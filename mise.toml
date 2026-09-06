@@ -32,7 +32,7 @@ cargo check -p chart-core --target wasm32-unknown-unknown --locked
 """
 
 [tasks.test]
-description = "Run macOS workspace or headless core/export tests (no chart semantic tests yet)"
+description = "Run macOS workspace or headless core/export tests"
 run = """
 set -euo pipefail
 if [[ "$(uname -s)" == "Darwin" ]]; then

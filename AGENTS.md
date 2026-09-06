@@ -7,7 +7,8 @@ Read [the specification](docs/spec/gpui-charts-specification.md),
 [status ledger](docs/implementation-status.md) before implementation. Explicit owner
 instructions lead, followed by the specification, conforming ADRs, implementation plan
 and migration rationale. An infrastructure-only assignment does not authorize chart
-implementation. The repository currently contains package shells, not working chart APIs.
+implementation. The repository contains minimal core contracts and host build proofs;
+chart compilation, rendering/export and binding APIs remain unimplemented.
 
 ## Project Structure & Module Organization
 
@@ -23,9 +24,9 @@ versions are not adopted dependencies.
 
 Use `mise install` to provision the tools in `mise.toml`. Run `mise run fmt` to format,
 `mise run check` for repository/dependency/build/lint/docs/WASM checks, and `mise run test`
-for macOS workspace or Linux core/export tests. Run a selected future core test with
-`mise exec -- cargo test -p chart-core TEST_FILTER --locked`; there are currently no
-semantic tests. Use the committed lockfile and inherited workspace lints. Rustfmt
+for macOS workspace or Linux core/export tests. Run a selected core contract test with
+`mise exec -- cargo test -p chart-core TEST_FILTER --locked`. Use the committed lockfile
+and inherited workspace lints. Rustfmt
 enforces formatting; Clippy and rustdoc warnings fail checks. Add capability tasks only
 when their acceptance runners exist.
 

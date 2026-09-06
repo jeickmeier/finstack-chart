@@ -3,9 +3,9 @@
 Rust-native grammar-of-graphics project with a portable core, headless publication export,
 a standalone GPUI host and optional Kit integration.
 
-**Status: WP-01 bootstrap complete, including pinned GPUI/Kit build proofs. No chart
-library, native chart gallery, exporter or language binding is implemented. No G0–G4
-release gate has passed.**
+**Status: WP-02 core foundations complete, following WP-01's pinned GPUI/Kit build
+proofs. Chart compilation, native chart rendering, exporters and language bindings remain
+unimplemented. No G0–G4 release gate has passed.**
 
 ## Start here
 
@@ -37,8 +37,9 @@ mise run test
 The three development tasks are `fmt` (format Rust), `check` (repository boundaries,
 local file links, dependency licenses/sources, formatting, compilation, Clippy, rustdoc
 and core WASM compilation), and `test` (macOS workspace or Linux core/export tests).
-Tests currently number zero; these checks do not prove
-chart semantics. Use `mise exec -- cargo ...` for one-off Cargo commands, or activate
+The core suite checks identities/revisions, finite geometry, bounded scene construction
+and synchronous service boundaries; it does not certify chart statistics or rendering.
+Use `mise exec -- cargo ...` for one-off Cargo commands, or activate
 mise in your shell for editor and terminal tool selection.
 
 The macOS `check` task also builds the standalone and Kit `host_bootstrap` examples.
@@ -52,6 +53,14 @@ The current scan fails on six unmaintained transitive packages; no advisory is i
 Details and the remaining release risks are in the [WP-01 evidence](docs/evidence/wp-01-completion-2026-09-06.md).
 
 ## Packages and contributions
+
+The first usable core contracts are documented in
+[ADR-002](docs/adr/002-minimal-core-contracts.md). The
+[public Rustdoc example](crates/chart-core/src/lib.rs) constructs a small validated scene
+without a host runtime. Run `mise exec -- cargo test -p chart-core --locked` for the
+contract suite and example. [Changes](CHANGELOG.md) and
+[WP-02 evidence](docs/evidence/wp-02-completion-2026-09-06.md) record compatibility and
+the precise validation boundary.
 
 The root is a virtual Cargo workspace named by this repository, not a `finstack-chart`
 facade crate. Package ownership follows ARC-01. Default members are `chart-core`,

@@ -1,16 +1,17 @@
 # Support and evidence matrix
 
 Updated: 6 September 2026. Intended support is not verified product support.
-Current dependency/build evidence is recorded in the
-[WP-01 completion report](evidence/wp-01-completion-2026-09-06.md); earlier infrastructure
-checks remain in the [bootstrap report](evidence/bootstrap-2026-09-06.md).
+Current foundation evidence is recorded in the
+[WP-02 completion report](evidence/wp-02-completion-2026-09-06.md). Dependency/build
+selection remains in the [WP-01 report](evidence/wp-01-completion-2026-09-06.md), with
+earlier infrastructure checks in the [bootstrap report](evidence/bootstrap-2026-09-06.md).
 
 | Surface | Required scope | Current implementation/evidence | Open gate |
 | --- | --- | --- | --- |
-| Portable Rust core | Synchronous host-independent semantics on macOS/Linux | Empty documented crate; infrastructure checks only | WP-02 onward; G1/G4 |
+| Portable Rust core | Synchronous host-independent semantics on macOS/Linux | Minimal contracts implemented; 21 integration tests and 1 Rustdoc example pass on macOS; chart/data/statistical semantics remain unimplemented | WP-04 onward; G1/G4 |
 | macOS Apple Silicon GPUI | First desktop host | Pinned `gpui-pre` / platform 0.3.3; standalone host example compiles and links on macOS 26.5.2 arm64; no chart/native visual evidence | WP-03/07/21 |
-| Linux headless core/export | Core tests and headless use | CI configured; no Linux execution recorded locally | WP-08/21 |
-| Browser WASM target | Core compilation; minimal runtime proof | Empty core compiles for `wasm32-unknown-unknown`; no runtime binding | WP-09 |
+| Linux headless core/export | Core tests and headless use | Target dependency isolation verified; CI configured; no Linux execution recorded locally | WP-08/21 |
+| Browser WASM target | Core compilation; minimal runtime proof | Implemented minimal core compiles for `wasm32-unknown-unknown`; target graph isolation verified; no runtime binding | WP-09 |
 | Optional Kit | Compatible theme/control adapter | Kit 0.6.0 host example compiles and links against the same GPUI identity; no chart theme/control implementation | WP-03/13 |
 | SVG/PDF/PNG | Vector marks, explicit fonts/dimensions and publication output | Export shell only; dependencies not selected | WP-03/08/13 |
 | Python headless | Minimal batch/correction/action/export equivalence | Rust shell only; no extension or packaging | WP-09 |
@@ -28,6 +29,11 @@ ADR-001 records exact host dependencies; actual host examples establish linked G
 type compatibility only. The macOS `check` task builds both variants; Linux tasks compile
 and test core/export. No renderer, theme, binding or other platform capability follows
 from these builds. Avoid one cross-target `--all-features` success claim.
+
+The repository checker now resolves three explicit target graphs for core/export host
+isolation. WP-02 also verifies finite geometry, bounded immutable scenes and synchronous
+services with deterministic test doubles. Full primitive/font/export and binding parity
+cannot be inferred from these foundation tests.
 
 The dependency advisory check currently fails on six unmaintained transitive packages;
 see the WP-01 report. Native future-compiler compatibility also remains open for `block`

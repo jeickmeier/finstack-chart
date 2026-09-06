@@ -93,6 +93,10 @@ WP-01 selected and built the exact registry identities recorded in
 [ADR-001](../adr/001-host-dependency-and-toolchain.md). The dependency examples are part
 of the macOS `check` task; capability proofs and G0 remain open.
 
+WP-02's minimal Rust contracts and synchronous service boundaries are recorded in
+[ADR-002](../adr/002-minimal-core-contracts.md). Authoring/compiler and wire-schema
+decisions continue in their assigned packages; the foundational types do not freeze them.
+
 ## 5. Work packages
 
 Every package below includes requirements, prerequisites, deliverables, and evidence. Requirements remain incomplete until their full scope is implemented even if an early package proves a subset.

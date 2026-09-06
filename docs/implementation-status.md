@@ -1,33 +1,37 @@
 # Implementation status
 
 Updated: 6 September 2026. Specification version: 0.1.0.
-Bootstrap committed at `fbc9782` (starting commit: `19f4a27`).
-WP-01 completion: `fbc9782` plus uncommitted dependency, build-proof and documentation
-changes, preserving the preceding review updates.
+Bootstrap committed at `fbc9782` (starting commit: `19f4a27`); WP-01 committed at `dfe38e8`.
+WP-02 completion: `dfe38e8` plus uncommitted core contracts/tests, target-isolation
+checks and documentation updates. No dependency/lockfile change.
 
 ## Current handoff
 
-The user assigned completion of WP-01 after the infrastructure bootstrap and review.
-**WP-01 is DONE:** ADR-001 selects exact registry GPUI/platform 0.3.3 and Kit 0.6.0;
-standalone and Kit host examples compile and link with one GPUI identity. Core/export
-remain isolated and Kit remains optional. The [completion evidence](evidence/wp-01-completion-2026-09-06.md)
-records builds, graph checks, licenses/sources, Clippy, rustdoc and core WASM compilation.
-Workspace tests run but contain zero semantic tests. INF-01–INF-05's earlier acceptance
-remains recorded in the [bootstrap report](evidence/bootstrap-2026-09-06.md).
+The user assigned WP-02 after WP-01. **WP-02 is DONE for its minimal-contract scope:**
+core now provides typed identities/revisions, contextual diagnostics, finite geometry,
+bounded immutable scene construction and synchronous text/resource interfaces.
+The [completion evidence](evidence/wp-02-completion-2026-09-06.md) records 21 passing
+integration tests and one passing Rustdoc example, strict repository/build/lint/docs
+checks and implemented-core WASM compilation. Core remains dependency-free. Target graph
+isolation and a WASM-only forbidden-dependency negative probe pass.
 
-WP-02 has its infrastructure subset prepared and its WP-01 prerequisite now satisfied;
-minimal contracts and meaningful diagnostic tests remain unimplemented. All later packages
-remain NOT STARTED. No chart APIs, exporters, chart rendering, binding runtimes, semantic
-fixtures or benchmarks are implemented. No G0–G4 gate is passed.
+WP-01's pinned host identities and compatible build examples remain verified; Kit stays
+optional and core/export remain isolated. [ADR-002](adr/002-minimal-core-contracts.md)
+defines the WP-03/WP-04 handoff. Both packages are now READY; later packages remain
+NOT STARTED. Chart compilation, data transactions, rendering/export, wire schema, binding
+runtimes and benchmarks remain unimplemented. No complete canonical FIX or G0–G4 gate
+is passed by these foundations.
 
-**Open dependency risks:** cargo-deny reports six unmaintained transitive packages;
-the advisory check fails with no ignored IDs. Cargo also reports a future compiler
+**Open dependency risks:** the WP-01 cargo-deny report contains six unmaintained
+transitive packages; no advisory was ignored and the scan was not repeated in WP-02.
+Cargo still reports a future compiler
 incompatibility in `block` 0.1.6. ADR-001 and the completion evidence retain the exact
 findings for upstream follow-up in WP-03 and release disposition in WP-23. Hosted CI,
 Linux execution and native visual/runtime capabilities remain unverified.
 
-**Next:** assign and complete WP-02's minimal contracts and diagnostic evidence. This
-task stops at WP-01. Licensing/public registry names remain release preparation decisions
+**Next:** assign WP-03's native/font/export capability spike using the minimal scene and
+service contracts. WP-04 data work also has its prerequisites satisfied. This task stops
+at WP-02. Licensing/public registry names remain release preparation decisions
 in ADR-010; they do not prevent local work.
 
 ## Work packages
@@ -38,10 +42,10 @@ The final column records outstanding prerequisites/blockers and the next action.
 
 | Package | State | Owner | Commit/PR | Requirement IDs | Evidence | Open work / next action |
 | --- | --- | --- | --- | --- | --- | --- |
-| WP-01 — Project bootstrap and scope ledger | DONE | Unassigned | `fbc9782` + uncommitted WP-01 slice | SCP-01, SCP-02, SCP-03, ARC-04, QLT-05 | [Completion evidence](evidence/wp-01-completion-2026-09-06.md); [ADR-001](adr/001-host-dependency-and-toolchain.md) | Bootstrap acceptance complete; native capabilities and dependency maintenance follow-up remain WP-03/WP-23 work. |
-| WP-02 — Workspace, diagnostics and minimal contracts | IN PROGRESS | Unassigned | `fbc9782` (infrastructure only) | ARC-01, ARC-02, ARC-03, SCN-01, BND-01, QLT-01, QLT-05 | [Infrastructure evidence](evidence/bootstrap-2026-09-06.md); partial only | WP-01 prerequisite satisfied; next assignment should implement minimal contracts and meaningful diagnostics tests. |
-| WP-03 — Native, font and export capability spike | NOT STARTED | Unassigned | — | ARC-04, LAY-02, LAY-04, SCN-03, GPU-01, GPU-03, EXP-01, EXP-02, QLT-03, QLT-04 | None | Satisfy prerequisites: WP-02. |
-| WP-04 — Immutable data, schemas and transactions | NOT STARTED | Unassigned | — | DAT-01, DAT-02, DAT-03, DAT-04, DAT-05, DAT-06, ARC-03, QLT-01 | None | Satisfy prerequisites: WP-02. |
+| WP-01 — Project bootstrap and scope ledger | DONE | Unassigned | `dfe38e8` | SCP-01, SCP-02, SCP-03, ARC-04, QLT-05 | [Completion evidence](evidence/wp-01-completion-2026-09-06.md); [ADR-001](adr/001-host-dependency-and-toolchain.md) | Bootstrap acceptance complete; native capabilities and dependency maintenance follow-up remain WP-03/WP-23 work. |
+| WP-02 — Workspace, diagnostics and minimal contracts | DONE | Unassigned | `dfe38e8` + uncommitted WP-02 slice | ARC-01, ARC-02, ARC-03, SCN-01, BND-01, QLT-01, QLT-05 | [Completion evidence](evidence/wp-02-completion-2026-09-06.md); [ADR-002](adr/002-minimal-core-contracts.md) | Minimal contracts accepted; full scene, data, wire/binding and diagnostic aggregation remain later work. |
+| WP-03 — Native, font and export capability spike | READY | Unassigned | — | ARC-04, LAY-02, LAY-04, SCN-03, GPU-01, GPU-03, EXP-01, EXP-02, QLT-03, QLT-04 | None | WP-02 prerequisite satisfied; implement and inspect actual native/font/export proofs and benchmark protocol. |
+| WP-04 — Immutable data, schemas and transactions | READY | Unassigned | — | DAT-01, DAT-02, DAT-03, DAT-04, DAT-05, DAT-06, ARC-03, QLT-01 | None | WP-02 prerequisite satisfied; implement snapshots, schemas, stable keys and atomic transactions. |
 | WP-05 — Grammar compiler and minimal prepared scene | NOT STARTED | Unassigned | — | GRA-01, GRA-02, GRA-03, GRA-04, GRA-06, GRA-08, SCN-01, SCN-02, DAT-06 | None | Satisfy prerequisites: WP-02, WP-04. |
 | WP-06 — Foundational scales, ticks and layout | NOT STARTED | Unassigned | — | SCL-01, SCL-02, SCL-04, SCL-05, LAY-01, LAY-02, DAT-05 | None | Satisfy prerequisites: WP-05. |
 | WP-07 — Working standalone GPUI vertical slice | NOT STARTED | Unassigned | — | GPU-01, GPU-02, SCN-03, SCN-04, INT-01, INT-03, QLT-01 | None | Satisfy prerequisites: WP-03, WP-06. |
@@ -66,7 +70,7 @@ The final column records outstanding prerequisites/blockers and the next action.
 
 | Gate | State | Evidence required next |
 | --- | --- | --- |
-| G0 | NOT PASSED | Dependency identities/builds established; minimal contracts, actual primitive/font/export proofs and benchmark protocol still required. |
+| G0 | NOT PASSED | Dependency identities/builds and minimal contracts established; actual primitive/font/export proofs and benchmark protocol still required. |
 | G1 | NOT PASSED | Real native chart, headless output, atomic updates, Python/WASM runtime fixtures. |
 | G2 | NOT PASSED | Complete alpha grammar/publication/theme/extension evidence. |
 | G3 | NOT PASSED | Interaction, corrections/retention, scheduling and coherent live exports. |

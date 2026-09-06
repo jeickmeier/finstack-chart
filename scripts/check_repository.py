@@ -17,12 +17,30 @@ ALLOWED = {
     "chart-wasm": {"chart-core"},
     "chart-gallery": {"chart-core", "chart-export", "gpui-charts", "gpui-charts-kit"},
 }
+PORTABLE_TARGETS = ("aarch64-apple-darwin", "x86_64-unknown-linux-gnu", "wasm32-unknown-unknown")
+
+
+def metadata_for(target=None):
+    command = ["cargo", "metadata", "--format-version", "1", "--locked"]
+    if target is not None:
+        command += ["--filter-platform", target]
+    return json.loads(subprocess.check_output(command, cwd=ROOT, text=True))
+
+
+def dependency_ids(root_id, nodes):
+    """Walk normal/build/dev edges present in this resolved feature/target graph."""
+    seen = set()
+    pending = list(nodes[root_id]["dependencies"])
+    while pending:
+        key = pending.pop()
+        if key not in seen:
+            seen.add(key)
+            pending.extend(nodes[key]["dependencies"])
+    return seen
 
 
 def main():
-    metadata = json.loads(subprocess.check_output(
-        ["cargo", "metadata", "--format-version", "1", "--locked"], cwd=ROOT, text=True
-    ))
+    metadata = metadata_for()
     packages = {p["id"]: p for p in metadata["packages"]}
     members = [packages[key] for key in metadata["workspace_members"]]
     errors = []
@@ -39,25 +57,22 @@ def main():
             if dep["name"] in ALLOWED and dep["name"] not in ALLOWED.get(name, set()):
                 errors.append(f"{name}: forbidden workspace edge to {dep['name']}")
 
-    # Inspect the resolved transitive graph, including build/dev dependencies.
+    # Check explicit supported target graphs, not only the invoking machine's graph.
     nodes = {n["id"]: n for n in metadata["resolve"]["nodes"]}
     forbidden = {"gpui", "gpui-pre", "gpui-component", "gpui-kit", "gpui-charts",
                  "gpui-charts-kit", "pyo3", "wasm-bindgen", "js-sys", "web-sys",
                  "chart-python", "chart-wasm", "chart-gallery"}
-    for package in members:
-        if package["name"] not in {"chart-core", "chart-export"}:
-            continue
-        seen = set()
-        pending = list(nodes[package["id"]]["dependencies"])
-        while pending:
-            key = pending.pop()
-            if key in seen:
+    for target in PORTABLE_TARGETS:
+        target_metadata = metadata_for(target)
+        target_nodes = {n["id"]: n for n in target_metadata["resolve"]["nodes"]}
+        target_packages = {p["id"]: p for p in target_metadata["packages"]}
+        for package in members:
+            if package["name"] not in {"chart-core", "chart-export"}:
                 continue
-            seen.add(key)
-            dep_name = packages[key]["name"]
-            if dep_name in forbidden or dep_name.startswith("gpui-pre"):
-                errors.append(f"{package['name']}: forbidden transitive host dependency {dep_name}")
-            pending.extend(nodes[key]["dependencies"])
+            for key in dependency_ids(package["id"], target_nodes):
+                dep_name = target_packages[key]["name"]
+                if dep_name in forbidden or dep_name.startswith("gpui-pre"):
+                    errors.append(f"{target}: {package['name']}: forbidden transitive host dependency {dep_name}")
 
     # ARC-04: the Kit and standalone consumers must resolve one GPUI identity.
     gpui_packages = [p for p in packages.values() if p["name"] in {"gpui", "gpui-pre"}]
@@ -68,17 +83,10 @@ def main():
             if dep["name"] in {"gpui-pre", "gpui-pre-platform", "gpui-kit"}:
                 if not dep["req"].startswith("="):
                     errors.append(f"{package['name']}: host dependency {dep['name']} needs an exact pin.")
-    standalone = next(p for p in members if p["name"] == "gpui-charts")
-    seen = set()
-    pending = list(nodes[standalone["id"]]["dependencies"])
-    while pending:
-        key = pending.pop()
-        if key in seen:
-            continue
-        seen.add(key)
-        if packages[key]["name"] in {"gpui-kit", "gpui-component", "gpui-charts-kit"}:
-            errors.append("Standalone GPUI must not require Kit.")
-        pending.extend(nodes[key]["dependencies"])
+    for standalone in (p for p in members if p["name"] == "gpui-charts"):
+        for key in dependency_ids(standalone["id"], nodes):
+            if packages[key]["name"] in {"gpui-kit", "gpui-component", "gpui-charts-kit"}:
+                errors.append("Standalone GPUI must not require Kit.")
 
     documents = [ROOT / "README.md", ROOT / "AGENTS.md"]
     documents += list((ROOT / "docs").rglob("*.md"))
@@ -99,7 +107,8 @@ def main():
     if errors:
         raise SystemExit("\n".join(errors))
     print("PASS: workspace edges, host isolation, single pinned GPUI identity, optional Kit and local Markdown file links.")
-    print("Scope: default resolved features; external links/anchors and unlisted host packages need review.")
+    print("Core/export isolation targets: " + ", ".join(PORTABLE_TARGETS))
+    print("Scope: default resolved features; graph checks are not target execution. External links/anchors and unlisted host packages need review.")
 
 
 if __name__ == "__main__":
