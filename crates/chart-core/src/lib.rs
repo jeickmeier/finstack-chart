@@ -1,8 +1,9 @@
 //! Portable, synchronous chart foundations.
 //!
 //! WP-02 provides identities, structured diagnostics, finite geometry, bounded immutable
-//! scenes and explicit host services. It does not yet compile chart definitions, render,
-//! export or decode a wire specification. See `docs/adr/002-minimal-core-contracts.md`.
+//! scenes and explicit host services. WP-04 adds immutable typed/column snapshots, atomic
+//! data transactions and provenance. It does not yet compile chart definitions, render,
+//! export or decode a wire specification. See ADR-002 and ADR-004 in `docs/adr/`.
 //!
 //! A minimal destination scene can be constructed without any host runtime:
 //!
@@ -30,14 +31,20 @@
 //! # }
 //! ```
 
+pub mod data;
 pub mod diagnostic;
 pub mod geometry;
 pub mod identity;
 pub mod limits;
+pub mod provenance;
 pub mod scene;
 pub mod services;
+pub mod transaction;
 
 pub use diagnostic::{ChartResult, Diagnostic, DiagnosticCode, DiagnosticContext, Severity};
 pub use geometry::{Point, Rect};
-pub use identity::{DatasetId, FieldId, LayerId, ResourceId, Revision, RowKey, SceneStamp};
+pub use identity::{
+    AggregateId, DatasetId, DerivedId, FieldId, LayerId, ResourceId, Revision, RowKey, SceneStamp,
+    SchemaVersion, SourceEpoch,
+};
 pub use limits::Limits;

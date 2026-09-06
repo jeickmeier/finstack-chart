@@ -3,8 +3,8 @@
 Rust-native grammar-of-graphics project with a portable core, headless publication export,
 a standalone GPUI host and optional Kit integration.
 
-**Status: WP-03 capability spike complete; G0 architecture/capability gate passed for
-the initial macOS host. Actual native and SVG/PDF/PNG proofs are retained. Public chart
+**Status: WP-04 immutable data and atomic transactions complete. G0 capability evidence
+is retained for the initial macOS host; WP-05 grammar work is ready. Public chart
 rendering/export APIs, chart compilation and bindings remain unimplemented; G1–G4 are open.**
 
 ## Start here
@@ -38,7 +38,8 @@ The three development tasks are `fmt` (format Rust), `check` (repository boundar
 local file links, dependency licenses/sources, formatting, compilation, Clippy, rustdoc
 and core WASM compilation), and `test` (macOS workspace or Linux core/export tests).
 The core suite checks identities/revisions, finite geometry, bounded scene construction
-and synchronous service boundaries; it does not certify chart statistics or rendering.
+and synchronous service boundaries, plus data/schema, replay, retention and snapshot
+ownership contracts; it does not certify chart statistics or rendering.
 Use `mise exec -- cargo ...` for one-off Cargo commands, or activate
 mise in your shell for editor and terminal tool selection.
 
@@ -57,8 +58,11 @@ The refreshed scan and remaining release risks are in the [WP-03 evidence](docs/
 
 ## Packages and contributions
 
-The first usable core contracts are documented in
-[ADR-002](docs/adr/002-minimal-core-contracts.md). The
+The core contracts are documented in
+[ADR-002](docs/adr/002-minimal-core-contracts.md) and
+[ADR-004](docs/adr/004-immutable-data-and-transactions.md). The latter specifies typed/column
+snapshots, ordered atomic commits, bounded replay and provenance, with
+[WP-04 evidence](docs/evidence/wp-04-completion-2026-09-06.md). The
 [public Rustdoc example](crates/chart-core/src/lib.rs) constructs a small validated scene
 without a host runtime. Run `mise exec -- cargo test -p chart-core --locked` for the
 contract suite and example. [Changes](CHANGELOG.md) and

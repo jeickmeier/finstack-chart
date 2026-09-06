@@ -40,6 +40,23 @@ identity!(
     "Stable source-row identity within a dataset; never a positional index."
 );
 
+identity!(
+    SchemaVersion,
+    "Version of a dataset schema, without integer narrowing."
+);
+identity!(
+    SourceEpoch,
+    "Monotonically advanced source epoch used to fence stale transactions."
+);
+identity!(
+    AggregateId,
+    "Identity of an aggregate within its declared input scope."
+);
+identity!(
+    DerivedId,
+    "Identity of a derived model or value within its input scope."
+);
+
 /// A revision within one explicitly identified owner/epoch, not a global clock.
 #[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Revision(u64);

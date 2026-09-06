@@ -2,7 +2,9 @@
 
 use std::fmt;
 
-use crate::identity::{DatasetId, FieldId, LayerId, ResourceId, Revision, SceneStamp};
+use crate::identity::{
+    DatasetId, FieldId, LayerId, ResourceId, Revision, RowKey, SceneStamp, SchemaVersion,
+};
 
 /// Shared result type; user input failures never require a successful empty replacement.
 pub type ChartResult<T> = Result<T, Diagnostic>;
@@ -45,6 +47,12 @@ pub enum DiagnosticCode {
     ExportFidelity,
     /// A revision counter cannot advance without wrapping.
     RevisionOverflow,
+    /// Expected dataset, schema or source epoch no longer matches.
+    RevisionConflict,
+    /// A remembered transaction identity was reused with a different payload.
+    TransactionReuse,
+    /// A numeric conversion cannot preserve the requested source resolution.
+    PrecisionLoss,
 }
 
 impl DiagnosticCode {
@@ -64,6 +72,9 @@ impl DiagnosticCode {
             Self::DisposedHandle => "CHART_DISPOSED_HANDLE",
             Self::ExportFidelity => "CHART_EXPORT_FIDELITY",
             Self::RevisionOverflow => "CHART_REVISION_OVERFLOW",
+            Self::RevisionConflict => "CHART_REVISION_CONFLICT",
+            Self::TransactionReuse => "CHART_TRANSACTION_REUSE",
+            Self::PrecisionLoss => "CHART_PRECISION_LOSS",
         }
     }
 }
@@ -83,6 +94,14 @@ pub struct DiagnosticContext {
     pub resource_revision: Option<Revision>,
     /// Compilation revisions supplied to the operation.
     pub stamp: Option<SceneStamp>,
+    /// Observed dataset revision at a data boundary.
+    pub dataset_revision: Option<Revision>,
+    /// Observed schema version at a data boundary.
+    pub schema_version: Option<SchemaVersion>,
+    /// Total affected rows; bounded samples do not replace this count.
+    pub affected_rows: u64,
+    /// Bounded sample of affected source keys, never positional identities.
+    pub row_samples: Vec<RowKey>,
 }
 
 /// Structured diagnostic. Context is boxed to keep successful result values small.
