@@ -3,5 +3,52 @@
 version = 4
 
 [[package]]
-name = "finstack-chart"
+name = "chart-core"
 version = "0.1.0"
+
+[[package]]
+name = "chart-export"
+version = "0.1.0"
+dependencies = [
+ "chart-core",
+]
+
+[[package]]
+name = "chart-gallery"
+version = "0.1.0"
+dependencies = [
+ "chart-core",
+ "chart-export",
+ "gpui-charts",
+ "gpui-charts-kit",
+]
+
+[[package]]
+name = "chart-python"
+version = "0.1.0"
+dependencies = [
+ "chart-core",
+ "chart-export",
+]
+
+[[package]]
+name = "chart-wasm"
+version = "0.1.0"
+dependencies = [
+ "chart-core",
+]
+
+[[package]]
+name = "gpui-charts"
+version = "0.1.0"
+dependencies = [
+ "chart-core",
+]
+
+[[package]]
+name = "gpui-charts-kit"
+version = "0.1.0"
+dependencies = [
+ "chart-core",
+ "gpui-charts",
+]

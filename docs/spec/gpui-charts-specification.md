@@ -3,7 +3,7 @@
 Document version: 0.1.0  
 Date: 6 September 2026  
 Status: Initial project contract for implementation; no implementation or measured performance is implied.  
-Companion documents: [Implementation plan](gpui-charts-implementation-plan.md) and [Migration and architecture rationale](gpui-charts-migration-plan.md).
+Companion documents: [Implementation plan](../impl_plans/gpui-charts-implementation-plan.md) and [Migration and architecture rationale](gpui-charts-migration-plan.md).
 
 ## 1. Authority, purpose, and vocabulary
 

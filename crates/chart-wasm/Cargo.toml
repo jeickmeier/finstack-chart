@@ -1,0 +1,13 @@
+[package]
+name = "chart-wasm"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+description = "Reserved WASM proof boundary; no exported bindings yet."
+
+[lints]
+workspace = true
+
+[dependencies]
+chart-core.workspace = true

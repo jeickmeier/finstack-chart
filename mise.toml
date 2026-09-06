@@ -1,0 +1,28 @@
+# Development tools and tasks. Provision with `mise install`.
+[tools]
+rust = { version = "1.97.1", profile = "minimal", components = "rustfmt,clippy", targets = "wasm32-unknown-unknown" }
+python = "3.14.6"
+
+[task_config]
+shell = "bash -c"
+
+[tasks.fmt]
+description = "Format Rust source"
+run = "cargo fmt --all"
+
+[tasks.check]
+description = "Check repository, formatting, compilation, lint, docs and portable core"
+run = """
+set -euo pipefail
+python3 scripts/check_repository.py
+cargo fmt --all -- --check
+cargo check --workspace --all-targets --locked
+cargo check -p chart-gallery --features kit --locked
+cargo clippy --workspace --all-targets --locked -- -D warnings
+RUSTDOCFLAGS="-D warnings" cargo doc --workspace --no-deps --locked
+cargo check -p chart-core --target wasm32-unknown-unknown --locked
+"""
+
+[tasks.test]
+description = "Run workspace tests (no semantic tests exist at bootstrap)"
+run = "cargo test --workspace --locked"

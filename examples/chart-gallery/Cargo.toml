@@ -1,0 +1,21 @@
+[package]
+name = "chart-gallery"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+description = "Development gallery; native rendering is not implemented."
+
+[lints]
+workspace = true
+
+[dependencies]
+chart-core.workspace = true
+chart-export.workspace = true
+gpui-charts.workspace = true
+
+gpui-charts-kit = { workspace = true, optional = true }
+
+[features]
+default = []
+kit = ["dep:gpui-charts-kit"]

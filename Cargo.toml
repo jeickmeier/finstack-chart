@@ -1,6 +1,31 @@
-[package]
-name = "finstack-chart"
+[workspace]
+resolver = "3"
+members = [
+    "crates/chart-core",
+    "crates/chart-export",
+    "crates/gpui-charts",
+    "crates/gpui-charts-kit",
+    "crates/chart-python",
+    "crates/chart-wasm",
+    "examples/chart-gallery",
+]
+default-members = ["crates/chart-core", "crates/chart-export", "crates/gpui-charts"]
+
+[workspace.package]
 version = "0.1.0"
 edition = "2024"
+rust-version = "1.97.1"
+publish = false
 
-[dependencies]
+[workspace.dependencies]
+chart-core = { path = "crates/chart-core" }
+chart-export = { path = "crates/chart-export" }
+gpui-charts = { path = "crates/gpui-charts" }
+gpui-charts-kit = { path = "crates/gpui-charts-kit" }
+
+[workspace.lints.rust]
+unsafe_code = "deny"
+missing_docs = "warn"
+
+[workspace.lints.clippy]
+all = "warn"

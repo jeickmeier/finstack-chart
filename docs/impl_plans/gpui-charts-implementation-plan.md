@@ -2,8 +2,10 @@
 
 Document version: 0.1.0  
 Date: 6 September 2026  
-Status: Executable project handoff; every work package is initially NOT STARTED.  
-Companion documents: [Project specification](gpui-charts-specification.md) and [Migration and architecture rationale](gpui-charts-migration-plan.md).
+Status: Executable project handoff; current progress is tracked in the [status ledger](../implementation-status.md).
+Companion documents: [Project specification](../spec/gpui-charts-specification.md) and [Migration and architecture rationale](../spec/gpui-charts-migration-plan.md).
+
+The [infrastructure setup plan](package-infrastructure-plan.md) covers the repository-only bootstrap. Package shells do not complete WP-02 or any release gate.
 
 ## 1. How to use this project package
 
@@ -54,7 +56,7 @@ Use a workspace lockfile for reproducible development and pin reference fixtures
 
 Default features should serve standalone desktop use without Python, a browser, Arrow/Polars, a finance engine, or network access. Core builds independently. Feature checks must cover valid combinations; avoid a blanket `--all-features` job if target-specific bindings make that combination meaningless.
 
-Proposed command contract, to make real in WP-02:
+Current development entry points are `mise run fmt`, `mise run check` and `mise run test`. Use `mise exec --` before one-off Cargo commands. The commands below describe package-level checks to extend as WP-02 and later acceptance runners become functional:
 
 | Command | Purpose |
 | --- | --- |
@@ -64,7 +66,7 @@ Proposed command contract, to make real in WP-02:
 | `cargo test -p gpui-charts` | Host-level tests supported by the selected framework. |
 | `cargo run -p chart-gallery` | Actual native gallery on a supported host. |
 | `cargo check -p chart-core --target wasm32-unknown-unknown` | Portable core build. |
-| `scripts/check.sh core\|desktop\|export\|bindings\|release` | Stable task-level validation entry points; implement each before claiming it ran. |
+| `mise run check` / `mise run test` | Minimal current validation entry points; add scoped capability tasks only with real acceptance runners. |
 
 Exact harness commands for GPUI, PyO3 and WASM follow selected toolchain APIs. A native test skipped because the worker lacks a supported display/OS is recorded as blocked for that environment, not passed. Headless/semantic work should continue independently.
 
@@ -451,7 +453,7 @@ Any semantic change updates the relevant specification ID, tests, portable schem
 
 Copy the following prompt into the assigned repository after adding the three documents:
 
-> Build the Rust-native GPUI chart library defined by docs/gpui-charts-specification.md, docs/gpui-charts-implementation-plan.md, and docs/gpui-charts-migration-plan.md. Read repository instructions and those documents before changing code. The specification is authoritative for behavior; the implementation plan defines work packages and gates; the migration plan supplies rationale.
+> Within the assigned task scope, build the Rust-native GPUI chart library defined by docs/spec/gpui-charts-specification.md, docs/impl_plans/gpui-charts-implementation-plan.md, and docs/spec/gpui-charts-migration-plan.md. Read repository instructions and those documents before changing code. The specification is authoritative for behavior; the implementation plan defines work packages and gates; the migration plan supplies rationale. An infrastructure-only or review-only assignment does not authorize library implementation.
 >
 > Inspect current implementation and docs/implementation-status.md. If no implementation exists, start with WP-01 and initialize the ledger. Otherwise select the earliest ready incomplete work package, preserving completed work. Implement a complete reviewable slice through its acceptance criteria, run the relevant checks on supported environments, and update the ledger with requirement IDs, commands, results, limitations and the next ready step.
 >
