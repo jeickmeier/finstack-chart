@@ -7,8 +7,8 @@ Read [the specification](docs/spec/gpui-charts-specification.md),
 [status ledger](docs/implementation-status.md) before implementation. Explicit owner
 instructions lead, followed by the specification, conforming ADRs, implementation plan
 and migration rationale. An infrastructure-only assignment does not authorize chart
-implementation. The repository contains minimal core contracts and host build proofs;
-chart compilation, rendering/export and binding APIs remain unimplemented.
+implementation. The repository contains core data/grammar preparation and host capability
+proofs; scale/layout resolution, public rendering/export and binding APIs remain unimplemented.
 
 ## Project Structure & Module Organization
 

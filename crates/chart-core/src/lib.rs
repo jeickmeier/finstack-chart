@@ -2,8 +2,9 @@
 //!
 //! WP-02 provides identities, structured diagnostics, finite geometry, bounded immutable
 //! scenes and explicit host services. WP-04 adds immutable typed/column snapshots, atomic
-//! data transactions and provenance. It does not yet compile chart definitions, render,
-//! export or decode a wire specification. See ADR-002 and ADR-004 in `docs/adr/`.
+//! data transactions and provenance. WP-05 adds typed authoring and grammar preparation
+//! into data-space geometry. Scale/layout resolution, rendering, export and wire decoding
+//! remain later boundaries. See ADR-002 and ADR-004 in `docs/adr/`.
 //!
 //! A minimal destination scene can be constructed without any host runtime:
 //!
@@ -34,17 +35,19 @@
 pub mod data;
 pub mod diagnostic;
 pub mod geometry;
+pub mod grammar;
 pub mod identity;
 pub mod limits;
 pub mod provenance;
 pub mod scene;
 pub mod services;
+pub mod state;
 pub mod transaction;
 
 pub use diagnostic::{ChartResult, Diagnostic, DiagnosticCode, DiagnosticContext, Severity};
 pub use geometry::{Point, Rect};
 pub use identity::{
     AggregateId, DatasetId, DerivedId, FieldId, LayerId, ResourceId, Revision, RowKey, SceneStamp,
-    SchemaVersion, SourceEpoch,
+    SchemaVersion, SourceEpoch, TransformId,
 };
 pub use limits::Limits;

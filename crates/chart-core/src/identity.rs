@@ -57,6 +57,11 @@ identity!(
     "Identity of a derived model or value within its input scope."
 );
 
+identity!(
+    TransformId,
+    "Stable identity of a named statistical transform output."
+);
+
 /// A revision within one explicitly identified owner/epoch, not a global clock.
 #[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Revision(u64);
