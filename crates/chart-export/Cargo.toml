@@ -11,3 +11,10 @@ workspace = true
 
 [dependencies]
 chart-core.workspace = true
+
+[dev-dependencies]
+resvg = { version = "=0.45.1", default-features = false, features = ["text"] }
+svg2pdf = { version = "=0.13.0", default-features = false, features = ["text"] }
+ttf-parser = "=0.25.1"
+base64 = "=0.22.1"
+png = "=0.17.16"

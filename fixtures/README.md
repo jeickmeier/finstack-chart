@@ -1,7 +1,8 @@
 # Canonical fixtures and resources
 
 FIX-01–FIX-18 are defined in the [specification](../docs/spec/gpui-charts-specification.md).
-No fixture execution or chart output exists at bootstrap. Add small cases beside their
+The [WP-03 capability fixture](capability/README.md) has actual native/publication output;
+no complete canonical FIX case is passed by that spike. Add small cases beside their
 independent expected semantic results as the owning work package is implemented.
 
 For each imported or generated reference asset, record fixture ID, origin URL and exact

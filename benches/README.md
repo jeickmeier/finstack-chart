@@ -1,11 +1,12 @@
 # Benchmark infrastructure
 
 PERF-01–PERF-05 and their targets remain in the
-[specification](../docs/spec/gpui-charts-specification.md). No benchmarks are implemented
-or measured yet. Add executable Cargo benchmark targets to the crate that owns the
+[specification](../docs/spec/gpui-charts-specification.md). The
+[WP-03 protocol and starting profile](../docs/adr/008-benchmark-protocol.md) are recorded;
+none of PERF-01–PERF-05 has run. Add executable Cargo benchmark targets to the crate that owns the
 measured code; this virtual workspace root is not a benchmark package.
 
-WP-03 records ADR-008 before performance work: hardware/chip/RAM, OS, Rust/dependency
+ADR-008 records hardware/chip/RAM, OS, Rust/dependency
 revisions, release profile, chart dimensions, pixel scale, workload/seed, warm-up,
 timing boundaries and quantile method. Distinguish source, accepted, committed,
 prepared, rendered, dropped, rejected and coalesced counts.

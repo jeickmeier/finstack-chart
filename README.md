@@ -3,9 +3,9 @@
 Rust-native grammar-of-graphics project with a portable core, headless publication export,
 a standalone GPUI host and optional Kit integration.
 
-**Status: WP-02 core foundations complete, following WP-01's pinned GPUI/Kit build
-proofs. Chart compilation, native chart rendering, exporters and language bindings remain
-unimplemented. No G0–G4 release gate has passed.**
+**Status: WP-03 capability spike complete; G0 architecture/capability gate passed for
+the initial macOS host. Actual native and SVG/PDF/PNG proofs are retained. Public chart
+rendering/export APIs, chart compilation and bindings remain unimplemented; G1–G4 are open.**
 
 ## Start here
 
@@ -42,15 +42,18 @@ and synchronous service boundaries; it does not certify chart statistics or rend
 Use `mise exec -- cargo ...` for one-off Cargo commands, or activate
 mise in your shell for editor and terminal tool selection.
 
-The macOS `check` task also builds the standalone and Kit `host_bootstrap` examples.
-These link real host dependencies but do not prove chart behavior or visual fidelity.
+The macOS `check` task also builds the standalone and Kit `host_bootstrap` examples,
+and builds/lints the Kit-gated native capability example.
 `mise exec -- cargo run -p chart-gallery` still exits 2. See ADR-001 for the separate
 host-example commands. CI checks native builds on macOS and headless packages on Linux;
-hosted CI, native visual/accessibility checks and real binding execution remain unverified.
+hosted CI and real binding execution remain unverified. The
+[WP-03 report](docs/evidence/wp-03-completion-2026-09-06.md) records actual native visual,
+input/lifecycle/accessibility-hook inspection and publication artifacts. These remain
+proof examples; use the [fixture instructions](fixtures/capability/README.md) to run them.
 
 Run `mise exec -- cargo deny --locked check advisories` when reviewing dependencies.
 The current scan fails on six unmaintained transitive packages; no advisory is ignored.
-Details and the remaining release risks are in the [WP-01 evidence](docs/evidence/wp-01-completion-2026-09-06.md).
+The refreshed scan and remaining release risks are in the [WP-03 evidence](docs/evidence/wp-03-completion-2026-09-06.md).
 
 ## Packages and contributions
 

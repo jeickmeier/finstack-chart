@@ -1,0 +1,10 @@
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `release` profile [optimized] target(s) in 0.47s
+     Running `target/release/examples/capability_export docs/evidence/wp-03`
+cold font load + parse + shape: 2.472 ms
+PDF embed_text=true, convert + write: 0.969 ms
+PDF embed_text=false, convert + write: 9.449 ms
+PNG 300 DPI 2126x1417, allocate + render + encode + write: 11.782 ms
+PNG 600 DPI 4252x2835, allocate + render + encode + write: 35.006 ms
+negative resource 0 / revision 0: missing glyph U+10FFFF
+warm prepared-tree PDF conversion only, warmup=10 n=30 p50=0.367 p95=0.491 ms

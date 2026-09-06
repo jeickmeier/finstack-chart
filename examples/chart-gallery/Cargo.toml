@@ -22,3 +22,11 @@ gpui-charts-kit = { workspace = true, optional = true }
 [features]
 default = []
 kit = ["dep:gpui-charts-kit", "dep:gpui-kit"]
+
+[dev-dependencies]
+resvg = { version = "=0.45.1", default-features = false, features = ["text"] }
+ttf-parser = "=0.25.1"
+
+[[example]]
+name = "capability_spike"
+required-features = ["kit"]

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180mm" height="120mm" viewBox="0 0 510.23622 340.15748">
+  <defs>
+    <linearGradient id="wash" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#247c86"/><stop offset="1" stop-color="#f1cb73"/>
+    </linearGradient>
+    <clipPath id="panel"><rect x="30" y="80" width="290" height="118"/></clipPath>
+  </defs>
+  <rect width="510.23622" height="340.15748" fill="#ffffff"/>
+  <g font-family="Noto Sans" fill="#203444">
+    <text x="30" y="32" font-size="17">Native / publication capability proof</text>
+    <text x="30" y="51" font-size="8">WP-03 · explicit fonts · vector geometry · 180 × 120 mm</text>
+    <rect x="30" y="80" width="290" height="118" fill="#f0f4f5"/>
+    <g clip-path="url(#panel)">
+      <path d="M 15 175 C 75 60 125 205 185 120 S 270 50 345 150" fill="none" stroke="#247c86" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M 12 189 Q 110 90 185 170 T 348 96" fill="none" stroke="#bb603e" stroke-width="2" stroke-dasharray="8 4" stroke-linecap="round"/>
+      <circle cx="67" cy="130" r="4" fill="#247c86"/><circle cx="185" cy="120" r="4" fill="#247c86"/><circle cx="298" cy="119" r="4" fill="#247c86"/>
+    </g>
+    <text x="30" y="214" font-size="8">Curves / round dashes / clipped overflow / point symbols</text>
+    <text x="344" y="79" font-size="9">Caps &amp; joins</text>
+    <path d="M 349 103 L 365 89 L 381 103" fill="none" stroke="#247c86" stroke-width="6" stroke-linecap="butt" stroke-linejoin="miter"/>
+    <path d="M 399 103 L 415 89 L 431 103" fill="none" stroke="#247c86" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 449 103 L 465 89 L 481 103" fill="none" stroke="#247c86" stroke-width="6" stroke-linecap="square" stroke-linejoin="bevel"/>
+    <text x="345" y="122" font-size="7">butt / miter</text><text x="397" y="122" font-size="7">round</text><text x="447" y="122" font-size="7">square / bevel</text>
+    <rect x="345" y="142" width="135" height="38" fill="url(#wash)"/>
+    <text x="345" y="194" font-size="8">sRGB linear gradient</text>
+    <text x="17" y="181" transform="rotate(-90 17 181)" font-size="8">Rotated vector text</text>
+    <text x="30" y="248" font-size="12">Rich runs: <tspan fill="#247c86">office affinity</tspan><tspan font-family="Fira Mono" font-size="10" fill="#bb603e"> 12,345.67</tspan></text>
+    <text x="30" y="269" font-size="10">Typography: café · naïve · Ω · −12.5% · é</text>
+    <path d="M 30 286 H 480" stroke="#bac9ce" stroke-width="0.5"/>
+    <text x="30" y="305" font-size="7">6 pt detail: <tspan font-size="6">0123456789  Thin lines &amp; tight glyph counters</tspan></text>
+    <text x="30" y="321" font-size="7">Retained fixture input; no system-font lookup or whole-scene raster substitution.</text>
+  </g>
+</svg>

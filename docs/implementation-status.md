@@ -2,37 +2,34 @@
 
 Updated: 6 September 2026. Specification version: 0.1.0.
 Bootstrap committed at `fbc9782` (starting commit: `19f4a27`); WP-01 committed at `dfe38e8`.
-WP-02 completion: `dfe38e8` plus uncommitted core contracts/tests, target-isolation
-checks and documentation updates. No dependency/lockfile change.
+WP-02 committed at `435e127`. WP-03 completion: `435e127` plus uncommitted capability
+examples, fixture/font assets, candidate dev dependencies/lockfile and evidence/ADRs.
 
 ## Current handoff
 
-The user assigned WP-02 after WP-01. **WP-02 is DONE for its minimal-contract scope:**
-core now provides typed identities/revisions, contextual diagnostics, finite geometry,
-bounded immutable scene construction and synchronous text/resource interfaces.
-The [completion evidence](evidence/wp-02-completion-2026-09-06.md) records 21 passing
-integration tests and one passing Rustdoc example, strict repository/build/lint/docs
-checks and implemented-core WASM compilation. Core remains dependency-free. Target graph
-isolation and a WASM-only forbidden-dependency negative probe pass.
+The user assigned WP-03 after WP-02. **WP-03 is DONE; G0 architecture/capability evidence
+is established for the initial macOS host.** The
+[completion report](evidence/wp-03-completion-2026-09-06.md) retains actual native,
+SVG/PDF/PNG outputs, inspected fonts/vector structure/physical dimensions, native
+input/remount/disposal and accessibility-hook evidence. [ADR-003](adr/003-font-and-renderer-capability-route.md)
+selects the renderer/font route and records unsupported capabilities and follow-up paths.
+[ADR-008](adr/008-benchmark-protocol.md) records the protocol and measured starting profile.
 
-WP-01's pinned host identities and compatible build examples remain verified; Kit stays
-optional and core/export remain isolated. [ADR-002](adr/002-minimal-core-contracts.md)
-defines the WP-03/WP-04 handoff. Both packages are now READY; later packages remain
-NOT STARTED. Chart compilation, data transactions, rendering/export, wire schema, binding
-runtimes and benchmarks remain unimplemented. No complete canonical FIX or G0–G4 gate
-is passed by these foundations.
+Core remains dependency-free, Kit optional and normal export isolated. Candidate export
+dependencies are dev-only. Strict repository/build/lint/docs/WASM checks and workspace
+tests pass (21 core integration tests plus one doctest). Public chart rendering/export,
+chart compilation, data transactions, wire schema and binding runtimes remain unimplemented.
+No complete canonical FIX/PERF case or G1–G4 gate is passed by the capability examples.
 
-**Open dependency risks:** the WP-01 cargo-deny report contains six unmaintained
-transitive packages; no advisory was ignored and the scan was not repeated in WP-02.
-Cargo still reports a future compiler
-incompatibility in `block` 0.1.6. ADR-001 and the completion evidence retain the exact
-findings for upstream follow-up in WP-03 and release disposition in WP-23. Hosted CI,
-Linux execution and native visual/runtime capabilities remain unverified.
+**Open dependency risks:** the refreshed advisory scan still fails on six unmaintained
+packages; no advisory is ignored. `block` 0.1.6 retains its future-compiler warning.
+WP-08 must reassess font/shaping maintenance before promoting the candidate dependencies;
+WP-23 owns release disposition. Hosted CI, Linux execution and full screen-reader support
+remain unverified. Native accessibility hooks are observed, not product certification.
 
-**Next:** assign WP-03's native/font/export capability spike using the minimal scene and
-service contracts. WP-04 data work also has its prerequisites satisfied. This task stops
-at WP-02. Licensing/public registry names remain release preparation decisions
-in ADR-010; they do not prevent local work.
+**Next:** WP-04 data work is READY. WP-07/08 now satisfy the WP-03 prerequisite but still
+require WP-06. This assignment stops at WP-03. Licensing/public registry names remain
+release preparation decisions in ADR-010; they do not prevent local work.
 
 ## Work packages
 
@@ -42,14 +39,14 @@ The final column records outstanding prerequisites/blockers and the next action.
 
 | Package | State | Owner | Commit/PR | Requirement IDs | Evidence | Open work / next action |
 | --- | --- | --- | --- | --- | --- | --- |
-| WP-01 — Project bootstrap and scope ledger | DONE | Unassigned | `dfe38e8` | SCP-01, SCP-02, SCP-03, ARC-04, QLT-05 | [Completion evidence](evidence/wp-01-completion-2026-09-06.md); [ADR-001](adr/001-host-dependency-and-toolchain.md) | Bootstrap acceptance complete; native capabilities and dependency maintenance follow-up remain WP-03/WP-23 work. |
-| WP-02 — Workspace, diagnostics and minimal contracts | DONE | Unassigned | `dfe38e8` + uncommitted WP-02 slice | ARC-01, ARC-02, ARC-03, SCN-01, BND-01, QLT-01, QLT-05 | [Completion evidence](evidence/wp-02-completion-2026-09-06.md); [ADR-002](adr/002-minimal-core-contracts.md) | Minimal contracts accepted; full scene, data, wire/binding and diagnostic aggregation remain later work. |
-| WP-03 — Native, font and export capability spike | READY | Unassigned | — | ARC-04, LAY-02, LAY-04, SCN-03, GPU-01, GPU-03, EXP-01, EXP-02, QLT-03, QLT-04 | None | WP-02 prerequisite satisfied; implement and inspect actual native/font/export proofs and benchmark protocol. |
+| WP-01 — Project bootstrap and scope ledger | DONE | Unassigned | `dfe38e8` | SCP-01, SCP-02, SCP-03, ARC-04, QLT-05 | [Completion evidence](evidence/wp-01-completion-2026-09-06.md); [ADR-001](adr/001-host-dependency-and-toolchain.md) | Bootstrap accepted; WP-03 capability follow-up complete; dependency maintenance/release disposition remain WP-08/23. |
+| WP-02 — Workspace, diagnostics and minimal contracts | DONE | Unassigned | `435e127` | ARC-01, ARC-02, ARC-03, SCN-01, BND-01, QLT-01, QLT-05 | [Completion evidence](evidence/wp-02-completion-2026-09-06.md); [ADR-002](adr/002-minimal-core-contracts.md) | Minimal contracts accepted; full scene, data, wire/binding and diagnostic aggregation remain later work. |
+| WP-03 — Native, font and export capability spike | DONE | Unassigned | `435e127` + uncommitted WP-03 slice | ARC-04, LAY-02, LAY-04, SCN-03, GPU-01, GPU-03, EXP-01, EXP-02, QLT-03, QLT-04 | [Completion evidence](evidence/wp-03-completion-2026-09-06.md); [ADR-003](adr/003-font-and-renderer-capability-route.md); [ADR-008](adr/008-benchmark-protocol.md) | Actual proof artifacts, native lifecycle/hooks and starting profile inspected; public integration/full fixtures remain later packages. |
 | WP-04 — Immutable data, schemas and transactions | READY | Unassigned | — | DAT-01, DAT-02, DAT-03, DAT-04, DAT-05, DAT-06, ARC-03, QLT-01 | None | WP-02 prerequisite satisfied; implement snapshots, schemas, stable keys and atomic transactions. |
 | WP-05 — Grammar compiler and minimal prepared scene | NOT STARTED | Unassigned | — | GRA-01, GRA-02, GRA-03, GRA-04, GRA-06, GRA-08, SCN-01, SCN-02, DAT-06 | None | Satisfy prerequisites: WP-02, WP-04. |
 | WP-06 — Foundational scales, ticks and layout | NOT STARTED | Unassigned | — | SCL-01, SCL-02, SCL-04, SCL-05, LAY-01, LAY-02, DAT-05 | None | Satisfy prerequisites: WP-05. |
-| WP-07 — Working standalone GPUI vertical slice | NOT STARTED | Unassigned | — | GPU-01, GPU-02, SCN-03, SCN-04, INT-01, INT-03, QLT-01 | None | Satisfy prerequisites: WP-03, WP-06. |
-| WP-08 — Headless export and snapshot foundation | NOT STARTED | Unassigned | — | ARC-02, EXP-01, EXP-02, EXP-03, EXP-04, LAY-04, SCN-03 | None | Satisfy prerequisites: WP-03, WP-06. |
+| WP-07 — Working standalone GPUI vertical slice | NOT STARTED | Unassigned | — | GPU-01, GPU-02, SCN-03, SCN-04, INT-01, INT-03, QLT-01 | None | WP-03 satisfied; still requires WP-06. |
+| WP-08 — Headless export and snapshot foundation | NOT STARTED | Unassigned | — | ARC-02, EXP-01, EXP-02, EXP-03, EXP-04, LAY-04, SCN-03 | None | WP-03 satisfied; still requires WP-06; reassess font/shaping maintenance at production promotion. |
 | WP-09 — Portable schema and executable binding proofs | NOT STARTED | Unassigned | — | BND-01, BND-02, BND-03, BND-04, ARC-02, DAT-01, QLT-01 | None | Satisfy prerequisites: WP-04, WP-05, WP-06, WP-07, WP-08. |
 | WP-10 — Complete statistical and position semantics | NOT STARTED | Unassigned | — | GRA-03, GRA-04, GRA-05, GRA-08, DAT-05, DAT-06, QLT-02 | None | Satisfy prerequisites: WP-09. |
 | WP-11 — Required scale and geometry families | NOT STARTED | Unassigned | — | GRA-06, SCL-01, SCL-02, SCL-03, SCL-04, SCL-05, SCN-01, SCN-03, DAT-05 | None | Satisfy prerequisites: WP-10, WP-07. |
@@ -70,7 +67,7 @@ The final column records outstanding prerequisites/blockers and the next action.
 
 | Gate | State | Evidence required next |
 | --- | --- | --- |
-| G0 | NOT PASSED | Dependency identities/builds and minimal contracts established; actual primitive/font/export proofs and benchmark protocol still required. |
+| G0 | PASSED — architecture/capability scope | WP-01/02/03 evidence and ADRs establish the initial macOS route and starting protocol; this does not pass full requirements, FIX/PERF or release support. |
 | G1 | NOT PASSED | Real native chart, headless output, atomic updates, Python/WASM runtime fixtures. |
 | G2 | NOT PASSED | Complete alpha grammar/publication/theme/extension evidence. |
 | G3 | NOT PASSED | Interaction, corrections/retention, scheduling and coherent live exports. |

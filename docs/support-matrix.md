@@ -2,22 +2,22 @@
 
 Updated: 6 September 2026. Intended support is not verified product support.
 Current foundation evidence is recorded in the
-[WP-02 completion report](evidence/wp-02-completion-2026-09-06.md). Dependency/build
+[WP-03 completion report](evidence/wp-03-completion-2026-09-06.md). Dependency/build
 selection remains in the [WP-01 report](evidence/wp-01-completion-2026-09-06.md), with
 earlier infrastructure checks in the [bootstrap report](evidence/bootstrap-2026-09-06.md).
 
 | Surface | Required scope | Current implementation/evidence | Open gate |
 | --- | --- | --- | --- |
 | Portable Rust core | Synchronous host-independent semantics on macOS/Linux | Minimal contracts implemented; 21 integration tests and 1 Rustdoc example pass on macOS; chart/data/statistical semantics remain unimplemented | WP-04 onward; G1/G4 |
-| macOS Apple Silicon GPUI | First desktop host | Pinned `gpui-pre` / platform 0.3.3; standalone host example compiles and links on macOS 26.5.2 arm64; no chart/native visual evidence | WP-03/07/21 |
+| macOS Apple Silicon GPUI | First desktop host | Pinned GPUI/platform 0.3.3; actual vector capability fixture inspected on macOS 26.5.2 arm64 at scale 2; input, remount, resize and teardown exercised; public chart renderer pending | WP-07/21 |
 | Linux headless core/export | Core tests and headless use | Target dependency isolation verified; CI configured; no Linux execution recorded locally | WP-08/21 |
 | Browser WASM target | Core compilation; minimal runtime proof | Implemented minimal core compiles for `wasm32-unknown-unknown`; target graph isolation verified; no runtime binding | WP-09 |
-| Optional Kit | Compatible theme/control adapter | Kit 0.6.0 host example compiles and links against the same GPUI identity; no chart theme/control implementation | WP-03/13 |
-| SVG/PDF/PNG | Vector marks, explicit fonts/dimensions and publication output | Export shell only; dependencies not selected | WP-03/08/13 |
+| Optional Kit | Compatible theme/control adapter | Kit 0.6.0 input/buttons exercised against the same GPUI identity; optional dependency preserved; chart theme/control adapter pending | WP-13/17 |
+| SVG/PDF/PNG | Vector marks, explicit fonts/dimensions and publication output | Actual text/outline SVG/PDF and 300/600 DPI PNG inspected; explicit embedded/subset fonts, physical sizes and zero PDF image objects verified; candidate dependencies dev-only | WP-08/13 |
 | Python headless | Minimal batch/correction/action/export equivalence | Rust shell only; no extension or packaging | WP-09 |
 | WASM scene/SVG | Minimal actual runtime and ownership proof | Rust shell only; no exported adapter | WP-09 |
-| Accessibility | Keyboard equivalence plus verified platform exposure/data alternative | No implementation or platform evidence | WP-03/17/21 |
-| Streaming/performance | FIX-08–11/14, PERF-01–05 | No implementation or measurement | WP-18–22 |
+| Accessibility | Keyboard equivalence plus verified platform exposure/data alternative | Native input/button/status/image hooks observed and keyboard actions exercised; no screen-reader/data-alternative certification | WP-17/21 |
+| Streaming/performance | FIX-08–11/14, PERF-01–05 | ADR-008 protocol and small static native/export starting profile; no streaming implementation or PERF case executed | WP-18–22 |
 | Other desktop platforms | Optional expansion after evidence | Not declared supported | Separate capability work |
 | Wheels/viewer/notebooks/browser product | Future distribution/host work | Out of current release scope | Separate plan |
 
@@ -26,23 +26,26 @@ earlier infrastructure checks in the [bootstrap report](evidence/bootstrap-2026-
 Current defaults include core/export and the standalone GPUI adapter shell. Kit is opt-in
 via the gallery's `kit` feature; binding shells require explicit package selection.
 ADR-001 records exact host dependencies; actual host examples establish linked GPUI/Kit
-type compatibility only. The macOS `check` task builds both variants; Linux tasks compile
-and test core/export. No renderer, theme, binding or other platform capability follows
-from these builds. Avoid one cross-target `--all-features` success claim.
+type compatibility. The macOS `check` task builds both variants and builds/lints the
+Kit capability example; Linux tasks compile and test core/export. Actual native and
+publication proof artifacts are separate WP-03 evidence. Avoid one cross-target
+`--all-features` success claim.
 
 The repository checker now resolves three explicit target graphs for core/export host
 isolation. WP-02 also verifies finite geometry, bounded immutable scenes and synchronous
 services with deterministic test doubles. Full primitive/font/export and binding parity
-cannot be inferred from these foundation tests.
+cannot be inferred from foundation tests or the small capability fixture.
 
 The dependency advisory check currently fails on six unmaintained transitive packages;
-see the WP-01 report. Native future-compiler compatibility also remains open for `block`
+see the refreshed WP-03 report. Native future-compiler compatibility also remains open for `block`
 0.1.6. These are tracked release risks, not failed chart fixture results.
 
-## Capability evidence to add in WP-03
+## Capability evidence and remaining paths
 
-Record GPUI, SVG, PDF and PNG separately for curved/dashed paths, caps/joins, clips,
-gradients, points, rich/rotated text, glyph coverage, font embedding/outline policy,
-physical output size, high DPI, overlays/input and native accessibility. Each cell
-needs artifact/command/revision evidence or a concrete unsupported/blocked explanation.
-The current status for every such capability is UNVERIFIED.
+[ADR-003's capability matrix](adr/003-font-and-renderer-capability-route.md) records
+native and export results for the fixed primitives, typography, clips, gradients,
+dimensions and controls, with concrete paths for unsupported capabilities.
+[The completion report](evidence/wp-03-completion-2026-09-06.md) links actual artifacts,
+inspection and commands. General rendering/diagnostics, destination measurement bridges,
+all themes, multi-panel/tight bounds, live snapshots and full platform accessibility
+remain unverified until their owning packages implement and exercise them.
