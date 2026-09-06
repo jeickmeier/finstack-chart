@@ -2,6 +2,7 @@
 [tools]
 rust = { version = "1.97.1", profile = "minimal", components = "rustfmt,clippy", targets = "wasm32-unknown-unknown" }
 python = "3.14.6"
+"cargo:cargo-deny" = "0.19.8"
 
 [task_config]
 shell = "bash -c"
@@ -15,14 +16,28 @@ description = "Check repository, formatting, compilation, lint, docs and portabl
 run = """
 set -euo pipefail
 python3 scripts/check_repository.py
+cargo deny --locked check licenses sources
 cargo fmt --all -- --check
-cargo check --workspace --all-targets --locked
-cargo check -p chart-gallery --features kit --locked
-cargo clippy --workspace --all-targets --locked -- -D warnings
-RUSTDOCFLAGS="-D warnings" cargo doc --workspace --no-deps --locked
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  packages=(--workspace)
+  cargo build -p chart-gallery --example host_bootstrap --locked
+  cargo build -p chart-gallery --example host_bootstrap --features kit --locked
+else
+  packages=(-p chart-core -p chart-export)
+fi
+cargo check "${packages[@]}" --all-targets --locked
+cargo clippy "${packages[@]}" --all-targets --locked -- -D warnings
+RUSTDOCFLAGS="-D warnings" cargo doc "${packages[@]}" --no-deps --locked
 cargo check -p chart-core --target wasm32-unknown-unknown --locked
 """
 
 [tasks.test]
-description = "Run workspace tests (no semantic tests exist at bootstrap)"
-run = "cargo test --workspace --locked"
+description = "Run macOS workspace or headless core/export tests (no chart semantic tests yet)"
+run = """
+set -euo pipefail
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  cargo test --workspace --locked
+else
+  cargo test -p chart-core -p chart-export --locked
+fi
+"""

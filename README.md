@@ -3,8 +3,9 @@
 Rust-native grammar-of-graphics project with a portable core, headless publication export,
 a standalone GPUI host and optional Kit integration.
 
-**Status: infrastructure scaffold. No chart library, native gallery, exporter or language
-binding is implemented. No G0–G4 release gate has passed.**
+**Status: WP-01 bootstrap complete, including pinned GPUI/Kit build proofs. No chart
+library, native chart gallery, exporter or language binding is implemented. No G0–G4
+release gate has passed.**
 
 ## Start here
 
@@ -20,9 +21,10 @@ research. It does not override the specification or select dependency versions.
 ## Development
 
 Use mise 2026.8.3 or newer. [mise.toml](mise.toml) manages Rust 1.97.1, rustfmt, Clippy,
-the `wasm32-unknown-unknown` target and Python 3.14.6 (standard library only).
-Cargo uses the checked-in workspace lockfile. There are currently no third-party
-Rust dependencies.
+the `wasm32-unknown-unknown` target, Python 3.14.6 and cargo-deny 0.19.8.
+Cargo uses the checked-in workspace lockfile. [ADR-001](docs/adr/001-host-dependency-and-toolchain.md)
+records GPUI 0.3.3 / Kit 0.6.0 package identities, features and the verified macOS/Xcode
+environment. Native development requires a full selected Xcode installation.
 
 ```sh
 mise trust
@@ -33,15 +35,21 @@ mise run test
 ```
 
 The three development tasks are `fmt` (format Rust), `check` (repository boundaries,
-local file links, formatting, compilation, Clippy, rustdoc and core WASM compilation),
-and `test` (workspace tests). Tests currently number zero; these checks do not prove
+local file links, dependency licenses/sources, formatting, compilation, Clippy, rustdoc
+and core WASM compilation), and `test` (macOS workspace or Linux core/export tests).
+Tests currently number zero; these checks do not prove
 chart semantics. Use `mise exec -- cargo ...` for one-off Cargo commands, or activate
 mise in your shell for editor and terminal tool selection.
 
-Desktop, export, binding and release acceptance runners are not implemented; add tasks
-when those capabilities exist. `mise exec -- cargo run -p chart-gallery` exits 2.
-CI configuration covers macOS and Linux infrastructure plus portable compilation;
-native visual/accessibility checks and real binding execution remain future work.
+The macOS `check` task also builds the standalone and Kit `host_bootstrap` examples.
+These link real host dependencies but do not prove chart behavior or visual fidelity.
+`mise exec -- cargo run -p chart-gallery` still exits 2. See ADR-001 for the separate
+host-example commands. CI checks native builds on macOS and headless packages on Linux;
+hosted CI, native visual/accessibility checks and real binding execution remain unverified.
+
+Run `mise exec -- cargo deny --locked check advisories` when reviewing dependencies.
+The current scan fails on six unmaintained transitive packages; no advisory is ignored.
+Details and the remaining release risks are in the [WP-01 evidence](docs/evidence/wp-01-completion-2026-09-06.md).
 
 ## Packages and contributions
 

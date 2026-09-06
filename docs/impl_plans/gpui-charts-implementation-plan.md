@@ -89,6 +89,10 @@ These decisions need concrete recorded outcomes in the stated packages. Default 
 
 Only unresolved decisions that materially change a user requirement or incompatible application integration need product-owner input. Choose and record ordinary implementation details within this contract.
 
+WP-01 selected and built the exact registry identities recorded in
+[ADR-001](../adr/001-host-dependency-and-toolchain.md). The dependency examples are part
+of the macOS `check` task; capability proofs and G0 remain open.
+
 ## 5. Work packages
 
 Every package below includes requirements, prerequisites, deliverables, and evidence. Requirements remain incomplete until their full scope is implemented even if an early package proves a subset.

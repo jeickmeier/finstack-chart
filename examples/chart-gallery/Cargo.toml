@@ -13,9 +13,12 @@ workspace = true
 chart-core.workspace = true
 chart-export.workspace = true
 gpui-charts.workspace = true
+gpui.workspace = true
+gpui_platform.workspace = true
+gpui-kit = { workspace = true, optional = true }
 
 gpui-charts-kit = { workspace = true, optional = true }
 
 [features]
 default = []
-kit = ["dep:gpui-charts-kit"]
+kit = ["dep:gpui-charts-kit", "dep:gpui-kit"]

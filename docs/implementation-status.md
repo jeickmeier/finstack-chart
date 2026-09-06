@@ -1,25 +1,34 @@
 # Implementation status
 
 Updated: 6 September 2026. Specification version: 0.1.0.
-Starting commit: `19f4a27`; bootstrap changes are uncommitted.
+Bootstrap committed at `fbc9782` (starting commit: `19f4a27`).
+WP-01 completion: `fbc9782` plus uncommitted dependency, build-proof and documentation
+changes, preserving the preceding review updates.
 
 ## Current handoff
 
-The user authorized infrastructure scaffolding and AI setup, excluding library
-implementation. Development now uses `mise.toml` for tool versions and the three
-tasks `fmt`, `check` and `test`. INF-01–INF-05 are provisioned; validation is recorded in the
-[evidence report](evidence/bootstrap-2026-09-06.md). No chart APIs, exporters, native
-rendering, bindings, semantic fixtures or benchmarks are implemented.
+The user assigned completion of WP-01 after the infrastructure bootstrap and review.
+**WP-01 is DONE:** ADR-001 selects exact registry GPUI/platform 0.3.3 and Kit 0.6.0;
+standalone and Kit host examples compile and link with one GPUI identity. Core/export
+remain isolated and Kit remains optional. The [completion evidence](evidence/wp-01-completion-2026-09-06.md)
+records builds, graph checks, licenses/sources, Clippy, rustdoc and core WASM compilation.
+Workspace tests run but contain zero semantic tests. INF-01–INF-05's earlier acceptance
+remains recorded in the [bootstrap report](evidence/bootstrap-2026-09-06.md).
 
-WP-01 is partial because exact GPUI/Kit dependency selection remains open. WP-02 has
-only its infrastructure subset prepared under this explicit assignment; its behavioral
-work remains gated on WP-01. The early scaffolding does not waive that prerequisite.
-All other work packages remain NOT STARTED. No G0–G4 gate is passed.
+WP-02 has its infrastructure subset prepared and its WP-01 prerequisite now satisfied;
+minimal contracts and meaningful diagnostic tests remain unimplemented. All later packages
+remain NOT STARTED. No chart APIs, exporters, chart rendering, binding runtimes, semantic
+fixtures or benchmarks are implemented. No G0–G4 gate is passed.
 
-**Next:** finish ADR-001 with a verified host-compatible source pair and reproducible
-build setup, then complete WP-02's minimal contracts and diagnostic evidence. Library
-implementation requires a subsequent task assignment. Licensing/public registry names
-remain release preparation decisions in ADR-010; they do not prevent local work.
+**Open dependency risks:** cargo-deny reports six unmaintained transitive packages;
+the advisory check fails with no ignored IDs. Cargo also reports a future compiler
+incompatibility in `block` 0.1.6. ADR-001 and the completion evidence retain the exact
+findings for upstream follow-up in WP-03 and release disposition in WP-23. Hosted CI,
+Linux execution and native visual/runtime capabilities remain unverified.
+
+**Next:** assign and complete WP-02's minimal contracts and diagnostic evidence. This
+task stops at WP-01. Licensing/public registry names remain release preparation decisions
+in ADR-010; they do not prevent local work.
 
 ## Work packages
 
@@ -29,8 +38,8 @@ The final column records outstanding prerequisites/blockers and the next action.
 
 | Package | State | Owner | Commit/PR | Requirement IDs | Evidence | Open work / next action |
 | --- | --- | --- | --- | --- | --- | --- |
-| WP-01 — Project bootstrap and scope ledger | IN PROGRESS | Unassigned | — | SCP-01, SCP-02, SCP-03, ARC-04, QLT-05 | [Infrastructure evidence](evidence/bootstrap-2026-09-06.md); partial only | Finish exact GPUI/Kit dependency selection (ADR-001). |
-| WP-02 — Workspace, diagnostics and minimal contracts | IN PROGRESS | Unassigned | — | ARC-01, ARC-02, ARC-03, SCN-01, BND-01, QLT-01, QLT-05 | [Infrastructure evidence](evidence/bootstrap-2026-09-06.md); partial only | After WP-01, implement minimal contracts and meaningful diagnostics tests. |
+| WP-01 — Project bootstrap and scope ledger | DONE | Unassigned | `fbc9782` + uncommitted WP-01 slice | SCP-01, SCP-02, SCP-03, ARC-04, QLT-05 | [Completion evidence](evidence/wp-01-completion-2026-09-06.md); [ADR-001](adr/001-host-dependency-and-toolchain.md) | Bootstrap acceptance complete; native capabilities and dependency maintenance follow-up remain WP-03/WP-23 work. |
+| WP-02 — Workspace, diagnostics and minimal contracts | IN PROGRESS | Unassigned | `fbc9782` (infrastructure only) | ARC-01, ARC-02, ARC-03, SCN-01, BND-01, QLT-01, QLT-05 | [Infrastructure evidence](evidence/bootstrap-2026-09-06.md); partial only | WP-01 prerequisite satisfied; next assignment should implement minimal contracts and meaningful diagnostics tests. |
 | WP-03 — Native, font and export capability spike | NOT STARTED | Unassigned | — | ARC-04, LAY-02, LAY-04, SCN-03, GPU-01, GPU-03, EXP-01, EXP-02, QLT-03, QLT-04 | None | Satisfy prerequisites: WP-02. |
 | WP-04 — Immutable data, schemas and transactions | NOT STARTED | Unassigned | — | DAT-01, DAT-02, DAT-03, DAT-04, DAT-05, DAT-06, ARC-03, QLT-01 | None | Satisfy prerequisites: WP-02. |
 | WP-05 — Grammar compiler and minimal prepared scene | NOT STARTED | Unassigned | — | GRA-01, GRA-02, GRA-03, GRA-04, GRA-06, GRA-08, SCN-01, SCN-02, DAT-06 | None | Satisfy prerequisites: WP-02, WP-04. |
@@ -57,7 +66,7 @@ The final column records outstanding prerequisites/blockers and the next action.
 
 | Gate | State | Evidence required next |
 | --- | --- | --- |
-| G0 | NOT PASSED | Exact dependencies, minimal contracts, actual primitive/font/export proofs and benchmark protocol. |
+| G0 | NOT PASSED | Dependency identities/builds established; minimal contracts, actual primitive/font/export proofs and benchmark protocol still required. |
 | G1 | NOT PASSED | Real native chart, headless output, atomic updates, Python/WASM runtime fixtures. |
 | G2 | NOT PASSED | Complete alpha grammar/publication/theme/extension evidence. |
 | G3 | NOT PASSED | Interaction, corrections/retention, scheduling and coherent live exports. |
@@ -65,7 +74,8 @@ The final column records outstanding prerequisites/blockers and the next action.
 
 ## Evidence updates
 
-For each completed slice record starting/result revision or uncommitted state, assigned
+Before ending every task, including reviews and partial or blocked slices, update this
+ledger with its outcome and evidence. Record starting/result revision or uncommitted state, assigned
 scope/IDs, exact command and working directory, date, OS/architecture/toolchain,
 result/counts, retained artifact paths, limitations and next concrete action. Keep
 failed or blocked requirements open. Update the [support matrix](support-matrix.md)

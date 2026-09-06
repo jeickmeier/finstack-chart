@@ -1,16 +1,17 @@
 # Support and evidence matrix
 
 Updated: 6 September 2026. Intended support is not verified product support.
-Current infrastructure evidence is recorded in the
-[bootstrap report](evidence/bootstrap-2026-09-06.md).
+Current dependency/build evidence is recorded in the
+[WP-01 completion report](evidence/wp-01-completion-2026-09-06.md); earlier infrastructure
+checks remain in the [bootstrap report](evidence/bootstrap-2026-09-06.md).
 
 | Surface | Required scope | Current implementation/evidence | Open gate |
 | --- | --- | --- | --- |
 | Portable Rust core | Synchronous host-independent semantics on macOS/Linux | Empty documented crate; infrastructure checks only | WP-02 onward; G1/G4 |
-| macOS Apple Silicon GPUI | First desktop host | Adapter shell; no GPUI dependency selected or native rendering | ADR-001, WP-03/07/21 |
+| macOS Apple Silicon GPUI | First desktop host | Pinned `gpui-pre` / platform 0.3.3; standalone host example compiles and links on macOS 26.5.2 arm64; no chart/native visual evidence | WP-03/07/21 |
 | Linux headless core/export | Core tests and headless use | CI configured; no Linux execution recorded locally | WP-08/21 |
-| Browser WASM target | Core compilation; minimal runtime proof | Compilation check provisioned; no runtime binding | WP-09 |
-| Optional Kit | Compatible theme/control adapter | Optional gallery feature plus crate shell; no Kit dependency | ADR-001, WP-03/13 |
+| Browser WASM target | Core compilation; minimal runtime proof | Empty core compiles for `wasm32-unknown-unknown`; no runtime binding | WP-09 |
+| Optional Kit | Compatible theme/control adapter | Kit 0.6.0 host example compiles and links against the same GPUI identity; no chart theme/control implementation | WP-03/13 |
 | SVG/PDF/PNG | Vector marks, explicit fonts/dimensions and publication output | Export shell only; dependencies not selected | WP-03/08/13 |
 | Python headless | Minimal batch/correction/action/export equivalence | Rust shell only; no extension or packaging | WP-09 |
 | WASM scene/SVG | Minimal actual runtime and ownership proof | Rust shell only; no exported adapter | WP-09 |
@@ -21,11 +22,16 @@ Current infrastructure evidence is recorded in the
 
 ## Feature checks
 
-Current defaults include core/export/standalone GPUI package shells. Kit is opt-in via
-the gallery's `kit` feature; binding shells require explicit package selection. No host
-packages are third-party dependencies yet. Shell compilation cannot establish renderer,
-Kit or binding compatibility. Introduce named valid target/feature checks with each real
-adapter; avoid one cross-target `--all-features` success claim.
+Current defaults include core/export and the standalone GPUI adapter shell. Kit is opt-in
+via the gallery's `kit` feature; binding shells require explicit package selection.
+ADR-001 records exact host dependencies; actual host examples establish linked GPUI/Kit
+type compatibility only. The macOS `check` task builds both variants; Linux tasks compile
+and test core/export. No renderer, theme, binding or other platform capability follows
+from these builds. Avoid one cross-target `--all-features` success claim.
+
+The dependency advisory check currently fails on six unmaintained transitive packages;
+see the WP-01 report. Native future-compiler compatibility also remains open for `block`
+0.1.6. These are tracked release risks, not failed chart fixture results.
 
 ## Capability evidence to add in WP-03
 

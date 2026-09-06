@@ -22,8 +22,8 @@ versions are not adopted dependencies.
 ## Build, Test, and Development Commands
 
 Use `mise install` to provision the tools in `mise.toml`. Run `mise run fmt` to format,
-`mise run check` for repository/build/lint/docs/WASM checks, and `mise run test` for
-workspace tests. Run a selected future core test with
+`mise run check` for repository/dependency/build/lint/docs/WASM checks, and `mise run test`
+for macOS workspace or Linux core/export tests. Run a selected future core test with
 `mise exec -- cargo test -p chart-core TEST_FILTER --locked`; there are currently no
 semantic tests. Use the committed lockfile and inherited workspace lints. Rustfmt
 enforces formatting; Clippy and rustdoc warnings fail checks. Add capability tasks only
@@ -40,8 +40,10 @@ Record commands, environment, results, artifact paths and limitations in the led
 ## Handoffs and Review
 
 Preserve unrelated edits and own one reviewable work-package slice. Select the earliest
-ready task only within the user's assignment; follow prerequisites. Update the ledger
-with unresolved requirements and the next action. Use the PR template's contract and
+ready task only within the user's assignment; follow prerequisites. Before ending every
+task, update `docs/implementation-status.md` with the outcome, revision, evidence,
+unresolved requirements and next action, including partial or blocked work and reviews.
+Use the PR template's contract and
 evidence fields; the single initial commit establishes no strict message convention.
 Use [local skills](docs/ai-development.md) when their workflow applies. Keep rules and
 skills concise and link the authoritative contracts instead of copying them.

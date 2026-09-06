@@ -1,0 +1,37 @@
+# WP-01 dependency review policy. See ADR-001 for scope and evidence.
+[graph]
+targets = ["aarch64-apple-darwin"]
+features = ["chart-gallery/kit"]
+
+[advisories]
+ignore = []
+
+[licenses]
+allow = [
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "MIT",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "0BSD",
+    "ISC",
+    "Zlib",
+    "BSL-1.0",
+    "CC0-1.0",
+    "Unicode-3.0",
+    "CDLA-Permissive-2.0",
+    "bzip2-1.0.6",
+]
+exceptions = [
+    { crate = "cbindgen@0.28.0", allow = ["MPL-2.0"] },
+    { crate = "option-ext@0.2.0", allow = ["MPL-2.0"] },
+]
+
+# ADR-010 leaves the license of this unpublished workspace undecided.
+[licenses.private]
+ignore = true
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]

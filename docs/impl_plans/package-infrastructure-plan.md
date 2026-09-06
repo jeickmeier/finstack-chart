@@ -4,6 +4,12 @@ Date: 6 September 2026. Scope: repository/package/AI infrastructure only.
 Contract version: 0.1.0. This supplements the [library implementation plan](gpui-charts-implementation-plan.md)
 without changing [normative requirements](../spec/gpui-charts-specification.md).
 
+This plan records the original infrastructure-only bootstrap. WP-01 subsequently
+selected real native dependencies and added linked host examples; current pins, tooling,
+platform commands and remaining risks are in [ADR-001](../adr/001-host-dependency-and-toolchain.md)
+and the [status ledger](../implementation-status.md). Statements below about absent
+third-party packages and unfinished WP-01 describe that earlier bootstrap boundary.
+
 ## Outcome and scope boundary
 
 Prepare a reproducible workspace that makes ownership, required evidence and the next

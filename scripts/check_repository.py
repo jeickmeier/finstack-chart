@@ -55,9 +55,30 @@ def main():
                 continue
             seen.add(key)
             dep_name = packages[key]["name"]
-            if dep_name in forbidden:
+            if dep_name in forbidden or dep_name.startswith("gpui-pre"):
                 errors.append(f"{package['name']}: forbidden transitive host dependency {dep_name}")
             pending.extend(nodes[key]["dependencies"])
+
+    # ARC-04: the Kit and standalone consumers must resolve one GPUI identity.
+    gpui_packages = [p for p in packages.values() if p["name"] in {"gpui", "gpui-pre"}]
+    if len(gpui_packages) != 1 or gpui_packages[0]["name"] != "gpui-pre":
+        errors.append("Expected exactly one gpui-pre identity; reconcile ADR-001.")
+    for package in members:
+        for dep in package["dependencies"]:
+            if dep["name"] in {"gpui-pre", "gpui-pre-platform", "gpui-kit"}:
+                if not dep["req"].startswith("="):
+                    errors.append(f"{package['name']}: host dependency {dep['name']} needs an exact pin.")
+    standalone = next(p for p in members if p["name"] == "gpui-charts")
+    seen = set()
+    pending = list(nodes[standalone["id"]]["dependencies"])
+    while pending:
+        key = pending.pop()
+        if key in seen:
+            continue
+        seen.add(key)
+        if packages[key]["name"] in {"gpui-kit", "gpui-component", "gpui-charts-kit"}:
+            errors.append("Standalone GPUI must not require Kit.")
+        pending.extend(nodes[key]["dependencies"])
 
     documents = [ROOT / "README.md", ROOT / "AGENTS.md"]
     documents += list((ROOT / "docs").rglob("*.md"))
@@ -77,7 +98,7 @@ def main():
                 errors.append(f"{document.relative_to(ROOT)}: broken local link {target}")
     if errors:
         raise SystemExit("\n".join(errors))
-    print("PASS: workspace edges, resolved host isolation and local Markdown file links.")
+    print("PASS: workspace edges, host isolation, single pinned GPUI identity, optional Kit and local Markdown file links.")
     print("Scope: default resolved features; external links/anchors and unlisted host packages need review.")
 
 
