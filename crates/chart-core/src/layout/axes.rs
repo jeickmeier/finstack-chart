@@ -1,6 +1,7 @@
 use super::{project, *};
 use crate::grammar::{DomainContributions, PreparedChart, ValueSpace};
 use crate::scales::*;
+use crate::state::AxisWindow;
 use crate::{ChartResult, DiagnosticCode, Rect, ScaleId};
 
 fn resolve_axis_inner(
@@ -12,6 +13,8 @@ fn resolve_axis_inner(
     if let Some(f) = &spec.number_format {
         f.validate()?;
     }
+    let windows = chart.state().axis_windows();
+    let window = windows.get(&spec.id);
     if let AxisScale::Secondary {
         source,
         factor,
@@ -22,6 +25,7 @@ fn resolve_axis_inner(
             || factor == 0.
             || !offset.is_finite()
             || spec.viewport.is_some()
+            || window.is_some()
             || spec.range.is_some()
             || spec.outside != OutsidePolicy::Extend
         {
@@ -133,9 +137,33 @@ fn resolve_axis_inner(
     } else {
         None
     };
-    let viewport = spec
-        .viewport
-        .or(inherited.map(|(a, b)| Bounds::new(a, b)).transpose()?);
+    let viewport = match window {
+        Some(AxisWindow::Numeric(a, b))
+            if matches!(space, ValueSpace::Data | ValueSpace::Transformed { .. }) =>
+        {
+            Some(Bounds::new(*a, *b)?)
+        }
+        Some(AxisWindow::Timestamp(..)) if matches!(space, ValueSpace::Timestamp { .. }) => None,
+        Some(AxisWindow::Category { .. }) if matches!(space, ValueSpace::Categorical { .. }) => {
+            None
+        }
+        Some(_) => {
+            return Err(error(
+                DiagnosticCode::SchemaConflict,
+                "Navigation window does not match this axis value space.",
+            ));
+        }
+        None => spec
+            .viewport
+            .or(inherited.map(|(a, b)| Bounds::new(a, b)).transpose()?),
+    };
+    let time_window = match window {
+        Some(AxisWindow::Timestamp(start, end)) => Some(TimeBounds {
+            start: *start,
+            end: *end,
+        }),
+        _ => None,
+    };
     let family = match (&spec.scale, &space) {
         (AxisScale::Auto, ValueSpace::Categorical { .. }) => {
             AxisScale::Band(BandOptions::default())
@@ -207,10 +235,13 @@ fn resolve_axis_inner(
                     "Point scales use category domains without numeric viewport policies.",
                 ));
             }
-            let scale = PointScale::resolve(categories, &options, range)?;
+            let mut scale = PointScale::resolve(categories, &options, range)?;
+            if let Some(AxisWindow::Category { first, last }) = window {
+                scale = scale.with_window(first, last)?;
+            }
             if spec.visible {
-                let stride = scale.domain().len().div_ceil(r.max_ticks).max(1);
-                for label in scale.domain().iter().step_by(stride) {
+                let stride = scale.visible_domain().len().div_ceil(r.max_ticks).max(1);
+                for label in scale.visible_domain().iter().step_by(stride) {
                     if let Some(position) = scale.center(label)? {
                         ticks.push(GuideTick {
                             position,
@@ -242,7 +273,7 @@ fn resolve_axis_inner(
                     })
                 })
                 .transpose()?;
-            let scale = SessionScale::new(calendar, range, view, spec.outside)?;
+            let scale = SessionScale::new(calendar, range, time_window.or(view), spec.outside)?;
             if spec.visible {
                 for t in scale.ticks(r.target_ticks, r.max_ticks)? {
                     if let Some(position) = scale.map(t.value)? {
@@ -262,10 +293,13 @@ fn resolve_axis_inner(
                     "Band scales use explicit category domains; numeric viewport/clamp/omit policies are unsupported.",
                 ));
             }
-            let scale = BandScale::resolve(categories, &options, range)?;
+            let mut scale = BandScale::resolve(categories, &options, range)?;
+            if let Some(AxisWindow::Category { first, last }) = window {
+                scale = scale.with_window(first, last)?;
+            }
             if spec.visible {
-                let stride = scale.domain().len().div_ceil(r.max_ticks).max(1);
-                for label in scale.domain().iter().step_by(stride) {
+                let stride = scale.visible_domain().len().div_ceil(r.max_ticks).max(1);
+                for label in scale.visible_domain().iter().step_by(stride) {
                     if let Some(position) = scale.center(label)? {
                         ticks.push(GuideTick {
                             position,
@@ -314,7 +348,13 @@ fn resolve_axis_inner(
                     })
                 })
                 .transpose()?;
-            let scale = UtcScale::new(domain, viewport, representation.unit, range, spec.outside)?;
+            let scale = UtcScale::new(
+                domain,
+                time_window.or(viewport),
+                representation.unit,
+                range,
+                spec.outside,
+            )?;
             if spec.visible {
                 for t in scale.ticks(
                     interval.unwrap_or(scale.auto_interval(r.target_ticks)?),

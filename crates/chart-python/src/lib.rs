@@ -83,6 +83,10 @@ impl Chart {
     fn present(&mut self, py: Python<'_>) -> PyResult<String> {
         py.detach(|| self.inner.present()).map_err(failure)
     }
+    /// Query presented geometry or produce typed navigation windows through the common engine.
+    fn query(&mut self, py: Python<'_>, input: String) -> PyResult<String> {
+        py.detach(|| self.inner.query(&input)).map_err(failure)
+    }
     /// Dispatch an origin/revision/scene-fenced shared action and return effective events.
     fn dispatch(&mut self, py: Python<'_>, input: String) -> PyResult<String> {
         py.detach(|| self.inner.dispatch(&input)).map_err(failure)

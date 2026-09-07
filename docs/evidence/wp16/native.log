@@ -1,0 +1,32 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+   Compiling chart-extension-example v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/custom-extension)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.40s
+     Running `target/debug/examples/binding_proof /Users/jeickmeier/Projects/finstack-chart/artifacts/wp-16/bindings/native`
+PASS WP-15 deterministic shared action trace: 23 transitions
+input "input-scatter" / "nearest-center"
+input "input-scatter" / "empty-between-centers"
+input "input-scatter" / "lasso-select"
+input "input-scatter" / "toggle-same-target"
+input "input-scatter" / "pointer-zoom"
+input "input-scatter" / "new-presented-coordinate"
+input "input-scatter" / "stale-revision"
+input "input-scatter" / "wrong-range-type"
+input "input-scatter" / "cancel-navigation-begin"
+input "input-scatter" / "pinned-pan-preview"
+input "input-scatter" / "pinned-pan-still-original"
+input "input-scatter" / "cancel-restores"
+input "input-scatter" / "legacy-replaces-typed"
+input "input-scatter" / "legacy-view-is-presented"
+input "input-bars" / "bar-edge-intersection"
+input "input-bars" / "bar-contained"
+input "input-line" / "line-nearest-gap-group"
+input "input-line" / "gap-brush-no-invented-source"
+input "input-category" / "category-singleton"
+input "input-category" / "category-reset-retains-catalog"
+input "input-category" / "category-missing-rejected"
+input "input-utc" / "exact-time-window"
+PASS WP-16 shared input queries/actions: 22 steps
+PASS Rust FIX-06: missing facet policy and unknown target panel rejected
+PASS native shared portable fixture, transaction replay, action and controlled disposal

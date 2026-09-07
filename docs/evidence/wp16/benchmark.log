@@ -1,0 +1,33 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `release` profile [optimized] target(s) in 10.40s
+     Running `target/release/examples/interaction_benchmark`
+[
+  {
+    "candidates": 100000,
+    "exact_hits_match": true,
+    "geometry": "scatter",
+    "index_build_ns": 45618792,
+    "index_query_ns": 653042,
+    "indexed_examined": 4693,
+    "prepared_arc_unchanged": true,
+    "queries": 512,
+    "reducer_hover_ns": 200250,
+    "scan_examined": 51600000,
+    "scan_query_ns": 218654583,
+    "target_index_build_ns": 13344417
+  },
+  {
+    "candidates": 100000,
+    "exact_hits_match": true,
+    "geometry": "line",
+    "index_build_ns": 44426083,
+    "index_query_ns": 563417,
+    "indexed_examined": 5230,
+    "prepared_arc_unchanged": true,
+    "queries": 512,
+    "reducer_hover_ns": 142042,
+    "scan_examined": 102400000,
+    "scan_query_ns": 611447625,
+    "target_index_build_ns": 11875750
+  }
+]

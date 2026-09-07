@@ -99,6 +99,7 @@ impl FigureSnapshot {
         let mut effective_state = state.clone();
         if profile.view == ViewMode::FullDomain {
             effective_state.apply(definition, ChartAction::SetViewport(Viewport::default()))?;
+            effective_state.apply(definition, ChartAction::SetAxisWindows(Default::default()))?;
             for axis in &mut effective_definition.axes {
                 axis.viewport = None;
             }

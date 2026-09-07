@@ -207,6 +207,7 @@ impl Default for PointOptions {
 #[derive(Clone, Debug, PartialEq)]
 pub struct PointScale {
     labels: Vec<String>,
+    window: std::ops::Range<usize>,
     range: Bounds,
     padding: f64,
 }
@@ -231,6 +232,7 @@ impl PointScale {
         range.distinct()?;
         Ok(Self {
             labels: labels.to_vec(),
+            window: 0..labels.len(),
             range,
             padding: options.padding,
         })
@@ -239,19 +241,28 @@ impl PointScale {
     pub fn domain(&self) -> &[String] {
         &self.labels
     }
+    /// Current category window, preserving the complete trained domain separately.
+    pub fn visible_domain(&self) -> &[String] {
+        &self.labels[self.window.clone()]
+    }
+    /// Restrict presentation to an inclusive stable-label window without changing training.
+    pub fn with_window(mut self, first: &str, last: &str) -> ChartResult<Self> {
+        self.window = super::category_window(&self.labels, first, last)?;
+        Ok(self)
+    }
     /// Destination range.
     pub fn range(&self) -> Bounds {
         self.range
     }
     /// Position of one known category; a singleton is always centered.
     pub fn center(&self, label: &str) -> ChartResult<Option<f64>> {
-        let Some(i) = self.labels.iter().position(|s| s == label) else {
+        let Some(i) = self.visible_domain().iter().position(|s| s == label) else {
             return Ok(None);
         };
-        let t = if self.labels.len() == 1 {
+        let t = if self.window.len() == 1 {
             0.5
         } else {
-            (i as f64 + self.padding) / (self.labels.len() as f64 - 1. + 2. * self.padding)
+            (i as f64 + self.padding) / (self.window.len() as f64 - 1. + 2. * self.padding)
         };
         Ok(Some(super::linear::interpolate(self.range, t)?))
     }
@@ -268,7 +279,7 @@ impl PointScale {
         }
         let mut best = None;
         let mut distance = f64::INFINITY;
-        for label in &self.labels {
+        for label in self.visible_domain() {
             let d =
                 (super::linear::fraction(self.range, self.center(label)?.expect("known label"))?
                     - super::linear::fraction(self.range, p)?)

@@ -73,6 +73,10 @@ impl Chart {
     pub fn present(&mut self) -> Result<String, JsError> {
         self.inner.present().map_err(failure)
     }
+    /// Query presented geometry or produce typed navigation windows through the common engine.
+    pub fn query(&mut self, input: &str) -> Result<String, JsError> {
+        self.inner.query(input).map_err(failure)
+    }
     /// Dispatch an origin/revision/scene-fenced shared action with effective events.
     pub fn dispatch(&mut self, input: &str) -> Result<String, JsError> {
         self.inner.dispatch(input).map_err(failure)

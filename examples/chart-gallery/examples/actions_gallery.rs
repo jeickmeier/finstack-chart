@@ -32,7 +32,13 @@ impl Gallery {
     fn act(&mut self, label: &str, cx: &mut Context<Self>) {
         let actions = match label {
             "Preview edit" => {
-                self.next_gesture += 1;
+                self.next_gesture = match self.chart.read(cx).next_gesture_id() {
+                    Ok(id) => id.get(),
+                    Err(e) => {
+                        self.status = e.message;
+                        return;
+                    }
+                };
                 vec![
                     ChartAction::BeginGesture {
                         id: Revision::new(self.next_gesture),

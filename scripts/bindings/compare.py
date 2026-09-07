@@ -279,3 +279,10 @@ for runtime in paths:
     assert furniture(xml['cancel']) == furniture(xml['undo'])
     assert furniture(xml['cancel']) != furniture(xml['commit'])
 print('PASS WP-15 exact Rust/Python/WASM action events and component revisions; real-font preview/cancel/commit/undo/redo geometry')
+
+input_traces = [json.loads((p/'input-trace.json').read_text()) for p in paths]
+for trace in input_traces[1:]: same(input_traces[0],trace,1e-12)
+for native_svg in paths[0].glob('input-*.svg'):
+    for runtime in paths[1:]:
+        assert native_svg.read_bytes() == (runtime/native_svg.name).read_bytes(), native_svg.name
+print('PASS WP-16 Rust/Python/WASM indexed inspection, provenance selection, typed navigation, pinned previews, cancellation and exact export geometry')

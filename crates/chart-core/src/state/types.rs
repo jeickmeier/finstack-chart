@@ -143,6 +143,8 @@ pub enum GestureKind {
 pub enum GesturePreview {
     /// Complete visible interval preview.
     Viewport(super::Viewport),
+    /// Complete named-axis navigation preview, retaining categorical/time identities.
+    AxisWindows(super::AxisWindows),
     /// Complete selection preview from the pinned scene.
     Selection(Vec<MarkTarget>),
     /// Complete annotation preview after application/core constraints and snapping.

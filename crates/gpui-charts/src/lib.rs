@@ -5,4 +5,4 @@ mod native;
 mod view;
 pub use custom::{NativePainter, NativePainterRegistry, PreparedNativePaint};
 pub use native::NativeFont;
-pub use view::{ChartInput, ChartView, NativeMetrics, TooltipBuilder};
+pub use view::{ChartInput, ChartView, NativeDragTool, NativeMetrics, TooltipBuilder};

@@ -42,6 +42,8 @@ pub mod identity;
 pub mod inspection;
 pub mod layout;
 pub mod limits;
+/// Pure navigation producers using pinned presented axes and semantic windows.
+pub mod navigation;
 pub mod provenance;
 pub mod scales;
 pub mod scene;

@@ -27,6 +27,7 @@ impl Default for BandOptions {
 #[derive(Clone, Debug, PartialEq)]
 pub struct BandScale {
     labels: Vec<String>,
+    window: std::ops::Range<usize>,
     index: BTreeMap<String, usize>,
     range: Bounds,
     inner: f64,
@@ -69,6 +70,7 @@ impl BandScale {
         }
         Ok(Self {
             labels: labels.to_vec(),
+            window: 0..labels.len(),
             index: labels
                 .iter()
                 .enumerate()
@@ -83,6 +85,16 @@ impl BandScale {
     /// Explicit resolved category order, including absent labels retained in the domain.
     pub fn domain(&self) -> &[String] {
         &self.labels
+    }
+    /// Current category window, preserving the complete trained domain separately.
+    pub fn visible_domain(&self) -> &[String] {
+        &self.labels[self.window.clone()]
+    }
+    /// Restrict presentation to an inclusive stable-label window without changing training.
+    pub fn with_window(mut self, first: &str, last: &str) -> ChartResult<Self> {
+        self.window = super::category_window(&self.labels, first, last)?;
+        self.denominator = (self.window.len() as f64 - self.inner + 2. * self.outer).max(1.);
+        Ok(self)
     }
     /// Authored destination range, including descending direction.
     pub fn range(&self) -> Bounds {
@@ -100,6 +112,10 @@ impl BandScale {
         let Some(&i) = self.index.get(label) else {
             return Ok(None);
         };
+        if !self.window.contains(&i) {
+            return Ok(None);
+        }
+        let i = i - self.window.start;
         Ok(Some(super::linear::interpolate(
             self.range,
             (self.outer + i as f64 + (1. - self.inner) * 0.5) / self.denominator,
@@ -110,6 +126,10 @@ impl BandScale {
         let Some(&i) = self.index.get(label) else {
             return Ok(None);
         };
+        if !self.window.contains(&i) {
+            return Ok(None);
+        }
+        let i = i - self.window.start;
         let a = (self.outer + i as f64) / self.denominator;
         let b = (self.outer + i as f64 + 1. - self.inner) / self.denominator;
         Ok(Some(Bounds::new(
@@ -133,9 +153,9 @@ impl BandScale {
             return Ok(None);
         }
         let i = slot.floor() as usize;
-        if i >= self.labels.len() {
+        if i >= self.window.len() {
             // Include the last band's closed far edge, including a descending range.
-            if let Some(last) = self.labels.last()
+            if let Some(last) = self.visible_domain().last()
                 && self
                     .extent(last)?
                     .is_some_and(|extent| position == extent.end())
@@ -147,6 +167,6 @@ impl BandScale {
         if slot - i as f64 > 1. - self.inner {
             return Ok(None);
         }
-        Ok(Some(&self.labels[i]))
+        Ok(Some(&self.labels[self.window.start + i]))
     }
 }

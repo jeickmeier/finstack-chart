@@ -3,8 +3,9 @@
 WP-15 implements the state ownership portion of INT-01/02/05/06, SCN-04,
 STM-02 and QLT-01. [ADR-007](adr/007-actions-gestures-and-controlled-state.md)
 records the decision; [completion evidence](evidence/wp-15-completion-2026-09-07.md)
-records execution. Navigation producers, editing constraints, streaming reconciliation,
-scheduling and live publication policies are owned by WP-16–20.
+records execution. [WP-16 interaction](interaction-contract.md) adds indexed producers
+and typed windows. Editing constraints, streaming reconciliation, scheduling and live
+publication policies are owned by WP-17–20.
 
 ## One reducer across hosts
 
@@ -32,7 +33,7 @@ hover/focus changes reuse the existing frame. Source updates use the transaction
 
 | Value | Behavior |
 | --- | --- |
-| Viewport | Finite distinct source/calculation-unit intervals; a preview is effective but uncommitted. Selection never changes statistical populations. |
+| Viewport | Legacy numeric intervals plus typed named-axis numeric/time/category windows; a preview is effective but uncommitted. Selection never changes statistical populations. |
 | Follow | FollowLatest, InspectHistory or FreezePresentation. Manual viewport changes enter InspectHistory by default. ResumeLatest clears freeze and preserves the viewport and edits; the streaming owner supplies latest-data navigation in WP-18. |
 | Hover / focus | Separate transient identities and revisions; a focus change does not replace hover. ClearInspection clears both. |
 | Pin / selection | Committed stable identities. Replace/Add/Toggle/Remove/Clear are common set operations. Custom disabled-selection targets reject selection. |
@@ -62,9 +63,9 @@ selection and one annotation are supported preview families. Preview equal to th
 committed value removes the effective preview. Hover/focus may change independently.
 
 Commit writes the final preview once. Cancel discards it and reports Explicit,
-CaptureLost, FocusLost, TargetRemoved or Disposed. Native pointer capture, Escape,
-focus-loss event translation and constrained editing are completed by WP-16/17; these
-reasons already execute through the shared reducer without a window.
+CaptureLost, FocusLost, TargetRemoved or Disposed. Native pointer capture, Escape and focus-loss translation are implemented by WP-16.
+Constrained annotation editing remains WP-17. These reasons also execute through the
+shared reducer without a window.
 
 Only committed annotation edits enter undo/redo history. Fifty previews followed by a
 commit create one command; hover, focus, selection and navigation create none. A new
@@ -90,7 +91,8 @@ inject hover/focus, interrupt an active gesture or fabricate an uncaptured freez
 Successful replacement clears local undo/redo history.
 
 The version-1 `StateEnvelope` has an optional `interaction` object for committed follow,
-visibility, selection, pin, annotations, configuration and component revisions. Legacy
+visibility, selection, pin, annotations, configuration, optional named-axis windows and
+component revisions. Legacy
 minimal envelopes still decode, but must satisfy current revision fences when restored.
 Definitions contain no pointer/gesture state. Saved state excludes hover/focus values,
 preview values, active gesture, command history and scene handles. Restoring a saved

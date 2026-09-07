@@ -159,7 +159,21 @@ impl SessionScale {
     }
     /// Invert to an active timestamp. A compressed shared boundary chooses the next session start.
     pub fn invert(&self, p: f64) -> ChartResult<i64> {
-        let offset = self.inner.invert(p)?.round();
+        self.timestamp_at_offset(self.inner.invert(p)?)
+    }
+    /// Declared active-time domain and effective view, in compressed timestamp ticks.
+    pub fn navigation_bounds(&self) -> (Bounds, Bounds) {
+        (self.inner.domain(), self.inner.viewport())
+    }
+    /// Resolve compressed ticks using the same boundary convention as pointer inversion.
+    pub fn timestamp_at_offset(&self, offset: f64) -> ChartResult<i64> {
+        if !offset.is_finite() {
+            return Err(error(
+                DiagnosticCode::NumericalDomain,
+                "Session offset must be finite.",
+            ));
+        }
+        let offset = offset.round();
         if offset < 0. || offset > self.inner.domain().end() {
             return Err(error(
                 DiagnosticCode::NumericalDomain,

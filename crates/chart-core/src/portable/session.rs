@@ -10,6 +10,7 @@ pub struct Session {
     store: DataStore,
     reducer: ActionReducer,
     compiler: Compiler,
+    inspectors: Vec<crate::inspection::Inspector>,
 }
 impl Session {
     /// Decode and validate versioned chart/data inputs, including builtin operations and schemas.
@@ -31,6 +32,7 @@ impl Session {
             store: data.into_store()?,
             reducer: ActionReducer::default(),
             compiler: Compiler::with_extensions(extensions),
+            inspectors: vec![],
         };
         session.prepare()?;
         Ok(session)
@@ -89,6 +91,7 @@ impl Session {
         }
         self.reducer
             .accept_controlled(&self.definition.definition, expected, next)?;
+        self.prune_inspectors();
         Ok(())
     }
     /// Validate then apply the existing atomic transaction; typed outcomes preserve replay/conflicts.
@@ -113,19 +116,118 @@ impl Session {
             envelope.action,
             ActionOrigin::Programmatic,
         );
-        Ok(self
+        let result = self
             .reducer
             .dispatch(&self.definition.definition, request)?
-            .outcome)
+            .outcome;
+        self.prune_inspectors();
+        Ok(result)
     }
     /// Acknowledge the caller's actual scene before scene-dependent actions.
     pub fn present(&mut self, scene: Arc<crate::layout::LaidOutChart>) {
         self.reducer.present(scene);
+        self.prune_inspectors();
     }
     /// Full shared reducer with explicit origin/state/scene fences and effective events.
     pub fn dispatch(&mut self, input: &str) -> ChartResult<DispatchOutcome> {
         let request: ActionRequest = decode(input)?;
-        self.reducer.dispatch(&self.definition.definition, request)
+        let result = self
+            .reducer
+            .dispatch(&self.definition.definition, request)?;
+        self.prune_inspectors();
+        Ok(result)
+    }
+    fn prune_inspectors(&mut self) {
+        let reducer = &self.reducer;
+        self.inspectors.retain(|i| {
+            [
+                reducer.presented(),
+                reducer.gesture_basis(),
+                reducer.frozen_scene(),
+            ]
+            .into_iter()
+            .flatten()
+            .any(|s| Arc::ptr_eq(s, i.presented()))
+        });
+    }
+    /// Pure presented-scene query. Geometry indexes are shared across calls and retained only for
+    /// the current, frozen and active-gesture scenes; input never compiles statistics.
+    pub fn query(&mut self, input: &str) -> ChartResult<String> {
+        use crate::inspection::Inspector;
+        use crate::navigation::Navigator;
+        let request: InputQuery = decode(input)?;
+        self.prune_inspectors();
+        let reducer = &self.reducer;
+        let scene = if request.gesture {
+            reducer.gesture_basis()
+        } else {
+            reducer.presented()
+        }
+        .ok_or_else(|| {
+            error(
+                DiagnosticCode::UnsupportedCapability,
+                "No requested presented/gesture scene.",
+            )
+        })?
+        .clone();
+        if request.scene != scene.scene().stamp() {
+            return Err(error(
+                DiagnosticCode::Superseded,
+                "Query scene differs from its presented/pinned basis.",
+            ));
+        }
+        let index = match self
+            .inspectors
+            .iter()
+            .position(|i| Arc::ptr_eq(i.presented(), &scene))
+        {
+            Some(i) => i,
+            None => {
+                self.inspectors
+                    .push(Inspector::new(scene.clone(), 10., 32)?);
+                self.inspectors.len() - 1
+            }
+        };
+        let inspector = &self.inspectors[index];
+        match request.query {
+            InputOperation::Inspect {
+                point,
+                radius,
+                max_grouped,
+                mode,
+            } => {
+                let result = inspector
+                    .with_options(radius, max_grouped)?
+                    .query(super::input::point(point)?, mode);
+                let epoch = scene.prepared().source().get()?.epoch();
+                let targets: Vec<_> = result
+                    .hits
+                    .iter()
+                    .map(|h| MarkTarget::from_inspected(h, epoch))
+                    .collect();
+                encode(
+                    &json!({"hits":result.hits,"targets":targets,"examined":result.examined,"nodes":result.nodes}),
+                )
+            }
+            InputOperation::Select { region, limit } => {
+                encode(&json!({"targets":inspector.select(request.scene,&region.region()?,limit)?}))
+            }
+            InputOperation::Navigate {
+                axes,
+                panel,
+                action,
+                boundary,
+            } => encode(
+                &json!({"windows":Navigator::new(scene).navigate(request.scene,&axes,panel.as_ref(),action.navigation()?,boundary)?}),
+            ),
+            InputOperation::SetRange {
+                axis,
+                panel,
+                window,
+            } => encode(
+                &json!({"windows":Navigator::new(scene).set_range(request.scene,axis,panel.as_ref(),window)?}),
+            ),
+        }
     }
     /// Inspect runtime ownership without exposing mutable state.
     pub fn reducer(&self) -> &ActionReducer {

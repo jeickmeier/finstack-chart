@@ -1,3 +1,4 @@
+mod input;
 use crate::native::{NativeFont, NativeFrame};
 use chart_core::data::{SnapshotHandle, StoreSnapshot};
 use chart_core::grammar::{ChartDefinition, CompileLimits, Compiler, PreparedChart};
@@ -13,6 +14,7 @@ use gpui::{
     AnyElement, App, Bounds, Context, FocusHandle, IntoElement, MouseButton, Pixels, Render, Role,
     Window, canvas, div, prelude::*, px, rgb,
 };
+pub use input::NativeDragTool;
 use std::{rc::Rc, sync::Arc};
 
 /// Caller-owned native tooltip body. The inspector pins the exact source snapshot;
@@ -104,6 +106,7 @@ pub struct ChartView {
     tooltip: Option<TooltipBuilder>,
     last_error: Option<Diagnostic>,
     metrics: NativeMetrics,
+    input: input::InputState,
 }
 impl ChartView {
     /// Mount an already validated input; no source preparation or fallible work is hidden here.
@@ -135,6 +138,7 @@ impl ChartView {
             tooltip: None,
             last_error: None,
             metrics: NativeMetrics::default(),
+            input: input::InputState::default(),
         }
     }
     /// Change the native-only inspection body, with no data/stat/layout invalidation.
@@ -194,6 +198,9 @@ impl ChartView {
                 cx.notify();
             })?;
         self.reducer = next;
+        if self.state().active_gesture().is_none() {
+            self.release_input();
+        }
         self.definition = definition;
         self.prepared = Arc::new(prepared);
         self.last_error = None;
@@ -232,6 +239,10 @@ impl ChartView {
     pub fn state(&self) -> &ChartState {
         self.reducer.state()
     }
+    /// Next valid identity shared by native gestures and host editing controls.
+    pub fn next_gesture_id(&self) -> ChartResult<Revision> {
+        self.reducer.next_gesture_id()
+    }
     /// Prepare a control/input request using current state and the presented or pinned basis.
     pub fn action_request(&self, action: ChartAction, origin: ActionOrigin) -> ActionRequest {
         self.reducer.request(&self.definition, action, origin)
@@ -258,6 +269,9 @@ impl ChartView {
             CompileLimits::default(),
         )?;
         self.reducer = next;
+        if self.state().active_gesture().is_none() {
+            self.release_input();
+        }
         self.prepared = Arc::new(prepared);
         cx.notify();
         Ok(true)
@@ -284,6 +298,9 @@ impl ChartView {
             self.prepared = Arc::new(prepared);
         }
         self.reducer = next;
+        if self.state().active_gesture().is_none() {
+            self.release_input();
+        }
         if result.outcome.changed {
             cx.notify();
         }
@@ -386,6 +403,14 @@ impl ChartView {
 }
 impl Render for ChartView {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+        let focused = self.focus.contains_focused(window, cx);
+        if self.input.focused && !focused {
+            if let Err(e) = self.cancel_input(chart_core::state::CancelReason::FocusLost, cx) {
+                self.last_error = Some(e);
+            }
+            let _ = self.dispatch_inspection(InspectionAction::Clear, InputOrigin::Keyboard, cx);
+        }
+        self.input.focused = focused;
         let mut tokens = self
             .definition
             .theme
@@ -403,6 +428,34 @@ impl Render for ChartView {
                 | (u32::from(focus_color.blue) << 8)
                 | u32::from(focus_color.alpha),
         );
+        if self.input.subscriptions.is_empty() {
+            let focus = self.focus.clone();
+            self.input
+                .subscriptions
+                .push(cx.on_focus_out(&focus, window, |this, _, _, cx| {
+                    if let Err(e) =
+                        this.cancel_input(chart_core::state::CancelReason::FocusLost, cx)
+                    {
+                        this.last_error = Some(e);
+                    }
+                    let _ = this.dispatch_inspection(
+                        InspectionAction::Clear,
+                        InputOrigin::Keyboard,
+                        cx,
+                    );
+                }));
+            self.input.subscriptions.push(cx.observe_window_activation(
+                window,
+                |this, window, cx| {
+                    if !window.is_window_active()
+                        && let Err(e) =
+                            this.cancel_input(chart_core::state::CancelReason::CaptureLost, cx)
+                    {
+                        this.last_error = Some(e);
+                    }
+                },
+            ));
+        }
         let prepaint = cx.entity().downgrade();
         let paint = prepaint.clone();
         let diagnostic = self.last_error.as_ref().map(|e| {
@@ -486,7 +539,28 @@ impl Render for ChartView {
                                 .is_none_or(|old| !Rc::ptr_eq(old, &frame))
                             {
                                 this.reducer.present(frame.chart.clone());
-                                this.inspector = Inspector::new(frame.chart.clone(), 10., 32).ok();
+                                let mut inspector =
+                                    Inspector::new(frame.chart.clone(), 10., 32).ok();
+                                if let Some(focus) = this.state().focus().cloned() {
+                                    let restored = inspector
+                                        .as_mut()
+                                        .is_some_and(|i| i.restore_focus(&focus).unwrap_or(false));
+                                    if !restored {
+                                        let request = this.action_request(
+                                            ChartAction::SetFocus(None),
+                                            ActionOrigin::Programmatic,
+                                        );
+                                        let _ = this.dispatch_action(request, cx);
+                                    }
+                                }
+                                if !this.state().hover().is_empty() {
+                                    let request = this.action_request(
+                                        ChartAction::SetHover(vec![]),
+                                        ActionOrigin::Programmatic,
+                                    );
+                                    let _ = this.dispatch_action(request, cx);
+                                }
+                                this.inspector = inspector;
                                 this.frame = Some(frame);
                                 let weak = cx.entity().downgrade();
                                 window.on_next_frame(move |_, cx| {
@@ -498,6 +572,39 @@ impl Render for ChartView {
                         Err(e) => {
                             this.last_error = Some(e);
                             this.inspector = None;
+                        }
+                    });
+                    let _ = paint.update(cx, |this, _| {
+                        if let Err(e) = this.paint_input(window) {
+                            this.last_error = Some(e);
+                        }
+                    });
+                    let move_owner = paint.clone();
+                    window.on_mouse_event(move |event: &gpui::MouseMoveEvent, phase, _, cx| {
+                        if phase == gpui::DispatchPhase::Capture {
+                            let _ = move_owner.update(cx, |this, cx| {
+                                if let Err(e) = this.pointer_move(event, cx) {
+                                    this.last_error = Some(e);
+                                    let _ = this.cancel_input(
+                                        chart_core::state::CancelReason::Explicit,
+                                        cx,
+                                    );
+                                }
+                            });
+                        }
+                    });
+                    let up_owner = paint.clone();
+                    window.on_mouse_event(move |event: &gpui::MouseUpEvent, phase, _, cx| {
+                        if phase == gpui::DispatchPhase::Capture {
+                            let _ = up_owner.update(cx, |this, cx| {
+                                if let Err(e) = this.pointer_up(event, cx) {
+                                    this.last_error = Some(e);
+                                    let _ = this.cancel_input(
+                                        chart_core::state::CancelReason::Explicit,
+                                        cx,
+                                    );
+                                }
+                            });
                         }
                     });
                     if painted && let Some(body) = &mut tooltip {
@@ -518,11 +625,13 @@ impl Render for ChartView {
             .hover_listener_mode(gpui::HoverListenerMode::InputModalityIndependent)
             .role(Role::Image)
             .aria_label("Interactive chart. Click to focus; arrow keys inspect visible observations; Escape clears inspection.")
-            .on_mouse_down(MouseButton::Left, cx.listener(|this, _, window, cx| {
+            .on_mouse_down(MouseButton::Left, cx.listener(|this, event, window, cx| {
                 window.focus(&this.focus, cx);
+                if let Err(e)=this.pointer_down(event,cx){this.last_error=Some(e);}
                 cx.notify();
             }))
             .on_mouse_move(cx.listener(|this, event: &gpui::MouseMoveEvent, _, cx| {
+                if this.has_drag() || this.input.disabled {return;}
                 let Some(frame) = &this.frame else { return };
                 let local = Point::new(
                     f64::from(f32::from(event.position.x - frame.bounds.origin.x)),
@@ -537,11 +646,32 @@ impl Render for ChartView {
                 }
             }))
             .on_hover(cx.listener(|this, hovered: &bool, _, cx| {
-                if !hovered && !this.inspector.as_ref().is_some_and(Inspector::has_keyboard_focus) {
+                if !hovered && !this.has_drag() && !this.inspector.as_ref().is_some_and(Inspector::has_keyboard_focus) {
                     let _ = this.dispatch_inspection(InspectionAction::Clear, InputOrigin::Pointer, cx);
                 }
             }))
+            .on_scroll_wheel(cx.listener(|this,event,window,cx| {
+                if let Err(e)=this.scroll_input(event,window,cx){this.last_error=Some(e);cx.notify();}
+            }))
             .on_key_down(cx.listener(|this, event: &gpui::KeyDownEvent, _, cx| {
+                if this.input.disabled{return;}
+                if event.keystroke.key == "escape" && this.state().active_gesture().is_some() {
+                    if let Err(e)=this.cancel_input(chart_core::state::CancelReason::Explicit,cx){this.last_error=Some(e);}
+                    cx.stop_propagation(); return;
+                }
+                if this.state().active_gesture().is_some(){return;}
+                if event.keystroke.key=="home" {
+                    let r=this.action_request(ChartAction::Reset,ActionOrigin::Keyboard);
+                    if let Err(e)=this.dispatch_action(r,cx){this.last_error=Some(e);}
+                    cx.stop_propagation();return;
+                }
+                if event.keystroke.key=="space" {
+                    if let Some(focus)=this.state().focus().cloned() {
+                        let r=this.action_request(ChartAction::Select {change:chart_core::state::SelectionChange::Toggle,targets:vec![focus]},ActionOrigin::Keyboard);
+                        if let Err(e)=this.dispatch_action(r,cx){this.last_error=Some(e);}
+                    }
+                    cx.stop_propagation();return;
+                }
                 let action = match event.keystroke.key.as_str() {
                     "right" | "down" => Some(InspectionAction::StepFocus { forward: true }),
                     "left" | "up" => Some(InspectionAction::StepFocus { forward: false }),
@@ -557,5 +687,11 @@ impl Render for ChartView {
             }))
             .child(chart_canvas)
             .children(diagnostic)
+    }
+}
+
+impl gpui::Focusable for ChartView {
+    fn focus_handle(&self, _: &App) -> FocusHandle {
+        self.focus.clone()
     }
 }

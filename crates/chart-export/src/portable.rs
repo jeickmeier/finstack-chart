@@ -297,6 +297,10 @@ impl PortableChart {
     pub fn dispatch(&mut self, input: &str) -> ChartResult<String> {
         portable::encode(&self.get_mut()?.core.dispatch(input)?)
     }
+    /// Query the shared presented/gesture index, selection geometry or navigation producer.
+    pub fn query(&mut self, input: &str) -> ChartResult<String> {
+        self.get_mut()?.core.query(input)
+    }
     /// Canonical chart round-trip representation.
     pub fn definition(&self) -> ChartResult<String> {
         self.get()?.core.chart_json()

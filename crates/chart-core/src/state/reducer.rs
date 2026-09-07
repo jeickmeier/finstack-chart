@@ -3,7 +3,10 @@ use crate::composition::{Anchor, ScaleValue};
 use crate::grammar::SelectionPolicy;
 use crate::layout::LaidOutChart;
 use crate::{Limits, SceneStamp};
-use std::{collections::VecDeque, sync::Arc};
+use std::{
+    collections::VecDeque,
+    sync::{Arc, Weak},
+};
 
 #[derive(Clone, Debug)]
 struct Command {
@@ -29,6 +32,12 @@ pub struct ActionReducer {
     links: BTreeMap<String, LinkRecord>,
     last_gesture: Revision,
     disposed: bool,
+    target_indexes: Vec<TargetIndex>,
+}
+#[derive(Clone, Debug)]
+struct TargetIndex {
+    scene: Weak<LaidOutChart>,
+    targets: Arc<BTreeMap<MarkTarget, bool>>,
 }
 impl Default for ActionReducer {
     fn default() -> Self {
@@ -49,6 +58,7 @@ impl ActionReducer {
             links: BTreeMap::new(),
             last_gesture: Revision::INITIAL,
             disposed: false,
+            target_indexes: vec![],
         }
     }
     /// Current immutable semantic state for preparation and application observation.
@@ -58,8 +68,54 @@ impl ActionReducer {
     /// Acknowledge the scene actually submitted by the host. Active gestures keep their own basis.
     pub fn present(&mut self, scene: Arc<LaidOutChart>) {
         if !self.disposed {
+            if !self
+                .target_indexes
+                .iter()
+                .any(|i| i.scene.ptr_eq(&Arc::downgrade(&scene)))
+            {
+                let mut targets = BTreeMap::new();
+                if let Ok(source) = scene.prepared().source().get() {
+                    for (i, (item, values)) in scene
+                        .scene()
+                        .items()
+                        .iter()
+                        .zip(scene.targets())
+                        .enumerate()
+                    {
+                        let Some(layer) = item.layer else { continue };
+                        let selectable = scene
+                            .interactions()
+                            .get(&i)
+                            .is_none_or(|v| v.selection != SelectionPolicy::Disabled);
+                        for target in values {
+                            let entry = targets
+                                .entry(MarkTarget {
+                                    epoch: source.epoch(),
+                                    layer,
+                                    panel: scene.item_panels()[i].clone(),
+                                    identity: target.into(),
+                                })
+                                .or_insert(false);
+                            *entry |= selectable;
+                        }
+                    }
+                }
+                self.target_indexes.push(TargetIndex {
+                    scene: Arc::downgrade(&scene),
+                    targets: Arc::new(targets),
+                });
+            }
             self.presented = Some(scene);
+            self.prune_indexes();
         }
+    }
+    fn prune_indexes(&mut self) {
+        self.target_indexes.retain(|i| {
+            [&self.presented, &self.gesture_basis, &self.frozen]
+                .into_iter()
+                .flatten()
+                .any(|s| i.scene.ptr_eq(&Arc::downgrade(s)))
+        });
     }
     /// Currently acknowledged visible scene (freeze, when active, takes precedence).
     pub fn presented(&self) -> Option<&Arc<LaidOutChart>> {
@@ -76,6 +132,10 @@ impl ActionReducer {
     /// Bounded undo/redo command counts; transient actions never add commands.
     pub fn history_lengths(&self) -> (usize, usize) {
         (self.history.len(), self.redo.len())
+    }
+    /// Allocate no state; return the next valid gesture identity across all input producers.
+    pub fn next_gesture_id(&self) -> ChartResult<Revision> {
+        self.last_gesture.checked_next()
     }
     /// Build a request from current fences; callers may retain it to detect stale responses.
     pub fn request(
@@ -138,7 +198,8 @@ impl ActionReducer {
             next.redo.remove(0);
         }
         let changed = *before != next.state;
-        let viewport_changed = before.viewport() != next.state.viewport();
+        let viewport_changed = before.viewport() != next.state.viewport()
+            || before.axis_windows() != next.state.axis_windows();
         let durable_changed = before.durable != next.state.durable
             || before.configuration != next.state.configuration;
         let presentation_changed = viewport_changed
@@ -192,6 +253,7 @@ impl ActionReducer {
             },
             event,
         };
+        next.prune_indexes();
         *self = next;
         Ok(result)
     }
@@ -226,36 +288,17 @@ impl ActionReducer {
             return Ok(());
         }
         let chart = self.basis(stamp, gesture)?;
-        let epoch = chart.prepared().source().get()?.epoch();
-        let mut available = BTreeSet::new();
-        for (i, (item, values)) in chart
-            .scene()
-            .items()
+        chart.prepared().source().get()?;
+        // The exact Arc identity prevents equal revision stamps from borrowing another scene's targets.
+        let available = self
+            .target_indexes
             .iter()
-            .zip(chart.targets())
-            .enumerate()
-        {
-            if selectable
-                && chart
-                    .interactions()
-                    .get(&i)
-                    .is_some_and(|v| v.selection == SelectionPolicy::Disabled)
-            {
-                continue;
-            }
-            let Some(layer) = item.layer else {
-                continue;
-            };
-            for target in values {
-                available.insert(MarkTarget {
-                    epoch,
-                    layer,
-                    panel: chart.item_panels()[i].clone(),
-                    identity: target.into(),
-                });
-            }
-        }
-        if targets.iter().any(|t| !available.contains(t)) {
+            .find(|i| i.scene.ptr_eq(&Arc::downgrade(chart)));
+        if targets.iter().any(|t| {
+            !available
+                .and_then(|i| i.targets.get(t))
+                .is_some_and(|allowed| !selectable || *allowed)
+        }) {
             return Err(error(
                 DiagnosticCode::Validation,
                 "Action targets must exist with the requested capability in the presented scene.",
@@ -298,6 +341,16 @@ impl ActionReducer {
             SetViewport(v) => {
                 v.validate()?;
                 self.state.durable.viewport = *v;
+                self.state.durable.windows.remove(&crate::ScaleId::new(0));
+                self.state.durable.windows.remove(&crate::ScaleId::new(1));
+                if self.state.configuration.manual_view_enters_history {
+                    self.state.durable.follow = FollowMode::InspectHistory;
+                    self.frozen = None;
+                }
+            }
+            SetAxisWindows(w) => {
+                windows::validate_windows(w)?;
+                self.state.durable.windows = w.clone();
                 if self.state.configuration.manual_view_enters_history {
                     self.state.durable.follow = FollowMode::InspectHistory;
                     self.frozen = None;
@@ -429,6 +482,9 @@ impl ActionReducer {
                 let kind = &self.state.active.as_ref().expect("checked gesture").kind;
                 match (kind, preview) {
                     (GestureKind::Viewport, GesturePreview::Viewport(v)) => v.validate()?,
+                    (GestureKind::Viewport, GesturePreview::AxisWindows(w)) => {
+                        windows::validate_windows(w)?
+                    }
                     (GestureKind::Selection, GesturePreview::Selection(targets)) => {
                         self.check_targets(targets, r.scene, true, true)?
                     }
@@ -445,7 +501,18 @@ impl ActionReducer {
                 let mut committed = self.state.clone();
                 committed.active = None;
                 let unchanged = match preview {
-                    GesturePreview::Viewport(v) => *v == committed.viewport(),
+                    GesturePreview::Viewport(v) => {
+                        *v == committed.viewport()
+                            && !committed
+                                .durable
+                                .windows
+                                .contains_key(&crate::ScaleId::new(0))
+                            && !committed
+                                .durable
+                                .windows
+                                .contains_key(&crate::ScaleId::new(1))
+                    }
+                    GesturePreview::AxisWindows(w) => w == committed.axis_windows().as_ref(),
                     GesturePreview::Selection(v) => {
                         v.iter().cloned().collect::<BTreeSet<_>>() == committed.durable.selection
                     }
@@ -465,6 +532,15 @@ impl ActionReducer {
                 match preview {
                     Some(GesturePreview::Viewport(v)) => {
                         self.state.durable.viewport = v;
+                        self.state.durable.windows.remove(&crate::ScaleId::new(0));
+                        self.state.durable.windows.remove(&crate::ScaleId::new(1));
+                        if self.state.configuration.manual_view_enters_history {
+                            self.state.durable.follow = FollowMode::InspectHistory;
+                            self.frozen = None;
+                        }
+                    }
+                    Some(GesturePreview::AxisWindows(w)) => {
+                        self.state.durable.windows = w;
                         if self.state.configuration.manual_view_enters_history {
                             self.state.durable.follow = FollowMode::InspectHistory;
                             self.frozen = None;
@@ -535,6 +611,8 @@ impl ActionReducer {
                 if let Some(v) = viewport {
                     v.validate()?;
                     self.state.durable.viewport = *v;
+                    self.state.durable.windows.remove(&crate::ScaleId::new(0));
+                    self.state.durable.windows.remove(&crate::ScaleId::new(1));
                 }
                 if let Some(v) = selection {
                     self.check_targets(v, r.scene, false, true)?;
@@ -676,7 +754,8 @@ impl ActionReducer {
         fence!(configuration, state.configuration == old.configuration);
         if state.viewport_revision < self.state.viewport_revision
             || (state.viewport_revision == self.state.viewport_revision
-                && state.viewport() != self.state.viewport())
+                && (state.viewport() != self.state.viewport()
+                    || state.axis_windows() != self.state.axis_windows()))
         {
             return Err(error(
                 DiagnosticCode::RevisionConflict,
@@ -695,6 +774,7 @@ impl ActionReducer {
         if self.state.follow() != FollowMode::FreezePresentation {
             self.frozen = None;
         }
+        self.prune_indexes();
         Ok(true)
     }
     /// Release all scene handles and transient state on owner disposal. Durable state is retained.
@@ -715,6 +795,7 @@ impl ActionReducer {
         self.redo.clear();
         self.links.clear();
         self.disposed = true;
+        self.target_indexes.clear();
         result
     }
 }
@@ -870,6 +951,7 @@ fn validate_annotation(d: &ChartDefinition, a: &Annotation) -> ChartResult<()> {
 }
 pub(super) fn validate_state(d: &ChartDefinition, s: &ChartState) -> ChartResult<()> {
     s.durable.viewport.validate()?;
+    windows::validate_windows(&s.durable.windows)?;
     validate_config(&s.configuration)?;
     let r = &s.revisions;
     if [

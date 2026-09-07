@@ -517,6 +517,17 @@ pub fn layout(
     if !prepared.definition().axes.is_empty() {
         effective.axes.clone_from(&prepared.definition().axes);
     }
+    if prepared
+        .state()
+        .axis_windows()
+        .keys()
+        .any(|id| !effective.axes.iter().any(|a| a.id == *id))
+    {
+        return Err(error(
+            DiagnosticCode::SchemaConflict,
+            "Navigation window names an absent axis.",
+        ));
+    }
     let theme = super::theme::tokens(&prepared, &effective)?;
     super::theme::configure(&theme, &mut effective);
     let full_request = effective.clone();

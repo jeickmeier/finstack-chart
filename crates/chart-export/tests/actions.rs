@@ -133,3 +133,79 @@ fn portable_controlled_replacements_check_component_fences_and_keep_hover_epheme
     )
     .unwrap();
 }
+
+#[path = "../examples/common/input_trace.rs"]
+mod input_trace;
+#[test]
+fn presented_input_trace_preserves_populations_and_typed_windows() {
+    let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
+    let dir = std::env::temp_dir().join(format!("chart-input-{}", std::process::id()));
+    std::fs::create_dir_all(&dir).unwrap();
+    input_trace::run(&root, &dir).unwrap();
+    std::fs::remove_dir_all(dir).unwrap();
+}
+#[test]
+fn full_domain_export_clears_named_numeric_and_category_windows() {
+    use chart_core::{ScaleId, layout::ResolvedScale};
+    let cases: Value =
+        serde_json::from_str(include_str!("../../../fixtures/interaction/cases.json")).unwrap();
+    for (index, window) in [
+        (0, AxisWindow::Numeric(0.5, 2.5)),
+        (
+            3,
+            AxisWindow::Category {
+                first: "Beta".into(),
+                last: "Beta".into(),
+            },
+        ),
+    ] {
+        let case = &cases[index];
+        for full in [false, true] {
+            let mut profile: Value =
+                serde_json::from_str(include_str!("../../../fixtures/interaction/profile.json"))
+                    .unwrap();
+            profile["full_domain"] = json!(full);
+            let mut c = PortableChart::new(
+                &case["chart"].to_string(),
+                &case["data"].to_string(),
+                &profile.to_string(),
+                FONT.to_vec(),
+            )
+            .unwrap();
+            let stamp = c.capture().unwrap().scene().stamp();
+            send(
+                &mut c,
+                ChartAction::SetAxisWindows(
+                    [(ScaleId::new(0), window.clone())].into_iter().collect(),
+                ),
+                stamp,
+            );
+            let capture = c.capture().unwrap();
+            match &capture.layout().axes()[&ScaleId::new(0)].scale {
+                ResolvedScale::Linear(s) => {
+                    assert_eq!(
+                        (s.viewport().start(), s.viewport().end()),
+                        if full { (0., 4.) } else { (0.5, 2.5) }
+                    );
+                }
+                ResolvedScale::Point(s) => {
+                    assert_eq!(s.domain(), ["Alpha", "Beta", "Gamma"]);
+                    assert_eq!(
+                        s.visible_domain(),
+                        if full {
+                            vec!["Alpha", "Beta", "Gamma"]
+                        } else {
+                            vec!["Beta"]
+                        }
+                    );
+                }
+                _ => panic!("numeric or category"),
+            }
+            // Full-domain capture changes only its captured copy, never the owned user view.
+            assert_eq!(
+                state(&c)["interaction"]["windows"]["0"],
+                serde_json::to_value(&window).unwrap()
+            );
+        }
+    }
+}

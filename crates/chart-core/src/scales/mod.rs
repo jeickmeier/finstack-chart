@@ -133,3 +133,19 @@ pub(crate) fn error(code: DiagnosticCode, message: impl Into<String>) -> Diagnos
         "Correct the domain, range, precision, tick or layout request before resolving the scene again.",
     )
 }
+
+pub(crate) fn category_window(
+    labels: &[String],
+    first: &str,
+    last: &str,
+) -> ChartResult<std::ops::Range<usize>> {
+    let a = labels.iter().position(|s| s == first);
+    let b = labels.iter().position(|s| s == last);
+    match (a, b) {
+        (Some(a), Some(b)) if a <= b => Ok(a..b + 1),
+        _ => Err(error(
+            DiagnosticCode::Validation,
+            "Category window endpoints must exist in ascending domain order.",
+        )),
+    }
+}

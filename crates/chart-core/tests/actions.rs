@@ -491,3 +491,76 @@ fn invalid_previews_and_resource_caps_preserve_valid_state_and_bounded_history()
     );
     assert_eq!(r.state(), &before);
 }
+
+#[test]
+fn legacy_viewports_replace_primary_named_windows_without_losing_other_axes() {
+    use chart_core::ScaleId;
+    let mut d = definition();
+    d.axes = vec![
+        AxisSpec::new(ScaleId::new(0), AxisSide::Bottom),
+        AxisSpec::new(ScaleId::new(1), AxisSide::Left),
+        AxisSpec::new(ScaleId::new(7), AxisSide::Top),
+    ];
+    let mut r = ActionReducer::default();
+    r.present(scene(&d, r.state(), 400.));
+    let windows: AxisWindows = [
+        (ScaleId::new(0), AxisWindow::Numeric(0.5, 1.5)),
+        (ScaleId::new(7), AxisWindow::Numeric(10., 20.)),
+    ]
+    .into_iter()
+    .collect();
+    send(&mut r, &d, ChartAction::SetAxisWindows(windows.clone()));
+    let begin = |r: &mut ActionReducer| {
+        let id = r.next_gesture_id().unwrap();
+        send(
+            r,
+            &d,
+            ChartAction::BeginGesture {
+                id,
+                kind: GestureKind::Viewport,
+            },
+        );
+        id
+    };
+    let id = begin(&mut r);
+    send(
+        &mut r,
+        &d,
+        ChartAction::PreviewGesture {
+            id,
+            preview: GesturePreview::Viewport(Viewport::default()),
+        },
+    );
+    assert!(!r.state().axis_windows().contains_key(&ScaleId::new(0)));
+    assert_eq!(
+        r.state().axis_windows()[&ScaleId::new(7)],
+        AxisWindow::Numeric(10., 20.)
+    );
+    assert_eq!(
+        r.state().interaction_snapshot().windows,
+        windows,
+        "preview is not serialized as committed"
+    );
+    send(
+        &mut r,
+        &d,
+        ChartAction::CancelGesture(CancelReason::Explicit),
+    );
+    assert_eq!(r.state().axis_windows().as_ref(), &windows);
+    let id = begin(&mut r);
+    send(
+        &mut r,
+        &d,
+        ChartAction::PreviewGesture {
+            id,
+            preview: GesturePreview::Viewport(view(1.)),
+        },
+    );
+    send(&mut r, &d, ChartAction::CommitGesture { id });
+    assert_eq!(r.state().viewport(), view(1.));
+    assert!(!r.state().axis_windows().contains_key(&ScaleId::new(0)));
+    send(&mut r, &d, ChartAction::SetAxisWindows(windows));
+    send(&mut r, &d, ChartAction::SetViewport(view(2.)));
+    assert_eq!(r.state().viewport(), view(2.));
+    assert_eq!(r.state().axis_windows().len(), 1);
+}

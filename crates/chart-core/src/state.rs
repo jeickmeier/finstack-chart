@@ -2,12 +2,15 @@
 //! Data mutations remain in the transaction engine; selection never filters source populations.
 mod reducer;
 mod types;
+mod windows;
 use crate::composition::{Annotation, FigureComposition};
 use crate::grammar::ChartDefinition;
 use crate::{ChartResult, Diagnostic, DiagnosticCode, LayerId, Revision};
 pub use reducer::ActionReducer;
 use std::collections::{BTreeMap, BTreeSet};
 pub use types::*;
+pub(crate) use windows::validate_windows as validate_navigation_windows;
+pub use windows::{AxisWindow, AxisWindows};
 
 /// Explicit visible intervals. Descending endpoints are supported; equal/non-finite are not.
 #[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Default, PartialEq)]
@@ -39,6 +42,8 @@ impl Viewport {
 pub enum ChartAction {
     /// Set viewport without changing statistical populations; manual changes enter history mode.
     SetViewport(Viewport),
+    /// Replace named numeric, temporal or categorical presentation windows atomically.
+    SetAxisWindows(AxisWindows),
     /// Change presentation visibility without changing domain/population contributions.
     SetLayerVisible {
         /// Existing layer.
@@ -123,6 +128,7 @@ pub struct ActionOutcome {
 #[derive(Clone, Debug, PartialEq)]
 struct DurableState {
     viewport: Viewport,
+    windows: AxisWindows,
     follow: FollowMode,
     hidden: BTreeSet<LayerId>,
     legend_visible: bool,
@@ -135,6 +141,7 @@ impl Default for DurableState {
     fn default() -> Self {
         Self {
             viewport: Viewport::default(),
+            windows: AxisWindows::new(),
             follow: FollowMode::default(),
             hidden: BTreeSet::new(),
             legend_visible: true,
@@ -148,6 +155,9 @@ impl Default for DurableState {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct InteractionSnapshot {
+    /// Named-axis committed overrides; absent in earlier snapshots.
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub windows: AxisWindows,
     /// Committed follow policy. A frozen snapshot itself is an owned runtime resource.
     pub follow: FollowMode,
     /// Legend visibility, independent of series visibility.
@@ -224,6 +234,22 @@ impl ChartState {
         match self.active.as_ref().and_then(|g| g.preview.as_ref()) {
             Some(GesturePreview::Viewport(v)) => *v,
             _ => self.durable.viewport,
+        }
+    }
+    /// Effective named-axis windows, including the active navigation preview.
+    pub fn axis_windows(&self) -> std::borrow::Cow<'_, AxisWindows> {
+        match self.active.as_ref().and_then(|g| g.preview.as_ref()) {
+            Some(GesturePreview::AxisWindows(w)) => std::borrow::Cow::Borrowed(w),
+            Some(GesturePreview::Viewport(_))
+                if self.durable.windows.contains_key(&crate::ScaleId::new(0))
+                    || self.durable.windows.contains_key(&crate::ScaleId::new(1)) =>
+            {
+                let mut windows = self.durable.windows.clone();
+                windows.remove(&crate::ScaleId::new(0));
+                windows.remove(&crate::ScaleId::new(1));
+                std::borrow::Cow::Owned(windows)
+            }
+            _ => std::borrow::Cow::Borrowed(&self.durable.windows),
         }
     }
     /// Committed intervals for durable serialization, excluding transient previews.
@@ -312,6 +338,7 @@ impl ChartState {
     /// Durable wire state, with transient state explicitly omitted.
     pub fn interaction_snapshot(&self) -> InteractionSnapshot {
         InteractionSnapshot {
+            windows: self.durable.windows.clone(),
             follow: self.durable.follow,
             legend_visible: self.durable.legend_visible,
             selection: self.durable.selection.iter().cloned().collect(),
@@ -339,6 +366,7 @@ impl ChartState {
                 "Duplicate serialized selection targets.",
             ));
         }
+        self.durable.windows = snapshot.windows;
         self.durable.follow = snapshot.follow;
         self.durable.legend_visible = snapshot.legend_visible;
         self.durable.selection = selection;

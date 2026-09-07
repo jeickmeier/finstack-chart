@@ -1,6 +1,8 @@
 //! Version 1 portable contracts. JSON contains no pointers or executable operations.
 //! Public decoders cap UTF-8 bytes/tokens/depth before deserialization and use core validation.
 mod encoding;
+mod input;
+pub use input::{InputOperation, InputQuery, NavigationWire, SelectionWire};
 mod session;
 mod wire;
 use crate::{ChartResult, Diagnostic, DiagnosticCode};

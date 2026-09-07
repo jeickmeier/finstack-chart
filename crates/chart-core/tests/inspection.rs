@@ -39,7 +39,11 @@ fn scene(geom: Geom, ys: &[Option<f64>], extra: bool) -> Arc<LaidOutChart> {
         LayerId::new(1),
         D,
         geom,
-        SourceAes::new().x(X).y(Y),
+        if matches!(geom, Geom::Bar { .. }) {
+            SourceAes::new().x(X).y(Y).y2(Numeric::Literal(0.))
+        } else {
+            SourceAes::new().x(X).y(Y)
+        },
     ));
     if extra {
         d.layers.push(Layer::new(
@@ -260,4 +264,336 @@ fn histogram_hit_retains_aggregate_members_and_respects_containment() {
     );
     hover(&mut i, -1., 100.);
     assert!(i.hits().is_empty());
+}
+
+fn dense_scene(n: usize, geom: Geom) -> Arc<LaidOutChart> {
+    let rows = TypedRows::snapshot(
+        D,
+        Revision::INITIAL,
+        (1..=n as u64).map(RowKey::new).collect(),
+        (0..n).collect(),
+        n,
+    )
+    .unwrap();
+    let batch = TypedDataBuilder::new(rows.get().unwrap(), SchemaVersion::new(1))
+        .float(X, "x", |i| Some((*i % 100) as f64))
+        .float(Y, "y", |i| Some((*i / 100) as f64))
+        .finish(DataLimits::default())
+        .unwrap();
+    let source =
+        DataStore::new(SourceEpoch::new(1), vec![(D, batch)], DataLimits::default()).unwrap();
+    let d = ChartDefinition::new(Revision::new(1)).layer(Layer::new(
+        LayerId::new(1),
+        D,
+        geom,
+        SourceAes::new().x(X).y(Y),
+    ));
+    let p = Compiler::new()
+        .prepare(
+            &d,
+            &source.snapshot(),
+            &ChartState::default(),
+            CompileLimits::default(),
+        )
+        .unwrap();
+    let mut request = LayoutRequest::new(
+        Rect::new(0., 0., 400., 200.).unwrap(),
+        Units::LogicalPixels,
+        ResourceDescriptor {
+            id: ResourceId::new(1),
+            revision: Revision::INITIAL,
+            kind: ResourceKind::Font,
+            byte_len: 1,
+        },
+    );
+    request.padding = 0.;
+    for a in &mut request.axes {
+        a.visible = false;
+        a.scale = AxisScale::Linear(ContinuousDomain::explicit(
+            Bounds::new(
+                0.,
+                if a.side.horizontal() {
+                    100.
+                } else {
+                    (n / 100) as f64
+                },
+            )
+            .unwrap(),
+        ));
+    }
+    Arc::new(layout(Arc::new(p), &request, &Metrics).unwrap())
+}
+#[test]
+fn dense_spatial_and_sorted_x_match_scan_without_source_work() {
+    for geom in [Geom::Point, Geom::line()] {
+        let chart = dense_scene(20_000, geom);
+        let prepared = chart.prepared().clone();
+        let i = Inspector::new(chart, 3., 16).unwrap();
+        let mut examined = 0;
+        for seed in 0..100 {
+            let p =
+                Point::new(f64::from((seed * 127) % 400), f64::from((seed * 47) % 200)).unwrap();
+            let indexed = i.query(p, InspectionMode::Auto);
+            let scan = i.query_scan(p, InspectionMode::Auto);
+            assert_eq!(indexed.hits, scan.hits);
+            assert!(scan.examined >= 20_000);
+            examined += indexed.examined;
+        }
+        assert!(examined < 100 * 400, "index examined {examined}");
+        assert!(Arc::ptr_eq(&prepared, i.presented().prepared()));
+        let copy = i.clone();
+        assert!(Arc::ptr_eq(i.presented(), copy.presented()));
+    }
+}
+#[test]
+fn brushes_lasso_series_and_limits_preserve_vertex_provenance() {
+    let chart = scene(Geom::line(), &[Some(1.), None, Some(3.)], false);
+    let i = Inspector::new(chart.clone(), 10., 8).unwrap();
+    let stamp = chart.scene().stamp();
+    // The line gap has no invented vertex or source identity.
+    assert!(
+        i.select(
+            stamp,
+            &SelectionRegion::Rectangle(Rect::new(90., 90., 20., 20.).unwrap()),
+            16
+        )
+        .unwrap()
+        .is_empty()
+    );
+    let selected = i
+        .select(stamp, &SelectionRegion::XRange(190., 210.), 16)
+        .unwrap();
+    assert_eq!(selected.len(), 1);
+    assert_eq!(
+        selected[0].identity,
+        chart_core::state::TargetIdentity::Source {
+            dataset: D,
+            key: RowKey::new(3)
+        }
+    );
+    let lasso = SelectionRegion::Lasso(vec![
+        Point::new(190., 40.).unwrap(),
+        Point::new(210., 40.).unwrap(),
+        Point::new(200., 60.).unwrap(),
+    ]);
+    assert_eq!(i.select(stamp, &lasso, 16).unwrap(), selected);
+    assert!(
+        i.select(stamp, &SelectionRegion::Lasso(vec![]), 16)
+            .is_err()
+    );
+    assert!(
+        i.select(
+            stamp,
+            &SelectionRegion::Series {
+                layer: LayerId::new(1),
+                panel: None
+            },
+            1
+        )
+        .is_err()
+    );
+    assert_eq!(
+        i.select(
+            stamp,
+            &SelectionRegion::Series {
+                layer: LayerId::new(1),
+                panel: None
+            },
+            16
+        )
+        .unwrap()
+        .len(),
+        2
+    );
+    let mut wrong = stamp;
+    wrong.layout = Revision::new(99);
+    assert_eq!(
+        i.select(wrong, &lasso, 16).unwrap_err().code,
+        DiagnosticCode::Superseded
+    );
+    assert!(Arc::ptr_eq(chart.prepared(), i.presented().prepared()));
+}
+#[test]
+fn rectangle_selection_intersects_bars_instead_of_testing_centers() {
+    let i = Inspector::new(
+        scene(
+            Geom::Bar {
+                width: 20.,
+                nonnegative: false,
+            },
+            &[Some(2.), Some(2.)],
+            false,
+        ),
+        10.,
+        8,
+    )
+    .unwrap();
+    let stamp = i.presented().scene().stamp();
+    // Bar at x=100 spans x=90..110 and y=100..200; its center is outside this brush.
+    let result = i
+        .select(
+            stamp,
+            &SelectionRegion::Rectangle(Rect::new(109., 105., 2., 2.).unwrap()),
+            16,
+        )
+        .unwrap();
+    assert_eq!(result.len(), 1);
+    assert_eq!(
+        result[0].identity,
+        chart_core::state::TargetIdentity::Source {
+            dataset: D,
+            key: RowKey::new(2)
+        }
+    );
+    assert!(
+        i.select(
+            stamp,
+            &SelectionRegion::Rectangle(Rect::new(111., 105., 2., 2.).unwrap()),
+            16
+        )
+        .unwrap()
+        .is_empty()
+    );
+    let point = Point::new(109., 105.).unwrap();
+    assert_eq!(i.query(point, InspectionMode::Containment).hits.len(), 1);
+    assert!(i.query(point, InspectionMode::NearestPoint).hits.is_empty());
+}
+#[test]
+fn stable_keyboard_identity_survives_rebuild_and_removal_clears_it() {
+    let first = scene(Geom::Point, &[Some(1.), Some(2.), Some(3.)], false);
+    let mut i = Inspector::new(first, 10., 8).unwrap();
+    i.dispatch(
+        i.presented().scene().stamp(),
+        InspectionAction::StepFocus { forward: true },
+        InputOrigin::Keyboard,
+    )
+    .unwrap();
+    let identity = chart_core::state::MarkTarget::from_inspected(&i.hits()[0], SourceEpoch::new(1));
+    let mut next =
+        Inspector::new(scene(Geom::Point, &[Some(2.), Some(3.)], false), 10., 8).unwrap();
+    assert!(next.restore_focus(&identity).unwrap());
+    assert_eq!(key(&next.hits()[0].target), 1);
+    assert_ne!(next.hits()[0].position, i.hits()[0].position);
+    let mut removed = Inspector::new(scene(Geom::Point, &[None, Some(3.)], false), 10., 8).unwrap();
+    assert!(!removed.restore_focus(&identity).unwrap());
+    assert!(removed.hits().is_empty());
+    assert!(!removed.has_keyboard_focus());
+}
+
+#[test]
+fn candle_wicks_are_contained_and_keyboard_deduplicates_each_candle() {
+    let cases: Vec<serde_json::Value> = serde_json::from_str(include_str!(
+        "../../../fixtures/families/portable-cases.json"
+    ))
+    .unwrap();
+    let mut case = cases
+        .into_iter()
+        .find(|c| c["name"] == "family-ohlc-volume")
+        .unwrap();
+    for axis in case["chart"]["definition"]["axes"].as_array_mut().unwrap() {
+        axis["visible"] = serde_json::json!(false);
+    }
+    let mut session =
+        chart_core::portable::Session::new(&case["chart"].to_string(), &case["data"].to_string())
+            .unwrap();
+    let mut request = LayoutRequest::new(
+        Rect::new(0., 0., 400., 200.).unwrap(),
+        Units::LogicalPixels,
+        ResourceDescriptor {
+            id: ResourceId::new(1),
+            revision: Revision::INITIAL,
+            kind: ResourceKind::Font,
+            byte_len: 1,
+        },
+    );
+    request.padding = 0.;
+    let chart = Arc::new(layout(session.prepare().unwrap(), &request, &Metrics).unwrap());
+    let (from, to) = chart
+        .scene()
+        .items()
+        .iter()
+        .find_map(|item| match item.primitive {
+            chart_core::scene::Primitive::Rule { from, to, .. }
+                if item.layer == Some(LayerId::new(1)) =>
+            {
+                Some((from, to))
+            }
+            _ => None,
+        })
+        .unwrap();
+    let p = Point::new(from.x(), from.y() + 0.9 * (to.y() - from.y())).unwrap();
+    let mut inspector = Inspector::new(chart, 3., 16).unwrap();
+    let occluded = Point::new(from.x(), from.y() + 0.1 * (to.y() - from.y())).unwrap();
+    assert_eq!(
+        inspector.query(occluded, InspectionMode::Containment).hits[0].layer,
+        LayerId::new(2)
+    );
+    let hits = inspector.query(p, InspectionMode::Containment).hits;
+    assert_eq!(hits.len(), 1);
+    assert_eq!(hits[0].layer, LayerId::new(1));
+    assert_eq!(key(&hits[0].target), 9007199254743001);
+    let mut targets = std::collections::BTreeSet::new();
+    for _ in 0..9 {
+        inspector
+            .dispatch(
+                inspector.presented().scene().stamp(),
+                InspectionAction::StepFocus { forward: true },
+                InputOrigin::Keyboard,
+            )
+            .unwrap();
+        assert!(
+            targets.insert(chart_core::state::MarkTarget::from_inspected(
+                &inspector.hits()[0],
+                SourceEpoch::new(1)
+            ))
+        );
+    }
+    inspector
+        .dispatch(
+            inspector.presented().scene().stamp(),
+            InspectionAction::StepFocus { forward: true },
+            InputOrigin::Keyboard,
+        )
+        .unwrap();
+    assert_eq!(key(&inspector.hits()[0].target), 9007199254743001);
+
+    // The first wick's center is outside the plot, but half its stroke remains visible.
+    case["chart"]["definition"]["layers"]
+        .as_array_mut()
+        .unwrap()
+        .truncate(1);
+    case["chart"]["definition"]["axes"][0]["viewport"] =
+        serde_json::to_value(Bounds::new(0.002, 4.002).unwrap()).unwrap();
+    let mut session =
+        chart_core::portable::Session::new(&case["chart"].to_string(), &case["data"].to_string())
+            .unwrap();
+    let chart = Arc::new(layout(session.prepare().unwrap(), &request, &Metrics).unwrap());
+    let (from, to) = chart
+        .scene()
+        .items()
+        .iter()
+        .find_map(|item| match item.primitive {
+            chart_core::scene::Primitive::Rule { from, to, .. }
+                if item.layer == Some(LayerId::new(1)) =>
+            {
+                Some((from, to))
+            }
+            _ => None,
+        })
+        .unwrap();
+    assert!((from.x() + 0.2).abs() < 1e-10);
+    let inspector = Inspector::new(chart, 3., 16).unwrap();
+    let p = Point::new(0.1, from.y() + 0.9 * (to.y() - from.y())).unwrap();
+    let hit = inspector.query(p, InspectionMode::Containment);
+    assert_eq!(hit.hits.len(), 1);
+    assert_eq!(key(&hit.hits[0].target), 9007199254743001);
+    assert!(
+        inspector
+            .query(
+                Point::new(-0.1, p.y()).unwrap(),
+                InspectionMode::Containment
+            )
+            .hits
+            .is_empty()
+    );
 }

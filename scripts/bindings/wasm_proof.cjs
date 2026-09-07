@@ -122,3 +122,40 @@ for (const step of JSON.parse(fs.readFileSync(path.join(root,'fixtures/actions/t
 }
 save('actions-state-trace',JSON.stringify(actionTrace));actionProof.dispose();actionProof.free();
 console.log(`PASS WP-15 WASM shared action trace: ${actionTrace.length} transitions`);
+
+// WP-16 shares authored expectations and typed reducer actions with Rust and Python.
+const inputTrace = [];
+for (const c of JSON.parse(fs.readFileSync(path.join(root,'fixtures/interaction/cases.json'),'utf8'))) {
+    const chart = new bindings.Chart(JSON.stringify(c.chart),JSON.stringify(c.data),fs.readFileSync(path.join(root,'fixtures/interaction/profile.json'),'utf8'),Uint8Array.from(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))));
+    let stamp = JSON.parse(chart.present()).stamp, basis = null;
+    const initial = JSON.parse(chart.semantics());
+    for (const step of c.queries) {
+        const before = JSON.parse(chart.state()); let result = null;
+        if (step.query) {
+            const queryStamp = {...(step.gesture ? basis : stamp)};
+            if(step.stale) queryStamp.layout='999999';
+            try {result=JSON.parse(chart.query(JSON.stringify({scene:queryStamp,gesture:!!step.gesture,query:step.query})));assert.equal(step.error,undefined);}
+            catch(error) {const code=JSON.parse(error.message).code;assert.equal(code,step.error,`${c.name}/${step.name}`);result={error:code};}
+            assert.deepEqual(JSON.parse(chart.state()),before);
+            if(step.expect) subset(result,step.expect);
+        }
+        let action=step.action;
+        if(step.apply==='windows')action={SetAxisWindows:result.windows};
+        if(step.apply==='preview')action={PreviewGesture:{id:step.id,preview:{AxisWindows:result.windows}}};
+        if(step.apply==='targets')action={Select:{change:step.change||'Replace',targets:result.targets}};
+        if(action) {
+            if(action.BeginGesture)basis={...stamp};
+            const state=JSON.parse(chart.state());
+            chart.dispatch(JSON.stringify({definition_revision:state.definition_revision,expected_state:state.state_revision,scene:basis||stamp,origin:'Pointer',action}));
+            if(action.CancelGesture||action.CommitGesture)basis=null;
+        }
+        const state=JSON.parse(chart.state());if(step.state)subset(state,step.state);
+        if(step.present){stamp=JSON.parse(chart.present()).stamp;fs.writeFileSync(path.join(output,`${c.name}-${step.name}.svg`),chart.svg());}
+        const semantic=JSON.parse(chart.semantics());assert.deepEqual(semantic.datasets,initial.datasets);
+        semantic.layers.forEach((a,i)=>{assert.deepEqual(a.rows,initial.layers[i].rows);assert.deepEqual(a.domains,initial.layers[i].domains);});
+        inputTrace.push({case:c.name,name:step.name,result,state});
+    }
+    chart.dispose();chart.free();
+}
+save('input-trace',JSON.stringify(inputTrace));
+console.log(`PASS WP-16 WASM shared input queries/actions: ${inputTrace.length} steps`);

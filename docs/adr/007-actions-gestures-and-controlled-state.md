@@ -1,6 +1,6 @@
 # ADR-007 — Actions, gesture ownership and controlled state
 
-Status: accepted for WP-15, 7 September 2026. WP-16–19 add input, reconciliation and
+Status: accepted for WP-15/16, 7 September 2026. WP-17–19 add linking, reconciliation and
 scheduling decisions without changing the synchronous core ownership boundary.
 
 ## Decision
@@ -36,7 +36,33 @@ serialization and linking. [WP-15 evidence](../evidence/wp-15-completion-2026-09
 includes deterministic traces, controlled-response/cancellation failures, resource
 release, real-font exports, actual Python/WASM execution and native controls.
 
-Gesture geometry/priority/capture translation remains WP-16; constraints and linked-view
+WP-16 implements gesture geometry, paint priority and capture translation; constraints and linked-view
 coordination remain WP-17; retention/follow reconciliation remains WP-18. The bounded
 active-plus-pending scheduling decision and evidence belong to WP-19. G3 is open until
 all WP-15–20 acceptance is complete.
+
+
+## WP-16: presented indexes and typed navigation
+
+Own spatial, sorted-x and semantic-target indexes beside an immutable presented scene.
+Share indexes through Arc and retain only bounded result/state copies per input transition.
+Use exact scene Arc identity for cache membership and stamps for external input fences.
+Cloning an inspector/reducer must not copy a scene-sized candidate set or rebuild target
+availability per pointer event. Overlapping geometry can still require linear hit work.
+
+Navigation produces typed named-axis windows rather than editing domains or filtering
+rows. Category endpoints are stable labels and timestamps are exact source ticks. Keep
+legacy x/y intervals compatible; named windows override them under the existing viewport
+revision and gesture lifecycle. One named scale has one window across its panels; this
+adds no separate per-panel state namespace. Categories preserve full trained catalogs.
+
+Native code owns event translation/capture/focus subscriptions and calls shared producers
+before the reducer. Drags retain the original presented frame and native origin. Observe
+focus transitions during rendering as well as through callbacks: the actual native blur
+check exposed a missed focus-out callback on the pinned GPUI version. Python/WASM use
+pure query DTOs and the same reducers, with no hidden presentation acknowledgment.
+
+No dependency changed. Full-domain capture clears named windows only in its captured
+copy. Live interaction overlays, linking, streaming reconciliation and scheduling remain
+with their assigned packages. The [interaction contract](../interaction-contract.md)
+and [WP-16 evidence](../evidence/wp-16-completion-2026-09-07.md) record the current scope.

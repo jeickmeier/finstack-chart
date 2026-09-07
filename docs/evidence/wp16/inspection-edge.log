@@ -1,0 +1,17 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.64s
+     Running tests/inspection.rs (target/debug/deps/inspection-c1e1b404e2483de2)
+
+running 10 tests
+test rectangle_selection_intersects_bars_instead_of_testing_centers ... ok
+test keyboard_wrap_clear_idempotency_and_stale_stamp_are_atomic ... ok
+test histogram_hit_retains_aggregate_members_and_respects_containment ... ok
+test empty_inspection_and_invalid_options_are_recoverable ... ok
+test brushes_lasso_series_and_limits_preserve_vertex_provenance ... ok
+test scatter_nearest_radius_clips_and_equal_distance_z_order ... ok
+test nearest_x_groups_preserve_gap_targets_and_never_invent_interpolation ... ok
+test stable_keyboard_identity_survives_rebuild_and_removal_clears_it ... ok
+test candle_wicks_are_contained_and_keyboard_deduplicates_each_candle ... ok
+test dense_spatial_and_sorted_x_match_scan_without_source_work ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.41s

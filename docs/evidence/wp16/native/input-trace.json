@@ -1,0 +1,1272 @@
+[
+  {
+    "case": "input-scatter",
+    "name": "nearest-center",
+    "result": {
+      "examined": 1,
+      "hits": [
+        {
+          "layer": "1",
+          "panel": null,
+          "position": {
+            "x": 100.0,
+            "y": 100.0
+          },
+          "selection": "AtomicTarget",
+          "target": {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743002"
+            }
+          },
+          "values": []
+        }
+      ],
+      "nodes": 1,
+      "targets": [
+        {
+          "epoch": "1",
+          "identity": {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743002"
+            }
+          },
+          "layer": "1",
+          "panel": null
+        }
+      ]
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "0",
+          "focus": "0",
+          "follow": "0",
+          "gesture": "0",
+          "hover": "0",
+          "pin": "0",
+          "selection": "0",
+          "visibility": "0"
+        },
+        "selection": []
+      },
+      "state_revision": "0",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "0"
+    }
+  },
+  {
+    "case": "input-scatter",
+    "name": "empty-between-centers",
+    "result": {
+      "targets": []
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "0",
+          "focus": "0",
+          "follow": "0",
+          "gesture": "0",
+          "hover": "0",
+          "pin": "0",
+          "selection": "0",
+          "visibility": "0"
+        },
+        "selection": []
+      },
+      "state_revision": "0",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "0"
+    }
+  },
+  {
+    "case": "input-scatter",
+    "name": "lasso-select",
+    "result": {
+      "targets": [
+        {
+          "epoch": "1",
+          "identity": {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743002"
+            }
+          },
+          "layer": "1",
+          "panel": null
+        }
+      ]
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "1",
+          "focus": "0",
+          "follow": "0",
+          "gesture": "0",
+          "hover": "0",
+          "pin": "0",
+          "selection": "1",
+          "visibility": "0"
+        },
+        "selection": [
+          {
+            "epoch": "1",
+            "identity": {
+              "Source": {
+                "dataset": "1",
+                "key": "9007199254743002"
+              }
+            },
+            "layer": "1",
+            "panel": null
+          }
+        ]
+      },
+      "state_revision": "1",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "0"
+    }
+  },
+  {
+    "case": "input-scatter",
+    "name": "toggle-same-target",
+    "result": {
+      "targets": [
+        {
+          "epoch": "1",
+          "identity": {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743002"
+            }
+          },
+          "layer": "1",
+          "panel": null
+        }
+      ]
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "2",
+          "focus": "0",
+          "follow": "0",
+          "gesture": "0",
+          "hover": "0",
+          "pin": "0",
+          "selection": "2",
+          "visibility": "0"
+        },
+        "selection": []
+      },
+      "state_revision": "2",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "0"
+    }
+  },
+  {
+    "case": "input-scatter",
+    "name": "pointer-zoom",
+    "result": {
+      "windows": {
+        "0": {
+          "Numeric": [
+            0.5,
+            2.5
+          ]
+        }
+      }
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "InspectHistory",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "3",
+          "focus": "0",
+          "follow": "1",
+          "gesture": "0",
+          "hover": "0",
+          "pin": "0",
+          "selection": "2",
+          "visibility": "0"
+        },
+        "selection": [],
+        "windows": {
+          "0": {
+            "Numeric": [
+              0.5,
+              2.5
+            ]
+          }
+        }
+      },
+      "state_revision": "3",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "1"
+    }
+  },
+  {
+    "case": "input-scatter",
+    "name": "new-presented-coordinate",
+    "result": {
+      "examined": 1,
+      "hits": [
+        {
+          "layer": "1",
+          "panel": null,
+          "position": {
+            "x": 100.0,
+            "y": 100.0
+          },
+          "selection": "AtomicTarget",
+          "target": {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743002"
+            }
+          },
+          "values": []
+        }
+      ],
+      "nodes": 1,
+      "targets": [
+        {
+          "epoch": "1",
+          "identity": {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743002"
+            }
+          },
+          "layer": "1",
+          "panel": null
+        }
+      ]
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "InspectHistory",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "3",
+          "focus": "0",
+          "follow": "1",
+          "gesture": "0",
+          "hover": "0",
+          "pin": "0",
+          "selection": "2",
+          "visibility": "0"
+        },
+        "selection": [],
+        "windows": {
+          "0": {
+            "Numeric": [
+              0.5,
+              2.5
+            ]
+          }
+        }
+      },
+      "state_revision": "3",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "1"
+    }
+  },
+  {
+    "case": "input-scatter",
+    "name": "stale-revision",
+    "result": {
+      "error": "CHART_SUPERSEDED"
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "InspectHistory",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "3",
+          "focus": "0",
+          "follow": "1",
+          "gesture": "0",
+          "hover": "0",
+          "pin": "0",
+          "selection": "2",
+          "visibility": "0"
+        },
+        "selection": [],
+        "windows": {
+          "0": {
+            "Numeric": [
+              0.5,
+              2.5
+            ]
+          }
+        }
+      },
+      "state_revision": "3",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "1"
+    }
+  },
+  {
+    "case": "input-scatter",
+    "name": "wrong-range-type",
+    "result": {
+      "error": "CHART_VALIDATION"
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "InspectHistory",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "3",
+          "focus": "0",
+          "follow": "1",
+          "gesture": "0",
+          "hover": "0",
+          "pin": "0",
+          "selection": "2",
+          "visibility": "0"
+        },
+        "selection": [],
+        "windows": {
+          "0": {
+            "Numeric": [
+              0.5,
+              2.5
+            ]
+          }
+        }
+      },
+      "state_revision": "3",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "1"
+    }
+  },
+  {
+    "case": "input-scatter",
+    "name": "cancel-navigation-begin",
+    "result": null,
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "InspectHistory",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "3",
+          "focus": "0",
+          "follow": "1",
+          "gesture": "1",
+          "hover": "0",
+          "pin": "0",
+          "selection": "2",
+          "visibility": "0"
+        },
+        "selection": [],
+        "windows": {
+          "0": {
+            "Numeric": [
+              0.5,
+              2.5
+            ]
+          }
+        }
+      },
+      "state_revision": "4",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "1"
+    }
+  },
+  {
+    "case": "input-scatter",
+    "name": "pinned-pan-preview",
+    "result": {
+      "windows": {
+        "0": {
+          "Numeric": [
+            0.0,
+            2.0
+          ]
+        }
+      }
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "InspectHistory",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "3",
+          "focus": "0",
+          "follow": "1",
+          "gesture": "2",
+          "hover": "0",
+          "pin": "0",
+          "selection": "2",
+          "visibility": "0"
+        },
+        "selection": [],
+        "windows": {
+          "0": {
+            "Numeric": [
+              0.5,
+              2.5
+            ]
+          }
+        }
+      },
+      "state_revision": "5",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "2"
+    }
+  },
+  {
+    "case": "input-scatter",
+    "name": "pinned-pan-still-original",
+    "result": {
+      "windows": {
+        "0": {
+          "Numeric": [
+            0.0,
+            2.0
+          ]
+        }
+      }
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "InspectHistory",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "3",
+          "focus": "0",
+          "follow": "1",
+          "gesture": "2",
+          "hover": "0",
+          "pin": "0",
+          "selection": "2",
+          "visibility": "0"
+        },
+        "selection": [],
+        "windows": {
+          "0": {
+            "Numeric": [
+              0.5,
+              2.5
+            ]
+          }
+        }
+      },
+      "state_revision": "5",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "2"
+    }
+  },
+  {
+    "case": "input-scatter",
+    "name": "cancel-restores",
+    "result": null,
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "InspectHistory",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "3",
+          "focus": "0",
+          "follow": "1",
+          "gesture": "3",
+          "hover": "0",
+          "pin": "0",
+          "selection": "2",
+          "visibility": "0"
+        },
+        "selection": [],
+        "windows": {
+          "0": {
+            "Numeric": [
+              0.5,
+              2.5
+            ]
+          }
+        }
+      },
+      "state_revision": "6",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "3"
+    }
+  },
+  {
+    "case": "input-scatter",
+    "name": "legacy-replaces-typed",
+    "result": null,
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "InspectHistory",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "4",
+          "focus": "0",
+          "follow": "1",
+          "gesture": "3",
+          "hover": "0",
+          "pin": "0",
+          "selection": "2",
+          "visibility": "0"
+        },
+        "selection": []
+      },
+      "state_revision": "7",
+      "version": 1,
+      "viewport": {
+        "x": [
+          1.0,
+          3.0
+        ],
+        "y": null
+      },
+      "viewport_revision": "4"
+    }
+  },
+  {
+    "case": "input-scatter",
+    "name": "legacy-view-is-presented",
+    "result": {
+      "examined": 1,
+      "hits": [
+        {
+          "layer": "1",
+          "panel": null,
+          "position": {
+            "x": 0.0,
+            "y": 100.0
+          },
+          "selection": "AtomicTarget",
+          "target": {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743002"
+            }
+          },
+          "values": []
+        }
+      ],
+      "nodes": 1,
+      "targets": [
+        {
+          "epoch": "1",
+          "identity": {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743002"
+            }
+          },
+          "layer": "1",
+          "panel": null
+        }
+      ]
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "InspectHistory",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "4",
+          "focus": "0",
+          "follow": "1",
+          "gesture": "3",
+          "hover": "0",
+          "pin": "0",
+          "selection": "2",
+          "visibility": "0"
+        },
+        "selection": []
+      },
+      "state_revision": "7",
+      "version": 1,
+      "viewport": {
+        "x": [
+          1.0,
+          3.0
+        ],
+        "y": null
+      },
+      "viewport_revision": "4"
+    }
+  },
+  {
+    "case": "input-bars",
+    "name": "bar-edge-intersection",
+    "result": {
+      "targets": [
+        {
+          "epoch": "1",
+          "identity": {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743002"
+            }
+          },
+          "layer": "1",
+          "panel": null
+        }
+      ]
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "0",
+          "focus": "0",
+          "follow": "0",
+          "gesture": "0",
+          "hover": "0",
+          "pin": "0",
+          "selection": "0",
+          "visibility": "0"
+        },
+        "selection": []
+      },
+      "state_revision": "0",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "0"
+    }
+  },
+  {
+    "case": "input-bars",
+    "name": "bar-contained",
+    "result": {
+      "examined": 1,
+      "hits": [
+        {
+          "layer": "1",
+          "panel": null,
+          "position": {
+            "x": 100.0,
+            "y": 150.0
+          },
+          "selection": "AtomicTarget",
+          "target": {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743002"
+            }
+          },
+          "values": []
+        }
+      ],
+      "nodes": 1,
+      "targets": [
+        {
+          "epoch": "1",
+          "identity": {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743002"
+            }
+          },
+          "layer": "1",
+          "panel": null
+        }
+      ]
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "0",
+          "focus": "0",
+          "follow": "0",
+          "gesture": "0",
+          "hover": "0",
+          "pin": "0",
+          "selection": "0",
+          "visibility": "0"
+        },
+        "selection": []
+      },
+      "state_revision": "0",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "0"
+    }
+  },
+  {
+    "case": "input-line",
+    "name": "line-nearest-gap-group",
+    "result": {
+      "examined": 2,
+      "hits": [
+        {
+          "layer": "1",
+          "panel": null,
+          "position": {
+            "x": 300.0,
+            "y": 100.0
+          },
+          "selection": "AtomicTarget",
+          "target": {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743004"
+            }
+          },
+          "values": []
+        }
+      ],
+      "nodes": 0,
+      "targets": [
+        {
+          "epoch": "1",
+          "identity": {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743004"
+            }
+          },
+          "layer": "1",
+          "panel": null
+        }
+      ]
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "0",
+          "focus": "0",
+          "follow": "0",
+          "gesture": "0",
+          "hover": "0",
+          "pin": "0",
+          "selection": "0",
+          "visibility": "0"
+        },
+        "selection": []
+      },
+      "state_revision": "0",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "0"
+    }
+  },
+  {
+    "case": "input-line",
+    "name": "gap-brush-no-invented-source",
+    "result": {
+      "targets": []
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "0",
+          "focus": "0",
+          "follow": "0",
+          "gesture": "0",
+          "hover": "0",
+          "pin": "0",
+          "selection": "0",
+          "visibility": "0"
+        },
+        "selection": []
+      },
+      "state_revision": "0",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "0"
+    }
+  },
+  {
+    "case": "input-category",
+    "name": "category-singleton",
+    "result": {
+      "windows": {
+        "0": {
+          "Category": {
+            "first": "Beta",
+            "last": "Beta"
+          }
+        }
+      }
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "InspectHistory",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "1",
+          "focus": "0",
+          "follow": "1",
+          "gesture": "0",
+          "hover": "0",
+          "pin": "0",
+          "selection": "0",
+          "visibility": "0"
+        },
+        "selection": [],
+        "windows": {
+          "0": {
+            "Category": {
+              "first": "Beta",
+              "last": "Beta"
+            }
+          }
+        }
+      },
+      "state_revision": "1",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "1"
+    }
+  },
+  {
+    "case": "input-category",
+    "name": "category-reset-retains-catalog",
+    "result": {
+      "windows": {
+        "0": {
+          "Category": {
+            "first": "Alpha",
+            "last": "Gamma"
+          }
+        }
+      }
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "InspectHistory",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "2",
+          "focus": "0",
+          "follow": "1",
+          "gesture": "0",
+          "hover": "0",
+          "pin": "0",
+          "selection": "0",
+          "visibility": "0"
+        },
+        "selection": [],
+        "windows": {
+          "0": {
+            "Category": {
+              "first": "Alpha",
+              "last": "Gamma"
+            }
+          }
+        }
+      },
+      "state_revision": "2",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "2"
+    }
+  },
+  {
+    "case": "input-category",
+    "name": "category-missing-rejected",
+    "result": {
+      "error": "CHART_VALIDATION"
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "InspectHistory",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "2",
+          "focus": "0",
+          "follow": "1",
+          "gesture": "0",
+          "hover": "0",
+          "pin": "0",
+          "selection": "0",
+          "visibility": "0"
+        },
+        "selection": [],
+        "windows": {
+          "0": {
+            "Category": {
+              "first": "Alpha",
+              "last": "Gamma"
+            }
+          }
+        }
+      },
+      "state_revision": "2",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "2"
+    }
+  },
+  {
+    "case": "input-utc",
+    "name": "exact-time-window",
+    "result": {
+      "windows": {
+        "0": {
+          "Timestamp": [
+            "1709143200000",
+            "1709272800000"
+          ]
+        }
+      }
+    },
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "interaction": {
+        "annotations": {},
+        "configuration": {
+          "history_capacity": 64,
+          "manual_view_enters_history": true,
+          "max_targets": 4096
+        },
+        "follow": "InspectHistory",
+        "legend_visible": true,
+        "pinned": null,
+        "revisions": {
+          "annotations": "0",
+          "configuration": "0",
+          "durable": "1",
+          "focus": "0",
+          "follow": "1",
+          "gesture": "0",
+          "hover": "0",
+          "pin": "0",
+          "selection": "0",
+          "visibility": "0"
+        },
+        "selection": [],
+        "windows": {
+          "0": {
+            "Timestamp": [
+              "1709143200000",
+              "1709272800000"
+            ]
+          }
+        }
+      },
+      "state_revision": "1",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "1"
+    }
+  }
+]
