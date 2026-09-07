@@ -255,6 +255,7 @@ pub enum LayoutStatus {
 /// One coherent immutable layout, retaining the exact prepared/stat/source snapshot.
 #[derive(Clone, Debug)]
 pub struct LaidOutChart {
+    pub(crate) paint_themes: BTreeMap<crate::LayerId, crate::theme::ThemePatch>,
     pub(crate) interactions: BTreeMap<usize, crate::grammar::GeometryInteraction>,
     pub(crate) insets: Vec<LaidOutInset>,
     pub(crate) panels: Vec<LaidOutPanel>,
@@ -295,6 +296,10 @@ pub struct LaidOutInset {
     pub chart: Arc<LaidOutChart>,
 }
 impl LaidOutChart {
+    /// Resolved per-layer paint cascade captured with this immutable destination.
+    pub fn paint_theme(&self, layer: crate::LayerId) -> Option<&crate::theme::ThemePatch> {
+        self.paint_themes.get(&layer)
+    }
     /// Explicit custom hit/semantic/selection/keyboard metadata by final scene item index.
     pub fn interactions(&self) -> &BTreeMap<usize, crate::grammar::GeometryInteraction> {
         &self.interactions

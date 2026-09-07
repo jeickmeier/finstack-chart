@@ -179,3 +179,14 @@ for(const step of streamCase.steps){
 }
 save('stream-trace',JSON.stringify(streamTrace));streamChart.dispose();streamChart.free();
 console.log(`PASS WP-18 WASM streaming replay: ${streamTrace.length} steps`);
+
+// WP-19: shared destination reduction, exact retained lookup and unchanged publication.
+for(const test of JSON.parse(fs.readFileSync(path.join(root,'fixtures/dense/cases.json'),'utf8'))){
+    const c=new bindings.Chart(JSON.stringify(test.chart),JSON.stringify(test.data),fs.readFileSync(path.join(root,'fixtures/interaction/profile.json'),'utf8'),Uint8Array.from(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))));
+    const stamp=JSON.parse(c.present()).stamp, before=JSON.parse(c.semantics()), exact=Uint8Array.from(c.svg());
+    const result=JSON.parse(c.dense_preview(JSON.stringify(test.request)));
+    assert.deepEqual(JSON.parse(c.semantics()),before);assert.deepEqual(c.svg(),exact);
+    result.described=JSON.parse(c.query(JSON.stringify({scene:stamp,query:{Describe:{offset:123,limit:1}}})));result.semantics=before;
+    fs.writeFileSync(path.join(output,`dense-${test.name}.svg`),result.svg);delete result.svg;
+    fs.writeFileSync(path.join(output,`dense-${test.name}.json`),JSON.stringify(result));c.dispose();c.free();
+}

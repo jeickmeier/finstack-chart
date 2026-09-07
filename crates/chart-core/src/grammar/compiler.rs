@@ -9,14 +9,18 @@ use std::{
     sync::Arc,
 };
 
+#[derive(Clone)]
+struct CachedOutput {
+    table: Arc<PreparedTable>,
+    diagnostics: Vec<Diagnostic>,
+}
 struct CachedGraph {
     scope: Option<facets::PanelScope>,
     source: SnapshotHandle<StoreSnapshot>,
     definitions: Vec<TransformDefinition>,
     limits: CompileLimits,
-    tables: BTreeMap<TransformId, Arc<PreparedTable>>,
-    diagnostics: Vec<Diagnostic>,
-    rows: usize,
+    outputs: BTreeMap<TransformId, CachedOutput>,
+    layers: BTreeMap<LayerId, (Layer, CachedOutput)>,
 }
 
 /// One synchronous preparation route for typed-normalized authoring, recipes and layers.
@@ -73,7 +77,6 @@ impl Compiler {
                     .source
                     .get()
                     .is_ok_and(|p| std::ptr::eq(p, snapshot))
-                && previous.state() == state
                 && old.mappings == definition.mappings
                 && old.transforms == definition.transforms
                 && old.layers == definition.layers
@@ -81,7 +84,7 @@ impl Compiler {
             {
                 validate_definition(definition, snapshot, limits, &self.extensions)?;
                 let mut result = previous.clone();
-                rebind_presentation(&mut result, &Arc::new(definition.clone()));
+                rebind_presentation(&mut result, &Arc::new(definition.clone()), state);
                 self.presentation = Some((result.clone(), limits));
                 return Ok(result);
             }
@@ -89,7 +92,10 @@ impl Compiler {
         self.presentation = None;
         if self.cache.values().any(|c| {
             c.definitions != definition.transforms
-                || !c.source.get().is_ok_and(|old| std::ptr::eq(old, snapshot))
+                || !c
+                    .source
+                    .get()
+                    .is_ok_and(|old| old.epoch() == snapshot.epoch())
         }) {
             self.cache.clear();
         }
@@ -129,28 +135,36 @@ impl Compiler {
         let snapshot = source.get()?;
         let order = validate_definition(definition, snapshot, limits, &self.extensions)?;
         let cache_key = scope.map(|s| s.key.clone());
-        let reuse = self.cache.get(&cache_key).is_some_and(|c| {
+        let cached = self.cache.get(&cache_key).filter(|c| {
             c.scope.as_ref() == scope
                 && c.definitions == definition.transforms
                 && c.limits == limits
-                && c.source.get().is_ok_and(|old| std::ptr::eq(old, snapshot))
         });
+        let reusable = |c: &CachedGraph, output: &CachedOutput| {
+            c.source
+                .get()
+                .and_then(|old| old.dataset(output.table.input.dataset))
+                .ok()
+                .zip(snapshot.dataset(output.table.input.dataset).ok())
+                .is_some_and(|(old, new)| std::ptr::eq(old, new))
+        };
+        let mut metrics = PreparationMetrics::default();
         let mut remaining = limits.max_prepared_rows;
-        let (tables, mut diagnostics, graph_rows) = if reuse {
-            let c = self
-                .cache
-                .get(&cache_key)
-                .ok_or_else(|| error(DiagnosticCode::Validation, "Graph cache is absent."))?;
-            charge(&mut remaining, c.rows, "prepared row")?;
-            (c.tables.clone(), c.diagnostics.clone(), c.rows)
-        } else {
-            let mut tables = BTreeMap::new();
-            let mut diagnostics = vec![];
-            for id in order {
-                let node = &definition.transforms[id];
-                if !facets::targeted(&node.facet, scope) {
-                    continue;
-                }
+        let mut tables = BTreeMap::new();
+        let mut outputs = BTreeMap::new();
+        let mut diagnostics = vec![];
+        for id in order {
+            let node = &definition.transforms[id];
+            if !facets::targeted(&node.facet, scope) {
+                continue;
+            }
+            let output = if let Some(old) =
+                cached.and_then(|c| c.outputs.get(&node.id).filter(|o| reusable(c, o)))
+            {
+                metrics.reused_transforms += 1;
+                old.clone()
+            } else {
+                metrics.evaluated_transforms += 1;
                 let input = resolve_input(
                     node.input,
                     snapshot,
@@ -163,7 +177,7 @@ impl Compiler {
                 let data = snapshot.dataset(input.input.dataset)?;
                 let input = facets::filter_panel(input, data, scope, &node.facet, node.scope)?;
                 let statistic = facets::scoped_stat(&node.statistic, node.scope);
-                let start = diagnostics.len();
+                let mut errors = vec![];
                 let table = stats::run(
                     &self.extensions,
                     &mut self.bin_cache,
@@ -186,18 +200,23 @@ impl Compiler {
                         max_prepared_rows: remaining,
                         ..limits
                     },
-                    &mut diagnostics,
+                    &mut errors,
                 )
                 .map_err(|e| context(e, data, None))?;
-                for e in &mut diagnostics[start..] {
+                for e in &mut errors {
                     *e = context(e.clone(), data, None);
                 }
-                charge(&mut remaining, table.work_units(), "prepared value")?;
-                tables.insert(node.id, table);
-            }
-            (tables, diagnostics, limits.max_prepared_rows - remaining)
-        };
-        let graph_diagnostics = diagnostics.clone();
+                CachedOutput {
+                    table,
+                    diagnostics: errors,
+                }
+            };
+            charge(&mut remaining, output.table.work_units(), "prepared value")?;
+            diagnostics.extend(output.diagnostics.clone());
+            tables.insert(node.id, output.table.clone());
+            outputs.insert(node.id, output);
+        }
+        let mut cached_layers = BTreeMap::new();
         let mut layers = vec![];
         let mut colors = BTreeMap::new();
         let mut scale_domains = BTreeMap::new();
@@ -210,40 +229,67 @@ impl Compiler {
             if !facets::targeted(&layer.facet, scope) {
                 continue;
             }
-            let input = resolve_input(
-                layer.data,
-                snapshot,
-                &tables,
-                remaining,
-                scope,
-                &layer.facet,
-                layer.scope,
-            )?;
-            let data = snapshot.dataset(input.input.dataset)?;
-            let input = facets::filter_panel(input, data, scope, &layer.facet, layer.scope)?;
-            let statistic = facets::scoped_stat(&layer.statistic, layer.scope);
+            let output = if let Some((_, old)) = cached.and_then(|c| {
+                c.layers
+                    .get(&layer.id)
+                    .filter(|(old, o)| same_population(old, layer) && reusable(c, o))
+            }) {
+                metrics.reused_layers += 1;
+                old.clone()
+            } else {
+                metrics.evaluated_layers += 1;
+                let input = resolve_input(
+                    layer.data,
+                    snapshot,
+                    &tables,
+                    remaining,
+                    scope,
+                    &layer.facet,
+                    layer.scope,
+                )?;
+                let data = snapshot.dataset(input.input.dataset)?;
+                let input = facets::filter_panel(input, data, scope, &layer.facet, layer.scope)?;
+                let statistic = facets::scoped_stat(&layer.statistic, layer.scope);
+                let mut errors = vec![];
+                let table = stats::run(
+                    &self.extensions,
+                    &mut self.bin_cache,
+                    input,
+                    data,
+                    stats::StatRequest {
+                        stat: &statistic,
+                        population: layer.scope,
+                        panel: facets::population_panel(scope, &layer.facet, layer.scope),
+                        filters: &layer.filters,
+                        policy: layer.invalid,
+                        scope: &facets::operation_scope(
+                            "layer",
+                            layer.id.get(),
+                            layer.scope,
+                            scope,
+                        ),
+                    },
+                    CompileLimits {
+                        max_prepared_rows: remaining,
+                        ..limits
+                    },
+                    &mut errors,
+                )
+                .map_err(|e| context(e, data, Some(layer.id)))?;
+                for e in &mut errors {
+                    *e = context(e.clone(), data, Some(layer.id));
+                }
+                CachedOutput {
+                    table,
+                    diagnostics: errors,
+                }
+            };
+            charge(&mut remaining, output.table.work_units(), "prepared value")?;
+            let table = output.table.clone();
+            let data = snapshot.dataset(table.input.dataset)?;
+            diagnostics.extend(output.diagnostics.clone());
+            cached_layers.insert(layer.id, (layer.clone(), output));
             let start = diagnostics.len();
-            let table = stats::run(
-                &self.extensions,
-                &mut self.bin_cache,
-                input,
-                data,
-                stats::StatRequest {
-                    stat: &statistic,
-                    population: layer.scope,
-                    panel: facets::population_panel(scope, &layer.facet, layer.scope),
-                    filters: &layer.filters,
-                    policy: layer.invalid,
-                    scope: &facets::operation_scope("layer", layer.id.get(), layer.scope, scope),
-                },
-                CompileLimits {
-                    max_prepared_rows: remaining,
-                    ..limits
-                },
-                &mut diagnostics,
-            )
-            .map_err(|e| context(e, data, Some(layer.id)))?;
-            charge(&mut remaining, table.work_units(), "prepared value")?;
             let prepared = prepare_layer(
                 layer,
                 table,
@@ -294,10 +340,7 @@ impl Compiler {
             domains,
             scale_domains,
             diagnostics,
-            metrics: PreparationMetrics {
-                evaluated_transforms: if reuse { 0 } else { tables.len() },
-                reused_transforms: if reuse { tables.len() } else { 0 },
-            },
+            metrics,
         };
         self.cache.insert(
             cache_key,
@@ -306,9 +349,8 @@ impl Compiler {
                 source: source.clone(),
                 definitions: definition.transforms.clone(),
                 limits,
-                tables,
-                diagnostics: graph_diagnostics,
-                rows: graph_rows,
+                outputs,
+                layers: cached_layers,
             },
         );
         Ok(result)
@@ -1593,14 +1635,24 @@ fn statistical_binding(
 }
 
 // Theme/furniture/guide changes reuse immutable rows, marks and provenance without recomputation.
-fn rebind_presentation(chart: &mut PreparedChart, definition: &Arc<ChartDefinition>) {
+fn rebind_presentation(
+    chart: &mut PreparedChart,
+    definition: &Arc<ChartDefinition>,
+    state: &ChartState,
+) {
+    chart.state = state.clone();
+    for layer in &mut chart.layers {
+        layer.visible = state.is_visible(layer.id);
+    }
     chart.definition = definition.clone();
     chart.metrics = PreparationMetrics {
         evaluated_transforms: 0,
         reused_transforms: chart.metrics.evaluated_transforms + chart.metrics.reused_transforms,
+        evaluated_layers: 0,
+        reused_layers: chart.metrics.evaluated_layers + chart.metrics.reused_layers,
     };
     for panel in &mut chart.panels {
-        rebind_presentation(Arc::make_mut(&mut panel.chart), definition);
+        rebind_presentation(Arc::make_mut(&mut panel.chart), definition, state);
     }
 }
 
@@ -1702,4 +1754,13 @@ fn apply_custom_geometry(
     prepared.domains = domains;
     prepared.interactions = interactions;
     Ok(())
+}
+
+fn same_population(a: &Layer, b: &Layer) -> bool {
+    a.data == b.data
+        && a.statistic == b.statistic
+        && a.filters == b.filters
+        && a.facet == b.facet
+        && a.scope == b.scope
+        && a.invalid == b.invalid
 }

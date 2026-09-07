@@ -218,3 +218,15 @@ for step in stream_case['steps']:
     stream_trace.append(dict(name=step['name'],result=result,semantics=semantic,state=state))
 save('stream-trace',json.dumps(stream_trace));chart.dispose()
 print(f'PASS WP-18 Python streaming replay: {len(stream_trace)} steps')
+
+# WP-19: presentation-only density, with unchanged exact publication and source semantics.
+for case in json.loads((ROOT/'fixtures/dense/cases.json').read_text()):
+    chart=Chart(json.dumps(case['chart']),json.dumps(case['data']),(ROOT/'fixtures/interaction/profile.json').read_text(),(ROOT/'fixtures/capability/fonts/NotoSans-Regular.ttf').read_bytes())
+    stamp=json.loads(chart.present())['stamp']; before=json.loads(chart.semantics()); exact=chart.export('svg')
+    result=json.loads(chart.dense_preview(json.dumps(case['request'])))
+    assert before==json.loads(chart.semantics()) and exact==chart.export('svg')
+    result['described']=json.loads(chart.query(json.dumps({'scene':stamp,'query':{'Describe':{'offset':123,'limit':1}}})))
+    result['semantics']=before
+    (output/f"dense-{case['name']}.svg").write_text(result.pop('svg'))
+    (output/f"dense-{case['name']}.json").write_text(json.dumps(result))
+    chart.dispose()

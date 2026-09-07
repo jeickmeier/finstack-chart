@@ -1,6 +1,8 @@
 //! Native execution of the same versioned fixture consumed by Python and real WASM.
 #[path = "common/actions_trace.rs"]
 mod actions_trace;
+#[path = "common/dense_proof.rs"]
+mod dense_proof;
 #[path = "common/input_trace.rs"]
 mod input_trace;
 #[path = "common/stream_trace.rs"]
@@ -19,6 +21,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     actions_trace::run(&root, &output)?;
     input_trace::run(&root, &output)?;
     stream_trace::run(&root, &output)?;
+    dense_proof::run(&root, &output)?;
     let mut chart = PortableChart::new(
         &fs::read_to_string(fixture.join("chart.json"))?,
         &fs::read_to_string(fixture.join("data.json"))?,

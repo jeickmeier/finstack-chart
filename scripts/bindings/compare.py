@@ -339,3 +339,49 @@ for runtime,trace in zip(paths,stream_traces):
         else:assert all(v is None for v in actual_values.values())
     for svg in paths[0].glob('stream-*.svg'):assert svg.read_bytes()==(runtime/svg.name).read_bytes(),svg.name
 print('PASS WP-18 70-step actual Rust/Python/WASM queue/retention/replay trace; independent retained rows and exact bin memberships; historical pins and exact SVG bytes')
+
+# WP-19: destination-only reduction; source and publication equality asserted in every runner.
+dense_cases=json.loads((Path(__file__).resolve().parents[2]/'fixtures/dense/cases.json').read_text())
+for case in dense_cases:
+    name=case['name'];traces=[json.loads((p/f'dense-{name}.json').read_text()) for p in paths]
+    for trace in traces[1:]:same(traces[0],trace,1e-10,f'dense/{name}')
+    for p in paths[1:]:assert (paths[0]/f'dense-{name}.svg').read_bytes()==(p/f'dense-{name}.svg').read_bytes()
+    t=traces[0];m=t['metrics'];assert m['source_rows']==len(case['rows']) and m['prepared_rows']==len(case['rows']);assert m['rendered_vertices']<m['raw_vertices']
+    described=t['described']['targets'][0];assert described['target']['identity']['Source']['key']=='9007199254743124'
+    assert described['cells'][0]['value']=='123'
+    marks=[i for i in t['items'] if i['layer']=='1'];clip=marks[0]['clip'];left=clip['origin']['x'];width=clip['width']
+    if name=='gapped-lines':
+        assert m['line_runs']==5 and m['represented_samples']==996 and m['candle_buckets']==0
+        paths_only=[i['primitive']['Path']['commands'] for i in marks];assert len(paths_only)==5
+        kept=[]
+        for commands,(start,end) in zip(paths_only,[(0,199),(201,399),(401,599),(601,799),(801,999)]):
+            points=[next(iter(c.values())) for c in commands];indices=[round((p['x']-left)/width*999) for p in points];kept+=indices
+            assert indices[0]==start and indices[-1]==end and indices==sorted(set(indices))
+            for index,point in zip(indices,points):
+                assert case['rows'][index][1] is not None
+                expected_y=clip['origin']['y']+clip['height']*(1-case['rows'][index][1]/90)
+                assert abs(point['y']-expected_y)<=1e-9
+            buckets={}
+            for index in range(start,end+1):buckets.setdefault(math.floor(width*index/999/8),[]).append(index)
+            for members in buckets.values():
+                retained=[i for i in indices if i in members];values=[case['rows'][i][1] for i in members]
+                assert members[0] in retained and members[-1] in retained
+                assert min(values) in [case['rows'][i][1] for i in retained] and max(values) in [case['rows'][i][1] for i in retained]
+        assert 123 not in kept and 333 in kept # Exact described row was discarded only from paint.
+    else:
+        seen=[];assert m['candle_buckets']==len(t['candles']) and m['represented_samples']==256
+        for bucket in t['candles']:
+            members=[int(x['Source']['key'])-9007199254743001 for x in bucket['targets']];seen+=members;rows=[case['rows'][i] for i in members]
+            assert members==sorted(members) and all(math.floor(width*i/255/12)==bucket['column'] for i in members)
+            assert (bucket['open'],bucket['high'],bucket['low'],bucket['close'])==(rows[0][1],max(r[2] for r in rows),min(r[3] for r in rows),rows[-1][4])
+            volumes=[r[5] for r in rows if r[5] is not None];assert bucket['volume']==(math.fsum(volumes) if volumes else None) and bucket['valid_volumes']==len(volumes)
+            assert (bucket['first_x'],bucket['last_x'])==(members[0],members[-1])
+        if name=='grayscale-candles':
+            for item in marks:
+                primitive=item['primitive']
+                if 'Rectangle' in primitive: color=primitive['Rectangle']['fill']
+                else:
+                    path=primitive['DashedPath'];assert path['stroke']['width']==2.5 and path['dashes']==[3,2];color=path['stroke']['color']
+                assert color['red']==color['green']==color['blue']
+        assert sorted(seen)==list(range(256)) and len(seen)==len(set(seen))
+print('PASS WP-19 actual Rust/Python/WASM density: exact raw lookup/publication unchanged; ordered gap endpoints and visible extrema; first/high/low/last OHLC and compensated valid-volume sums; exact SVG bytes')

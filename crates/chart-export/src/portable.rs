@@ -221,6 +221,33 @@ impl PortableChart {
             i.core.extensions().clone(),
         )
     }
+    /// Versioned destination-only density preview. Publication capture remains exact.
+    /// Returns reduced paint, exact bucket membership/counts and an editable SVG preview.
+    pub fn dense_preview(&self, request: &str) -> ChartResult<String> {
+        #[derive(Deserialize)]
+        #[serde(deny_unknown_fields)]
+        struct Request {
+            version: u32,
+            options: chart_core::dense::DensityOptions,
+        }
+        let request: Request = portable::decode(request)?;
+        if request.version != portable::VERSION {
+            return Err(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Unsupported density preview version.",
+            ));
+        }
+        let i = self.get()?;
+        let figure = self.capture()?;
+        let dense = chart_core::dense::DenseChart::prepare(
+            figure.layout().clone(),
+            &request.options,
+            i.profile.layout.limits,
+        )?;
+        portable::encode(
+            &json!({"version":portable::VERSION,"stamp":dense.scene().stamp(),"metrics":dense.metrics(),"candles":dense.candles(),"items":dense.scene().items(),"svg":crate::svg::build(dense.scene(),&i.fonts,&i.profile,true)?}),
+        )
+    }
     /// Owned semantic JSON with generated values, domains, exact source payloads and targets.
     pub fn semantics(&mut self) -> ChartResult<String> {
         self.get_mut()?.core.semantics_json()

@@ -697,7 +697,7 @@ pub(super) fn solve_panels(
         for label in w.labels.values().flatten(){if let Some(block)=&label.rich {for d in &block.diagnostics {if !w.diagnostics.contains(d){w.diagnostics.push(d.clone());}}}}
         let resources=super::text::resources(&output.items,request)?;
         let scene = Scene::new(stamp,request.units,request.bounds,&output.items,&resources,request.limits)?;
-        Ok(LaidOutChart {interactions:output.interactions,insets:vec![],prepared:w.prepared,scene,plot:w.plot,axes:w.axes,
+        Ok(LaidOutChart {paint_themes:BTreeMap::new(),interactions:output.interactions,insets:vec![],prepared:w.prepared,scene,plot:w.plot,axes:w.axes,
             item_panels: vec![None; output.targets.len()], panels: vec![],
             targets:output.targets,diagnostics:w.diagnostics,status,passes:w.passes})
     }).collect()

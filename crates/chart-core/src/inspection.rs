@@ -102,6 +102,9 @@ impl Inspector {
                 "Inspection radius must be positive/finite and grouped limit 1..128.",
             ));
         }
+        for data in presented.prepared().source().get()?.datasets() {
+            data.prepare_lookup();
+        }
         let mut candidates = vec![];
         let mut paint_group = None;
         let mut layer_order = 0;

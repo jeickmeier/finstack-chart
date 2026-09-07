@@ -3,7 +3,7 @@
 Rust-native grammar-of-graphics project with a portable core, headless publication export,
 a standalone GPUI host and optional Kit integration.
 
-**Status: WP-18 bounded ingestion, retention, exact bin updates and historical inspection are implemented. G2 passes its
+**Status: WP-19 bounded background preparation, stage caches and exact-lookup density rendering are implemented. G2 passes its
 [feature matrix](docs/alpha-api.md), including facets, themes, vector publication,
 public custom extensions and 36 actual Rust/Python/WASM cases. A shared action trace
 proves gesture/cancellation/controlled-state behavior in each runtime; 47 shared input
@@ -126,3 +126,7 @@ checks and the accessibility limitations of the supported native target.
 [Streaming contract](docs/streaming-contract.md) and
 [WP-18 evidence](docs/evidence/wp-18-completion-2026-09-07.md) document exact replay,
 queue acknowledgements, retention/follow semantics and remaining performance gates.
+
+[Scheduling and density contract](docs/scheduling-density-contract.md) and
+[WP-19 evidence](docs/evidence/wp-19-completion-2026-09-07.md) cover bounded workers,
+monotonic presentation, dense line/candle paint and preliminary CPU/index measurements.

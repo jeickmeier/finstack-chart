@@ -37,6 +37,7 @@ pub mod accessibility;
 /// Portable publication composition and annotation coordinates.
 pub mod composition;
 pub mod data;
+pub mod dense;
 pub mod diagnostic;
 /// Snapped and constrained annotation producers over a pinned presented basis.
 pub mod editing;
@@ -54,6 +55,7 @@ pub mod navigation;
 pub mod provenance;
 pub mod scales;
 pub mod scene;
+pub mod scheduling;
 pub mod services;
 pub mod state;
 /// Serializable headless presentation tokens and cascade.

@@ -1,6 +1,7 @@
 mod edit;
 mod host;
 mod input;
+mod scheduling;
 use crate::native::{NativeFont, NativeFrame};
 use chart_core::data::{SnapshotHandle, StoreSnapshot};
 use chart_core::grammar::{ChartDefinition, CompileLimits, Compiler, PreparedChart};
@@ -110,6 +111,8 @@ pub struct ChartView {
     tooltip: Option<TooltipBuilder>,
     last_error: Option<Diagnostic>,
     metrics: NativeMetrics,
+    density: chart_core::dense::DensityOptions,
+    scheduling: scheduling::Scheduling,
     input: input::InputState,
     host: host::HostState,
 }
@@ -126,7 +129,9 @@ impl ChartView {
             painters,
             request,
         } = input;
+        let scheduling = scheduling::Scheduling::new(compiler.extensions().clone());
         Self {
+            scheduling,
             definition,
             source,
             reducer: ActionReducer::new(state),
@@ -143,9 +148,26 @@ impl ChartView {
             tooltip: None,
             last_error: None,
             metrics: NativeMetrics::default(),
+            density: chart_core::dense::DensityOptions::default(),
             input: input::InputState::default(),
             host: host::HostState::default(),
         }
+    }
+    /// Explicit destination-only reduction; the current source/inspection values stay exact.
+    pub fn set_density(
+        &mut self,
+        options: chart_core::dense::DensityOptions,
+        cx: &mut Context<Self>,
+    ) -> ChartResult<()> {
+        options.validate()?;
+        self.density = options;
+        self.attempted = None;
+        cx.notify();
+        Ok(())
+    }
+    /// Actual last-presented raw/prepared/rendered work counts.
+    pub fn density_metrics(&self) -> Option<&chart_core::dense::DensityMetrics> {
+        self.frame.as_ref().map(|f| &f.density)
     }
     /// Change the native-only inspection body, with no data/stat/layout invalidation.
     pub fn set_tooltip(&mut self, builder: TooltipBuilder, cx: &mut Context<Self>) {
@@ -180,6 +202,7 @@ impl ChartView {
                 CompileLimits::default(),
             )?;
         }
+        self.reset_preparation(false, cx)?;
         self.reducer = next;
         if self.reducer.state().active_gesture().is_none() {
             self.release_input();
@@ -224,6 +247,7 @@ impl ChartView {
         }
         self.definition = definition;
         self.prepared = Arc::new(prepared);
+        self.reset_preparation(true, cx)?;
         self.last_error = None;
         cx.notify();
         Ok(())
@@ -237,6 +261,7 @@ impl ChartView {
     ) -> ChartResult<()> {
         request.revision = self.request.revision.checked_next()?;
         self.request = request;
+        self.reset_preparation(true, cx)?;
         self.attempted = None;
         cx.notify();
         Ok(())
@@ -294,6 +319,7 @@ impl ChartView {
             self.release_input();
         }
         self.prepared = Arc::new(prepared);
+        self.reset_preparation(true, cx)?;
         cx.notify();
         Ok(true)
     }
@@ -319,6 +345,13 @@ impl ChartView {
             self.prepared = Arc::new(prepared);
         }
         self.reducer = next;
+        if result
+            .event
+            .as_ref()
+            .is_some_and(|e| e.presentation_changed)
+        {
+            self.reset_preparation(true, cx)?;
+        }
         if self.state().active_gesture().is_none() {
             self.release_input();
         }
@@ -404,12 +437,14 @@ impl ChartView {
                 self.request.clone(),
                 &self.font,
                 &self.painters,
+                &self.density,
                 bounds,
                 window,
             )
         });
         match result {
-            Ok(frame) => {
+            Ok(mut frame) => {
+                frame.job = self.scheduling.prepared_token;
                 self.last_error = None;
                 self.cached = Some(Rc::new(frame));
                 self.cached.clone()
@@ -564,6 +599,7 @@ impl Render for ChartView {
                                 .as_ref()
                                 .is_none_or(|old| !Rc::ptr_eq(old, &frame))
                             {
+                                this.acknowledge_preparation(frame.job);
                                 this.reducer.present(frame.chart.clone());
                                 let mut inspector =
                                     Inspector::new(frame.chart.clone(), 10., 32).ok();

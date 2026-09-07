@@ -392,6 +392,7 @@ pub(super) fn layout_facets(
         request.limits,
     )?;
     Ok(LaidOutChart {
+        paint_themes: std::collections::BTreeMap::new(),
         interactions,
         insets: vec![],
         prepared,

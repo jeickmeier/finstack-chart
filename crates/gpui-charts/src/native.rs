@@ -292,6 +292,8 @@ struct Item {
     paint: Paint,
 }
 pub(crate) struct NativeFrame {
+    pub job: Option<chart_core::scheduling::JobToken>,
+    pub density: chart_core::dense::DensityMetrics,
     pub chart: Arc<LaidOutChart>,
     pub bounds: Bounds<Pixels>,
     items: Vec<Item>,
@@ -314,6 +316,7 @@ impl NativeFrame {
         mut request: LayoutRequest,
         font: &NativeFont,
         painters: &crate::NativePainterRegistry,
+        density: &chart_core::dense::DensityOptions,
         bounds: Bounds<Pixels>,
         window: &Window,
     ) -> ChartResult<Self> {
@@ -331,8 +334,10 @@ impl NativeFrame {
                 system: window.text_system(),
             },
         )?);
+        let reduced =
+            chart_core::dense::DenseChart::prepare(chart.clone(), density, request.limits)?;
         let mut items = vec![];
-        for item in chart.scene().items() {
+        for item in reduced.scene().items() {
             let result = (|| {
                 let clip = rect_at(item.clip.unwrap_or(chart.scene().bounds()), bounds.origin)?;
                 let outlined = if let Primitive::GlyphRun {
@@ -518,6 +523,8 @@ impl NativeFrame {
             items.push(result);
         }
         Ok(Self {
+            job: None,
+            density: reduced.metrics().clone(),
             chart,
             bounds,
             items,

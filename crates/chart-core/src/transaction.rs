@@ -544,6 +544,7 @@ fn mutate(
     mutation: &Mutation,
     limits: DataLimits,
 ) -> ChartResult<OperationCounts> {
+    data.lookup.take();
     let mut counts = OperationCounts::default();
     // Validate the whole incoming representation before any explicitly lossy filtering.
     let filtered;

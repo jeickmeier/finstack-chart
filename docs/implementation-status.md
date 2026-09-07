@@ -10,27 +10,30 @@ Original reports retain the revision context from their evidence runs.
 ## Current handoff
 
 **Owner assignment: complete original WP-11 through WP-23 and commit after each
-completed package. WP-11–18 are DONE; WP-19 is READY.** Expanded Phase 2/parity and
+completed package. WP-11–19 are DONE; WP-20 is READY.** Expanded Phase 2/parity and
 primary-authoring acceptance remains open under the owner's scope clarification.
 Concurrent planning/review documentation is preserved.
 
-WP-18 adds bounded queue acceptance, atomic count/event-time retention, exact explicit
-bin contribution reuse and observable source reconciliation. Historical pins preserve
-old values; follow/inspect/freeze/resume share the core in Rust, Python, WASM and native.
-See [completion evidence](evidence/wp-18-completion-2026-09-07.md),
-[streaming contract](streaming-contract.md) and [ADR-004](adr/004-immutable-data-and-transactions.md).
+WP-19 adds one active plus newest pending background preparation per chart, compatible
+monotonic presentation, per-dataset numeric cache reuse and density-only line/candle
+paint beside exact raw lookup/publication. See [completion evidence](evidence/wp-19-completion-2026-09-07.md)
+and [scheduling/density contract](scheduling-density-contract.md).
 
 `mise run fmt`, `mise run check`, `mise run test` and actual `bindings-proof` pass.
-**202 tests pass** (164 core, 28 export, 5 external-extension, 1 native-conversion,
-4 Rustdoc). All 36 existing cases, 23 actions, 47 input steps and 70 streaming replay
-steps execute in Rust/Python/Node WASM. Independent retention/statistics expectations
-and exact host SVG bytes pass. Native lifecycle and resolved follow axis were inspected.
-The local exact-bin comparison shows reduced classification work with equal complete
-tables/domains; it excludes ingestion/native paint/RSS and does not close PERF gates.
+**212 tests pass** (174 core, 28 export, 5 external-extension, 1 native-conversion,
+4 Rustdoc). All 36 existing cases, 23 actions, 47 input steps, 70 streaming steps and
+3 dense fixtures execute in Rust/Python/Node WASM. Independent extrema/gap/OHLC/volume
+oracles, exact raw descriptions, unchanged normal publication and host SVG equality pass.
+The actual four-chart burst run reaches revision 160 per chart with 118 pending
+coalesces, two incompatible completions rejected and zero drained lag per chart.
 
-G0/G1/G2 retain their recorded scope. G3/G4 and expanded parity/authoring gates remain
-open. Existing dependency advisories, the `block` warning and native accessibility
-limits remain unresolved. **Next: WP-19 bounded scheduling, caches and dense rendering.**
+Preliminary PERF-01/02 CPU measurements identify exact-index creation and retained
+geometry/index memory as bottlenecks. They do not close native total-frame/GPU,
+sustained-load or memory-plateau gates. An earlier native redraw delay until resize
+was not reproduced in the logged active-window run and remains a hardening question.
+G3/G4 and expanded parity/authoring gates remain open, as do dependency advisories,
+the upstream `block` warning and native accessibility/platform limits.
+**Next: WP-20 coherent export capture during live interaction.**
 
 ## Work packages
 
@@ -57,9 +60,9 @@ The final column records outstanding prerequisites/blockers and the next action.
 | WP-15 — Complete action reducer and state ownership | DONE | Unassigned | WP-15 completion commit | INT-01, INT-02, INT-05, INT-06, SCN-04, STM-02, QLT-01 | [Completion evidence](evidence/wp-15-completion-2026-09-07.md); [contract](state-action-contract.md); [ADR-007](adr/007-actions-gestures-and-controlled-state.md) | Deterministic action/controlled/gesture/history/lifetime scope accepted through actual native/export/Python/WASM. Input producers and full G3 remain WP-16–20. |
 | WP-16 — Hit testing, navigation and selection | DONE | Unassigned | `4148793` | INT-03, INT-04, INT-05, INT-06, SCL-01, SCN-04, STM-05 | [Completion evidence](evidence/wp-16-completion-2026-09-07.md); [contract](interaction-contract.md) | Assigned indexed inspection/navigation/selection acceptance passes; FIX-09/10 remaining portions and G3 stay with WP-17–20. |
 | WP-17 — Linked views, editable annotations and host controls | DONE | Unassigned | `6779e44` | INT-01, INT-04, INT-05, INT-06, GPU-03, LAY-03, DAT-06 | [Completion evidence](evidence/wp-17-completion-2026-09-07.md); [contract](host-tools-contract.md) | Original linked/editing/host acceptance passes; native accessibility limitations recorded. Full G3 remains open. |
-| WP-18 — Streaming retention and incremental computation | DONE | Unassigned | Included in this completion commit | DAT-03, DAT-04, DAT-06, STM-01, STM-02, STM-03, GRA-08, QLT-01 | [Completion evidence](evidence/wp-18-completion-2026-09-07.md); [contract](streaming-contract.md) | Original queue/retention/incremental/follow acceptance passes; 70-step three-host replay and native lifecycle inspected. Sustained PERF and G3 remain open. |
-| WP-19 — Bounded scheduling, caches and dense representation | READY | Codex | — | STM-04, STM-05, SCN-04, GPU-02, QLT-04 | None | Prerequisites complete; implement bounded non-starving work, invalidation and dense representation with exact lookup. |
-| WP-20 — Coherent exports during live interaction | NOT STARTED | Unassigned | — | EXP-03, EXP-04, DAT-06, STM-02, SCN-04, QLT-04 | None | Satisfy prerequisites: WP-13, WP-17, WP-18, WP-19. |
+| WP-18 — Streaming retention and incremental computation | DONE | Unassigned | `30ca2e8` | DAT-03, DAT-04, DAT-06, STM-01, STM-02, STM-03, GRA-08, QLT-01 | [Completion evidence](evidence/wp-18-completion-2026-09-07.md); [contract](streaming-contract.md) | Original queue/retention/incremental/follow acceptance passes; 70-step three-host replay and native lifecycle inspected. Sustained PERF and G3 remain open. |
+| WP-19 — Bounded scheduling, caches and dense representation | DONE | Unassigned | Included in this completion commit | STM-04, STM-05, SCN-04, GPU-02, QLT-04 | [Completion evidence](evidence/wp-19-completion-2026-09-07.md); [contract](scheduling-density-contract.md) | Original bounded-worker/cache/density acceptance passes; actual four-chart progress and three-host dense proofs. Preliminary PERF identifies index/memory bottlenecks; intermittent native redraw question retained. |
+| WP-20 — Coherent exports during live interaction | READY | Codex | — | EXP-03, EXP-04, DAT-06, STM-02, SCN-04, QLT-04 | None | Prerequisites complete; implement bounded coherent export capture, live updates and resource release. |
 | WP-21 — Correctness, fidelity and supported-platform hardening | NOT STARTED | Unassigned | — | SCP-03, QLT-01, QLT-02, QLT-03, GPU-02, GPU-03, BND-03, BND-04 | None | Satisfy prerequisites: WP-14, WP-17, WP-20. |
 | WP-22 — Measured performance and sustained-load release gate | NOT STARTED | Unassigned | — | STM-01, STM-03, STM-04, STM-05, EXP-03, QLT-04 | None | Satisfy prerequisites: WP-19, WP-20. |
 | WP-23 — Production documentation and release readiness | NOT STARTED | Unassigned | — | SCP-01, SCP-02, SCP-03, ARC-04, BND-01, QLT-05, QLT-06 | None | Satisfy prerequisites: WP-21, WP-22. |

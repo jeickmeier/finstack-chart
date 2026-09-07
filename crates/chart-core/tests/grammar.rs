@@ -514,7 +514,9 @@ fn viewport_and_visibility_leave_stat_population_domains_and_cache_unchanged() {
         zoomed.metrics(),
         PreparationMetrics {
             evaluated_transforms: 0,
-            reused_transforms: 1
+            reused_transforms: 1,
+            evaluated_layers: 0,
+            reused_layers: 1
         }
     );
     assert!(Arc::ptr_eq(

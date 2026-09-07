@@ -4,7 +4,7 @@ use crate::{
 };
 use std::{
     collections::{BTreeMap, BTreeSet},
-    sync::Arc,
+    sync::{Arc, OnceLock},
 };
 
 /// Owning immutable handle with explicit local disposal. Clones remain independently valid.
@@ -209,6 +209,7 @@ impl<'a> RowView<'a> {
 /// Immutable dataset state; edits create a new value sharing unchanged chunks.
 #[derive(Clone, Debug)]
 pub struct DatasetSnapshot {
+    pub(crate) lookup: OnceLock<Arc<BTreeMap<RowKey, (usize, usize)>>>,
     pub(crate) id: DatasetId,
     pub(crate) revision: Revision,
     pub(crate) schema: Arc<Schema>,
@@ -223,6 +224,7 @@ impl DatasetSnapshot {
         Self {
             id,
             revision: Revision::INITIAL,
+            lookup: OnceLock::new(),
             categories: schema
                 .fields()
                 .iter()
@@ -265,9 +267,38 @@ impl DatasetSnapshot {
             .iter()
             .flat_map(|chunk| (0..chunk.batch().len()).map(move |index| RowView { chunk, index }))
     }
-    /// Exact key lookup; currently scans chunks, without copying retained row payloads.
+    /// Build the bounded exact-key index once, before interactive source-value lookup.
+    /// Index entries store chunk/row offsets; source values are never copied.
+    pub fn prepare_lookup(&self) {
+        self.lookup.get_or_init(|| {
+            Arc::new(
+                self.chunks
+                    .iter()
+                    .enumerate()
+                    .flat_map(|(chunk, c)| {
+                        c.batch()
+                            .keys()
+                            .iter()
+                            .enumerate()
+                            .map(move |(row, key)| (*key, (chunk, row)))
+                    })
+                    .collect(),
+            )
+        });
+    }
+    /// Number of retained index entries; zero until explicitly prepared or first lookup.
+    pub fn lookup_entries(&self) -> usize {
+        self.lookup.get().map_or(0, |i| i.len())
+    }
+    /// Exact key lookup in the immutable snapshot. The first call builds an index;
+    /// presented inspection prepares it eagerly so hover never scans the retained source.
     pub fn row(&self, key: RowKey) -> Option<RowView<'_>> {
-        self.rows().find(|row| row.key() == key)
+        self.prepare_lookup();
+        let (chunk, index) = *self.lookup.get()?.get(&key)?;
+        Some(RowView {
+            chunk: &self.chunks[chunk],
+            index,
+        })
     }
     /// First-seen category labels, retained across updates/removals until explicit reset.
     pub fn categories(&self, field: FieldId) -> Option<&[String]> {

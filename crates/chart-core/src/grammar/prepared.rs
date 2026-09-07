@@ -415,6 +415,10 @@ pub struct PreparationMetrics {
     pub evaluated_transforms: usize,
     /// Named outputs reused from the compiler's last valid immutable graph.
     pub reused_transforms: usize,
+    /// Layer statistics evaluated (geometry may be rebuilt separately).
+    pub evaluated_layers: usize,
+    /// Exact layer statistic tables reused.
+    pub reused_layers: usize,
 }
 
 /// Immutable grammar output consumed by the shared scale/layout stage.

@@ -58,6 +58,7 @@ pub(super) fn apply(
     r: &LayoutRequest,
     t: &ThemePatch,
 ) -> ChartResult<()> {
+    chart.paint_themes.clear();
     // Update panel views as well as the flattened presented scene, keeping both coherent.
     for p in &mut chart.panels {
         apply(Arc::make_mut(&mut p.chart), r, t)?;
@@ -154,6 +155,10 @@ pub(super) fn apply(
                 local.overlay(p);
             }
             local.overlay(&r.output_theme);
+            chart
+                .paint_themes
+                .entry(id)
+                .or_insert_with(|| local.clone());
         }
         let authored = item.layer.and_then(|id| {
             chart

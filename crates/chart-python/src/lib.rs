@@ -71,6 +71,11 @@ impl Chart {
         py.detach(|| self.inner.transaction(&input))
             .map_err(failure)
     }
+    /// Exact-source-preserving density preview using shared core reduction.
+    fn dense_preview(&self, py: Python<'_>, request: String) -> PyResult<String> {
+        py.detach(|| self.inner.dense_preview(&request))
+            .map_err(failure)
+    }
     /// Queue, commit or inspect shared streaming state; queued never means committed.
     fn stream(&mut self, py: Python<'_>, input: String) -> PyResult<String> {
         py.detach(|| self.inner.stream(&input)).map_err(failure)

@@ -84,3 +84,17 @@ PDF text convert/write 0.969 ms; PDF outline 9.449 ms; PNG allocate/render/encod
 conversions after ten unmeasured warm-up conversions have p50 **0.367 ms**, p95 **0.491 ms**.
 These are illustrative local measurements, not export-under-streaming
 or formal performance passes. Memory was not profiled in this starting run.
+
+## WP-19 preliminary scheduling and density evidence
+
+The [scheduling/density contract](../scheduling-density-contract.md) places bounded
+executor-independent admission in core and GPUI background numeric work in the native
+host. Exact raw inspection is retained beside reduced destination paint. This avoids
+changing statistics or publication semantics to obtain density reduction. A per-dataset
+key index removes full retained-history scans from exact hover descriptions.
+
+[WP-19 evidence](../evidence/wp-19-completion-2026-09-07.md) records actual four-chart
+progress, compatible stale rejection and preliminary PERF-01/02 CPU stages. Index
+construction and retained geometry memory remain concrete bottlenecks. These finite
+measurements do not satisfy native total-frame/GPU, sustained PERF-03, PERF-04/05 or
+memory-plateau gates; the original budgets above remain unchanged.
