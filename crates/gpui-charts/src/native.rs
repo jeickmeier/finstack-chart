@@ -298,6 +298,9 @@ pub(crate) struct NativeFrame {
     pub density: chart_core::dense::DensityMetrics,
     pub chart: Arc<LaidOutChart>,
     pub bounds: Bounds<Pixels>,
+    font: NativeFont,
+    painters: crate::NativePainterRegistry,
+    density_options: chart_core::dense::DensityOptions,
     items: Vec<Item>,
 }
 fn point_at(p: Point, offset: gpui::Point<Pixels>) -> ChartResult<gpui::Point<Pixels>> {
@@ -531,8 +534,30 @@ impl NativeFrame {
             density: reduced.metrics().clone(),
             chart,
             bounds,
+            font: font.clone(),
+            painters: painters.clone(),
+            density_options: density.clone(),
             items,
         })
+    }
+    /// Reproject the same frozen semantic input using its captured resources/style.
+    pub fn reproject(
+        &self,
+        bounds: Bounds<Pixels>,
+        revision: chart_core::Revision,
+        window: &Window,
+    ) -> ChartResult<Self> {
+        let mut request = self.request.clone();
+        request.revision = revision;
+        Self::prepare(
+            self.chart.prepared().clone(),
+            request,
+            &self.font,
+            &self.painters,
+            &self.density_options,
+            bounds,
+            window,
+        )
     }
     pub fn paint(&self, window: &mut Window, cx: &mut App) -> ChartResult<()> {
         window.with_content_mask(

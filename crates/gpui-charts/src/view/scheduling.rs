@@ -18,6 +18,8 @@ pub(super) struct Scheduling {
     latest: Option<SnapshotHandle<StoreSnapshot>>,
     generation: Revision,
     pub prepared_token: Option<JobToken>,
+    pub window: Option<gpui::AnyWindowHandle>,
+    frame_requested: bool,
 }
 impl Scheduling {
     pub fn new(extensions: Arc<chart_core::grammar::ExtensionRegistry>) -> Self {
@@ -28,6 +30,8 @@ impl Scheduling {
             latest: None,
             generation: Revision::INITIAL,
             prepared_token: None,
+            window: None,
+            frame_requested: false,
         }
     }
 }
@@ -134,8 +138,42 @@ impl ChartView {
                     this.start_preparation(cx);
                 }
                 cx.notify();
+                if matches!(
+                    outcome,
+                    CompletionOutcome::Ready | CompletionOutcome::Failed
+                ) {
+                    this.request_presentation_frame(cx);
+                }
             });
         }));
+    }
+    // Entity notifications can leave an idle platform frame source asleep. Keep at most
+    // one explicit wake outstanding; the callback owns only a weak chart reference.
+    fn request_presentation_frame(&mut self, cx: &mut Context<Self>) {
+        if self.scheduling.frame_requested || self.scheduling.queue.metrics().disposed {
+            return;
+        }
+        let Some(window) = self.scheduling.window else {
+            return;
+        };
+        let weak = cx.entity().downgrade();
+        self.scheduling.frame_requested = true;
+        if window
+            .update(cx, |_, window, _| {
+                window.refresh();
+                window.on_next_frame(move |_, cx| {
+                    let _ = weak.update(cx, |this, cx| {
+                        this.scheduling.frame_requested = false;
+                        if !this.scheduling.queue.metrics().disposed {
+                            cx.notify();
+                        }
+                    });
+                });
+            })
+            .is_err()
+        {
+            self.scheduling.frame_requested = false;
+        }
     }
     fn install_preparation(
         &mut self,

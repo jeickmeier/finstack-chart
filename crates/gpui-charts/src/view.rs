@@ -462,7 +462,45 @@ impl ChartView {
     }
     fn prepaint(&mut self, bounds: Bounds<Pixels>, window: &Window) -> Option<Rc<NativeFrame>> {
         if self.reducer.frozen_scene().is_some() {
-            return self.frame.clone();
+            let frame = self.frame.clone()?;
+            if frame.bounds == bounds {
+                return Some(frame);
+            }
+            if let Some(cached) = &self.cached
+                && cached.bounds == bounds
+                && Arc::ptr_eq(cached.chart.prepared(), frame.chart.prepared())
+            {
+                return Some(cached.clone());
+            }
+            let key = (
+                bounds,
+                self.request.revision,
+                Arc::as_ptr(frame.chart.prepared()) as usize,
+            );
+            if self.attempted.as_ref() == Some(&key) {
+                return Some(frame);
+            }
+            self.attempted = Some(key);
+            self.metrics.layout_attempts = self.metrics.layout_attempts.saturating_add(1);
+            match self
+                .request
+                .revision
+                .max(frame.request.revision)
+                .checked_next()
+                .and_then(|revision| frame.reproject(bounds, revision, window))
+            {
+                Ok(next) => {
+                    self.request.revision = next.request.revision;
+                    self.last_error = None;
+                    self.cached = Some(Rc::new(next));
+                    return self.cached.clone();
+                }
+                Err(e) => {
+                    self.last_error = Some(e);
+                    self.inspector = None;
+                    return Some(frame);
+                }
+            }
         }
         let key = (
             bounds,
@@ -508,6 +546,7 @@ impl ChartView {
 }
 impl Render for ChartView {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+        self.scheduling.window = Some(window.window_handle());
         let focused = self.focus.contains_focused(window, cx);
         if self.input.focused && !focused {
             if let Err(e) = self.cancel_input(chart_core::state::CancelReason::FocusLost, cx) {
@@ -552,6 +591,10 @@ impl Render for ChartView {
             self.input.subscriptions.push(cx.observe_window_activation(
                 window,
                 |this, window, cx| {
+                    if window.is_window_active() {
+                        window.refresh();
+                        cx.notify();
+                    }
                     if !window.is_window_active()
                         && let Err(e) =
                             this.cancel_input(chart_core::state::CancelReason::CaptureLost, cx)
@@ -645,8 +688,17 @@ impl Render for ChartView {
                                 .as_ref()
                                 .is_none_or(|old| !Rc::ptr_eq(old, &frame))
                             {
-                                this.acknowledge_preparation(frame.job);
-                                this.reducer.present(frame.chart.clone());
+                                if this.reducer.frozen_scene().is_some() {
+                                    if let Err(e) = this.reducer.present_frozen(frame.chart.clone())
+                                    {
+                                        this.last_error = Some(e);
+                                        this.inspector = None;
+                                        return;
+                                    }
+                                } else {
+                                    this.acknowledge_preparation(frame.job);
+                                    this.reducer.present(frame.chart.clone());
+                                }
                                 let mut inspector =
                                     Inspector::new(frame.chart.clone(), 10., 32).ok();
                                 if let Some(focus) = this.state().focus().cloned() {

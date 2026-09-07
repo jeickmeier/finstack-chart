@@ -18,6 +18,7 @@ struct Gallery {
     running: bool,
     started: Instant,
     status: String,
+    isolated_redraw: bool,
     _task: Task<()>,
     _subscriptions: Vec<Subscription>,
 }
@@ -198,7 +199,8 @@ impl Render for Gallery {
     }
 }
 fn main() {
-    gpui_platform::application().run(|cx: &mut App| {
+    let isolated_redraw = std::env::args().any(|a| a == "--isolated-redraw");
+    gpui_platform::application().run(move |cx: &mut App| {
         let font = NativeFont::load(
             ResourceDescriptor {
                 id: ResourceId::new(1),
@@ -232,23 +234,34 @@ fn main() {
                 }),
                 ..Default::default()
             },
-            |_, cx| {
+            move |_, cx| {
                 cx.new(|cx| {
                     let charts: Vec<_> = inputs
                         .into_iter()
                         .map(|input| cx.new(|cx| ChartView::new(input, cx)))
                         .collect();
-                    let subscriptions = charts
-                        .iter()
-                        .map(|chart| cx.observe(chart, |_, _, cx| cx.notify()))
-                        .collect();
+                    let subscriptions = if isolated_redraw {
+                        vec![]
+                    } else {
+                        charts
+                            .iter()
+                            .map(|chart| cx.observe(chart, |_, _, cx| cx.notify()))
+                            .collect()
+                    };
                     let task = cx.spawn(async move |entity, cx| {
                         let mut tail = 0;
+                        let mut warmup = 0;
                         loop {
                             cx.background_executor()
                                 .timer(Duration::from_millis(20))
                                 .await;
                             let result = entity.update(cx, |this: &mut Gallery, cx| {
+                                if this.isolated_redraw && this.tick == 0 && !this.running {
+                                    warmup += 1;
+                                    if warmup == 100 {
+                                        this.act("Run", cx);
+                                    }
+                                }
                                 if this.running {
                                     tail = 0;
                                     for _ in 0..4 {
@@ -266,8 +279,13 @@ fn main() {
                                     if tail % 10 == 0 {
                                         this.log(cx, "drain");
                                     }
+                                    if tail == 100 && this.isolated_redraw {
+                                        this.act("Dispose workers", cx);
+                                    }
                                 }
-                                cx.notify();
+                                if !this.isolated_redraw {
+                                    cx.notify();
+                                }
                             });
                             if result.is_err() {
                                 break;
@@ -281,6 +299,7 @@ fn main() {
                         running: false,
                         started: Instant::now(),
                         status: "Ready; press Run".into(),
+                        isolated_redraw,
                         _task: task,
                         _subscriptions: subscriptions,
                     }

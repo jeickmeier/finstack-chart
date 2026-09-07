@@ -10,30 +10,28 @@ Original reports retain the revision context from their evidence runs.
 ## Current handoff
 
 **Owner assignment: complete original WP-11 through WP-23 and commit after each
-completed package. WP-11–20 are DONE; WP-21 is READY for original-scope hardening.**
+completed package. WP-11–21 are DONE; WP-22 is READY for original-scope performance.**
 Expanded Phase 2/parity and primary-authoring acceptance remains open under the
 owner's scope clarification. Concurrent planning/review documentation is preserved.
 
-WP-20 adds immutable multi-dataset export capture, explicit presented/current and
-interaction inclusion policies, publication-resolution rebuilds, bounded jobs and
-release on success/error/cancellation/disposal. See [completion evidence](evidence/wp-20-completion-2026-09-07.md)
-and [live-export contract](live-export-contract.md).
+WP-21 fixes frozen native resize without admitting later data/theme changes, and
+reproduces/fixes idle background redraw starvation with bounded explicit frame demand.
+Both final four-chart runs paint revision 160 and drain to zero lag before disposal.
+The native hardening trace and inspected captures cover tiny bounds, malformed data/font
+recovery and 20 old-entity releases. See [completion evidence](evidence/wp-21-completion-2026-09-07.md),
+[ADR-009](adr/009-supported-platform-and-accessibility.md) and the [support matrix](support-matrix.md).
 
-`mise run fmt`, `mise run check`, `mise run test` and actual `bindings-proof` pass.
-**217 tests pass** (174 core, 33 export, 5 external-extension, 1 native-conversion,
-4 Rustdoc). All 36 prior cases, 23 actions, 47 input steps, 70 streaming steps,
-3 density fixtures and 40 live-export steps execute in Rust/Python/Node WASM.
-Independent projection and byte equality verify held exports after preview/freeze,
-later source edits and disposal. The actual native run finishes all 400 atomic
-commits; commit-0 SVG/PDF complete at commit 77, with peak two jobs, one capacity
-rejection and active PNG cancellation. Final charged inputs and active jobs are zero.
+Final macOS fmt/check/test pass: **218 tests** (175 core, 33 export, five external-extension,
+one native conversion, four Rustdoc). Actual Rust/Python/Node WASM fixtures pass: 36 cases,
+23 actions, 47 input steps, 70 stream steps, three density cases and 40 live-export steps.
+Linux aarch64 headless execution passes **212 tests**, all-target checks/docs, full Rust
+fixtures and unchanged cross-host comparison against actual Python/WASM output.
+CI adds actual portable runtime jobs; no remote execution is claimed.
 
-Finite native timings do not close sustained PERF-03/05 or memory/latency gates.
-WP-21 must fix native frozen resize clipping and investigate WP-19's intermittent
-redraw observation. G3 remains open pending native hardening; G4 and expanded
-parity/authoring gates remain open, as do dependency advisories, the upstream `block`
-warning and native accessibility/platform limits.
-**Next: original WP-21 correctness, fidelity and supported-platform hardening.**
+Original FIX-01–18 and G3 pass. Native screen-reader/OS focus and non-macOS-native
+limits remain explicit. Finite runs do not satisfy PERF-01–05; expanded parity/authoring
+and G4 remain open, as do dependency advisories and the upstream `block` warning.
+**Next: original WP-22 measured performance, sustained ingestion and concurrent export.**
 
 ## Work packages
 
@@ -62,9 +60,9 @@ The final column records outstanding prerequisites/blockers and the next action.
 | WP-17 — Linked views, editable annotations and host controls | DONE | Unassigned | `6779e44` | INT-01, INT-04, INT-05, INT-06, GPU-03, LAY-03, DAT-06 | [Completion evidence](evidence/wp-17-completion-2026-09-07.md); [contract](host-tools-contract.md) | Original linked/editing/host acceptance passes; native accessibility limitations recorded. Full G3 remains open. |
 | WP-18 — Streaming retention and incremental computation | DONE | Unassigned | `30ca2e8` | DAT-03, DAT-04, DAT-06, STM-01, STM-02, STM-03, GRA-08, QLT-01 | [Completion evidence](evidence/wp-18-completion-2026-09-07.md); [contract](streaming-contract.md) | Original queue/retention/incremental/follow acceptance passes; 70-step three-host replay and native lifecycle inspected. Sustained PERF and G3 remain open. |
 | WP-19 — Bounded scheduling, caches and dense representation | DONE | Unassigned | `e57246d` | STM-04, STM-05, SCN-04, GPU-02, QLT-04 | [Completion evidence](evidence/wp-19-completion-2026-09-07.md); [contract](scheduling-density-contract.md) | Original bounded-worker/cache/density acceptance passes; actual four-chart progress and three-host dense proofs. Preliminary PERF identifies index/memory bottlenecks; intermittent native redraw question retained. |
-| WP-20 — Coherent exports during live interaction | DONE | Unassigned | Included in this completion commit | EXP-03, EXP-04, DAT-06, STM-02, SCN-04, QLT-04 | [Completion evidence](evidence/wp-20-completion-2026-09-07.md); [contract](live-export-contract.md) | Original coherent capture/bounded lifetime acceptance passes; actual 40-step three-host replay and finite native exports during 400 atomic commits. Sustained PERF and native hardening remain open. |
-| WP-21 — Correctness, fidelity and supported-platform hardening | READY (original scope) | Codex | — | SCP-03, QLT-01, QLT-02, QLT-03, GPU-02, GPU-03, BND-03, BND-04 | None | Original WP-14/17/20 prerequisites complete under owner clarification. Expanded acceptance still requires: WP-14, WP-17, WP-20. |
-| WP-22 — Measured performance and sustained-load release gate | NOT STARTED | Unassigned | — | STM-01, STM-03, STM-04, STM-05, EXP-03, QLT-04 | None | Satisfy prerequisites: WP-19, WP-20. |
+| WP-20 — Coherent exports during live interaction | DONE | Unassigned | `9d86ef7` | EXP-03, EXP-04, DAT-06, STM-02, SCN-04, QLT-04 | [Completion evidence](evidence/wp-20-completion-2026-09-07.md); [contract](live-export-contract.md) | Original coherent capture/bounded lifetime acceptance passes; actual 40-step three-host replay and finite native exports during 400 atomic commits. Sustained PERF and native hardening remain open. |
+| WP-21 — Correctness, fidelity and supported-platform hardening | DONE (original scope) | Unassigned | Included in this completion commit | SCP-03, QLT-01/02/03, GPU-02/03, BND-03/04, FIX-01–18 | [Completion evidence](evidence/wp-21-completion-2026-09-07.md); [ADR-009](adr/009-supported-platform-and-accessibility.md) | Original acceptance passes including fixed native frozen resize/redraw and actual macOS/Linux/headless bindings. Expanded parity/authoring acceptance remains open and requires the separately listed packages/gates. |
+| WP-22 — Measured performance and sustained-load release gate | READY (original scope) | Codex | — | STM-01, STM-03, STM-04, STM-05, EXP-03, QLT-04 | None | Original WP-19/20 prerequisites complete under owner clarification. Expanded acceptance still requires: WP-19, WP-20. |
 | WP-23 — Production documentation and release readiness | NOT STARTED | Unassigned | — | SCP-01, SCP-02, SCP-03, ARC-04, BND-01, QLT-05, QLT-06 | None | Satisfy prerequisites: WP-21, WP-22. |
 
 ## Cumulative gates
@@ -74,7 +72,7 @@ The final column records outstanding prerequisites/blockers and the next action.
 | G0 | PASSED — architecture/capability scope | WP-01/02/03 evidence and ADRs establish the initial macOS route and starting protocol; this does not pass full requirements, FIX/PERF or release support. |
 | G1 | PASSED — minimal portable core | WP-04–08 foundation/native/headless evidence plus WP-09 actual Python/WASM FIX-15/16 runtime comparison; this does not certify full grammar or production host/distribution products. |
 | G2 | PASSED — Cartesian/publication alpha | [Alpha matrix](alpha-api.md) maps complete grammar/facets/themes/publication/extensions and actual portable evidence. G3/G4 retain their remaining scope. |
-| G3 | NOT PASSED | WP-15–20 scoped interaction/streaming/export evidence complete; native frozen resize and intermittent redraw hardening remain WP-21. |
+| G3 | PASSED (original interactive streaming scope) | WP-15–20 interaction/streaming/export plus WP-21 frozen-resize and native redraw regression fixes; actual native and Rust/Python/WASM evidence. Sustained PERF and expanded parity remain separate. |
 | G4 | NOT PASSED | All required FIX/PERF/platform/accessibility/documentation evidence. |
 
 ## Evidence updates

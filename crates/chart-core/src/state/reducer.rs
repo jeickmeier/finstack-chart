@@ -153,6 +153,29 @@ impl ActionReducer {
     pub fn frozen_scene(&self) -> Option<&Arc<LaidOutChart>> {
         self.frozen.as_ref()
     }
+    /// Acknowledge a resized frozen figure after successful host painting. Only layout may
+    /// change: the exact retained prepared object must survive, and layout revisions advance.
+    /// Active gestures/pins retain their original basis independently of this new projection.
+    pub fn present_frozen(&mut self, scene: Arc<LaidOutChart>) -> ChartResult<()> {
+        let old = self.frozen.as_ref().ok_or_else(|| {
+            error(
+                DiagnosticCode::RevisionConflict,
+                "No frozen presentation is active.",
+            )
+        })?;
+        if self.disposed
+            || !Arc::ptr_eq(old.prepared(), scene.prepared())
+            || scene.scene().stamp().layout <= old.scene().stamp().layout
+        {
+            return Err(error(
+                DiagnosticCode::RevisionConflict,
+                "Frozen reprojection must retain the exact prepared input and advance layout.",
+            ));
+        }
+        self.frozen = Some(scene.clone());
+        self.present(scene);
+        Ok(())
+    }
     /// At most one original pinned scene; explicitly unpin to release historical resources.
     pub fn pinned_scene(&self) -> Option<&Arc<LaidOutChart>> {
         self.pinned.as_ref()

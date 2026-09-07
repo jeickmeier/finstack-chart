@@ -566,3 +566,78 @@ fn legacy_viewports_replace_primary_named_windows_without_losing_other_axes() {
     assert_eq!(r.state().viewport(), view(2.));
     assert_eq!(r.state().axis_windows().len(), 1);
 }
+
+#[test]
+fn frozen_resize_advances_projection_without_admitting_later_semantics() {
+    let d = definition();
+    let mut r = ActionReducer::default();
+    let original = scene(&d, r.state(), 400.);
+    let weak = Arc::downgrade(&original);
+    r.present(original.clone());
+    send(
+        &mut r,
+        &d,
+        ChartAction::SetFollow(FollowMode::FreezePresentation),
+    );
+    let state = r.state().clone();
+    let make = |revision| {
+        let mut request = LayoutRequest::new(
+            Rect::new(0., 0., 700., 300.).unwrap(),
+            Units::LogicalPixels,
+            ResourceDescriptor {
+                id: ResourceId::new(1),
+                revision: Revision::INITIAL,
+                kind: ResourceKind::Font,
+                byte_len: 1,
+            },
+        );
+        request.revision = Revision::new(revision);
+        Arc::new(layout(original.prepared().clone(), &request, &Metrics).unwrap())
+    };
+    let resized = make(401);
+    assert_ne!(resized.scene().bounds(), original.scene().bounds());
+    r.present_frozen(resized.clone()).unwrap();
+    assert_eq!(r.state(), &state);
+    assert!(Arc::ptr_eq(r.presented().unwrap(), &resized));
+    assert!(Arc::ptr_eq(r.frozen_scene().unwrap(), &resized));
+    // A new preparation from another store may have identical public IDs/revisions.
+    let unrelated = scene(&d, &ChartState::default(), 800.);
+    assert_eq!(
+        unrelated.scene().stamp().store,
+        original.scene().stamp().store
+    );
+    assert_eq!(
+        r.present_frozen(unrelated).unwrap_err().code,
+        DiagnosticCode::RevisionConflict
+    );
+    assert_eq!(
+        r.present_frozen(make(400)).unwrap_err().code,
+        DiagnosticCode::RevisionConflict
+    );
+    assert_eq!(
+        r.present_frozen(resized.clone()).unwrap_err().code,
+        DiagnosticCode::RevisionConflict
+    );
+    // Subsequent actions use the newly painted basis. The old pixel stamp is stale.
+    let request = r.request(
+        &d,
+        ChartAction::Select {
+            change: SelectionChange::Replace,
+            targets: vec![mark(101)],
+        },
+        ActionOrigin::Pointer,
+    );
+    assert_eq!(request.scene, Some(resized.scene().stamp()));
+    r.dispatch(&d, request).unwrap();
+    drop(original);
+    assert!(weak.upgrade().is_none());
+    send(
+        &mut r,
+        &d,
+        ChartAction::SetFollow(FollowMode::InspectHistory),
+    );
+    assert_eq!(
+        r.present_frozen(resized).unwrap_err().code,
+        DiagnosticCode::RevisionConflict
+    );
+}
