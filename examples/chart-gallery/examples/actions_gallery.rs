@@ -20,6 +20,7 @@ fn annotation(x: f64) -> Annotation {
         priority: 0,
         collision: Collision::Keep,
         callout: None,
+        connector_origin: chart_core::composition::ConnectorOrigin::Label,
         overflow: false,
     }
 }

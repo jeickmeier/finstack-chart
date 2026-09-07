@@ -190,6 +190,38 @@ impl Session {
         };
         let inspector = &self.inspectors[index];
         match request.query {
+            InputOperation::Describe { offset, limit } => {
+                encode(&inspector.accessible_page(self.reducer.state(), offset, limit)?)
+            }
+            InputOperation::EditAnnotation {
+                id,
+                part,
+                constraints,
+                delta,
+            } => {
+                let editor = crate::editing::AnnotationEditor::new(scene, &id, part, constraints)?;
+                encode(&json!({"annotation": editor.preview(request.scene, delta[0], delta[1])?}))
+            }
+            InputOperation::LinkCapture {
+                origin,
+                event,
+                axes,
+                panel,
+                selection,
+            } => encode(
+                &json!({"message":crate::linking::LinkMessage::from_event(&origin,&event,inspector,self.reducer.state(),&axes,panel.as_ref(),selection)?}),
+            ),
+            InputOperation::LinkResolve {
+                message,
+                mappings,
+                panel,
+                missing,
+            } => {
+                let update = message.resolve(inspector, &mappings, panel.as_ref(), missing)?;
+                encode(
+                    &json!({"action":update.action,"origin":update.origin,"unmatched":update.unmatched}),
+                )
+            }
             InputOperation::Inspect {
                 point,
                 radius,

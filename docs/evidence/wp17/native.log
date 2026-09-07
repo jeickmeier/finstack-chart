@@ -1,0 +1,57 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+   Compiling chart-extension-example v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/custom-extension)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.50s
+     Running `target/debug/examples/binding_proof /Users/jeickmeier/Projects/finstack-chart/artifacts/wp-17/bindings/native`
+PASS WP-15 deterministic shared action trace: 23 transitions
+input "input-scatter" / "nearest-center"
+input "input-scatter" / "empty-between-centers"
+input "input-scatter" / "lasso-select"
+input "input-scatter" / "toggle-same-target"
+input "input-scatter" / "pointer-zoom"
+input "input-scatter" / "new-presented-coordinate"
+input "input-scatter" / "stale-revision"
+input "input-scatter" / "wrong-range-type"
+input "input-scatter" / "cancel-navigation-begin"
+input "input-scatter" / "pinned-pan-preview"
+input "input-scatter" / "pinned-pan-still-original"
+input "input-scatter" / "cancel-restores"
+input "input-scatter" / "legacy-replaces-typed"
+input "input-scatter" / "legacy-view-is-presented"
+input "input-bars" / "bar-edge-intersection"
+input "input-bars" / "bar-contained"
+input "input-line" / "line-nearest-gap-group"
+input "input-line" / "gap-brush-no-invented-source"
+input "input-category" / "category-singleton"
+input "input-category" / "category-reset-retains-catalog"
+input "input-category" / "category-missing-rejected"
+input "input-utc" / "exact-time-window"
+input "input-host-tools" / "accessible-first-page"
+input "input-host-tools" / "edit-begin"
+input "input-host-tools" / "snapped-preview"
+input "input-host-tools" / "edit-cancel"
+input "input-host-tools" / "edit-second-begin"
+input "input-host-tools" / "second-preview"
+input "input-host-tools" / "edit-commit"
+input "input-host-tools" / "edit-undo"
+input "input-host-tools" / "edit-redo"
+input "input-host-tools" / "select-source"
+input "input-host-tools" / "capture-semantic-selection"
+input "input-host-tools" / "resolve-table-selection"
+input "input-host-tools" / "repeated-table-selection"
+input "input-host-tools" / "linked-echo-suppressed"
+input "input-host-tools" / "missing-source-rejected"
+input "input-host-tools" / "missing-source-reported"
+input "input-host-tools" / "wrong-edit-constraint-type"
+input "input-host-tools" / "accessible-page-budget"
+input "input-host-tools" / "pan-selected-source-outside"
+input "input-host-tools" / "capture-clipped-selection"
+input "input-host-category-link" / "select-gamma"
+input "input-host-category-link" / "show-alpha-only"
+input "input-host-category-link" / "capture-hidden-category-selection"
+input "input-host-category-link" / "resolve-hidden-category-selection"
+input "input-host-category-link" / "visible-table-remains-alpha-only"
+PASS WP-16/17 shared input queries/actions: 47 steps
+PASS Rust FIX-06: missing facet policy and unknown target panel rejected
+PASS native shared portable fixture, transaction replay, action and controlled disposal

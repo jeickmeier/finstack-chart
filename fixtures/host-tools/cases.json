@@ -1,0 +1,1110 @@
+[
+  {
+    "name": "input-host-tools",
+    "chart": {
+      "version": 1,
+      "definition": {
+        "revision": "1",
+        "mappings": {
+          "x": null,
+          "y": null,
+          "x2": null,
+          "y2": null,
+          "size": null,
+          "group": null
+        },
+        "transforms": [],
+        "layers": [
+          {
+            "id": "1",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Field": "1"
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": null,
+                "y2": null,
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": "Point",
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude"
+          }
+        ],
+        "axes": [
+          {
+            "id": "0",
+            "side": "Bottom",
+            "scale": {
+              "Linear": {
+                "explicit": {
+                  "start": 0,
+                  "end": 4
+                },
+                "baseline": "None",
+                "padding": 0,
+                "nice": false,
+                "nice_ticks": 6
+              }
+            },
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": false
+          },
+          {
+            "id": "1",
+            "side": "Left",
+            "scale": {
+              "Linear": {
+                "explicit": {
+                  "start": 0,
+                  "end": 4
+                },
+                "baseline": "None",
+                "padding": 0,
+                "nice": false,
+                "nice_ticks": 6
+              }
+            },
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": false
+          }
+        ],
+        "figure": {
+          "version": 1,
+          "annotations": [
+            {
+              "id": "Threshold",
+              "anchor": {
+                "Data": {
+                  "panel": null,
+                  "scales": {
+                    "x": "0",
+                    "y": "1"
+                  },
+                  "x": {
+                    "Number": 0.5
+                  },
+                  "y": {
+                    "Number": 3
+                  }
+                }
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "Threshold"
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              },
+              "offset": [
+                0,
+                -20
+              ],
+              "priority": 0,
+              "collision": "Keep",
+              "callout": {
+                "Data": {
+                  "panel": null,
+                  "scales": {
+                    "x": "0",
+                    "y": "1"
+                  },
+                  "x": {
+                    "Number": 3.5
+                  },
+                  "y": {
+                    "Number": 3
+                  }
+                }
+              },
+              "overflow": false,
+              "connector_origin": "Anchor"
+            }
+          ]
+        }
+      }
+    },
+    "data": {
+      "version": 1,
+      "epoch": "1",
+      "datasets": [
+        {
+          "id": "1",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "1",
+                "name": "field_1",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "2",
+                "name": "field_2",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003",
+              "9007199254743004",
+              "9007199254743005"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Float64": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    2,
+                    2,
+                    2,
+                    2,
+                    2
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "queries": [
+      {
+        "name": "accessible-first-page",
+        "query": {
+          "Describe": {
+            "offset": 0,
+            "limit": 2
+          }
+        },
+        "expect": {
+          "total": 5,
+          "offset": 0,
+          "targets": [
+            {
+              "description": "Source row 9007199254743001 in dataset 1",
+              "cells": [
+                {
+                  "field": "field_1",
+                  "value": "0"
+                },
+                {
+                  "field": "field_2",
+                  "value": "2"
+                }
+              ]
+            },
+            {
+              "description": "Source row 9007199254743002 in dataset 1"
+            }
+          ]
+        }
+      },
+      {
+        "name": "edit-begin",
+        "action": {
+          "BeginGesture": {
+            "id": "1",
+            "kind": {
+              "Annotation": "Threshold"
+            }
+          }
+        }
+      },
+      {
+        "name": "snapped-preview",
+        "query": {
+          "EditAnnotation": {
+            "id": "Threshold",
+            "part": "Translate",
+            "constraints": {
+              "horizontal": false,
+              "vertical": true,
+              "x": null,
+              "y": {
+                "Number": {
+                  "bounds": [
+                    0.5,
+                    3.5
+                  ],
+                  "step": 0.5,
+                  "origin": 0
+                }
+              },
+              "preserve_order": null
+            },
+            "delta": [
+              100,
+              -26
+            ]
+          }
+        },
+        "gesture": true,
+        "apply": "annotation_preview",
+        "id": "1",
+        "present": true,
+        "expect": {
+          "annotation": {
+            "anchor": {
+              "Data": {
+                "panel": null,
+                "scales": {
+                  "x": "0",
+                  "y": "1"
+                },
+                "x": {
+                  "Number": 0.5
+                },
+                "y": {
+                  "Number": 3.5
+                }
+              }
+            },
+            "callout": {
+              "Data": {
+                "panel": null,
+                "scales": {
+                  "x": "0",
+                  "y": "1"
+                },
+                "x": {
+                  "Number": 3.5
+                },
+                "y": {
+                  "Number": 3.5
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "edit-cancel",
+        "action": {
+          "CancelGesture": "Explicit"
+        },
+        "present": true,
+        "state": {
+          "interaction": {
+            "annotations": {}
+          }
+        }
+      },
+      {
+        "name": "edit-second-begin",
+        "action": {
+          "BeginGesture": {
+            "id": "2",
+            "kind": {
+              "Annotation": "Threshold"
+            }
+          }
+        }
+      },
+      {
+        "name": "second-preview",
+        "query": {
+          "EditAnnotation": {
+            "id": "Threshold",
+            "part": "Translate",
+            "constraints": {
+              "horizontal": false,
+              "vertical": true,
+              "x": null,
+              "y": {
+                "Number": {
+                  "bounds": [
+                    0.5,
+                    3.5
+                  ],
+                  "step": 0.5,
+                  "origin": 0
+                }
+              },
+              "preserve_order": null
+            },
+            "delta": [
+              100,
+              -26
+            ]
+          }
+        },
+        "gesture": true,
+        "apply": "annotation_preview",
+        "id": "2"
+      },
+      {
+        "name": "edit-commit",
+        "action": {
+          "CommitGesture": {
+            "id": "2"
+          }
+        },
+        "present": true,
+        "state": {
+          "interaction": {
+            "annotations": {
+              "Threshold": {
+                "anchor": {
+                  "Data": {
+                    "panel": null,
+                    "scales": {
+                      "x": "0",
+                      "y": "1"
+                    },
+                    "x": {
+                      "Number": 0.5
+                    },
+                    "y": {
+                      "Number": 3.5
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "edit-undo",
+        "action": "Undo",
+        "present": true,
+        "state": {
+          "interaction": {
+            "annotations": {}
+          }
+        }
+      },
+      {
+        "name": "edit-redo",
+        "action": "Redo",
+        "present": true,
+        "state": {
+          "interaction": {
+            "annotations": {
+              "Threshold": {
+                "anchor": {
+                  "Data": {
+                    "panel": null,
+                    "scales": {
+                      "x": "0",
+                      "y": "1"
+                    },
+                    "x": {
+                      "Number": 0.5
+                    },
+                    "y": {
+                      "Number": 3.5
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "select-source",
+        "action": {
+          "Select": {
+            "change": "Replace",
+            "targets": [
+              {
+                "epoch": "1",
+                "layer": "1",
+                "panel": null,
+                "identity": {
+                  "Source": {
+                    "dataset": "1",
+                    "key": "9007199254743002"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "capture-semantic-selection",
+        "query": {
+          "LinkCapture": {
+            "origin": "chart-a",
+            "event": {
+              "revision": "1",
+              "origin": "Control",
+              "durable": true,
+              "presentation_changed": false,
+              "cancellation": null
+            },
+            "axes": [],
+            "panel": null,
+            "selection": true
+          }
+        },
+        "expect": {
+          "message": {
+            "origin": "chart-a",
+            "windows": [],
+            "selection": [
+              {
+                "epoch": "1",
+                "identity": {
+                  "Source": {
+                    "dataset": "1",
+                    "key": "9007199254743002"
+                  }
+                },
+                "inputs": []
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "resolve-table-selection",
+        "query": {
+          "LinkResolve": {
+            "message": {
+              "origin": "table",
+              "revision": "1",
+              "windows": [],
+              "selection": [
+                {
+                  "epoch": "1",
+                  "identity": {
+                    "Source": {
+                      "dataset": "1",
+                      "key": "9007199254743002"
+                    }
+                  },
+                  "inputs": []
+                }
+              ]
+            },
+            "mappings": [],
+            "panel": null,
+            "missing": "Reject"
+          }
+        },
+        "apply": "linked",
+        "expect": {
+          "origin": {
+            "Linked": "table"
+          },
+          "unmatched": []
+        }
+      },
+      {
+        "name": "repeated-table-selection",
+        "query": {
+          "LinkResolve": {
+            "message": {
+              "origin": "table",
+              "revision": "1",
+              "windows": [],
+              "selection": [
+                {
+                  "epoch": "1",
+                  "identity": {
+                    "Source": {
+                      "dataset": "1",
+                      "key": "9007199254743002"
+                    }
+                  },
+                  "inputs": []
+                }
+              ]
+            },
+            "mappings": [],
+            "panel": null,
+            "missing": "Reject"
+          }
+        },
+        "apply": "linked",
+        "expect": {
+          "origin": {
+            "Linked": "table"
+          },
+          "unmatched": []
+        }
+      },
+      {
+        "name": "linked-echo-suppressed",
+        "query": {
+          "LinkCapture": {
+            "origin": "chart-a",
+            "event": {
+              "revision": "1",
+              "origin": {
+                "Linked": "table"
+              },
+              "durable": true,
+              "presentation_changed": false,
+              "cancellation": null
+            },
+            "axes": [],
+            "panel": null,
+            "selection": true
+          }
+        },
+        "expect": {
+          "message": null
+        }
+      },
+      {
+        "name": "missing-source-rejected",
+        "query": {
+          "LinkResolve": {
+            "message": {
+              "origin": "table",
+              "revision": "1",
+              "windows": [],
+              "selection": [
+                {
+                  "epoch": "1",
+                  "identity": {
+                    "Source": {
+                      "dataset": "1",
+                      "key": "999"
+                    }
+                  },
+                  "inputs": []
+                }
+              ]
+            },
+            "mappings": [],
+            "panel": null,
+            "missing": "Reject"
+          }
+        },
+        "error": "CHART_VALIDATION"
+      },
+      {
+        "name": "missing-source-reported",
+        "query": {
+          "LinkResolve": {
+            "message": {
+              "origin": "table",
+              "revision": "1",
+              "windows": [],
+              "selection": [
+                {
+                  "epoch": "1",
+                  "identity": {
+                    "Source": {
+                      "dataset": "1",
+                      "key": "999"
+                    }
+                  },
+                  "inputs": []
+                }
+              ]
+            },
+            "mappings": [],
+            "panel": null,
+            "missing": "ReportAndOmit"
+          }
+        },
+        "expect": {
+          "unmatched": [
+            {
+              "epoch": "1",
+              "identity": {
+                "Source": {
+                  "dataset": "1",
+                  "key": "999"
+                }
+              },
+              "inputs": []
+            }
+          ]
+        }
+      },
+      {
+        "name": "wrong-edit-constraint-type",
+        "query": {
+          "EditAnnotation": {
+            "id": "Threshold",
+            "part": "Translate",
+            "constraints": {
+              "horizontal": false,
+              "vertical": true,
+              "x": null,
+              "y": {
+                "Category": [
+                  "wrong"
+                ]
+              },
+              "preserve_order": null
+            },
+            "delta": [
+              0,
+              1
+            ]
+          }
+        },
+        "error": "CHART_VALIDATION"
+      },
+      {
+        "name": "accessible-page-budget",
+        "query": {
+          "Describe": {
+            "offset": 0,
+            "limit": 257
+          }
+        },
+        "error": "CHART_VALIDATION"
+      },
+      {
+        "name": "pan-selected-source-outside",
+        "query": {
+          "SetRange": {
+            "axis": "0",
+            "panel": null,
+            "window": {
+              "Numeric": [
+                2,
+                4
+              ]
+            }
+          }
+        },
+        "apply": "windows",
+        "present": true
+      },
+      {
+        "name": "capture-clipped-selection",
+        "query": {
+          "LinkCapture": {
+            "origin": "chart-a",
+            "event": {
+              "revision": "1",
+              "origin": "Control",
+              "durable": true,
+              "presentation_changed": false,
+              "cancellation": null
+            },
+            "axes": [
+              "0"
+            ],
+            "panel": null,
+            "selection": true
+          }
+        },
+        "expect": {
+          "message": {
+            "selection": [
+              {
+                "epoch": "1",
+                "identity": {
+                  "Source": {
+                    "dataset": "1",
+                    "key": "9007199254743002"
+                  }
+                },
+                "inputs": []
+              }
+            ],
+            "windows": [
+              {
+                "axis": "0",
+                "window": {
+                  "Numeric": [
+                    2,
+                    4
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "input-host-category-link",
+    "chart": {
+      "version": 1,
+      "definition": {
+        "revision": "1",
+        "mappings": {
+          "x": null,
+          "y": null,
+          "x2": null,
+          "y2": null,
+          "size": null,
+          "group": null
+        },
+        "transforms": [],
+        "layers": [
+          {
+            "id": "1",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Category": "1"
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": null,
+                "y2": null,
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": "Point",
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude"
+          }
+        ],
+        "axes": [
+          {
+            "id": "0",
+            "side": "Bottom",
+            "scale": {
+              "Point": {
+                "domain": [
+                  "Alpha",
+                  "Beta",
+                  "Gamma"
+                ],
+                "padding": 0.5
+              }
+            },
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": false
+          },
+          {
+            "id": "1",
+            "side": "Left",
+            "scale": "Auto",
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": false
+          }
+        ]
+      }
+    },
+    "data": {
+      "version": 1,
+      "epoch": "1",
+      "datasets": [
+        {
+          "id": "1",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "1",
+                "name": "field_1",
+                "kind": "Categorical",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "2",
+                "name": "field_2",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Categorical": {
+                    "codes": [
+                      0,
+                      1,
+                      2
+                    ],
+                    "dictionary": [
+                      "Gamma",
+                      "Alpha",
+                      "Beta"
+                    ]
+                  }
+                },
+                "validity": [
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    3,
+                    1,
+                    2
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "queries": [
+      {
+        "name": "select-gamma",
+        "action": {
+          "Select": {
+            "change": "Replace",
+            "targets": [
+              {
+                "epoch": "1",
+                "layer": "1",
+                "panel": null,
+                "identity": {
+                  "Source": {
+                    "dataset": "1",
+                    "key": "9007199254743001"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "show-alpha-only",
+        "query": {
+          "SetRange": {
+            "axis": "0",
+            "panel": null,
+            "window": {
+              "Category": {
+                "first": "Alpha",
+                "last": "Alpha"
+              }
+            }
+          }
+        },
+        "apply": "windows",
+        "present": true
+      },
+      {
+        "name": "capture-hidden-category-selection",
+        "query": {
+          "LinkCapture": {
+            "origin": "categories",
+            "event": {
+              "revision": "1",
+              "origin": "Control",
+              "durable": true,
+              "presentation_changed": false,
+              "cancellation": null
+            },
+            "axes": [
+              "0"
+            ],
+            "panel": null,
+            "selection": true
+          }
+        },
+        "expect": {
+          "message": {
+            "selection": [
+              {
+                "epoch": "1",
+                "identity": {
+                  "Source": {
+                    "dataset": "1",
+                    "key": "9007199254743001"
+                  }
+                },
+                "inputs": []
+              }
+            ],
+            "windows": [
+              {
+                "axis": "0",
+                "meaning": "Category",
+                "window": {
+                  "Category": {
+                    "first": "Alpha",
+                    "last": "Alpha"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "resolve-hidden-category-selection",
+        "query": {
+          "LinkResolve": {
+            "message": {
+              "origin": "table",
+              "revision": "1",
+              "windows": [],
+              "selection": [
+                {
+                  "epoch": "1",
+                  "identity": {
+                    "Source": {
+                      "dataset": "1",
+                      "key": "9007199254743001"
+                    }
+                  },
+                  "inputs": []
+                }
+              ]
+            },
+            "mappings": [],
+            "panel": null,
+            "missing": "Reject"
+          }
+        },
+        "apply": "linked",
+        "expect": {
+          "unmatched": []
+        }
+      },
+      {
+        "name": "visible-table-remains-alpha-only",
+        "query": {
+          "Describe": {
+            "offset": 0,
+            "limit": 4
+          }
+        },
+        "expect": {
+          "total": 1,
+          "targets": [
+            {
+              "selected": false,
+              "target": {
+                "identity": {
+                  "Source": {
+                    "key": "9007199254743002"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

@@ -99,7 +99,9 @@ impl<T> TypedRows<T> {
 }
 
 /// Revision-qualified dataset/schema handle used by transactions and provenance.
-#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(
+    serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd,
+)]
 #[serde(deny_unknown_fields)]
 pub struct DatasetVersion {
     /// Dataset identity.

@@ -9,30 +9,28 @@ Original reports retain the revision context from their evidence runs.
 
 ## Current handoff
 
-**Owner assignment: complete the original WP-11 through WP-23 scope and commit after
-each completed package. WP-11–16 are DONE; WP-17 is READY.** The owner explicitly
-confirmed that expanded Phase 2 acceptance remains open; those additions do not expand
-this implementation assignment. Concurrent parity and review documents are preserved.
+**Owner assignment: complete original WP-11 through WP-23 and commit after each
+completed package. WP-11–17 are DONE; WP-18 is READY.** Expanded Phase 2/parity and
+primary-authoring acceptance remains open under the owner's scope clarification.
+Concurrent planning/review documentation is preserved.
 
-WP-16 adds shared presented-scene spatial/sorted-x/target indexes, typed named-axis
-navigation, provenance-aware brushes/lasso and focus-scoped native input producers.
-Pointer zoom, pan, range/region zoom, categories, capture, cancellation and stable
-keyboard focus use the same core query/reducer contracts as actual Python/WASM.
-See [completion evidence](evidence/wp-16-completion-2026-09-07.md),
-[interaction contract](interaction-contract.md) and
+WP-17 adds semantic chart/table linking, constrained annotation producers and native
+control/accessibility hooks. Stable keys, compatible named axes, origin/revision echo
+suppression and pinned preview/commit/cancel/undo behavior share one core in Rust,
+Python and WASM. See [completion evidence](evidence/wp-17-completion-2026-09-07.md),
+[host tools contract](host-tools-contract.md) and
 [ADR-007](adr/007-actions-gestures-and-controlled-state.md).
 
 `mise run fmt`, `mise run check`, `mise run test` and actual `bindings-proof` pass.
-**183 tests pass** (145 core, 28 export, 5 external extension, 1 native conversion,
-4 Rustdoc cases). All 36 existing cases, 23 action transitions and 22 input steps
-execute in Rust, Python and Node WASM. Existing tolerances remain unchanged.
-Native gestures/cancellation/category windows were visually inspected. The focused
-100k-candidate index/scan benchmark returns exact matches without source compilation.
+**193 tests pass** (155 core, 28 export, 5 external-extension, 1 native-conversion,
+4 Rustdoc). All 36 existing cases, 23 action transitions and 47 input steps execute
+in Rust/Python/Node WASM. Native table links, edit/cancel/undo, menus, toolbar, legend,
+copy and export were executed and inspected. Accessibility exposes labels and values,
+but OS focus still reports the window; full screen-reader traversal remains unverified.
 
-G0/G1/G2 retain their recorded scope. G3/G4 and expanded parity gates remain open.
-Existing dependency advisories and the `block` warning remain unresolved. Linux/full
-accessibility, complete streaming, release packaging and PERF-01–05 remain unverified.
-**Next: WP-17 linked views, editable annotations and host controls.**
+G0/G1/G2 retain their recorded scope. G3/G4 and expanded parity/authoring gates remain
+open. Existing dependency advisories and the `block` warning remain unresolved.
+**Next: WP-18 retention, ingestion outcomes and incremental/replay computation.**
 
 ## Work packages
 
@@ -57,9 +55,9 @@ The final column records outstanding prerequisites/blockers and the next action.
 | WP-13 — Full themes and publication composition | DONE | Unassigned | `f6c41c1` | THM-01, THM-02, THM-03, LAY-02, LAY-03, LAY-04, EXP-01, EXP-02, EXP-04, GPU-03 | [Completion evidence](evidence/wp-13-completion-2026-09-07.md); [contract](theme-typography-composition-contract.md) | FIX-12/13 accepted through actual core/native/export/bindings; cumulative G2 remains WP-14. |
 | WP-14 — Extension contracts and alpha API | DONE | Unassigned | `1cb9557` | SCP-01, SCP-02, ARC-03, GRA-01, GRA-08, SCN-02, SCN-03, INT-06, BND-01, THM-03, QLT-05 | [Completion evidence](evidence/wp-14-completion-2026-09-07.md); [contract](extension-contract.md); [alpha matrix](alpha-api.md) | FIX-17 and cumulative G2 passed; full reducer/interaction begins WP-15. |
 | WP-15 — Complete action reducer and state ownership | DONE | Unassigned | WP-15 completion commit | INT-01, INT-02, INT-05, INT-06, SCN-04, STM-02, QLT-01 | [Completion evidence](evidence/wp-15-completion-2026-09-07.md); [contract](state-action-contract.md); [ADR-007](adr/007-actions-gestures-and-controlled-state.md) | Deterministic action/controlled/gesture/history/lifetime scope accepted through actual native/export/Python/WASM. Input producers and full G3 remain WP-16–20. |
-| WP-16 — Hit testing, navigation and selection | DONE | Unassigned | Included in this completion commit | INT-03, INT-04, INT-05, INT-06, SCL-01, SCN-04, STM-05 | [Completion evidence](evidence/wp-16-completion-2026-09-07.md); [contract](interaction-contract.md) | Assigned indexed inspection/navigation/selection acceptance passes; FIX-09/10 remaining portions and G3 stay with WP-17–20. |
-| WP-17 — Linked views, editable annotations and host controls | READY | Codex | — | INT-01, INT-04, INT-05, INT-06, GPU-03, LAY-03, DAT-06 | None | Prerequisites WP-13/15/16 complete; implement linked views, constrained annotation editing and host controls. |
-| WP-18 — Streaming retention and incremental computation | NOT STARTED | Unassigned | — | DAT-03, DAT-04, DAT-06, STM-01, STM-02, STM-03, GRA-08, QLT-01 | None | Satisfy prerequisites: WP-04, WP-10, WP-15. |
+| WP-16 — Hit testing, navigation and selection | DONE | Unassigned | `4148793` | INT-03, INT-04, INT-05, INT-06, SCL-01, SCN-04, STM-05 | [Completion evidence](evidence/wp-16-completion-2026-09-07.md); [contract](interaction-contract.md) | Assigned indexed inspection/navigation/selection acceptance passes; FIX-09/10 remaining portions and G3 stay with WP-17–20. |
+| WP-17 — Linked views, editable annotations and host controls | DONE | Unassigned | Included in this completion commit | INT-01, INT-04, INT-05, INT-06, GPU-03, LAY-03, DAT-06 | [Completion evidence](evidence/wp-17-completion-2026-09-07.md); [contract](host-tools-contract.md) | Original linked/editing/host acceptance passes; native accessibility limitations recorded. Full G3 remains open. |
+| WP-18 — Streaming retention and incremental computation | READY | Codex | — | DAT-03, DAT-04, DAT-06, STM-01, STM-02, STM-03, GRA-08, QLT-01 | None | Prerequisites complete; implement bounded ingestion, retention reconciliation and exact incremental updates with batch fallbacks. |
 | WP-19 — Bounded scheduling, caches and dense representation | NOT STARTED | Unassigned | — | STM-04, STM-05, SCN-04, GPU-02, QLT-04 | None | Satisfy prerequisites: WP-12, WP-16, WP-18. |
 | WP-20 — Coherent exports during live interaction | NOT STARTED | Unassigned | — | EXP-03, EXP-04, DAT-06, STM-02, SCN-04, QLT-04 | None | Satisfy prerequisites: WP-13, WP-17, WP-18, WP-19. |
 | WP-21 — Correctness, fidelity and supported-platform hardening | NOT STARTED | Unassigned | — | SCP-03, QLT-01, QLT-02, QLT-03, GPU-02, GPU-03, BND-03, BND-04 | None | Satisfy prerequisites: WP-14, WP-17, WP-20. |

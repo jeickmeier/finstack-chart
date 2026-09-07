@@ -123,7 +123,11 @@ fn parent<'a>(chart: &'a LaidOutChart, key: &Option<PanelKey>) -> ChartResult<&'
     }
 }
 
-fn anchor(chart: &LaidOutChart, a: &Anchor, figure: Rect) -> ChartResult<Option<(Point, Rect)>> {
+pub(super) fn anchor(
+    chart: &LaidOutChart,
+    a: &Anchor,
+    figure: Rect,
+) -> ChartResult<Option<(Point, Rect)>> {
     let relative = |b: Rect, x: f64, y: f64| -> ChartResult<Option<(Point, Rect)>> {
         if !x.is_finite() || !y.is_finite() || !(0. ..=1.).contains(&x) || !(0. ..=1.).contains(&y)
         {
@@ -409,10 +413,14 @@ pub(super) fn finish(
         if let Some(to) = &a.callout {
             if let Some((to, _)) = anchor(chart, to, r.bounds)? {
                 // The nearest point on the label box minimizes leader length deterministically.
-                let from = Point::new(
-                    to.x().clamp(candidate.origin().x(), candidate.max_x()),
-                    to.y().clamp(candidate.origin().y(), candidate.max_y()),
-                )?;
+                let from = if a.connector_origin == crate::composition::ConnectorOrigin::Anchor {
+                    position
+                } else {
+                    Point::new(
+                        to.x().clamp(candidate.origin().x(), candidate.max_x()),
+                        to.y().clamp(candidate.origin().y(), candidate.max_y()),
+                    )?
+                };
                 items.push(SceneItem {
                     layer: None,
                     clip: Some(clip),

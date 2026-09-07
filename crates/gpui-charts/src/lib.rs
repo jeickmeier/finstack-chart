@@ -5,4 +5,7 @@ mod native;
 mod view;
 pub use custom::{NativePainter, NativePainterRegistry, PreparedNativePaint};
 pub use native::NativeFont;
-pub use view::{ChartInput, ChartView, NativeDragTool, NativeMetrics, TooltipBuilder};
+pub use view::{
+    ChartHostEvent, ChartInput, ChartView, ControlBuilder, ControlSlot, HostCommand, HostContext,
+    NativeAnnotationTool, NativeDragTool, NativeMetrics, TooltipBuilder,
+};

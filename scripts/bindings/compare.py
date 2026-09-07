@@ -286,3 +286,12 @@ for native_svg in paths[0].glob('input-*.svg'):
     for runtime in paths[1:]:
         assert native_svg.read_bytes() == (runtime/native_svg.name).read_bytes(), native_svg.name
 print('PASS WP-16 Rust/Python/WASM indexed inspection, provenance selection, typed navigation, pinned previews, cancellation and exact export geometry')
+
+for runtime, trace in zip(paths, input_traces):
+    host_steps = [s for s in trace if s['case'].startswith('input-host-')]
+    assert len(host_steps) == 25
+    xml = {name: ET.parse(runtime / f'input-host-tools-{name}.svg').getroot() for name in ('snapped-preview','edit-cancel','edit-commit','edit-undo','edit-redo')}
+    assert furniture(xml['snapped-preview']) == furniture(xml['edit-commit']) == furniture(xml['edit-redo'])
+    assert furniture(xml['edit-cancel']) == furniture(xml['edit-undo'])
+    assert furniture(xml['edit-cancel']) != furniture(xml['edit-commit'])
+print('PASS WP-17 actual Rust/Python/WASM accessible data, snapped annotation preview/cancel/commit/undo/redo, linked provenance, echoes, missing keys and clipped/category selections')

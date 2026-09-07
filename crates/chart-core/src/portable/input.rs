@@ -21,6 +21,48 @@ pub struct InputQuery {
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
 pub enum InputOperation {
+    /// Bounded semantic table and focus descriptions, without native/interpreter objects.
+    Describe {
+        /// Starting meaningful target offset.
+        offset: usize,
+        /// Page size 1..256.
+        limit: usize,
+    },
+    /// Constrain/snap an authored annotation over this presented or active gesture basis.
+    EditAnnotation {
+        /// Existing annotation identity.
+        id: String,
+        /// Editable endpoint or joint movement.
+        part: crate::editing::AnnotationPart,
+        /// Typed movement/snap/range constraints.
+        constraints: crate::editing::EditConstraints,
+        /// Total destination displacement since gesture begin.
+        delta: [f64; 2],
+    },
+    /// Capture a root-origin message after an effective event; linked echoes produce null.
+    LinkCapture {
+        /// Stable application view name.
+        origin: String,
+        /// Event returned by common dispatch.
+        event: crate::state::StateEvent,
+        /// Sender axes, empty for selection-only linking.
+        axes: Vec<ScaleId>,
+        /// Optional source facet.
+        panel: Option<PanelKey>,
+        /// Include the effective selection, including an explicit clear.
+        selection: bool,
+    },
+    /// Resolve semantic links to a common receiving action without dispatching it.
+    LinkResolve {
+        /// Unmodified root-origin message.
+        message: crate::linking::LinkMessage,
+        /// Explicit sender/receiver axis pairing.
+        mappings: Vec<crate::linking::AxisLink>,
+        /// Optional receiving facet.
+        panel: Option<PanelKey>,
+        /// Missing-key policy with explicit unmatched reporting.
+        missing: crate::linking::MissingMatch,
+    },
     /// Read nearest-x/point/shape hits and exact semantic targets.
     Inspect {
         /// Destination coordinates.

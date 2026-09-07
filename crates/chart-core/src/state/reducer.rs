@@ -17,6 +17,7 @@ struct Command {
 struct LinkRecord {
     revision: Revision,
     viewport: Option<Viewport>,
+    windows: Option<AxisWindows>,
     selection: Option<Vec<MarkTarget>>,
 }
 /// Retained synchronous reducer. Only this owner retains history and at most one gesture basis
@@ -37,7 +38,7 @@ pub struct ActionReducer {
 #[derive(Clone, Debug)]
 struct TargetIndex {
     scene: Weak<LaidOutChart>,
-    targets: Arc<BTreeMap<MarkTarget, bool>>,
+    targets: Arc<BTreeMap<MarkTarget, (bool, bool)>>,
 }
 impl Default for ActionReducer {
     fn default() -> Self {
@@ -75,6 +76,17 @@ impl ActionReducer {
             {
                 let mut targets = BTreeMap::new();
                 if let Ok(source) = scene.prepared().source().get() {
+                    for target in scene.prepared().semantic_targets() {
+                        let entry = targets
+                            .entry(MarkTarget {
+                                epoch: source.epoch(),
+                                layer: target.layer,
+                                panel: target.panel.cloned(),
+                                identity: target.target.into(),
+                            })
+                            .or_insert((false, false));
+                        entry.1 |= target.selectable;
+                    }
                     for (i, (item, values)) in scene
                         .scene()
                         .items()
@@ -95,8 +107,9 @@ impl ActionReducer {
                                     panel: scene.item_panels()[i].clone(),
                                     identity: target.into(),
                                 })
-                                .or_insert(false);
-                            *entry |= selectable;
+                                .or_insert((false, false));
+                            entry.0 = true;
+                            entry.1 |= selectable;
                         }
                     }
                 }
@@ -297,7 +310,7 @@ impl ActionReducer {
         if targets.iter().any(|t| {
             !available
                 .and_then(|i| i.targets.get(t))
-                .is_some_and(|allowed| !selectable || *allowed)
+                .is_some_and(|(presented, allowed)| if selectable { *allowed } else { *presented })
         }) {
             return Err(error(
                 DiagnosticCode::Validation,
@@ -577,6 +590,7 @@ impl ActionReducer {
             Synchronize {
                 revision,
                 viewport,
+                windows,
                 selection,
             } => {
                 *record = false;
@@ -594,7 +608,10 @@ impl ActionReducer {
                         return Ok(());
                     }
                     if *revision == last.revision {
-                        if *viewport != last.viewport || *selection != last.selection {
+                        if *viewport != last.viewport
+                            || *windows != last.windows
+                            || *selection != last.selection
+                        {
                             return Err(error(
                                 DiagnosticCode::TransactionReuse,
                                 "A synchronization revision was reused for different values.",
@@ -607,6 +624,17 @@ impl ActionReducer {
                         DiagnosticCode::ResourceLimit,
                         "At most 64 linked sources are retained.",
                     ));
+                }
+                if viewport.is_some() && windows.is_some() {
+                    return Err(error(
+                        DiagnosticCode::Validation,
+                        "Choose legacy or typed linked windows, not both.",
+                    ));
+                }
+                if let Some(v) = windows {
+                    windows::validate_windows(v)?;
+                    self.state.durable.windows.extend(v.clone());
+                    windows::validate_windows(&self.state.durable.windows)?;
                 }
                 if let Some(v) = viewport {
                     v.validate()?;
@@ -623,6 +651,7 @@ impl ActionReducer {
                     LinkRecord {
                         revision: *revision,
                         viewport: *viewport,
+                        windows: windows.clone(),
                         selection: selection.clone(),
                     },
                 );

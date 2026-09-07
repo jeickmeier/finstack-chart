@@ -103,6 +103,7 @@ pub(super) struct Index {
     pub candidates: Vec<Candidate>,
     pub keyboard: Vec<usize>,
     pub highlights: BTreeMap<IdentityKey, Bounds>,
+    pub semantic: BTreeMap<IdentityKey, usize>,
     nodes: Vec<Node>,
     order: Vec<usize>,
     lines: Vec<Lines>,
@@ -187,10 +188,25 @@ impl Index {
             l.groups = merged;
         }
         let order = (0..candidates.len()).collect();
+        let semantic = keyboard
+            .iter()
+            .map(|i| {
+                let hit = &candidates[*i].hit;
+                (
+                    (
+                        hit.panel.clone(),
+                        hit.layer,
+                        crate::state::TargetIdentity::from(&hit.target),
+                    ),
+                    *i,
+                )
+            })
+            .collect();
         let mut index = Self {
             candidates,
             keyboard,
             highlights,
+            semantic,
             nodes: vec![],
             order,
             lines,

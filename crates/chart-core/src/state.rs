@@ -109,6 +109,9 @@ pub enum ChartAction {
         revision: Revision,
         /// Optional complete viewport update.
         viewport: Option<Viewport>,
+        /// Optional typed named-axis updates; unrelated axes remain unchanged. Mutually exclusive with legacy viewport.
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        windows: Option<AxisWindows>,
         /// Optional complete target set, including explicit clear.
         selection: Option<Vec<MarkTarget>>,
     },

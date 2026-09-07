@@ -237,7 +237,7 @@ pub struct ActionRequest {
     pub action: super::ChartAction,
 }
 /// Effective changes only; repeated input returns no event.
-#[derive(Serialize, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 pub struct StateEvent {
     /// Resulting total revision.
     pub revision: Revision,

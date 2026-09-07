@@ -42,6 +42,9 @@ struct Drag {
 #[derive(Default)]
 pub(super) struct InputState {
     drag: Option<Drag>,
+    pub(super) edit: Option<super::edit::EditDrag>,
+    pub(super) annotation_tools: Vec<NativeAnnotationTool>,
+    pub(super) focused_edit: Option<usize>,
     pub(super) tool: NativeDragTool,
     pub(super) disabled: bool,
     pub(super) focused: bool,
@@ -108,10 +111,11 @@ impl ChartView {
         Ok(())
     }
     pub(super) fn has_drag(&self) -> bool {
-        self.input.drag.is_some()
+        self.input.drag.is_some() || self.input.edit.is_some()
     }
     pub(super) fn release_input(&mut self) {
         self.input.drag = None;
+        self.input.edit = None;
     }
     pub(super) fn cancel_input(
         &mut self,
@@ -123,6 +127,7 @@ impl ChartView {
             self.dispatch_action(r, cx)?;
         }
         self.input.drag = None;
+        self.input.edit = None;
         Ok(())
     }
     pub(super) fn pointer_down(
@@ -131,6 +136,9 @@ impl ChartView {
         cx: &mut Context<Self>,
     ) -> ChartResult<()> {
         if self.input.disabled || self.state().active_gesture().is_some() {
+            return Ok(());
+        }
+        if self.edit_down(event, cx)? {
             return Ok(());
         }
         let Some(inspector) = self.inspector.clone() else {
@@ -188,6 +196,9 @@ impl ChartView {
     ) -> ChartResult<()> {
         if !self.has_drag() {
             return Ok(());
+        }
+        if self.input.edit.is_some() {
+            return self.edit_move(event, cx);
         }
         if event.pressed_button != Some(MouseButton::Left) {
             return self.cancel_input(CancelReason::CaptureLost, cx);
@@ -282,6 +293,9 @@ impl ChartView {
         if event.button != MouseButton::Left || !self.has_drag() {
             return Ok(());
         }
+        if self.input.edit.is_some() {
+            return self.edit_up(event, cx);
+        }
         self.pointer_move(
             &MouseMoveEvent {
                 position: event.position,
@@ -311,6 +325,7 @@ impl ChartView {
             self.dispatch_action(request, cx)?;
         }
         self.input.drag = None;
+        self.input.edit = None;
         cx.stop_propagation();
         Ok(())
     }

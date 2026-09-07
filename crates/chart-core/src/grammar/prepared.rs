@@ -332,6 +332,19 @@ pub struct PreparedMark {
     /// Explicit resolved constant/mapped size plus solid color.
     pub style: Style,
 }
+/// One stable semantic target before viewport clipping or presentation visibility.
+/// Source edits/filtering/statistical scope can remove it; ordinary navigation cannot.
+#[derive(Clone, Copy, Debug)]
+pub struct PreparedTarget<'a> {
+    /// Presentation layer identity.
+    pub layer: LayerId,
+    /// Exact facet identity, absent for a single panel.
+    pub panel: Option<&'a super::PanelKey>,
+    /// Actual provenance and retained input scope.
+    pub target: &'a Target,
+    /// Explicit custom selection capability for this prepared mark.
+    pub selectable: bool,
+}
 
 /// One prepared layer in paint order.
 #[derive(Clone, Debug)]
@@ -448,6 +461,33 @@ impl PreparedChart {
     /// Layers in authored paint order.
     pub fn layers(&self) -> &[PreparedLayer] {
         &self.layers
+    }
+    /// Borrow stable targets from the presented preparation, including marks outside its viewport.
+    /// Use the laid-out Inspector for visible hit/focus order; linking/selection use this catalog.
+    pub fn semantic_targets(&self) -> impl Iterator<Item = PreparedTarget<'_>> {
+        std::iter::once((None, self))
+            .filter(|_| self.panels.is_empty())
+            .chain(self.panels.iter().map(|p| (Some(&p.key), p.chart.as_ref())))
+            .flat_map(|(panel, chart)| {
+                chart.layers.iter().flat_map(move |layer| {
+                    layer
+                        .marks
+                        .iter()
+                        .enumerate()
+                        .flat_map(move |(index, mark)| {
+                            let selectable = layer
+                                .interactions
+                                .get(&index)
+                                .is_none_or(|v| v.selection != super::SelectionPolicy::Disabled);
+                            mark.targets.iter().map(move |target| PreparedTarget {
+                                layer: layer.id,
+                                panel,
+                                target,
+                                selectable,
+                            })
+                        })
+                })
+            })
     }
     /// Explicit named output, if declared.
     pub fn transform(&self, id: TransformId) -> Option<&Arc<PreparedTable>> {

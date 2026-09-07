@@ -125,7 +125,7 @@ console.log(`PASS WP-15 WASM shared action trace: ${actionTrace.length} transiti
 
 // WP-16 shares authored expectations and typed reducer actions with Rust and Python.
 const inputTrace = [];
-for (const c of JSON.parse(fs.readFileSync(path.join(root,'fixtures/interaction/cases.json'),'utf8'))) {
+for (const c of ['fixtures/interaction/cases.json','fixtures/host-tools/cases.json'].flatMap(p=>JSON.parse(fs.readFileSync(path.join(root,p),'utf8')))) {
     const chart = new bindings.Chart(JSON.stringify(c.chart),JSON.stringify(c.data),fs.readFileSync(path.join(root,'fixtures/interaction/profile.json'),'utf8'),Uint8Array.from(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))));
     let stamp = JSON.parse(chart.present()).stamp, basis = null;
     const initial = JSON.parse(chart.semantics());
@@ -140,13 +140,15 @@ for (const c of JSON.parse(fs.readFileSync(path.join(root,'fixtures/interaction/
             if(step.expect) subset(result,step.expect);
         }
         let action=step.action;
+        if(step.apply==='annotation_preview')action={PreviewGesture:{id:step.id,preview:{Annotation:result.annotation}}};
+        if(step.apply==='linked')action=result.action;
         if(step.apply==='windows')action={SetAxisWindows:result.windows};
         if(step.apply==='preview')action={PreviewGesture:{id:step.id,preview:{AxisWindows:result.windows}}};
         if(step.apply==='targets')action={Select:{change:step.change||'Replace',targets:result.targets}};
         if(action) {
             if(action.BeginGesture)basis={...stamp};
             const state=JSON.parse(chart.state());
-            chart.dispatch(JSON.stringify({definition_revision:state.definition_revision,expected_state:state.state_revision,scene:basis||stamp,origin:'Pointer',action}));
+            chart.dispatch(JSON.stringify({definition_revision:state.definition_revision,expected_state:state.state_revision,scene:basis||stamp,origin:step.apply==='linked'?result.origin:'Pointer',action}));
             if(action.CancelGesture||action.CommitGesture)basis=null;
         }
         const state=JSON.parse(chart.state());if(step.state)subset(state,step.state);
@@ -158,4 +160,4 @@ for (const c of JSON.parse(fs.readFileSync(path.join(root,'fixtures/interaction/
     chart.dispose();chart.free();
 }
 save('input-trace',JSON.stringify(inputTrace));
-console.log(`PASS WP-16 WASM shared input queries/actions: ${inputTrace.length} steps`);
+console.log(`PASS WP-16/17 WASM shared input queries/actions: ${inputTrace.length} steps`);

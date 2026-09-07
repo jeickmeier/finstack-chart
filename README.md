@@ -3,12 +3,13 @@
 Rust-native grammar-of-graphics project with a portable core, headless publication export,
 a standalone GPUI host and optional Kit integration.
 
-**Status: WP-16 indexed inspection, typed navigation and selection are implemented. G2 passes its
+**Status: WP-17 semantic linking, constrained annotation editing and host controls are implemented. G2 passes its
 [feature matrix](docs/alpha-api.md), including facets, themes, vector publication,
 public custom extensions and 36 actual Rust/Python/WASM cases. A shared action trace
-proves gesture/cancellation/controlled-state behavior in each runtime; 22 shared input
-query/action steps cover the [interaction contract](docs/interaction-contract.md).
-Linked views/editing are next. Streaming and production gates G3/G4 remain open.**
+proves gesture/cancellation/controlled-state behavior in each runtime; 47 shared input
+query/action steps cover the [interaction contract](docs/interaction-contract.md)
+and [host tools contract](docs/host-tools-contract.md).
+Streaming and production gates G3/G4 remain open, as do expanded parity/authoring gates.**
 
 ## Start here
 
@@ -116,3 +117,8 @@ The [state/action contract](docs/state-action-contract.md) covers origins, contr
 revision fences, transient previews, bounded annotation undo and explicit scene ownership.
 Run `mise exec -- cargo run -p chart-gallery --example actions_gallery --locked` for
 native preview/cancel/commit/undo/freeze controls.
+
+Run `mise exec -- cargo run -p chart-gallery --example host_tools_gallery --locked`
+for linked charts/table, snapped threshold/range handles and replaceable native controls.
+[WP-17 evidence](docs/evidence/wp-17-completion-2026-09-07.md) records actual runtime
+checks and the accessibility limitations of the supported native target.

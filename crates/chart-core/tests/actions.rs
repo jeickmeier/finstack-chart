@@ -96,6 +96,7 @@ fn annotation(x: f64) -> Annotation {
         priority: 0,
         collision: Collision::Keep,
         callout: None,
+        connector_origin: chart_core::composition::ConnectorOrigin::Label,
         overflow: false,
     }
 }
@@ -383,6 +384,7 @@ fn linked_sequences_are_bounded_idempotent_and_preserve_origin_without_feedback_
             ChartAction::Synchronize {
                 revision: Revision::new(sequence),
                 viewport: Some(view(v)),
+                windows: None,
                 selection: Some(vec![mark(101)]),
             },
             ActionOrigin::Linked("overview".into()),

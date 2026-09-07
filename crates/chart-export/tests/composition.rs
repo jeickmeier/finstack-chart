@@ -297,6 +297,7 @@ fn annotation(id: &str, anchor: Anchor, collision: Collision, priority: i32) -> 
         priority,
         collision,
         callout: None,
+        connector_origin: chart_core::composition::ConnectorOrigin::Label,
         overflow: true,
     }
 }

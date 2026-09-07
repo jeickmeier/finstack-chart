@@ -1,6 +1,6 @@
 # ADR-007 — Actions, gesture ownership and controlled state
 
-Status: accepted for WP-15/16, 7 September 2026. WP-17–19 add linking, reconciliation and
+Status: accepted for WP-15–17, 7 September 2026. WP-18–19 add reconciliation and
 scheduling decisions without changing the synchronous core ownership boundary.
 
 ## Decision
@@ -66,3 +66,21 @@ No dependency changed. Full-domain capture clears named windows only in its capt
 copy. Live interaction overlays, linking, streaming reconciliation and scheduling remain
 with their assigned packages. The [interaction contract](../interaction-contract.md)
 and [WP-16 evidence](../evidence/wp-16-completion-2026-09-07.md) record the current scope.
+
+## WP-17: semantic links and host-owned tools
+
+Link through epoch/dataset/source keys or revisioned aggregate/model identities, with
+explicit compatible named-axis mappings. Resolve against prepared semantic targets,
+including hidden/clipped observations. Preserve origin/revision in the common reducer
+and suppress linked-origin recapture to prevent cycles. Missing matches are explicit.
+
+Constrained annotation producers pin the original presented projection and emit values
+into the existing gesture/history lifecycle. Add anchor-origin connectors for authored
+threshold/range geometry without coupling line positions to label offsets. Source edits
+remain application transactions. Keep clipboard/export/menu handlers and all GPUI
+elements outside core; portable hosts use the same pure link/edit/description queries.
+
+Expose bounded semantic descriptions independently of rendering. Native accessibility
+and a linked table consume those descriptions. Actual tree exposure is verified, with
+OS-focus/screen-reader limitations recorded in the [host tools contract](../host-tools-contract.md)
+and [WP-17 evidence](../evidence/wp-17-completion-2026-09-07.md). No dependency changed.

@@ -296,6 +296,28 @@ impl Inspector {
     pub fn candidate_count(&self) -> usize {
         self.index.candidates.len()
     }
+    /// Distinct visible semantic targets in deterministic keyboard order, without cloning rows.
+    /// Consumers can page this iterator for accessible tables or match identities across views.
+    pub fn semantic_targets(&self) -> impl ExactSizeIterator<Item = &InspectedTarget> {
+        self.index
+            .keyboard
+            .iter()
+            .map(|i| &self.index.candidates[*i].hit)
+    }
+    /// Resolve the authoritative presented target in logarithmic identity lookup work.
+    pub fn target(
+        &self,
+        target: &crate::state::MarkTarget,
+    ) -> ChartResult<Option<&InspectedTarget>> {
+        if target.epoch != self.presented.prepared().source().get()?.epoch() {
+            return Ok(None);
+        }
+        Ok(self
+            .index
+            .semantic
+            .get(&(target.panel.clone(), target.layer, target.identity.clone()))
+            .map(|i| &self.index.candidates[*i].hit))
+    }
     /// Reduce an action only against its presented stamp; redundant targets are idempotent.
     pub fn dispatch(
         &mut self,

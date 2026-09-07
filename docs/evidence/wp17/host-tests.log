@@ -1,0 +1,17 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.62s
+     Running tests/host_tools.rs (target/debug/deps/host_tools-5c0351ea52739d7e)
+
+running 10 tests
+test time_constraints_roundtrip_as_decimal_strings_without_integer_narrowing ... ok
+test threshold_connector_uses_authored_endpoints_independent_of_label_offset ... ok
+test accessible_page_preserves_exact_keys_values_and_bounded_pagination ... ok
+test range_handles_reject_crossing_and_pinned_edits_ignore_resize_then_cancel ... ok
+test linked_selection_survives_viewport_clipping_and_hidden_receiving_layers ... ok
+test semantic_links_remap_layer_ids_and_suppress_cycles_without_source_edits ... ok
+test linked_windows_use_semantic_values_and_preserve_unrelated_axes ... ok
+test threshold_translation_snaps_both_endpoints_and_commits_one_undo_command ... ok
+test aggregate_links_and_descriptions_preserve_membership_revision ... ok
+test exact_timestamp_and_category_editing_use_presented_typed_coordinates ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s

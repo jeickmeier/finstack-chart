@@ -72,6 +72,20 @@ pub enum Collision {
     /// Test up/right/down/left at one then two line heights; hide with pressure if all fail.
     ShiftThenHide,
 }
+/// Whether a callout joins a laid-out label or two explicit authored endpoints.
+#[derive(Serialize, Deserialize, Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum ConnectorOrigin {
+    /// Nearest point on the laid-out label box, preserving ordinary callout behavior.
+    #[default]
+    Label,
+    /// Exact authored anchor to callout endpoint, for threshold/range annotation geometry.
+    Anchor,
+}
+impl ConnectorOrigin {
+    fn is_default(&self) -> bool {
+        *self == Self::Label
+    }
+}
 /// Direct label or callout. Higher priority is placed first, ties retain declaration order.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
@@ -94,6 +108,9 @@ pub struct Annotation {
     /// Optional leader endpoint in its independently declared coordinate space.
     #[serde(default)]
     pub callout: Option<Anchor>,
+    /// Connector origin; labels may be offset without moving threshold/range line endpoints.
+    #[serde(default, skip_serializing_if = "ConnectorOrigin::is_default")]
+    pub connector_origin: ConnectorOrigin,
     /// False clips to the addressed plot (or figure for a figure/output anchor).
     #[serde(default)]
     pub overflow: bool,

@@ -26,14 +26,21 @@ fn dispatch(
     chart: &mut PortableChart,
     stamp: &Value,
     action: &Value,
+    origin: &Value,
 ) -> Result<Value, Box<dyn std::error::Error>> {
     let state: Value = serde_json::from_str(&chart.state()?)?;
-    Ok(serde_json::from_str(&chart.dispatch(&json!({"definition_revision":state["definition_revision"],"expected_state":state["state_revision"],"scene":stamp,"origin":"Pointer","action":action}).to_string())?)?)
+    Ok(serde_json::from_str(&chart.dispatch(&json!({"definition_revision":state["definition_revision"],"expected_state":state["state_revision"],"scene":stamp,"origin":origin,"action":action}).to_string())?)?)
 }
 pub fn run(root: &Path, output: &Path) -> Result<(), Box<dyn std::error::Error>> {
-    let cases: Vec<Value> = serde_json::from_str(&fs::read_to_string(
-        root.join("fixtures/interaction/cases.json"),
-    )?)?;
+    let mut cases: Vec<Value> = vec![];
+    for fixture in [
+        "fixtures/interaction/cases.json",
+        "fixtures/host-tools/cases.json",
+    ] {
+        cases.extend(serde_json::from_str::<Vec<Value>>(&fs::read_to_string(
+            root.join(fixture),
+        )?)?);
+    }
     let mut trace = vec![];
     for case in cases {
         let mut chart = PortableChart::new(
@@ -82,6 +89,8 @@ pub fn run(root: &Path, output: &Path) -> Result<(), Box<dyn std::error::Error>>
                 }
             }
             let action=step.get("action").cloned().or_else(||match step["apply"].as_str(){
+                Some("annotation_preview")=>Some(json!({"PreviewGesture":{"id":step["id"],"preview":{"Annotation":result["annotation"]}}})),
+                Some("linked")=>Some(result["action"].clone()),
                 Some("windows")=>Some(json!({"SetAxisWindows":result["windows"]})),
                 Some("preview")=>Some(json!({"PreviewGesture":{"id":step["id"],"preview":{"AxisWindows":result["windows"]}}})),
                 Some("targets")=>Some(json!({"Select":{"change":step.get("change").unwrap_or(&json!("Replace")),"targets":result["targets"]}})),
@@ -91,7 +100,17 @@ pub fn run(root: &Path, output: &Path) -> Result<(), Box<dyn std::error::Error>>
                 if action.get("BeginGesture").is_some() {
                     basis = Some(stamp.clone());
                 }
-                dispatch(&mut chart, basis.as_ref().unwrap_or(&stamp), &action)?;
+                let origin = if step["apply"] == "linked" {
+                    result["origin"].clone()
+                } else {
+                    json!("Pointer")
+                };
+                dispatch(
+                    &mut chart,
+                    basis.as_ref().unwrap_or(&stamp),
+                    &action,
+                    &origin,
+                )?;
                 if action.get("CancelGesture").is_some() || action.get("CommitGesture").is_some() {
                     basis = None;
                 }
@@ -131,7 +150,7 @@ pub fn run(root: &Path, output: &Path) -> Result<(), Box<dyn std::error::Error>>
         serde_json::to_string_pretty(&trace)?,
     )?;
     println!(
-        "PASS WP-16 shared input queries/actions: {} steps",
+        "PASS WP-16/17 shared input queries/actions: {} steps",
         trace.len()
     );
     Ok(())

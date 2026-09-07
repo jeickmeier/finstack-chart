@@ -320,6 +320,13 @@ impl LaidOutChart {
     pub fn scene(&self) -> &Scene {
         &self.scene
     }
+    /// Resolve an annotation coordinate through the exact layout projection and clipping policy.
+    pub fn project_anchor(
+        &self,
+        anchor: &crate::composition::Anchor,
+    ) -> crate::ChartResult<Option<(crate::Point, Rect)>> {
+        super::composition::anchor(self, anchor, self.scene.bounds())
+    }
     /// Useful plot, absent for the compact no-space state.
     pub fn plot(&self) -> Option<Rect> {
         self.plot

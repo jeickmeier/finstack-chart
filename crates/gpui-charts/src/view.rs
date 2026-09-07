@@ -1,3 +1,5 @@
+mod edit;
+mod host;
 mod input;
 use crate::native::{NativeFont, NativeFrame};
 use chart_core::data::{SnapshotHandle, StoreSnapshot};
@@ -10,10 +12,12 @@ use chart_core::state::{
     MarkTarget,
 };
 use chart_core::{ChartResult, Diagnostic, Point, Rect, Revision};
+pub use edit::NativeAnnotationTool;
 use gpui::{
     AnyElement, App, Bounds, Context, FocusHandle, IntoElement, MouseButton, Pixels, Render, Role,
     Window, canvas, div, prelude::*, px, rgb,
 };
+pub use host::{ChartHostEvent, ControlBuilder, ControlSlot, HostCommand, HostContext};
 pub use input::NativeDragTool;
 use std::{rc::Rc, sync::Arc};
 
@@ -107,6 +111,7 @@ pub struct ChartView {
     last_error: Option<Diagnostic>,
     metrics: NativeMetrics,
     input: input::InputState,
+    host: host::HostState,
 }
 impl ChartView {
     /// Mount an already validated input; no source preparation or fallible work is hidden here.
@@ -139,6 +144,7 @@ impl ChartView {
             last_error: None,
             metrics: NativeMetrics::default(),
             input: input::InputState::default(),
+            host: host::HostState::default(),
         }
     }
     /// Change the native-only inspection body, with no data/stat/layout invalidation.
@@ -304,6 +310,9 @@ impl ChartView {
         if result.outcome.changed {
             cx.notify();
         }
+        if let Some(event) = &result.event {
+            cx.emit(ChartHostEvent::StateChanged(event.clone()));
+        }
         Ok(result)
     }
     /// Resolve native input using the exact presented inspector, then dispatch semantic actions.
@@ -456,6 +465,8 @@ impl Render for ChartView {
                 },
             ));
         }
+        let controls = self.host_elements(window, cx);
+        let (accessible_summary, accessible_focus) = self.accessibility_elements(cx);
         let prepaint = cx.entity().downgrade();
         let paint = prepaint.clone();
         let diagnostic = self.last_error.as_ref().map(|e| {
@@ -575,7 +586,10 @@ impl Render for ChartView {
                         }
                     });
                     let _ = paint.update(cx, |this, _| {
-                        if let Err(e) = this.paint_input(window) {
+                        if let Err(e) = this
+                            .paint_input(window)
+                            .and_then(|()| this.paint_edit_handles(window))
+                        {
                             this.last_error = Some(e);
                         }
                     });
@@ -620,18 +634,51 @@ impl Render for ChartView {
             .size_full()
             .overflow_hidden()
             .border_1()
-            .border_color(if self.focus.is_focused(window) { focus_color } else { gpui::rgba(0x00000000) })
+            .border_color(if self.focus.is_focused(window) {
+                focus_color
+            } else {
+                gpui::rgba(0x00000000)
+            })
+            .focusable()
             .track_focus(&self.focus)
             .hover_listener_mode(gpui::HoverListenerMode::InputModalityIndependent)
-            .role(Role::Image)
-            .aria_label("Interactive chart. Click to focus; arrow keys inspect visible observations; Escape clears inspection.")
-            .on_mouse_down(MouseButton::Left, cx.listener(|this, event, window, cx| {
-                window.focus(&this.focus, cx);
-                if let Err(e)=this.pointer_down(event,cx){this.last_error=Some(e);}
-                cx.notify();
-            }))
+            .role(Role::Group)
+            .aria_label(accessible_summary)
+            .on_mouse_down(
+                MouseButton::Left,
+                cx.listener(|this, event, window, cx| {
+                    this.host.menu_at = None;
+                    window.focus(&this.focus, cx);
+                    if let Err(e) = this.pointer_down(event, cx) {
+                        this.last_error = Some(e);
+                    }
+                    cx.notify();
+                }),
+            )
+            .on_mouse_down(
+                MouseButton::Right,
+                cx.listener(|this, event: &gpui::MouseDownEvent, window, cx| {
+                    if !this.supports_host_command(HostCommand::ContextMenu) {
+                        return;
+                    }
+                    window.focus(&this.focus, cx);
+                    let p = this.frame.as_ref().and_then(|f| {
+                        Point::new(
+                            f64::from(f32::from(event.position.x - f.bounds.origin.x)),
+                            f64::from(f32::from(event.position.y - f.bounds.origin.y)),
+                        )
+                        .ok()
+                    });
+                    if let Err(e) = this.request_host_command(HostCommand::ContextMenu, p, cx) {
+                        this.last_error = Some(e);
+                    }
+                    cx.stop_propagation();
+                }),
+            )
             .on_mouse_move(cx.listener(|this, event: &gpui::MouseMoveEvent, _, cx| {
-                if this.has_drag() || this.input.disabled {return;}
+                if this.has_drag() || this.input.disabled {
+                    return;
+                }
                 let Some(frame) = &this.frame else { return };
                 let local = Point::new(
                     f64::from(f32::from(event.position.x - frame.bounds.origin.x)),
@@ -639,38 +686,116 @@ impl Render for ChartView {
                 );
                 if let Ok(p) = local
                     && let Err(e) = this.dispatch_inspection(
-                        InspectionAction::Hover(Some(p)), InputOrigin::Pointer, cx,
+                        InspectionAction::Hover(Some(p)),
+                        InputOrigin::Pointer,
+                        cx,
                     )
                 {
                     this.last_error = Some(e);
                 }
             }))
             .on_hover(cx.listener(|this, hovered: &bool, _, cx| {
-                if !hovered && !this.has_drag() && !this.inspector.as_ref().is_some_and(Inspector::has_keyboard_focus) {
-                    let _ = this.dispatch_inspection(InspectionAction::Clear, InputOrigin::Pointer, cx);
+                if !hovered
+                    && !this.has_drag()
+                    && !this
+                        .inspector
+                        .as_ref()
+                        .is_some_and(Inspector::has_keyboard_focus)
+                {
+                    let _ =
+                        this.dispatch_inspection(InspectionAction::Clear, InputOrigin::Pointer, cx);
                 }
             }))
-            .on_scroll_wheel(cx.listener(|this,event,window,cx| {
-                if let Err(e)=this.scroll_input(event,window,cx){this.last_error=Some(e);cx.notify();}
+            .on_scroll_wheel(cx.listener(|this, event, window, cx| {
+                if let Err(e) = this.scroll_input(event, window, cx) {
+                    this.last_error = Some(e);
+                    cx.notify();
+                }
             }))
-            .on_key_down(cx.listener(|this, event: &gpui::KeyDownEvent, _, cx| {
-                if this.input.disabled{return;}
-                if event.keystroke.key == "escape" && this.state().active_gesture().is_some() {
-                    if let Err(e)=this.cancel_input(chart_core::state::CancelReason::Explicit,cx){this.last_error=Some(e);}
-                    cx.stop_propagation(); return;
+            .on_key_down(cx.listener(|this, event: &gpui::KeyDownEvent, window, cx| {
+                if this.input.disabled || !this.focus.is_focused(window) {
+                    return;
                 }
-                if this.state().active_gesture().is_some(){return;}
-                if event.keystroke.key=="home" {
-                    let r=this.action_request(ChartAction::Reset,ActionOrigin::Keyboard);
-                    if let Err(e)=this.dispatch_action(r,cx){this.last_error=Some(e);}
-                    cx.stop_propagation();return;
+                if event.keystroke.key == "escape" && this.host.menu_at.take().is_some() {
+                    cx.notify();
+                    cx.stop_propagation();
+                    return;
                 }
-                if event.keystroke.key=="space" {
-                    if let Some(focus)=this.state().focus().cloned() {
-                        let r=this.action_request(ChartAction::Select {change:chart_core::state::SelectionChange::Toggle,targets:vec![focus]},ActionOrigin::Keyboard);
-                        if let Err(e)=this.dispatch_action(r,cx){this.last_error=Some(e);}
+                if event.keystroke.modifiers.platform || event.keystroke.modifiers.control {
+                    let command = match event.keystroke.key.as_str() {
+                        "c" => Some(HostCommand::Copy),
+                        "e" => Some(HostCommand::Export),
+                        _ => None,
+                    };
+                    if let Some(command) = command {
+                        if this.supports_host_command(command) {
+                            if let Err(e) = this.request_host_command(command, None, cx) {
+                                this.last_error = Some(e);
+                            }
+                            cx.stop_propagation();
+                        }
+                        return;
                     }
-                    cx.stop_propagation();return;
+                    if event.keystroke.key == "z" && this.state().active_gesture().is_none() {
+                        let action = if event.keystroke.modifiers.shift {
+                            ChartAction::Redo
+                        } else {
+                            ChartAction::Undo
+                        };
+                        let request = this.action_request(action, ActionOrigin::Keyboard);
+                        if let Err(e) = this.dispatch_action(request, cx) {
+                            this.last_error = Some(e);
+                        }
+                        cx.stop_propagation();
+                        return;
+                    }
+                }
+                if event.keystroke.key == "escape" && this.state().active_gesture().is_some() {
+                    if let Err(e) = this.cancel_input(chart_core::state::CancelReason::Explicit, cx)
+                    {
+                        this.last_error = Some(e);
+                    }
+                    cx.stop_propagation();
+                    return;
+                }
+                if this.state().active_gesture().is_some() {
+                    return;
+                }
+                match this.edit_key(event, cx) {
+                    Ok(true) => {
+                        cx.stop_propagation();
+                        return;
+                    }
+                    Err(e) => {
+                        this.last_error = Some(e);
+                        cx.notify();
+                        return;
+                    }
+                    _ => {}
+                }
+                if event.keystroke.key == "home" {
+                    let r = this.action_request(ChartAction::Reset, ActionOrigin::Keyboard);
+                    if let Err(e) = this.dispatch_action(r, cx) {
+                        this.last_error = Some(e);
+                    }
+                    cx.stop_propagation();
+                    return;
+                }
+                if event.keystroke.key == "space" {
+                    if let Some(focus) = this.state().focus().cloned() {
+                        let r = this.action_request(
+                            ChartAction::Select {
+                                change: chart_core::state::SelectionChange::Toggle,
+                                targets: vec![focus],
+                            },
+                            ActionOrigin::Keyboard,
+                        );
+                        if let Err(e) = this.dispatch_action(r, cx) {
+                            this.last_error = Some(e);
+                        }
+                    }
+                    cx.stop_propagation();
+                    return;
                 }
                 let action = match event.keystroke.key.as_str() {
                     "right" | "down" => Some(InspectionAction::StepFocus { forward: true }),
@@ -686,6 +811,8 @@ impl Render for ChartView {
                 }
             }))
             .child(chart_canvas)
+            .children(accessible_focus)
+            .children(controls)
             .children(diagnostic)
     }
 }
