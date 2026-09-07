@@ -9,29 +9,34 @@ Original reports retain the revision context from their evidence runs.
 
 ## Current handoff
 
-**Owner assignment: original WP-11 through WP-23, with a commit per package.
-WP-11–22 are DONE in that scope; WP-23 is READY for local release documentation.**
-The owner explicitly waived the 30-minute test. Expanded parity/authoring acceptance
-remains open under the separate original-scope clarification.
+**The owner's original WP-11 through WP-23 assignment is complete, with a separate
+commit for every package. Expanded acceptance remains OPEN.** The owner explicitly
+waived the 30-minute test; its interrupted trace and numerical failure remain retained.
+No package was published and no distribution license was inferred.
 
-WP-22 adds measured exact-index storage consolidation and native CPU/GPU/actual-display
-instrumentation. Visible ten-line p95 hover/frame work is 0.092666/11.689291 ms;
-short-stream actual ingest-to-display p95 is 165.759375 ms across 600,000 measured
-row updates. All accepted IDs and retained reference values reconcile. The coherent
-concurrent PDF and chart/export resources drain and release. Both 13-chart dashboard
-modes present revision 120; the report explicitly identifies exact scatter and line reduction.
+WP-23 supplies the [developer/release guide](release-guide.md),
+[65-requirement evidence index](release-evidence.md), changelog, package/source policy,
+and deterministic unpublished local source-candidate tool. The index explicitly lists
+75 additional identifiers from concurrent planning as OPEN and does not certify later
+clauses added to original IDs. See [WP-23 evidence](evidence/wp-23-completion-2026-09-07.md).
 
-See [WP-22 evidence](evidence/wp-22-completion-2026-09-07.md) and
-[ADR-008](adr/008-benchmark-protocol.md) for raw distributions, memory high-water,
-failed normal-window display traces and the duration/visibility limitations. The owner-
-stopped trace is retained and fails the unfiltered latency budget; it is not a passing
-30-minute result. Current expanded production G4 remains OPEN.
+Final runtime evidence is **219 macOS tests, 213 Linux headless tests**, required
+fmt/check/lint/docs/WASM checks and actual Rust/Python/Node WASM fixtures (36 cases,
+23 actions, 47 input steps, 70 stream steps, three density cases, 40 live-export steps).
+The extracted committed runtime archive passes offline repository/isolation/link checks
+and fresh headless all-target compilation. Repeated archives have identical SHA-256.
+The final WP-23 archive/manifest is generated under `artifacts/local-release` after commit.
 
-Final fmt/check/test and performance-feature Clippy pass; 219 macOS tests and actual
-Rust/Python/Node WASM fixture comparisons pass. Linux headless rerun passes 213 tests.
-Existing dependency advisories, OS accessibility limits and distribution metadata remain
-explicit. **Next: finish original WP-23 evidence index, developer/release guide and local
-unpublished source candidate; leave expanded certification open.**
+[WP-22](evidence/wp-22-completion-2026-09-07.md) records ten-line p95 hover/frame work
+0.092666/11.689291 ms and visible short-stream actual ingest-to-display p95 165.759375 ms.
+Exact accounting and concurrent publication drain/release pass. Heavy-dashboard timings,
+failed normal-window display traces, allocator high-water and the duration/visibility
+limits remain explicit. These results do not certify expanded workloads or current G4.
+
+**Next owner work:** select the separately planned parity/primary-authoring lane and its
+acceptance packages. Preserve the open OS accessibility/platform/distribution boundaries,
+license metadata and dependency advisories. There is no active implementation package
+left in this original assignment; concurrent owner edits remain separate.
 
 ## Work packages
 
@@ -62,8 +67,8 @@ The final column records outstanding prerequisites/blockers and the next action.
 | WP-19 — Bounded scheduling, caches and dense representation | DONE | Unassigned | `e57246d` | STM-04, STM-05, SCN-04, GPU-02, QLT-04 | [Completion evidence](evidence/wp-19-completion-2026-09-07.md); [contract](scheduling-density-contract.md) | Original bounded-worker/cache/density acceptance passes; actual four-chart progress and three-host dense proofs. Preliminary PERF identifies index/memory bottlenecks; intermittent native redraw question retained. |
 | WP-20 — Coherent exports during live interaction | DONE | Unassigned | `9d86ef7` | EXP-03, EXP-04, DAT-06, STM-02, SCN-04, QLT-04 | [Completion evidence](evidence/wp-20-completion-2026-09-07.md); [contract](live-export-contract.md) | Original coherent capture/bounded lifetime acceptance passes; actual 40-step three-host replay and finite native exports during 400 atomic commits. Sustained PERF and native hardening remain open. |
 | WP-21 — Correctness, fidelity and supported-platform hardening | DONE (original scope) | Unassigned | `4c099ee` | SCP-03, QLT-01/02/03, GPU-02/03, BND-03/04, FIX-01–18 | [Completion evidence](evidence/wp-21-completion-2026-09-07.md); [ADR-009](adr/009-supported-platform-and-accessibility.md) | Original acceptance passes including fixed native frozen resize/redraw and actual macOS/Linux/headless bindings. Expanded parity/authoring acceptance remains open and requires the separately listed packages/gates. |
-| WP-22 — Measured performance and sustained-load release gate | DONE (original scope; owner duration waiver) | Unassigned | Included in this completion commit | STM-01/03/04/05, EXP-03, QLT-04, PERF-01–05 | [Completion evidence](evidence/wp-22-completion-2026-09-07.md); [ADR-008](adr/008-benchmark-protocol.md) | Visible short budgets and exact accounting pass; interrupted/occluded failures and memory limits retained. Thirty-minute duration explicitly owner-waived. Expanded workloads and current G4 stay open. |
-| WP-23 — Production documentation and release readiness | READY (original scope) | Codex | — | SCP-01, SCP-02, SCP-03, ARC-04, BND-01, QLT-05, QLT-06 | None | Original WP-21/22 evidence available; prepare local source candidate with qualifications. Expanded acceptance still requires: WP-21, WP-22. |
+| WP-22 — Measured performance and sustained-load release gate | DONE (original scope; owner duration waiver) | Unassigned | `c58f5b2` | STM-01/03/04/05, EXP-03, QLT-04, PERF-01–05 | [Completion evidence](evidence/wp-22-completion-2026-09-07.md); [ADR-008](adr/008-benchmark-protocol.md) | Visible short budgets and exact accounting pass; interrupted/occluded failures and memory limits retained. Thirty-minute duration explicitly owner-waived. Expanded workloads and current G4 stay open. |
+| WP-23 — Production documentation and release readiness | DONE (original local candidate scope) | Unassigned | Included in this completion commit | SCP-01/02/03, ARC-04, BND-01, QLT-05/06 | [Completion evidence](evidence/wp-23-completion-2026-09-07.md); [release index](release-evidence.md); [guide](release-guide.md) | All original package handoffs complete; source candidate remains unpublished. Expanded parity/authoring and current production G4 remain OPEN; duration waiver, failed evidence, platform/accessibility/metadata limits are explicit. |
 
 ## Cumulative gates
 
@@ -73,7 +78,7 @@ The final column records outstanding prerequisites/blockers and the next action.
 | G1 | PASSED — minimal portable core | WP-04–08 foundation/native/headless evidence plus WP-09 actual Python/WASM FIX-15/16 runtime comparison; this does not certify full grammar or production host/distribution products. |
 | G2 | PASSED — Cartesian/publication alpha | [Alpha matrix](alpha-api.md) maps complete grammar/facets/themes/publication/extensions and actual portable evidence. G3/G4 retain their remaining scope. |
 | G3 | PASSED (original interactive streaming scope) | WP-15–20 interaction/streaming/export plus WP-21 frozen-resize and native redraw regression fixes; actual native and Rust/Python/WASM evidence. Sustained PERF and expanded parity remain separate. |
-| G4 | NOT PASSED | All required FIX/PERF/platform/accessibility/documentation evidence. |
+| G4 | OPEN — local candidate only | All required FIX/PERF/platform/accessibility/documentation evidence. |
 
 ## Evidence updates
 

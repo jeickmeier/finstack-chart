@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+- Complete original WP-16–23 indexed interaction, exact source lookup, linked host tools,
+  annotation editing, atomic retention/streaming, bounded native preparation/density,
+  coherent live export and native hardening. Frozen resize keeps the exact captured
+  semantics; background completions demand a bounded presentation frame.
+- Consolidate inspection identity/index storage while preserving exact and duplicate-x
+  results. Add release-mode CPU/GPU/actual-presentation benchmarks and measured evidence.
+  The owner waived the 30-minute run; retained interrupted/occluded traces are not passing
+  sustained evidence. See WP-22 for numerical budgets, memory and visibility limits.
+- Add an original-requirement release index, developer/example routes, source provenance
+  and deterministic unpublished local source packaging. Current expanded parity/authoring
+  and production G4 remain open; no license or registry distribution is implied.
+
+
 - Add the shared revision-fenced action reducer, distinct interaction state, explicit scene
   acknowledgment, pinned gesture previews/cancellation, bounded annotation undo/redo,
   controlled replacements, linked sequence tracking and freeze/resume ownership. Native,
@@ -35,8 +48,7 @@
   fences, bounded FIFO replay, stable ordinals/categories and source/aggregate/derived
   provenance. Shared chunks retain old snapshots without copying row history on append.
 - Add schema/epoch/aggregate/derived identities and diagnostic revision/count/sample
-  context. Diagnostic enum additions affect exhaustive downstream matches; wire encoding
-  is still unimplemented. See ADR-004 for replacement/schema and replay rules.
+  context. Diagnostic enum additions affect exhaustive downstream matches; the initial delivery preceded the later WP-09 wire encoding. See ADR-004 for replacement/schema and replay rules.
 
 - Add typed column authoring and a shared staged grammar compiler for heterogeneous
   source/generated layers, identity/explicit-bin statistics and point/line/rule/rectangle

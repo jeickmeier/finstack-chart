@@ -3,13 +3,17 @@
 Rust-native grammar-of-graphics project with a portable core, headless publication export,
 a standalone GPUI host and optional Kit integration.
 
-**Status: WP-20 bounded coherent live export is implemented alongside background preparation, caches and exact-lookup density rendering. G2 passes its
-[feature matrix](docs/alpha-api.md), including facets, themes, vector publication,
-public custom extensions and 36 actual Rust/Python/WASM cases. A shared action trace
-proves gesture/cancellation/controlled-state behavior in each runtime; 47 shared input
-query/action steps cover the [interaction contract](docs/interaction-contract.md)
-and [host tools contract](docs/host-tools-contract.md).
-Streaming and production gates G3/G4 remain open, as do expanded parity/authoring gates.**
+**Status: original WP-11–23 implementation and local release documentation are complete.**
+The shared engine supports the documented families, facets/themes, custom extensions,
+indexed interaction, bounded streaming and coherent publication. Actual Rust/Python/Node
+WASM fixtures and macOS native/Linux headless evidence are linked in the
+[release evidence index](docs/release-evidence.md). The owner waived the 30-minute test;
+[WP-22](docs/evidence/wp-22-completion-2026-09-07.md) records short measured performance,
+actual GPU/display timing and failed-run limitations.
+
+Current expanded parity/authoring and production G4 gates remain open. Packages are local
+and unpublished. Start with the [developer and release guide](docs/release-guide.md) for
+build commands, runnable examples, ownership, compatibility and source-candidate packaging.
 
 ## Start here
 

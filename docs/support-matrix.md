@@ -1,20 +1,20 @@
 # Support and evidence matrix
 
-Updated 7 September 2026. [WP-21 evidence](evidence/wp-21-completion-2026-09-07.md)
+Updated 7 September 2026. [Release evidence](release-evidence.md), [WP-21 evidence](evidence/wp-21-completion-2026-09-07.md)
 and [ADR-009](adr/009-supported-platform-and-accessibility.md) define the original
 implemented scope. Expanded parity and production release gates remain open.
 
 | Surface | Executed evidence | Limits |
 | --- | --- | --- |
-| Rust core/text/export on macOS | Rust 1.97.1, macOS 26.5.2 arm64; 175 core tests, 33 export tests, four Rustdoc cases; actual portable fixtures | Sustained performance remains WP-22 |
-| Rust core/text/export on Linux | Local Debian Bookworm aarch64 container, Rust 1.97.1; 212 tests, all-target checks/docs, full native headless fixture runner and cross-host oracle comparison | No Linux native GPUI; x86 remote CI is configured, not locally executed |
+| Rust core/text/export on macOS | Rust 1.97.1, macOS 26.5.2 arm64; 176 core tests, 33 export tests, four Rustdoc cases; actual portable fixtures | [WP-22 measured results](evidence/wp-22-completion-2026-09-07.md); owner waived 30-minute duration |
+| Rust core/text/export on Linux | Local Debian Bookworm aarch64 container, Rust 1.97.1; 213 tests, all-target checks/docs, full native headless fixture runner and cross-host oracle comparison | No Linux native GPUI; x86 remote CI is configured, not locally executed |
 | Native GPUI | macOS Apple Silicon, GPUI/platform 0.3.3; original families, themes, composition, controls, input/editing, streaming/export and inspected frozen resize/recovery | Other desktop hosts and full assistive conformance unverified |
 | Optional Kit | Opt-in Kit 0.6.0 with the same GPUI identity; linked build/Clippy and inspected controls | No independent chart semantics |
 | Python headless proof | CPython 3.14.6, PyO3 0.29.2; actual 36 cases, 23 actions, 47 input steps, 70 stream steps, three density cases, 40 live-export steps | Proof adapter; no wheel/notebook distribution certification |
 | WebAssembly proof | wasm32 core/export compile; actual Node 24.14.0 / wasm-bindgen 0.2.128 executes the same fixtures, exact identities/times and memory-growth/disposal tests | No browser viewer/DOM/accessibility or package distribution claim |
 | SVG/PDF/PNG | Original primitives, explicit fonts, physical sizes, clips, vector publication, themes/composition and coherent live capture; shared host outputs compared | Supplied fonts required; browser SVG font policy remains consumer-specific |
 | Accessibility | Actual native keyboard inspection/selection/editing, chart summaries, exact data-table alternatives, status/buttons and annotation values; WP-17 tree artifacts | OS inspector reports window focus; VoiceOver speech and full traversal unverified |
-| Streaming and scheduling | Atomic corrections/removals/retention; bounded preparation; exact raw lookup and declared visual reduction; fixed native idle redraw and coherent exports with released resources | Finite evidence does not pass PERF-01–05 |
+| Streaming and scheduling | Atomic corrections/removals/retention; bounded preparation; exact raw lookup and declared visual reduction; fixed native idle redraw and coherent exports with released resources | Visible short PERF-03 p95 165.759 ms; full duration not claimed, interrupted display failure retained |
 | Additional parity/authoring | Separately planned D3, ggplot2 and primary authoring work | Not certified by original WP-21 |
 
 The [alpha API matrix](alpha-api.md) identifies original supported families and recipes.
