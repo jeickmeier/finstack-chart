@@ -63,6 +63,8 @@ pub enum Format {
 /// Text representation promised by the selected output mode.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum TextRepresentation {
+    /// Plain text embeds fonts; rich runs use exact positioned outlines with logical SVG labels.
+    MixedPositionedOutlines,
     /// Logical SVG text with full embedded font bytes; editor shaping can vary.
     EmbeddedFullFonts,
     /// PDF glyphs with embedded subsets and Unicode maps; search/extraction is preserved.

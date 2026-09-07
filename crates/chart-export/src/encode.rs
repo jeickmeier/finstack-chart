@@ -148,6 +148,62 @@ pub(crate) fn pdf(
             surface.push_clip_path(&clip, &FillRule::NonZero);
             let node = tree.node_by_id(&format!("item-{index}"));
             match (&item.primitive, node) {
+                (
+                    Primitive::GlyphRun {
+                        origin,
+                        rotation,
+                        run,
+                        color,
+                    },
+                    _,
+                ) => {
+                    surface.set_fill(Some(fill(*color)));
+                    surface.set_stroke(None);
+                    let font = pdf_fonts.get(&run.font.id).ok_or_else(|| {
+                        error(
+                            DiagnosticCode::MissingResource,
+                            "PDF rich text font is absent.",
+                        )
+                    })?;
+                    let (sin, cos) = rotation.to_radians().sin_cos();
+                    surface.push_transform(&Transform::from_row(
+                        p.f32(cos)?,
+                        p.f32(sin)?,
+                        p.f32(-sin)?,
+                        p.f32(cos)?,
+                        p.f32(origin.x())?,
+                        p.f32(origin.y())?,
+                    ));
+                    let mut x = 0.;
+                    let mut y = 0.;
+                    let glyphs = run
+                        .glyphs
+                        .iter()
+                        .map(|g| {
+                            let glyph = KrillaGlyph::new(
+                                GlyphId::new(u32::from(g.id)),
+                                p.f32(g.advance.x() / run.font_size)?,
+                                p.f32((g.position.x() - x) / run.font_size)?,
+                                p.f32(-(g.position.y() - y) / run.font_size)?,
+                                p.f32(-g.advance.y() / run.font_size)?,
+                                g.start..g.end,
+                                None,
+                            );
+                            x += g.advance.x();
+                            y += g.advance.y();
+                            Ok(glyph)
+                        })
+                        .collect::<ChartResult<Vec<_>>>()?;
+                    surface.draw_glyphs(
+                        Point::from_xy(0., 0.),
+                        &glyphs,
+                        font.clone(),
+                        &run.text,
+                        p.f32(run.font_size)?,
+                        p.text == TextMode::Outline,
+                    );
+                    surface.pop();
+                }
                 (Primitive::Text { font, color, .. }, Some(usvg::Node::Text(text))) => {
                     surface.set_fill(Some(fill(*color)));
                     surface.set_stroke(None);
@@ -190,23 +246,74 @@ pub(crate) fn pdf(
                 }
                 (primitive, Some(usvg::Node::Path(node))) => {
                     match primitive {
+                        Primitive::GradientRectangle { bounds, gradient } => {
+                            let x1 = p.f32(bounds.origin().x())?;
+                            let y1 = p.f32(bounds.origin().y())?;
+                            let (x2, y2) = match gradient.direction {
+                                chart_core::scene::GradientDirection::Horizontal => {
+                                    (p.f32(bounds.max_x())?, y1)
+                                }
+                                chart_core::scene::GradientDirection::Vertical => {
+                                    (x1, p.f32(bounds.max_y())?)
+                                }
+                            };
+                            let stop = |c: Color, offset: NormalizedF32| krilla::paint::Stop {
+                                offset,
+                                color: krilla::color::rgb::Color::new(c.red, c.green, c.blue)
+                                    .into(),
+                                opacity: opacity(c),
+                            };
+                            surface.set_fill(Some(Fill {
+                                paint: krilla::paint::LinearGradient {
+                                    x1,
+                                    y1,
+                                    x2,
+                                    y2,
+                                    transform: Transform::identity(),
+                                    spread_method: krilla::paint::SpreadMethod::Pad,
+                                    stops: vec![
+                                        stop(gradient.start, NormalizedF32::ZERO),
+                                        stop(gradient.end, NormalizedF32::ONE),
+                                    ],
+                                    anti_alias: true,
+                                }
+                                .into(),
+                                opacity: NormalizedF32::ONE,
+                                rule: FillRule::NonZero,
+                            }));
+                            surface.set_stroke(None);
+                        }
                         Primitive::Rectangle { fill: c, .. }
                         | Primitive::Point { fill: c, .. }
+                        | Primitive::Symbol { fill: c, .. }
                         | Primitive::FilledPath { fill: c, .. } => {
                             surface.set_fill(Some(fill(*c)));
                             surface.set_stroke(None);
                         }
-                        Primitive::Rule { stroke, .. } | Primitive::Path { stroke, .. } => {
+                        Primitive::Rule { stroke, .. }
+                        | Primitive::Path { stroke, .. }
+                        | Primitive::DashedPath { stroke, .. } => {
                             surface.set_fill(None);
                             surface.set_stroke(Some(Stroke {
                                 paint: fill(stroke.color).paint,
                                 width: p.f32(stroke.width)?,
                                 opacity: opacity(stroke.color),
                                 miter_limit: 4.,
+                                dash: if let Primitive::DashedPath { dashes, .. } = primitive {
+                                    Some(krilla::paint::StrokeDash {
+                                        array: dashes
+                                            .iter()
+                                            .map(|v| p.f32(*v))
+                                            .collect::<ChartResult<_>>()?,
+                                        offset: 0.,
+                                    })
+                                } else {
+                                    None
+                                },
                                 ..Default::default()
                             }));
                         }
-                        Primitive::Text { .. } => {
+                        Primitive::Text { .. } | Primitive::GlyphRun { .. } => {
                             return Err(error(
                                 DiagnosticCode::ExportFidelity,
                                 "Expected shaped PDF text, found a path.",

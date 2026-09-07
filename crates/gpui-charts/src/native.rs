@@ -25,13 +25,14 @@ pub struct NativeFont {
     pub(crate) descriptor: ResourceDescriptor,
     bytes: Arc<[u8]>,
     font: Font,
+    faces: BTreeMap<chart_core::ResourceId, (ResourceDescriptor, Arc<[u8]>)>,
 }
 #[derive(Default)]
 struct FontRegistry(BTreeMap<String, NativeFont>);
 impl gpui::Global for FontRegistry {}
 
 impl NativeFont {
-    /// Parse/check a regular face, verify its family, then register these supplied bytes.
+    /// Parse/check an explicit face, verify its family, then register these supplied bytes.
     /// Register before the host first resolves this family; GPUI caches resolved font selections.
     /// The host must reserve supplied faces in this family for this adapter. Reloading the
     /// same descriptor/bytes is idempotent; a different resource under the family rejects.
@@ -64,21 +65,20 @@ impl NativeFont {
                     format!("Font parsing failed: {e:?}"),
                 )
             })?;
-            if face.is_bold()
-                || face.is_italic()
-                || !face.names().into_iter().any(|n| {
-                    n.name_id == ttf_parser::name_id::FAMILY
-                        && n.to_string().as_deref() == Some(family)
-                })
-            {
+            if !face.names().into_iter().any(|n| {
+                n.name_id == ttf_parser::name_id::FAMILY && n.to_string().as_deref() == Some(family)
+            }) {
                 return Err(error(
                     DiagnosticCode::InvalidResource,
-                    "The supplied regular font face does not match the requested family.",
+                    "The supplied font face does not match the requested family.",
                 ));
             }
+            let weight = face.weight().to_number();
+            let italic = face.is_italic();
+            let registry_key = format!("{family}:{weight}:{italic}");
             if let Some(existing) = cx
                 .try_global::<FontRegistry>()
-                .and_then(|r| r.0.get(family))
+                .and_then(|r| r.0.get(&registry_key))
             {
                 if existing.descriptor == descriptor && existing.bytes == bytes {
                     return Ok(existing.clone());
@@ -102,14 +102,20 @@ impl NativeFont {
                     "Registered font family is unavailable in the native text system.",
                 ));
             }
+            let mut native = gpui::font(family.to_owned());
+            native.weight = gpui::FontWeight(f32::from(weight));
+            if italic {
+                native.style = gpui::FontStyle::Italic;
+            }
             let font = Self {
                 descriptor,
+                faces: BTreeMap::from([(descriptor.id, (descriptor, bytes.clone()))]),
                 bytes,
-                font: gpui::font(family.to_owned()),
+                font: native,
             };
             cx.default_global::<FontRegistry>()
                 .0
-                .insert(family.to_owned(), font.clone());
+                .insert(registry_key, font.clone());
             Ok(font)
         })();
         result.map_err(|mut e| {
@@ -121,6 +127,31 @@ impl NativeFont {
     /// Exact core resource identity/revision used for measurement and painting.
     pub fn descriptor(&self) -> ResourceDescriptor {
         self.descriptor
+    }
+    /// Add an explicitly loaded face for rich runs and deliberate fallback. Duplicate identities
+    /// must have identical descriptors/bytes; no system family lookup is added.
+    pub fn with_face(mut self, other: &Self) -> ChartResult<Self> {
+        for (id, (descriptor, bytes)) in &other.faces {
+            if let Some((d, b)) = self.faces.get(id)
+                && (d != descriptor || b != bytes)
+            {
+                return Err(error(
+                    DiagnosticCode::SchemaConflict,
+                    "Native rich face identity has conflicting bytes/revision.",
+                ));
+            }
+            self.faces.insert(*id, (*descriptor, bytes.clone()));
+        }
+        if self.faces.len() > Limits::default().max_resources
+            || self.faces.values().map(|(d, _)| d.byte_len).sum::<u64>()
+                > Limits::default().max_total_resource_bytes
+        {
+            return Err(error(
+                DiagnosticCode::ResourceLimit,
+                "Native rich font bank exceeds resource limits.",
+            ));
+        }
+        Ok(self)
     }
     fn shape(
         &self,
@@ -184,6 +215,40 @@ struct Metrics<'a> {
     system: &'a WindowTextSystem,
 }
 impl TextMeasurer for Metrics<'_> {
+    fn shape(
+        &self,
+        r: chart_core::typography::ShapeRequest<'_>,
+    ) -> ChartResult<chart_core::typography::ShapedRun> {
+        if r.units != Units::LogicalPixels {
+            return Err(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Native rich shaping requires logical pixels.",
+            ));
+        }
+        r.run.validate(r.limits)?;
+        let primary = r.run.font.as_ref().unwrap_or(r.default_font);
+        for (index, descriptor) in std::iter::once(primary).chain(&r.run.fallback).enumerate() {
+            let (_, bytes) = self
+                .font
+                .faces
+                .get(&descriptor.id)
+                .filter(|(d, _)| d == descriptor)
+                .ok_or_else(|| {
+                    error(
+                        DiagnosticCode::MissingResource,
+                        "Native rich run references an unregistered exact font revision.",
+                    )
+                })?;
+            if chart_text::supports(bytes, &r.run.text, r.run.weight)? {
+                return chart_text::shape(bytes, *descriptor, r, index > 0);
+            }
+        }
+        Err(error(
+            DiagnosticCode::MissingResource,
+            "No declared native face supplies the complete rich run/weight.",
+        ))
+    }
+
     fn measure(&self, r: TextRequest<'_>) -> ChartResult<TextMetrics> {
         if *r.font != self.font.descriptor {
             return Err(error(
@@ -216,6 +281,7 @@ impl TextMeasurer for Metrics<'_> {
     }
 }
 enum Paint {
+    Empty,
     Quad(gpui::PaintQuad),
     Path(Path<Pixels>, gpui::Rgba),
     Text(Box<ShapedLine>, gpui::Point<Pixels>),
@@ -267,7 +333,72 @@ impl NativeFrame {
         for item in chart.scene().items() {
             let result = (|| {
                 let clip = rect_at(item.clip.unwrap_or(chart.scene().bounds()), bounds.origin)?;
-                let paint = match &item.primitive {
+                let outlined = if let Primitive::GlyphRun {
+                    origin,
+                    rotation,
+                    run,
+                    color,
+                } = &item.primitive
+                {
+                    if self_font_missing(font, &run.font) {
+                        return Err(error(
+                            DiagnosticCode::MissingResource,
+                            "Native rich scene has an unregistered face revision.",
+                        ));
+                    }
+                    Some(Primitive::FilledPath {
+                        commands: chart_core::typography::placed_outlines(run, *origin, *rotation)?,
+                        fill: *color,
+                    })
+                } else if let Primitive::Symbol {
+                    center,
+                    radius,
+                    kind,
+                    fill,
+                } = &item.primitive
+                {
+                    Some(Primitive::FilledPath {
+                        commands: chart_core::scene::symbol_path(*center, *radius, *kind)?,
+                        fill: *fill,
+                    })
+                } else if let Primitive::DashedPath {
+                    commands,
+                    stroke,
+                    dashes,
+                } = &item.primitive
+                {
+                    Some(Primitive::Path {
+                        commands: chart_core::scene::dash_polyline(
+                            commands,
+                            dashes,
+                            request.limits.max_path_commands,
+                        )?,
+                        stroke: *stroke,
+                    })
+                } else {
+                    None
+                };
+                let primitive = outlined.as_ref().unwrap_or(&item.primitive);
+                let paint = match primitive {
+                    Primitive::GlyphRun { .. }
+                    | Primitive::DashedPath { .. }
+                    | Primitive::Symbol { .. } => unreachable!(),
+                    Primitive::GradientRectangle {
+                        bounds: r,
+                        gradient,
+                    } => Paint::Quad(fill(
+                        rect_at(*r, bounds.origin)?,
+                        gpui::linear_gradient(
+                            match gradient.direction {
+                                chart_core::scene::GradientDirection::Horizontal => 90.,
+                                chart_core::scene::GradientDirection::Vertical => 180.,
+                            },
+                            gpui::linear_color_stop(native_color(gradient.start), 0.),
+                            gpui::linear_color_stop(native_color(gradient.end), 1.),
+                        )
+                        .color_space(gpui::ColorSpace::Srgb),
+                    )),
+
                     Primitive::Rectangle {
                         bounds: r,
                         fill: color,
@@ -319,8 +450,13 @@ impl NativeFrame {
                             native_color(stroke.color),
                         )
                     }
+                    Primitive::FilledPath { commands, .. } | Primitive::Path { commands, .. }
+                        if commands.is_empty() =>
+                    {
+                        Paint::Empty
+                    }
                     Primitive::Path { commands, .. } | Primitive::FilledPath { commands, .. } => {
-                        let (mut path, color) = match &item.primitive {
+                        let (mut path, color) = match primitive {
                             Primitive::Path { stroke, .. } => {
                                 (PathBuilder::stroke(pixel(stroke.width)?), stroke.color)
                             }
@@ -386,6 +522,7 @@ impl NativeFrame {
                         Some(ContentMask { bounds: item.clip }),
                         |window| -> ChartResult<()> {
                             match &item.paint {
+                                Paint::Empty => {}
                                 Paint::Quad(q) => window.paint_quad(q.clone()),
                                 Paint::Path(p, c) => window.paint_path(p.clone(), *c),
                                 Paint::Text(line, p) => line
@@ -409,6 +546,12 @@ impl NativeFrame {
             },
         )
     }
+}
+
+fn self_font_missing(font: &NativeFont, descriptor: &ResourceDescriptor) -> bool {
+    font.faces
+        .get(&descriptor.id)
+        .is_none_or(|(d, _)| d != descriptor)
 }
 
 #[cfg(test)]

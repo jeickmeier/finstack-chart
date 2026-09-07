@@ -25,6 +25,7 @@ struct CachedGraph {
 #[derive(Default)]
 pub struct Compiler {
     cache: BTreeMap<Option<PanelKey>, CachedGraph>,
+    presentation: Option<(PreparedChart, CompileLimits)>,
 }
 impl Compiler {
     /// Empty compiler; no host services, threads or I/O are needed for data preparation.
@@ -34,6 +35,7 @@ impl Compiler {
     /// Release cached graph/source ownership; existing prepared charts remain valid.
     pub fn clear_cache(&mut self) {
         self.cache.clear();
+        self.presentation = None;
     }
     /// Validate, filter/map, compute stats, bind outputs, position, collect domains and emit
     /// immutable data-space geometry. Scale/range/layout preparation follows in WP-06.
@@ -45,13 +47,34 @@ impl Compiler {
         limits: CompileLimits,
     ) -> ChartResult<PreparedChart> {
         let snapshot = source.get()?;
+        if let Some((previous, old_limits)) = &self.presentation {
+            let old = previous.definition();
+            if *old_limits == limits
+                && previous
+                    .source
+                    .get()
+                    .is_ok_and(|p| std::ptr::eq(p, snapshot))
+                && previous.state() == state
+                && old.mappings == definition.mappings
+                && old.transforms == definition.transforms
+                && old.layers == definition.layers
+                && old.facets == definition.facets
+            {
+                validate_definition(definition, snapshot, limits)?;
+                let mut result = previous.clone();
+                rebind_presentation(&mut result, &Arc::new(definition.clone()));
+                self.presentation = Some((result.clone(), limits));
+                return Ok(result);
+            }
+        }
+        self.presentation = None;
         if self.cache.values().any(|c| {
             c.definitions != definition.transforms
                 || !c.source.get().is_ok_and(|old| std::ptr::eq(old, snapshot))
         }) {
             self.cache.clear();
         }
-        if definition.facets.is_some() {
+        let result = if definition.facets.is_some() {
             self.cache.retain(|key, _| {
                 key.as_ref().is_some_and(|key| {
                     definition
@@ -60,10 +83,13 @@ impl Compiler {
                         .is_some_and(|spec| spec.order.contains(key))
                 })
             });
-            return facets::prepare_facets(self, definition, source, state, limits);
-        }
-        self.cache.retain(|key, _| key.is_none());
-        self.prepare_scoped(definition, source, state, limits, None)
+            facets::prepare_facets(self, definition, source, state, limits)
+        } else {
+            self.cache.retain(|key, _| key.is_none());
+            self.prepare_scoped(definition, source, state, limits, None)
+        }?;
+        self.presentation = Some((result.clone(), limits));
+        Ok(result)
     }
     pub(crate) fn prepare_scoped(
         &mut self,
@@ -298,6 +324,22 @@ pub(super) fn validate_definition(
     snapshot: &StoreSnapshot,
     limits: CompileLimits,
 ) -> ChartResult<Vec<usize>> {
+    if let Some(theme) = &definition.theme {
+        theme.resolve(&crate::theme::ThemePatch::default())?;
+        if theme
+            .layers
+            .keys()
+            .any(|id| !definition.layers.iter().any(|l| &l.id == id))
+        {
+            return Err(error(
+                DiagnosticCode::Validation,
+                "Theme names an absent layer.",
+            ));
+        }
+    }
+    if let Some(figure) = &definition.figure {
+        figure.validate(crate::Limits::default())?;
+    }
     if definition.layers.len() > limits.max_layers
         || definition.transforms.len() > limits.max_transforms
     {
@@ -479,7 +521,7 @@ pub(super) fn eligible_domains(layer: &PreparedLayer) -> DomainContributions {
             let mut include = |p: Point| {
                 used.insert(if horizontal { p.x() } else { p.y() } as usize);
             };
-            for mark in &layer.marks {
+            for mark in layer.marks.iter() {
                 match &mark.geometry {
                     PreparedGeometry::Point(p) => include(*p),
                     PreparedGeometry::BandRun { lower, upper } => {
@@ -928,7 +970,7 @@ fn prepare_layer(
         scales: layer.scales,
         clip: layer.clip,
         table,
-        marks: vec![],
+        marks: Arc::new(vec![]),
         domains,
         invalid_geometry: 0,
         visible: state.is_visible(layer.id),
@@ -1067,7 +1109,7 @@ fn prepare_layer(
                     },
                 ] {
                     include_geometry(&mut prepared.domains, &geometry);
-                    prepared.marks.push(PreparedMark {
+                    Arc::make_mut(&mut prepared.marks).push(PreparedMark {
                         geometry,
                         targets: vec![row.target.clone()],
                         group: group.clone(),
@@ -1117,7 +1159,7 @@ fn prepare_layer(
                 };
                 charge(vertices, n, "vertex")?;
                 include_geometry(&mut prepared.domains, &geometry);
-                prepared.marks.push(PreparedMark {
+                Arc::make_mut(&mut prepared.marks).push(PreparedMark {
                     geometry,
                     targets: vec![row.target],
                     group,
@@ -1220,7 +1262,7 @@ fn push_run(
             }
         };
         include_geometry(&mut prepared.domains, &geometry);
-        prepared.marks.push(PreparedMark {
+        Arc::make_mut(&mut prepared.marks).push(PreparedMark {
             geometry,
             targets: std::mem::take(targets),
             group: group.clone(),
@@ -1466,4 +1508,16 @@ fn statistical_binding(
         merge_space(&mut d.y_space, &space(y2)?)?;
     }
     Ok(d)
+}
+
+// Theme/furniture/guide changes reuse immutable rows, marks and provenance without recomputation.
+fn rebind_presentation(chart: &mut PreparedChart, definition: &Arc<ChartDefinition>) {
+    chart.definition = definition.clone();
+    chart.metrics = PreparationMetrics {
+        evaluated_transforms: 0,
+        reused_transforms: chart.metrics.evaluated_transforms + chart.metrics.reused_transforms,
+    };
+    for panel in &mut chart.panels {
+        rebind_presentation(Arc::make_mut(&mut panel.chart), definition);
+    }
 }

@@ -43,6 +43,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     cases.extend(serde_json::from_str::<Vec<serde_json::Value>>(
         &fs::read_to_string(root.join("fixtures/facets/portable-cases.json"))?,
     )?);
+    cases.extend(serde_json::from_str::<Vec<serde_json::Value>>(
+        &fs::read_to_string(root.join("fixtures/composition/portable-cases.json"))?,
+    )?);
     let mut statistics = serde_json::Map::new();
     let mut scenes = serde_json::Map::new();
     for case in cases {
@@ -51,7 +54,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             &case["chart"].to_string(),
             &case["data"].to_string(),
             &case.get("profile").map_or_else(
-                || fs::read_to_string(fixture.join("profile.json")),
+                || {
+                    fs::read_to_string(
+                        case.get("profile_file")
+                            .and_then(serde_json::Value::as_str)
+                            .map_or_else(|| fixture.join("profile.json"), |file| root.join(file)),
+                    )
+                },
                 |p| Ok(p.to_string()),
             )?,
             fs::read(root.join("fixtures/capability/fonts/NotoSans-Regular.ttf"))?,
@@ -66,7 +75,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             output.join(format!("statistics-{name}.png")),
             chart.export("png")?,
         )?;
-        if name.starts_with("family-") || name.starts_with("facet-") {
+        if name.starts_with("family-")
+            || name.starts_with("facet-")
+            || name.starts_with("composition-")
+        {
             fs::write(
                 output.join(format!("statistics-{name}.pdf")),
                 chart.export("pdf")?,

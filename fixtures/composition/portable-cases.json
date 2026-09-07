@@ -1,0 +1,2522 @@
+[
+  {
+    "name": "composition-editorial",
+    "chart": {
+      "version": 1,
+      "definition": {
+        "revision": "13",
+        "mappings": {
+          "x": null,
+          "y": null,
+          "x2": null,
+          "y2": null,
+          "size": null,
+          "group": null
+        },
+        "transforms": [],
+        "layers": [
+          {
+            "id": "3",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Field": "1"
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": null,
+                "y2": null,
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": {
+              "Line": {
+                "order": "X",
+                "connect_gaps": false
+              }
+            },
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude",
+            "color": null
+          },
+          {
+            "id": "2",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "2"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Literal": 0.0
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": {
+                  "Literal": 2.0
+                },
+                "y2": {
+                  "Field": "2"
+                },
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": "Rule",
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 140,
+                "green": 70,
+                "blue": 90,
+                "alpha": 220
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude",
+            "color": null,
+            "facet": "Broadcast"
+          },
+          {
+            "id": "1",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Field": "1"
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": null,
+                "y2": null,
+                "size": null,
+                "group": "4"
+              }
+            },
+            "inherit": false,
+            "geom": "Point",
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude",
+            "color": {
+              "id": "20",
+              "input": {
+                "Category": "4"
+              },
+              "scale": {
+                "Discrete": {
+                  "domain": [
+                    "1",
+                    "2"
+                  ],
+                  "palette": [
+                    {
+                      "red": 30,
+                      "green": 125,
+                      "blue": 180,
+                      "alpha": 230
+                    },
+                    {
+                      "red": 218,
+                      "green": 105,
+                      "blue": 40,
+                      "alpha": 230
+                    }
+                  ],
+                  "missing": {
+                    "red": 120,
+                    "green": 120,
+                    "blue": 120,
+                    "alpha": 100
+                  }
+                }
+              },
+              "title": "Group"
+            }
+          }
+        ],
+        "axes": [
+          {
+            "id": "0",
+            "side": "Bottom",
+            "scale": "Auto",
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true,
+            "typography": {
+              "text": "",
+              "size": 0.7,
+              "tabular": true
+            },
+            "title": {
+              "lines": [
+                [
+                  {
+                    "text": "Observation x",
+                    "size": 0.75
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            },
+            "label_rotation": -35.0,
+            "number_format": {
+              "notation": "Fixed",
+              "precision": 1,
+              "locale": "EnUs",
+              "grouping": false,
+              "prefix": "",
+              "suffix": ""
+            }
+          },
+          {
+            "id": "1",
+            "side": "Left",
+            "scale": "Auto",
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true,
+            "typography": {
+              "text": "",
+              "size": 0.7,
+              "tabular": true
+            },
+            "title": {
+              "lines": [
+                [
+                  {
+                    "text": "Value (units)",
+                    "size": 0.75
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": -90.0
+            },
+            "label_rotation": 0.0,
+            "number_format": {
+              "notation": "Fixed",
+              "precision": 0,
+              "locale": "EnUs",
+              "grouping": false,
+              "prefix": "",
+              "suffix": ""
+            }
+          }
+        ],
+        "facets": {
+          "fields": [
+            "3"
+          ],
+          "order": [
+            {
+              "values": [
+                {
+                  "Text": "B"
+                }
+              ]
+            },
+            {
+              "values": [
+                {
+                  "Text": "A"
+                }
+              ]
+            }
+          ],
+          "layout": {
+            "Wrap": {
+              "columns": 2
+            }
+          },
+          "empty": "Keep",
+          "scales": {
+            "free_x": false,
+            "free_y": false
+          },
+          "gap": 12.0,
+          "collect_guides": true
+        },
+        "figure": {
+          "version": 1,
+          "title": {
+            "lines": [
+              [
+                {
+                  "text": "Small multiples",
+                  "size": 1.4,
+                  "font": {
+                    "id": "9007199254747002",
+                    "revision": "1",
+                    "kind": "Font",
+                    "byte_len": "627176"
+                  },
+                  "weight": 700
+                },
+                {
+                  "text": "  ·  one prepared population",
+                  "size": 0.9
+                }
+              ]
+            ],
+            "line_spacing": 1.2,
+            "rotation": 0.0
+          },
+          "subtitle": {
+            "lines": [
+              [
+                {
+                  "text": "Explicit fonts and vector paint   ",
+                  "size": 0.72
+                },
+                {
+                  "text": "مرحبا بالعالم",
+                  "size": 0.8,
+                  "language": "ar",
+                  "direction": "RightToLeft",
+                  "fallback": [
+                    {
+                      "id": "9007199254747003",
+                      "revision": "1",
+                      "kind": "Font",
+                      "byte_len": "237400"
+                    }
+                  ]
+                }
+              ]
+            ],
+            "line_spacing": 1.2,
+            "rotation": 0.0
+          },
+          "caption": {
+            "lines": [
+              [
+                {
+                  "text": "Figure 1 · Shared scales; the inset reuses the same source rows.",
+                  "size": 0.72
+                }
+              ]
+            ],
+            "line_spacing": 1.2,
+            "rotation": 0.0
+          },
+          "source_notes": [
+            {
+              "lines": [
+                [
+                  {
+                    "text": "Source: deterministic fixture. No external market data.",
+                    "size": 0.64
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            }
+          ],
+          "footnotes": [
+            {
+              "lines": [
+                [
+                  {
+                    "text": "Notes: x/y are source units; dashed rule = supplied reference.",
+                    "size": 0.64
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            }
+          ],
+          "panel_letters": [
+            {
+              "panel": {
+                "values": [
+                  {
+                    "Text": "B"
+                  }
+                ]
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "(a)",
+                      "size": 0.8,
+                      "font": {
+                        "id": "9007199254747002",
+                        "revision": "1",
+                        "kind": "Font",
+                        "byte_len": "627176"
+                      },
+                      "weight": 700
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              }
+            },
+            {
+              "panel": {
+                "values": [
+                  {
+                    "Text": "A"
+                  }
+                ]
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "(b)",
+                      "size": 0.8,
+                      "font": {
+                        "id": "9007199254747002",
+                        "revision": "1",
+                        "kind": "Font",
+                        "byte_len": "627176"
+                      },
+                      "weight": 700
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              }
+            }
+          ],
+          "insets": [
+            {
+              "id": "detail-a",
+              "panel": {
+                "values": [
+                  {
+                    "Text": "A"
+                  }
+                ]
+              },
+              "rectangle": [
+                0.52,
+                0.5,
+                0.45,
+                0.45
+              ],
+              "layers": [
+                "3",
+                "1"
+              ],
+              "x_view": {
+                "start": 0.0,
+                "end": 1.0
+              },
+              "y_view": {
+                "start": 0.0,
+                "end": 4.0
+              },
+              "guides": false
+            }
+          ],
+          "annotations": [
+            {
+              "id": "peak",
+              "anchor": {
+                "Data": {
+                  "panel": {
+                    "values": [
+                      {
+                        "Text": "A"
+                      }
+                    ]
+                  },
+                  "scales": {
+                    "x": "0",
+                    "y": "1"
+                  },
+                  "x": {
+                    "Number": 2.0
+                  },
+                  "y": {
+                    "Number": 9.0
+                  }
+                }
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "Peak 9",
+                      "size": 0.68
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              },
+              "offset": [
+                -43.0,
+                15.0
+              ],
+              "priority": 10,
+              "collision": "Keep",
+              "callout": {
+                "Data": {
+                  "panel": {
+                    "values": [
+                      {
+                        "Text": "A"
+                      }
+                    ]
+                  },
+                  "scales": {
+                    "x": "0",
+                    "y": "1"
+                  },
+                  "x": {
+                    "Number": 2.0
+                  },
+                  "y": {
+                    "Number": 9.0
+                  }
+                }
+              },
+              "overflow": false
+            },
+            {
+              "id": "units",
+              "anchor": {
+                "Figure": {
+                  "x": 0.73,
+                  "y": 0.95
+                }
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "180 × 120 mm",
+                      "size": 0.6
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              },
+              "overflow": true
+            },
+            {
+              "id": "lambda",
+              "anchor": {
+                "Output": {
+                  "x": 430.0,
+                  "y": 12.0
+                }
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "λ = −0.25",
+                      "size": 0.64
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              },
+              "overflow": true
+            },
+            {
+              "id": "direct-b",
+              "anchor": {
+                "Panel": {
+                  "panel": {
+                    "values": [
+                      {
+                        "Text": "B"
+                      }
+                    ]
+                  },
+                  "x": 0.08,
+                  "y": 0.4
+                }
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "Panel B",
+                      "size": 0.65
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              },
+              "collision": "ShiftThenHide",
+              "priority": 1,
+              "overflow": false
+            }
+          ]
+        },
+        "theme": {
+          "version": 1,
+          "named": "Editorial",
+          "plot": {
+            "gradient": {
+              "direction": "Vertical",
+              "start": {
+                "red": 234,
+                "green": 243,
+                "blue": 252,
+                "alpha": 255
+              },
+              "end": {
+                "red": 255,
+                "green": 255,
+                "blue": 255,
+                "alpha": 255
+              }
+            }
+          },
+          "layers": {
+            "1": {
+              "symbol": "Diamond"
+            },
+            "2": {
+              "dashes": [
+                4.0,
+                2.0
+              ]
+            },
+            "3": {
+              "mark": {
+                "red": 35,
+                "green": 93,
+                "blue": 145,
+                "alpha": 255
+              },
+              "stroke_width": 1.5
+            }
+          }
+        }
+      }
+    },
+    "data": {
+      "version": 1,
+      "epoch": "1",
+      "datasets": [
+        {
+          "id": "1",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "1",
+                "name": "x",
+                "kind": "Float64",
+                "nullable": false,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "2",
+                "name": "y",
+                "kind": "Float64",
+                "nullable": false,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "3",
+                "name": "facet",
+                "kind": "Utf8",
+                "nullable": false,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "4",
+                "name": "group",
+                "kind": "Int64",
+                "nullable": false,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003",
+              "9007199254743004",
+              "9007199254743005"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Float64": [
+                    0.0,
+                    1.0,
+                    2.0,
+                    0.0,
+                    1.0
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    1.0,
+                    3.0,
+                    9.0,
+                    2.0,
+                    4.0
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Utf8": [
+                    "A",
+                    "A",
+                    "A",
+                    "B",
+                    "B"
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Int64": [
+                    "1",
+                    "1",
+                    "2",
+                    "1",
+                    "2"
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        },
+        {
+          "id": "2",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "2",
+                "name": "threshold",
+                "kind": "Float64",
+                "nullable": false,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "99"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Float64": [
+                    3.5
+                  ]
+                },
+                "validity": [
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "profile_file": "fixtures/composition/profile.json"
+  },
+  {
+    "name": "composition-terminal",
+    "chart": {
+      "version": 1,
+      "definition": {
+        "revision": "13",
+        "mappings": {
+          "x": null,
+          "y": null,
+          "x2": null,
+          "y2": null,
+          "size": null,
+          "group": null
+        },
+        "transforms": [],
+        "layers": [
+          {
+            "id": "3",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Field": "1"
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": null,
+                "y2": null,
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": {
+              "Line": {
+                "order": "X",
+                "connect_gaps": false
+              }
+            },
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude",
+            "color": null
+          },
+          {
+            "id": "2",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "2"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Literal": 0.0
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": {
+                  "Literal": 2.0
+                },
+                "y2": {
+                  "Field": "2"
+                },
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": "Rule",
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 140,
+                "green": 70,
+                "blue": 90,
+                "alpha": 220
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude",
+            "color": null,
+            "facet": "Broadcast"
+          },
+          {
+            "id": "1",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Field": "1"
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": null,
+                "y2": null,
+                "size": null,
+                "group": "4"
+              }
+            },
+            "inherit": false,
+            "geom": "Point",
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude",
+            "color": {
+              "id": "20",
+              "input": {
+                "Category": "4"
+              },
+              "scale": {
+                "Discrete": {
+                  "domain": [
+                    "1",
+                    "2"
+                  ],
+                  "palette": [
+                    {
+                      "red": 30,
+                      "green": 125,
+                      "blue": 180,
+                      "alpha": 230
+                    },
+                    {
+                      "red": 218,
+                      "green": 105,
+                      "blue": 40,
+                      "alpha": 230
+                    }
+                  ],
+                  "missing": {
+                    "red": 120,
+                    "green": 120,
+                    "blue": 120,
+                    "alpha": 100
+                  }
+                }
+              },
+              "title": "Group"
+            }
+          }
+        ],
+        "axes": [
+          {
+            "id": "0",
+            "side": "Bottom",
+            "scale": "Auto",
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true,
+            "typography": {
+              "text": "",
+              "size": 0.7,
+              "tabular": true
+            },
+            "title": {
+              "lines": [
+                [
+                  {
+                    "text": "Observation x",
+                    "size": 0.75
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            },
+            "label_rotation": -35.0,
+            "number_format": {
+              "notation": "Fixed",
+              "precision": 1,
+              "locale": "EnUs",
+              "grouping": false,
+              "prefix": "",
+              "suffix": ""
+            }
+          },
+          {
+            "id": "1",
+            "side": "Left",
+            "scale": "Auto",
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true,
+            "typography": {
+              "text": "",
+              "size": 0.7,
+              "tabular": true
+            },
+            "title": {
+              "lines": [
+                [
+                  {
+                    "text": "Value (units)",
+                    "size": 0.75
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": -90.0
+            },
+            "label_rotation": 0.0,
+            "number_format": {
+              "notation": "Fixed",
+              "precision": 0,
+              "locale": "EnUs",
+              "grouping": false,
+              "prefix": "",
+              "suffix": ""
+            }
+          }
+        ],
+        "facets": {
+          "fields": [
+            "3"
+          ],
+          "order": [
+            {
+              "values": [
+                {
+                  "Text": "B"
+                }
+              ]
+            },
+            {
+              "values": [
+                {
+                  "Text": "A"
+                }
+              ]
+            }
+          ],
+          "layout": {
+            "Wrap": {
+              "columns": 2
+            }
+          },
+          "empty": "Keep",
+          "scales": {
+            "free_x": false,
+            "free_y": false
+          },
+          "gap": 12.0,
+          "collect_guides": true
+        },
+        "figure": {
+          "version": 1,
+          "title": {
+            "lines": [
+              [
+                {
+                  "text": "Small multiples",
+                  "size": 1.4,
+                  "font": {
+                    "id": "9007199254747002",
+                    "revision": "1",
+                    "kind": "Font",
+                    "byte_len": "627176"
+                  },
+                  "weight": 700
+                },
+                {
+                  "text": "  ·  one prepared population",
+                  "size": 0.9
+                }
+              ]
+            ],
+            "line_spacing": 1.2,
+            "rotation": 0.0
+          },
+          "subtitle": {
+            "lines": [
+              [
+                {
+                  "text": "Explicit fonts and vector paint   ",
+                  "size": 0.72
+                },
+                {
+                  "text": "مرحبا بالعالم",
+                  "size": 0.8,
+                  "language": "ar",
+                  "direction": "RightToLeft",
+                  "fallback": [
+                    {
+                      "id": "9007199254747003",
+                      "revision": "1",
+                      "kind": "Font",
+                      "byte_len": "237400"
+                    }
+                  ]
+                }
+              ]
+            ],
+            "line_spacing": 1.2,
+            "rotation": 0.0
+          },
+          "caption": {
+            "lines": [
+              [
+                {
+                  "text": "Figure 1 · Shared scales; the inset reuses the same source rows.",
+                  "size": 0.72
+                }
+              ]
+            ],
+            "line_spacing": 1.2,
+            "rotation": 0.0
+          },
+          "source_notes": [
+            {
+              "lines": [
+                [
+                  {
+                    "text": "Source: deterministic fixture. No external market data.",
+                    "size": 0.64
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            }
+          ],
+          "footnotes": [
+            {
+              "lines": [
+                [
+                  {
+                    "text": "Notes: x/y are source units; dashed rule = supplied reference.",
+                    "size": 0.64
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            }
+          ],
+          "panel_letters": [
+            {
+              "panel": {
+                "values": [
+                  {
+                    "Text": "B"
+                  }
+                ]
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "(a)",
+                      "size": 0.8,
+                      "font": {
+                        "id": "9007199254747002",
+                        "revision": "1",
+                        "kind": "Font",
+                        "byte_len": "627176"
+                      },
+                      "weight": 700
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              }
+            },
+            {
+              "panel": {
+                "values": [
+                  {
+                    "Text": "A"
+                  }
+                ]
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "(b)",
+                      "size": 0.8,
+                      "font": {
+                        "id": "9007199254747002",
+                        "revision": "1",
+                        "kind": "Font",
+                        "byte_len": "627176"
+                      },
+                      "weight": 700
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              }
+            }
+          ],
+          "insets": [
+            {
+              "id": "detail-a",
+              "panel": {
+                "values": [
+                  {
+                    "Text": "A"
+                  }
+                ]
+              },
+              "rectangle": [
+                0.52,
+                0.5,
+                0.45,
+                0.45
+              ],
+              "layers": [
+                "3",
+                "1"
+              ],
+              "x_view": {
+                "start": 0.0,
+                "end": 1.0
+              },
+              "y_view": {
+                "start": 0.0,
+                "end": 4.0
+              },
+              "guides": false
+            }
+          ],
+          "annotations": [
+            {
+              "id": "peak",
+              "anchor": {
+                "Data": {
+                  "panel": {
+                    "values": [
+                      {
+                        "Text": "A"
+                      }
+                    ]
+                  },
+                  "scales": {
+                    "x": "0",
+                    "y": "1"
+                  },
+                  "x": {
+                    "Number": 2.0
+                  },
+                  "y": {
+                    "Number": 9.0
+                  }
+                }
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "Peak 9",
+                      "size": 0.68
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              },
+              "offset": [
+                -43.0,
+                15.0
+              ],
+              "priority": 10,
+              "collision": "Keep",
+              "callout": {
+                "Data": {
+                  "panel": {
+                    "values": [
+                      {
+                        "Text": "A"
+                      }
+                    ]
+                  },
+                  "scales": {
+                    "x": "0",
+                    "y": "1"
+                  },
+                  "x": {
+                    "Number": 2.0
+                  },
+                  "y": {
+                    "Number": 9.0
+                  }
+                }
+              },
+              "overflow": false
+            },
+            {
+              "id": "units",
+              "anchor": {
+                "Figure": {
+                  "x": 0.73,
+                  "y": 0.95
+                }
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "180 × 120 mm",
+                      "size": 0.6
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              },
+              "overflow": true
+            },
+            {
+              "id": "lambda",
+              "anchor": {
+                "Output": {
+                  "x": 430.0,
+                  "y": 12.0
+                }
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "λ = −0.25",
+                      "size": 0.64
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              },
+              "overflow": true
+            },
+            {
+              "id": "direct-b",
+              "anchor": {
+                "Panel": {
+                  "panel": {
+                    "values": [
+                      {
+                        "Text": "B"
+                      }
+                    ]
+                  },
+                  "x": 0.08,
+                  "y": 0.4
+                }
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "Panel B",
+                      "size": 0.65
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              },
+              "collision": "ShiftThenHide",
+              "priority": 1,
+              "overflow": false
+            }
+          ]
+        },
+        "theme": {
+          "version": 1,
+          "named": "Terminal",
+          "plot": {
+            "gradient": {
+              "direction": "Vertical",
+              "start": {
+                "red": 27,
+                "green": 40,
+                "blue": 56,
+                "alpha": 255
+              },
+              "end": {
+                "red": 18,
+                "green": 27,
+                "blue": 37,
+                "alpha": 255
+              }
+            }
+          },
+          "layers": {
+            "1": {
+              "symbol": "Diamond"
+            },
+            "2": {
+              "dashes": [
+                4.0,
+                2.0
+              ]
+            },
+            "3": {
+              "mark": {
+                "red": 117,
+                "green": 187,
+                "blue": 242,
+                "alpha": 255
+              },
+              "stroke_width": 1.5
+            }
+          }
+        }
+      }
+    },
+    "data": {
+      "version": 1,
+      "epoch": "1",
+      "datasets": [
+        {
+          "id": "1",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "1",
+                "name": "x",
+                "kind": "Float64",
+                "nullable": false,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "2",
+                "name": "y",
+                "kind": "Float64",
+                "nullable": false,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "3",
+                "name": "facet",
+                "kind": "Utf8",
+                "nullable": false,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "4",
+                "name": "group",
+                "kind": "Int64",
+                "nullable": false,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003",
+              "9007199254743004",
+              "9007199254743005"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Float64": [
+                    0.0,
+                    1.0,
+                    2.0,
+                    0.0,
+                    1.0
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    1.0,
+                    3.0,
+                    9.0,
+                    2.0,
+                    4.0
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Utf8": [
+                    "A",
+                    "A",
+                    "A",
+                    "B",
+                    "B"
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Int64": [
+                    "1",
+                    "1",
+                    "2",
+                    "1",
+                    "2"
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        },
+        {
+          "id": "2",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "2",
+                "name": "threshold",
+                "kind": "Float64",
+                "nullable": false,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "99"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Float64": [
+                    3.5
+                  ]
+                },
+                "validity": [
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "profile_file": "fixtures/composition/profile.json"
+  },
+  {
+    "name": "composition-grayscale",
+    "chart": {
+      "version": 1,
+      "definition": {
+        "revision": "13",
+        "mappings": {
+          "x": null,
+          "y": null,
+          "x2": null,
+          "y2": null,
+          "size": null,
+          "group": null
+        },
+        "transforms": [],
+        "layers": [
+          {
+            "id": "3",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Field": "1"
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": null,
+                "y2": null,
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": {
+              "Line": {
+                "order": "X",
+                "connect_gaps": false
+              }
+            },
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude",
+            "color": null
+          },
+          {
+            "id": "2",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "2"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Literal": 0.0
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": {
+                  "Literal": 2.0
+                },
+                "y2": {
+                  "Field": "2"
+                },
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": "Rule",
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 140,
+                "green": 70,
+                "blue": 90,
+                "alpha": 220
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude",
+            "color": null,
+            "facet": "Broadcast"
+          },
+          {
+            "id": "1",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Field": "1"
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": null,
+                "y2": null,
+                "size": null,
+                "group": "4"
+              }
+            },
+            "inherit": false,
+            "geom": "Point",
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude",
+            "color": {
+              "id": "20",
+              "input": {
+                "Category": "4"
+              },
+              "scale": {
+                "Discrete": {
+                  "domain": [
+                    "1",
+                    "2"
+                  ],
+                  "palette": [
+                    {
+                      "red": 30,
+                      "green": 125,
+                      "blue": 180,
+                      "alpha": 230
+                    },
+                    {
+                      "red": 218,
+                      "green": 105,
+                      "blue": 40,
+                      "alpha": 230
+                    }
+                  ],
+                  "missing": {
+                    "red": 120,
+                    "green": 120,
+                    "blue": 120,
+                    "alpha": 100
+                  }
+                }
+              },
+              "title": "Group"
+            }
+          }
+        ],
+        "axes": [
+          {
+            "id": "0",
+            "side": "Bottom",
+            "scale": "Auto",
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true,
+            "typography": {
+              "text": "",
+              "size": 0.7,
+              "tabular": true
+            },
+            "title": {
+              "lines": [
+                [
+                  {
+                    "text": "Observation x",
+                    "size": 0.75
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            },
+            "label_rotation": -35.0,
+            "number_format": {
+              "notation": "Fixed",
+              "precision": 1,
+              "locale": "EnUs",
+              "grouping": false,
+              "prefix": "",
+              "suffix": ""
+            }
+          },
+          {
+            "id": "1",
+            "side": "Left",
+            "scale": "Auto",
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true,
+            "typography": {
+              "text": "",
+              "size": 0.7,
+              "tabular": true
+            },
+            "title": {
+              "lines": [
+                [
+                  {
+                    "text": "Value (units)",
+                    "size": 0.75
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": -90.0
+            },
+            "label_rotation": 0.0,
+            "number_format": {
+              "notation": "Fixed",
+              "precision": 0,
+              "locale": "EnUs",
+              "grouping": false,
+              "prefix": "",
+              "suffix": ""
+            }
+          }
+        ],
+        "facets": {
+          "fields": [
+            "3"
+          ],
+          "order": [
+            {
+              "values": [
+                {
+                  "Text": "B"
+                }
+              ]
+            },
+            {
+              "values": [
+                {
+                  "Text": "A"
+                }
+              ]
+            }
+          ],
+          "layout": {
+            "Wrap": {
+              "columns": 2
+            }
+          },
+          "empty": "Keep",
+          "scales": {
+            "free_x": false,
+            "free_y": false
+          },
+          "gap": 12.0,
+          "collect_guides": true
+        },
+        "figure": {
+          "version": 1,
+          "title": {
+            "lines": [
+              [
+                {
+                  "text": "Small multiples",
+                  "size": 1.4,
+                  "font": {
+                    "id": "9007199254747002",
+                    "revision": "1",
+                    "kind": "Font",
+                    "byte_len": "627176"
+                  },
+                  "weight": 700
+                },
+                {
+                  "text": "  ·  one prepared population",
+                  "size": 0.9
+                }
+              ]
+            ],
+            "line_spacing": 1.2,
+            "rotation": 0.0
+          },
+          "subtitle": {
+            "lines": [
+              [
+                {
+                  "text": "Explicit fonts and vector paint   ",
+                  "size": 0.72
+                },
+                {
+                  "text": "مرحبا بالعالم",
+                  "size": 0.8,
+                  "language": "ar",
+                  "direction": "RightToLeft",
+                  "fallback": [
+                    {
+                      "id": "9007199254747003",
+                      "revision": "1",
+                      "kind": "Font",
+                      "byte_len": "237400"
+                    }
+                  ]
+                }
+              ]
+            ],
+            "line_spacing": 1.2,
+            "rotation": 0.0
+          },
+          "caption": {
+            "lines": [
+              [
+                {
+                  "text": "Figure 1 · Shared scales; the inset reuses the same source rows.",
+                  "size": 0.72
+                }
+              ]
+            ],
+            "line_spacing": 1.2,
+            "rotation": 0.0
+          },
+          "source_notes": [
+            {
+              "lines": [
+                [
+                  {
+                    "text": "Source: deterministic fixture. No external market data.",
+                    "size": 0.64
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            }
+          ],
+          "footnotes": [
+            {
+              "lines": [
+                [
+                  {
+                    "text": "Notes: x/y are source units; dashed rule = supplied reference.",
+                    "size": 0.64
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            }
+          ],
+          "panel_letters": [
+            {
+              "panel": {
+                "values": [
+                  {
+                    "Text": "B"
+                  }
+                ]
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "(a)",
+                      "size": 0.8,
+                      "font": {
+                        "id": "9007199254747002",
+                        "revision": "1",
+                        "kind": "Font",
+                        "byte_len": "627176"
+                      },
+                      "weight": 700
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              }
+            },
+            {
+              "panel": {
+                "values": [
+                  {
+                    "Text": "A"
+                  }
+                ]
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "(b)",
+                      "size": 0.8,
+                      "font": {
+                        "id": "9007199254747002",
+                        "revision": "1",
+                        "kind": "Font",
+                        "byte_len": "627176"
+                      },
+                      "weight": 700
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              }
+            }
+          ],
+          "insets": [
+            {
+              "id": "detail-a",
+              "panel": {
+                "values": [
+                  {
+                    "Text": "A"
+                  }
+                ]
+              },
+              "rectangle": [
+                0.52,
+                0.5,
+                0.45,
+                0.45
+              ],
+              "layers": [
+                "3",
+                "1"
+              ],
+              "x_view": {
+                "start": 0.0,
+                "end": 1.0
+              },
+              "y_view": {
+                "start": 0.0,
+                "end": 4.0
+              },
+              "guides": false
+            }
+          ],
+          "annotations": [
+            {
+              "id": "peak",
+              "anchor": {
+                "Data": {
+                  "panel": {
+                    "values": [
+                      {
+                        "Text": "A"
+                      }
+                    ]
+                  },
+                  "scales": {
+                    "x": "0",
+                    "y": "1"
+                  },
+                  "x": {
+                    "Number": 2.0
+                  },
+                  "y": {
+                    "Number": 9.0
+                  }
+                }
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "Peak 9",
+                      "size": 0.68
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              },
+              "offset": [
+                -43.0,
+                15.0
+              ],
+              "priority": 10,
+              "collision": "Keep",
+              "callout": {
+                "Data": {
+                  "panel": {
+                    "values": [
+                      {
+                        "Text": "A"
+                      }
+                    ]
+                  },
+                  "scales": {
+                    "x": "0",
+                    "y": "1"
+                  },
+                  "x": {
+                    "Number": 2.0
+                  },
+                  "y": {
+                    "Number": 9.0
+                  }
+                }
+              },
+              "overflow": false
+            },
+            {
+              "id": "units",
+              "anchor": {
+                "Figure": {
+                  "x": 0.73,
+                  "y": 0.95
+                }
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "180 × 120 mm",
+                      "size": 0.6
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              },
+              "overflow": true
+            },
+            {
+              "id": "lambda",
+              "anchor": {
+                "Output": {
+                  "x": 430.0,
+                  "y": 12.0
+                }
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "λ = −0.25",
+                      "size": 0.64
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              },
+              "overflow": true
+            },
+            {
+              "id": "direct-b",
+              "anchor": {
+                "Panel": {
+                  "panel": {
+                    "values": [
+                      {
+                        "Text": "B"
+                      }
+                    ]
+                  },
+                  "x": 0.08,
+                  "y": 0.4
+                }
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "Panel B",
+                      "size": 0.65
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              },
+              "collision": "ShiftThenHide",
+              "priority": 1,
+              "overflow": false
+            }
+          ]
+        },
+        "theme": {
+          "version": 1,
+          "named": "Grayscale",
+          "plot": {
+            "gradient": {
+              "direction": "Vertical",
+              "start": {
+                "red": 234,
+                "green": 243,
+                "blue": 252,
+                "alpha": 255
+              },
+              "end": {
+                "red": 255,
+                "green": 255,
+                "blue": 255,
+                "alpha": 255
+              }
+            }
+          },
+          "layers": {
+            "1": {
+              "symbol": "Diamond"
+            },
+            "2": {
+              "dashes": [
+                4.0,
+                2.0
+              ]
+            },
+            "3": {
+              "mark": {
+                "red": 35,
+                "green": 93,
+                "blue": 145,
+                "alpha": 255
+              },
+              "stroke_width": 1.5
+            }
+          }
+        }
+      }
+    },
+    "data": {
+      "version": 1,
+      "epoch": "1",
+      "datasets": [
+        {
+          "id": "1",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "1",
+                "name": "x",
+                "kind": "Float64",
+                "nullable": false,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "2",
+                "name": "y",
+                "kind": "Float64",
+                "nullable": false,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "3",
+                "name": "facet",
+                "kind": "Utf8",
+                "nullable": false,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "4",
+                "name": "group",
+                "kind": "Int64",
+                "nullable": false,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003",
+              "9007199254743004",
+              "9007199254743005"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Float64": [
+                    0.0,
+                    1.0,
+                    2.0,
+                    0.0,
+                    1.0
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    1.0,
+                    3.0,
+                    9.0,
+                    2.0,
+                    4.0
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Utf8": [
+                    "A",
+                    "A",
+                    "A",
+                    "B",
+                    "B"
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Int64": [
+                    "1",
+                    "1",
+                    "2",
+                    "1",
+                    "2"
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        },
+        {
+          "id": "2",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "2",
+                "name": "threshold",
+                "kind": "Float64",
+                "nullable": false,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "99"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Float64": [
+                    3.5
+                  ]
+                },
+                "validity": [
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "profile_file": "fixtures/composition/profile.json"
+  }
+]

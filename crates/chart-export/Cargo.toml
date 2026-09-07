@@ -13,6 +13,7 @@ workspace = true
 serde.workspace = true
 serde_json.workspace = true
 chart-core.workspace = true
+chart-text.workspace = true
 resvg_export = { package = "resvg", version = "=0.48.1", default-features = false, features = ["text"] }
 usvg = { version = "=0.48.1", default-features = false, features = ["text", "writer"] }
 krilla = { version = "=0.8.2", default-features = false }

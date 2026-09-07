@@ -3,6 +3,7 @@ resolver = "3"
 members = [
     "crates/chart-core",
     "crates/chart-export",
+    "crates/chart-text",
     "crates/gpui-charts",
     "crates/gpui-charts-kit",
     "crates/chart-python",
@@ -22,6 +23,7 @@ serde = { version = "=1.0.229", features = ["derive", "rc"] }
 serde_json = "=1.0.151"
 chart-core = { path = "crates/chart-core" }
 chart-export = { path = "crates/chart-export" }
+chart-text = { path = "crates/chart-text" }
 gpui-charts = { path = "crates/gpui-charts" }
 gpui-charts-kit = { path = "crates/gpui-charts-kit" }
 gpui = { package = "gpui-pre", version = "=0.3.3", default-features = false }

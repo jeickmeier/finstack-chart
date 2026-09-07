@@ -272,6 +272,23 @@ impl ChartView {
 }
 impl Render for ChartView {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+        let mut tokens = self
+            .definition
+            .theme
+            .as_ref()
+            .and_then(|t| t.resolve(&self.request.host_theme).ok())
+            .unwrap_or_else(|| self.request.host_theme.clone());
+        tokens.overlay(&self.request.output_theme);
+        let focus_color = chart_core::theme::paint_color(
+            tokens.focus.unwrap_or(chart_core::theme::rgb(59, 130, 196)),
+            tokens.color_mode,
+        );
+        let focus_color = gpui::rgba(
+            (u32::from(focus_color.red) << 24)
+                | (u32::from(focus_color.green) << 16)
+                | (u32::from(focus_color.blue) << 8)
+                | u32::from(focus_color.alpha),
+        );
         let prepaint = cx.entity().downgrade();
         let paint = prepaint.clone();
         let diagnostic = self.last_error.as_ref().map(|e| {
@@ -381,7 +398,7 @@ impl Render for ChartView {
             .size_full()
             .overflow_hidden()
             .border_1()
-            .border_color(if self.focus.is_focused(window) { rgb(0x3b82c4) } else { rgb(0xffffff) })
+            .border_color(if self.focus.is_focused(window) { focus_color } else { gpui::rgba(0x00000000) })
             .track_focus(&self.focus)
             .hover_listener_mode(gpui::HoverListenerMode::InputModalityIndependent)
             .role(Role::Image)

@@ -244,6 +244,25 @@ impl FontResources {
     }
 }
 impl TextMeasurer for FontResources {
+    fn shape(
+        &self,
+        r: chart_core::typography::ShapeRequest<'_>,
+    ) -> ChartResult<chart_core::typography::ShapedRun> {
+        r.run.validate(r.limits)?;
+        let primary = r.run.font.as_ref().unwrap_or(r.default_font);
+        for (index, descriptor) in std::iter::once(primary).chain(&r.run.fallback).enumerate() {
+            let font = self.get(descriptor)?;
+            if chart_text::supports(&font.bytes, &r.run.text, r.run.weight)? {
+                return chart_text::shape(&font.bytes, *descriptor, r, index > 0);
+            }
+        }
+        let mut e = error(
+            DiagnosticCode::MissingResource,
+            "No declared face supports the complete rich run and requested weight.",
+        );
+        e.context.resource = Some(primary.id);
+        Err(e)
+    }
     fn measure(&self, r: TextRequest<'_>) -> ChartResult<TextMetrics> {
         if r.units != Units::Points {
             return Err(error(

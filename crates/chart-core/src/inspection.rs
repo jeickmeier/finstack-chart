@@ -123,7 +123,7 @@ impl Inspector {
                 }
             };
             match &item.primitive {
-                Primitive::Point { center, .. } => {
+                Primitive::Point { center, .. } | Primitive::Symbol { center, .. } => {
                     if let Some(t) = targets.first() {
                         add(*center, t, None);
                     }
@@ -143,7 +143,9 @@ impl Inspector {
                         }
                     }
                 }
-                Primitive::Path { commands, .. } | Primitive::FilledPath { commands, .. } => {
+                Primitive::Path { commands, .. }
+                | Primitive::DashedPath { commands, .. }
+                | Primitive::FilledPath { commands, .. } => {
                     for (p, t) in commands
                         .iter()
                         .filter_map(|c| match c {

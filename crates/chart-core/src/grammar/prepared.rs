@@ -320,7 +320,7 @@ pub struct PreparedLayer {
     pub(crate) scales: super::ScaleBindings,
     pub(crate) clip: super::ClipPolicy,
     pub(crate) table: Arc<PreparedTable>,
-    pub(crate) marks: Vec<PreparedMark>,
+    pub(crate) marks: Arc<Vec<PreparedMark>>,
     pub(crate) domains: DomainContributions,
     pub(crate) invalid_geometry: usize,
     pub(crate) visible: bool,

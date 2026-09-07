@@ -287,7 +287,7 @@ pub(crate) fn prepare_facets(
         let used_vertices = chart
             .layers
             .iter()
-            .flat_map(|l| &l.marks)
+            .flat_map(|l| l.marks.iter())
             .map(|m| match &m.geometry {
                 PreparedGeometry::Point(_) => 1,
                 PreparedGeometry::LineRun(v) => v.len(),

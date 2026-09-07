@@ -71,6 +71,19 @@ fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
     let mut ids = BTreeSet::new();
     let mut sides = BTreeSet::new();
     for a in &r.axes {
+        if !a.label_rotation.is_finite() || a.label_rotation.abs() > 360. {
+            return Err(error(
+                DiagnosticCode::Validation,
+                "Axis label rotation must be -360..360 degrees.",
+            ));
+        }
+        if let Some(t) = &a.typography {
+            t.validate(r.limits)?;
+        }
+        if let Some(t) = &a.title {
+            t.validate(r.limits)?;
+        }
+
         if !ids.insert(a.id) || (a.visible && !sides.insert(a.side)) {
             return Err(error(
                 DiagnosticCode::SchemaConflict,
@@ -194,6 +207,7 @@ fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
 struct Label {
     tick: GuideTick,
     metrics: TextMetrics,
+    rich: Option<super::text::Block>,
 }
 fn measure_axes(
     axes: &BTreeMap<ScaleId, ResolvedAxis>,
@@ -212,9 +226,35 @@ fn measure_axes(
     for (id, a) in axes {
         let mut measured = vec![];
         for t in &a.ticks {
+            let rich = if a.spec.typography.is_some() || a.spec.label_rotation != 0. {
+                let mut run = a
+                    .spec
+                    .typography
+                    .clone()
+                    .unwrap_or_else(|| crate::typography::RichRun::new(""));
+                run.text = t.label.clone();
+                Some(super::text::measure(
+                    &crate::typography::RichText {
+                        lines: vec![vec![run]],
+                        line_spacing: 1.2,
+                        rotation: a.spec.label_rotation,
+                    },
+                    r,
+                    measurer,
+                    r.host_theme.foreground.unwrap_or(INK),
+                )?)
+            } else {
+                None
+            };
+            let metrics = if let Some(b) = &rich {
+                TextMetrics::new(b.bounds.width(), b.bounds.height(), 0.)?
+            } else {
+                measure_text(measurer, text_request(r, &t.label), r.limits)?
+            };
             measured.push(Label {
                 tick: t.clone(),
-                metrics: measure_text(measurer, text_request(r, &t.label), r.limits)?,
+                metrics,
+                rich,
             });
         }
         labels.insert(*id, measured);
@@ -225,6 +265,7 @@ fn measure_axes(
 fn margins(
     axes: &BTreeMap<ScaleId, ResolvedAxis>,
     labels: &BTreeMap<ScaleId, Vec<Label>>,
+    titles: &BTreeMap<ScaleId, super::text::Block>,
     r: &LayoutRequest,
     mut m: [f64; 4],
 ) -> [f64; 4] {
@@ -241,7 +282,15 @@ fn margins(
                 AxisSide::Top => (2, h),
                 AxisSide::Bottom => (3, h),
             };
-            m[side] = m[side].max(r.padding + r.tick_length + r.label_gap + size);
+            let title = titles.get(id).map_or(0., |t| {
+                r.label_gap
+                    + if a.spec.side.horizontal() {
+                        t.bounds.height()
+                    } else {
+                        t.bounds.width()
+                    }
+            });
+            m[side] = m[side].max(r.padding + r.tick_length + r.label_gap + size + title);
             if a.spec.side.horizontal() {
                 m[0] = m[0].max(r.padding + w / 2.);
                 m[1] = m[1].max(r.padding + w / 2.);
@@ -354,7 +403,7 @@ fn guides(
                     from,
                     to,
                     stroke: Stroke {
-                        color: INK,
+                        color: r.host_theme.foreground.unwrap_or(INK),
                         width: 1.,
                     },
                 },
@@ -389,7 +438,7 @@ fn guides(
                         from,
                         to,
                         stroke: Stroke {
-                            color: INK,
+                            color: r.host_theme.foreground.unwrap_or(INK),
                             width: 1.,
                         },
                     },
@@ -397,21 +446,27 @@ fn guides(
                 vec![],
                 r,
             )?;
-            out.push(
-                SceneItem {
-                    layer: None,
-                    clip: None,
-                    primitive: Primitive::Text {
-                        origin,
-                        text: l.tick.label.clone(),
-                        font: r.font.id,
-                        font_size: r.font_size,
-                        color: INK,
+            if let Some(block) = &l.rich {
+                for item in block.items_at(bounds.origin().x(), bounds.origin().y(), r.bounds)? {
+                    out.push(item, vec![], r)?;
+                }
+            } else {
+                out.push(
+                    SceneItem {
+                        layer: None,
+                        clip: None,
+                        primitive: Primitive::Text {
+                            origin,
+                            text: l.tick.label.clone(),
+                            font: r.font.id,
+                            font_size: r.font_size,
+                            color: r.host_theme.foreground.unwrap_or(INK),
+                        },
                     },
-                },
-                vec![],
-                r,
-            )?;
+                    vec![],
+                    r,
+                )?;
+            }
         }
         if matches!(&a.scale,ResolvedScale::Band(s) if s.domain().len()>labels[id].len()) {
             pressure = true;
@@ -439,7 +494,7 @@ fn compact(
                     text: text.into(),
                     font: r.font.id,
                     font_size: r.font_size,
-                    color: INK,
+                    color: r.host_theme.foreground.unwrap_or(INK),
                 },
             },
             vec![],
@@ -456,9 +511,19 @@ pub fn layout(
     request: &LayoutRequest,
     measurer: &dyn TextMeasurer,
 ) -> ChartResult<LaidOutChart> {
+    let bounded = super::text::BoundedMeasurer::new(measurer, request.limits)?;
+    let measurer = &bounded as &dyn TextMeasurer;
     let mut effective = request.clone();
     if !prepared.definition().axes.is_empty() {
         effective.axes.clone_from(&prepared.definition().axes);
+    }
+    let theme = super::theme::tokens(&prepared, &effective)?;
+    super::theme::configure(&theme, &mut effective);
+    let full_request = effective.clone();
+    let furniture = super::composition::prepare(&prepared, &effective, measurer)?;
+    if let Some(f) = &furniture {
+        effective.bounds = f.content;
+        effective.figure_bounds = Some(full_request.bounds);
     }
     let request = &effective;
     let stamp = SceneStamp {
@@ -468,10 +533,26 @@ pub fn layout(
         state: prepared.state().revision(),
         viewport: prepared.state().viewport_revision(),
     };
-    layout_inner(prepared, request, measurer, stamp).map_err(|mut e| {
-        e.context.stamp = Some(stamp);
-        e
-    })
+    layout_inner(prepared, request, measurer, stamp)
+        .and_then(|mut chart| {
+            chart.scene = Scene::new(
+                chart.scene.stamp(),
+                request.units,
+                full_request.bounds,
+                chart.scene.items(),
+                chart.scene.resources(),
+                request.limits,
+            )?;
+            super::theme::apply(&mut chart, &full_request, &theme)?;
+            if let Some(furniture) = furniture {
+                super::composition::finish(&mut chart, &full_request, measurer, &theme, furniture)?;
+            }
+            Ok(chart)
+        })
+        .map_err(|mut e| {
+            e.context.stamp = Some(stamp);
+            e
+        })
 }
 
 fn layout_inner(
@@ -499,6 +580,7 @@ pub(super) fn solve_panels(
         request: LayoutRequest,
         axes: BTreeMap<ScaleId, ResolvedAxis>,
         labels: BTreeMap<ScaleId, Vec<Label>>,
+        titles: BTreeMap<ScaleId, super::text::Block>,
         plot: Option<Rect>,
         diagnostics: Vec<Diagnostic>,
         passes: usize,
@@ -510,7 +592,25 @@ pub(super) fn solve_panels(
         for side in &mut m {
             *side = side.max(request.padding);
         }
+        let titles = request
+            .axes
+            .iter()
+            .filter(|a| a.visible)
+            .filter_map(|a| a.title.as_ref().map(|t| (a.id, t)))
+            .map(|(id, t)| {
+                Ok((
+                    id,
+                    super::text::measure(
+                        t,
+                        &request,
+                        measurer,
+                        request.host_theme.foreground.unwrap_or(INK),
+                    )?,
+                ))
+            })
+            .collect::<ChartResult<BTreeMap<_, _>>>()?;
         work.push(Work {
+            titles,
             diagnostics: prepared.diagnostics().to_vec(),
             prepared,
             request,
@@ -536,7 +636,7 @@ pub(super) fn solve_panels(
                 .collect::<ChartResult<_>>()?;
             w.labels = measure_axes(&w.axes, &w.request, measurer)?;
             w.passes = pass + 1;
-            next = margins(&w.axes, &w.labels, &w.request, next);
+            next = margins(&w.axes, &w.labels, &w.titles, &w.request, next);
         }
         if next == m {
             break;
@@ -561,6 +661,18 @@ pub(super) fn solve_panels(
             if guides(&mut w.axes, &w.labels, p, request, &mut output)? {
                 w.diagnostics.push(pressure("Overlapping, duplicate or out-of-figure tick labels were deterministically thinned."));
             }
+            for (id,title) in &w.titles {
+                let axis=&w.axes[id];
+                let (x,y)=match axis.spec.side {
+                    AxisSide::Bottom=>(p.origin().x()+(p.width()-title.bounds.width())/2.,request.bounds.max_y()-request.padding-title.bounds.height()),
+                    AxisSide::Top=>(p.origin().x()+(p.width()-title.bounds.width())/2.,request.bounds.origin().y()+request.padding),
+                    AxisSide::Left=>(request.bounds.origin().x()+request.padding,p.origin().y()+(p.height()-title.bounds.height())/2.),
+                    AxisSide::Right=>(request.bounds.max_x()-request.padding-title.bounds.width(),p.origin().y()+(p.height()-title.bounds.height())/2.),
+                };
+                if !inside(Rect::new(x,y,title.bounds.width(),title.bounds.height())?,request.bounds){w.diagnostics.push(pressure("Axis title exceeds its panel and is clipped; logical text is retained."));}
+                for item in title.items_at(x,y,request.bounds)? {output.push(item,vec![],request)?;}
+                w.diagnostics.extend_from_slice(&title.diagnostics);
+            }
             (output,status)
         } else {
             w.axes.clear();
@@ -571,8 +683,10 @@ pub(super) fn solve_panels(
         };
         if status == LayoutStatus::NoData { compact("No data",request,measurer,&mut output)?; }
         if output.omitted > 0 { w.diagnostics.push(pressure(&format!("Explicit scale policies omitted {} marks/vertices; source statistics are unchanged.",output.omitted))); }
-        let scene = Scene::new(stamp,request.units,request.bounds,&output.items,&[request.font],request.limits)?;
-        Ok(LaidOutChart {prepared:w.prepared,scene,plot:w.plot,axes:w.axes,
+        for label in w.labels.values().flatten(){if let Some(block)=&label.rich {for d in &block.diagnostics {if !w.diagnostics.contains(d){w.diagnostics.push(d.clone());}}}}
+        let resources=super::text::resources(&output.items,request)?;
+        let scene = Scene::new(stamp,request.units,request.bounds,&output.items,&resources,request.limits)?;
+        Ok(LaidOutChart {insets:vec![],prepared:w.prepared,scene,plot:w.plot,axes:w.axes,
             item_panels: vec![None; output.targets.len()], panels: vec![],
             targets:output.targets,diagnostics:w.diagnostics,status,passes:w.passes})
     }).collect()

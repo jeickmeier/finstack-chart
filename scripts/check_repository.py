@@ -10,8 +10,9 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {
     "chart-core": set(),
-    "chart-export": {"chart-core"},
-    "gpui-charts": {"chart-core"},
+    "chart-export": {"chart-core", "chart-text"},
+    "chart-text": {"chart-core"},
+    "gpui-charts": {"chart-core", "chart-text"},
     "gpui-charts-kit": {"chart-core", "gpui-charts"},
     "chart-python": {"chart-core", "chart-export"},
     "chart-wasm": {"chart-core", "chart-export"},
@@ -67,7 +68,7 @@ def main():
         target_nodes = {n["id"]: n for n in target_metadata["resolve"]["nodes"]}
         target_packages = {p["id"]: p for p in target_metadata["packages"]}
         for package in members:
-            if package["name"] not in {"chart-core", "chart-export"}:
+            if package["name"] not in {"chart-core", "chart-export", "chart-text"}:
                 continue
             for key in dependency_ids(package["id"], target_nodes):
                 dep_name = target_packages[key]["name"]

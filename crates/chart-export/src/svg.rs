@@ -93,6 +93,65 @@ pub(crate) fn build(
                 clip.height()
             )?;
             match &item.primitive {
+                Primitive::Symbol {
+                    center,
+                    radius,
+                    kind,
+                    fill,
+                } => {
+                    write!(
+                        out,
+                        "<path id=\"item-{index}\" fill=\"{}\" fill-opacity=\"{}\" d=\"",
+                        color(*fill),
+                        alpha(*fill)
+                    )?;
+                    for c in chart_core::scene::symbol_path(*center, *radius, *kind)
+                        .map_err(|_| std::fmt::Error)?
+                    {
+                        write_command(&mut out, &c)?;
+                    }
+                    out.write_str("\"/>")?;
+                }
+                Primitive::GlyphRun {
+                    origin,
+                    rotation,
+                    run,
+                    color: c,
+                } => {
+                    // Exact positioned outlines are the display truth; logical content stays explicit.
+                    write!(
+                        out,
+                        "<g id=\"item-{index}\" role=\"img\" aria-label=\"{}\"><desc>{}</desc><path fill=\"{}\" fill-opacity=\"{}\" fill-rule=\"nonzero\" d=\"",
+                        escape(&run.text),
+                        escape(&run.text),
+                        color(*c),
+                        alpha(*c)
+                    )?;
+                    let commands = chart_core::typography::placed_outlines(run, *origin, *rotation)
+                        .map_err(|_| std::fmt::Error)?;
+                    for c in &commands {
+                        write_command(&mut out, c)?;
+                    }
+                    out.write_str("\"/></g>")?;
+                }
+                Primitive::GradientRectangle { bounds, gradient } => {
+                    let (x2, y2) = match gradient.direction {
+                        chart_core::scene::GradientDirection::Horizontal => (1, 0),
+                        chart_core::scene::GradientDirection::Vertical => (0, 1),
+                    };
+                    write!(
+                        out,
+                        "<defs><linearGradient id=\"gradient-{index}\" x1=\"0\" y1=\"0\" x2=\"{x2}\" y2=\"{y2}\" color-interpolation=\"sRGB\"><stop offset=\"0\" stop-color=\"{}\" stop-opacity=\"{}\"/><stop offset=\"1\" stop-color=\"{}\" stop-opacity=\"{}\"/></linearGradient></defs><rect id=\"item-{index}\" x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" fill=\"url(#gradient-{index})\"/>",
+                        color(gradient.start),
+                        alpha(gradient.start),
+                        color(gradient.end),
+                        alpha(gradient.end),
+                        bounds.origin().x(),
+                        bounds.origin().y(),
+                        bounds.width(),
+                        bounds.height()
+                    )?;
+                }
                 Primitive::Rectangle { bounds, fill } => write!(
                     out,
                     "<rect id=\"item-{index}\" x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" fill=\"{}\" fill-opacity=\"{}\"/>",
@@ -127,29 +186,27 @@ pub(crate) fn build(
                     stroke.width,
                     alpha(stroke.color)
                 )?,
-                Primitive::Path { commands, .. } | Primitive::FilledPath { commands, .. } => {
+                Primitive::Path { commands, .. }
+                | Primitive::FilledPath { commands, .. }
+                | Primitive::DashedPath { commands, .. } => {
                     write!(out, "<path id=\"item-{index}\" d=\"")?;
                     for c in commands {
-                        match c {
-                            PathCommand::MoveTo(a) => write!(out, "M {} {} ", a.x(), a.y())?,
-                            PathCommand::LineTo(a) => write!(out, "L {} {} ", a.x(), a.y())?,
-                            PathCommand::QuadraticTo(a, b) => {
-                                write!(out, "Q {} {} {} {} ", a.x(), a.y(), b.x(), b.y())?
-                            }
-                            PathCommand::CubicTo(a, b, c) => write!(
-                                out,
-                                "C {} {} {} {} {} {} ",
-                                a.x(),
-                                a.y(),
-                                b.x(),
-                                b.y(),
-                                c.x(),
-                                c.y()
-                            )?,
-                            PathCommand::Close => out.write_str("Z ")?,
-                        }
+                        write_command(&mut out, c)?;
                     }
                     match &item.primitive {
+                        Primitive::DashedPath { stroke, dashes, .. } => {
+                            write!(
+                                out,
+                                "\" fill=\"none\" stroke=\"{}\" stroke-width=\"{}\" stroke-opacity=\"{}\" stroke-dasharray=\"",
+                                color(stroke.color),
+                                stroke.width,
+                                alpha(stroke.color)
+                            )?;
+                            for v in dashes {
+                                write!(out, "{v} ")?;
+                            }
+                            out.write_str("\"/>")?;
+                        }
                         Primitive::Path { stroke, .. } => write!(
                             out,
                             "\" fill=\"none\" stroke=\"{}\" stroke-width=\"{}\" stroke-opacity=\"{}\"/>",
@@ -213,4 +270,23 @@ pub(crate) fn outline(tree: &usvg::Tree, p: &PublicationProfile) -> ChartResult<
     })?;
     let result=format!("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"{}pt\" height=\"{}pt\" viewBox=\"0 0 {} {}\">{body}",p.page.width(),p.page.height(),tree.size().width(),tree.size().height()).into_bytes();
     super::encode::bounded(result, p)
+}
+
+fn write_command(out: &mut Writer, c: &PathCommand) -> Result<(), std::fmt::Error> {
+    match c {
+        PathCommand::MoveTo(a) => write!(out, "M {} {} ", a.x(), a.y()),
+        PathCommand::LineTo(a) => write!(out, "L {} {} ", a.x(), a.y()),
+        PathCommand::QuadraticTo(a, b) => write!(out, "Q {} {} {} {} ", a.x(), a.y(), b.x(), b.y()),
+        PathCommand::CubicTo(a, b, c) => write!(
+            out,
+            "C {} {} {} {} {} {} ",
+            a.x(),
+            a.y(),
+            b.x(),
+            b.y(),
+            c.x(),
+            c.y()
+        ),
+        PathCommand::Close => out.write_str("Z "),
+    }
 }

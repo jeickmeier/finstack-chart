@@ -77,16 +77,20 @@ impl FigureSnapshot {
         profile.layout.bounds = Rect::new(0., 0., profile.page.width(), profile.page.height())?;
         let captured_profile = profile.clone();
         let captured_state = state.clone();
+        let mut effective_definition = definition.clone();
         let mut effective_state = state.clone();
         if profile.view == ViewMode::FullDomain {
             effective_state.apply(definition, ChartAction::SetViewport(Viewport::default()))?;
+            for axis in &mut effective_definition.axes {
+                axis.viewport = None;
+            }
             for axis in &mut profile.layout.axes {
                 axis.viewport = None;
             }
         }
         fonts.get(&profile.layout.font)?;
         let prepared = Arc::new(Compiler::new().prepare(
-            definition,
+            &effective_definition,
             &source,
             &effective_state,
             CompileLimits::default(),
@@ -176,7 +180,7 @@ impl FigureSnapshot {
             let data = source.get()?;
             let metadata = Reproducibility {
                 engines: format!(
-                    "chart-export {}; usvg/resvg 0.48.1; harfrust 0.12.0; krilla 0.8.2; skrifa 0.44.0/0.42.1; PNG 0.17.16",
+                    "chart-export {}; chart-text 0.1.0; usvg/resvg 0.48.1; harfrust 0.12.0; krilla 0.8.2; skrifa 0.44.0/0.42.1; PNG 0.17.16",
                     env!("CARGO_PKG_VERSION")
                 ),
                 stamp: scene.stamp(),
@@ -240,7 +244,21 @@ impl FigureSnapshot {
             };
             Ok(ExportArtifact {
                 format,
-                capabilities: format.capabilities(profile.text),
+                capabilities: {
+                    let mut c = format.capabilities(profile.text);
+                    if format == Format::Svg
+                        && profile.text == TextMode::Preserve
+                        && self
+                            .0
+                            .scene
+                            .items()
+                            .iter()
+                            .any(|i| matches!(i.primitive, Primitive::GlyphRun { .. }))
+                    {
+                        c.text = crate::TextRepresentation::MixedPositionedOutlines;
+                    }
+                    c
+                },
                 bytes: crate::encode::bounded(bytes, profile)?,
                 diagnostics: self.0.layout.diagnostics().to_vec(),
                 metadata: self.0.metadata.clone(),
@@ -279,19 +297,58 @@ fn preflight(
         let result = (|| {
             rect(item.clip.unwrap_or(scene.bounds()))?;
             match &item.primitive {
+                Primitive::GlyphRun {
+                    origin,
+                    rotation,
+                    run,
+                    ..
+                } => {
+                    point(*origin)?;
+                    profile.f32(run.font_size)?;
+                    fonts.get(&run.font)?.validate_text(&run.text)?;
+                    for glyph in &run.glyphs {
+                        point(glyph.position)?;
+                    }
+                    for c in chart_core::typography::placed_outlines(run, *origin, *rotation)? {
+                        match c {
+                            PathCommand::MoveTo(a) | PathCommand::LineTo(a) => point(a)?,
+                            PathCommand::QuadraticTo(a, b) => {
+                                point(a)?;
+                                point(b)?;
+                            }
+                            PathCommand::CubicTo(a, b, c) => {
+                                point(a)?;
+                                point(b)?;
+                                point(c)?;
+                            }
+                            PathCommand::Close => {}
+                        }
+                    }
+                }
                 Primitive::Rule { from, to, stroke } => {
                     point(*from)?;
                     point(*to)?;
                     profile.f32(stroke.width)?;
                 }
-                Primitive::Rectangle { bounds, .. } => rect(*bounds)?,
-                Primitive::Point { center, radius, .. } => {
+                Primitive::Rectangle { bounds, .. }
+                | Primitive::GradientRectangle { bounds, .. } => rect(*bounds)?,
+                Primitive::Point { center, radius, .. }
+                | Primitive::Symbol { center, radius, .. } => {
                     point(*center)?;
                     profile.f32(*radius)?;
                 }
-                Primitive::Path { commands, .. } | Primitive::FilledPath { commands, .. } => {
-                    if let Primitive::Path { stroke, .. } = &item.primitive {
+                Primitive::Path { commands, .. }
+                | Primitive::FilledPath { commands, .. }
+                | Primitive::DashedPath { commands, .. } => {
+                    if let Primitive::Path { stroke, .. } | Primitive::DashedPath { stroke, .. } =
+                        &item.primitive
+                    {
                         profile.f32(stroke.width)?;
+                    }
+                    if let Primitive::DashedPath { dashes, .. } = &item.primitive {
+                        for dash in dashes {
+                            profile.f32(*dash)?;
+                        }
                     }
                     for c in commands {
                         match c {

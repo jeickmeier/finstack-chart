@@ -8,7 +8,7 @@ use crate::limits::require_within;
 use crate::{ChartResult, Diagnostic, DiagnosticCode, Limits, ResourceId, Revision};
 
 /// Unit convention shared by a scene and its destination text service.
-#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Units {
     /// Native logical pixels, before device-pixel scaling.
     LogicalPixels,
@@ -17,7 +17,7 @@ pub enum Units {
 }
 
 /// Resource representation the host is expected to supply.
-#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq)]
 pub enum ResourceKind {
     /// Font bytes; actual parsing, glyph support and permissions are host responsibilities.
     Font,
@@ -26,7 +26,7 @@ pub enum ResourceKind {
 }
 
 /// Identity of immutable host-owned bytes. Changing bytes requires a new revision.
-#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq)]
 pub struct ResourceDescriptor {
     /// Stable resource identity.
     pub id: ResourceId,
@@ -103,7 +103,7 @@ pub struct TextRequest<'a> {
 }
 
 /// Finite advance width and nonnegative baseline metrics in the requested units.
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, PartialEq)]
 pub struct TextMetrics {
     width: f64,
     ascent: f64,
@@ -151,6 +151,17 @@ impl TextMetrics {
 pub trait TextMeasurer {
     /// Measure with the exact requested font revision, size and units or return diagnostics.
     fn measure(&self, request: TextRequest<'_>) -> ChartResult<TextMetrics>;
+    /// Shape rich text into positioned glyphs and numeric outlines. Hosts opt in explicitly.
+    fn shape(
+        &self,
+        _request: crate::typography::ShapeRequest<'_>,
+    ) -> ChartResult<crate::typography::ShapedRun> {
+        Err(Diagnostic::error(
+            DiagnosticCode::UnsupportedCapability,
+            "This destination has no rich-text shaping service.",
+            "Supply a TextMeasurer implementing exact rich shaping.",
+        ))
+    }
 }
 
 /// Validate a request before invoking the host, preserving resource context on errors.

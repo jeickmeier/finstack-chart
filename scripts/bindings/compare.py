@@ -126,9 +126,9 @@ for name in statistics[0]:
 print(f'PASS shared fixtures: {len(statistics[0])} cases in Rust/Python/WASM, independent stats/provenance, scenes within 1e-10 pt, SVG bytes exact')
 
 # WP-11 independent expectations, in addition to the unchanged three-runtime comparisons.
-for data, scenes in zip(statistics,scenes):
+for data, family_scenes in zip(statistics,scenes):
     def family(name): return data['family-'+name]['layers']
-    def marks(name,layer='1'): return [i['primitive'] for i in scenes['family-'+name]['items'] if i['layer']==layer]
+    def marks(name,layer='1'): return [i['primitive'] for i in family_scenes['family-'+name]['items'] if i['layer']==layer]
     assert len(marks('log-gaps'))==2 and all('Path' in p for p in marks('log-gaps'))
     assert len(family('log-gaps')[0]['rows']['Source'])==5
     assert len(marks('area'))==2 and family('area')[0]['invalid_geometry']==1
@@ -144,7 +144,7 @@ for data, scenes in zip(statistics,scenes):
     assert price['domains']['y']=={'minimum':1.,'maximum':7.} and volume['domains']['y']=={'minimum':0.,'maximum':30.}
     assert len(marks('ohlc-volume'))==10 and len(marks('ohlc-volume','2'))==4
     assert len(marks('session'))==2 and len(family('session')[0]['rows']['Source'])==5
-    labels=[i['primitive']['Text']['text'] for i in scenes['family-utc-leap']['items'] if 'Text' in i['primitive']]
+    labels=[i['primitive']['Text']['text'] for i in family_scenes['family-utc-leap']['items'] if 'Text' in i['primitive']]
     assert any('2024-02-29' in t for t in labels)
     assert family('stacked-bars')[0]['domains']['y']=={'minimum':-5.,'maximum':5.}
 for name in statistics[0]:
@@ -194,3 +194,42 @@ for name in data:
     if name.startswith('facet-'):
         assert not subprocess.check_output(['pdfimages','-list',str(paths[0]/f'statistics-{name}.pdf')],text=True).strip().splitlines()[2:]
 print('PASS WP-12 FIX-06: typed panel order/membership, broadcast/target, shared/free scales, aligned six-panel grid, grouped/facet/chart means, per-item panel identity, collected guides and vector PDF')
+
+# WP-13: FIX-12/13 composition and explicit typography through all three real hosts.
+composition_names = ['composition-'+theme for theme in ('editorial','terminal','grayscale')]
+for runtime, data, scene in zip(paths, statistics, scenes):
+    reference = data[composition_names[0]]
+    for name in composition_names:
+        actual = data[name]
+        # Theme changes must leave all prepared populations, domains and targets intact.
+        same(reference['layers'], actual['layers'], 1e-12)
+        same(reference['panels'], actual['panels'], 1e-12)
+        output = scene[name]
+        assert len(output['panels']) == 2 and len(output['insets']) == 1
+        assert len(output['items']) == len(output['targets']) == len(output['item_panels'])
+        assert output['insets'][0]['panel'] == {'values':[{'Text':'A'}]}
+        primitives = [i['primitive'] for i in output['items']]
+        assert sum('GradientRectangle' in p for p in primitives) == 3
+        assert sum('DashedPath' in p for p in primitives) == 2
+        assert all(p['Symbol']['kind']=='Diamond' for p in primitives if 'Symbol' in p)
+        glyphs = [p['GlyphRun'] for p in primitives if 'GlyphRun' in p]
+        arabic = next(g['run'] for g in glyphs if g['run']['text']=='مرحبا بالعالم')
+        assert arabic['used_fallback'] and arabic['font']['id']=='9007199254747003'
+        assert arabic['direction']=='RightToLeft' and all(g['id']!=0 for g in arabic['glyphs'])
+        assert any(g['run']['font']['id']=='9007199254747002' for g in glyphs)
+        assert any(g['rotation']==-35 and g['run']['tabular'] for g in glyphs)
+        assert any(g['rotation']==-90 and g['run']['text']=='Value (units)' for g in glyphs)
+        assert all(any(g['run']['text']==t for g in glyphs) for t in ['Peak 9','Panel B','(a)','(b)','λ = −0.25'])
+        assert len(output['diagnostics'])==1 and output['diagnostics'][0]['severity']=='Warning'
+        svg = ET.parse(runtime/f'statistics-{name}.svg').getroot()
+        ns = '{http://www.w3.org/2000/svg}'
+        assert not list(svg.iter(ns+'image')) and list(svg.iter(ns+'linearGradient'))
+        assert any(e.attrib.get('aria-label')=='مرحبا بالعالم' for e in svg.iter())
+for name in composition_names:
+    pdf = str(paths[0]/f'statistics-{name}.pdf')
+    assert not subprocess.check_output(['pdfimages','-list',pdf],text=True).strip().splitlines()[2:]
+    fonts = subprocess.check_output(['pdffonts',pdf],text=True).strip().splitlines()[2:]
+    assert len(fonts)==3 and all(re.search(r'yes\s+yes\s+yes', f) for f in fonts)
+    extracted = subprocess.check_output(['pdftotext',pdf,'-'],text=True)
+    assert 'مرحبا بالعالم' in extracted
+print('PASS WP-13 FIX-12/13: theme invariant populations/domains/targets, two panels and source-sharing inset, rich/rotated/tabular text, explicit bold/Arabic resources, symbols/dashes/gradients, vector searchable PDF and three-host exact SVG')

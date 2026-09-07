@@ -67,8 +67,8 @@ console.log(`PASS WASM: real Node WebAssembly, portable fixture, copies, invalid
 
 // WP-10: shared portable builtin semantics and final destination scenes in actual WASM.
 const statistics = {}, scenes = {};
-for (const proofCase of [...JSON.parse(fs.readFileSync(path.join(root,'fixtures/statistics/portable-cases.json'),'utf8')), ...JSON.parse(fs.readFileSync(path.join(root,'fixtures/families/portable-cases.json'),'utf8')), ...JSON.parse(fs.readFileSync(path.join(root,'fixtures/facets/portable-cases.json'),'utf8'))]) {
-    const proof = new bindings.Chart(JSON.stringify(proofCase.chart),JSON.stringify(proofCase.data),proofCase.profile ? JSON.stringify(proofCase.profile) : read('profile'),Uint8Array.from(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))));
+for (const proofCase of [...JSON.parse(fs.readFileSync(path.join(root,'fixtures/statistics/portable-cases.json'),'utf8')), ...JSON.parse(fs.readFileSync(path.join(root,'fixtures/families/portable-cases.json'),'utf8')), ...JSON.parse(fs.readFileSync(path.join(root,'fixtures/facets/portable-cases.json'),'utf8')), ...JSON.parse(fs.readFileSync(path.join(root,'fixtures/composition/portable-cases.json'),'utf8'))]) {
+    const proof = new bindings.Chart(JSON.stringify(proofCase.chart),JSON.stringify(proofCase.data),proofCase.profile ? JSON.stringify(proofCase.profile) : proofCase.profile_file ? fs.readFileSync(path.join(root,proofCase.profile_file),'utf8') : read('profile'),Uint8Array.from(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))));
     statistics[proofCase.name] = JSON.parse(proof.semantics()); scenes[proofCase.name] = JSON.parse(proof.scene());
     fs.writeFileSync(path.join(output,`statistics-${proofCase.name}.svg`),proof.svg());
     proof.dispose(); proof.free();

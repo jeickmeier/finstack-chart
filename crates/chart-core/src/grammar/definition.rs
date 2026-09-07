@@ -729,6 +729,12 @@ impl Layer {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct ChartDefinition {
+    /// Optional portable figure furniture and prepared-data inset views.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub figure: Option<crate::composition::FigureComposition>,
+    /// Optional versioned headless theme cascade.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub theme: Option<crate::theme::ThemeSpec>,
     /// Optional explicit facet catalog and panel layout.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub facets: Option<super::FacetSpec>,
@@ -750,6 +756,8 @@ impl ChartDefinition {
         Self {
             revision,
             facets: None,
+            theme: None,
+            figure: None,
             mappings: SourceAes::new(),
             transforms: vec![],
             axes: vec![],

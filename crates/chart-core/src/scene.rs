@@ -55,6 +55,44 @@ pub enum PathCommand {
 /// Authored minimal primitive, validated and copied into an immutable scene.
 #[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub enum Primitive {
+    /// Noncircular point symbol with an explicit semantic center.
+    Symbol {
+        /// Finite point center.
+        center: Point,
+        /// Positive half-extent in scene units.
+        radius: f64,
+        /// Square, diamond or triangle; circles use Primitive::Point.
+        kind: crate::theme::Symbol,
+        /// Solid fill.
+        fill: Color,
+    },
+    /// Two-stop axis-aligned sRGB gradient with explicit alpha, retained as vector paint.
+    GradientRectangle {
+        /// Finite rectangle bounds.
+        bounds: Rect,
+        /// Full rectangle-local linear gradient.
+        gradient: LinearGradient,
+    },
+    /// Dashed straight path; phase resets for each explicitly opened subpath.
+    DashedPath {
+        /// Numeric MoveTo/LineTo/Close commands.
+        commands: Vec<PathCommand>,
+        /// Solid stroke width and color.
+        stroke: Stroke,
+        /// Positive alternating on/off lengths, with an even count no larger than 16.
+        dashes: Vec<f64>,
+    },
+    /// Explicitly shaped rich text. Outlines and PDF glyphs share the same logical clusters.
+    GlyphRun {
+        /// Destination baseline origin.
+        origin: Point,
+        /// Clockwise degrees about the origin.
+        rotation: f64,
+        /// Logical text, exact resource, advances and numeric glyph outlines.
+        run: crate::typography::ShapedRun,
+        /// Homogeneous run color.
+        color: Color,
+    },
     /// Straight rule between finite endpoints.
     Rule {
         /// Start point.
@@ -189,12 +227,34 @@ fn validate(
     let mut path_remaining = limits.max_path_commands;
     for item in items {
         let result = match &item.primitive {
+            Primitive::GlyphRun { run, .. } => {
+                require_within(
+                    run.text.len().saturating_add(run.language.len()) <= text_remaining,
+                    "total UTF-8 text byte",
+                )?;
+                require_within(
+                    run.outlines.len().saturating_add(run.glyphs.len()) <= path_remaining,
+                    "total rich outline commands",
+                )?;
+                text_remaining -= run.text.len() + run.language.len();
+                path_remaining -= run.outlines.len() + run.glyphs.len();
+                Ok(())
+            }
             Primitive::Text { text, .. } => {
                 let result = require_within(text.len() <= text_remaining, "total UTF-8 text byte");
                 if result.is_ok() {
                     text_remaining -= text.len();
                 }
                 result
+            }
+            Primitive::DashedPath {
+                commands, dashes, ..
+            } => {
+                require_within(commands.len() <= path_remaining, "total path command")?;
+                path_remaining -= commands.len();
+                let lowered = dash_polyline(commands, dashes, path_remaining)?;
+                path_remaining -= lowered.len();
+                Ok(())
             }
             Primitive::Path { commands, .. } | Primitive::FilledPath { commands, .. } => {
                 let result = require_within(commands.len() <= path_remaining, "total path command");
@@ -249,11 +309,69 @@ fn validate_primitive(
     limits: Limits,
 ) -> ChartResult<()> {
     match primitive {
+        Primitive::GlyphRun { rotation, run, .. } => {
+            if !rotation.is_finite() || rotation.abs() > 360. {
+                return Err(path_error());
+            }
+            if resources.get(&run.font.id).is_none_or(|r| **r != run.font) {
+                let mut e = path_error();
+                e.code = DiagnosticCode::MissingResource;
+                e.context.resource = Some(run.font.id);
+                return Err(e);
+            }
+            validate_text(
+                TextRequest {
+                    text: &run.text,
+                    font: &run.font,
+                    font_size: run.font_size,
+                    units,
+                },
+                limits,
+            )?;
+            require_within(
+                run.glyphs.len() <= limits.max_path_commands,
+                "rich glyph count",
+            )?;
+            if run.glyphs.iter().any(|g| {
+                g.id == 0
+                    || g.start > g.end
+                    || !run.text.is_char_boundary(g.start)
+                    || !run.text.is_char_boundary(g.end)
+            }) {
+                return Err(path_error());
+            }
+            if !run.outlines.is_empty() {
+                validate_primitive(
+                    &Primitive::FilledPath {
+                        commands: run.outlines.clone(),
+                        fill: Color {
+                            red: 0,
+                            green: 0,
+                            blue: 0,
+                            alpha: 255,
+                        },
+                    },
+                    resources,
+                    units,
+                    limits,
+                )?;
+            }
+            Ok(())
+        }
         Primitive::Rule { stroke, .. } => {
             positive(stroke.width, "Stroke width must be finite and positive.")
         }
-        Primitive::Rectangle { .. } => Ok(()),
-        Primitive::Point { center, radius, .. } => {
+        Primitive::Rectangle { .. } | Primitive::GradientRectangle { .. } => Ok(()),
+        Primitive::Point { center, radius, .. } | Primitive::Symbol { center, radius, .. } => {
+            if matches!(
+                primitive,
+                Primitive::Symbol {
+                    kind: crate::theme::Symbol::Circle,
+                    ..
+                }
+            ) {
+                return Err(path_error());
+            }
             positive(*radius, "Point radius must be finite and positive.")?;
             Rect::new(
                 center.x() - radius,
@@ -263,8 +381,11 @@ fn validate_primitive(
             )?;
             Ok(())
         }
-        Primitive::Path { commands, .. } | Primitive::FilledPath { commands, .. } => {
-            if let Primitive::Path { stroke, .. } = primitive {
+        Primitive::Path { commands, .. }
+        | Primitive::FilledPath { commands, .. }
+        | Primitive::DashedPath { commands, .. } => {
+            if let Primitive::Path { stroke, .. } | Primitive::DashedPath { stroke, .. } = primitive
+            {
                 positive(stroke.width, "Stroke width must be finite and positive.")?;
             }
             let mut open = false;
@@ -325,4 +446,148 @@ fn path_error() -> Diagnostic {
         "A path must contain drawing segments within explicitly opened subpaths.",
         "Start with MoveTo, include a line or curve, and use a new MoveTo after Close.",
     )
+}
+
+/// Direction of a two-stop sRGB gradient in rectangle-local coordinates.
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq)]
+pub enum GradientDirection {
+    /// Left to right.
+    Horizontal,
+    /// Top to bottom.
+    Vertical,
+}
+/// Two explicit sRGB stops; interpolation and alpha are shared by native/SVG/PDF.
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
+pub struct LinearGradient {
+    /// Direction across the full rectangle, with padded endpoints.
+    pub direction: GradientDirection,
+    /// Color at fraction zero.
+    pub start: Color,
+    /// Color at fraction one.
+    pub end: Color,
+}
+/// Lower an explicitly dashed polyline to independent numeric segments for native painting.
+/// Phase resets at MoveTo. Curves require a solid path; budgets stop pathological tiny dashes.
+pub fn dash_polyline(
+    commands: &[PathCommand],
+    dashes: &[f64],
+    limit: usize,
+) -> ChartResult<Vec<PathCommand>> {
+    if dashes.is_empty()
+        || dashes.len() > 16
+        || !dashes.len().is_multiple_of(2)
+        || dashes.iter().any(|v| !v.is_finite() || *v <= 0.)
+    {
+        return Err(path_error());
+    }
+    let mut out = vec![];
+    let mut previous = None;
+    let mut start = None;
+    let mut index = 0;
+    let mut left = dashes[0];
+    let mut pen_down = false;
+    let mut work = 0;
+    for command in commands {
+        let to = match command {
+            PathCommand::MoveTo(p) => {
+                previous = Some(*p);
+                start = Some(*p);
+                index = 0;
+                left = dashes[0];
+                pen_down = false;
+                continue;
+            }
+            PathCommand::LineTo(p) => *p,
+            PathCommand::Close => start.ok_or_else(path_error)?,
+            _ => {
+                return Err(Diagnostic::error(
+                    DiagnosticCode::UnsupportedCapability,
+                    "Dashed paths accept straight segments only.",
+                    "Use a solid curve or explicitly flatten it to a bounded polyline.",
+                ));
+            }
+        };
+        let from = previous.ok_or_else(path_error)?;
+        let dx = to.x() - from.x();
+        let dy = to.y() - from.y();
+        let length = dx.hypot(dy);
+        if !length.is_finite() {
+            return Err(path_error());
+        }
+        let mut at = 0.;
+        while at < length {
+            work += 1;
+            require_within(work <= limit, "dash subdivision work")?;
+            let available = length - at;
+            let finishes_dash = left <= available;
+            let end = if finishes_dash { at + left } else { length };
+            if end <= at {
+                return Err(Diagnostic::error(
+                    DiagnosticCode::PrecisionLoss,
+                    "Dash size cannot advance along this path at destination precision.",
+                    "Use a representable dash length at this output size.",
+                ));
+            }
+            if index % 2 == 0 {
+                require_within(
+                    out.len().saturating_add(2) <= limit,
+                    "dashed numeric command",
+                )?;
+                let point = |distance: f64| {
+                    Point::new(
+                        from.x() + dx * (distance / length),
+                        from.y() + dy * (distance / length),
+                    )
+                };
+                if !pen_down {
+                    out.push(PathCommand::MoveTo(point(at)?));
+                }
+                out.push(PathCommand::LineTo(point(end)?));
+                pen_down = true;
+            } else {
+                pen_down = false;
+            }
+            at = end;
+            if finishes_dash {
+                index = (index + 1) % dashes.len();
+                left = dashes[index];
+            } else {
+                left -= available;
+            }
+        }
+        previous = if matches!(command, PathCommand::Close) {
+            None
+        } else {
+            Some(to)
+        };
+    }
+    Ok(out)
+}
+
+/// Exact closed numeric polygon for square, diamond or triangle point symbols.
+pub fn symbol_path(
+    center: Point,
+    r: f64,
+    s: crate::theme::Symbol,
+) -> ChartResult<Vec<PathCommand>> {
+    use crate::theme::Symbol;
+    positive(r, "Symbol radius must be finite and positive.")?;
+    let offsets: &[(f64, f64)] = match s {
+        Symbol::Square => &[(-1., -1.), (1., -1.), (1., 1.), (-1., 1.)],
+        Symbol::Diamond => &[(0., -1.), (1., 0.), (0., 1.), (-1., 0.)],
+        Symbol::Triangle => &[(0., -1.), (1., 1.), (-1., 1.)],
+        Symbol::Circle => return Err(path_error()),
+    };
+    let mut p = vec![];
+    for (i, (x, y)) in offsets.iter().enumerate() {
+        let point = Point::new(center.x() + x * r, center.y() + y * r)?;
+        p.push(if i == 0 {
+            PathCommand::MoveTo(point)
+        } else {
+            PathCommand::LineTo(point)
+        });
+    }
+    p.push(PathCommand::Close);
+    Ok(p)
 }

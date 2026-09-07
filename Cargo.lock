@@ -941,6 +941,7 @@ version = "0.1.0"
 dependencies = [
  "base64 0.22.1",
  "chart-core",
+ "chart-text",
  "krilla",
  "png 0.17.16",
  "resvg 0.45.1",
@@ -978,6 +979,15 @@ dependencies = [
  "chart-export",
  "pyo3",
  "pyo3-build-config",
+]
+
+[[package]]
+name = "chart-text"
+version = "0.1.0"
+dependencies = [
+ "chart-core",
+ "harfrust 0.12.0",
+ "ttf-parser",
 ]
 
 [[package]]
@@ -2424,6 +2434,7 @@ name = "gpui-charts"
 version = "0.1.0"
 dependencies = [
  "chart-core",
+ "chart-text",
  "gpui-pre",
  "ttf-parser",
 ]

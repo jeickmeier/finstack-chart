@@ -76,6 +76,18 @@ pub enum AxisScale {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct AxisSpec {
+    /// Optional portable numeric formatting; incompatible category/time guides reject it.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub number_format: Option<crate::typography::NumberFormat>,
+    /// Optional explicit rich axis title, measured with this destination's text service.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub title: Option<crate::typography::RichText>,
+    /// Optional rich tick style; its text is replaced by each logical tick label.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub typography: Option<crate::typography::RichRun>,
+    /// Clockwise tick-label rotation in degrees; uses exact shaped outlines when nonzero.
+    #[serde(default)]
+    pub label_rotation: f64,
     /// Must match a layer scale binding (or an empty primary guide).
     pub id: ScaleId,
     /// Guide side and scale orientation.
@@ -98,6 +110,10 @@ impl AxisSpec {
         Self {
             id,
             side,
+            typography: None,
+            number_format: None,
+            title: None,
+            label_rotation: 0.,
             scale: AxisScale::Auto,
             viewport: None,
             range: None,
@@ -109,6 +125,12 @@ impl AxisSpec {
 /// Explicit bounded layout request; all dimensions share the destination units.
 #[derive(Clone, Debug)]
 pub struct LayoutRequest {
+    /// Host tokens, preceding named theme and plot overrides.
+    pub host_theme: crate::theme::ThemePatch,
+    /// Explicit applicable interaction styling by layer.
+    pub interaction_theme: BTreeMap<crate::LayerId, crate::theme::ThemePatch>,
+    /// Destination output overrides, separate from the authored theme.
+    pub output_theme: crate::theme::ThemePatch,
     /// Optional enclosing figure clip for layers explicitly allowing figure overflow.
     /// Facet layout supplies the outer figure; plot clips remain panel-local.
     pub figure_bounds: Option<Rect>,
@@ -149,6 +171,9 @@ impl LayoutRequest {
     pub fn new(bounds: Rect, units: Units, font: ResourceDescriptor) -> Self {
         Self {
             bounds,
+            host_theme: crate::theme::ThemePatch::default(),
+            interaction_theme: BTreeMap::new(),
+            output_theme: crate::theme::ThemePatch::default(),
             figure_bounds: None,
             units,
             font,
@@ -226,6 +251,7 @@ pub enum LayoutStatus {
 /// One coherent immutable layout, retaining the exact prepared/stat/source snapshot.
 #[derive(Clone, Debug)]
 pub struct LaidOutChart {
+    pub(crate) insets: Vec<LaidOutInset>,
     pub(crate) panels: Vec<LaidOutPanel>,
     pub(crate) item_panels: Vec<Option<crate::grammar::PanelKey>>,
     pub(crate) prepared: Arc<PreparedChart>,
@@ -251,7 +277,24 @@ pub struct LaidOutPanel {
     /// Resolved panel scene with common figure coordinates.
     pub chart: Arc<LaidOutChart>,
 }
+/// Alternate prepared-data view with its own coherent ranges and destination scene.
+#[derive(Clone, Debug)]
+pub struct LaidOutInset {
+    /// Authored inset view identity.
+    pub id: String,
+    /// Parent facet, absent for a single-panel figure.
+    pub panel: Option<crate::grammar::PanelKey>,
+    /// Full inset destination bounds.
+    pub bounds: Rect,
+    /// Exact inset scene/scales and reused prepared data.
+    pub chart: Arc<LaidOutChart>,
+}
 impl LaidOutChart {
+    /// Alternate prepared-data views, in inset paint order.
+    pub fn insets(&self) -> &[LaidOutInset] {
+        &self.insets
+    }
+
     /// Resolved facets in explicit order; empty on a single-panel chart.
     pub fn panels(&self) -> &[LaidOutPanel] {
         &self.panels

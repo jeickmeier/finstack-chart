@@ -5,9 +5,12 @@
 //! explicit destination font. No source filtering or statistics run during layout.
 
 mod axes;
+mod composition;
 mod engine;
 mod facets;
 mod project;
+mod text;
+mod theme;
 mod types;
 pub use engine::layout;
 pub use types::*;

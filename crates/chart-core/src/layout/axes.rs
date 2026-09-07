@@ -9,6 +9,9 @@ fn resolve_axis_inner(
     spec: &AxisSpec,
     plot: Rect,
 ) -> ChartResult<ResolvedAxis> {
+    if let Some(f) = &spec.number_format {
+        f.validate()?;
+    }
     if let AxisScale::Secondary {
         source,
         factor,
@@ -86,7 +89,11 @@ fn resolve_axis_inner(
                 };
                 Ok(GuideTick {
                     position: t.position,
-                    label: format_nonlinear_tick(convert(value)?),
+                    label: numeric_label(
+                        spec,
+                        convert(value)?,
+                        format_nonlinear_tick(convert(value)?),
+                    )?,
                 })
             })
             .collect::<ChartResult<_>>()?;
@@ -140,6 +147,14 @@ fn resolve_axis_inner(
         (AxisScale::Auto, _) => AxisScale::Linear(ContinuousDomain::default()),
         (s, _) => s.clone(),
     };
+    if spec.number_format.is_some()
+        && !matches!(space, ValueSpace::Data | ValueSpace::Transformed { .. })
+    {
+        return Err(error(
+            DiagnosticCode::SchemaConflict,
+            "Numeric formatting requires a numeric guide; time and categories retain their own labels.",
+        ));
+    }
     let mut ticks = vec![];
     let scale = match (family, &space) {
         (AxisScale::Linear(options), ValueSpace::Data | ValueSpace::Transformed { .. }) => {
@@ -149,7 +164,7 @@ fn resolve_axis_inner(
                     if let Some(position) = scale.map(t.value)? {
                         ticks.push(GuideTick {
                             position,
-                            label: t.label,
+                            label: numeric_label(spec, t.value, t.label)?,
                         });
                     }
                 }
@@ -178,7 +193,7 @@ fn resolve_axis_inner(
                     if let Some(position) = scale.map(t.value)? {
                         ticks.push(GuideTick {
                             position,
-                            label: t.label,
+                            label: numeric_label(spec, t.value, t.label)?,
                         });
                     }
                 }
@@ -420,4 +435,12 @@ fn positive_extent(
         }
     }
     Ok(extent)
+}
+
+fn numeric_label(spec: &AxisSpec, value: f64, default: String) -> ChartResult<String> {
+    if let Some(f) = &spec.number_format {
+        f.format(value)
+    } else {
+        Ok(default)
+    }
 }

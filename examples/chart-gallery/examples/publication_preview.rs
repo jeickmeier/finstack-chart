@@ -1,5 +1,5 @@
 //! Native vector preview of FigureSnapshot::preview_svg(), without native text remeasurement.
-//! This bounded example accepts only the supplied exporter's solid paths/rectangular clips.
+//! This bounded example accepts exporter paths, straight dashes, two-stop gradients and rectangular clips.
 use gpui::{
     App, Bounds, ContentMask, Context, PathBuilder, Pixels, Render, Window, WindowBounds,
     WindowOptions, canvas, div, point, prelude::*, px, rgb, size,
@@ -8,7 +8,7 @@ use resvg::{tiny_skia, usvg};
 use std::sync::Arc;
 struct Outline {
     path: tiny_skia::Path,
-    color: gpui::Rgba,
+    color: gpui::Background,
     clip: Option<tiny_skia::Rect>,
 }
 struct Preview {
@@ -53,14 +53,61 @@ fn outlines(
                 if !p.is_visible() {
                     continue;
                 }
-                let color = |paint: &usvg::Paint, alpha: f32| -> Result<gpui::Rgba, String> {
-                    let usvg::Paint::Color(c) = paint else {
-                        return Err("Unsupported publication preview paint".into());
+                let color = |paint: &usvg::Paint, alpha: f32| -> Result<gpui::Background, String> {
+                    let rgba = |c: usvg::Color, a: f32| {
+                        rgb((u32::from(c.red) << 16)
+                            | (u32::from(c.green) << 8)
+                            | u32::from(c.blue))
+                        .alpha(a)
                     };
-                    Ok(rgb((u32::from(c.red) << 16)
-                        | (u32::from(c.green) << 8)
-                        | u32::from(c.blue))
-                    .alpha(alpha))
+                    match paint {
+                        usvg::Paint::Color(c) => Ok(rgba(*c, alpha).into()),
+                        usvg::Paint::LinearGradient(g) => {
+                            if g.stops().len() != 2
+                                || g.stops()[0].offset().get() != 0.
+                                || g.stops()[1].offset().get() != 1.
+                            {
+                                return Err("Preview requires two endpoint gradient stops".into());
+                            }
+                            let mut a = tiny_skia::Point::from_xy(g.x1(), g.y1());
+                            let mut b = tiny_skia::Point::from_xy(g.x2(), g.y2());
+                            g.transform().map_point(&mut a);
+                            g.transform().map_point(&mut b);
+                            let bounds = p.data().bounds();
+                            let near = |a: f32, b: f32| (a - b).abs() < 0.01;
+                            let angle = if near(a.y, b.y)
+                                && near(a.x, bounds.left())
+                                && near(b.x, bounds.right())
+                            {
+                                90.
+                            } else if near(a.x, b.x)
+                                && near(a.y, bounds.top())
+                                && near(b.y, bounds.bottom())
+                            {
+                                180.
+                            } else {
+                                return Err(
+                                    "Preview gradient is not full-bounds horizontal/vertical"
+                                        .into(),
+                                );
+                            };
+                            let from = &g.stops()[0];
+                            let to = &g.stops()[1];
+                            Ok(gpui::linear_gradient(
+                                angle,
+                                gpui::linear_color_stop(
+                                    rgba(from.color(), from.opacity().get() * alpha),
+                                    0.,
+                                ),
+                                gpui::linear_color_stop(
+                                    rgba(to.color(), to.opacity().get() * alpha),
+                                    1.,
+                                ),
+                            )
+                            .color_space(gpui::ColorSpace::Srgb))
+                        }
+                        _ => Err("Unsupported publication preview paint".into()),
+                    }
                 };
                 if let Some(fill) = p.fill() {
                     result.push(Outline {
@@ -74,10 +121,15 @@ fn outlines(
                     });
                 }
                 if let Some(stroke) = p.stroke() {
+                    let style = stroke.to_tiny_skia();
+                    let path = if let Some(dash) = &style.dash {
+                        p.data().dash(dash, 1.).ok_or("Invalid dashed outline")?
+                    } else {
+                        p.data().clone()
+                    };
                     result.push(Outline {
-                        path: p
-                            .data()
-                            .stroke(&stroke.to_tiny_skia(), 1.)
+                        path: path
+                            .stroke(&style, 1.)
                             .ok_or("Invalid stroke outline")?
                             .transform(transform)
                             .ok_or("Invalid stroke transform")?,
@@ -93,7 +145,7 @@ fn outlines(
 }
 struct Draw {
     path: gpui::Path<Pixels>,
-    color: gpui::Rgba,
+    color: gpui::Background,
     clip: Option<Bounds<Pixels>>,
 }
 fn prepare(
@@ -177,7 +229,17 @@ impl Render for Preview {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let file = std::env::args()
         .nth(1)
-        .unwrap_or_else(|| "artifacts/wp-08/publication-preview.svg".into());
+        .map(std::path::PathBuf::from)
+        .unwrap_or_else(|| {
+            let bundled = std::env::current_exe().ok().and_then(|p| {
+                p.parent()?
+                    .parent()
+                    .map(|p| p.join("Resources/publication.svg"))
+            });
+            bundled.filter(|p| p.is_file()).unwrap_or_else(|| {
+                std::path::PathBuf::from("artifacts/wp-08/publication-preview.svg")
+            })
+        });
     let data = std::fs::read(file)?;
     let tree = usvg::Tree::from_data(
         &data,

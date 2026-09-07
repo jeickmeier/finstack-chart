@@ -111,7 +111,7 @@ fn push_text(
             text: label.text.clone(),
             font: r.font.id,
             font_size: r.font_size,
-            color: INK,
+            color: r.host_theme.foreground.unwrap_or(INK),
         },
     });
     Ok(())
@@ -378,10 +378,11 @@ pub(super) fn layout_facets(
         request.units,
         request.bounds,
         &items,
-        &[request.font],
+        &super::text::resources(&items, request)?,
         request.limits,
     )?;
     Ok(LaidOutChart {
+        insets: vec![],
         prepared,
         scene,
         plot: None,

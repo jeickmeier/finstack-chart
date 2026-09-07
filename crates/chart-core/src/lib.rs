@@ -32,6 +32,8 @@
 //! # }
 //! ```
 
+/// Portable publication composition and annotation coordinates.
+pub mod composition;
 pub mod data;
 pub mod diagnostic;
 pub mod geometry;
@@ -45,7 +47,11 @@ pub mod scales;
 pub mod scene;
 pub mod services;
 pub mod state;
+/// Serializable headless presentation tokens and cascade.
+pub mod theme;
 pub mod transaction;
+/// Logical rich text and explicit shaping service contracts.
+pub mod typography;
 
 pub use diagnostic::{ChartResult, Diagnostic, DiagnosticCode, DiagnosticContext, Severity};
 pub use geometry::{Point, Rect};

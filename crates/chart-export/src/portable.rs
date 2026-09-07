@@ -4,6 +4,7 @@ use crate::{
     FigureSnapshot, FontResource, FontResources, Format, PageSize, PublicationProfile, TextMode,
     ViewMode, error,
 };
+use base64::Engine;
 use chart_core::{
     portable::{self, Session},
     services::{ResourceDescriptor, ResourceKind},
@@ -25,10 +26,28 @@ pub enum FontWire {
         revision: Revision,
     },
 }
-/// Deliberately bounded basic publication profile envelope; full composition is WP-13.
+/// An additional explicit font resource, encoded as bounded base64 bytes in the profile.
+#[derive(Clone, Debug, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct EmbeddedFont {
+    /// Stable identity and immutable revision.
+    pub resource: FontWire,
+    /// Standard padded base64 font bytes. No filesystem paths or font-family lookup.
+    pub base64: String,
+}
+/// Bounded portable publication profile; authored themes/furniture live in ChartDefinition.
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ProfileEnvelope {
+    /// Optional additional exact faces for rich text and declared fallback.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub additional_fonts: Vec<EmbeddedFont>,
+    /// Host cascade tokens, preceding the authored named theme.
+    #[serde(default)]
+    pub host_theme: chart_core::theme::ThemePatch,
+    /// Output-only styling, applied after the authored theme and interaction styling.
+    #[serde(default)]
+    pub output_theme: chart_core::theme::ThemePatch,
     /// Supported envelope version 1.
     pub version: u32,
     /// Positive physical width in points.
@@ -64,10 +83,55 @@ impl ProfileEnvelope {
             byte_len: bytes.len() as u64,
         };
         let font = FontResource::new(descriptor, Arc::from(bytes))?;
-        let fonts = FontResources::new(vec![font])?;
+        if self.additional_fonts.len() >= Limits::default().max_resources {
+            return Err(error(
+                DiagnosticCode::ResourceLimit,
+                "Additional font count exceeds the resource budget.",
+            ));
+        }
+        let mut faces = vec![font];
+        let mut remaining = Limits::default()
+            .max_total_resource_bytes
+            .saturating_sub(descriptor.byte_len);
+        for embedded in self.additional_fonts {
+            let estimated = (embedded.base64.len() as u64).saturating_add(3) / 4 * 3;
+            if estimated > Limits::default().max_resource_bytes.saturating_add(2)
+                || estimated > remaining.saturating_add(2)
+            {
+                return Err(error(
+                    DiagnosticCode::ResourceLimit,
+                    "Embedded font exceeds decoded resource budget.",
+                ));
+            }
+            let bytes = base64::engine::general_purpose::STANDARD
+                .decode(embedded.base64)
+                .map_err(|_| {
+                    error(
+                        DiagnosticCode::InvalidResource,
+                        "Additional font is not valid standard base64.",
+                    )
+                })?;
+            let FontWire::Font { id, revision } = embedded.resource;
+            let descriptor = ResourceDescriptor {
+                id,
+                revision,
+                kind: ResourceKind::Font,
+                byte_len: bytes.len() as u64,
+            };
+            remaining = remaining.checked_sub(descriptor.byte_len).ok_or_else(|| {
+                error(
+                    DiagnosticCode::ResourceLimit,
+                    "Additional font resource budget exceeded.",
+                )
+            })?;
+            faces.push(FontResource::new(descriptor, Arc::from(bytes))?);
+        }
+        let fonts = FontResources::new(faces)?;
         let mut profile =
             PublicationProfile::new(PageSize::points(self.width_pt, self.height_pt)?, descriptor)?;
         profile.dpi = self.dpi;
+        profile.layout.host_theme = self.host_theme;
+        profile.layout.output_theme = self.output_theme;
         profile.layout.font_size = self.font_size;
         profile.layout.padding = self.padding;
         profile.text = if self.outline {
@@ -150,8 +214,14 @@ impl PortableChart {
             ))
             .collect();
         let panels = figure.layout().panels().iter().map(|p|json!({"key":p.key,"row":p.row,"column":p.column,"bounds":p.bounds,"plot":p.chart.plot()})).collect::<Vec<_>>();
+        let insets = figure
+            .layout()
+            .insets()
+            .iter()
+            .map(|i| json!({"id":i.id,"panel":i.panel,"bounds":i.bounds,"plot":i.chart.plot()}))
+            .collect::<Vec<_>>();
         portable::encode(
-            &json!({"version":portable::VERSION,"stamp":figure.scene().stamp(),"units":figure.scene().units(),"bounds":figure.scene().bounds(),"items":figure.scene().items(),"resources":figure.scene().resources(),"targets":targets,"item_panels":item_panels,"panels":panels,"diagnostics":figure.layout().diagnostics(),"fonts":figure.metadata().fonts.iter().map(|f|json!({"id":f.id,"revision":f.revision,"sha256":f.sha256})).collect::<Vec<_>>() }),
+            &json!({"insets":insets,"version":portable::VERSION,"stamp":figure.scene().stamp(),"units":figure.scene().units(),"bounds":figure.scene().bounds(),"items":figure.scene().items(),"resources":figure.scene().resources(),"targets":targets,"item_panels":item_panels,"panels":panels,"diagnostics":figure.layout().diagnostics(),"fonts":figure.metadata().fonts.iter().map(|f|json!({"id":f.id,"revision":f.revision,"sha256":f.sha256})).collect::<Vec<_>>() }),
         )
     }
     /// Return bytes for the explicitly requested format; no host file I/O or silent fallback.

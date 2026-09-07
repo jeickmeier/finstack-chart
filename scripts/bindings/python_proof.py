@@ -91,8 +91,8 @@ print(f"PASS Python: actual extension, portable fixture, copies, detached thread
 
 # WP-10: every new builtin executes through the actual extension and existing export engine.
 statistics = {}; scenes = {}
-for case in json.loads((ROOT / "fixtures/statistics/portable-cases.json").read_text()) + json.loads((ROOT / "fixtures/families/portable-cases.json").read_text()) + json.loads((ROOT / "fixtures/facets/portable-cases.json").read_text()):
-    proof = Chart(json.dumps(case["chart"]), json.dumps(case["data"]), json.dumps(case["profile"]) if "profile" in case else read("profile"), (ROOT / "fixtures/capability/fonts/NotoSans-Regular.ttf").read_bytes())
+for case in json.loads((ROOT / "fixtures/statistics/portable-cases.json").read_text()) + json.loads((ROOT / "fixtures/families/portable-cases.json").read_text()) + json.loads((ROOT / "fixtures/facets/portable-cases.json").read_text()) + json.loads((ROOT / "fixtures/composition/portable-cases.json").read_text()):
+    proof = Chart(json.dumps(case["chart"]), json.dumps(case["data"]), json.dumps(case["profile"]) if "profile" in case else (ROOT / case["profile_file"]).read_text() if "profile_file" in case else read("profile"), (ROOT / "fixtures/capability/fonts/NotoSans-Regular.ttf").read_bytes())
     statistics[case["name"]] = json.loads(proof.semantics())
     scenes[case["name"]] = json.loads(proof.scene())
     (output / f"statistics-{case['name']}.svg").write_bytes(proof.export("svg"))
