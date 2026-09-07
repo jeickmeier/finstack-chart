@@ -10,7 +10,7 @@ use crate::identity::{
 pub type ChartResult<T> = Result<T, Diagnostic>;
 
 /// Severity of a diagnostic; warnings may accompany a usable outcome in later stages.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Severity {
     /// Recoverable failure of the requested operation.
     Error,
@@ -80,7 +80,7 @@ impl DiagnosticCode {
 }
 
 /// Relevant identities, when the failing boundary has that information.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, Default, Eq, PartialEq)]
 pub struct DiagnosticContext {
     /// Dataset involved in the failure.
     pub dataset: Option<DatasetId>,
@@ -99,13 +99,14 @@ pub struct DiagnosticContext {
     /// Observed schema version at a data boundary.
     pub schema_version: Option<SchemaVersion>,
     /// Total affected rows; bounded samples do not replace this count.
+    #[serde(with = "crate::portable::unsigned")]
     pub affected_rows: u64,
     /// Bounded sample of affected source keys, never positional identities.
     pub row_samples: Vec<RowKey>,
 }
 
 /// Structured diagnostic. Context is boxed to keep successful result values small.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, Eq, PartialEq)]
 pub struct Diagnostic {
     /// Stable category.
     pub code: DiagnosticCode,
@@ -149,3 +150,9 @@ impl fmt::Display for Diagnostic {
 }
 
 impl std::error::Error for Diagnostic {}
+
+impl serde::Serialize for DiagnosticCode {
+    fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+        serializer.serialize_str(self.as_str())
+    }
+}

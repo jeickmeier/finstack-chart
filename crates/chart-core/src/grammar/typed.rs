@@ -52,6 +52,15 @@ macro_rules! column_method {
     };
 }
 impl<'a, T> TypedDataBuilder<'a, T> {
+    /// Native accessors have no portable executable representation. Materialize a normalized
+    /// batch and serialize that owned data instead of attempting to serialize closures.
+    pub fn to_portable_spec(&self) -> ChartResult<String> {
+        Err(error(
+            DiagnosticCode::UnsupportedCapability,
+            "Native accessors cannot be serialized as operations; materialize the batch and use portable field mappings.",
+        ))
+    }
+
     /// Materialize a typed snapshot into a caller-versioned schema; source keys stay exact.
     pub fn new(rows: &'a TypedRows<T>, version: SchemaVersion) -> Self {
         Self {

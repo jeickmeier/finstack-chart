@@ -6,7 +6,8 @@ use crate::{ChartResult, Diagnostic, DiagnosticCode, LayerId, Revision};
 use std::collections::BTreeSet;
 
 /// Explicit visible intervals. Descending endpoints are supported; equal/non-finite are not.
-#[derive(Clone, Copy, Debug, Default, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Default, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct Viewport {
     /// Optional visible x interval in declared data/calculation units.
     pub x: Option<(f64, f64)>,
@@ -29,7 +30,8 @@ impl Viewport {
 }
 
 /// Implemented vertical-slice actions shared by programmatic and future host input.
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum ChartAction {
     /// Change visible intervals without filtering source rows or moving bin edges.
     SetViewport(Viewport),
@@ -45,7 +47,7 @@ pub enum ChartAction {
 }
 
 /// Resulting effective state transition; no queued input or asynchronous presentation implied.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
 pub struct ActionOutcome {
     /// False for an idempotent action.
     pub changed: bool,
@@ -64,6 +66,34 @@ pub struct ChartState {
     hidden: BTreeSet<LayerId>,
 }
 impl ChartState {
+    pub(crate) fn from_portable(
+        definition: &ChartDefinition,
+        revision: Revision,
+        viewport_revision: Revision,
+        viewport: Viewport,
+        hidden_layers: Vec<LayerId>,
+    ) -> ChartResult<Self> {
+        viewport.validate()?;
+        let hidden: BTreeSet<_> = hidden_layers.iter().copied().collect();
+        if viewport_revision > revision
+            || hidden.len() != hidden_layers.len()
+            || hidden
+                .iter()
+                .any(|id| !definition.layers.iter().any(|l| l.id == *id))
+        {
+            return Err(crate::portable::error(
+                DiagnosticCode::Validation,
+                "Invalid state revisions or hidden-layer identities",
+            ));
+        }
+        Ok(Self {
+            revision,
+            viewport_revision,
+            viewport,
+            hidden,
+        })
+    }
+
     /// Total effective state revision.
     pub fn revision(&self) -> Revision {
         self.revision

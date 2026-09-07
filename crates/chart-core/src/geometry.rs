@@ -3,7 +3,7 @@
 use crate::{ChartResult, Diagnostic, DiagnosticCode};
 
 /// A finite point in the scene's declared destination units.
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, PartialEq)]
 pub struct Point {
     x: f64,
     y: f64,
@@ -31,7 +31,7 @@ impl Point {
 
 /// An axis-aligned rectangle with nonnegative extents and finite far edges.
 /// Zero width/height represents empty space, not a substituted nonempty rectangle.
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, PartialEq)]
 pub struct Rect {
     origin: Point,
     width: f64,

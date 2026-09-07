@@ -1,0 +1,262 @@
+error[unmaintained]: Bincode is unmaintained
+   ┌─ /Users/jeickmeier/Projects/finstack-chart/Cargo.lock:34:1
+   │
+34 │ bincode 1.3.3 registry+https://github.com/rust-lang/crates.io-index
+   │ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ unmaintained advisory detected
+   │
+   ├ ID: RUSTSEC-2025-0141
+   ├ Advisory: https://rustsec.org/advisories/RUSTSEC-2025-0141
+   ├ Due to a doxxing and harassment incident, the bincode team has taken the decision to cease development permanently.
+     
+     The team considers version 1.3.3 a complete version of bincode that is not in need of any updates.
+     
+     ## Alternatives to consider
+     
+     * [wincode](https://crates.io/crates/wincode)
+     * [postcard](https://crates.io/crates/postcard)
+     * [bitcode](https://crates.io/crates/bitcode)
+     * [rkyv](https://crates.io/crates/rkyv)
+   ├ Announcement: https://git.sr.ht/~stygianentity/bincode/tree/v3.0/item/README.md
+   ├ Solution: No safe upgrade is available!
+   ├ bincode v1.3.3
+     └── syntect v5.3.0
+         └── gpui-base v0.6.0
+             ├── gpui-component v0.6.0
+             │   └── gpui-kit v0.6.0
+             │       ├── chart-gallery v0.1.0
+             │       └── gpui-charts-kit v0.1.0
+             │           └── chart-gallery v0.1.0 (*)
+             └── gpui-kit v0.6.0 (*)
+
+error[unmaintained]: `instant` is unmaintained
+    ┌─ /Users/jeickmeier/Projects/finstack-chart/Cargo.lock:233:1
+    │
+233 │ instant 0.1.13 registry+https://github.com/rust-lang/crates.io-index
+    │ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ unmaintained advisory detected
+    │
+    ├ ID: RUSTSEC-2024-0384
+    ├ Advisory: https://rustsec.org/advisories/RUSTSEC-2024-0384
+    ├ This crate is no longer maintained, and the author recommends using the maintained [`web-time`] crate instead.
+      
+      [`web-time`]: https://crates.io/crates/web-time
+    ├ Solution: No safe upgrade is available!
+    ├ instant v0.1.13
+      ├── gpui-base v0.6.0
+      │   ├── gpui-component v0.6.0
+      │   │   └── gpui-kit v0.6.0
+      │   │       ├── chart-gallery v0.1.0
+      │   │       └── gpui-charts-kit v0.1.0
+      │   │           └── chart-gallery v0.1.0 (*)
+      │   └── gpui-kit v0.6.0 (*)
+      ├── gpui-component v0.6.0 (*)
+      └── notify-types v1.0.1
+          └── notify v7.0.0
+              └── gpui-component v0.6.0 (*)
+
+error[unmaintained]: paste - no longer maintained
+    ┌─ /Users/jeickmeier/Projects/finstack-chart/Cargo.lock:315:1
+    │
+315 │ paste 1.0.15 registry+https://github.com/rust-lang/crates.io-index
+    │ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ unmaintained advisory detected
+    │
+    ├ ID: RUSTSEC-2024-0436
+    ├ Advisory: https://rustsec.org/advisories/RUSTSEC-2024-0436
+    ├ The creator of the crate `paste` has stated in the [`README.md`](https://github.com/dtolnay/paste/blob/master/README.md) 
+      that this project is not longer maintained as well as archived the repository
+      
+      ## Possible Alternative(s)
+      
+      - [`pastey`]: a fork of paste and is aimed to be a drop-in replacement with additional features for paste crate
+      - [`with_builtin_macros`]: crate providing a [superset of `paste`'s functionality including general `macro_rules!` eager expansions](https://docs.rs/with_builtin_macros/0.1.0/with_builtin_macros/macro.with_eager_expansions.html)  and `concat!`/`concat_idents!` macros
+      
+      [`pastey`]: https://crates.io/crates/pastey
+      [`with_builtin_macros`]: https://crates.io/crates/with_builtin_macros
+    ├ Announcement: https://github.com/dtolnay/paste
+    ├ Solution: No safe upgrade is available!
+    ├ paste v1.0.15
+      ├── gpui-component v0.6.0
+      │   └── gpui-kit v0.6.0
+      │       ├── chart-gallery v0.1.0
+      │       └── gpui-charts-kit v0.1.0
+      │           └── chart-gallery v0.1.0 (*)
+      ├── metal v0.33.0
+      │   ├── core-video v0.5.2
+      │   │   ├── gpui-pre v0.3.3
+      │   │   │   ├── chart-gallery v0.1.0 (*)
+      │   │   │   ├── gpui-base v0.6.0
+      │   │   │   │   ├── gpui-component v0.6.0 (*)
+      │   │   │   │   └── gpui-kit v0.6.0 (*)
+      │   │   │   ├── gpui-charts v0.1.0
+      │   │   │   │   ├── chart-gallery v0.1.0 (*)
+      │   │   │   │   └── gpui-charts-kit v0.1.0 (*)
+      │   │   │   ├── gpui-component v0.6.0 (*)
+      │   │   │   ├── gpui-kit v0.6.0 (*)
+      │   │   │   ├── gpui-kit-assets v0.6.0
+      │   │   │   │   └── gpui-component v0.6.0 (*)
+      │   │   │   ├── gpui-pre-apple v0.3.3
+      │   │   │   │   └── gpui-pre-macos v0.3.3
+      │   │   │   │       └── gpui-pre-platform v0.3.3
+      │   │   │   │           ├── chart-gallery v0.1.0 (*)
+      │   │   │   │           ├── gpui-base v0.6.0 (*)
+      │   │   │   │           └── gpui-kit v0.6.0 (*)
+      │   │   │   ├── gpui-pre-macos v0.3.3 (*)
+      │   │   │   └── gpui-pre-platform v0.3.3 (*)
+      │   │   ├── gpui-pre-apple v0.3.3 (*)
+      │   │   └── gpui-pre-media v0.3.3
+      │   │       └── gpui-pre-macos v0.3.3 (*)
+      │   ├── gpui-pre-apple v0.3.3 (*)
+      │   ├── gpui-pre-macos v0.3.3 (*)
+      │   └── gpui-pre-media v0.3.3 (*)
+      └── pulp v0.22.3
+          └── exr v1.74.2
+              └── image v0.25.10
+                  ├── gpui-pre v0.3.3 (*)
+                  ├── gpui-pre-apple v0.3.3 (*)
+                  └── gpui-pre-macos v0.3.3 (*)
+
+error[unmaintained]: rustls-pemfile is unmaintained
+    ┌─ /Users/jeickmeier/Projects/finstack-chart/Cargo.lock:393:1
+    │
+393 │ rustls-pemfile 2.2.0 registry+https://github.com/rust-lang/crates.io-index
+    │ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ unmaintained advisory detected
+    │
+    ├ ID: RUSTSEC-2025-0134
+    ├ Advisory: https://rustsec.org/advisories/RUSTSEC-2025-0134
+    ├ The rustls-pemfile crate is no longer maintained. The repository has been archived since August
+      2025, and users are encouraged to depend directly on the underlying PEM parsing code included
+      in rustls-pki-types since 1.9.0. The latest version of rustls-pemfile is in fact a thin wrapper
+      around the same code used in rustls-pki-types, so migrating should be straightforward.
+      
+      The new API is represented by the [`PemObject`][PemObject] trait, which provides methods for
+      reading a single or multiple PEM objects from a file or byte slice.
+      
+      [PemObject]: https://docs.rs/rustls-pki-types/latest/rustls_pki_types/pem/trait.PemObject.html
+    ├ Announcement: https://github.com/rustls/pemfile/issues/61
+    ├ Solution: No safe upgrade is available!
+    ├ rustls-pemfile v2.2.0
+      └── gpui-pre-reqwest v0.12.15
+          └── gpui-pre-reqwest-client v0.3.3
+              └── gpui-kit v0.6.0
+                  ├── chart-gallery v0.1.0
+                  └── gpui-charts-kit v0.1.0
+                      └── chart-gallery v0.1.0 (*)
+
+error[unmaintained]: `rustybuzz` is unmaintained
+    ┌─ /Users/jeickmeier/Projects/finstack-chart/Cargo.lock:398:1
+    │
+398 │ rustybuzz 0.20.1 registry+https://github.com/rust-lang/crates.io-index
+    │ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ unmaintained advisory detected
+    │
+    ├ ID: RUSTSEC-2026-0206
+    ├ Advisory: https://rustsec.org/advisories/RUSTSEC-2026-0206
+    ├ The current maintainer of `rustybuzz` has stated that the crate is unmaintained and will not receive further fixes or updates (see the referenced issue).
+      
+      ## Alternative(s)
+      
+      - [`harfrust`](https://github.com/harfbuzz/harfrust), an actively maintained and updated alternative which is part of the Harfbuzz project.
+    ├ Announcement: https://github.com/harfbuzz/rustybuzz/issues/166
+    ├ Solution: No safe upgrade is available!
+    ├ rustybuzz v0.20.1
+      ├── usvg v0.45.1
+      │   ├── resvg v0.45.1
+      │   │   ├── (dev) chart-export v0.1.0
+      │   │   │   ├── chart-gallery v0.1.0
+      │   │   │   ├── chart-python v0.1.0
+      │   │   │   └── chart-wasm v0.1.0
+      │   │   ├── (dev) chart-gallery v0.1.0 (*)
+      │   │   └── svg2pdf v0.13.0
+      │   │       └── (dev) chart-export v0.1.0 (*)
+      │   └── svg2pdf v0.13.0 (*)
+      └── usvg v0.46.0
+          ├── gpui-pre v0.3.3
+          │   ├── chart-gallery v0.1.0 (*)
+          │   ├── gpui-base v0.6.0
+          │   │   ├── gpui-component v0.6.0
+          │   │   │   └── gpui-kit v0.6.0
+          │   │   │       ├── chart-gallery v0.1.0 (*)
+          │   │   │       └── gpui-charts-kit v0.1.0
+          │   │   │           └── chart-gallery v0.1.0 (*)
+          │   │   └── gpui-kit v0.6.0 (*)
+          │   ├── gpui-charts v0.1.0
+          │   │   ├── chart-gallery v0.1.0 (*)
+          │   │   └── gpui-charts-kit v0.1.0 (*)
+          │   ├── gpui-component v0.6.0 (*)
+          │   ├── gpui-kit v0.6.0 (*)
+          │   ├── gpui-kit-assets v0.6.0
+          │   │   └── gpui-component v0.6.0 (*)
+          │   ├── gpui-pre-apple v0.3.3
+          │   │   └── gpui-pre-macos v0.3.3
+          │   │       └── gpui-pre-platform v0.3.3
+          │   │           ├── chart-gallery v0.1.0 (*)
+          │   │           ├── gpui-base v0.6.0 (*)
+          │   │           └── gpui-kit v0.6.0 (*)
+          │   ├── gpui-pre-macos v0.3.3 (*)
+          │   └── gpui-pre-platform v0.3.3 (*)
+          └── resvg v0.46.0
+              └── gpui-pre v0.3.3 (*)
+
+error[unmaintained]: `ttf-parser` is unmaintained
+    ┌─ /Users/jeickmeier/Projects/finstack-chart/Cargo.lock:501:1
+    │
+501 │ ttf-parser 0.25.1 registry+https://github.com/rust-lang/crates.io-index
+    │ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ unmaintained advisory detected
+    │
+    ├ ID: RUSTSEC-2026-0192
+    ├ Advisory: https://rustsec.org/advisories/RUSTSEC-2026-0192
+    ├ The author of `ttf-parser` has stated that the crate is unmaintained and will not receive further fixes (see the referenced issue).
+      
+      ## Alternative(s)
+      
+      - [`skrifa`](https://crates.io/crates/skrifa), an actively maintained TrueType and OpenType font parsing crate, part of the Google Fonts "oxidize" (`fontations`) project.
+    ├ Announcement: https://github.com/harfbuzz/ttf-parser/issues/217
+    ├ Solution: No safe upgrade is available!
+    ├ ttf-parser v0.25.1
+      ├── (dev) chart-export v0.1.0
+      │   ├── chart-gallery v0.1.0
+      │   ├── chart-python v0.1.0
+      │   └── chart-wasm v0.1.0
+      ├── (dev) chart-gallery v0.1.0 (*)
+      ├── fontdb v0.23.0
+      │   ├── svg2pdf v0.13.0
+      │   │   └── (dev) chart-export v0.1.0 (*)
+      │   ├── usvg v0.45.1
+      │   │   ├── resvg v0.45.1
+      │   │   │   ├── (dev) chart-export v0.1.0 (*)
+      │   │   │   ├── (dev) chart-gallery v0.1.0 (*)
+      │   │   │   └── svg2pdf v0.13.0 (*)
+      │   │   └── svg2pdf v0.13.0 (*)
+      │   └── usvg v0.46.0
+      │       ├── gpui-pre v0.3.3
+      │       │   ├── chart-gallery v0.1.0 (*)
+      │       │   ├── gpui-base v0.6.0
+      │       │   │   ├── gpui-component v0.6.0
+      │       │   │   │   └── gpui-kit v0.6.0
+      │       │   │   │       ├── chart-gallery v0.1.0 (*)
+      │       │   │   │       └── gpui-charts-kit v0.1.0
+      │       │   │   │           └── chart-gallery v0.1.0 (*)
+      │       │   │   └── gpui-kit v0.6.0 (*)
+      │       │   ├── gpui-charts v0.1.0
+      │       │   │   ├── chart-gallery v0.1.0 (*)
+      │       │   │   └── gpui-charts-kit v0.1.0 (*)
+      │       │   ├── gpui-component v0.6.0 (*)
+      │       │   ├── gpui-kit v0.6.0 (*)
+      │       │   ├── gpui-kit-assets v0.6.0
+      │       │   │   └── gpui-component v0.6.0 (*)
+      │       │   ├── gpui-pre-apple v0.3.3
+      │       │   │   └── gpui-pre-macos v0.3.3
+      │       │   │       └── gpui-pre-platform v0.3.3
+      │       │   │           ├── chart-gallery v0.1.0 (*)
+      │       │   │           ├── gpui-base v0.6.0 (*)
+      │       │   │           └── gpui-kit v0.6.0 (*)
+      │       │   ├── gpui-pre-macos v0.3.3 (*)
+      │       │   └── gpui-pre-platform v0.3.3 (*)
+      │       └── resvg v0.46.0
+      │           └── gpui-pre v0.3.3 (*)
+      ├── gpui-charts v0.1.0 (*)
+      ├── gpui-pre v0.3.3 (*)
+      ├── rustybuzz v0.20.1
+      │   ├── usvg v0.45.1 (*)
+      │   └── usvg v0.46.0 (*)
+      └── svg2pdf v0.13.0 (*)
+
+advisories FAILED

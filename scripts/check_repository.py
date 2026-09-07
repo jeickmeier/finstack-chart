@@ -14,7 +14,7 @@ ALLOWED = {
     "gpui-charts": {"chart-core"},
     "gpui-charts-kit": {"chart-core", "gpui-charts"},
     "chart-python": {"chart-core", "chart-export"},
-    "chart-wasm": {"chart-core"},
+    "chart-wasm": {"chart-core", "chart-export"},
     "chart-gallery": {"chart-core", "chart-export", "gpui-charts", "gpui-charts-kit"},
 }
 PORTABLE_TARGETS = ("aarch64-apple-darwin", "x86_64-unknown-linux-gnu", "wasm32-unknown-unknown")

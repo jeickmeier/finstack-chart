@@ -51,6 +51,28 @@
   in the normal export graph; retain historical proof dependencies and open host advisories.
 - Add ten export integration tests, inspected artifacts and independent output checks.
 
-These are WP-02/WP-04/WP-05/WP-06/WP-07/WP-08 foundations for version 0.1.0. Full grammar
-and wire/binding APIs remain unimplemented. Initial public signatures may evolve with their
+- Add strict version 1 chart/data/transaction/action/state/profile envelopes, exact decimal
+  64-bit encodings, native-accessor rejection and bounded input decoding in the shared core.
+- Add actual PyO3 0.29.2 and wasm-bindgen 0.2.128 proof adapters, owned copies, deterministic
+  disposal and shared publication sessions; Python Rust-only work detaches the interpreter.
+- Add the executable `bindings-proof` task with Rust/Python/WASM semantic, scene, export,
+  large-integer/time and lifetime fixtures. Minimal G1 now passes; full G4 portability remains open.
+- Core gains Serde/serde_json dependencies, without host libraries or I/O. Wire spellings and
+  operation versions are explicit compatibility contracts; see ADR-006. No old wire format
+  existed to migrate, and future schema changes require a version or explicit migration.
+
+These are WP-02/WP-04/WP-05/WP-06/WP-07/WP-08/WP-09 foundations for version 0.1.0.
+Full grammar, complete portable coverage and production host/distribution APIs remain later work. Initial public signatures may evolve with their
 first consumers; breaking changes and future schema migrations must be recorded explicitly.
+
+- WP-10: add version-one count, automatic 30-bin, exact grouped summary/quantile and
+  intercept OLS operations, typed generated fields/schemas and exact model memberships.
+- Add explicit mixed-sign stack/normalize, band-relative fixed-slot dodge and stable
+  seeded data/display jitter; normalized domains are dimensionless and incompatible
+  additive encodings reject. Declare exact full-recompute capabilities for every builtin.
+- Add independent FIX-02–05, malformed/numeric/reorder/update tests and twelve cases in
+  the real Rust/Python/WASM proof. Semantic results include schema and operation records.
+- Compatibility: new `StatParameters`, `Mappings`, `Position`, `PreparedRows`, `OutputSchema`
+  and `GeneratedKind` variants require exhaustive consumers to update. `Position` now owns
+  explicit group-order vectors and is no longer `Copy`/`Eq`; integer seeds/group keys use
+  canonical decimal wire strings. New builtin registrations retain envelope version one.

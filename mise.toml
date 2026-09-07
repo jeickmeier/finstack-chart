@@ -43,3 +43,7 @@ else
   cargo test -p chart-core -p chart-export --locked
 fi
 """
+
+[tasks.bindings-proof]
+description = "Build and run the actual Rust, Python and WASM portable fixture (Node, matching wasm-bindgen CLI and Poppler required)"
+run = "python3 scripts/run_binding_proofs.py"

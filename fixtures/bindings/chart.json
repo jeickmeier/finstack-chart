@@ -1,0 +1,180 @@
+{
+  "version": 1,
+  "definition": {
+    "revision": "9007199254745001",
+    "mappings": {
+      "x": null,
+      "y": null,
+      "x2": null,
+      "y2": null,
+      "size": null,
+      "group": null
+    },
+    "transforms": [],
+    "layers": [
+      {
+        "id": "9007199254742001",
+        "scales": {
+          "x": "0",
+          "y": "1"
+        },
+        "clip": "Plot",
+        "data": {
+          "Dataset": "9007199254741001"
+        },
+        "filters": [],
+        "statistic": {
+          "operation": {
+            "id": "chart.bin",
+            "version": "1"
+          },
+          "parameters": {
+            "Bin": {
+              "input": {
+                "Field": "1"
+              },
+              "edges": [
+                0.0,
+                1.0,
+                2.0
+              ],
+              "outliers": "Exclude",
+              "grouping": "All",
+              "space": "Data"
+            }
+          }
+        },
+        "mappings": {
+          "Binned": {
+            "x": {
+              "Field": "Start"
+            },
+            "y": {
+              "Field": "Count"
+            },
+            "x2": {
+              "Field": "End"
+            },
+            "y2": {
+              "Literal": 0.0
+            },
+            "size": null
+          }
+        },
+        "inherit": false,
+        "geom": "Rectangle",
+        "position": "Identity",
+        "style": {
+          "color": {
+            "red": 180,
+            "green": 200,
+            "blue": 215,
+            "alpha": 140
+          },
+          "radius": 3.0,
+          "stroke_width": 1.5
+        },
+        "invalid": "Exclude"
+      },
+      {
+        "id": "9007199254742002",
+        "scales": {
+          "x": "0",
+          "y": "1"
+        },
+        "clip": "Plot",
+        "data": {
+          "Dataset": "9007199254741001"
+        },
+        "filters": [],
+        "statistic": {
+          "operation": {
+            "id": "chart.identity",
+            "version": "1"
+          },
+          "parameters": "Identity"
+        },
+        "mappings": {
+          "Source": {
+            "x": {
+              "Field": "1"
+            },
+            "y": {
+              "Field": "2"
+            },
+            "x2": null,
+            "y2": null,
+            "size": null,
+            "group": null
+          }
+        },
+        "inherit": true,
+        "geom": {
+          "Line": {
+            "order": "X",
+            "connect_gaps": false
+          }
+        },
+        "position": "Identity",
+        "style": {
+          "color": {
+            "red": 35,
+            "green": 90,
+            "blue": 150,
+            "alpha": 255
+          },
+          "radius": 3.0,
+          "stroke_width": 1.5
+        },
+        "invalid": "Exclude"
+      },
+      {
+        "id": "9007199254742003",
+        "scales": {
+          "x": "0",
+          "y": "1"
+        },
+        "clip": "Plot",
+        "data": {
+          "Dataset": "9007199254741001"
+        },
+        "filters": [],
+        "statistic": {
+          "operation": {
+            "id": "chart.identity",
+            "version": "1"
+          },
+          "parameters": "Identity"
+        },
+        "mappings": {
+          "Source": {
+            "x": {
+              "Field": "1"
+            },
+            "y": {
+              "Field": "2"
+            },
+            "x2": null,
+            "y2": null,
+            "size": null,
+            "group": null
+          }
+        },
+        "inherit": true,
+        "geom": "Point",
+        "position": "Identity",
+        "style": {
+          "color": {
+            "red": 35,
+            "green": 90,
+            "blue": 150,
+            "alpha": 255
+          },
+          "radius": 3.0,
+          "stroke_width": 1.5
+        },
+        "invalid": "Exclude"
+      }
+    ]
+  }
+}

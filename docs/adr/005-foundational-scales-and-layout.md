@@ -1,6 +1,6 @@
 # ADR-005: Foundational scale, tick and destination-layout algorithms
 
-Status: ACCEPTED for WP-06; statistical algorithms/full scale families remain WP-10/11.
+Status: ACCEPTED for WP-06 and WP-10; full scale families remain WP-11.
 Date: 6 September 2026. Requirements: SCL-01/02/04/05, LAY-01/02, DAT-05. Fixture: FIX-07.
 
 ## Shared preparation and destination boundary
@@ -153,3 +153,21 @@ Python's UTC datetime arithmetic. No fixture tolerance or visual baseline was lo
 WP-06 evidence does not close all cited specification requirements or G1–G4. WP-07 and
 WP-08 now consume this one shared layout/scene contract. Full scale/coordinate/typography,
 publication, binding and interaction evidence remains with its assigned later packages.
+
+## WP-10 statistical and position completion — 6 September 2026
+
+The [statistics contract](../statistics-contract.md) extends this accepted decision with
+exact count/automatic bins/grouped summaries/intercept OLS, source/transformed spaces,
+explicit stack/normalize/dodge/jitter, typed generated schemas and membership. It records
+nonzero-width bin defaults, compensated arithmetic and centered/scaled OLS, failure rules,
+per-field metadata, position hashing/units/order, work budgets and exact full-recompute
+capability declarations. These use the existing compiler and scene projection; no dependency
+or host-specific statistics engine was added. Additional scale families remain WP-11.
+
+[Canonical fixtures](../../fixtures/statistics/README.md) own the expectations. A narrow
+external comparison uses the published finite-input R-7 examples from
+[D3's quantile documentation](https://d3js.org/d3-array/summarize#quantile), retrieved
+6 September 2026 and stored locally; its empty/invalid summation semantics are not adopted.
+Rust tests never require a reference engine. Actual Rust/Python/WASM cases independently
+compare stats/provenance, final destination scenes and SVG output. The WP-10 evidence report
+records the executed scope; this is not full G2 or G4 certification.

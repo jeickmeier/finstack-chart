@@ -7,7 +7,7 @@ use crate::{
 use std::{collections::BTreeSet, sync::Arc};
 
 /// A durable source identity, intentionally independent of position or data revision.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd)]
+#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd)]
 pub struct SourceRef {
     /// Dataset identity; replacing another dataset never preserves this association.
     pub dataset: DatasetId,
@@ -16,7 +16,7 @@ pub struct SourceRef {
 }
 
 /// Provenance distinguishes original rows from aggregate memberships and model scopes.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, Eq, PartialEq)]
 pub enum Target {
     /// Source row resolved in the supplied current or explicitly historical snapshot.
     Source(SourceRef),

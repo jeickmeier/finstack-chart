@@ -54,3 +54,6 @@ pub use identity::{
     SceneStamp, SchemaVersion, SourceEpoch, TransformId,
 };
 pub use limits::Limits;
+
+/// Versioned portable envelopes, validation and owned runtime boundary.
+pub mod portable;

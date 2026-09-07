@@ -15,7 +15,8 @@ use crate::{
 };
 
 /// Unpremultiplied sRGB bytes, with linear alpha coverage in the range 0–255.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct Color {
     /// Red channel.
     pub red: u8,
@@ -28,7 +29,7 @@ pub struct Color {
 }
 
 /// A solid stroke; native cap/join/dash choices await the capability spike.
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, PartialEq)]
 pub struct Stroke {
     /// Unpremultiplied color.
     pub color: Color,
@@ -37,7 +38,7 @@ pub struct Stroke {
 }
 
 /// Numeric path segments. After `Close`, a subsequent segment requires a new `MoveTo`.
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, PartialEq)]
 pub enum PathCommand {
     /// Begin a subpath.
     MoveTo(Point),
@@ -52,7 +53,7 @@ pub enum PathCommand {
 }
 
 /// Authored minimal primitive, validated and copied into an immutable scene.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub enum Primitive {
     /// Straight rule between finite endpoints.
     Rule {
@@ -102,7 +103,7 @@ pub enum Primitive {
 }
 
 /// Primitive metadata, without assigning fake source targets to decoration.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub struct SceneItem {
     /// Optional originating layer for diagnostic context.
     pub layer: Option<LayerId>,

@@ -21,6 +21,10 @@ pub(crate) fn validate_operation(operation: &OperationRef, expected: &str) -> Ch
 }
 pub(crate) fn validate_stat(stat: &Statistic, limits: CompileLimits) -> ChartResult<()> {
     match &stat.parameters {
+        StatParameters::AutoBin(_)
+        | StatParameters::Count(_)
+        | StatParameters::Summary(_)
+        | StatParameters::Ols(_) => super::statistics::validate(stat, limits),
         StatParameters::Identity => validate_operation(&stat.operation, "chart.identity"),
         StatParameters::Bin(spec) => {
             validate_operation(&stat.operation, "chart.bin")?;
@@ -247,7 +251,7 @@ pub(crate) fn run(
         ..Default::default()
     };
     let index: BTreeMap<_, _> =
-        if !filters.is_empty() || matches!(stat.parameters, StatParameters::Bin(_)) {
+        if !filters.is_empty() || !matches!(stat.parameters, StatParameters::Identity) {
             data.rows().map(|r| (r.key(), r)).collect()
         } else {
             BTreeMap::new()
@@ -304,7 +308,27 @@ pub(crate) fn run(
         )?;
         table.rows = PreparedRows::Source(kept.into());
     }
-    let (grouping, space) = match &stat.parameters {
+    let resolved = if let StatParameters::AutoBin(spec) = &stat.parameters {
+        Some(StatParameters::Bin(super::statistics::automatic(
+            spec, &table, data,
+        )?))
+    } else {
+        None
+    };
+    let (grouping, space) = match resolved.as_ref().unwrap_or(&stat.parameters) {
+        StatParameters::AutoBin(_) => unreachable!("resolved above"),
+        StatParameters::Count(_) | StatParameters::Summary(_) | StatParameters::Ols(_) => {
+            super::statistics::run(
+                &mut table,
+                data,
+                stat,
+                policy,
+                scope,
+                limits,
+                &mut counts,
+                diagnostics,
+            )?
+        }
         StatParameters::Identity => (Grouping::All, StatSpace::Data),
         StatParameters::Bin(spec) => {
             let PreparedRows::Source(rows) = &table.rows else {
@@ -359,13 +383,21 @@ pub(crate) fn run(
                 };
                 if value < spec.edges[0] {
                     counts.below += 1;
-                    continue;
+                    if spec.outliers != OutlierPolicy::Overflow {
+                        continue;
+                    }
                 }
                 if value > spec.edges[n] {
                     counts.above += 1;
-                    continue;
+                    if spec.outliers != OutlierPolicy::Overflow {
+                        continue;
+                    }
                 }
-                let bin = (spec.edges.partition_point(|edge| *edge <= value) - 1).min(n - 1);
+                let bin = spec
+                    .edges
+                    .partition_point(|edge| *edge <= value)
+                    .saturating_sub(1)
+                    .min(n - 1);
                 groups[group_index].1[bin].push(row.key);
             }
             warning(
@@ -384,7 +416,11 @@ pub(crate) fn run(
                 } else {
                     policy
                 },
-                counts.below + counts.above,
+                if spec.outliers == OutlierPolicy::Overflow {
+                    0
+                } else {
+                    counts.below + counts.above
+                },
                 vec![],
                 format!(
                     "Bin stat excluded {} below and {} above explicit edges.",
@@ -403,9 +439,14 @@ pub(crate) fn run(
                     _ => usize::MAX,
                 });
             }
+            // Canonical order for noncategorical groups and member sets.
+            if !matches!(&spec.grouping, Grouping::Field(f) if data.categories(*f).is_some()) {
+                groups.sort_by(|a, b| a.0.cmp(&b.0));
+            }
             let mut output = Vec::new();
             for (group, bins) in groups {
-                for (i, members) in bins.into_iter().enumerate() {
+                for (i, mut members) in bins.into_iter().enumerate() {
+                    members.sort_unstable();
                     let count = members.len() as u64;
                     let target = Target::Aggregate {
                         id: AggregateId::new(i as u64),
@@ -459,6 +500,7 @@ pub(crate) fn run(
         filters: filters.to_vec(),
         grouping,
         space,
+        incremental: stat.incremental_capabilities(),
         counts,
     });
     Ok(Arc::new(table))

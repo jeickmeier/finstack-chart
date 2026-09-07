@@ -3,7 +3,8 @@ use crate::{ChartResult, DiagnosticCode, FieldId, SchemaVersion};
 use std::{collections::BTreeSet, sync::Arc};
 
 /// Source timestamp integer unit. No conversion to floating point is implied.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum TimeUnit {
     /// Whole seconds.
     Seconds,
@@ -16,7 +17,8 @@ pub enum TimeUnit {
 }
 
 /// Explicit timestamp representation; timezone is metadata, not a timezone database.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct TimestampType {
     /// Unit of each signed 64-bit source value.
     pub unit: TimeUnit,
@@ -25,7 +27,8 @@ pub struct TimestampType {
 }
 
 /// Required portable column kinds.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum FieldKind {
     /// IEEE binary64 values; non-finite source values remain recoverable.
     Float64,
@@ -44,7 +47,8 @@ pub enum FieldKind {
 }
 
 /// Stable field identity plus optional presentation metadata.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct Field {
     /// Stable identity; schema order is not identity.
     pub id: FieldId,
@@ -61,7 +65,7 @@ pub struct Field {
 }
 
 /// Validated immutable schema shared by batches.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, Eq, PartialEq)]
 pub struct Schema {
     version: SchemaVersion,
     fields: Arc<[Field]>,

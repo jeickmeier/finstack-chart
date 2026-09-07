@@ -1,0 +1,23 @@
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.83s
+     Running tests/portable.rs (target/debug/deps/portable-d99ca00006d43608)
+
+running 6 tests
+test native_accessors_fail_serialization_instead_of_disappearing ... ok
+test fix16_all_64_bits_null_payload_and_formatted_columns_round_trip ... ok
+test state_restore_cannot_reuse_revision_for_changed_content ... ok
+test strict_versions_required_fields_unknown_operations_and_duplicate_keys_reject ... ok
+test fix15_round_trip_correction_viewport_and_aggregate_members ... ok
+test bounded_decoding_and_failed_transactions_leave_data_and_state_unchanged ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/portable.rs (target/debug/deps/portable-6a1172d72a0c091c)
+
+running 3 tests
+test binding_profile_is_explicit_and_never_falls_back_on_native_resources ... ok
+test publication_scene_targets_align_with_background_and_mark_items ... ok
+test captured_output_owns_resources_across_updates_and_disposal ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+

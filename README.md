@@ -3,10 +3,9 @@
 Rust-native grammar-of-graphics project with a portable core, headless publication export,
 a standalone GPUI host and optional Kit integration.
 
-**Status: WP-08 headless publication implemented. Immutable shared-core figures export
-SVG/PDF/PNG with explicit fonts and physical dimensions; a native publication preview
-uses the same layout. Standalone native charts and inspection remain available.
-WP-09 binding proofs are next; G1–G4 remain open.**
+**Status: WP-10 built-in statistics and positions implemented and verified through Rust,
+Python and actual WASM. Count, bins, summaries, OLS, stack/normalize, dodge and jitter share
+one compiler. WP-11 is next; G1 retains its minimal accepted scope and G2–G4 remain open.**
 
 ## Start here
 
@@ -35,7 +34,7 @@ mise run check
 mise run test
 ```
 
-The three development tasks are `fmt` (format Rust), `check` (repository boundaries,
+The foundation development tasks are `fmt` (format Rust), `check` (repository boundaries,
 local file links, dependency licenses/sources, formatting, compilation, Clippy, rustdoc
 and core WASM compilation), and `test` (macOS workspace or Linux core/export tests).
 The core suite checks identities/revisions, finite geometry, bounded scene construction
@@ -55,14 +54,21 @@ the standalone gallery (no Kit dependency required). Move over marks, click the 
 use arrow keys/Escape; controls exercise zoom, malformed input, missing fonts, tiny bounds
 and remount. [WP-07 evidence](docs/evidence/wp-07-completion-2026-09-06.md) records the actual
 native checks. See ADR-001 for the separate host-example commands. CI checks native builds on macOS and headless packages on Linux;
-hosted CI and real binding execution remain unverified. The
+hosted CI remains unverified. Actual Python/Node WASM proof execution is recorded in WP-09. The
 [WP-03 report](docs/evidence/wp-03-completion-2026-09-06.md) records actual native visual,
 input/lifecycle/accessibility-hook inspection and publication artifacts. These remain
 proof examples; use the [fixture instructions](fixtures/capability/README.md) to run them.
 
+The [portable contract](docs/portable-contract.md) documents strict version 1 envelopes and
+the minimal Python/WASM API. Run `mise run bindings-proof` with Node, Poppler and an exact
+wasm-bindgen-cli 0.2.128 on PATH (or set `WASM_BINDGEN`); the
+[fixture instructions](fixtures/bindings/README.md) explain setup and the actual runner.
+[WP-09 evidence](docs/evidence/wp-09-completion-2026-09-06.md) records three-runtime results,
+large-integer/time precision, invalid memory-view tests and current support limits.
+
 Run `mise exec -- cargo deny --locked check advisories` when reviewing dependencies.
 The current scan fails on six unmaintained transitive packages; no advisory is ignored.
-The refreshed scan and remaining release risks are in the [WP-03 evidence](docs/evidence/wp-03-completion-2026-09-06.md).
+The refreshed scan and remaining release risks are in the [WP-09 evidence](docs/evidence/wp-09-completion-2026-09-06.md).
 
 The [publication example](crates/chart-export/examples/publication_export.rs) demonstrates
 `FigureSnapshot::capture` and bytes-only SVG/PDF/PNG export. See the

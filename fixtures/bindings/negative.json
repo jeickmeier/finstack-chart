@@ -1,0 +1,97 @@
+[
+  {
+    "name": "unknown required construct",
+    "target": "chart",
+    "path": "/widget",
+    "code": "CHART_VALIDATION",
+    "value": {}
+  },
+  {
+    "name": "missing required version",
+    "target": "chart",
+    "path": "/version",
+    "code": "CHART_VALIDATION",
+    "remove": true
+  },
+  {
+    "name": "future schema",
+    "target": "chart",
+    "path": "/version",
+    "code": "CHART_UNSUPPORTED_CAPABILITY",
+    "value": 2
+  },
+  {
+    "name": "native operation",
+    "target": "chart",
+    "path": "/definition/layers/0/statistic/operation/id",
+    "code": "CHART_UNSUPPORTED_CAPABILITY",
+    "value": "native.closure"
+  },
+  {
+    "name": "unknown operation version",
+    "target": "chart",
+    "path": "/definition/layers/0/statistic/operation/version",
+    "code": "CHART_UNSUPPORTED_CAPABILITY",
+    "value": "2"
+  },
+  {
+    "name": "native geometry",
+    "target": "chart",
+    "path": "/definition/layers/0/geom",
+    "code": "CHART_VALIDATION",
+    "value": {
+      "NativePainter": "pointer"
+    }
+  },
+  {
+    "name": "number identity forbidden",
+    "target": "data",
+    "path": "/datasets/0/batch/keys/0",
+    "code": "CHART_VALIDATION",
+    "value": 9007199254740993
+  },
+  {
+    "name": "noncanonical identity",
+    "target": "data",
+    "path": "/datasets/0/id",
+    "code": "CHART_VALIDATION",
+    "value": "09007199254741001"
+  },
+  {
+    "name": "timestamp number forbidden",
+    "target": "data",
+    "path": "/datasets/0/batch/columns/2/values/Timestamp/0",
+    "code": "CHART_VALIDATION",
+    "value": 1712345678901234567
+  },
+  {
+    "name": "signed overflow",
+    "target": "data",
+    "path": "/datasets/0/batch/columns/4/values/Int64/0",
+    "code": "CHART_VALIDATION",
+    "value": "9223372036854775808"
+  },
+  {
+    "name": "invalid validity length",
+    "target": "data",
+    "path": "/datasets/0/batch/columns/0/validity",
+    "code": "CHART_SCHEMA_CONFLICT",
+    "value": []
+  },
+  {
+    "name": "duplicate keys",
+    "target": "data",
+    "path": "/datasets/0/batch/keys/1",
+    "code": "CHART_VALIDATION",
+    "value": "9007199254743001"
+  },
+  {
+    "name": "native resource",
+    "target": "profile",
+    "path": "/resource",
+    "code": "CHART_VALIDATION",
+    "value": {
+      "NativeHandle": "0xdeadbeef"
+    }
+  }
+]

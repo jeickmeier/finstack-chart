@@ -1,0 +1,22 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.00s
+     Running tests/statistics.rs (target/debug/deps/statistics-3fd25d35399460ca)
+
+running 14 tests
+test strict_inputs_budgets_and_incompatible_position_contracts_reject ... ok
+test stored_d3_r7_reference_examples_match_only_the_agreed_quantile_definition ... ok
+test stable_accumulation_survives_intermediate_overflow_and_extreme_quantiles ... ok
+test count_requires_all_inputs_and_reports_invalid_strict_and_empty_groups ... ok
+test named_generated_output_is_shared_and_cannot_be_reinterpreted_as_source ... ok
+test dodge_uses_band_width_and_preserves_missing_slots ... ok
+test zero_preserving_transformed_stacks_work_and_unused_bad_generated_fields_reject ... ok
+test transformed_stat_fields_are_not_transformed_again_and_mismatch_rejects ... ok
+test fix03_mixed_sign_stack_normalize_and_reorder_domains ... ok
+test fix04_quantiles_stable_summary_missing_and_explicit_empty_sum ... ok
+test fix02_explicit_auto_constant_empty_and_overflow_bin_conservation ... ok
+test fix05_intercept_ols_zoom_filter_degenerate_and_large_origin ... ok
+test seeded_jitter_is_stable_in_data_and_display_units ... ok
+test exact_batch_fallback_after_append_correction_removal_and_reorder ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

@@ -20,3 +20,6 @@ fn error(code: DiagnosticCode, message: impl Into<String>) -> Diagnostic {
         "Supply a supported point-based publication profile and explicit permitted font bytes, then capture again.",
     )
 }
+
+/// Owned host-independent session used by the minimal binding proofs.
+pub mod portable;

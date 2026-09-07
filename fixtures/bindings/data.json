@@ -1,0 +1,238 @@
+{
+  "version": 1,
+  "epoch": "9007199254746001",
+  "datasets": [
+    {
+      "id": "9007199254741001",
+      "batch": {
+        "schema_version": "9007199254744001",
+        "fields": [
+          {
+            "id": "1",
+            "name": "x",
+            "kind": "Float64",
+            "nullable": true,
+            "unit": null,
+            "label": "x"
+          },
+          {
+            "id": "2",
+            "name": "y",
+            "kind": "Float64",
+            "nullable": true,
+            "unit": null,
+            "label": "y"
+          },
+          {
+            "id": "3",
+            "name": "event_time",
+            "kind": {
+              "Timestamp": {
+                "unit": "Nanoseconds",
+                "timezone": "UTC"
+              }
+            },
+            "nullable": true,
+            "unit": "ns",
+            "label": "event_time"
+          },
+          {
+            "id": "4",
+            "name": "exact_unsigned",
+            "kind": "UInt64",
+            "nullable": true,
+            "unit": null,
+            "label": "exact_unsigned"
+          },
+          {
+            "id": "5",
+            "name": "exact_signed",
+            "kind": "Int64",
+            "nullable": true,
+            "unit": null,
+            "label": "exact_signed"
+          },
+          {
+            "id": "6",
+            "name": "active",
+            "kind": "Boolean",
+            "nullable": true,
+            "unit": null,
+            "label": "active"
+          },
+          {
+            "id": "7",
+            "name": "label",
+            "kind": "Utf8",
+            "nullable": true,
+            "unit": null,
+            "label": "label"
+          },
+          {
+            "id": "8",
+            "name": "sector",
+            "kind": "Categorical",
+            "nullable": true,
+            "unit": null,
+            "label": "sector"
+          }
+        ],
+        "keys": [
+          "9007199254743001",
+          "9007199254743002",
+          "9007199254743003",
+          "9007199254743004"
+        ],
+        "columns": [
+          {
+            "values": {
+              "Float64": [
+                0.25,
+                0.75,
+                1.25,
+                1.75
+              ]
+            },
+            "validity": [
+              true,
+              true,
+              false,
+              true
+            ],
+            "formatted": [
+              "0.2500",
+              "0.7500",
+              null,
+              "1.7500"
+            ]
+          },
+          {
+            "values": {
+              "Float64": [
+                1.0,
+                3.0,
+                9.0,
+                2.0
+              ]
+            },
+            "validity": [
+              true,
+              false,
+              true,
+              true
+            ],
+            "formatted": null
+          },
+          {
+            "values": {
+              "Timestamp": [
+                "1712345678901234567",
+                "1712345678901234568",
+                "1712345678901234569",
+                "1712345678901234570"
+              ]
+            },
+            "validity": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "formatted": null
+          },
+          {
+            "values": {
+              "UInt64": [
+                "18446744073709551615",
+                "9007199254740993",
+                "0",
+                "1"
+              ]
+            },
+            "validity": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "formatted": null
+          },
+          {
+            "values": {
+              "Int64": [
+                "-9223372036854775808",
+                "9223372036854775807",
+                "-9007199254740993",
+                "0"
+              ]
+            },
+            "validity": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "formatted": null
+          },
+          {
+            "values": {
+              "Boolean": [
+                true,
+                false,
+                true,
+                false
+              ]
+            },
+            "validity": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "formatted": null
+          },
+          {
+            "values": {
+              "Utf8": [
+                "café Ω",
+                "correct me",
+                "null x",
+                "last"
+              ]
+            },
+            "validity": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "formatted": null
+          },
+          {
+            "values": {
+              "Categorical": {
+                "codes": [
+                  0,
+                  1,
+                  0,
+                  1
+                ],
+                "dictionary": [
+                  "A",
+                  "B"
+                ]
+              }
+            },
+            "validity": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "formatted": null
+          }
+        ]
+      }
+    }
+  ]
+}

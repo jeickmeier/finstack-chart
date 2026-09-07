@@ -7,6 +7,7 @@ macro_rules! identity {
         #[doc = $description]
         #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
         pub struct $name(u64);
+        crate::portable::wire_identity!($name);
 
         impl $name {
             /// Wrap a caller-assigned identity without narrowing or reinterpretation.
@@ -66,6 +67,7 @@ identity!(
 /// A revision within one explicitly identified owner/epoch, not a global clock.
 #[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Revision(u64);
+crate::portable::wire_identity!(Revision);
 
 impl Revision {
     /// Initial revision before any effective change.
@@ -94,7 +96,7 @@ impl Revision {
 }
 
 /// Compilation inputs identifying a scene. Comparing stamps does not schedule or present it.
-#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, Default, Eq, PartialEq)]
 pub struct SceneStamp {
     /// Definition revision.
     pub definition: Revision,

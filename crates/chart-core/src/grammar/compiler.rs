@@ -84,7 +84,7 @@ impl Compiler {
                 for e in &mut diagnostics[start..] {
                     *e = context(e.clone(), data, None);
                 }
-                charge(&mut remaining, table.rows.len(), "prepared row")?;
+                charge(&mut remaining, table.work_units(), "prepared value")?;
                 tables.insert(node.id, table);
             }
             (tables, diagnostics, limits.max_prepared_rows - remaining)
@@ -116,7 +116,7 @@ impl Compiler {
                 &mut diagnostics,
             )
             .map_err(|e| context(e, data, Some(layer.id)))?;
-            charge(&mut remaining, table.rows.len(), "prepared row")?;
+            charge(&mut remaining, table.work_units(), "prepared value")?;
             let prepared = prepare_layer(
                 layer,
                 table,
@@ -291,20 +291,20 @@ fn validate_definition(
             ));
         }
     }
-    preflight_schemas(definition, snapshot, &order)?;
+    preflight_schemas(definition, snapshot, &order, limits)?;
     Ok(order)
 }
 
-struct EncodedRow {
-    x: Option<f64>,
-    y: Option<f64>,
-    x2: Option<f64>,
-    y2: Option<f64>,
-    size: Option<f64>,
-    group: Option<GroupValue>,
-    ordinal: u64,
-    target: Target,
-    key: Option<RowKey>,
+pub(super) struct EncodedRow {
+    pub(super) x: Option<f64>,
+    pub(super) y: Option<f64>,
+    pub(super) x2: Option<f64>,
+    pub(super) y2: Option<f64>,
+    pub(super) size: Option<f64>,
+    pub(super) group: Option<GroupValue>,
+    pub(super) ordinal: u64,
+    pub(super) target: Target,
+    pub(super) key: Option<RowKey>,
 }
 fn coordinate_space(data: &DatasetSnapshot, value: &Numeric) -> ChartResult<ValueSpace> {
     if let Numeric::Category(id) = value {
@@ -568,8 +568,8 @@ fn prepare_layer(
 ) -> ChartResult<PreparedLayer> {
     let limits = budget.limits;
     let vertices = &mut budget.vertices;
-    let domains;
-    let (encoded, mapped_size) = match (&table.rows, &layer.mappings) {
+    let mut domains;
+    let (mut encoded, mapped_size): (Vec<EncodedRow>, bool) = match (&table.rows, &layer.mappings) {
         (PreparedRows::Source(rows), Mappings::Source(authored)) => {
             let (aes, bound_domains) = source_binding(layer, authored, inherited, data)?;
             domains = bound_domains;
@@ -633,6 +633,46 @@ fn prepare_layer(
                 .collect::<Vec<_>>();
             (encoded, aes.size.is_some())
         }
+        (PreparedRows::Statistical(rows), Mappings::Statistical(aes)) => {
+            let OutputSchema::Statistical { fields, .. } = &table.schema else {
+                unreachable!()
+            };
+            domains = statistical_binding(layer, aes, fields)?;
+            let value = |r: &StatisticalRow, n: &StatNumeric| match n {
+                StatNumeric::Literal(v) => Some(*v),
+                StatNumeric::Field(StatField::Group) => fields
+                    .iter()
+                    .find(|c| c.field == StatField::Group)
+                    .and_then(|c| {
+                        if let ValueSpace::Categorical { categories } = &c.space {
+                            categories
+                                .iter()
+                                .position(|v| v == &super::statistics::group_label(&r.group))
+                                .map(|i| i as f64)
+                        } else {
+                            None
+                        }
+                    }),
+                StatNumeric::Field(f) => r.value(f),
+            };
+            (
+                rows.iter()
+                    .enumerate()
+                    .map(|(i, r)| EncodedRow {
+                        x: value(r, &aes.x),
+                        y: value(r, &aes.y),
+                        x2: aes.x2.as_ref().and_then(|v| value(r, v)),
+                        y2: aes.y2.as_ref().and_then(|v| value(r, v)),
+                        size: aes.size.as_ref().and_then(|v| value(r, v)),
+                        group: Some(r.group.clone()),
+                        ordinal: i as u64,
+                        target: r.target.clone(),
+                        key: None,
+                    })
+                    .collect(),
+                aes.size.is_some(),
+            )
+        }
         (PreparedRows::Binned(rows), Mappings::Binned(aes)) => {
             domains = bin_binding(layer, aes, &table.space)?;
             let encoded = rows
@@ -665,7 +705,10 @@ fn prepare_layer(
             "Mapped size currently supports point radius and rule stroke width; use constant styling for lines and rectangles.",
         ));
     }
+    super::positions::apply(layer, &domains, &mut encoded, limits)?;
+    super::positions::output_space(layer, &mut domains);
     let mut prepared = PreparedLayer {
+        position: layer.position.clone(),
         id: layer.id,
         scales: layer.scales,
         clip: layer.clip,
@@ -892,18 +935,20 @@ fn include_geometry(domains: &mut DomainContributions, geometry: &PreparedGeomet
 struct OutputShape {
     dataset: crate::DatasetId,
     bins: Option<ValueSpace>,
+    statistical: Option<Vec<StatColumn>>,
 }
 fn preflight_schemas(
     definition: &ChartDefinition,
     snapshot: &StoreSnapshot,
     order: &[usize],
+    limits: CompileLimits,
 ) -> ChartResult<()> {
     let mut shapes = BTreeMap::<TransformId, OutputShape>::new();
     for &i in order {
         let node = &definition.transforms[i];
         let input = input_shape(node.input, &shapes)?;
         let data = snapshot.dataset(input.dataset)?;
-        let output = stat_shape(input, data, &node.statistic, &node.filters)
+        let output = stat_shape(input, data, &node.statistic, &node.filters, limits)
             .map_err(|e| context(e, data, None))?;
         shapes.insert(node.id, output);
     }
@@ -911,19 +956,24 @@ fn preflight_schemas(
     for layer in &definition.layers {
         let input = input_shape(layer.data, &shapes)?;
         let data = snapshot.dataset(input.dataset)?;
-        let output = stat_shape(input, data, &layer.statistic, &layer.filters)
+        let output = stat_shape(input, data, &layer.statistic, &layer.filters, limits)
             .map_err(|e| context(e, data, Some(layer.id)))?;
-        let binding = match (&output.bins, &layer.mappings) {
-            (None, Mappings::Source(aes)) => {
+        let mut binding = match (&output.bins, &output.statistical, &layer.mappings) {
+            (None, None, Mappings::Source(aes)) => {
                 source_binding(layer, aes, &definition.mappings, data).map(|(_, domain)| domain)
             }
-            (Some(space), Mappings::Binned(aes)) => bin_binding(layer, aes, space),
+            (Some(space), None, Mappings::Binned(aes)) => bin_binding(layer, aes, space),
+            (None, Some(fields), Mappings::Statistical(aes)) => {
+                statistical_binding(layer, aes, fields)
+            }
             _ => Err(error(
                 DiagnosticCode::SchemaConflict,
                 "Aesthetic stage does not match the declared source/generated output schema.",
             )),
         }
         .map_err(|e| context(e, data, Some(layer.id)))?;
+        super::positions::validate(layer, &binding, limits)?;
+        super::positions::output_space(layer, &mut binding);
         merge_named(&mut domains, layer.scales, &binding)
             .map_err(|e| context(e, data, Some(layer.id)))?;
     }
@@ -937,6 +987,7 @@ fn input_shape(
         DataRef::Dataset(dataset) => Ok(OutputShape {
             dataset,
             bins: None,
+            statistical: None,
         }),
         DataRef::Transform(id) => shapes.get(&id).cloned().ok_or_else(|| {
             error(
@@ -951,8 +1002,9 @@ fn stat_shape(
     data: &DatasetSnapshot,
     stat: &Statistic,
     filters: &[SourceFilter],
+    limits: CompileLimits,
 ) -> ChartResult<OutputShape> {
-    if !filters.is_empty() && input.bins.is_some() {
+    if !filters.is_empty() && (input.bins.is_some() || input.statistical.is_some()) {
         return Err(error(
             DiagnosticCode::SchemaConflict,
             "Filter source observations before generating statistical rows.",
@@ -961,7 +1013,36 @@ fn stat_shape(
     for filter in filters {
         numeric_space(data, &filter.value)?;
     }
-    if let StatParameters::Bin(spec) = &stat.parameters {
+    let automatic = if let StatParameters::AutoBin(s) = &stat.parameters {
+        Some(BinSpec {
+            input: s.input.clone(),
+            edges: vec![],
+            grouping: s.grouping.clone(),
+            space: s.space.clone(),
+            outliers: OutlierPolicy::Exclude,
+        })
+    } else {
+        None
+    };
+    let bin = match &stat.parameters {
+        StatParameters::Bin(s) => Some(s),
+        _ => automatic.as_ref(),
+    };
+    if !matches!(stat.parameters, StatParameters::Identity)
+        && (input.bins.is_some() || input.statistical.is_some())
+    {
+        return Err(error(
+            DiagnosticCode::SchemaConflict,
+            "Nonidentity statistics require source observations.",
+        ));
+    }
+    if matches!(
+        stat.parameters,
+        StatParameters::Count(_) | StatParameters::Summary(_) | StatParameters::Ols(_)
+    ) {
+        input.statistical = Some(super::statistics::schema(stat, data, limits)?);
+    }
+    if let Some(spec) = bin {
         if input.bins.is_some() {
             return Err(error(
                 DiagnosticCode::SchemaConflict,
@@ -979,4 +1060,58 @@ fn stat_shape(
         });
     }
     Ok(input)
+}
+
+fn statistical_binding(
+    layer: &Layer,
+    aes: &StatAes,
+    fields: &[StatColumn],
+) -> ChartResult<DomainContributions> {
+    let space = |value: &StatNumeric| -> ChartResult<Option<ValueSpace>> {
+        match value {
+            StatNumeric::Literal(v) if v.is_finite() => Ok(None),
+            StatNumeric::Literal(_) => Err(error(
+                DiagnosticCode::NumericalDomain,
+                "Generated literal must be finite.",
+            )),
+            StatNumeric::Field(f) => fields
+                .iter()
+                .find(|c| &c.field == f)
+                .map(|c| Some(c.space.clone()))
+                .ok_or_else(|| {
+                    error(
+                        DiagnosticCode::SchemaConflict,
+                        "Generated field is absent from this statistic's schema.",
+                    )
+                }),
+        }
+    };
+    validate_line_size(layer, aes.size.is_some())?;
+    let mut d = DomainContributions {
+        x_space: space(&aes.x)?,
+        y_space: space(&aes.y)?,
+        ..Default::default()
+    };
+    for v in [&aes.x2, &aes.y2].into_iter().flatten() {
+        space(v)?;
+    }
+    if let Some(v) = &aes.size
+        && matches!(space(v)?, Some(ValueSpace::Categorical { .. }))
+    {
+        return Err(error(
+            DiagnosticCode::SchemaConflict,
+            "Mapped generated size requires a numeric field.",
+        ));
+    }
+    if matches!(layer.geom, Geom::Rule | Geom::Rectangle) {
+        let (Some(x2), Some(y2)) = (&aes.x2, &aes.y2) else {
+            return Err(error(
+                DiagnosticCode::SchemaConflict,
+                "Interval geometry requires both generated endpoints.",
+            ));
+        };
+        merge_space(&mut d.x_space, &space(x2)?)?;
+        merge_space(&mut d.y_space, &space(y2)?)?;
+    }
+    Ok(d)
 }

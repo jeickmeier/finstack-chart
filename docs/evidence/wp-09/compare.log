@@ -1,0 +1,11 @@
+PASS three-runtime initial: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime definition: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime transaction: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime replay: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime action: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime final: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime scene: exact identities/types/state; numeric tolerance 0.01 pt
+PASS three-runtime state: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS independent domains/bin counts/members, large IDs, exact nanosecond times, UInt64/Int64 extremes, null/display values, replay, physical vector SVG and per-item target alignment
+PASS exact SVG bytes across Rust/Python/WASM
+PASS actual Rust/Python PDF vector/font policy and PNG dimensions

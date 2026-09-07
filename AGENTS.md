@@ -8,14 +8,15 @@ Read [the specification](docs/spec/gpui-charts-specification.md),
 instructions lead, followed by the specification, conforming ADRs, implementation plan
 and migration rationale. An infrastructure-only assignment does not authorize chart
 implementation. The repository contains core data/grammar, scales/layout, inspection and a standalone
-native chart adapter, plus immutable headless SVG/PDF/PNG publication. Binding APIs remain
-unimplemented.
+native chart adapter, immutable headless SVG/PDF/PNG publication, built-in statistics and
+positions, and versioned Python/WASM proofs. Full scale/geometry/facet/theme families,
+binding coverage and host products remain later work.
 
 ## Project Structure & Module Organization
 
 `chart-core` owns shared semantics; `chart-export` owns headless publication;
 `gpui-charts` owns native integration; `gpui-charts-kit` is optional. Python/WASM
-packages are reserved proof adapters. Recipes and bindings must share the core engine.
+packages are executable proof adapters. Recipes and bindings must share the core engine.
 Keep GPUI/interpreter/browser objects, compulsory I/O, system fonts, finance engines
 and mandatory threading outside core. Export must not require a GPUI event loop.
 Record dependency identity and consequential choices in `docs/adr/`; dated migration
@@ -25,7 +26,8 @@ versions are not adopted dependencies.
 
 Use `mise install` to provision the tools in `mise.toml`. Run `mise run fmt` to format,
 `mise run check` for repository/dependency/build/lint/docs/WASM checks, and `mise run test`
-for macOS workspace or Linux core/export tests. Run a selected core contract test with
+for macOS workspace or Linux core/export tests. Run `mise run bindings-proof` for actual
+Rust/Python/WASM parity; it requires Node, Poppler and wasm-bindgen CLI 0.2.128. Run a selected core contract test with
 `mise exec -- cargo test -p chart-core TEST_FILTER --locked`. Use the committed lockfile
 and inherited workspace lints. Rustfmt
 enforces formatting; Clippy and rustdoc warnings fail checks. Add capability tasks only

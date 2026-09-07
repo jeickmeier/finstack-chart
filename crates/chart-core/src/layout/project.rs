@@ -1,5 +1,5 @@
 use super::*;
-use crate::grammar::{ClipPolicy, PreparedGeometry, ValueSpace};
+use crate::grammar::{ClipPolicy, JitterUnits, Position, PreparedGeometry, ValueSpace};
 use crate::provenance::Target;
 use crate::scales::error;
 use crate::scene::{PathCommand, Primitive, SceneItem, Stroke};
@@ -91,18 +91,57 @@ pub(super) fn project(
         let y = &axes[&layer.scales().y];
         let xspace = layer.domains().x_space.as_ref().unwrap_or(&x.space);
         let yspace = layer.domains().y_space.as_ref().unwrap_or(&y.space);
-        let point = |p: Point| -> ChartResult<Option<Point>> {
-            match (x.map(p.x(), xspace)?, y.map(p.y(), yspace)?) {
-                (Some(a), Some(b)) => Ok(Some(Point::new(a, b)?)),
-                _ => Ok(None),
-            }
-        };
         let clip = Some(if layer.clip() == ClipPolicy::Plot {
             plot
         } else {
             request.bounds
         });
         for mark in layer.marks() {
+            let point = |p: Point, target: &Target, edge: f64| -> ChartResult<Option<Point>> {
+                let (Some(mut a), Some(mut b)) = (x.map(p.x(), xspace)?, y.map(p.y(), yspace)?)
+                else {
+                    return Ok(None);
+                };
+                match layer.position() {
+                    Position::Jitter(spec) if spec.units == JitterUnits::Display => {
+                        let (dx, dy) = crate::grammar::positions::jitter(
+                            spec,
+                            target,
+                            &Some(mark.group.clone()),
+                        );
+                        a += dx;
+                        b += dy;
+                    }
+                    Position::Dodge(spec) => {
+                        let (ResolvedScale::Band(scale), ValueSpace::Categorical { categories }) =
+                            (&x.scale, xspace)
+                        else {
+                            return Err(error(
+                                DiagnosticCode::SchemaConflict,
+                                "Dodge requires resolved categorical bands.",
+                            ));
+                        };
+                        let Some(bounds) = scale.extent(&categories[p.x() as usize])? else {
+                            return Ok(None);
+                        };
+                        let slot = spec
+                            .order
+                            .iter()
+                            .position(|g| g == &mark.group)
+                            .ok_or_else(|| {
+                                error(
+                                    DiagnosticCode::Validation,
+                                    "Dodge group is absent from its fixed order.",
+                                )
+                            })?;
+                        let width = (bounds.end() - bounds.start()) * spec.width;
+                        a += width * ((slot as f64 + 0.5 + edge) / spec.order.len() as f64 - 0.5);
+                    }
+                    _ => {}
+                }
+                Ok(Some(Point::new(a, b)?))
+            };
+
             let stroke = Stroke {
                 color: mark.style.color,
                 width: mark.style.stroke_width,
@@ -150,7 +189,7 @@ pub(super) fn project(
                         Ok(())
                     };
                     for (p, target) in points.iter().zip(&mark.targets) {
-                        if let Some(p) = point(*p)? {
+                        if let Some(p) = point(*p, target, 0.)? {
                             run.push(p);
                             targets.push(target.clone());
                         } else {
@@ -161,7 +200,7 @@ pub(super) fn project(
                     flush(&mut out, &mut run, &mut targets)?;
                 }
                 PreparedGeometry::Point(p) => {
-                    if let Some(center) = point(*p)? {
+                    if let Some(center) = point(*p, &mark.targets[0], 0.)? {
                         out.push(
                             item(Primitive::Point {
                                 center,
@@ -176,7 +215,15 @@ pub(super) fn project(
                     }
                 }
                 PreparedGeometry::Rule { from, to } | PreparedGeometry::Rectangle { from, to } => {
-                    if let (Some(from), Some(to)) = (point(*from)?, point(*to)?) {
+                    let edge = if matches!(mark.geometry, PreparedGeometry::Rectangle { .. }) {
+                        0.5
+                    } else {
+                        0.
+                    };
+                    if let (Some(from), Some(to)) = (
+                        point(*from, &mark.targets[0], -edge)?,
+                        point(*to, &mark.targets[0], edge)?,
+                    ) {
                         let primitive = if matches!(mark.geometry, PreparedGeometry::Rule { .. }) {
                             Primitive::Rule { from, to, stroke }
                         } else {

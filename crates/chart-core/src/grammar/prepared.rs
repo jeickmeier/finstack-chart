@@ -8,22 +8,22 @@ use crate::{Diagnostic, LayerId, Point, Revision, RowKey, SchemaVersion, Transfo
 use std::{collections::BTreeMap, sync::Arc};
 
 /// Exact group values; labels/codes and numeric IDs are never narrowed to f64.
-#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Eq, PartialEq, Ord, PartialOrd)]
 pub enum GroupValue {
     /// Whole population.
     All,
     /// Categorical or UTF-8 group label.
     Text(String),
     /// Signed integer group.
-    Int(i64),
+    Int(#[serde(with = "crate::portable::signed")] i64),
     /// Unsigned integer group.
-    UInt(u64),
+    UInt(#[serde(with = "crate::portable::unsigned")] u64),
     /// Boolean group.
     Boolean(bool),
 }
 
 /// Declared axis calculation space, preventing silent double transforms or mixed origins.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub enum ValueSpace {
     /// Stable label catalog; geometry stores a checked ordinal into this layer catalog.
     Categorical {
@@ -37,6 +37,7 @@ pub enum ValueSpace {
         /// Source unit/timezone.
         representation: TimestampType,
         /// Checked integer origin.
+        #[serde(with = "crate::portable::signed")]
         origin: i64,
     },
     /// Explicit pre-stat transform; interval coordinates already occupy this space.
@@ -49,8 +50,10 @@ pub enum ValueSpace {
 }
 
 /// Exact generated schema field kind.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
 pub enum GeneratedKind {
+    /// Exact group label with an explicit categorical catalog.
+    Categorical,
     /// Finite binary64 endpoint.
     Float64,
     /// Exact unsigned membership count.
@@ -58,7 +61,7 @@ pub enum GeneratedKind {
 }
 
 /// Generated schema descriptor, separate from any original source schema.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, Eq, PartialEq)]
 pub struct GeneratedField {
     /// Generated accessor identity.
     pub field: super::BinField,
@@ -67,8 +70,15 @@ pub struct GeneratedField {
 }
 
 /// Prepared output schema; source accessors and generated accessors are disjoint.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub enum OutputSchema {
+    /// Count/summary/model schema with per-field nullability and calculation space.
+    Statistical {
+        /// Schema definition version.
+        version: SchemaVersion,
+        /// Exact generated field descriptors.
+        fields: Vec<super::StatColumn>,
+    },
     /// Original source fields, preserved by identity.
     Source(Arc<Schema>),
     /// Versioned explicit-bin output: start/end/midpoint f64 and count u64.
@@ -81,22 +91,24 @@ pub enum OutputSchema {
 }
 
 /// An identity-stat row references its owning immutable source snapshot.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, Eq, PartialEq)]
 pub struct SourceRow {
     /// Exact source key.
     pub key: RowKey,
     /// Stable insertion ordinal, independent of authored order.
+    #[serde(with = "crate::portable::unsigned")]
     pub ordinal: u64,
 }
 
 /// Typed bin output; no source-row accessor receives this generated row.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub struct BinnedRow {
     /// Left edge in the declared output space.
     pub start: f64,
     /// Right edge, final edge included by the bin computation.
     pub end: f64,
     /// Exact number of source members.
+    #[serde(with = "crate::portable::unsigned")]
     pub count: u64,
     /// Declared source group.
     pub group: GroupValue,
@@ -105,8 +117,10 @@ pub struct BinnedRow {
 }
 
 /// Physically distinct source and generated row vectors.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub enum PreparedRows {
+    /// Count, summary or fitted-model rows.
+    Statistical(Arc<[super::StatisticalRow]>),
     /// Source-key references, not cloned original rows or type-erased callbacks.
     Source(Arc<[SourceRow]>),
     /// Typed generated rows with explicit aggregate provenance.
@@ -116,6 +130,7 @@ impl PreparedRows {
     /// Prepared output row count.
     pub fn len(&self) -> usize {
         match self {
+            Self::Statistical(rows) => rows.len(),
             Self::Source(rows) => rows.len(),
             Self::Binned(rows) => rows.len(),
         }
@@ -127,7 +142,7 @@ impl PreparedRows {
 }
 
 /// Per-stage population accounting; counts describe this operation, not the whole graph.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, Default, Eq, PartialEq)]
 pub struct PopulationCounts {
     /// Rows received from the dependency.
     pub input: usize,
@@ -145,8 +160,8 @@ pub struct PopulationCounts {
     pub output: usize,
 }
 
-/// Auditable stat invocation. All WP-05 operations use exact full recomputation.
-#[derive(Clone, Debug, PartialEq)]
+/// Auditable stat invocation with exact update capability and population accounting.
+#[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub struct OperationRecord {
     /// Registered operation identity/version.
     pub operation: OperationRef,
@@ -160,6 +175,8 @@ pub struct OperationRecord {
     pub grouping: Grouping,
     /// Statistical calculation-space policy.
     pub space: StatSpace,
+    /// Exact specialized update support and declared full-recompute fallback.
+    pub incremental: super::IncrementalCapabilities,
     /// Population accounting for this stage.
     pub counts: PopulationCounts,
 }
@@ -174,6 +191,13 @@ pub struct PreparedTable {
     pub(crate) operations: Vec<OperationRecord>,
 }
 impl PreparedTable {
+    pub(crate) fn work_units(&self) -> usize {
+        let fields = match &self.schema {
+            OutputSchema::Statistical { fields, .. } => fields.len(),
+            _ => 1,
+        };
+        self.rows.len().saturating_mul(fields)
+    }
     /// Explicit original/generated schema.
     pub fn schema(&self) -> &OutputSchema {
         &self.schema
@@ -197,7 +221,7 @@ impl PreparedTable {
 }
 
 /// Finite data-space domain extent. Empty axes have no extent; Scale resolution chooses documented fallbacks.
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, PartialEq)]
 pub struct Extent {
     /// Minimum contributing endpoint.
     pub minimum: f64,
@@ -219,7 +243,7 @@ impl Extent {
 }
 
 /// Contributions after statistics and semantic positions, before scale policies or viewport.
-#[derive(Clone, Debug, Default, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, Default, PartialEq)]
 pub struct DomainContributions {
     /// Eligible x coordinates and interval endpoints.
     pub x: Option<Extent>,
@@ -270,6 +294,7 @@ pub struct PreparedMark {
 /// One prepared layer in paint order.
 #[derive(Clone, Debug)]
 pub struct PreparedLayer {
+    pub(crate) position: super::Position,
     pub(crate) id: LayerId,
     pub(crate) scales: super::ScaleBindings,
     pub(crate) clip: super::ClipPolicy,
@@ -280,6 +305,10 @@ pub struct PreparedLayer {
     pub(crate) visible: bool,
 }
 impl PreparedLayer {
+    /// Exact semantic/display position policy.
+    pub fn position(&self) -> &super::Position {
+        &self.position
+    }
     /// Bound positional scale identities.
     pub fn scales(&self) -> super::ScaleBindings {
         self.scales

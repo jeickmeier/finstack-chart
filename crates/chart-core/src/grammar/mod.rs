@@ -56,13 +56,17 @@
 
 mod compiler;
 mod definition;
+pub(crate) mod positions;
 mod prepared;
+mod statistical_types;
+mod statistics;
 mod stats;
 mod typed;
 
 pub use compiler::Compiler;
 pub use definition::*;
 pub use prepared::*;
+pub use statistical_types::*;
 pub use typed::*;
 
 use crate::{Diagnostic, DiagnosticCode};

@@ -3,39 +3,44 @@
 Updated: 6 September 2026. Specification version: 0.1.0.
 Bootstrap committed at `fbc9782` (starting commit: `19f4a27`); WP-01 committed at `dfe38e8`.
 WP-02 committed at `435e127`; WP-03 at `3a86189`; WP-04 at `d0a6c48`.
-WP-05 is committed at `3cf1b33`; WP-06 at `f8657fb`. WP-07 completion is `f8657fb`
-plus the uncommitted native adapter, shared inspection, gallery, tests and documentation.
+WP-05 is committed at `3cf1b33`; WP-06 at `f8657fb`; WP-07/08 at `fac148a`.
+WP-09 completion is `fac148a` plus the uncommitted portable contracts, adapters, fixtures,
+runner and documentation.
 
 ## Current handoff
 
-**WP-08 is DONE for the headless export and snapshot foundation.** Immutable shared-core
-figures export SVG/PDF/PNG with supplied fonts, physical dimensions, explicit text/outline
-capabilities and reproducibility metadata. The standalone native publication preview uses
-the same captured layout and was inspected through resize. Minimal FIX-13/14 includes
-coherent export while data/definition/annotations change and eventual snapshot release.
+**WP-10 is DONE for built-in statistical and position semantics.** Count, automatic bins,
+exact summaries/quantiles, intercept OLS, transformed statistical spaces, mixed-sign
+stack/normalize, band-relative dodge and stable seeded jitter use the existing core compiler.
+Generated fields have explicit schemas, spaces and source/model membership. Normalized
+stacks carry dimensionless metadata. Every builtin declares exact full-recompute fallback;
+no specialized streaming performance is claimed.
 
-[The WP-08 report](evidence/wp-08-completion-2026-09-06.md) records inspected artifacts,
-independent dimensions/vector/font checks and limits. [ADR-003](adr/003-font-and-renderer-capability-route.md)
-records resvg/usvg 0.48.1 and krilla 0.8.2 adoption; the normal export graph has no legacy
-rustybuzz/ttf-parser/svg2pdf or GPUI. Core remains dependency-free and synchronous.
-WP-07's uncommitted native adapter/inspection/gallery result remains preserved;
-[its evidence](evidence/wp-07-completion-2026-09-06.md) remains valid for that scope.
+[The WP-10 report](evidence/wp-10-completion-2026-09-06.md) records scope, actual commands,
+artifacts, tolerances and limitations. [The statistics contract](statistics-contract.md)
+and [ADR-005](adr/005-foundational-scales-and-layout.md) record defaults and algorithms.
+[The portable contract](portable-contract.md) now covers these operations and positions.
+Result revision is `fac148a` plus the preserved uncommitted WP-09 and new WP-10 changes.
 
-`mise run fmt`, `mise run check` and `mise run test` pass on macOS arm64: **89 core tests,
-10 export tests, 1 native conversion test and 2 Rustdoc examples**. Actual SVG/PDF/PNG and
-native preview inspection passed. Core WASM compilation passes. The six existing workspace
-unmaintained advisories and `block` 0.1.6 future-compiler warning remain open; advisory
-scanning is separate from the passing license/source gate.
+`mise run fmt`, `mise run check`, `mise run test` and the final actual `bindings-proof`
+pass locally. Cargo runs **109 core tests, 13 export tests, 1 native conversion test and
+2 Rustdoc examples (125 total)**, including 14 new WP-10 tests. FIX-02/03/04/05 pass
+independent expectations and exact batch comparisons after append/correction/removal/reorder.
+Twelve stored WP-10 cases execute in each of native Rust, Python and actual Node WebAssembly;
+statistics match within 1e-12, final scenes within 1e-10 points, and SVG bytes match exactly.
+Four representative exported PNGs were visually inspected. Existing WP-09 lifetime,
+malformed-input, correction/state and physical export checks pass again.
 
-G0 remains passed for initial macOS architecture/capability scope. G1–G4 remain open:
-actual binding runtimes, full grammar/typography/interaction, accessibility and sustained-load
-performance remain later packages. Linux execution, hosted CI and screen-reader support
+WP-09 and G1 retain their accepted minimal portable-core scope, documented in
+[the WP-09 report](evidence/wp-09-completion-2026-09-06.md). G0/G1 are passed at their
+recorded scopes; G2–G4 remain open. No new dependency was added by WP-10. The six existing
+unmaintained advisories (last scanned in WP-09) and `block` future-compiler warning remain
+unresolved. Linux/hosted CI, browser UI, wheels and the full interpreter/platform matrix
 remain unverified.
 
-**Next:** WP-09 portable schema and executable binding proofs is READY and unassigned.
-Full publication composition remains WP-13; sustained live export remains WP-20.
-Maintenance/release disposition remains WP-23; licensing/public registry names remain
-release preparation decisions in ADR-010.
+**Next:** WP-11 required scale and geometry families is READY and unassigned. Extend the
+shared output/position/domain route and actual binding fixtures. Full family portability
+is required at WP-21/G4; streaming optimization/evidence remains WP-18/22.
 
 ## Work packages
 
@@ -51,11 +56,11 @@ The final column records outstanding prerequisites/blockers and the next action.
 | WP-04 — Immutable data, schemas and transactions | DONE | Unassigned | `d0a6c48` | DAT-01, DAT-02, DAT-03, DAT-04, DAT-05, DAT-06, ARC-03, QLT-01 | [Completion evidence](evidence/wp-04-completion-2026-09-06.md); [ADR-004](adr/004-immutable-data-and-transactions.md) | Data portions accepted; full transform/selection behavior, queued ingestion/time retention and binding runtimes remain later packages. |
 | WP-05 — Grammar compiler and minimal prepared scene | DONE | Unassigned | `3cf1b33` | GRA-01, GRA-02, GRA-03, GRA-04, GRA-06, GRA-08, SCN-01, SCN-02, DAT-06 | [Completion evidence](evidence/wp-05-completion-2026-09-06.md); [ADR-002](adr/002-minimal-core-contracts.md) | Known data-space geometry/semantics accepted; scales/layout and destination scene projection are WP-06; complete grammar/extensions remain later packages. |
 | WP-06 — Foundational scales, ticks and layout | DONE | Unassigned | `f8657fb` | SCL-01, SCL-02, SCL-04, SCL-05, LAY-01, LAY-02, DAT-05 | [Completion evidence](evidence/wp-06-completion-2026-09-06.md); [ADR-005](adr/005-foundational-scales-and-layout.md) | Foundational scale/scene/text-layout contracts accepted; actual native/export consumers are WP-07/08, full families/typography/shared layout remain WP-11–13. |
-| WP-07 — Working standalone GPUI vertical slice | DONE | Unassigned | `f8657fb` + uncommitted WP-07 slice | GPU-01, GPU-02, SCN-03, SCN-04, INT-01, INT-03, QLT-01 | [Completion evidence](evidence/wp-07-completion-2026-09-06.md); [ADR-003](adr/003-font-and-renderer-capability-route.md) | Standalone line/point/bar, native text, presented-snapshot inspection, resize and disposal accepted for FIX-01/07/18 subsets; complete interaction/indexing/accessibility remain WP-15–21. |
-| WP-08 — Headless export and snapshot foundation | DONE | Unassigned | `f8657fb` + uncommitted WP-07/08 slices | ARC-02, EXP-01, EXP-02, EXP-03, EXP-04, LAY-04, SCN-03 | [Completion evidence](evidence/wp-08-completion-2026-09-06.md); [ADR-003](adr/003-font-and-renderer-capability-route.md) | Basic headless formats, explicit resources and minimal FIX-13/14 accepted; full composition/live exports remain WP-13/20. |
-| WP-09 — Portable schema and executable binding proofs | READY | Unassigned | — | BND-01, BND-02, BND-03, BND-04, ARC-02, DAT-01, QLT-01 | None | WP-04–08 complete; implement portable contracts and actual Python/WASM runtime fixtures when assigned. |
-| WP-10 — Complete statistical and position semantics | NOT STARTED | Unassigned | — | GRA-03, GRA-04, GRA-05, GRA-08, DAT-05, DAT-06, QLT-02 | None | Satisfy prerequisites: WP-09. |
-| WP-11 — Required scale and geometry families | NOT STARTED | Unassigned | — | GRA-06, SCL-01, SCL-02, SCL-03, SCL-04, SCL-05, SCN-01, SCN-03, DAT-05 | None | Satisfy prerequisites: WP-10, WP-07. |
+| WP-07 — Working standalone GPUI vertical slice | DONE | Unassigned | `fac148a` | GPU-01, GPU-02, SCN-03, SCN-04, INT-01, INT-03, QLT-01 | [Completion evidence](evidence/wp-07-completion-2026-09-06.md); [ADR-003](adr/003-font-and-renderer-capability-route.md) | Standalone line/point/bar, native text, presented-snapshot inspection, resize and disposal accepted for FIX-01/07/18 subsets; complete interaction/indexing/accessibility remain WP-15–21. |
+| WP-08 — Headless export and snapshot foundation | DONE | Unassigned | `fac148a` | ARC-02, EXP-01, EXP-02, EXP-03, EXP-04, LAY-04, SCN-03 | [Completion evidence](evidence/wp-08-completion-2026-09-06.md); [ADR-003](adr/003-font-and-renderer-capability-route.md) | Basic headless formats, explicit resources and minimal FIX-13/14 accepted; full composition/live exports remain WP-13/20. |
+| WP-09 — Portable schema and executable binding proofs | DONE | Unassigned | `fac148a` + uncommitted WP-09 | BND-01, BND-02, BND-03, BND-04, ARC-02, DAT-01, QLT-01 | [Completion evidence](evidence/wp-09-completion-2026-09-06.md); [ADR-006](adr/006-portable-specification-and-binding-proofs.md) | Version 1 subset and actual Rust/Python/WASM FIX-15/16 accepted; extend builtin coverage through WP-10–14 and full parity at WP-21. |
+| WP-10 — Complete statistical and position semantics | DONE | Unassigned | `fac148a` + uncommitted WP-09/10 | GRA-03, GRA-04, GRA-05, GRA-08, DAT-05, DAT-06, QLT-02 | [Completion evidence](evidence/wp-10-completion-2026-09-06.md); [contract](statistics-contract.md); [ADR-005](adr/005-foundational-scales-and-layout.md) | Built-in stats/positions and FIX-02–05 accepted; exact full-recompute fallback declared. Extend families in WP-11 and specialized streaming in WP-18. |
+| WP-11 — Required scale and geometry families | READY | Unassigned | — | GRA-06, SCL-01, SCL-02, SCL-03, SCL-04, SCL-05, SCN-01, SCN-03, DAT-05 | None | WP-10 and WP-07 complete; implement the assigned scale/geometry slice when requested. |
 | WP-12 — Facets, guides and shared layout | NOT STARTED | Unassigned | — | GRA-07, GRA-08, SCL-05, LAY-01, LAY-02, LAY-03 | None | Satisfy prerequisites: WP-10, WP-11. |
 | WP-13 — Full themes and publication composition | NOT STARTED | Unassigned | — | THM-01, THM-02, THM-03, LAY-02, LAY-03, LAY-04, EXP-01, EXP-02, EXP-04, GPU-03 | None | Satisfy prerequisites: WP-08, WP-12. |
 | WP-14 — Extension contracts and alpha API | NOT STARTED | Unassigned | — | SCP-01, SCP-02, ARC-03, GRA-01, GRA-08, SCN-02, SCN-03, INT-06, BND-01, THM-03, QLT-05 | None | Satisfy prerequisites: WP-09, WP-11, WP-12, WP-13. |
@@ -74,7 +79,7 @@ The final column records outstanding prerequisites/blockers and the next action.
 | Gate | State | Evidence required next |
 | --- | --- | --- |
 | G0 | PASSED — architecture/capability scope | WP-01/02/03 evidence and ADRs establish the initial macOS route and starting protocol; this does not pass full requirements, FIX/PERF or release support. |
-| G1 | NOT PASSED | WP-04 data, WP-05 grammar, WP-06 layout, WP-07 native and WP-08 headless chart evidence available; Python/WASM runtime fixtures still required. |
+| G1 | PASSED — minimal portable core | WP-04–08 foundation/native/headless evidence plus WP-09 actual Python/WASM FIX-15/16 runtime comparison; this does not certify full grammar or production host/distribution products. |
 | G2 | NOT PASSED | Complete alpha grammar/publication/theme/extension evidence. |
 | G3 | NOT PASSED | Interaction, corrections/retention, scheduling and coherent live exports. |
 | G4 | NOT PASSED | All required FIX/PERF/platform/accessibility/documentation evidence. |

@@ -1,9 +1,13 @@
+use super::{
+    AutoBinSpec, CountSpec, DodgeSpec, JitterSpec, OlsSpec, StackSpec, StatAes, SummarySpec,
+};
 use crate::data::InvalidPolicy;
 use crate::scene::Color;
 use crate::{DatasetId, FieldId, LayerId, Revision, ScaleId, TransformId};
 
 /// Exact builtin operation identity/version; unknown or mismatched registrations fail.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct OperationRef {
     /// Registered name; no executable code is loaded by this descriptor.
     pub id: String,
@@ -24,7 +28,8 @@ impl OperationRef {
 }
 
 /// Dataset or named prepared output; dependency IDs are never array offsets.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum DataRef {
     /// Immutable registered dataset.
     Dataset(DatasetId),
@@ -43,7 +48,8 @@ impl From<TransformId> for DataRef {
 }
 
 /// Portable coordinate/numeric mapping evaluated against source rows only.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum Numeric {
     /// Numeric source field; integer precision is checked, timestamps require `Timestamp`.
     Field(FieldId),
@@ -56,6 +62,7 @@ pub enum Numeric {
         /// Source timestamp field.
         field: FieldId,
         /// Explicit origin in that field's integer units.
+        #[serde(with = "crate::portable::signed")]
         origin: i64,
     },
 }
@@ -66,7 +73,8 @@ impl From<FieldId> for Numeric {
 }
 
 /// Stable source grouping. Facet/panel scopes are not implemented by this minimal engine.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Default, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum Grouping {
     /// Whole filtered population; the default for histogram recipes.
     #[default]
@@ -76,7 +84,8 @@ pub enum Grouping {
 }
 
 /// Source filtering changes the population before statistics; viewport actions do not.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct SourceFilter {
     /// Source numeric mapping to compare.
     pub value: Numeric,
@@ -87,7 +96,8 @@ pub struct SourceFilter {
 }
 
 /// Supported versioned pre-stat numeric transform. No implicit scale transform is applied.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct NumericTransform {
     /// Must resolve `chart.affine`, version one.
     pub operation: OperationRef,
@@ -97,7 +107,7 @@ pub struct NumericTransform {
     pub offset: f64,
 }
 impl NumericTransform {
-    /// Declare `factor * source + offset` before binning.
+    /// Declare `factor * source + offset` before the declared statistic.
     pub fn affine(factor: f64, offset: f64) -> Self {
         Self {
             operation: OperationRef::builtin("chart.affine"),
@@ -108,7 +118,8 @@ impl NumericTransform {
 }
 
 /// Declared statistical input/output space, retained in prepared metadata.
-#[derive(Clone, Debug, Default, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Default, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum StatSpace {
     /// Source data units over the filtered population.
     #[default]
@@ -118,17 +129,21 @@ pub enum StatSpace {
 }
 
 /// Behavior outside explicit bin edges.
-#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Default, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum OutlierPolicy {
     /// Exclude and report below/above counts.
     #[default]
     Exclude,
+    /// Assign outside values to the nearest finite edge bin, retaining counts and membership.
+    Overflow,
     /// Reject instead of excluding any finite value outside the edges.
     Error,
 }
 
 /// Explicit-edge bin parameters. Intervals are [left,right), with final right included.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct BinSpec {
     /// Required source channel.
     pub input: Numeric,
@@ -155,16 +170,26 @@ impl BinSpec {
 }
 
 /// Implemented statistical parameter contracts; generated outputs have a separate type.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum StatParameters {
     /// Preserve source or already-generated rows/provenance.
     Identity,
+    /// Thirty equal-width bins by default, over the eligible filtered population.
+    AutoBin(AutoBinSpec),
+    /// Count rows satisfying every declared required numeric input.
+    Count(CountSpec),
+    /// Exact grouped finite-value summaries and configurable interpolated quantiles.
+    Summary(SummarySpec),
+    /// Intercept ordinary least-squares over finite paired observations.
+    Ols(OlsSpec),
     /// Aggregate source observations into explicit bins.
     Bin(BinSpec),
 }
 
 /// Operation registration and its parameters must agree before any data is evaluated.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct Statistic {
     /// Known operation identity and version.
     pub operation: OperationRef,
@@ -194,7 +219,8 @@ impl Default for Statistic {
 }
 
 /// Named acyclic operation output that can feed multiple layers through shared storage.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct TransformDefinition {
     /// Stable graph identity.
     pub id: TransformId,
@@ -221,7 +247,8 @@ impl TransformDefinition {
 }
 
 /// Source-stage aesthetic mappings. Every mapped field is validated against each layer.
-#[derive(Clone, Debug, Default, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Default, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct SourceAes {
     /// First horizontal coordinate.
     pub x: Option<Numeric>,
@@ -284,7 +311,8 @@ impl SourceAes {
 }
 
 /// Typed generated bin fields; these cannot be used as source field IDs/accessors.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum BinField {
     /// Left interval edge in the stat's output space.
     Start,
@@ -297,7 +325,8 @@ pub enum BinField {
 }
 
 /// Mapping evaluated against `BinnedRow`, never the original observation.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum BinNumeric {
     /// Generated typed field.
     Field(BinField),
@@ -311,7 +340,8 @@ impl From<BinField> for BinNumeric {
 }
 
 /// Generated-stage aesthetics, with no inheritance from source-row accessors.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct BinAes {
     /// First horizontal coordinate.
     pub x: BinNumeric,
@@ -348,16 +378,20 @@ impl BinAes {
 }
 
 /// Stage-safe mapping choice. A generated mapping cannot accidentally read source fields.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum Mappings {
     /// Source mappings, optionally inheriting chart defaults.
     Source(SourceAes),
+    /// Explicit mappings of count, summary or fitted output fields.
+    Statistical(StatAes),
     /// Explicit mappings of the bin output schema.
     Binned(BinAes),
 }
 
 /// Source/order policy for straight line runs.
-#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Default, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum LineOrder {
     /// Increasing x; equal x values use stable source insertion ordinal.
     #[default]
@@ -367,7 +401,8 @@ pub enum LineOrder {
 }
 
 /// Implemented geometry contracts. Coordinates remain in data/calculation space.
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum Geom {
     /// Circular points.
     Point,
@@ -393,16 +428,24 @@ impl Geom {
     }
 }
 
-/// Only implemented semantic position; stacking/dodging/jitter remain WP-10.
-#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+/// Semantic positions precede domains; display adjustments follow scale projection.
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Default, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum Position {
     /// Preserve prepared endpoints.
     #[default]
     Identity,
+    /// Add positive and negative heights separately, in explicit group order.
+    Stack(StackSpec),
+    /// Fixed band-relative slots; missing groups keep their configured slot.
+    Dodge(DodgeSpec),
+    /// Stable per-target displacement in declared data or destination units.
+    Jitter(JitterSpec),
 }
 
 /// Constant solid styling, separate from data aesthetic mappings.
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct Style {
     /// Fill/stroke color, before any future palette scale.
     pub color: Color,
@@ -427,7 +470,8 @@ impl Default for Style {
 }
 
 /// Named positional scale bindings. IDs zero and one are the default x and y scales.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct ScaleBindings {
     /// Horizontal scale identity.
     pub x: ScaleId,
@@ -443,7 +487,8 @@ impl Default for ScaleBindings {
     }
 }
 /// Destination clip shared by painting and future hit testing/export.
-#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Default, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum ClipPolicy {
     /// Clip to the resolved plot rectangle.
     #[default]
@@ -453,7 +498,8 @@ pub enum ClipPolicy {
 }
 
 /// One heterogeneous grammar layer, erased to portable fields before preparation.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct Layer {
     /// Stable identity; vector order controls paint order.
     pub id: LayerId,
@@ -465,7 +511,7 @@ pub struct Layer {
     pub data: DataRef,
     /// Source filters, before statistics and domains.
     pub filters: Vec<SourceFilter>,
-    /// Identity or bins through the same stage implementation used by transforms.
+    /// Shared built-in statistic, using the same implementation as named transforms.
     pub statistic: Statistic,
     /// Source or generated-stage encodings.
     pub mappings: Mappings,
@@ -531,7 +577,8 @@ impl Layer {
 }
 
 /// Normalized chart definition; no native callbacks, windows or original typed rows.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct ChartDefinition {
     /// Caller-owned definition revision; advance on effective authored changes.
     pub revision: Revision,
@@ -570,7 +617,8 @@ impl ChartDefinition {
 }
 
 /// Explicit compiler work budgets; source allocation and retained caller handles are separate.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct CompileLimits {
     /// Maximum declared layers.
     pub max_layers: usize,
@@ -582,7 +630,7 @@ pub struct CompileLimits {
     pub max_groups: usize,
     /// Maximum edges in an explicit bin request.
     pub max_edges: usize,
-    /// Maximum rows across prepared outputs, including source projections and shared graph nodes.
+    /// Maximum rows across prepared outputs; statistical rows charge one unit per generated field.
     pub max_prepared_rows: usize,
     /// Maximum total geometry vertices/endpoints across layers.
     pub max_vertices: usize,

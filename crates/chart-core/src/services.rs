@@ -8,7 +8,7 @@ use crate::limits::require_within;
 use crate::{ChartResult, Diagnostic, DiagnosticCode, Limits, ResourceId, Revision};
 
 /// Unit convention shared by a scene and its destination text service.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Units {
     /// Native logical pixels, before device-pixel scaling.
     LogicalPixels,
@@ -17,7 +17,7 @@ pub enum Units {
 }
 
 /// Resource representation the host is expected to supply.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
 pub enum ResourceKind {
     /// Font bytes; actual parsing, glyph support and permissions are host responsibilities.
     Font,
@@ -26,7 +26,7 @@ pub enum ResourceKind {
 }
 
 /// Identity of immutable host-owned bytes. Changing bytes requires a new revision.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
 pub struct ResourceDescriptor {
     /// Stable resource identity.
     pub id: ResourceId,
@@ -35,6 +35,7 @@ pub struct ResourceDescriptor {
     /// Expected representation.
     pub kind: ResourceKind,
     /// Expected byte length, preserved without pointer-width narrowing.
+    #[serde(with = "crate::portable::unsigned")]
     pub byte_len: u64,
 }
 

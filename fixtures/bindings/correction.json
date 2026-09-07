@@ -1,0 +1,194 @@
+{
+  "version": 1,
+  "id": "correct-row-2",
+  "epoch": "9007199254746001",
+  "expected": [
+    {
+      "dataset": "9007199254741001",
+      "revision": "0",
+      "schema_version": "9007199254744001"
+    }
+  ],
+  "operations": [
+    {
+      "dataset": "9007199254741001",
+      "mutation": {
+        "UpsertByKey": {
+          "schema_version": "9007199254744001",
+          "fields": [
+            {
+              "id": "1",
+              "name": "x",
+              "kind": "Float64",
+              "nullable": true,
+              "unit": null,
+              "label": "x"
+            },
+            {
+              "id": "2",
+              "name": "y",
+              "kind": "Float64",
+              "nullable": true,
+              "unit": null,
+              "label": "y"
+            },
+            {
+              "id": "3",
+              "name": "event_time",
+              "kind": {
+                "Timestamp": {
+                  "unit": "Nanoseconds",
+                  "timezone": "UTC"
+                }
+              },
+              "nullable": true,
+              "unit": "ns",
+              "label": "event_time"
+            },
+            {
+              "id": "4",
+              "name": "exact_unsigned",
+              "kind": "UInt64",
+              "nullable": true,
+              "unit": null,
+              "label": "exact_unsigned"
+            },
+            {
+              "id": "5",
+              "name": "exact_signed",
+              "kind": "Int64",
+              "nullable": true,
+              "unit": null,
+              "label": "exact_signed"
+            },
+            {
+              "id": "6",
+              "name": "active",
+              "kind": "Boolean",
+              "nullable": true,
+              "unit": null,
+              "label": "active"
+            },
+            {
+              "id": "7",
+              "name": "label",
+              "kind": "Utf8",
+              "nullable": true,
+              "unit": null,
+              "label": "label"
+            },
+            {
+              "id": "8",
+              "name": "sector",
+              "kind": "Categorical",
+              "nullable": true,
+              "unit": null,
+              "label": "sector"
+            }
+          ],
+          "keys": [
+            "9007199254743002"
+          ],
+          "columns": [
+            {
+              "values": {
+                "Float64": [
+                  1.5
+                ]
+              },
+              "validity": [
+                true
+              ],
+              "formatted": [
+                "1.5000"
+              ]
+            },
+            {
+              "values": {
+                "Float64": [
+                  4.0
+                ]
+              },
+              "validity": [
+                true
+              ],
+              "formatted": null
+            },
+            {
+              "values": {
+                "Timestamp": [
+                  "1712345678901234568"
+                ]
+              },
+              "validity": [
+                true
+              ],
+              "formatted": null
+            },
+            {
+              "values": {
+                "UInt64": [
+                  "9007199254740993"
+                ]
+              },
+              "validity": [
+                true
+              ],
+              "formatted": null
+            },
+            {
+              "values": {
+                "Int64": [
+                  "9223372036854775807"
+                ]
+              },
+              "validity": [
+                true
+              ],
+              "formatted": null
+            },
+            {
+              "values": {
+                "Boolean": [
+                  false
+                ]
+              },
+              "validity": [
+                true
+              ],
+              "formatted": null
+            },
+            {
+              "values": {
+                "Utf8": [
+                  "correct me"
+                ]
+              },
+              "validity": [
+                true
+              ],
+              "formatted": null
+            },
+            {
+              "values": {
+                "Categorical": {
+                  "codes": [
+                    1
+                  ],
+                  "dictionary": [
+                    "A",
+                    "B"
+                  ]
+                }
+              },
+              "validity": [
+                true
+              ],
+              "formatted": null
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

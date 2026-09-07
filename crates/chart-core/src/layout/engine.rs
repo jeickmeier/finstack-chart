@@ -144,7 +144,8 @@ fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
             .filter(|l| l.visible())
             .any(|l| match l.table().rows() {
                 crate::grammar::PreparedRows::Binned(bins) => bins.iter().any(|b| b.count > 0),
-                crate::grammar::PreparedRows::Source(_) => !l.marks().is_empty(),
+                crate::grammar::PreparedRows::Source(_)
+                | crate::grammar::PreparedRows::Statistical(_) => !l.marks().is_empty(),
             });
     if no_population {
         potential_items = potential_items.checked_add(1).ok_or_else(|| {
@@ -498,7 +499,8 @@ fn layout_inner(
                 .filter(|l| l.visible())
                 .any(|l| match l.table().rows() {
                     crate::grammar::PreparedRows::Binned(bins) => bins.iter().any(|b| b.count > 0),
-                    crate::grammar::PreparedRows::Source(_) => !l.marks().is_empty(),
+                    crate::grammar::PreparedRows::Source(_)
+                    | crate::grammar::PreparedRows::Statistical(_) => !l.marks().is_empty(),
                 });
         let status = if output.items.is_empty() || !has_population {
             LayoutStatus::NoData

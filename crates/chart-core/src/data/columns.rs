@@ -6,14 +6,15 @@ use std::{
 };
 
 /// Physical column payload. Validity lives separately in [`Column`].
-#[derive(Clone, Debug)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug)]
+#[serde(deny_unknown_fields)]
 pub enum ColumnValues {
     /// Source binary64 values, including recoverable non-finite values.
-    Float64(Vec<f64>),
+    Float64(#[serde(with = "crate::portable::floats")] Vec<f64>),
     /// Exact signed integers.
-    Int64(Vec<i64>),
+    Int64(#[serde(with = "crate::portable::signed_vec")] Vec<i64>),
     /// Exact unsigned integers.
-    UInt64(Vec<u64>),
+    UInt64(#[serde(with = "crate::portable::unsigned_vec")] Vec<u64>),
     /// Booleans.
     Boolean(Vec<bool>),
     /// UTF-8 source text.
@@ -26,7 +27,7 @@ pub enum ColumnValues {
         dictionary: Vec<String>,
     },
     /// Integer timestamp ticks; schema carries unit and timezone.
-    Timestamp(Vec<i64>),
+    Timestamp(#[serde(with = "crate::portable::signed_vec")] Vec<i64>),
 }
 
 impl PartialEq for ColumnValues {
@@ -160,6 +161,10 @@ impl Column {
     /// True means non-null; it does not certify float finiteness for a numeric operation.
     pub fn validity(&self) -> &[bool] {
         &self.validity
+    }
+    /// Entire optional display payload, preserving absent versus explicitly null cells.
+    pub fn formatted_values(&self) -> Option<&[Option<String>]> {
+        self.formatted.as_deref()
     }
     /// Recover the original exact display text independently of rendered coordinates.
     pub fn formatted(&self, row: usize) -> Option<&str> {
@@ -509,7 +514,8 @@ impl NormalizedBatch {
 }
 
 /// Invalid channel policy for numeric projection only; ingestion preserves source data.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum InvalidPolicy {
     /// Return gaps and a bounded aggregate diagnostic.
     Exclude,

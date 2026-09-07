@@ -8,3 +8,7 @@ description = "Portable chart contracts and computation."
 
 [lints]
 workspace = true
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true

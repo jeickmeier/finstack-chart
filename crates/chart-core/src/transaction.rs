@@ -103,7 +103,7 @@ impl Transaction {
 }
 
 /// Counts for one operation, before later operations may undo its row changes.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, Default, Eq, PartialEq)]
 pub struct OperationCounts {
     /// New keys inserted, including keys subsequently evicted by this operation.
     pub inserted: usize,
@@ -118,7 +118,7 @@ pub struct OperationCounts {
 }
 
 /// Completed transaction acknowledgement, including net revision and removal effects.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, Eq, PartialEq)]
 pub struct CommitReceipt {
     /// Source epoch at commit.
     pub epoch: SourceEpoch,
@@ -144,7 +144,7 @@ impl CommitReceipt {
 }
 
 /// Observed fences accompanying a conflict; sources must resynchronize.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, Eq, PartialEq)]
 pub struct Conflict {
     /// Recoverable conflict explanation and available revision context.
     pub diagnostic: Diagnostic,
@@ -155,7 +155,7 @@ pub struct Conflict {
 }
 
 /// Synchronous acknowledgement. Rejections/conflicts leave data and replay history intact.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Debug, Eq, PartialEq)]
 pub enum CommitOutcome {
     /// Committed, including an explicitly unchanged result for a no-op.
     Applied(CommitReceipt),
