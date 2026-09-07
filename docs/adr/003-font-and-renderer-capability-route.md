@@ -1,6 +1,8 @@
 # ADR-003: Font, native path and publication route
 
-Status: ACCEPTED for WP-03 feasibility; public integration and full fixtures remain WP-07/08/13.
+Status: ACCEPTED for WP-03 feasibility, WP-07 native integration and WP-08 basic headless
+publication. The WP-08 adoption section supersedes the historical publication candidate;
+full publication fixtures remain WP-13/20.
 Date: 6 September 2026. Requirements: ARC-04, LAY-02/04, SCN-03, GPU-01/03, EXP-01/02, QLT-03.
 
 ## Decision
@@ -12,7 +14,7 @@ incompatible tree is not substituted merely because its version number is higher
 GPUI's own 0.46 renderer dependency remains internal to the pinned host. No such tree type
 is exposed in a chart public API. Exact packages/checksums are in the workspace lockfile.
 
-Candidate dependencies remain **dev dependencies** of the two proof consumers. They do
+Publication candidate dependencies remain **dev dependencies** of the two proof consumers. They do
 not change `chart-export`'s normal dependency graph (`chart-export → chart-core`) or core's
 dependency-free boundary. Promote only the needed packages/features when WP-08 integrates
 the public exporter. `resvg` and `svg2pdf` default features are disabled; only text support
@@ -101,3 +103,99 @@ boundary replaceable; WP-08 must assess maintained parser/shaper successors and 
 upstream usvg/GPUI transition as part of promotion, and WP-23 must resolve or explicitly
 disposition release risks. `block` 0.1.6 also retains its future-compiler warning.
 No dependency advisory was ignored and no message was sent upstream.
+
+
+## WP-07 native integration
+
+`gpui-charts` now consumes `LaidOutChart` from the shared compiler/layout route. It retains
+GPUI quads, paths and shaped lines in a native frame; hover redraws reuse them. It paints
+explicit Scene clips and vector marks, never a rasterized chart. Conversion to GPUI binary32
+coordinates rejects non-finite values or error above 0.25 logical pixel. Text measurement
+and painting use the same `WindowTextSystem`, supplied regular face, size and shaped-line
+ascent/descent; baseline placement follows those metrics. This is plain, unrotated native
+text, not the WP-03 publication outline preview or WP-13 rich typography.
+
+`NativeFont` parses and checks the supplied resource length, budget and family. Register
+before GPUI first resolves the family and reserve that family's supplied faces for this
+adapter: GPUI caches family selections. The pinned macOS implementation searches its memory
+font source before the system source. An App-scoped registry makes an identical registration
+idempotent and rejects a different resource under the same family. Missing/control glyphs
+and shaped runs using another font reject explicitly. No implicit fallback is supported.
+The host retains the registered bytes through GPUI's process text cache; register outside
+mount/render loops. This host ownership contract does not certify arbitrary prior/external
+font registrations, other native platforms, complex scripts or full font sandboxing.
+
+Promote only the already locked `ttf-parser` **0.25.1** to the normal native dependency
+for resource/glyph preflight. No parser/shaper version or publication graph changes. Its
+known maintenance advisory remains open; this narrow promotion does not waive WP-08's
+successor/transition assessment or WP-23's release disposition.
+
+One `ChartView` owns prepared input, at most a pending and a presented native frame, focus,
+and a core `Inspector`. It publishes inspection only after successful paint, with pointer
+coordinates relative to that frame's actual bounds. Tooltip content is laid out/painted
+only against the same presented chart; a new frame clears obsolete inspection. Weak
+next-frame callbacks do not retain disposed chart entities. On preparation failure the
+old frame and diagnostic remain; if bounds changed, inspection is disabled until a matching
+frame can be painted. The shared inspection reducer is the WP-07 subset, not the full
+selection/controlled-state/indexing work of WP-15/16. See the
+[WP-07 evidence](../evidence/wp-07-completion-2026-09-06.md).
+
+## WP-08 headless publication adoption
+
+This section supersedes the WP-03 publication candidate for the normal library graph;
+the original dev-only experiment and its evidence remain unchanged. Adopt `usvg`/`resvg`
+**0.48.1** with only text/writer features, `krilla` **0.8.2** with default features disabled,
+`skrifa` **0.44.0** for resource/permission preflight, SHA-256 **0.10.9**, base64 **0.22.1**
+and PNG **0.17.16**. The lockfile fixes all transitive versions. No GPUI dependency,
+system-font loading feature, mandatory threads, custom font shaper or custom PDF writer
+is introduced in `chart-export` or core.
+
+The maintenance assessment found that [svg2pdf was archived on 10 July 2026 and directs
+users to krilla/krilla-svg](https://github.com/typst/svg2pdf). The
+[resvg 0.48 changelog](https://github.com/linebender/resvg/blob/main/CHANGELOG.md) records
+its move from rustybuzz/ttf-parser to harfrust/skrifa. `krilla-svg` 0.8.1 would force the
+older 0.47 usvg/font stack, so the library instead uses
+[krilla's positioned-glyph/vector API](https://github.com/LaurenzV/krilla) directly.
+Its optional simple-text/rustybuzz and raster features are disabled. The bounded adapter
+maps only the existing solid core primitives and exact usvg-shaped glyph IDs/transforms;
+it does not implement general SVG interpretation. Existing native and WP-03 dev dependencies
+retain their locked old versions. The six workspace maintenance advisories remain open,
+with no ignores; the normal export graph excludes rustybuzz, ttf-parser and svg2pdf.
+See the [actual dependency graph](../evidence/wp-08/export-dependencies.txt).
+
+`FigureSnapshot::capture` clones definition/state/profile, retains the coherent source
+snapshot and font bytes, runs the shared core compiler/layout in physical points and
+builds one immutable publication tree. It records definition/store/state/layout/viewport
+stamps, source epoch, dataset/schema versions, font SHA-256 identities, annotation revision,
+physical settings and engine versions. The retained prepared chart owns the actual definition
+and data. Encoding consults no current application state. `FullDomain` removes viewport
+restrictions, including named-axis viewports, while preserving visibility, explicit domain
+policy and upstream statistics. Original capture settings remain in reproduction metadata.
+
+The profile supplies page dimensions (points or millimetres), DPI, plain annotation scene
+items, explicit background, resource/output/raster bounds and a binary32 conversion error
+limit (default 0.01 pt, maximum 0.25 pt). Dimensions and coordinates outside representable
+precision fail; PNG uses uniform DPI/72 scaling and checked rounded dimensions. Transparent
+PNG emits straight RGBA, with no extra background compositing. Encoders enforce returned-byte
+limits; raster allocation is bounded by pixel count. This is not a strict allocator peak-memory
+quota: vector serialization/PDF internals can allocate before the final output-size check.
+
+Fonts are supplied single-face static TTF/CFF bytes with exact resource ID/revision and
+permission preflight. The font database contains only these bytes; private aliases and an
+explicit resolver prevent system fallback. Missing/control characters, substituted glyphs,
+unsupported variable/color/bitmap/SVG fonts and prohibited embedding reject with diagnostics.
+Editable SVG embeds the full supplied font and rejects preview/print-only permission;
+PDF embeds subsets and rejects no-subsetting permission in preserve mode. Outline mode
+removes embedded fonts and selectable text. Restricted or bitmap-only permission is rejected
+at resource creation. These conservative policies and format representation are public,
+not an implicit fallback. Browser text SVG can reshape text; the outline preview is the
+exact point-layout route when geometry must be preserved.
+
+SVG/PDF keep vector marks and rectangle clipping; PNG rasterizes the same positioned tree.
+The native publication example paints its outlined SVG as vector paths, retaining glyph
+geometry through resizing. Plain text, solid rules/paths/rectangles/points and literal
+annotations are the implemented core subset. Gradients, rich/rotated text, images, groups,
+full figure furniture and fallback require later scene contracts and evidence; the broader
+WP-03 feasibility matrix does not certify them in this library. No PDF/A/X, tagged PDF,
+CMYK or full complex-script claim is made. See the
+[WP-08 completion report](../evidence/wp-08-completion-2026-09-06.md).

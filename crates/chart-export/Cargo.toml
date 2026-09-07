@@ -11,10 +11,15 @@ workspace = true
 
 [dependencies]
 chart-core.workspace = true
+resvg_export = { package = "resvg", version = "=0.48.1", default-features = false, features = ["text"] }
+usvg = { version = "=0.48.1", default-features = false, features = ["text", "writer"] }
+krilla = { version = "=0.8.2", default-features = false }
+skrifa = "=0.44.0"
+sha2 = "=0.10.9"
+base64 = "=0.22.1"
+png = "=0.17.16"
 
 [dev-dependencies]
 resvg = { version = "=0.45.1", default-features = false, features = ["text"] }
 svg2pdf = { version = "=0.13.0", default-features = false, features = ["text"] }
 ttf-parser = "=0.25.1"
-base64 = "=0.22.1"
-png = "=0.17.16"

@@ -1,0 +1,177 @@
+Reproducibility {
+    engines: "chart-export 0.1.0; usvg/resvg 0.48.1; harfrust 0.12.0; krilla 0.8.2; skrifa 0.44.0/0.42.1; PNG 0.17.16",
+    stamp: SceneStamp {
+        definition: Revision(
+            8,
+        ),
+        store: Revision(
+            0,
+        ),
+        layout: Revision(
+            0,
+        ),
+        state: Revision(
+            0,
+        ),
+        viewport: Revision(
+            0,
+        ),
+    },
+    captured_state: ChartState {
+        revision: Revision(
+            0,
+        ),
+        viewport_revision: Revision(
+            0,
+        ),
+        viewport: Viewport {
+            x: None,
+            y: None,
+        },
+        hidden: {},
+    },
+    source_epoch: SourceEpoch(
+        7,
+    ),
+    datasets: [
+        (
+            DatasetVersion {
+                dataset: DatasetId(
+                    1,
+                ),
+                revision: Revision(
+                    0,
+                ),
+                schema_version: SchemaVersion(
+                    1,
+                ),
+            },
+            SchemaVersion(
+                1,
+            ),
+        ),
+    ],
+    fonts: [
+        FontManifest {
+            id: ResourceId(
+                0,
+            ),
+            revision: Revision(
+                0,
+            ),
+            sha256: "2ec33f84606cbaa0a1a944488e14f97faf2f6a25ecdd8354f5358f06da13c7d9",
+        },
+    ],
+    profile: PublicationProfile {
+        page: PageSize {
+            width: 510.236220472441,
+            height: 340.15748031496065,
+        },
+        layout: LayoutRequest {
+            bounds: Rect {
+                origin: Point {
+                    x: 0.0,
+                    y: 0.0,
+                },
+                width: 510.236220472441,
+                height: 340.15748031496065,
+            },
+            units: Points,
+            revision: Revision(
+                0,
+            ),
+            font: ResourceDescriptor {
+                id: ResourceId(
+                    0,
+                ),
+                revision: Revision(
+                    0,
+                ),
+                kind: Font,
+                byte_len: 556216,
+            },
+            font_size: 10.0,
+            axes: [
+                AxisSpec {
+                    id: ScaleId(
+                        0,
+                    ),
+                    side: Bottom,
+                    scale: Auto,
+                    viewport: None,
+                    range: None,
+                    outside: Extend,
+                    visible: true,
+                },
+                AxisSpec {
+                    id: ScaleId(
+                        1,
+                    ),
+                    side: Left,
+                    scale: Auto,
+                    viewport: None,
+                    range: None,
+                    outside: Extend,
+                    visible: true,
+                },
+            ],
+            padding: 30.0,
+            minimum_plot: (
+                24.0,
+                24.0,
+            ),
+            tick_length: 4.0,
+            label_gap: 4.0,
+            target_ticks: 6,
+            max_ticks: 128,
+            max_categories: 10000,
+            max_vertices: 1000000,
+            limits: Limits {
+                max_items: 100000,
+                max_path_commands: 1000000,
+                max_text_bytes: 1048576,
+                max_resources: 256,
+                max_resource_bytes: 67108864,
+                max_total_resource_bytes: 268435456,
+            },
+        },
+        view: VisibleView,
+        text: Preserve,
+        dpi: 300,
+        background: Color {
+            red: 255,
+            green: 255,
+            blue: 255,
+            alpha: 255,
+        },
+        annotation_revision: Revision(
+            4,
+        ),
+        annotations: [
+            SceneItem {
+                layer: None,
+                clip: None,
+                primitive: Text {
+                    origin: Point {
+                        x: 30.0,
+                        y: 18.0,
+                    },
+                    text: "Captured publication - café Ω",
+                    font: ResourceId(
+                        0,
+                    ),
+                    font_size: 12.0,
+                    color: Color {
+                        red: 25,
+                        green: 45,
+                        blue: 65,
+                        alpha: 255,
+                    },
+                },
+            },
+        ],
+        precision: 0.01,
+        max_raster_pixels: 32000000,
+        max_output_bytes: 67108864,
+    },
+}

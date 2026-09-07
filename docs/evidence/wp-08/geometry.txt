@@ -1,0 +1,730 @@
+plot=Some(Rect { origin: Point { x: 43.71999979019165, y: 36.80999946594238 }, width: 429.456221216307, height: 251.7274819171335 })
+scene=Scene {
+    stamp: SceneStamp {
+        definition: Revision(
+            8,
+        ),
+        store: Revision(
+            0,
+        ),
+        layout: Revision(
+            0,
+        ),
+        state: Revision(
+            0,
+        ),
+        viewport: Revision(
+            0,
+        ),
+    },
+    units: Points,
+    bounds: Rect {
+        origin: Point {
+            x: 0.0,
+            y: 0.0,
+        },
+        width: 510.236220472441,
+        height: 340.15748031496065,
+    },
+    items: [
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Rectangle {
+                bounds: Rect {
+                    origin: Point {
+                        x: 0.0,
+                        y: 0.0,
+                    },
+                    width: 510.236220472441,
+                    height: 340.15748031496065,
+                },
+                fill: Color {
+                    red: 255,
+                    green: 255,
+                    blue: 255,
+                    alpha: 255,
+                },
+            },
+        },
+        SceneItem {
+            layer: Some(
+                LayerId(
+                    1,
+                ),
+            ),
+            clip: Some(
+                Rect {
+                    origin: Point {
+                        x: 43.71999979019165,
+                        y: 36.80999946594238,
+                    },
+                    width: 429.456221216307,
+                    height: 251.7274819171335,
+                },
+            ),
+            primitive: Path {
+                commands: [
+                    MoveTo(
+                        Point {
+                            x: 43.71999979019165,
+                            y: 288.5374813830759,
+                        },
+                    ),
+                    LineTo(
+                        Point {
+                            x: 151.0840550942684,
+                            y: 120.71916010498688,
+                        },
+                    ),
+                ],
+                stroke: Stroke {
+                    color: Color {
+                        red: 35,
+                        green: 90,
+                        blue: 150,
+                        alpha: 255,
+                    },
+                    width: 1.5,
+                },
+            },
+        },
+        SceneItem {
+            layer: Some(
+                LayerId(
+                    1,
+                ),
+            ),
+            clip: Some(
+                Rect {
+                    origin: Point {
+                        x: 43.71999979019165,
+                        y: 36.80999946594238,
+                    },
+                    width: 429.456221216307,
+                    height: 251.7274819171335,
+                },
+            ),
+            primitive: Path {
+                commands: [
+                    MoveTo(
+                        Point {
+                            x: 365.8121657024219,
+                            y: 204.6283207440314,
+                        },
+                    ),
+                    LineTo(
+                        Point {
+                            x: 473.1762210064986,
+                            y: 36.80999946594238,
+                        },
+                    ),
+                ],
+                stroke: Stroke {
+                    color: Color {
+                        red: 35,
+                        green: 90,
+                        blue: 150,
+                        alpha: 255,
+                    },
+                    width: 1.5,
+                },
+            },
+        },
+        SceneItem {
+            layer: Some(
+                LayerId(
+                    2,
+                ),
+            ),
+            clip: Some(
+                Rect {
+                    origin: Point {
+                        x: 43.71999979019165,
+                        y: 36.80999946594238,
+                    },
+                    width: 429.456221216307,
+                    height: 251.7274819171335,
+                },
+            ),
+            primitive: Point {
+                center: Point {
+                    x: 43.71999979019165,
+                    y: 288.5374813830759,
+                },
+                radius: 3.0,
+                fill: Color {
+                    red: 35,
+                    green: 90,
+                    blue: 150,
+                    alpha: 255,
+                },
+            },
+        },
+        SceneItem {
+            layer: Some(
+                LayerId(
+                    2,
+                ),
+            ),
+            clip: Some(
+                Rect {
+                    origin: Point {
+                        x: 43.71999979019165,
+                        y: 36.80999946594238,
+                    },
+                    width: 429.456221216307,
+                    height: 251.7274819171335,
+                },
+            ),
+            primitive: Point {
+                center: Point {
+                    x: 151.0840550942684,
+                    y: 120.71916010498688,
+                },
+                radius: 3.0,
+                fill: Color {
+                    red: 35,
+                    green: 90,
+                    blue: 150,
+                    alpha: 255,
+                },
+            },
+        },
+        SceneItem {
+            layer: Some(
+                LayerId(
+                    2,
+                ),
+            ),
+            clip: Some(
+                Rect {
+                    origin: Point {
+                        x: 43.71999979019165,
+                        y: 36.80999946594238,
+                    },
+                    width: 429.456221216307,
+                    height: 251.7274819171335,
+                },
+            ),
+            primitive: Point {
+                center: Point {
+                    x: 365.8121657024219,
+                    y: 204.6283207440314,
+                },
+                radius: 3.0,
+                fill: Color {
+                    red: 35,
+                    green: 90,
+                    blue: 150,
+                    alpha: 255,
+                },
+            },
+        },
+        SceneItem {
+            layer: Some(
+                LayerId(
+                    2,
+                ),
+            ),
+            clip: Some(
+                Rect {
+                    origin: Point {
+                        x: 43.71999979019165,
+                        y: 36.80999946594238,
+                    },
+                    width: 429.456221216307,
+                    height: 251.7274819171335,
+                },
+            ),
+            primitive: Point {
+                center: Point {
+                    x: 473.1762210064986,
+                    y: 36.80999946594238,
+                },
+                radius: 3.0,
+                fill: Color {
+                    red: 35,
+                    green: 90,
+                    blue: 150,
+                    alpha: 255,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Rule {
+                from: Point {
+                    x: 43.71999979019165,
+                    y: 288.5374813830759,
+                },
+                to: Point {
+                    x: 473.1762210064986,
+                    y: 288.5374813830759,
+                },
+                stroke: Stroke {
+                    color: Color {
+                        red: 55,
+                        green: 60,
+                        blue: 65,
+                        alpha: 255,
+                    },
+                    width: 1.0,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Rule {
+                from: Point {
+                    x: 43.71999979019165,
+                    y: 288.5374813830759,
+                },
+                to: Point {
+                    x: 43.71999979019165,
+                    y: 292.5374813830759,
+                },
+                stroke: Stroke {
+                    color: Color {
+                        red: 55,
+                        green: 60,
+                        blue: 65,
+                        alpha: 255,
+                    },
+                    width: 1.0,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Text {
+                origin: Point {
+                    x: 40.859999895095825,
+                    y: 307.2274809634592,
+                },
+                text: "0",
+                font: ResourceId(
+                    0,
+                ),
+                font_size: 10.0,
+                color: Color {
+                    red: 55,
+                    green: 60,
+                    blue: 65,
+                    alpha: 255,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Rule {
+                from: Point {
+                    x: 151.0840550942684,
+                    y: 288.5374813830759,
+                },
+                to: Point {
+                    x: 151.0840550942684,
+                    y: 292.5374813830759,
+                },
+                stroke: Stroke {
+                    color: Color {
+                        red: 55,
+                        green: 60,
+                        blue: 65,
+                        alpha: 255,
+                    },
+                    width: 1.0,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Text {
+                origin: Point {
+                    x: 144.024055628326,
+                    y: 307.2274809634592,
+                },
+                text: "0.5",
+                font: ResourceId(
+                    0,
+                ),
+                font_size: 10.0,
+                color: Color {
+                    red: 55,
+                    green: 60,
+                    blue: 65,
+                    alpha: 255,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Rule {
+                from: Point {
+                    x: 258.44811039834514,
+                    y: 288.5374813830759,
+                },
+                to: Point {
+                    x: 258.44811039834514,
+                    y: 292.5374813830759,
+                },
+                stroke: Stroke {
+                    color: Color {
+                        red: 55,
+                        green: 60,
+                        blue: 65,
+                        alpha: 255,
+                    },
+                    width: 1.0,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Text {
+                origin: Point {
+                    x: 255.5881105032493,
+                    y: 307.2274809634592,
+                },
+                text: "1",
+                font: ResourceId(
+                    0,
+                ),
+                font_size: 10.0,
+                color: Color {
+                    red: 55,
+                    green: 60,
+                    blue: 65,
+                    alpha: 255,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Rule {
+                from: Point {
+                    x: 365.8121657024219,
+                    y: 288.5374813830759,
+                },
+                to: Point {
+                    x: 365.8121657024219,
+                    y: 292.5374813830759,
+                },
+                stroke: Stroke {
+                    color: Color {
+                        red: 55,
+                        green: 60,
+                        blue: 65,
+                        alpha: 255,
+                    },
+                    width: 1.0,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Text {
+                origin: Point {
+                    x: 358.7521662364795,
+                    y: 307.2274809634592,
+                },
+                text: "1.5",
+                font: ResourceId(
+                    0,
+                ),
+                font_size: 10.0,
+                color: Color {
+                    red: 55,
+                    green: 60,
+                    blue: 65,
+                    alpha: 255,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Rule {
+                from: Point {
+                    x: 473.1762210064986,
+                    y: 288.5374813830759,
+                },
+                to: Point {
+                    x: 473.1762210064986,
+                    y: 292.5374813830759,
+                },
+                stroke: Stroke {
+                    color: Color {
+                        red: 55,
+                        green: 60,
+                        blue: 65,
+                        alpha: 255,
+                    },
+                    width: 1.0,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Text {
+                origin: Point {
+                    x: 470.3162211114028,
+                    y: 307.2274809634592,
+                },
+                text: "2",
+                font: ResourceId(
+                    0,
+                ),
+                font_size: 10.0,
+                color: Color {
+                    red: 55,
+                    green: 60,
+                    blue: 65,
+                    alpha: 255,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Rule {
+                from: Point {
+                    x: 43.71999979019165,
+                    y: 36.80999946594238,
+                },
+                to: Point {
+                    x: 43.71999979019165,
+                    y: 288.5374813830759,
+                },
+                stroke: Stroke {
+                    color: Color {
+                        red: 55,
+                        green: 60,
+                        blue: 65,
+                        alpha: 255,
+                    },
+                    width: 1.0,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Rule {
+                from: Point {
+                    x: 43.71999979019165,
+                    y: 36.80999946594238,
+                },
+                to: Point {
+                    x: 39.71999979019165,
+                    y: 36.80999946594238,
+                },
+                stroke: Stroke {
+                    color: Color {
+                        red: 55,
+                        green: 60,
+                        blue: 65,
+                        alpha: 255,
+                    },
+                    width: 1.0,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Text {
+                origin: Point {
+                    x: 30.0,
+                    y: 40.6899995803833,
+                },
+                text: "4",
+                font: ResourceId(
+                    0,
+                ),
+                font_size: 10.0,
+                color: Color {
+                    red: 55,
+                    green: 60,
+                    blue: 65,
+                    alpha: 255,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Rule {
+                from: Point {
+                    x: 43.71999979019165,
+                    y: 120.71916010498688,
+                },
+                to: Point {
+                    x: 39.71999979019165,
+                    y: 120.71916010498688,
+                },
+                stroke: Stroke {
+                    color: Color {
+                        red: 55,
+                        green: 60,
+                        blue: 65,
+                        alpha: 255,
+                    },
+                    width: 1.0,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Text {
+                origin: Point {
+                    x: 30.0,
+                    y: 124.5991602194278,
+                },
+                text: "3",
+                font: ResourceId(
+                    0,
+                ),
+                font_size: 10.0,
+                color: Color {
+                    red: 55,
+                    green: 60,
+                    blue: 65,
+                    alpha: 255,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Rule {
+                from: Point {
+                    x: 43.71999979019165,
+                    y: 204.6283207440314,
+                },
+                to: Point {
+                    x: 39.71999979019165,
+                    y: 204.6283207440314,
+                },
+                stroke: Stroke {
+                    color: Color {
+                        red: 55,
+                        green: 60,
+                        blue: 65,
+                        alpha: 255,
+                    },
+                    width: 1.0,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Text {
+                origin: Point {
+                    x: 30.0,
+                    y: 208.50832085847233,
+                },
+                text: "2",
+                font: ResourceId(
+                    0,
+                ),
+                font_size: 10.0,
+                color: Color {
+                    red: 55,
+                    green: 60,
+                    blue: 65,
+                    alpha: 255,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Rule {
+                from: Point {
+                    x: 43.71999979019165,
+                    y: 288.5374813830759,
+                },
+                to: Point {
+                    x: 39.71999979019165,
+                    y: 288.5374813830759,
+                },
+                stroke: Stroke {
+                    color: Color {
+                        red: 55,
+                        green: 60,
+                        blue: 65,
+                        alpha: 255,
+                    },
+                    width: 1.0,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Text {
+                origin: Point {
+                    x: 30.0,
+                    y: 292.4174814975168,
+                },
+                text: "1",
+                font: ResourceId(
+                    0,
+                ),
+                font_size: 10.0,
+                color: Color {
+                    red: 55,
+                    green: 60,
+                    blue: 65,
+                    alpha: 255,
+                },
+            },
+        },
+        SceneItem {
+            layer: None,
+            clip: None,
+            primitive: Text {
+                origin: Point {
+                    x: 30.0,
+                    y: 18.0,
+                },
+                text: "Captured publication - café Ω",
+                font: ResourceId(
+                    0,
+                ),
+                font_size: 12.0,
+                color: Color {
+                    red: 25,
+                    green: 45,
+                    blue: 65,
+                    alpha: 255,
+                },
+            },
+        },
+    ],
+    resources: [
+        ResourceDescriptor {
+            id: ResourceId(
+                0,
+            ),
+            revision: Revision(
+                0,
+            ),
+            kind: Font,
+            byte_len: 556216,
+        },
+    ],
+}

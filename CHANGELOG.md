@@ -35,6 +35,22 @@
   variants, and `SceneStamp` gains `state` for visibility-sensitive snapshots. Struct literals
   and exhaustive downstream matches must adopt these fields/variants. No wire schema exists.
 
-These are WP-02/WP-04/WP-05/WP-06 foundations for version 0.1.0. Full chart compilation,
-rendering/export and wire/binding APIs remain unimplemented. Initial public signatures may evolve with their
+- Add a retained standalone GPUI chart view with native vector paint, supplied-font text
+  measurement/shaping, bounded frame caching and caller-owned tooltip elements.
+- Add shared presented-snapshot inspection: scatter radius, nearest-x line groups, bar
+  containment, keyboard focus, stale action fences and exact source/aggregate targets.
+- Replace the exiting gallery shell with line, scatter, histogram and UTC examples; verify
+  real hover/keyboard input, zoom, resize, malformed updates, no-space and entity disposal.
+- Promote the already locked `ttf-parser` 0.25.1 to the native font preflight bridge.
+
+- Add immutable headless figure capture, point-based publication profiles, explicit font
+  resources and SVG/PDF/PNG bytes with diagnostics and reproducibility metadata.
+- Add full-font SVG, subset-font PDF and outline modes, physical DPI output, visible/full
+  domain policy and a native vector preview using the captured publication layout.
+- Adopt resvg/usvg 0.48.1 and krilla 0.8.2 without the legacy font-shaping dependencies
+  in the normal export graph; retain historical proof dependencies and open host advisories.
+- Add ten export integration tests, inspected artifacts and independent output checks.
+
+These are WP-02/WP-04/WP-05/WP-06/WP-07/WP-08 foundations for version 0.1.0. Full grammar
+and wire/binding APIs remain unimplemented. Initial public signatures may evolve with their
 first consumers; breaking changes and future schema migrations must be recorded explicitly.

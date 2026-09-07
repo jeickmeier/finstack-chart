@@ -3,10 +3,10 @@
 Rust-native grammar-of-graphics project with a portable core, headless publication export,
 a standalone GPUI host and optional Kit integration.
 
-**Status: WP-06 foundational scales and destination layout implemented. Linear, categorical
-band and UTC scales project the shared grammar output into finite scenes with plain axes,
-explicit clips and bounded text-aware margins. WP-07 native integration and WP-08 export
-are next; G0 capability evidence is retained and G1–G4 remain open.**
+**Status: WP-08 headless publication implemented. Immutable shared-core figures export
+SVG/PDF/PNG with explicit fonts and physical dimensions; a native publication preview
+uses the same layout. Standalone native charts and inspection remain available.
+WP-09 binding proofs are next; G1–G4 remain open.**
 
 ## Start here
 
@@ -43,14 +43,18 @@ and synchronous service boundaries, plus data/schema, replay, retention and snap
 ownership contracts. It also verifies identity/explicit-bin statistics, line gaps,
 heterogeneous layer geometry and transform reuse. Scale/layout tests add domain policies,
 UTC calendar and precision fixtures, categorical identity, measured margins and viewport
-separation. Actual rendering and the full statistical family remain later gates.
+separation. Presented-scene inspection verifies clipping, provenance, keyboard steps and
+stale-event rejection. The full statistical family remains later work.
 Use `mise exec -- cargo ...` for one-off Cargo commands, or activate
 mise in your shell for editor and terminal tool selection.
 
 The macOS `check` task also builds the standalone and Kit `host_bootstrap` examples,
 and builds/lints the Kit-gated native capability example.
-`mise exec -- cargo run -p chart-gallery` still exits 2. See ADR-001 for the separate
-host-example commands. CI checks native builds on macOS and headless packages on Linux;
+Run `mise exec -- cargo run -p chart-gallery --locked` in a macOS graphical session for
+the standalone gallery (no Kit dependency required). Move over marks, click the chart and
+use arrow keys/Escape; controls exercise zoom, malformed input, missing fonts, tiny bounds
+and remount. [WP-07 evidence](docs/evidence/wp-07-completion-2026-09-06.md) records the actual
+native checks. See ADR-001 for the separate host-example commands. CI checks native builds on macOS and headless packages on Linux;
 hosted CI and real binding execution remain unverified. The
 [WP-03 report](docs/evidence/wp-03-completion-2026-09-06.md) records actual native visual,
 input/lifecycle/accessibility-hook inspection and publication artifacts. These remain
@@ -59,6 +63,12 @@ proof examples; use the [fixture instructions](fixtures/capability/README.md) to
 Run `mise exec -- cargo deny --locked check advisories` when reviewing dependencies.
 The current scan fails on six unmaintained transitive packages; no advisory is ignored.
 The refreshed scan and remaining release risks are in the [WP-03 evidence](docs/evidence/wp-03-completion-2026-09-06.md).
+
+The [publication example](crates/chart-export/examples/publication_export.rs) demonstrates
+`FigureSnapshot::capture` and bytes-only SVG/PDF/PNG export. See the
+[fixture instructions](fixtures/publication/README.md) for headless generation, independent
+artifact checks and the native publication preview, and the
+[WP-08 report](docs/evidence/wp-08-completion-2026-09-06.md) for inspected results and limits.
 
 ## Packages and contributions
 
@@ -76,7 +86,11 @@ builds a typed histogram through the shared compiler; [WP-05 evidence](docs/evid
 records the generated-schema, domain, provenance and state contracts. The same example now
 continues through destination layout. [ADR-005](docs/adr/005-foundational-scales-and-layout.md)
 and [WP-06 evidence](docs/evidence/wp-06-completion-2026-09-06.md) record scale, tick, clip,
-font-metric and layout policies.
+font-metric and layout policies. The [gallery source](examples/chart-gallery/src/main.rs)
+shows `NativeFont::load` before rendering, `ChartInput::new`, a retained `ChartView` entity,
+and caller-owned tooltips. Register font bytes before GPUI first resolves their family;
+reserve that family's supplied faces for the adapter. Native metrics and painting share
+GPUI's text system; headless publication has a separate destination bridge.
 
 The root is a virtual Cargo workspace named by this repository, not a `finstack-chart`
 facade crate. Package ownership follows ARC-01. Default members are `chart-core`,

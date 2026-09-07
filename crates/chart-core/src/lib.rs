@@ -37,6 +37,7 @@ pub mod diagnostic;
 pub mod geometry;
 pub mod grammar;
 pub mod identity;
+pub mod inspection;
 pub mod layout;
 pub mod limits;
 pub mod provenance;
