@@ -941,6 +941,7 @@ version = "0.1.0"
 dependencies = [
  "base64 0.22.1",
  "chart-core",
+ "chart-extension-example",
  "chart-text",
  "krilla",
  "png 0.17.16",
@@ -956,11 +957,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "chart-extension-example"
+version = "0.1.0"
+dependencies = [
+ "chart-core",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "chart-gallery"
 version = "0.1.0"
 dependencies = [
  "chart-core",
  "chart-export",
+ "chart-extension-example",
  "gpui-charts",
  "gpui-charts-kit",
  "gpui-kit",
@@ -968,6 +979,7 @@ dependencies = [
  "gpui-pre-platform",
  "resvg 0.45.1",
  "serde",
+ "serde_json",
  "ttf-parser",
 ]
 
@@ -977,6 +989,7 @@ version = "0.1.0"
 dependencies = [
  "chart-core",
  "chart-export",
+ "chart-extension-example",
  "pyo3",
  "pyo3-build-config",
 ]
@@ -996,6 +1009,7 @@ version = "0.1.0"
 dependencies = [
  "chart-core",
  "chart-export",
+ "chart-extension-example",
  "wasm-bindgen",
 ]
 
@@ -2436,6 +2450,7 @@ dependencies = [
  "chart-core",
  "chart-text",
  "gpui-pre",
+ "serde_json",
  "ttf-parser",
 ]
 

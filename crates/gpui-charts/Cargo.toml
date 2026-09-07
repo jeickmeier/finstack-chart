@@ -10,6 +10,7 @@ description = "Standalone GPUI chart host."
 workspace = true
 
 [dependencies]
+serde_json.workspace = true
 chart-core.workspace = true
 chart-text.workspace = true
 gpui.workspace = true

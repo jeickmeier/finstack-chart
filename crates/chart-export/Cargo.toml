@@ -23,6 +23,7 @@ base64 = "=0.22.1"
 png = "=0.17.16"
 
 [dev-dependencies]
+chart-extension-example.workspace = true
 resvg = { version = "=0.45.1", default-features = false, features = ["text"] }
 svg2pdf = { version = "=0.13.0", default-features = false, features = ["text"] }
 ttf-parser = "=0.25.1"

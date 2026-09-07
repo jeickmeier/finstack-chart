@@ -124,8 +124,10 @@ pub(super) fn apply(
             }
         }
         ColorInput::Statistical(field) => {
-            let (PreparedRows::Statistical(source), OutputSchema::Statistical { fields, .. }) =
-                (&table.rows, &table.schema)
+            let (
+                PreparedRows::Statistical(source),
+                OutputSchema::Statistical { fields, .. } | OutputSchema::Custom { fields, .. },
+            ) = (&table.rows, &table.schema)
             else {
                 return Err(error(
                     DiagnosticCode::SchemaConflict,

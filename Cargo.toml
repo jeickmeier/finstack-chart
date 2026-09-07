@@ -9,6 +9,7 @@ members = [
     "crates/chart-python",
     "crates/chart-wasm",
     "examples/chart-gallery",
+    "examples/custom-extension",
 ]
 default-members = ["crates/chart-core", "crates/chart-export", "crates/gpui-charts"]
 
@@ -22,6 +23,7 @@ publish = false
 serde = { version = "=1.0.229", features = ["derive", "rc"] }
 serde_json = "=1.0.151"
 chart-core = { path = "crates/chart-core" }
+chart-extension-example = { path = "examples/custom-extension" }
 chart-export = { path = "crates/chart-export" }
 chart-text = { path = "crates/chart-text" }
 gpui-charts = { path = "crates/gpui-charts" }

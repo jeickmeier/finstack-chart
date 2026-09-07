@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+- Add typed facet wrap/grid, shared/free named scales, stable panel targets and aligned guides.
+- Add explicit theme cascade, rich/rotated/tabular typography, publication furniture/insets,
+  optional Kit theme integration and physical SVG/PDF/PNG preview.
+- Add registered custom stat/geom APIs with checked generated schemas, targets and interaction
+  metadata; host-owned native painters report explicit export failure. Add Cartesian capability
+  APIs, custom guides, candle direction colors and compile-fail stage-accessor examples.
+- Freeze the documented alpha boundary and complete 36 actual Rust/Python/WASM fixture cases.
+  Public enum/struct additions require downstream exhaustive-match/literal updates. Optional
+  portable fields preserve existing defaults; native callback code is never serialized.
+
 - Add portable log/symlog/point/color/supplied-session scales and guide-only secondary unit axes.
 - Add area/ribbon filled paths across native/SVG/PDF/PNG, interval bars, validated OHLC and
   independently validated volume, and rectangular heatmap recipes over the shared compiler.

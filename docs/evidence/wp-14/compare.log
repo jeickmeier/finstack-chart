@@ -1,0 +1,16 @@
+PASS three-runtime initial: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime definition: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime transaction: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime replay: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime action: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime final: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime scene: exact identities/types/state; numeric tolerance 0.01 pt
+PASS three-runtime state: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS independent domains/bin counts/members, large IDs, exact nanosecond times, UInt64/Int64 extremes, null/display values, replay, physical vector SVG and per-item target alignment
+PASS exact SVG bytes across Rust/Python/WASM
+PASS actual Rust/Python PDF vector/font policy and PNG dimensions
+PASS shared fixtures: 36 cases in Rust/Python/WASM, independent stats/provenance, scenes within 1e-10 pt, SVG bytes exact
+PASS WP-11: independent log/run gaps, area/ribbon boundaries, color/missing metadata, price/volume validation, supplied sessions, leap day, signed stack and vector PDF expectations
+PASS WP-12 FIX-06: typed panel order/membership, broadcast/target, shared/free scales, aligned six-panel grid, grouped/facet/chart means, per-item panel identity, collected guides and vector PDF
+PASS WP-13 FIX-12/13: theme invariant populations/domains/targets, two panels and source-sharing inset, rich/rotated/tabular text, explicit bold/Arabic resources, symbols/dashes/gradients, vector searchable PDF and three-host exact SVG
+PASS WP-14 FIX-17: registered custom density/schema, exact counts/membership, common generated builtin points and shared axes, custom labels/hit/semantics/selection/keyboard order, vector exports and independent up/down/doji candle colors

@@ -76,6 +76,9 @@ pub enum AxisScale {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct AxisSpec {
+    /// Explicit bounded semantic tick positions/labels, replacing automatic guide candidates.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub guide_ticks: Option<Vec<CustomGuideTick>>,
     /// Optional portable numeric formatting; incompatible category/time guides reject it.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub number_format: Option<crate::typography::NumberFormat>,
@@ -109,6 +112,7 @@ impl AxisSpec {
     pub fn new(id: ScaleId, side: AxisSide) -> Self {
         Self {
             id,
+            guide_ticks: None,
             side,
             typography: None,
             number_format: None,
@@ -251,6 +255,7 @@ pub enum LayoutStatus {
 /// One coherent immutable layout, retaining the exact prepared/stat/source snapshot.
 #[derive(Clone, Debug)]
 pub struct LaidOutChart {
+    pub(crate) interactions: BTreeMap<usize, crate::grammar::GeometryInteraction>,
     pub(crate) insets: Vec<LaidOutInset>,
     pub(crate) panels: Vec<LaidOutPanel>,
     pub(crate) item_panels: Vec<Option<crate::grammar::PanelKey>>,
@@ -290,6 +295,10 @@ pub struct LaidOutInset {
     pub chart: Arc<LaidOutChart>,
 }
 impl LaidOutChart {
+    /// Explicit custom hit/semantic/selection/keyboard metadata by final scene item index.
+    pub fn interactions(&self) -> &BTreeMap<usize, crate::grammar::GeometryInteraction> {
+        &self.interactions
+    }
     /// Alternate prepared-data views, in inset paint order.
     pub fn insets(&self) -> &[LaidOutInset] {
         &self.insets
@@ -334,5 +343,40 @@ impl LaidOutChart {
     /// Actual destination measurement passes, never above the documented cap.
     pub fn passes(&self) -> usize {
         self.passes
+    }
+}
+
+/// Authored guide label positioned by the same checked scale as its data geometry.
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
+pub struct CustomGuideTick {
+    /// Numeric calculation value, exact category, or exact timestamp with unit.
+    pub value: crate::composition::ScaleValue,
+    /// Logical label; no host formatter closure is serialized.
+    pub label: String,
+}
+
+impl ResolvedAxis {
+    /// Map a semantic value through its actual numeric/category/time capability.
+    pub fn map_value(&self, v: &crate::composition::ScaleValue) -> crate::ChartResult<Option<f64>> {
+        match (&self.scale, v) {
+            (ResolvedScale::Linear(s), crate::composition::ScaleValue::Number(v)) => s.map(*v),
+            (ResolvedScale::Nonlinear(s), crate::composition::ScaleValue::Number(v)) => s.map(*v),
+            (ResolvedScale::Band(s), crate::composition::ScaleValue::Category(v)) => s.center(v),
+            (ResolvedScale::Point(s), crate::composition::ScaleValue::Category(v)) => s.center(v),
+            (ResolvedScale::Utc(s), crate::composition::ScaleValue::Timestamp { value, unit })
+                if s.unit() == *unit =>
+            {
+                s.map(*value)
+            }
+            (
+                ResolvedScale::Session(s),
+                crate::composition::ScaleValue::Timestamp { value, unit },
+            ) if s.calendar().unit == *unit => s.map(*value),
+            _ => Err(crate::scales::error(
+                crate::DiagnosticCode::SchemaConflict,
+                "Value disagrees with its named scale family or timestamp unit.",
+            )),
+        }
     }
 }

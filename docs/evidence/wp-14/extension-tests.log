@@ -1,0 +1,23 @@
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.68s
+     Running tests/extensions.rs (target/debug/deps/extensions-6ff0902b1d3d6ef9)
+
+running 4 tests
+test custom_native_and_unknown_operation_descriptors_reject_portable_execution ... ok
+test registered_geometry_shares_axes_explicit_guides_hit_values_and_keyboard_order ... ok
+test custom_coordinates_use_resolved_scales_and_reject_wrong_guide_types ... ok
+test portable_vector_output_and_native_only_export_fail_explicitly ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.91s
+
+     Running tests/contracts.rs (target/debug/deps/contracts-90bdf4e34ff1255d)
+
+running 5 tests
+test schema_spaces_and_parameter_budgets_are_checked_before_evaluation ... ok
+test custom_histogram_has_own_schema_exact_membership_density_and_shared_domains ... ok
+test bounded_custom_paint_and_hit_regions_cannot_exhaust_core_or_invent_targets ... ok
+test registry_schema_and_output_failures_are_typed_and_do_not_replace_valid_results ... ok
+test custom_transform_reuses_exact_tables_and_recomputes_after_corrections_like_fresh_batch ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

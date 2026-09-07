@@ -1,0 +1,1235 @@
+{
+  "extension-histogram": {
+    "datasets": [
+      {
+        "chunks": [
+          {
+            "columns": [
+              {
+                "formatted": null,
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  false
+                ],
+                "values": {
+                  "Float64": [
+                    0.0,
+                    0.25,
+                    0.75,
+                    1.0,
+                    1.5,
+                    2.0,
+                    999.0
+                  ]
+                }
+              }
+            ],
+            "fields": [
+              {
+                "id": "1",
+                "kind": "Float64",
+                "label": null,
+                "name": "observation",
+                "nullable": true,
+                "unit": "units"
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003",
+              "9007199254743004",
+              "9007199254743005",
+              "9007199254743006",
+              "9007199254743007"
+            ],
+            "schema_version": "1"
+          }
+        ],
+        "schema": {
+          "fields": [
+            {
+              "id": "1",
+              "kind": "Float64",
+              "label": null,
+              "name": "observation",
+              "nullable": true,
+              "unit": "units"
+            }
+          ],
+          "version": "1"
+        },
+        "version": {
+          "dataset": "1",
+          "revision": "0",
+          "schema_version": "1"
+        }
+      }
+    ],
+    "definition_revision": "1",
+    "layers": [
+      {
+        "color_legend": null,
+        "domains": {
+          "x": {
+            "maximum": 2.0,
+            "minimum": 0.0
+          },
+          "x_space": "Data",
+          "y": {
+            "maximum": 0.5,
+            "minimum": 0.0
+          },
+          "y_space": "Data"
+        },
+        "id": "1",
+        "invalid_geometry": 0,
+        "operations": [
+          {
+            "counts": {
+              "above": 0,
+              "below": 0,
+              "filtered": 0,
+              "input": 7,
+              "invalid_filter": 0,
+              "invalid_stat": 1,
+              "output": 2
+            },
+            "filters": [],
+            "grouping": "All",
+            "incremental": {
+              "append": false,
+              "correction": false,
+              "full_recompute": true,
+              "window": false
+            },
+            "input": {
+              "dataset": "1",
+              "revision": "0",
+              "schema_version": "1"
+            },
+            "operation": {
+              "id": "example.density_histogram",
+              "version": "1"
+            },
+            "panel": null,
+            "parameters": {
+              "Custom": {
+                "grouping": "All",
+                "space": "Data",
+                "values": {
+                  "edges": [
+                    0.0,
+                    1.0,
+                    2.0
+                  ],
+                  "input": {
+                    "Field": "1"
+                  }
+                }
+              }
+            },
+            "scope": "Group",
+            "space": "Data"
+          },
+          {
+            "counts": {
+              "above": 0,
+              "below": 0,
+              "filtered": 0,
+              "input": 2,
+              "invalid_filter": 0,
+              "invalid_stat": 0,
+              "output": 2
+            },
+            "filters": [],
+            "grouping": "All",
+            "incremental": {
+              "append": false,
+              "correction": false,
+              "full_recompute": true,
+              "window": false
+            },
+            "input": {
+              "dataset": "1",
+              "revision": "0",
+              "schema_version": "1"
+            },
+            "operation": {
+              "id": "chart.identity",
+              "version": "1"
+            },
+            "panel": null,
+            "parameters": "Identity",
+            "scope": "Group",
+            "space": "Data"
+          }
+        ],
+        "rows": {
+          "Statistical": [
+            {
+              "count": "3",
+              "group": "All",
+              "members": [
+                "9007199254743001",
+                "9007199254743002",
+                "9007199254743003"
+              ],
+              "target": {
+                "Aggregate": {
+                  "group": "transform:7/All/0000000000000000:3ff0000000000000",
+                  "id": "0",
+                  "input": {
+                    "dataset": "1",
+                    "revision": "0",
+                    "schema_version": "1"
+                  },
+                  "members": [
+                    "9007199254743001",
+                    "9007199254743002",
+                    "9007199254743003"
+                  ]
+                }
+              },
+              "values": [
+                {
+                  "field": {
+                    "Custom": "left"
+                  },
+                  "value": 0.0
+                },
+                {
+                  "field": {
+                    "Custom": "right"
+                  },
+                  "value": 1.0
+                },
+                {
+                  "field": {
+                    "Custom": "density"
+                  },
+                  "value": 0.5
+                }
+              ]
+            },
+            {
+              "count": "3",
+              "group": "All",
+              "members": [
+                "9007199254743004",
+                "9007199254743005",
+                "9007199254743006"
+              ],
+              "target": {
+                "Aggregate": {
+                  "group": "transform:7/All/3ff0000000000000:4000000000000000",
+                  "id": "1",
+                  "input": {
+                    "dataset": "1",
+                    "revision": "0",
+                    "schema_version": "1"
+                  },
+                  "members": [
+                    "9007199254743004",
+                    "9007199254743005",
+                    "9007199254743006"
+                  ]
+                }
+              },
+              "values": [
+                {
+                  "field": {
+                    "Custom": "left"
+                  },
+                  "value": 1.0
+                },
+                {
+                  "field": {
+                    "Custom": "right"
+                  },
+                  "value": 2.0
+                },
+                {
+                  "field": {
+                    "Custom": "density"
+                  },
+                  "value": 0.5
+                }
+              ]
+            }
+          ]
+        },
+        "schema": {
+          "Custom": {
+            "fields": [
+              {
+                "field": {
+                  "Custom": "left"
+                },
+                "kind": "Float64",
+                "nullable": false,
+                "space": "Data"
+              },
+              {
+                "field": {
+                  "Custom": "right"
+                },
+                "kind": "Float64",
+                "nullable": false,
+                "space": "Data"
+              },
+              {
+                "field": {
+                  "Custom": "density"
+                },
+                "kind": "Float64",
+                "nullable": false,
+                "space": "Data"
+              },
+              {
+                "field": "Count",
+                "kind": "UInt64",
+                "nullable": false,
+                "space": "Data"
+              }
+            ],
+            "operation": {
+              "id": "example.density_histogram",
+              "version": "1"
+            }
+          }
+        },
+        "targets": [
+          {
+            "Aggregate": {
+              "group": "transform:7/All/0000000000000000:3ff0000000000000",
+              "id": "0",
+              "input": {
+                "dataset": "1",
+                "revision": "0",
+                "schema_version": "1"
+              },
+              "members": [
+                "9007199254743001",
+                "9007199254743002",
+                "9007199254743003"
+              ]
+            }
+          },
+          {
+            "Aggregate": {
+              "group": "transform:7/All/3ff0000000000000:4000000000000000",
+              "id": "1",
+              "input": {
+                "dataset": "1",
+                "revision": "0",
+                "schema_version": "1"
+              },
+              "members": [
+                "9007199254743004",
+                "9007199254743005",
+                "9007199254743006"
+              ]
+            }
+          }
+        ],
+        "visible": true
+      },
+      {
+        "color_legend": null,
+        "domains": {
+          "x": {
+            "maximum": 1.0,
+            "minimum": 0.0
+          },
+          "x_space": "Data",
+          "y": {
+            "maximum": 0.5,
+            "minimum": 0.5
+          },
+          "y_space": "Data"
+        },
+        "id": "2",
+        "invalid_geometry": 0,
+        "operations": [
+          {
+            "counts": {
+              "above": 0,
+              "below": 0,
+              "filtered": 0,
+              "input": 7,
+              "invalid_filter": 0,
+              "invalid_stat": 1,
+              "output": 2
+            },
+            "filters": [],
+            "grouping": "All",
+            "incremental": {
+              "append": false,
+              "correction": false,
+              "full_recompute": true,
+              "window": false
+            },
+            "input": {
+              "dataset": "1",
+              "revision": "0",
+              "schema_version": "1"
+            },
+            "operation": {
+              "id": "example.density_histogram",
+              "version": "1"
+            },
+            "panel": null,
+            "parameters": {
+              "Custom": {
+                "grouping": "All",
+                "space": "Data",
+                "values": {
+                  "edges": [
+                    0.0,
+                    1.0,
+                    2.0
+                  ],
+                  "input": {
+                    "Field": "1"
+                  }
+                }
+              }
+            },
+            "scope": "Group",
+            "space": "Data"
+          },
+          {
+            "counts": {
+              "above": 0,
+              "below": 0,
+              "filtered": 0,
+              "input": 2,
+              "invalid_filter": 0,
+              "invalid_stat": 0,
+              "output": 2
+            },
+            "filters": [],
+            "grouping": "All",
+            "incremental": {
+              "append": false,
+              "correction": false,
+              "full_recompute": true,
+              "window": false
+            },
+            "input": {
+              "dataset": "1",
+              "revision": "0",
+              "schema_version": "1"
+            },
+            "operation": {
+              "id": "chart.identity",
+              "version": "1"
+            },
+            "panel": null,
+            "parameters": "Identity",
+            "scope": "Group",
+            "space": "Data"
+          }
+        ],
+        "rows": {
+          "Statistical": [
+            {
+              "count": "3",
+              "group": "All",
+              "members": [
+                "9007199254743001",
+                "9007199254743002",
+                "9007199254743003"
+              ],
+              "target": {
+                "Aggregate": {
+                  "group": "transform:7/All/0000000000000000:3ff0000000000000",
+                  "id": "0",
+                  "input": {
+                    "dataset": "1",
+                    "revision": "0",
+                    "schema_version": "1"
+                  },
+                  "members": [
+                    "9007199254743001",
+                    "9007199254743002",
+                    "9007199254743003"
+                  ]
+                }
+              },
+              "values": [
+                {
+                  "field": {
+                    "Custom": "left"
+                  },
+                  "value": 0.0
+                },
+                {
+                  "field": {
+                    "Custom": "right"
+                  },
+                  "value": 1.0
+                },
+                {
+                  "field": {
+                    "Custom": "density"
+                  },
+                  "value": 0.5
+                }
+              ]
+            },
+            {
+              "count": "3",
+              "group": "All",
+              "members": [
+                "9007199254743004",
+                "9007199254743005",
+                "9007199254743006"
+              ],
+              "target": {
+                "Aggregate": {
+                  "group": "transform:7/All/3ff0000000000000:4000000000000000",
+                  "id": "1",
+                  "input": {
+                    "dataset": "1",
+                    "revision": "0",
+                    "schema_version": "1"
+                  },
+                  "members": [
+                    "9007199254743004",
+                    "9007199254743005",
+                    "9007199254743006"
+                  ]
+                }
+              },
+              "values": [
+                {
+                  "field": {
+                    "Custom": "left"
+                  },
+                  "value": 1.0
+                },
+                {
+                  "field": {
+                    "Custom": "right"
+                  },
+                  "value": 2.0
+                },
+                {
+                  "field": {
+                    "Custom": "density"
+                  },
+                  "value": 0.5
+                }
+              ]
+            }
+          ]
+        },
+        "schema": {
+          "Custom": {
+            "fields": [
+              {
+                "field": {
+                  "Custom": "left"
+                },
+                "kind": "Float64",
+                "nullable": false,
+                "space": "Data"
+              },
+              {
+                "field": {
+                  "Custom": "right"
+                },
+                "kind": "Float64",
+                "nullable": false,
+                "space": "Data"
+              },
+              {
+                "field": {
+                  "Custom": "density"
+                },
+                "kind": "Float64",
+                "nullable": false,
+                "space": "Data"
+              },
+              {
+                "field": "Count",
+                "kind": "UInt64",
+                "nullable": false,
+                "space": "Data"
+              }
+            ],
+            "operation": {
+              "id": "example.density_histogram",
+              "version": "1"
+            }
+          }
+        },
+        "targets": [
+          {
+            "Aggregate": {
+              "group": "transform:7/All/0000000000000000:3ff0000000000000",
+              "id": "0",
+              "input": {
+                "dataset": "1",
+                "revision": "0",
+                "schema_version": "1"
+              },
+              "members": [
+                "9007199254743001",
+                "9007199254743002",
+                "9007199254743003"
+              ]
+            }
+          },
+          {
+            "Aggregate": {
+              "group": "transform:7/All/3ff0000000000000:4000000000000000",
+              "id": "1",
+              "input": {
+                "dataset": "1",
+                "revision": "0",
+                "schema_version": "1"
+              },
+              "members": [
+                "9007199254743004",
+                "9007199254743005",
+                "9007199254743006"
+              ]
+            }
+          }
+        ],
+        "visible": true
+      }
+    ],
+    "panels": [],
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "state_revision": "0",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "0"
+    },
+    "store_revision": "0",
+    "version": 1
+  },
+  "alpha-candle-colors": {
+    "datasets": [
+      {
+        "chunks": [
+          {
+            "columns": [
+              {
+                "formatted": null,
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "values": {
+                  "Float64": [
+                    0.0,
+                    1.0,
+                    2.0,
+                    3.0,
+                    4.0
+                  ]
+                }
+              },
+              {
+                "formatted": null,
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "values": {
+                  "Float64": [
+                    2.0,
+                    3.0,
+                    5.0,
+                    4.0,
+                    6.0
+                  ]
+                }
+              },
+              {
+                "formatted": null,
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "values": {
+                  "Float64": [
+                    3.0,
+                    2.0,
+                    4.0,
+                    5.0,
+                    6.0
+                  ]
+                }
+              },
+              {
+                "formatted": null,
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "values": {
+                  "Float64": [
+                    1.0,
+                    1.0,
+                    3.0,
+                    2.0,
+                    4.0
+                  ]
+                }
+              },
+              {
+                "formatted": null,
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "values": {
+                  "Float64": [
+                    4.0,
+                    5.0,
+                    6.0,
+                    6.0,
+                    7.0
+                  ]
+                }
+              },
+              {
+                "formatted": null,
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "values": {
+                  "Float64": [
+                    10.0,
+                    -1.0,
+                    30.0,
+                    20.0,
+                    15.0
+                  ]
+                }
+              }
+            ],
+            "fields": [
+              {
+                "id": "1",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_1",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "id": "2",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_2",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "id": "3",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_3",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "id": "4",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_4",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "id": "5",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_5",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "id": "6",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_6",
+                "nullable": true,
+                "unit": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003",
+              "9007199254743004",
+              "9007199254743005"
+            ],
+            "schema_version": "1"
+          }
+        ],
+        "schema": {
+          "fields": [
+            {
+              "id": "1",
+              "kind": "Float64",
+              "label": null,
+              "name": "field_1",
+              "nullable": true,
+              "unit": null
+            },
+            {
+              "id": "2",
+              "kind": "Float64",
+              "label": null,
+              "name": "field_2",
+              "nullable": true,
+              "unit": null
+            },
+            {
+              "id": "3",
+              "kind": "Float64",
+              "label": null,
+              "name": "field_3",
+              "nullable": true,
+              "unit": null
+            },
+            {
+              "id": "4",
+              "kind": "Float64",
+              "label": null,
+              "name": "field_4",
+              "nullable": true,
+              "unit": null
+            },
+            {
+              "id": "5",
+              "kind": "Float64",
+              "label": null,
+              "name": "field_5",
+              "nullable": true,
+              "unit": null
+            },
+            {
+              "id": "6",
+              "kind": "Float64",
+              "label": null,
+              "name": "field_6",
+              "nullable": true,
+              "unit": null
+            }
+          ],
+          "version": "1"
+        },
+        "version": {
+          "dataset": "1",
+          "revision": "0",
+          "schema_version": "1"
+        }
+      }
+    ],
+    "definition_revision": "1",
+    "layers": [
+      {
+        "color_legend": null,
+        "domains": {
+          "x": {
+            "maximum": 4.0,
+            "minimum": 0.0
+          },
+          "x_space": "Data",
+          "y": {
+            "maximum": 7.0,
+            "minimum": 1.0
+          },
+          "y_space": "Data"
+        },
+        "id": "1",
+        "invalid_geometry": 0,
+        "operations": [
+          {
+            "counts": {
+              "above": 0,
+              "below": 0,
+              "filtered": 0,
+              "input": 5,
+              "invalid_filter": 0,
+              "invalid_stat": 0,
+              "output": 5
+            },
+            "filters": [],
+            "grouping": "All",
+            "incremental": {
+              "append": false,
+              "correction": false,
+              "full_recompute": true,
+              "window": false
+            },
+            "input": {
+              "dataset": "1",
+              "revision": "0",
+              "schema_version": "1"
+            },
+            "operation": {
+              "id": "chart.identity",
+              "version": "1"
+            },
+            "panel": null,
+            "parameters": "Identity",
+            "scope": "Group",
+            "space": "Data"
+          }
+        ],
+        "rows": {
+          "Source": [
+            {
+              "key": "9007199254743001",
+              "ordinal": "0"
+            },
+            {
+              "key": "9007199254743002",
+              "ordinal": "1"
+            },
+            {
+              "key": "9007199254743003",
+              "ordinal": "2"
+            },
+            {
+              "key": "9007199254743004",
+              "ordinal": "3"
+            },
+            {
+              "key": "9007199254743005",
+              "ordinal": "4"
+            }
+          ]
+        },
+        "schema": {
+          "Source": {
+            "fields": [
+              {
+                "id": "1",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_1",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "id": "2",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_2",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "id": "3",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_3",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "id": "4",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_4",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "id": "5",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_5",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "id": "6",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_6",
+                "nullable": true,
+                "unit": null
+              }
+            ],
+            "version": "1"
+          }
+        },
+        "targets": [
+          {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743001"
+            }
+          },
+          {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743001"
+            }
+          },
+          {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743002"
+            }
+          },
+          {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743002"
+            }
+          },
+          {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743003"
+            }
+          },
+          {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743003"
+            }
+          },
+          {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743004"
+            }
+          },
+          {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743004"
+            }
+          },
+          {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743005"
+            }
+          },
+          {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743005"
+            }
+          }
+        ],
+        "visible": true
+      },
+      {
+        "color_legend": null,
+        "domains": {
+          "x": {
+            "maximum": 4.0,
+            "minimum": 0.0
+          },
+          "x_space": "Data",
+          "y": {
+            "maximum": 30.0,
+            "minimum": 0.0
+          },
+          "y_space": "Data"
+        },
+        "id": "2",
+        "invalid_geometry": 1,
+        "operations": [
+          {
+            "counts": {
+              "above": 0,
+              "below": 0,
+              "filtered": 0,
+              "input": 5,
+              "invalid_filter": 0,
+              "invalid_stat": 0,
+              "output": 5
+            },
+            "filters": [],
+            "grouping": "All",
+            "incremental": {
+              "append": false,
+              "correction": false,
+              "full_recompute": true,
+              "window": false
+            },
+            "input": {
+              "dataset": "1",
+              "revision": "0",
+              "schema_version": "1"
+            },
+            "operation": {
+              "id": "chart.identity",
+              "version": "1"
+            },
+            "panel": null,
+            "parameters": "Identity",
+            "scope": "Group",
+            "space": "Data"
+          }
+        ],
+        "rows": {
+          "Source": [
+            {
+              "key": "9007199254743001",
+              "ordinal": "0"
+            },
+            {
+              "key": "9007199254743002",
+              "ordinal": "1"
+            },
+            {
+              "key": "9007199254743003",
+              "ordinal": "2"
+            },
+            {
+              "key": "9007199254743004",
+              "ordinal": "3"
+            },
+            {
+              "key": "9007199254743005",
+              "ordinal": "4"
+            }
+          ]
+        },
+        "schema": {
+          "Source": {
+            "fields": [
+              {
+                "id": "1",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_1",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "id": "2",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_2",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "id": "3",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_3",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "id": "4",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_4",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "id": "5",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_5",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "id": "6",
+                "kind": "Float64",
+                "label": null,
+                "name": "field_6",
+                "nullable": true,
+                "unit": null
+              }
+            ],
+            "version": "1"
+          }
+        },
+        "targets": [
+          {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743001"
+            }
+          },
+          {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743003"
+            }
+          },
+          {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743004"
+            }
+          },
+          {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743005"
+            }
+          }
+        ],
+        "visible": true
+      }
+    ],
+    "panels": [],
+    "state": {
+      "definition_revision": "1",
+      "hidden_layers": [],
+      "state_revision": "0",
+      "version": 1,
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "viewport_revision": "0"
+    },
+    "store_revision": "0",
+    "version": 1
+  }
+}

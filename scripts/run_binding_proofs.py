@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build and execute the actual WP-09/10/11/12/13 native/PyO3/wasm-bindgen proof, using pinned crates.
+"""Build and execute the actual WP-09/10/11/12/13/14 native/PyO3/wasm-bindgen proof, using pinned crates.
 
 Run under mise; WASM_BINDGEN may name a task-local matching CLI. No downloads occur here.
 """
@@ -33,7 +33,7 @@ def run(name, command):
     + subprocess.check_output(["rustc","-Vv"],text=True)
 )
 run("native", ["cargo","run","-p","chart-export","--example","binding_proof","--locked","--",output / "native"])
-run("python-build", ["cargo","build","-p","chart-python","--features","extension-module","--locked"])
+run("python-build", ["cargo","build","-p","chart-python","--features","extension-module,extension-proof","--locked"])
 module = output / "python-module"; module.mkdir(exist_ok=True)
 library = ROOT / "target/debug" / ("libchart_python.dylib" if sys.platform == "darwin" else "libchart_python.so")
 # Keep an owned copy so later default-feature workspace builds cannot replace the loaded extension.
@@ -41,8 +41,8 @@ destination = module / "chart_python.so"
 if destination.is_symlink(): destination.unlink()
 shutil.copy2(library, destination)
 run("python", [sys.executable,ROOT / "scripts/bindings/python_proof.py",module,output / "python"])
-run("wasm-build", ["cargo","build","-p","chart-wasm","--target","wasm32-unknown-unknown","--locked"])
+run("wasm-build", ["cargo","build","-p","chart-wasm","--features","extension-proof","--target","wasm32-unknown-unknown","--locked"])
 run("wasm-generate", [cli,ROOT / "target/wasm32-unknown-unknown/debug/chart_wasm.wasm","--target","nodejs","--out-dir",output / "wasm-module"])
 run("wasm", [node,ROOT / "scripts/bindings/wasm_proof.cjs",output / "wasm-module",output / "wasm"])
 run("compare", [sys.executable,ROOT / "scripts/bindings/compare.py",output])
-print(f"PASS WP-09/10/11/12/13 runtime proof. Results: {output}")
+print(f"PASS WP-09/10/11/12/13/14 runtime proof. Results: {output}")

@@ -77,6 +77,8 @@ pub enum TextRepresentation {
 /// Capabilities of this format/mode; no implicit localized or whole-figure fallback occurs.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct ExportCapabilities {
+    /// Native callback paint is unsupported in every headless format.
+    pub native_painters: bool,
     /// Supported chart marks remain vectors in SVG/PDF.
     pub vector_marks: bool,
     /// Explicit text storage/editing tradeoff.
@@ -92,6 +94,7 @@ impl Format {
             (Self::Pdf, _) => TextRepresentation::EmbeddedSubsetFonts,
         };
         ExportCapabilities {
+            native_painters: false,
             vector_marks: self != Self::Png,
             text: representation,
         }

@@ -676,7 +676,7 @@ pub(super) fn solve_panels(
             (output,status)
         } else {
             w.axes.clear();
-            let mut output = Output {items: vec![],targets:vec![],omitted:0};
+            let mut output = Output {items: vec![],targets:vec![],omitted:0,interactions:Default::default()};
             compact("Not enough space",request,measurer,&mut output)?;
             w.diagnostics.push(pressure("Bounds and destination text metrics cannot accommodate the minimum useful plot."));
             (output,LayoutStatus::NoSpace)
@@ -686,7 +686,7 @@ pub(super) fn solve_panels(
         for label in w.labels.values().flatten(){if let Some(block)=&label.rich {for d in &block.diagnostics {if !w.diagnostics.contains(d){w.diagnostics.push(d.clone());}}}}
         let resources=super::text::resources(&output.items,request)?;
         let scene = Scene::new(stamp,request.units,request.bounds,&output.items,&resources,request.limits)?;
-        Ok(LaidOutChart {insets:vec![],prepared:w.prepared,scene,plot:w.plot,axes:w.axes,
+        Ok(LaidOutChart {interactions:output.interactions,insets:vec![],prepared:w.prepared,scene,plot:w.plot,axes:w.axes,
             item_panels: vec![None; output.targets.len()], panels: vec![],
             targets:output.targets,diagnostics:w.diagnostics,status,passes:w.passes})
     }).collect()

@@ -10,25 +10,23 @@ Original reports retain the revision context from their evidence runs.
 ## Current handoff
 
 **Owner assignment: complete WP-11 through WP-23 in prerequisite order and commit after
-each completed package. WP-11/12/13 are DONE; WP-14 is next.** This handoff belongs to the
-WP-13 completion commit, starting from WP-12 commit `63dbcc2`.
+each completed package. WP-11–14 are DONE; WP-15 is next.**
 
-WP-13 adds three complete named themes, explicit rich/rotated typography, figure
-furniture, source-sharing insets and the optional Kit host theme/reset adapter.
-[Report](evidence/wp-13-completion-2026-09-07.md),
-[contract](theme-typography-composition-contract.md) and
-[ADR-011](adr/011-explicit-typography-and-composition.md) record limits and evidence.
+WP-14 adds explicit custom stat/geom registration, checked generated schemas and targets,
+custom guide/interaction metadata, resolved Cartesian capabilities, native-only painter
+handling and the [alpha API matrix](alpha-api.md). [Completion evidence](evidence/wp-14-completion-2026-09-07.md)
+and [extension contract](extension-contract.md) record behavior and limitations.
 
 `mise run fmt`, `mise run check`, `mise run test` and actual `bindings-proof` pass.
-**148 tests pass** (126 core, 19 export, 1 native conversion, 2 Rustdoc examples).
-Thirty-four cases execute in Rust, Python and Node WASM, with numerical semantics within
-1e-12, scenes within 1e-10 points and exact SVG bytes. Native themes, exact publication
-preview, Kit reset, 300 DPI theme PNGs and a rendered vector PDF were inspected. PNG
-300/600 DPI dimensions, physical PDF sizing, embedded Unicode fonts and vector output pass.
+**159 tests pass** (126 core, 23 export, 5 external extension, 1 native conversion,
+4 Rustdoc cases). Thirty-six cases execute in Rust, Python and Node WASM, with semantics
+within 1e-12, scenes within 1e-10 points and exact SVG bytes. Native custom geometry,
+native-only paint, reverse keyboard inspection, PNG and rasterized vector PDF were inspected.
 
-G0/G1 remain passed at recorded scopes; G2–G4 remain open. Existing dependency advisories
-and the `block` future-compiler warning remain unresolved. Linux/full accessibility/release
-packaging and performance remain unverified. **Next: WP-14 extension contracts and alpha API.**
+G0/G1 retain their scope; **G2 passes the cumulative alpha feature matrix**. G3/G4 remain
+open. Existing dependency advisories and `block` warning remain unresolved. Linux/full
+accessibility, release packaging and performance remain unverified. **Next: WP-15 complete
+action reducer and state ownership.**
 
 ## Work packages
 
@@ -50,9 +48,9 @@ The final column records outstanding prerequisites/blockers and the next action.
 | WP-10 — Complete statistical and position semantics | DONE | Unassigned | `c5ec829` | GRA-03, GRA-04, GRA-05, GRA-08, DAT-05, DAT-06, QLT-02 | [Completion evidence](evidence/wp-10-completion-2026-09-06.md); [contract](statistics-contract.md); [ADR-005](adr/005-foundational-scales-and-layout.md) | Built-in stats/positions and FIX-02–05 accepted; exact full-recompute fallback declared. Extend families in WP-11 and specialized streaming in WP-18. |
 | WP-11 — Required scale and geometry families | DONE | Unassigned | `a6fb2ea` | GRA-06, SCL-01, SCL-02, SCL-03, SCL-04, SCL-05, SCN-01, SCN-03, DAT-05 | [Completion evidence](evidence/wp-11-completion-2026-09-07.md); [contract](scale-geometry-contract.md) | Required families and FIX-01/03/07 scope accepted through native/export/actual bindings; proceed to shared layout in WP-12. |
 | WP-12 — Facets, guides and shared layout | DONE | Unassigned | `63dbcc2` | GRA-07, GRA-08, SCL-05, LAY-01, LAY-02, LAY-03 | [Completion evidence](evidence/wp-12-completion-2026-09-07.md); [contract](facet-layout-contract.md) | FIX-06 and facet/shared-layout scope accepted through core/native/export/actual bindings; full typography and composition remain WP-13. |
-| WP-13 — Full themes and publication composition | DONE | Unassigned | WP-13 completion commit | THM-01, THM-02, THM-03, LAY-02, LAY-03, LAY-04, EXP-01, EXP-02, EXP-04, GPU-03 | [Completion evidence](evidence/wp-13-completion-2026-09-07.md); [contract](theme-typography-composition-contract.md) | FIX-12/13 accepted through actual core/native/export/bindings; cumulative G2 remains WP-14. |
-| WP-14 — Extension contracts and alpha API | READY | Codex | — | SCP-01, SCP-02, ARC-03, GRA-01, GRA-08, SCN-02, SCN-03, INT-06, BND-01, THM-03, QLT-05 | None | WP-09/11/12/13 complete; prove public extensions and alpha contract matrix. |
-| WP-15 — Complete action reducer and state ownership | NOT STARTED | Unassigned | — | INT-01, INT-02, INT-05, INT-06, SCN-04, STM-02, QLT-01 | None | Satisfy prerequisites: WP-07, WP-14. |
+| WP-13 — Full themes and publication composition | DONE | Unassigned | `f6c41c1` | THM-01, THM-02, THM-03, LAY-02, LAY-03, LAY-04, EXP-01, EXP-02, EXP-04, GPU-03 | [Completion evidence](evidence/wp-13-completion-2026-09-07.md); [contract](theme-typography-composition-contract.md) | FIX-12/13 accepted through actual core/native/export/bindings; cumulative G2 remains WP-14. |
+| WP-14 — Extension contracts and alpha API | DONE | Unassigned | WP-14 completion commit | SCP-01, SCP-02, ARC-03, GRA-01, GRA-08, SCN-02, SCN-03, INT-06, BND-01, THM-03, QLT-05 | [Completion evidence](evidence/wp-14-completion-2026-09-07.md); [contract](extension-contract.md); [alpha matrix](alpha-api.md) | FIX-17 and cumulative G2 passed; full reducer/interaction begins WP-15. |
+| WP-15 — Complete action reducer and state ownership | READY | Codex | — | INT-01, INT-02, INT-05, INT-06, SCN-04, STM-02, QLT-01 | None | Satisfy prerequisites: WP-07, WP-14. |
 | WP-16 — Hit testing, navigation and selection | NOT STARTED | Unassigned | — | INT-03, INT-04, INT-05, INT-06, SCL-01, SCN-04, STM-05 | None | Satisfy prerequisites: WP-11, WP-15. |
 | WP-17 — Linked views, editable annotations and host controls | NOT STARTED | Unassigned | — | INT-01, INT-04, INT-05, INT-06, GPU-03, LAY-03, DAT-06 | None | Satisfy prerequisites: WP-13, WP-15, WP-16. |
 | WP-18 — Streaming retention and incremental computation | NOT STARTED | Unassigned | — | DAT-03, DAT-04, DAT-06, STM-01, STM-02, STM-03, GRA-08, QLT-01 | None | Satisfy prerequisites: WP-04, WP-10, WP-15. |
@@ -68,7 +66,7 @@ The final column records outstanding prerequisites/blockers and the next action.
 | --- | --- | --- |
 | G0 | PASSED — architecture/capability scope | WP-01/02/03 evidence and ADRs establish the initial macOS route and starting protocol; this does not pass full requirements, FIX/PERF or release support. |
 | G1 | PASSED — minimal portable core | WP-04–08 foundation/native/headless evidence plus WP-09 actual Python/WASM FIX-15/16 runtime comparison; this does not certify full grammar or production host/distribution products. |
-| G2 | NOT PASSED | Complete alpha grammar/publication/theme/extension evidence. |
+| G2 | PASSED — Cartesian/publication alpha | [Alpha matrix](alpha-api.md) maps complete grammar/facets/themes/publication/extensions and actual portable evidence. G3/G4 retain their remaining scope. |
 | G3 | NOT PASSED | Interaction, corrections/retention, scheduling and coherent live exports. |
 | G4 | NOT PASSED | All required FIX/PERF/platform/accessibility/documentation evidence. |
 

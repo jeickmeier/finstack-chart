@@ -9,8 +9,8 @@ instructions lead, followed by the specification, conforming ADRs, implementatio
 and migration rationale. An infrastructure-only assignment does not authorize chart
 implementation. The repository contains core data/grammar, scales/layout, inspection and a standalone
 native chart adapter, immutable headless SVG/PDF/PNG publication, built-in statistics and
-positions, required scale/geometry families and versioned Python/WASM proofs. Facets/themes,
-binding coverage and host products remain later work.
+positions, scale/geometry families, facets, themes/publication composition, registered
+extensions and versioned Python/WASM proofs. The status ledger owns remaining scope.
 
 ## Project Structure & Module Organization
 

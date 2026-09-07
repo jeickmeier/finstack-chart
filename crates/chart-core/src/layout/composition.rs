@@ -3,7 +3,7 @@ use super::{
     text::{self, Block},
     *,
 };
-use crate::composition::{Anchor, Collision, ScaleValue};
+use crate::composition::{Anchor, Collision};
 use crate::grammar::{PanelKey, PreparedChart, PreparedGeometry};
 use crate::scene::{Color, Primitive, Scene, SceneItem, Stroke};
 use crate::services::TextMeasurer;
@@ -122,25 +122,7 @@ fn parent<'a>(chart: &'a LaidOutChart, key: &Option<PanelKey>) -> ChartResult<&'
         None => Err(invalid("Faceted data/panel furniture must name its panel.")),
     }
 }
-fn map(axis: &ResolvedAxis, v: &ScaleValue) -> ChartResult<Option<f64>> {
-    match (&axis.scale, v) {
-        (ResolvedScale::Linear(s), ScaleValue::Number(v)) => s.map(*v),
-        (ResolvedScale::Nonlinear(s), ScaleValue::Number(v)) => s.map(*v),
-        (ResolvedScale::Band(s), ScaleValue::Category(v)) => s.center(v),
-        (ResolvedScale::Point(s), ScaleValue::Category(v)) => s.center(v),
-        (ResolvedScale::Utc(s), ScaleValue::Timestamp { value, unit }) if s.unit() == *unit => {
-            s.map(*value)
-        }
-        (ResolvedScale::Session(s), ScaleValue::Timestamp { value, unit })
-            if s.calendar().unit == *unit =>
-        {
-            s.map(*value)
-        }
-        _ => Err(invalid(
-            "Annotation value disagrees with its named scale family or timestamp unit.",
-        )),
-    }
-}
+
 fn anchor(chart: &LaidOutChart, a: &Anchor, figure: Rect) -> ChartResult<Option<(Point, Rect)>> {
     let relative = |b: Rect, x: f64, y: f64| -> ChartResult<Option<(Point, Rect)>> {
         if !x.is_finite() || !y.is_finite() || !(0. ..=1.).contains(&x) || !(0. ..=1.).contains(&y)
@@ -189,7 +171,7 @@ fn anchor(chart: &LaidOutChart, a: &Anchor, figure: Rect) -> ChartResult<Option<
                 .get(&scales.y)
                 .filter(|a| !a.spec.side.horizontal())
                 .ok_or_else(|| invalid("Annotation vertical scale is absent or horizontal."))?;
-            let (Some(x), Some(y)) = (map(x_axis, x)?, map(y_axis, y)?) else {
+            let (Some(x), Some(y)) = (x_axis.map_value(x)?, y_axis.map_value(y)?) else {
                 return Ok(None);
             };
             Ok(Some((Point::new(x, y)?, plot)))
@@ -348,6 +330,11 @@ pub(super) fn finish(
         let mut inset_theme = theme.clone();
         inset_theme.background = Some(theme.panel.unwrap_or(crate::theme::rgb(255, 255, 255)));
         super::theme::apply(&mut view, &request, &inset_theme)?;
+        chart.interactions.extend(
+            view.interactions
+                .iter()
+                .map(|(i, v)| (i + items.len(), v.clone())),
+        );
         items.extend_from_slice(view.scene.items());
         chart.targets.extend_from_slice(&view.targets);
         chart.item_panels.extend(std::iter::repeat_n(

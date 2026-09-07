@@ -9,10 +9,14 @@ description = "Owned WASM chart and publication proof adapter."
 [lib]
 crate-type = ["cdylib", "rlib"]
 
+[features]
+extension-proof = ["dep:chart-extension-example"]
+
 [lints]
 workspace = true
 
 [dependencies]
+chart-extension-example = { workspace = true, optional = true }
 chart-core.workspace = true
 chart-export.workspace = true
 wasm-bindgen = "=0.2.128"

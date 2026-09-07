@@ -136,6 +136,7 @@ pub(super) fn apply(
             }
         }
     }
+    let interaction_offset = items.len();
     for (index, source) in chart.scene.items().iter().enumerate() {
         let mut item = source.clone();
         let mut local = t.clone();
@@ -192,6 +193,7 @@ pub(super) fn apply(
         match &mut item.primitive {
             Primitive::GradientRectangle { .. } => {}
             Primitive::Rectangle { fill, .. }
+            | Primitive::NativePaint { fill, .. }
             | Primitive::Point { fill, .. }
             | Primitive::FilledPath { fill, .. }
             | Primitive::Symbol { fill, .. } => {
@@ -265,6 +267,10 @@ pub(super) fn apply(
         chart.scene.resources(),
         r.limits,
     )?;
+    chart.interactions = std::mem::take(&mut chart.interactions)
+        .into_iter()
+        .map(|(i, v)| (i + interaction_offset, v))
+        .collect();
     chart.targets = targets;
     chart.item_panels = panels;
     Ok(())
@@ -274,6 +280,7 @@ pub(super) fn monochrome(p: &mut Primitive, mode: Option<crate::theme::ColorMode
     let apply = |c: &mut crate::scene::Color| *c = crate::theme::paint_color(*c, mode);
     match p {
         Primitive::Rectangle { fill, .. }
+        | Primitive::NativePaint { fill, .. }
         | Primitive::Point { fill, .. }
         | Primitive::FilledPath { fill, .. }
         | Primitive::Symbol { fill, .. } => apply(fill),

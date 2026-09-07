@@ -71,7 +71,25 @@ impl FigureSnapshot {
         source: SnapshotHandle<StoreSnapshot>,
         state: &ChartState,
         fonts: FontResources,
+        profile: PublicationProfile,
+    ) -> ChartResult<Self> {
+        Self::capture_with_extensions(
+            definition,
+            source,
+            state,
+            fonts,
+            profile,
+            Arc::new(chart_core::grammar::ExtensionRegistry::new()),
+        )
+    }
+    /// Capture with explicitly retained versioned implementations; native-only paint rejects.
+    pub fn capture_with_extensions(
+        definition: &ChartDefinition,
+        source: SnapshotHandle<StoreSnapshot>,
+        state: &ChartState,
+        fonts: FontResources,
         mut profile: PublicationProfile,
+        extensions: Arc<chart_core::grammar::ExtensionRegistry>,
     ) -> ChartResult<Self> {
         profile.validate()?;
         profile.layout.bounds = Rect::new(0., 0., profile.page.width(), profile.page.height())?;
@@ -89,7 +107,7 @@ impl FigureSnapshot {
             }
         }
         fonts.get(&profile.layout.font)?;
-        let prepared = Arc::new(Compiler::new().prepare(
+        let prepared = Arc::new(Compiler::with_extensions(extensions).prepare(
             &effective_definition,
             &source,
             &effective_state,
@@ -297,6 +315,16 @@ fn preflight(
         let result = (|| {
             rect(item.clip.unwrap_or(scene.bounds()))?;
             match &item.primitive {
+                Primitive::NativePaint { painter, .. } => {
+                    return Err(error(
+                        DiagnosticCode::UnsupportedCapability,
+                        format!(
+                            "Native painter {} version {} has no SVG/PDF/PNG representation; replace it with portable geometry.",
+                            painter.id,
+                            painter.version.get()
+                        ),
+                    ));
+                }
                 Primitive::GlyphRun {
                     origin,
                     rotation,

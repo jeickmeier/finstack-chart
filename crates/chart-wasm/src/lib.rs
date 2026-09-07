@@ -26,6 +26,25 @@ impl Chart {
             .map(|inner| Self { inner })
             .map_err(failure)
     }
+    /// Proof-only constructor installing known compiled extensions; JSON cannot install code.
+    #[cfg(feature = "extension-proof")]
+    #[wasm_bindgen(js_name=withExampleExtensions)]
+    pub fn with_example_extensions(
+        definition: &str,
+        data: &str,
+        profile: &str,
+        font: Vec<u8>,
+    ) -> Result<Chart, JsError> {
+        PortableChart::with_extensions(
+            definition,
+            data,
+            profile,
+            font,
+            chart_extension_example::registry().map_err(failure)?,
+        )
+        .map(|inner| Self { inner })
+        .map_err(failure)
+    }
     /// Return owned semantic JSON.
     pub fn semantics(&mut self) -> Result<String, JsError> {
         self.inner.semantics().map_err(failure)

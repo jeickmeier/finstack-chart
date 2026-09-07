@@ -55,6 +55,17 @@ pub enum PathCommand {
 /// Authored minimal primitive, validated and copied into an immutable scene.
 #[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub enum Primitive {
+    /// Explicit native callback invocation. Headless renderers reject this capability.
+    NativePaint {
+        /// Finite destination rectangle; the host enforces the scene clip.
+        bounds: Rect,
+        /// Exact host-registered painter identity/version.
+        painter: crate::grammar::OperationRef,
+        /// Bounded declarative painter data, never code.
+        parameters: serde_json::Value,
+        /// Resolved style token supplied to the painter.
+        fill: Color,
+    },
     /// Noncircular point symbol with an explicit semantic center.
     Symbol {
         /// Finite point center.
@@ -192,6 +203,25 @@ impl Scene {
         })
     }
 
+    /// Fail before encoding if this scene needs any native-only painter; no implicit raster fallback.
+    pub fn require_portable_paint(&self) -> ChartResult<()> {
+        for item in &self.items {
+            if let Primitive::NativePaint { painter, .. } = &item.primitive {
+                let mut d = Diagnostic::error(
+                    DiagnosticCode::UnsupportedCapability,
+                    format!(
+                        "Native painter {} version {} has no SVG/PDF/PNG representation.",
+                        painter.id,
+                        painter.version.get()
+                    ),
+                    "Replace this layer with portable numeric geometry before export.",
+                );
+                d.context.layer = item.layer;
+                return Err(d);
+            }
+        }
+        Ok(())
+    }
     /// Input revision stamps retained exactly.
     pub const fn stamp(&self) -> SceneStamp {
         self.stamp
@@ -227,6 +257,19 @@ fn validate(
     let mut path_remaining = limits.max_path_commands;
     for item in items {
         let result = match &item.primitive {
+            Primitive::NativePaint {
+                painter,
+                parameters,
+                ..
+            } => {
+                crate::grammar::validate_native_paint(painter, parameters)?;
+                let bytes = crate::grammar::native_parameter_size(parameters)?
+                    .saturating_add(painter.id.len());
+                require_within(bytes <= text_remaining, "total native descriptor byte")?;
+                text_remaining -= bytes;
+                Ok(())
+            }
+
             Primitive::GlyphRun { run, .. } => {
                 require_within(
                     run.text.len().saturating_add(run.language.len()) <= text_remaining,
@@ -309,6 +352,11 @@ fn validate_primitive(
     limits: Limits,
 ) -> ChartResult<()> {
     match primitive {
+        Primitive::NativePaint {
+            painter,
+            parameters,
+            ..
+        } => crate::grammar::validate_native_paint(painter, parameters),
         Primitive::GlyphRun { rotation, run, .. } => {
             if !rotation.is_finite() || rotation.abs() > 360. {
                 return Err(path_error());

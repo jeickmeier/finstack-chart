@@ -246,6 +246,12 @@ pub(crate) fn pdf(
                 }
                 (primitive, Some(usvg::Node::Path(node))) => {
                     match primitive {
+                        Primitive::NativePaint { .. } => {
+                            return Err(error(
+                                DiagnosticCode::UnsupportedCapability,
+                                "Native painters cannot be encoded as PDF.",
+                            ));
+                        }
                         Primitive::GradientRectangle { bounds, gradient } => {
                             let x1 = p.f32(bounds.origin().x())?;
                             let y1 = p.f32(bounds.origin().y())?;

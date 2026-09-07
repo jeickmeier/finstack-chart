@@ -11,11 +11,13 @@ crate-type = ["cdylib", "rlib"]
 
 [features]
 extension-module = ["pyo3/extension-module"]
+extension-proof = ["dep:chart-extension-example"]
 
 [lints]
 workspace = true
 
 [dependencies]
+chart-extension-example = { workspace = true, optional = true }
 chart-core.workspace = true
 chart-export.workspace = true
 pyo3 = "=0.29.2"

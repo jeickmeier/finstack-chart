@@ -67,11 +67,24 @@ console.log(`PASS WASM: real Node WebAssembly, portable fixture, copies, invalid
 
 // WP-10: shared portable builtin semantics and final destination scenes in actual WASM.
 const statistics = {}, scenes = {};
-for (const proofCase of [...JSON.parse(fs.readFileSync(path.join(root,'fixtures/statistics/portable-cases.json'),'utf8')), ...JSON.parse(fs.readFileSync(path.join(root,'fixtures/families/portable-cases.json'),'utf8')), ...JSON.parse(fs.readFileSync(path.join(root,'fixtures/facets/portable-cases.json'),'utf8')), ...JSON.parse(fs.readFileSync(path.join(root,'fixtures/composition/portable-cases.json'),'utf8'))]) {
-    const proof = new bindings.Chart(JSON.stringify(proofCase.chart),JSON.stringify(proofCase.data),proofCase.profile ? JSON.stringify(proofCase.profile) : proofCase.profile_file ? fs.readFileSync(path.join(root,proofCase.profile_file),'utf8') : read('profile'),Uint8Array.from(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))));
+for (const proofCase of [...JSON.parse(fs.readFileSync(path.join(root,'fixtures/statistics/portable-cases.json'),'utf8')), ...JSON.parse(fs.readFileSync(path.join(root,'fixtures/families/portable-cases.json'),'utf8')), ...JSON.parse(fs.readFileSync(path.join(root,'fixtures/facets/portable-cases.json'),'utf8')), ...JSON.parse(fs.readFileSync(path.join(root,'fixtures/composition/portable-cases.json'),'utf8')), ...JSON.parse(fs.readFileSync(path.join(root,'fixtures/extensions/portable-cases.json'),'utf8'))]) {
+    const construct = proofCase.registered ? bindings.Chart.withExampleExtensions : (...args)=>new bindings.Chart(...args);
+    const proof = construct(JSON.stringify(proofCase.chart),JSON.stringify(proofCase.data),proofCase.profile ? JSON.stringify(proofCase.profile) : proofCase.profile_file ? fs.readFileSync(path.join(root,proofCase.profile_file),'utf8') : read('profile'),Uint8Array.from(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))));
     statistics[proofCase.name] = JSON.parse(proof.semantics()); scenes[proofCase.name] = JSON.parse(proof.scene());
     fs.writeFileSync(path.join(output,`statistics-${proofCase.name}.svg`),proof.svg());
     proof.dispose(); proof.free();
+    if (proofCase.registered) {
+        for (const mode of ['unregistered','unknown-version','native-only','wrong-schema']) {
+            const bad=JSON.parse(JSON.stringify(proofCase.chart));
+            let construct=bindings.Chart.withExampleExtensions;
+            if(mode==='unregistered') construct=(...args)=>new bindings.Chart(...args);
+            else if(mode==='unknown-version') bad.definition.transforms[0].statistic.operation.version='99';
+            else if(mode==='native-only') bad.definition.layers[0].geometry_extension.operation.id='example.native_bars';
+            else bad.definition.layers[0].mappings.Statistical.x={Field:{Custom:'absent'}};
+            assert.throws(()=>construct(JSON.stringify(bad),JSON.stringify(proofCase.data),fs.readFileSync(path.join(root,proofCase.profile_file),'utf8'),Uint8Array.from(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf')))),e=>JSON.parse(e.message).code===(mode==='wrong-schema'?'CHART_SCHEMA_CONFLICT':'CHART_UNSUPPORTED_CAPABILITY'));
+        }
+        console.log('PASS WASM FIX-17 unregistered/unknown-version/native-only/stage-schema errors');
+    }
     if (proofCase.name === 'facet-shared-broadcast') {
         for (const [target,expected] of [[null,'CHART_SCHEMA_CONFLICT'],[{Panels:[{values:[{Text:'absent'}]}]},'CHART_VALIDATION']]) {
             const bad=JSON.parse(JSON.stringify(proofCase.chart));

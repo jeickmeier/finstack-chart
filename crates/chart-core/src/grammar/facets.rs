@@ -113,6 +113,7 @@ pub(crate) fn scoped_stat(stat: &Statistic, scope: StatScope) -> Statistic {
     if scope != StatScope::Group {
         match &mut stat.parameters {
             StatParameters::Identity => {}
+            StatParameters::Custom(s) => s.grouping = Grouping::All,
             StatParameters::AutoBin(s) => s.grouping = Grouping::All,
             StatParameters::Bin(s) => s.grouping = Grouping::All,
             StatParameters::Count(s) => s.grouping = Grouping::All,
@@ -229,7 +230,13 @@ pub(crate) fn prepare_facets(
             ));
         }
     }
-    let mut population_diagnostics = validate_population(definition, source.get()?, spec, limits)?;
+    let mut population_diagnostics = validate_population(
+        definition,
+        source.get()?,
+        spec,
+        limits,
+        &compiler.extensions,
+    )?;
     let mut rows = Vec::new();
     let mut columns = Vec::new();
     if matches!(spec.layout, FacetLayout::Grid) {
@@ -390,6 +397,7 @@ fn validate_population(
     snapshot: &StoreSnapshot,
     spec: &FacetSpec,
     limits: CompileLimits,
+    extensions: &ExtensionRegistry,
 ) -> ChartResult<Vec<crate::Diagnostic>> {
     #[derive(Clone)]
     struct Input {
@@ -398,7 +406,7 @@ fn validate_population(
         generated: bool,
         faceted: bool,
     }
-    let order = compiler::validate_definition(definition, snapshot, limits)?;
+    let order = compiler::validate_definition(definition, snapshot, limits, extensions)?;
     let mut inputs = std::collections::BTreeMap::<crate::TransformId, Input>::new();
     let resolve =
         |input: DataRef, inputs: &std::collections::BTreeMap<crate::TransformId, Input>| -> Input {

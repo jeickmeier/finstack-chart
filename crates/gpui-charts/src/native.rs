@@ -281,6 +281,7 @@ impl TextMeasurer for Metrics<'_> {
     }
 }
 enum Paint {
+    Custom(std::rc::Rc<dyn crate::PreparedNativePaint>),
     Empty,
     Quad(gpui::PaintQuad),
     Path(Path<Pixels>, gpui::Rgba),
@@ -312,6 +313,7 @@ impl NativeFrame {
         prepared: Arc<PreparedChart>,
         mut request: LayoutRequest,
         font: &NativeFont,
+        painters: &crate::NativePainterRegistry,
         bounds: Bounds<Pixels>,
         window: &Window,
     ) -> ChartResult<Self> {
@@ -380,6 +382,16 @@ impl NativeFrame {
                 };
                 let primitive = outlined.as_ref().unwrap_or(&item.primitive);
                 let paint = match primitive {
+                    Primitive::NativePaint {
+                        bounds: r,
+                        painter,
+                        parameters,
+                        fill,
+                    } => Paint::Custom(painters.get(painter)?.prepare(
+                        rect_at(*r, bounds.origin)?,
+                        parameters,
+                        *fill,
+                    )?),
                     Primitive::GlyphRun { .. }
                     | Primitive::DashedPath { .. }
                     | Primitive::Symbol { .. } => unreachable!(),
@@ -522,6 +534,7 @@ impl NativeFrame {
                         Some(ContentMask { bounds: item.clip }),
                         |window| -> ChartResult<()> {
                             match &item.paint {
+                                Paint::Custom(p) => p.paint(window, cx),
                                 Paint::Empty => {}
                                 Paint::Quad(q) => window.paint_quad(q.clone()),
                                 Paint::Path(p, c) => window.paint_path(p.clone(), *c),

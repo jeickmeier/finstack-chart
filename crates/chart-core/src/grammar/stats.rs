@@ -25,6 +25,7 @@ pub(crate) fn validate_stat(stat: &Statistic, limits: CompileLimits) -> ChartRes
         | StatParameters::Count(_)
         | StatParameters::Summary(_)
         | StatParameters::Ols(_) => super::statistics::validate(stat, limits),
+        StatParameters::Custom(p) => extensions::validate_parameters(p, limits),
         StatParameters::Identity => validate_operation(&stat.operation, "chart.identity"),
         StatParameters::Bin(spec) => {
             validate_operation(&stat.operation, "chart.bin")?;
@@ -236,6 +237,7 @@ pub(crate) fn warning(
     Ok(())
 }
 
+#[derive(Clone, Copy)]
 pub(crate) struct StatRequest<'a> {
     pub stat: &'a Statistic,
     pub population: StatScope,
@@ -245,6 +247,7 @@ pub(crate) struct StatRequest<'a> {
     pub scope: &'a str,
 }
 pub(crate) fn run(
+    extensions: &ExtensionRegistry,
     input: Arc<PreparedTable>,
     data: &DatasetSnapshot,
     request: StatRequest<'_>,
@@ -341,6 +344,18 @@ pub(crate) fn run(
                 &mut counts,
                 diagnostics,
             )?
+        }
+        StatParameters::Custom(p) => {
+            super::extensions::run_custom(
+                extensions,
+                &mut table,
+                data,
+                &request,
+                limits,
+                &mut counts,
+                diagnostics,
+            )?;
+            (p.grouping.clone(), p.space.clone())
         }
         StatParameters::Identity => (Grouping::All, StatSpace::Data),
         StatParameters::Bin(spec) => {

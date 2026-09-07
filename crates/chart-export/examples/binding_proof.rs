@@ -46,11 +46,27 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     cases.extend(serde_json::from_str::<Vec<serde_json::Value>>(
         &fs::read_to_string(root.join("fixtures/composition/portable-cases.json"))?,
     )?);
+    cases.extend(serde_json::from_str::<Vec<serde_json::Value>>(
+        &fs::read_to_string(root.join("fixtures/extensions/portable-cases.json"))?,
+    )?);
     let mut statistics = serde_json::Map::new();
     let mut scenes = serde_json::Map::new();
     for case in cases {
         let name = case["name"].as_str().ok_or("case name")?;
-        let mut chart = PortableChart::new(
+        let constructor = |chart: &str, data: &str, profile: &str, font: Vec<u8>| {
+            if case["registered"].as_bool() == Some(true) {
+                PortableChart::with_extensions(
+                    chart,
+                    data,
+                    profile,
+                    font,
+                    chart_extension_example::registry()?,
+                )
+            } else {
+                PortableChart::new(chart, data, profile, font)
+            }
+        };
+        let mut chart = constructor(
             &case["chart"].to_string(),
             &case["data"].to_string(),
             &case.get("profile").map_or_else(
@@ -78,6 +94,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         if name.starts_with("family-")
             || name.starts_with("facet-")
             || name.starts_with("composition-")
+            || name.starts_with("extension-")
+            || name.starts_with("alpha-")
         {
             fs::write(
                 output.join(format!("statistics-{name}.pdf")),

@@ -91,12 +91,27 @@ print(f"PASS Python: actual extension, portable fixture, copies, detached thread
 
 # WP-10: every new builtin executes through the actual extension and existing export engine.
 statistics = {}; scenes = {}
-for case in json.loads((ROOT / "fixtures/statistics/portable-cases.json").read_text()) + json.loads((ROOT / "fixtures/families/portable-cases.json").read_text()) + json.loads((ROOT / "fixtures/facets/portable-cases.json").read_text()) + json.loads((ROOT / "fixtures/composition/portable-cases.json").read_text()):
-    proof = Chart(json.dumps(case["chart"]), json.dumps(case["data"]), json.dumps(case["profile"]) if "profile" in case else (ROOT / case["profile_file"]).read_text() if "profile_file" in case else read("profile"), (ROOT / "fixtures/capability/fonts/NotoSans-Regular.ttf").read_bytes())
+for case in json.loads((ROOT / "fixtures/statistics/portable-cases.json").read_text()) + json.loads((ROOT / "fixtures/families/portable-cases.json").read_text()) + json.loads((ROOT / "fixtures/facets/portable-cases.json").read_text()) + json.loads((ROOT / "fixtures/composition/portable-cases.json").read_text()) + json.loads((ROOT / "fixtures/extensions/portable-cases.json").read_text()):
+    constructor = Chart.with_example_extensions if case.get("registered") else Chart
+    proof = constructor(json.dumps(case["chart"]), json.dumps(case["data"]), json.dumps(case["profile"]) if "profile" in case else (ROOT / case["profile_file"]).read_text() if "profile_file" in case else read("profile"), (ROOT / "fixtures/capability/fonts/NotoSans-Regular.ttf").read_bytes())
     statistics[case["name"]] = json.loads(proof.semantics())
     scenes[case["name"]] = json.loads(proof.scene())
     (output / f"statistics-{case['name']}.svg").write_bytes(proof.export("svg"))
     proof.dispose()
+    if case.get("registered"):
+        for mode in ("unregistered", "unknown-version", "native-only", "wrong-schema"):
+            bad = json.loads(json.dumps(case["chart"]))
+            construct = Chart.with_example_extensions
+            if mode == "unregistered": construct = Chart
+            elif mode == "unknown-version": bad["definition"]["transforms"][0]["statistic"]["operation"]["version"] = "99"
+            elif mode == "native-only": bad["definition"]["layers"][0]["geometry_extension"]["operation"]["id"] = "example.native_bars"
+            else: bad["definition"]["layers"][0]["mappings"]["Statistical"]["x"] = {"Field":{"Custom":"absent"}}
+            try:
+                construct(json.dumps(bad), json.dumps(case["data"]), (ROOT / case["profile_file"]).read_text(), (ROOT / "fixtures/capability/fonts/NotoSans-Regular.ttf").read_bytes())
+                raise AssertionError("invalid extension accepted: " + mode)
+            except ChartError as error:
+                assert json.loads(error.args[0])["code"] == ("CHART_SCHEMA_CONFLICT" if mode == "wrong-schema" else "CHART_UNSUPPORTED_CAPABILITY")
+        print("PASS Python FIX-17 unregistered/unknown-version/native-only/stage-schema errors")
     if case["name"] == "facet-shared-broadcast":
         for target, expected in [(None, "CHART_SCHEMA_CONFLICT"), ({"Panels":[{"values":[{"Text":"absent"}]}]}, "CHART_VALIDATION")]:
             bad = json.loads(json.dumps(case["chart"]))

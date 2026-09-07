@@ -145,6 +145,8 @@ pub struct IncrementalCapabilities {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Eq, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub enum StatField {
+    /// Field in a registered custom generated schema; never a source FieldId.
+    Custom(String),
     /// Stable group label, projected through the generated schema catalog.
     Group,
     /// Membership count.
@@ -246,7 +248,12 @@ pub struct StatAes {
     pub size: Option<StatNumeric>,
 }
 impl StatAes {
-    /// Bind generated x/y coordinates.
+    /// Bind generated x/y coordinates. Source IDs cannot receive generated outputs.
+    ///
+    /// ```compile_fail
+    /// use chart_core::{FieldId, grammar::StatAes};
+    /// let generated = StatAes::new(FieldId::new(1), FieldId::new(2));
+    /// ```
     pub fn new(x: impl Into<StatNumeric>, y: impl Into<StatNumeric>) -> Self {
         Self {
             x: x.into(),

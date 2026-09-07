@@ -72,6 +72,7 @@ impl ResolvedAxis {
 }
 
 pub(super) struct Output {
+    pub interactions: BTreeMap<usize, crate::grammar::GeometryInteraction>,
     pub items: Vec<SceneItem>,
     pub targets: Vec<Vec<Target>>,
     pub omitted: usize,
@@ -99,6 +100,7 @@ pub(super) fn project(
     request: &LayoutRequest,
 ) -> ChartResult<Output> {
     let mut out = Output {
+        interactions: BTreeMap::new(),
         items: vec![],
         targets: vec![],
         omitted: 0,
@@ -113,7 +115,8 @@ pub(super) fn project(
         } else {
             request.figure_bounds.unwrap_or(request.bounds)
         });
-        for mark in layer.marks() {
+        for (mark_index, mark) in layer.marks().iter().enumerate() {
+            let output_index = out.items.len();
             let point = |p: Point, target: &Target, edge: f64| -> ChartResult<Option<Point>> {
                 let (Some(mut a), Some(mut b)) = (x.map(p.x(), xspace)?, y.map(p.y(), yspace)?)
                 else {
@@ -169,6 +172,66 @@ pub(super) fn project(
                 primitive,
             };
             match &mark.geometry {
+                PreparedGeometry::Polygon(points) => {
+                    let projected = points
+                        .iter()
+                        .map(|p| point(*p, &mark.targets[0], 0.))
+                        .collect::<ChartResult<Option<Vec<_>>>>()?;
+                    if let Some(points) = projected {
+                        let mut commands: Vec<_> = points
+                            .into_iter()
+                            .enumerate()
+                            .map(|(i, p)| {
+                                if i == 0 {
+                                    PathCommand::MoveTo(p)
+                                } else {
+                                    PathCommand::LineTo(p)
+                                }
+                            })
+                            .collect();
+                        commands.push(PathCommand::Close);
+                        out.push(
+                            item(Primitive::FilledPath {
+                                commands,
+                                fill: mark.style.color,
+                            }),
+                            mark.targets.clone(),
+                            request,
+                        )?;
+                    } else {
+                        out.omitted += 1;
+                    }
+                }
+                PreparedGeometry::NativePaint {
+                    from,
+                    to,
+                    painter,
+                    parameters,
+                } => {
+                    if let (Some(a), Some(b)) = (
+                        point(*from, &mark.targets[0], 0.)?,
+                        point(*to, &mark.targets[0], 0.)?,
+                    ) {
+                        out.push(
+                            item(Primitive::NativePaint {
+                                bounds: Rect::new(
+                                    a.x().min(b.x()),
+                                    a.y().min(b.y()),
+                                    (b.x() - a.x()).abs(),
+                                    (b.y() - a.y()).abs(),
+                                )?,
+                                painter: painter.clone(),
+                                parameters: parameters.clone(),
+                                fill: mark.style.color,
+                            }),
+                            mark.targets.clone(),
+                            request,
+                        )?;
+                    } else {
+                        out.omitted += 1;
+                    }
+                }
+
                 PreparedGeometry::BandRun { lower, upper } => {
                     let mut lo = vec![];
                     let mut hi = vec![];
@@ -351,6 +414,38 @@ pub(super) fn project(
                     } else {
                         out.omitted += 1;
                     }
+                }
+            }
+            if let Some(interaction) = layer.interactions().get(&mark_index)
+                && out.items.len() == output_index + 1
+            {
+                use crate::grammar::HitGeometry;
+                let map = |p| point(p, &mark.targets[0], 0.);
+                let hit = match &interaction.hit {
+                    HitGeometry::Point { center, radius } => {
+                        map(*center)?.map(|center| HitGeometry::Point {
+                            center,
+                            radius: *radius,
+                        })
+                    }
+                    HitGeometry::Rectangle { from, to } => match (map(*from)?, map(*to)?) {
+                        (Some(from), Some(to)) => Some(HitGeometry::Rectangle { from, to }),
+                        _ => None,
+                    },
+                    HitGeometry::Polygon(points) => points
+                        .iter()
+                        .map(|p| map(*p))
+                        .collect::<ChartResult<Option<Vec<_>>>>()?
+                        .map(HitGeometry::Polygon),
+                };
+                if let Some(hit) = hit {
+                    out.interactions.insert(
+                        output_index,
+                        crate::grammar::GeometryInteraction {
+                            hit,
+                            ..interaction.clone()
+                        },
+                    );
                 }
             }
         }

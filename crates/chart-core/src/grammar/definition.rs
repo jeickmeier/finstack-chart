@@ -173,6 +173,8 @@ impl BinSpec {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub enum StatParameters {
+    /// Parameters for an explicitly registered custom statistic.
+    Custom(super::ExtensionParameters),
     /// Preserve source or already-generated rows/provenance.
     Identity,
     /// Thirty equal-width bins by default, over the eligible filtered population.
@@ -197,6 +199,13 @@ pub struct Statistic {
     pub parameters: StatParameters,
 }
 impl Statistic {
+    /// Select an explicitly registered extension; no executable code is serialized.
+    pub fn custom(operation: OperationRef, parameters: super::ExtensionParameters) -> Self {
+        Self {
+            operation,
+            parameters: StatParameters::Custom(parameters),
+        }
+    }
     /// Preserve input rows and their exact provenance.
     pub fn identity() -> Self {
         Self {
@@ -283,6 +292,12 @@ impl SourceAes {
         Self::default()
     }
     /// Bind x to a numeric field, literal, timestamp or explicit category encoding.
+    /// Generated accessors cannot enter the source stage.
+    ///
+    /// ```compile_fail
+    /// use chart_core::grammar::{SourceAes, StatField};
+    /// let source = SourceAes::new().x(StatField::Count);
+    /// ```
     pub fn x(mut self, value: impl Into<Numeric>) -> Self {
         self.x = Some(value.into());
         self
@@ -584,6 +599,12 @@ pub enum ClipPolicy {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Layer {
+    /// Optional versioned custom geometry after shared encoding and positioning.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub geometry_extension: Option<super::GeometryExtension>,
+    /// Direction-dependent candle colors; supplied OHLC values remain unchanged.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub candle_colors: Option<super::CandleColors>,
     /// Explicit missing-facet and panel targeting policy.
     #[serde(default)]
     pub facet: super::FacetTarget,
@@ -623,6 +644,8 @@ impl Layer {
     pub fn new(id: LayerId, data: impl Into<DataRef>, geom: Geom, mappings: SourceAes) -> Self {
         Self {
             id,
+            geometry_extension: None,
+            candle_colors: None,
             facet: super::FacetTarget::default(),
             scope: super::StatScope::default(),
             scales: ScaleBindings::default(),

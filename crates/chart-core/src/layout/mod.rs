@@ -6,11 +6,13 @@
 
 mod axes;
 mod composition;
+mod coordinates;
 mod engine;
 mod facets;
 mod project;
 mod text;
 mod theme;
 mod types;
+pub use coordinates::*;
 pub use engine::layout;
 pub use types::*;

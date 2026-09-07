@@ -41,6 +41,7 @@ pub(crate) fn build(
     p: &PublicationProfile,
     embed: bool,
 ) -> ChartResult<String> {
+    scene.require_portable_paint()?;
     let mut out = Writer {
         text: String::new(),
         limit: p.max_output_bytes,
@@ -93,6 +94,9 @@ pub(crate) fn build(
                 clip.height()
             )?;
             match &item.primitive {
+                Primitive::NativePaint { .. } => {
+                    unreachable!("portable paint checked before encoding")
+                }
                 Primitive::Symbol {
                     center,
                     radius,

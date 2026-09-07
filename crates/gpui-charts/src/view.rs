@@ -31,6 +31,7 @@ pub struct ChartInput {
     compiler: Compiler,
     prepared: Arc<PreparedChart>,
     font: NativeFont,
+    painters: Rc<crate::NativePainterRegistry>,
     request: LayoutRequest,
 }
 impl ChartInput {
@@ -40,8 +41,22 @@ impl ChartInput {
         source: SnapshotHandle<StoreSnapshot>,
         font: NativeFont,
     ) -> ChartResult<Self> {
+        Self::with_extensions(
+            definition,
+            source,
+            font,
+            Arc::new(chart_core::grammar::ExtensionRegistry::new()),
+        )
+    }
+    /// Compile with explicitly supplied versioned native/portable stat and geometry extensions.
+    pub fn with_extensions(
+        definition: ChartDefinition,
+        source: SnapshotHandle<StoreSnapshot>,
+        font: NativeFont,
+        extensions: Arc<chart_core::grammar::ExtensionRegistry>,
+    ) -> ChartResult<Self> {
         let state = ChartState::default();
-        let mut compiler = Compiler::new();
+        let mut compiler = Compiler::with_extensions(extensions);
         let prepared =
             Arc::new(compiler.prepare(&definition, &source, &state, CompileLimits::default())?);
         let request = LayoutRequest::new(
@@ -56,8 +71,14 @@ impl ChartInput {
             compiler,
             prepared,
             font,
+            painters: Rc::new(crate::NativePainterRegistry::new()),
             request,
         })
+    }
+    /// Retain exact host-only painter implementations for this mount and its prepared frames.
+    pub fn with_native_painters(mut self, painters: Rc<crate::NativePainterRegistry>) -> Self {
+        self.painters = painters;
+        self
     }
 }
 
@@ -70,6 +91,7 @@ pub struct ChartView {
     compiler: Compiler,
     prepared: Arc<PreparedChart>,
     font: NativeFont,
+    painters: Rc<crate::NativePainterRegistry>,
     request: LayoutRequest,
     focus: FocusHandle,
     frame: Option<Rc<NativeFrame>>,
@@ -90,6 +112,7 @@ impl ChartView {
             compiler,
             prepared,
             font,
+            painters,
             request,
         } = input;
         Self {
@@ -99,6 +122,7 @@ impl ChartView {
             compiler,
             prepared,
             font,
+            painters,
             request,
             focus: cx.focus_handle(),
             frame: None,
@@ -249,6 +273,7 @@ impl ChartView {
                 self.prepared.clone(),
                 self.request.clone(),
                 &self.font,
+                &self.painters,
                 bounds,
                 window,
             )

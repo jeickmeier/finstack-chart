@@ -289,6 +289,7 @@ pub(super) fn layout_facets(
         cells.push(cell);
     }
     let resolved = solve_panels(inputs, measurer, stamp)?;
+    let mut interactions = std::collections::BTreeMap::new();
     let mut items = vec![];
     let mut targets = vec![];
     let mut item_panels = vec![];
@@ -309,6 +310,12 @@ pub(super) fn layout_facets(
             chart.scene().items().len() <= request.limits.max_items.saturating_sub(items.len()),
             "figure scene item",
         )?;
+        interactions.extend(
+            chart
+                .interactions()
+                .iter()
+                .map(|(i, v)| (i + items.len(), v.clone())),
+        );
         items.extend_from_slice(chart.scene().items());
         targets.extend_from_slice(chart.targets());
         item_panels.extend(std::iter::repeat_n(
@@ -382,6 +389,7 @@ pub(super) fn layout_facets(
         request.limits,
     )?;
     Ok(LaidOutChart {
+        interactions,
         insets: vec![],
         prepared,
         scene,

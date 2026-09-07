@@ -161,8 +161,24 @@ pub struct PortableChart {
 impl PortableChart {
     /// Validate copied JSON inputs and one supplied font; initialize without any host runtime.
     pub fn new(chart: &str, data: &str, profile: &str, font: Vec<u8>) -> ChartResult<Self> {
+        Self::with_extensions(
+            chart,
+            data,
+            profile,
+            font,
+            std::sync::Arc::new(chart_core::grammar::ExtensionRegistry::new()),
+        )
+    }
+    /// Resolve known portable extension versions from a host-supplied immutable registry.
+    pub fn with_extensions(
+        chart: &str,
+        data: &str,
+        profile: &str,
+        font: Vec<u8>,
+        extensions: std::sync::Arc<chart_core::grammar::ExtensionRegistry>,
+    ) -> ChartResult<Self> {
         let profile: ProfileEnvelope = portable::decode(profile)?;
-        let core = Session::new(chart, data)?;
+        let core = Session::with_extensions(chart, data, extensions)?;
         let (profile, fonts) = profile.build(font)?;
         let chart = Self {
             inner: Some(Inner {
@@ -183,12 +199,13 @@ impl PortableChart {
     /// Immutable figure using the exact shared exporter; callers may retain it after disposal.
     pub fn capture(&self) -> ChartResult<FigureSnapshot> {
         let i = self.get()?;
-        FigureSnapshot::capture(
+        FigureSnapshot::capture_with_extensions(
             i.core.definition(),
             i.core.source(),
             i.core.state(),
             i.fonts.clone(),
             i.profile.clone(),
+            i.core.extensions().clone(),
         )
     }
     /// Owned semantic JSON with generated values, domains, exact source payloads and targets.
@@ -220,8 +237,14 @@ impl PortableChart {
             .iter()
             .map(|i| json!({"id":i.id,"panel":i.panel,"bounds":i.bounds,"plot":i.chart.plot()}))
             .collect::<Vec<_>>();
+        let interactions: std::collections::BTreeMap<_, _> = figure
+            .layout()
+            .interactions()
+            .iter()
+            .map(|(i, v)| (i + 1, v))
+            .collect();
         portable::encode(
-            &json!({"insets":insets,"version":portable::VERSION,"stamp":figure.scene().stamp(),"units":figure.scene().units(),"bounds":figure.scene().bounds(),"items":figure.scene().items(),"resources":figure.scene().resources(),"targets":targets,"item_panels":item_panels,"panels":panels,"diagnostics":figure.layout().diagnostics(),"fonts":figure.metadata().fonts.iter().map(|f|json!({"id":f.id,"revision":f.revision,"sha256":f.sha256})).collect::<Vec<_>>() }),
+            &json!({"interactions":interactions,"insets":insets,"version":portable::VERSION,"stamp":figure.scene().stamp(),"units":figure.scene().units(),"bounds":figure.scene().bounds(),"items":figure.scene().items(),"resources":figure.scene().resources(),"targets":targets,"item_panels":item_panels,"panels":panels,"diagnostics":figure.layout().diagnostics(),"fonts":figure.metadata().fonts.iter().map(|f|json!({"id":f.id,"revision":f.revision,"sha256":f.sha256})).collect::<Vec<_>>() }),
         )
     }
     /// Return bytes for the explicitly requested format; no host file I/O or silent fallback.

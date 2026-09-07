@@ -14,14 +14,23 @@ pub struct Session {
 impl Session {
     /// Decode and validate versioned chart/data inputs, including builtin operations and schemas.
     pub fn new(chart: &str, data: &str) -> ChartResult<Self> {
+        Self::with_extensions(chart, data, Arc::new(ExtensionRegistry::new()))
+    }
+    /// Execute only registered portable extensions; arbitrary callbacks are never decoded.
+    pub fn with_extensions(
+        chart: &str,
+        data: &str,
+        extensions: Arc<ExtensionRegistry>,
+    ) -> ChartResult<Self> {
         let definition: ChartEnvelope = decode(chart)?;
+        extensions.validate_portable(&definition.definition)?;
         definition.validate()?;
         let data: DataEnvelope = decode(data)?;
         let mut session = Self {
             definition,
             store: data.into_store()?,
             state: ChartState::default(),
-            compiler: Compiler::default(),
+            compiler: Compiler::with_extensions(extensions),
         };
         session.prepare()?;
         Ok(session)
@@ -38,8 +47,15 @@ impl Session {
     pub fn state(&self) -> &ChartState {
         &self.state
     }
+    /// Immutable registrations retained for coherent publication capture.
+    pub fn extensions(&self) -> &Arc<ExtensionRegistry> {
+        self.compiler.extensions()
+    }
     /// Serialize the authored definition with its envelope version.
     pub fn chart_json(&self) -> ChartResult<String> {
+        self.compiler
+            .extensions()
+            .validate_portable(self.definition())?;
         encode(&self.definition)
     }
     /// Serialize exact state/revisions in their separate envelope.

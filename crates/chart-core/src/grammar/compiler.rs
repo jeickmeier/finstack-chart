@@ -24,6 +24,7 @@ struct CachedGraph {
 /// New source or transform definitions release prior cache entries; prepared owners stay valid.
 #[derive(Default)]
 pub struct Compiler {
+    pub(crate) extensions: Arc<ExtensionRegistry>,
     cache: BTreeMap<Option<PanelKey>, CachedGraph>,
     presentation: Option<(PreparedChart, CompileLimits)>,
 }
@@ -31,6 +32,17 @@ impl Compiler {
     /// Empty compiler; no host services, threads or I/O are needed for data preparation.
     pub fn new() -> Self {
         Self::default()
+    }
+    /// Use explicitly supplied immutable extension implementations.
+    pub fn with_extensions(extensions: Arc<ExtensionRegistry>) -> Self {
+        Self {
+            extensions,
+            ..Self::default()
+        }
+    }
+    /// Shared registry identity used by coherent capture and portable validation.
+    pub fn extensions(&self) -> &Arc<ExtensionRegistry> {
+        &self.extensions
     }
     /// Release cached graph/source ownership; existing prepared charts remain valid.
     pub fn clear_cache(&mut self) {
@@ -60,7 +72,7 @@ impl Compiler {
                 && old.layers == definition.layers
                 && old.facets == definition.facets
             {
-                validate_definition(definition, snapshot, limits)?;
+                validate_definition(definition, snapshot, limits, &self.extensions)?;
                 let mut result = previous.clone();
                 rebind_presentation(&mut result, &Arc::new(definition.clone()));
                 self.presentation = Some((result.clone(), limits));
@@ -100,7 +112,7 @@ impl Compiler {
         scope: Option<&facets::PanelScope>,
     ) -> ChartResult<PreparedChart> {
         let snapshot = source.get()?;
-        let order = validate_definition(definition, snapshot, limits)?;
+        let order = validate_definition(definition, snapshot, limits, &self.extensions)?;
         let cache_key = scope.map(|s| s.key.clone());
         let reuse = self.cache.get(&cache_key).is_some_and(|c| {
             c.scope.as_ref() == scope
@@ -138,6 +150,7 @@ impl Compiler {
                 let statistic = facets::scoped_stat(&node.statistic, node.scope);
                 let start = diagnostics.len();
                 let table = stats::run(
+                    &self.extensions,
                     input,
                     data,
                     stats::StatRequest {
@@ -173,6 +186,7 @@ impl Compiler {
         let mut colors = BTreeMap::new();
         let mut scale_domains = BTreeMap::new();
         let mut budget = GeometryBudget {
+            extensions: &self.extensions,
             limits,
             vertices: limits.max_vertices,
         };
@@ -194,6 +208,7 @@ impl Compiler {
             let statistic = facets::scoped_stat(&layer.statistic, layer.scope);
             let start = diagnostics.len();
             let table = stats::run(
+                &self.extensions,
                 input,
                 data,
                 stats::StatRequest {
@@ -323,6 +338,7 @@ pub(super) fn validate_definition(
     definition: &ChartDefinition,
     snapshot: &StoreSnapshot,
     limits: CompileLimits,
+    extensions: &ExtensionRegistry,
 ) -> ChartResult<Vec<usize>> {
     if let Some(theme) = &definition.theme {
         theme.resolve(&crate::theme::ThemePatch::default())?;
@@ -358,9 +374,24 @@ pub(super) fn validate_definition(
             ));
         }
         stats::validate_stat(&node.statistic, limits)?;
+        if matches!(node.statistic.parameters, StatParameters::Custom(_)) {
+            extensions.stat_descriptor(&node.statistic.operation)?;
+        }
         stats::validate_filters(&node.filters, limits)?;
     }
     for layer in &definition.layers {
+        if layer.candle_colors.is_some() && !matches!(layer.geom, Geom::Ohlc { .. }) {
+            return Err(error(
+                DiagnosticCode::SchemaConflict,
+                "Candle colors require supplied OHLC geometry.",
+            ));
+        }
+        if let Some(g) = &layer.geometry_extension {
+            extensions::parameter_size(&g.parameters)?;
+            extensions
+                .geom(&g.operation)?
+                .validate(layer, &g.parameters)?;
+        }
         if !layers.insert(layer.id) {
             return Err(error(
                 DiagnosticCode::SchemaConflict,
@@ -376,6 +407,9 @@ pub(super) fn validate_definition(
             ));
         }
         stats::validate_stat(&layer.statistic, limits)?;
+        if matches!(layer.statistic.parameters, StatParameters::Custom(_)) {
+            extensions.stat_descriptor(&layer.statistic.operation)?;
+        }
         stats::validate_filters(&layer.filters, limits)?;
         if !layer.style.radius.is_finite()
             || layer.style.radius <= 0.
@@ -430,7 +464,7 @@ pub(super) fn validate_definition(
             ));
         }
     }
-    preflight_schemas(definition, snapshot, &order, limits)?;
+    preflight_schemas(definition, snapshot, &order, limits, extensions)?;
     Ok(order)
 }
 
@@ -529,14 +563,15 @@ pub(super) fn eligible_domains(layer: &PreparedLayer) -> DomainContributions {
                             include(*p);
                         }
                     }
-                    PreparedGeometry::LineRun(points) => {
+                    PreparedGeometry::LineRun(points) | PreparedGeometry::Polygon(points) => {
                         for p in points {
                             include(*p);
                         }
                     }
                     PreparedGeometry::Rule { from, to }
                     | PreparedGeometry::Rectangle { from, to }
-                    | PreparedGeometry::Bar { from, to, .. } => {
+                    | PreparedGeometry::Bar { from, to, .. }
+                    | PreparedGeometry::NativePaint { from, to, .. } => {
                         include(*from);
                         include(*to);
                     }
@@ -767,7 +802,8 @@ fn validate_line_size(layer: &Layer, mapped: bool) -> ChartResult<()> {
     Ok(())
 }
 
-struct GeometryBudget {
+struct GeometryBudget<'a> {
+    extensions: &'a ExtensionRegistry,
     limits: CompileLimits,
     vertices: usize,
 }
@@ -777,9 +813,10 @@ fn prepare_layer(
     data: &DatasetSnapshot,
     inherited: &SourceAes,
     state: &ChartState,
-    budget: &mut GeometryBudget,
+    budget: &mut GeometryBudget<'_>,
     diagnostics: &mut Vec<Diagnostic>,
 ) -> ChartResult<PreparedLayer> {
+    let extensions = budget.extensions;
     let limits = budget.limits;
     let vertices = &mut budget.vertices;
     let mut domains;
@@ -851,7 +888,9 @@ fn prepare_layer(
             (encoded, aes.size.is_some())
         }
         (PreparedRows::Statistical(rows), Mappings::Statistical(aes)) => {
-            let OutputSchema::Statistical { fields, .. } = &table.schema else {
+            let (OutputSchema::Statistical { fields, .. } | OutputSchema::Custom { fields, .. }) =
+                &table.schema
+            else {
                 unreachable!()
             };
             domains = statistical_binding(layer, aes, fields)?;
@@ -964,6 +1003,7 @@ fn prepare_layer(
     super::positions::apply(layer, &domains, &mut encoded, limits)?;
     super::positions::output_space(layer, &mut domains);
     let mut prepared = PreparedLayer {
+        interactions: BTreeMap::new(),
         color_legend,
         position: layer.position.clone(),
         id: layer.id,
@@ -1096,6 +1136,14 @@ fn prepare_layer(
                 && low <= close
                 && close <= high
             {
+                let style = if row.color.is_none() {
+                    layer.candle_colors.map_or(style, |c| Style {
+                        color: if close >= open { c.up } else { c.down },
+                        ..style
+                    })
+                } else {
+                    style
+                };
                 charge(vertices, 6, "OHLC vertex")?;
                 for geometry in [
                     PreparedGeometry::Rule {
@@ -1155,7 +1203,10 @@ fn prepare_layer(
                     PreparedGeometry::Point(_) => 1,
                     PreparedGeometry::Rule { .. } => 2,
                     PreparedGeometry::Rectangle { .. } | PreparedGeometry::Bar { .. } => 4,
-                    PreparedGeometry::LineRun(_) | PreparedGeometry::BandRun { .. } => 0,
+                    PreparedGeometry::LineRun(_)
+                    | PreparedGeometry::BandRun { .. }
+                    | PreparedGeometry::Polygon(_)
+                    | PreparedGeometry::NativePaint { .. } => 0,
                 };
                 charge(vertices, n, "vertex")?;
                 include_geometry(&mut prepared.domains, &geometry);
@@ -1185,6 +1236,9 @@ fn prepare_layer(
         ),
         diagnostics,
     )?;
+    if let Some(extension) = &layer.geometry_extension {
+        apply_custom_geometry(extensions, extension, layer, &mut prepared, vertices)?;
+    }
     Ok(prepared)
 }
 fn emit_line_block(
@@ -1282,7 +1336,7 @@ fn include_geometry(domains: &mut DomainContributions, geometry: &PreparedGeomet
                 include(*p);
             }
         }
-        PreparedGeometry::LineRun(points) => {
+        PreparedGeometry::LineRun(points) | PreparedGeometry::Polygon(points) => {
             for p in points {
                 include(*p);
             }
@@ -1291,7 +1345,9 @@ fn include_geometry(domains: &mut DomainContributions, geometry: &PreparedGeomet
             include(*from);
             include(*to);
         }
-        PreparedGeometry::Rectangle { from, to } | PreparedGeometry::Bar { from, to, .. } => {
+        PreparedGeometry::Rectangle { from, to }
+        | PreparedGeometry::Bar { from, to, .. }
+        | PreparedGeometry::NativePaint { from, to, .. } => {
             include(*from);
             include(*to);
         }
@@ -1309,6 +1365,7 @@ fn preflight_schemas(
     snapshot: &StoreSnapshot,
     order: &[usize],
     limits: CompileLimits,
+    extensions: &ExtensionRegistry,
 ) -> ChartResult<()> {
     let mut shapes = BTreeMap::<TransformId, OutputShape>::new();
     for &i in order {
@@ -1321,6 +1378,7 @@ fn preflight_schemas(
             &facets::scoped_stat(&node.statistic, node.scope),
             &node.filters,
             limits,
+            extensions,
         )
         .map_err(|e| context(e, data, None))?;
         shapes.insert(node.id, output);
@@ -1335,6 +1393,7 @@ fn preflight_schemas(
             &facets::scoped_stat(&layer.statistic, layer.scope),
             &layer.filters,
             limits,
+            extensions,
         )
         .map_err(|e| context(e, data, Some(layer.id)))?;
         let mut binding = match (&output.bins, &output.statistical, &layer.mappings) {
@@ -1382,6 +1441,7 @@ fn stat_shape(
     stat: &Statistic,
     filters: &[SourceFilter],
     limits: CompileLimits,
+    extensions: &ExtensionRegistry,
 ) -> ChartResult<OutputShape> {
     if !filters.is_empty() && (input.bins.is_some() || input.statistical.is_some()) {
         return Err(error(
@@ -1420,6 +1480,11 @@ fn stat_shape(
         StatParameters::Count(_) | StatParameters::Summary(_) | StatParameters::Ols(_)
     ) {
         input.statistical = Some(super::statistics::schema(stat, data, limits)?);
+    }
+    if let StatParameters::Custom(p) = &stat.parameters {
+        input.statistical = Some(extensions::custom_schema(
+            extensions, stat, data, p, limits,
+        )?);
     }
     if let Some(spec) = bin {
         if input.bins.is_some() {
@@ -1520,4 +1585,104 @@ fn rebind_presentation(chart: &mut PreparedChart, definition: &Arc<ChartDefiniti
     for panel in &mut chart.panels {
         rebind_presentation(Arc::make_mut(&mut panel.chart), definition);
     }
+}
+
+fn apply_custom_geometry(
+    registry: &ExtensionRegistry,
+    extension: &GeometryExtension,
+    layer: &Layer,
+    prepared: &mut PreparedLayer,
+    vertices: &mut usize,
+) -> ChartResult<()> {
+    let implementation = registry.geom(&extension.operation)?;
+    let outputs = implementation.prepare(CustomGeomInput {
+        marks: prepared.marks(),
+        table: prepared.table(),
+        domains: prepared.domains(),
+        parameters: &extension.parameters,
+        max_vertices: *vertices,
+    })?;
+    if outputs.len() > *vertices {
+        return Err(error(
+            DiagnosticCode::ResourceLimit,
+            "Custom geometry exceeded its remaining mark budget.",
+        ));
+    }
+    let mut marks = Vec::with_capacity(outputs.len());
+    let mut interactions = BTreeMap::new();
+    let mut order = BTreeSet::new();
+    let mut domains = DomainContributions {
+        x_space: prepared.domains.x_space.clone(),
+        y_space: prepared.domains.y_space.clone(),
+        ..Default::default()
+    };
+    for output in outputs {
+        let source = prepared.marks().get(output.input_mark).ok_or_else(|| {
+            error(
+                DiagnosticCode::Validation,
+                "Custom geometry references an absent input mark.",
+            )
+        })?;
+        if source.targets.len() != 1 {
+            return Err(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Atomic custom geometry requires one target per input mark; split runs into explicit rules or points.",
+            ));
+        }
+        let n = match &output.geometry {
+            PreparedGeometry::Point(_) => 1,
+            PreparedGeometry::Rule { .. } | PreparedGeometry::Rectangle { .. } => 2,
+            PreparedGeometry::Polygon(p) if p.len() >= 3 => p.len(),
+            PreparedGeometry::NativePaint {
+                painter,
+                parameters,
+                ..
+            } => {
+                if implementation.descriptor().portable {
+                    return Err(error(
+                        DiagnosticCode::UnsupportedCapability,
+                        "A portable geometry cannot emit a native-only painter.",
+                    ));
+                }
+                extensions::validate_name(&painter.id)?;
+                if painter.version == crate::Revision::INITIAL {
+                    return Err(error(
+                        DiagnosticCode::Validation,
+                        "Native painters require a positive version.",
+                    ));
+                }
+                extensions::parameter_size(parameters)?;
+                2
+            }
+            _ => {
+                return Err(error(
+                    DiagnosticCode::UnsupportedCapability,
+                    "Custom atomic paint supports points, rules, rectangles, polygons and explicit native painters.",
+                ));
+            }
+        };
+        charge(vertices, n, "custom paint vertex")?;
+        let hit = output.interaction.validate(*vertices)?;
+        charge(vertices, hit, "custom hit vertex")?;
+        if !order.insert(output.interaction.keyboard_order) {
+            return Err(error(
+                DiagnosticCode::Validation,
+                "Custom keyboard order must be unique within a layer/panel.",
+            ));
+        }
+        include_geometry(&mut domains, &output.geometry);
+        interactions.insert(marks.len(), output.interaction);
+        marks.push(PreparedMark {
+            geometry: output.geometry,
+            targets: source.targets.clone(),
+            group: source.group.clone(),
+            style: source.style,
+        });
+    }
+    // Semantic positions precede this custom lowering; geometry cannot change encoding spaces.
+    let _ = layer;
+    prepared.marks = Arc::new(marks);
+    prepared.domains = domains;
+    prepared.interactions = interactions;
+    Ok(())
 }

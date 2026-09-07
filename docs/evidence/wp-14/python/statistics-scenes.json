@@ -1,0 +1,2236 @@
+{
+  "extension-histogram": {
+    "bounds": {
+      "height": 240.0,
+      "origin": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "width": 360.0
+    },
+    "diagnostics": [
+      {
+        "code": "CHART_NUMERICAL_DOMAIN",
+        "context": {
+          "affected_rows": "1",
+          "dataset": "1",
+          "dataset_revision": "0",
+          "field": null,
+          "layer": null,
+          "resource": null,
+          "resource_revision": null,
+          "row_samples": [
+            "9007199254743007"
+          ],
+          "schema_version": "1",
+          "stamp": null
+        },
+        "correction": "Correct the declared mapping, operation, scope or budget before preparing again.",
+        "message": "Custom statistic excluded 1 invalid required rows.",
+        "severity": "Warning"
+      },
+      {
+        "code": "CHART_LAYOUT_PRESSURE",
+        "context": {
+          "affected_rows": "0",
+          "dataset": null,
+          "dataset_revision": null,
+          "field": null,
+          "layer": null,
+          "resource": null,
+          "resource_revision": null,
+          "row_samples": [],
+          "schema_version": null,
+          "stamp": null
+        },
+        "correction": "Correct the domain, range, precision, tick or layout request before resolving the scene again.",
+        "message": "Overlapping, duplicate or out-of-figure tick labels were deterministically thinned.",
+        "severity": "Warning"
+      }
+    ],
+    "fonts": [
+      {
+        "id": "9007199254747001",
+        "revision": "3",
+        "sha256": "2ec33f84606cbaa0a1a944488e14f97faf2f6a25ecdd8354f5358f06da13c7d9"
+      }
+    ],
+    "insets": [],
+    "interactions": {
+      "1": {
+        "hit": {
+          "Polygon": [
+            {
+              "x": 46.94999885559082,
+              "y": 194.38000106811523
+            },
+            {
+              "x": 180.0,
+              "y": 194.38000106811523
+            },
+            {
+              "x": 180.0,
+              "y": 43.895599594116206
+            },
+            {
+              "x": 169.35599990844727,
+              "y": 30.809999465942383
+            },
+            {
+              "x": 57.593998947143554,
+              "y": 30.809999465942383
+            },
+            {
+              "x": 46.94999885559082,
+              "y": 43.895599594116206
+            }
+          ]
+        },
+        "keyboard_order": "2",
+        "selection": "AtomicTarget",
+        "values": [
+          [
+            "Count",
+            {
+              "Unsigned": "3"
+            }
+          ],
+          [
+            "Density",
+            {
+              "Number": 0.5
+            }
+          ],
+          [
+            "Interval",
+            {
+              "Text": "0\u20131"
+            }
+          ]
+        ]
+      },
+      "2": {
+        "hit": {
+          "Polygon": [
+            {
+              "x": 180.0,
+              "y": 194.38000106811523
+            },
+            {
+              "x": 313.0500011444092,
+              "y": 194.38000106811523
+            },
+            {
+              "x": 313.0500011444092,
+              "y": 43.895599594116206
+            },
+            {
+              "x": 302.4060010528564,
+              "y": 30.809999465942383
+            },
+            {
+              "x": 190.64400009155273,
+              "y": 30.809999465942383
+            },
+            {
+              "x": 180.0,
+              "y": 43.895599594116206
+            }
+          ]
+        },
+        "keyboard_order": "1",
+        "selection": "AtomicTarget",
+        "values": [
+          [
+            "Count",
+            {
+              "Unsigned": "3"
+            }
+          ],
+          [
+            "Density",
+            {
+              "Number": 0.5
+            }
+          ],
+          [
+            "Interval",
+            {
+              "Text": "1\u20132"
+            }
+          ]
+        ]
+      }
+    },
+    "item_panels": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "items": [
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rectangle": {
+            "bounds": {
+              "height": 240.0,
+              "origin": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "width": 360.0
+            },
+            "fill": {
+              "alpha": 255,
+              "blue": 255,
+              "green": 255,
+              "red": 255
+            }
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 46.94999885559082,
+            "y": 30.809999465942383
+          },
+          "width": 266.10000228881836
+        },
+        "layer": "1",
+        "primitive": {
+          "FilledPath": {
+            "commands": [
+              {
+                "MoveTo": {
+                  "x": 46.94999885559082,
+                  "y": 194.38000106811523
+                }
+              },
+              {
+                "LineTo": {
+                  "x": 180.0,
+                  "y": 194.38000106811523
+                }
+              },
+              {
+                "LineTo": {
+                  "x": 180.0,
+                  "y": 43.895599594116206
+                }
+              },
+              {
+                "LineTo": {
+                  "x": 169.35599990844727,
+                  "y": 30.809999465942383
+                }
+              },
+              {
+                "LineTo": {
+                  "x": 57.593998947143554,
+                  "y": 30.809999465942383
+                }
+              },
+              {
+                "LineTo": {
+                  "x": 46.94999885559082,
+                  "y": 43.895599594116206
+                }
+              },
+              "Close"
+            ],
+            "fill": {
+              "alpha": 255,
+              "blue": 150,
+              "green": 90,
+              "red": 35
+            }
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 46.94999885559082,
+            "y": 30.809999465942383
+          },
+          "width": 266.10000228881836
+        },
+        "layer": "1",
+        "primitive": {
+          "FilledPath": {
+            "commands": [
+              {
+                "MoveTo": {
+                  "x": 180.0,
+                  "y": 194.38000106811523
+                }
+              },
+              {
+                "LineTo": {
+                  "x": 313.0500011444092,
+                  "y": 194.38000106811523
+                }
+              },
+              {
+                "LineTo": {
+                  "x": 313.0500011444092,
+                  "y": 43.895599594116206
+                }
+              },
+              {
+                "LineTo": {
+                  "x": 302.4060010528564,
+                  "y": 30.809999465942383
+                }
+              },
+              {
+                "LineTo": {
+                  "x": 190.64400009155273,
+                  "y": 30.809999465942383
+                }
+              },
+              {
+                "LineTo": {
+                  "x": 180.0,
+                  "y": 43.895599594116206
+                }
+              },
+              "Close"
+            ],
+            "fill": {
+              "alpha": 255,
+              "blue": 150,
+              "green": 90,
+              "red": 35
+            }
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 46.94999885559082,
+            "y": 30.809999465942383
+          },
+          "width": 266.10000228881836
+        },
+        "layer": "2",
+        "primitive": {
+          "Point": {
+            "center": {
+              "x": 46.94999885559082,
+              "y": 30.809999465942383
+            },
+            "fill": {
+              "alpha": 255,
+              "blue": 40,
+              "green": 95,
+              "red": 210
+            },
+            "radius": 3.0
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 46.94999885559082,
+            "y": 30.809999465942383
+          },
+          "width": 266.10000228881836
+        },
+        "layer": "2",
+        "primitive": {
+          "Point": {
+            "center": {
+              "x": 180.0,
+              "y": 30.809999465942383
+            },
+            "fill": {
+              "alpha": 255,
+              "blue": 40,
+              "green": 95,
+              "red": 210
+            },
+            "radius": 3.0
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 46.94999885559082,
+              "y": 194.38000106811523
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 313.0500011444092,
+              "y": 194.38000106811523
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 46.94999885559082,
+              "y": 194.38000106811523
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 46.94999885559082,
+              "y": 198.38000106811523
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 32.58999824523926,
+              "y": 213.07000064849854
+            },
+            "text": "Lower"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 180.0,
+              "y": 194.38000106811523
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 180.0,
+              "y": 198.38000106811523
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 157.05000114440918,
+              "y": 213.07000064849854
+            },
+            "text": "Boundary"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 313.0500011444092,
+              "y": 194.38000106811523
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 313.0500011444092,
+              "y": 198.38000106811523
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 298.36000061035156,
+              "y": 213.07000064849854
+            },
+            "text": "Upper"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 46.94999885559082,
+              "y": 30.809999465942383
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 46.94999885559082,
+              "y": 194.38000106811523
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 46.94999885559082,
+              "y": 30.809999465942383
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 42.94999885559082,
+              "y": 30.809999465942383
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 24.829999923706055,
+              "y": 34.6899995803833
+            },
+            "text": "0.5"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 46.94999885559082,
+              "y": 63.52399978637695
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 42.94999885559082,
+              "y": 63.52399978637695
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 24.829999923706055,
+              "y": 67.40399990081787
+            },
+            "text": "0.4"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 46.94999885559082,
+              "y": 96.23800010681153
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 42.94999885559082,
+              "y": 96.23800010681153
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 24.829999923706055,
+              "y": 100.11800022125244
+            },
+            "text": "0.3"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 46.94999885559082,
+              "y": 128.95200042724608
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 42.94999885559082,
+              "y": 128.95200042724608
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 24.829999923706055,
+              "y": 132.832000541687
+            },
+            "text": "0.2"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 46.94999885559082,
+              "y": 161.66600074768067
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 42.94999885559082,
+              "y": 161.66600074768067
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 24.829999923706055,
+              "y": 165.5460008621216
+            },
+            "text": "0.1"
+          }
+        }
+      }
+    ],
+    "panels": [],
+    "resources": [
+      {
+        "byte_len": "556216",
+        "id": "9007199254747001",
+        "kind": "Font",
+        "revision": "3"
+      }
+    ],
+    "stamp": {
+      "definition": "1",
+      "layout": "0",
+      "state": "0",
+      "store": "0",
+      "viewport": "0"
+    },
+    "targets": [
+      [],
+      [
+        {
+          "Aggregate": {
+            "group": "transform:7/All/0000000000000000:3ff0000000000000",
+            "id": "0",
+            "input": {
+              "dataset": "1",
+              "revision": "0",
+              "schema_version": "1"
+            },
+            "members": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003"
+            ]
+          }
+        }
+      ],
+      [
+        {
+          "Aggregate": {
+            "group": "transform:7/All/3ff0000000000000:4000000000000000",
+            "id": "1",
+            "input": {
+              "dataset": "1",
+              "revision": "0",
+              "schema_version": "1"
+            },
+            "members": [
+              "9007199254743004",
+              "9007199254743005",
+              "9007199254743006"
+            ]
+          }
+        }
+      ],
+      [
+        {
+          "Aggregate": {
+            "group": "transform:7/All/0000000000000000:3ff0000000000000",
+            "id": "0",
+            "input": {
+              "dataset": "1",
+              "revision": "0",
+              "schema_version": "1"
+            },
+            "members": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003"
+            ]
+          }
+        }
+      ],
+      [
+        {
+          "Aggregate": {
+            "group": "transform:7/All/3ff0000000000000:4000000000000000",
+            "id": "1",
+            "input": {
+              "dataset": "1",
+              "revision": "0",
+              "schema_version": "1"
+            },
+            "members": [
+              "9007199254743004",
+              "9007199254743005",
+              "9007199254743006"
+            ]
+          }
+        }
+      ],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      []
+    ],
+    "units": "Points",
+    "version": 1
+  },
+  "alpha-candle-colors": {
+    "bounds": {
+      "height": 240.0,
+      "origin": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "width": 360.0
+    },
+    "diagnostics": [
+      {
+        "code": "CHART_NUMERICAL_DOMAIN",
+        "context": {
+          "affected_rows": "1",
+          "dataset": "1",
+          "dataset_revision": "0",
+          "field": null,
+          "layer": "2",
+          "resource": null,
+          "resource_revision": null,
+          "row_samples": [
+            "9007199254743002"
+          ],
+          "schema_version": "1",
+          "stamp": null
+        },
+        "correction": "Correct the declared mapping, operation, scope or budget before preparing again.",
+        "message": "Geometry excluded 1 rows with invalid required coordinates, groups or sizes; gaps are not zero values.",
+        "severity": "Warning"
+      }
+    ],
+    "fonts": [
+      {
+        "id": "9007199254747001",
+        "revision": "3",
+        "sha256": "2ec33f84606cbaa0a1a944488e14f97faf2f6a25ecdd8354f5358f06da13c7d9"
+      }
+    ],
+    "insets": [],
+    "interactions": {},
+    "item_panels": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "items": [
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rectangle": {
+            "bounds": {
+              "height": 240.0,
+              "origin": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "width": 360.0
+            },
+            "fill": {
+              "alpha": 255,
+              "blue": 255,
+              "green": 255,
+              "red": 255
+            }
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 37.71999979019165,
+            "y": 30.809999465942383
+          },
+          "width": 278.84000062942505
+        },
+        "layer": "1",
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 37.71999979019165,
+              "y": 194.38000106811523
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 85,
+                "green": 145,
+                "red": 30
+              },
+              "width": 1.5
+            },
+            "to": {
+              "x": 37.71999979019165,
+              "y": 112.59500026702881
+            }
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 37.71999979019165,
+            "y": 30.809999465942383
+          },
+          "width": 278.84000062942505
+        },
+        "layer": "1",
+        "primitive": {
+          "Rectangle": {
+            "bounds": {
+              "height": 27.261666933695466,
+              "origin": {
+                "x": 31.71999979019165,
+                "y": 139.8566672007243
+              },
+              "width": 12.0
+            },
+            "fill": {
+              "alpha": 255,
+              "blue": 85,
+              "green": 145,
+              "red": 30
+            }
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 37.71999979019165,
+            "y": 30.809999465942383
+          },
+          "width": 278.84000062942505
+        },
+        "layer": "1",
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 107.42999994754791,
+              "y": 194.38000106811523
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 55,
+                "green": 55,
+                "red": 195
+              },
+              "width": 1.5
+            },
+            "to": {
+              "x": 107.42999994754791,
+              "y": 85.33333333333334
+            }
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 37.71999979019165,
+            "y": 30.809999465942383
+          },
+          "width": 278.84000062942505
+        },
+        "layer": "1",
+        "primitive": {
+          "Rectangle": {
+            "bounds": {
+              "height": 27.261666933695466,
+              "origin": {
+                "x": 101.42999994754791,
+                "y": 139.8566672007243
+              },
+              "width": 12.0
+            },
+            "fill": {
+              "alpha": 255,
+              "blue": 55,
+              "green": 55,
+              "red": 195
+            }
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 37.71999979019165,
+            "y": 30.809999465942383
+          },
+          "width": 278.84000062942505
+        },
+        "layer": "1",
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 177.14000010490417,
+              "y": 139.8566672007243
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 55,
+                "green": 55,
+                "red": 195
+              },
+              "width": 1.5
+            },
+            "to": {
+              "x": 177.14000010490417,
+              "y": 58.071666399637856
+            }
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 37.71999979019165,
+            "y": 30.809999465942383
+          },
+          "width": 278.84000062942505
+        },
+        "layer": "1",
+        "primitive": {
+          "Rectangle": {
+            "bounds": {
+              "height": 27.261666933695466,
+              "origin": {
+                "x": 171.14000010490417,
+                "y": 85.33333333333334
+              },
+              "width": 12.0
+            },
+            "fill": {
+              "alpha": 255,
+              "blue": 55,
+              "green": 55,
+              "red": 195
+            }
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 37.71999979019165,
+            "y": 30.809999465942383
+          },
+          "width": 278.84000062942505
+        },
+        "layer": "1",
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 246.85000026226044,
+              "y": 167.11833413441977
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 85,
+                "green": 145,
+                "red": 30
+              },
+              "width": 1.5
+            },
+            "to": {
+              "x": 246.85000026226044,
+              "y": 58.071666399637856
+            }
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 37.71999979019165,
+            "y": 30.809999465942383
+          },
+          "width": 278.84000062942505
+        },
+        "layer": "1",
+        "primitive": {
+          "Rectangle": {
+            "bounds": {
+              "height": 27.261666933695466,
+              "origin": {
+                "x": 240.85000026226044,
+                "y": 85.33333333333334
+              },
+              "width": 12.0
+            },
+            "fill": {
+              "alpha": 255,
+              "blue": 85,
+              "green": 145,
+              "red": 30
+            }
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 37.71999979019165,
+            "y": 30.809999465942383
+          },
+          "width": 278.84000062942505
+        },
+        "layer": "1",
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 316.5600004196167,
+              "y": 112.59500026702881
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 85,
+                "green": 145,
+                "red": 30
+              },
+              "width": 1.5
+            },
+            "to": {
+              "x": 316.5600004196167,
+              "y": 30.809999465942383
+            }
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 37.71999979019165,
+            "y": 30.809999465942383
+          },
+          "width": 278.84000062942505
+        },
+        "layer": "1",
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 310.5600004196167,
+              "y": 58.071666399637856
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 85,
+                "green": 145,
+                "red": 30
+              },
+              "width": 1.5
+            },
+            "to": {
+              "x": 322.5600004196167,
+              "y": 58.071666399637856
+            }
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 37.71999979019165,
+            "y": 30.809999465942383
+          },
+          "width": 278.84000062942505
+        },
+        "layer": "2",
+        "primitive": {
+          "Rectangle": {
+            "bounds": {
+              "height": 54.52333386739093,
+              "origin": {
+                "x": 34.21999979019165,
+                "y": 139.8566672007243
+              },
+              "width": 7.0
+            },
+            "fill": {
+              "alpha": 70,
+              "blue": 128,
+              "green": 128,
+              "red": 128
+            }
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 37.71999979019165,
+            "y": 30.809999465942383
+          },
+          "width": 278.84000062942505
+        },
+        "layer": "2",
+        "primitive": {
+          "Rectangle": {
+            "bounds": {
+              "height": 163.57000160217285,
+              "origin": {
+                "x": 173.64000010490417,
+                "y": 30.809999465942383
+              },
+              "width": 7.0
+            },
+            "fill": {
+              "alpha": 70,
+              "blue": 128,
+              "green": 128,
+              "red": 128
+            }
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 37.71999979019165,
+            "y": 30.809999465942383
+          },
+          "width": 278.84000062942505
+        },
+        "layer": "2",
+        "primitive": {
+          "Rectangle": {
+            "bounds": {
+              "height": 109.04666773478189,
+              "origin": {
+                "x": 243.35000026226044,
+                "y": 85.33333333333334
+              },
+              "width": 7.0
+            },
+            "fill": {
+              "alpha": 70,
+              "blue": 128,
+              "green": 128,
+              "red": 128
+            }
+          }
+        }
+      },
+      {
+        "clip": {
+          "height": 163.57000160217285,
+          "origin": {
+            "x": 37.71999979019165,
+            "y": 30.809999465942383
+          },
+          "width": 278.84000062942505
+        },
+        "layer": "2",
+        "primitive": {
+          "Rectangle": {
+            "bounds": {
+              "height": 81.78500080108643,
+              "origin": {
+                "x": 313.0600004196167,
+                "y": 112.59500026702881
+              },
+              "width": 7.0
+            },
+            "fill": {
+              "alpha": 70,
+              "blue": 128,
+              "green": 128,
+              "red": 128
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 37.71999979019165,
+              "y": 194.38000106811523
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 316.5600004196167,
+              "y": 194.38000106811523
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 37.71999979019165,
+              "y": 194.38000106811523
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 37.71999979019165,
+              "y": 198.38000106811523
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 34.859999895095825,
+              "y": 213.07000064849854
+            },
+            "text": "0"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 107.42999994754791,
+              "y": 194.38000106811523
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 107.42999994754791,
+              "y": 198.38000106811523
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 104.57000005245209,
+              "y": 213.07000064849854
+            },
+            "text": "1"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 177.14000010490417,
+              "y": 194.38000106811523
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 177.14000010490417,
+              "y": 198.38000106811523
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 174.28000020980835,
+              "y": 213.07000064849854
+            },
+            "text": "2"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 246.85000026226044,
+              "y": 194.38000106811523
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 246.85000026226044,
+              "y": 198.38000106811523
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 243.9900003671646,
+              "y": 213.07000064849854
+            },
+            "text": "3"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 316.5600004196167,
+              "y": 194.38000106811523
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 316.5600004196167,
+              "y": 198.38000106811523
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 313.7000005245209,
+              "y": 213.07000064849854
+            },
+            "text": "4"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 37.71999979019165,
+              "y": 30.809999465942383
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 37.71999979019165,
+              "y": 194.38000106811523
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 37.71999979019165,
+              "y": 58.071666399637856
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 33.71999979019165,
+              "y": 58.071666399637856
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 24.0,
+              "y": 61.951666514078774
+            },
+            "text": "6"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 37.71999979019165,
+              "y": 112.59500026702881
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 33.71999979019165,
+              "y": 112.59500026702881
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 24.0,
+              "y": 116.47500038146973
+            },
+            "text": "4"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 37.71999979019165,
+              "y": 167.11833413441977
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 33.71999979019165,
+              "y": 167.11833413441977
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 24.0,
+              "y": 170.9983342488607
+            },
+            "text": "2"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 316.5600004196167,
+              "y": 30.809999465942383
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 316.5600004196167,
+              "y": 194.38000106811523
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 316.5600004196167,
+              "y": 30.809999465942383
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 320.5600004196167,
+              "y": 30.809999465942383
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 324.5600004196167,
+              "y": 34.6899995803833
+            },
+            "text": "30"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 316.5600004196167,
+              "y": 85.33333333333334
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 320.5600004196167,
+              "y": 85.33333333333334
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 324.5600004196167,
+              "y": 89.21333344777426
+            },
+            "text": "20"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 316.5600004196167,
+              "y": 139.8566672007243
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 320.5600004196167,
+              "y": 139.8566672007243
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 324.5600004196167,
+              "y": 143.73666731516522
+            },
+            "text": "10"
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Rule": {
+            "from": {
+              "x": 316.5600004196167,
+              "y": 194.38000106811523
+            },
+            "stroke": {
+              "color": {
+                "alpha": 255,
+                "blue": 65,
+                "green": 60,
+                "red": 55
+              },
+              "width": 1.0
+            },
+            "to": {
+              "x": 320.5600004196167,
+              "y": 194.38000106811523
+            }
+          }
+        }
+      },
+      {
+        "clip": null,
+        "layer": null,
+        "primitive": {
+          "Text": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "font": "9007199254747001",
+            "font_size": 10.0,
+            "origin": {
+              "x": 324.5600004196167,
+              "y": 198.26000118255615
+            },
+            "text": "0"
+          }
+        }
+      }
+    ],
+    "panels": [],
+    "resources": [
+      {
+        "byte_len": "556216",
+        "id": "9007199254747001",
+        "kind": "Font",
+        "revision": "3"
+      }
+    ],
+    "stamp": {
+      "definition": "1",
+      "layout": "0",
+      "state": "0",
+      "store": "0",
+      "viewport": "0"
+    },
+    "targets": [
+      [],
+      [
+        {
+          "Source": {
+            "dataset": "1",
+            "key": "9007199254743001"
+          }
+        }
+      ],
+      [
+        {
+          "Source": {
+            "dataset": "1",
+            "key": "9007199254743001"
+          }
+        }
+      ],
+      [
+        {
+          "Source": {
+            "dataset": "1",
+            "key": "9007199254743002"
+          }
+        }
+      ],
+      [
+        {
+          "Source": {
+            "dataset": "1",
+            "key": "9007199254743002"
+          }
+        }
+      ],
+      [
+        {
+          "Source": {
+            "dataset": "1",
+            "key": "9007199254743003"
+          }
+        }
+      ],
+      [
+        {
+          "Source": {
+            "dataset": "1",
+            "key": "9007199254743003"
+          }
+        }
+      ],
+      [
+        {
+          "Source": {
+            "dataset": "1",
+            "key": "9007199254743004"
+          }
+        }
+      ],
+      [
+        {
+          "Source": {
+            "dataset": "1",
+            "key": "9007199254743004"
+          }
+        }
+      ],
+      [
+        {
+          "Source": {
+            "dataset": "1",
+            "key": "9007199254743005"
+          }
+        }
+      ],
+      [
+        {
+          "Source": {
+            "dataset": "1",
+            "key": "9007199254743005"
+          }
+        }
+      ],
+      [
+        {
+          "Source": {
+            "dataset": "1",
+            "key": "9007199254743001"
+          }
+        }
+      ],
+      [
+        {
+          "Source": {
+            "dataset": "1",
+            "key": "9007199254743003"
+          }
+        }
+      ],
+      [
+        {
+          "Source": {
+            "dataset": "1",
+            "key": "9007199254743004"
+          }
+        }
+      ],
+      [
+        {
+          "Source": {
+            "dataset": "1",
+            "key": "9007199254743005"
+          }
+        }
+      ],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      []
+    ],
+    "units": "Points",
+    "version": 1
+  }
+}

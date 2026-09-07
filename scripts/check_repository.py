@@ -12,11 +12,12 @@ ALLOWED = {
     "chart-core": set(),
     "chart-export": {"chart-core", "chart-text"},
     "chart-text": {"chart-core"},
+    "chart-extension-example": {"chart-core"},
     "gpui-charts": {"chart-core", "chart-text"},
     "gpui-charts-kit": {"chart-core", "gpui-charts"},
     "chart-python": {"chart-core", "chart-export"},
     "chart-wasm": {"chart-core", "chart-export"},
-    "chart-gallery": {"chart-core", "chart-export", "gpui-charts", "gpui-charts-kit"},
+    "chart-gallery": {"chart-core", "chart-export", "gpui-charts", "gpui-charts-kit", "chart-extension-example"},
 }
 PORTABLE_TARGETS = ("aarch64-apple-darwin", "x86_64-unknown-linux-gnu", "wasm32-unknown-unknown")
 
@@ -55,6 +56,8 @@ def main():
         if package["publish"] != []:
             errors.append(f"{name}: publication must remain disabled until release preparation.")
         for dep in package["dependencies"]:
+            if dep["name"] == "chart-extension-example" and ((name == "chart-export" and dep["kind"] == "dev") or (name in {"chart-python", "chart-wasm"} and dep["optional"])):
+                continue  # FIX-17 proof-only code never becomes a core/export production dependency.
             if dep["name"] in ALLOWED and dep["name"] not in ALLOWED.get(name, set()):
                 errors.append(f"{name}: forbidden workspace edge to {dep['name']}")
 

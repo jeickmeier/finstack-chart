@@ -25,6 +25,8 @@ default = []
 kit = ["dep:gpui-charts-kit", "dep:gpui-kit"]
 
 [dev-dependencies]
+chart-extension-example.workspace = true
+serde_json.workspace = true
 resvg = { version = "=0.45.1", default-features = false, features = ["text"] }
 ttf-parser = "=0.25.1"
 

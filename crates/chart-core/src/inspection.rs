@@ -32,6 +32,10 @@ pub enum InspectionAction {
 /// Exact presented mark or line vertex; no interpolation or invented source row.
 #[derive(Clone, Debug, PartialEq)]
 pub struct InspectedTarget {
+    /// Exact custom semantic values; ordinary marks resolve their original target data.
+    pub values: Vec<(String, crate::grammar::SemanticValue)>,
+    /// Declared target selection behavior.
+    pub selection: crate::grammar::SelectionPolicy,
     /// Stable facet identity; absent for a single-panel chart.
     pub panel: Option<crate::grammar::PanelKey>,
     /// Originating layer.
@@ -53,6 +57,7 @@ pub struct InspectionOutcome {
 }
 #[derive(Clone, Debug)]
 struct Candidate {
+    custom: Option<crate::grammar::GeometryInteraction>,
     hit: InspectedTarget,
     clip: Rect,
     rectangle: Option<Rect>,
@@ -63,6 +68,7 @@ struct Candidate {
 pub struct Inspector {
     presented: Arc<LaidOutChart>,
     candidates: Vec<Candidate>,
+    keyboard: Vec<usize>,
     hits: Vec<InspectedTarget>,
     focus: Option<usize>,
     revision: Revision,
@@ -106,11 +112,47 @@ impl Inspector {
                 .find(|l| l.id == layer)
                 .is_some_and(|l| matches!(l.geom, Geom::Line { .. }));
             let clip = item.clip.unwrap_or(presented.scene().bounds());
+            if let Some(info) = presented.interactions().get(&index) {
+                if let Some(target) = targets.first() {
+                    let bounds = info.hit.bounds()?;
+                    let (left, right, top, bottom) = (
+                        bounds.origin().x().max(clip.origin().x()),
+                        bounds.max_x().min(clip.max_x()),
+                        bounds.origin().y().max(clip.origin().y()),
+                        bounds.max_y().min(clip.max_y()),
+                    );
+                    if left <= right && top <= bottom {
+                        let anchor = info.hit.anchor()?;
+                        let position = Point::new(
+                            anchor.x().clamp(left, right),
+                            anchor.y().clamp(top, bottom),
+                        )?;
+                        candidates.push(Candidate {
+                            custom: Some(info.clone()),
+                            hit: InspectedTarget {
+                                values: info.values.clone(),
+                                selection: info.selection,
+                                panel: presented.item_panels()[index].clone(),
+                                layer,
+                                target: target.clone(),
+                                position,
+                            },
+                            clip,
+                            rectangle: None,
+                            line: false,
+                        });
+                    }
+                }
+                continue;
+            }
             let mut add = |position: Point, target: &Target, rectangle: Option<Rect>| {
                 // Partially visible rectangles can be inspected where their actual clip intersects.
                 if rectangle.is_some() || contains(clip, position) {
                     candidates.push(Candidate {
+                        custom: None,
                         hit: InspectedTarget {
+                            values: vec![],
+                            selection: crate::grammar::SelectionPolicy::AtomicTarget,
                             panel: presented.item_panels()[index].clone(),
                             layer,
                             target: target.clone(),
@@ -160,7 +202,30 @@ impl Inspector {
                 _ => {}
             }
         }
+        let mut keyboard: Vec<_> = (0..candidates.len()).collect();
+        let mut groups = std::collections::BTreeMap::<_, Vec<usize>>::new();
+        for (i, c) in candidates.iter().enumerate() {
+            groups
+                .entry((c.hit.panel.clone(), c.hit.layer))
+                .or_default()
+                .push(i);
+        }
+        for indices in groups.values() {
+            if indices.iter().any(|i| candidates[*i].custom.is_some()) {
+                let mut ordered = indices.clone();
+                ordered.sort_by_key(|i| {
+                    candidates[*i]
+                        .custom
+                        .as_ref()
+                        .map_or(*i as u64, |v| v.keyboard_order)
+                });
+                for (slot, index) in indices.iter().zip(ordered) {
+                    keyboard[*slot] = index;
+                }
+            }
+        }
         Ok(Self {
+            keyboard,
             presented,
             candidates,
             hits: vec![],
@@ -214,7 +279,10 @@ impl Inspector {
                         (Some(i), true) => (i + 1) % n,
                         (Some(i), false) => (i + n - 1) % n,
                     };
-                    (vec![self.candidates[index].hit.clone()], Some(index))
+                    (
+                        vec![self.candidates[self.keyboard[index]].hit.clone()],
+                        Some(index),
+                    )
                 }
             }
         };
@@ -243,7 +311,12 @@ impl Inspector {
             .rev()
             .filter(|c| !c.line && contains(c.clip, p))
         {
-            let distance = if let Some(r) = c.rectangle {
+            let distance = if let Some(custom) = &c.custom {
+                if !custom.hit.contains(p) {
+                    continue;
+                }
+                0.
+            } else if let Some(r) = c.rectangle {
                 if !contains(r, p) {
                     continue;
                 }

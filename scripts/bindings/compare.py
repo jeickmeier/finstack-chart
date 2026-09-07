@@ -233,3 +233,37 @@ for name in composition_names:
     extracted = subprocess.check_output(['pdftotext',pdf,'-'],text=True)
     assert 'مرحبا بالعالم' in extracted
 print('PASS WP-13 FIX-12/13: theme invariant populations/domains/targets, two panels and source-sharing inset, rich/rotated/tabular text, explicit bold/Arabic resources, symbols/dashes/gradients, vector searchable PDF and three-host exact SVG')
+
+# WP-14 FIX-17: independent external operation and builtin candle direction expectations.
+for runtime, data, scene in zip(paths, statistics, scenes):
+    output = data['extension-histogram']; layers = output['layers']
+    assert len(layers) == 2
+    rows = layers[0]['rows']['Statistical']
+    assert [r['count'] for r in rows] == ['3','3']
+    assert layers[0]['schema']['Custom']['operation'] == {'id':'example.density_histogram','version':'1'}
+    for index,row in enumerate(rows):
+        values = {v['field']['Custom']:v['value'] for v in row['values']}
+        assert values == {'left':float(index),'right':float(index+1),'density':0.5}
+        assert row['members'] == [str(9007199254743001+index*3+i) for i in range(3)]
+        assert row['target']['Aggregate']['members'] == row['members']
+    assert layers[0]['operations'][0]['counts']['invalid_stat'] == 1
+    assert layers[0]['domains']['x'] == {'minimum':0.,'maximum':2.}
+    assert layers[0]['domains']['y'] == {'minimum':0.,'maximum':0.5}
+    assert layers[1]['rows'] == layers[0]['rows']
+    figure = scene['extension-histogram']
+    assert len(figure['interactions']) == 2
+    interaction = list(figure['interactions'].values())
+    assert [i['keyboard_order'] for i in interaction] == ['2','1']
+    assert all(i['selection']=='AtomicTarget' and 'Polygon' in i['hit'] for i in interaction)
+    assert all(i['values'][0] == ['Count',{'Unsigned':'3'}] for i in interaction)
+    assert all('FilledPath' in figure['items'][int(index)]['primitive'] for index in figure['interactions'])
+    labels=[i['primitive']['Text']['text'] for i in figure['items'] if 'Text' in i['primitive']]
+    assert all(label in labels for label in ['Lower','Boundary','Upper'])
+    candles=[i['primitive'] for i in scene['alpha-candle-colors']['items'] if i['layer']=='1']
+    colors=[p['Rule']['stroke']['color'] if 'Rule' in p else p['Rectangle']['fill'] for p in candles]
+    green={'red':30,'green':145,'blue':85,'alpha':255};red={'red':195,'green':55,'blue':55,'alpha':255}
+    assert colors == [green,green,red,red,red,red,green,green,green,green]
+for name in ('extension-histogram','alpha-candle-colors'):
+    pdf=str(paths[0]/f'statistics-{name}.pdf')
+    assert not subprocess.check_output(['pdfimages','-list',pdf],text=True).strip().splitlines()[2:]
+print('PASS WP-14 FIX-17: registered custom density/schema, exact counts/membership, common generated builtin points and shared axes, custom labels/hit/semantics/selection/keyboard order, vector exports and independent up/down/doji candle colors')

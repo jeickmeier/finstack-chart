@@ -72,6 +72,13 @@ pub struct GeneratedField {
 /// Prepared output schema; source accessors and generated accessors are disjoint.
 #[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub enum OutputSchema {
+    /// Registered custom output identity and its separate generated field schema.
+    Custom {
+        /// Exact schema/operation identity and version.
+        operation: OperationRef,
+        /// Checked generated fields, separate from original observations.
+        fields: Vec<super::StatColumn>,
+    },
     /// Count/summary/model schema with per-field nullability and calculation space.
     Statistical {
         /// Schema definition version.
@@ -197,7 +204,9 @@ pub struct PreparedTable {
 impl PreparedTable {
     pub(crate) fn work_units(&self) -> usize {
         let fields = match &self.schema {
-            OutputSchema::Statistical { fields, .. } => fields.len(),
+            OutputSchema::Statistical { fields, .. } | OutputSchema::Custom { fields, .. } => {
+                fields.len()
+            }
             _ => 1,
         };
         self.rows.len().saturating_mul(fields)
@@ -262,6 +271,19 @@ pub struct DomainContributions {
 /// Portable prepared geometry, explicitly in calculation/data units, never pixels.
 #[derive(Clone, Debug, PartialEq)]
 pub enum PreparedGeometry {
+    /// Closed custom filled polygon, with one atomic semantic target.
+    Polygon(Vec<Point>),
+    /// Explicit native-only painter invocation; every headless renderer rejects it.
+    NativePaint {
+        /// First calculation-space corner.
+        from: Point,
+        /// Opposite calculation-space corner.
+        to: Point,
+        /// Registered native painter identity and version.
+        painter: OperationRef,
+        /// Bounded data, never executable code.
+        parameters: serde_json::Value,
+    },
     /// Circular point center; size stays in style as eventual destination units.
     Point(Point),
     /// Ordered straight run, including a one-vertex isolated run that must not bridge a gap.
@@ -314,6 +336,7 @@ pub struct PreparedMark {
 /// One prepared layer in paint order.
 #[derive(Clone, Debug)]
 pub struct PreparedLayer {
+    pub(crate) interactions: BTreeMap<usize, super::GeometryInteraction>,
     pub(crate) color_legend: Option<crate::scales::ColorLegend>,
     pub(crate) position: super::Position,
     pub(crate) id: LayerId,
@@ -326,6 +349,10 @@ pub struct PreparedLayer {
     pub(crate) visible: bool,
 }
 impl PreparedLayer {
+    /// Explicit custom interaction contract by prepared mark index.
+    pub fn interactions(&self) -> &BTreeMap<usize, super::GeometryInteraction> {
+        &self.interactions
+    }
     /// Exact color identity, palette and domain metadata.
     pub fn color_legend(&self) -> Option<&crate::scales::ColorLegend> {
         self.color_legend.as_ref()

@@ -32,6 +32,28 @@ impl Chart {
         })
         .map_err(failure)
     }
+    /// Proof-only constructor installing the known compiled example extensions; accepts no code.
+    #[cfg(feature = "extension-proof")]
+    #[staticmethod]
+    fn with_example_extensions(
+        py: Python<'_>,
+        definition: String,
+        data: String,
+        profile: String,
+        font: Vec<u8>,
+    ) -> PyResult<Self> {
+        py.detach(move || {
+            PortableChart::with_extensions(
+                &definition,
+                &data,
+                &profile,
+                font,
+                chart_extension_example::registry()?,
+            )
+            .map(|inner| Self { inner })
+        })
+        .map_err(failure)
+    }
     /// Return owned semantic JSON; long work runs detached from Python.
     fn semantics(&mut self, py: Python<'_>) -> PyResult<String> {
         py.detach(|| self.inner.semantics()).map_err(failure)

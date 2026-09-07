@@ -352,7 +352,46 @@ pub(super) fn resolve_axis(
     spec: &AxisSpec,
     plot: Rect,
 ) -> ChartResult<ResolvedAxis> {
-    resolve_axis_inner(chart, r, spec, plot).map_err(|mut e| {
+    let result = (|| {
+        if let Some(ticks) = &spec.guide_ticks
+            && (ticks.len() > r.max_ticks
+                || ticks.iter().map(|t| t.label.len()).sum::<usize>() > r.limits.max_text_bytes)
+        {
+            return Err(error(
+                DiagnosticCode::ResourceLimit,
+                "Custom guide exceeds tick/text budgets.",
+            ));
+        }
+        let mut axis = resolve_axis_inner(chart, r, spec, plot)?;
+        if let Some(ticks) = &spec.guide_ticks {
+            if spec.number_format.is_some() {
+                return Err(error(
+                    DiagnosticCode::SchemaConflict,
+                    "Explicit custom labels cannot also request a numeric formatter.",
+                ));
+            }
+            axis.ticks.clear();
+            for tick in ticks {
+                if tick.label.is_empty() {
+                    return Err(error(
+                        DiagnosticCode::Validation,
+                        "Custom guide labels must be nonempty.",
+                    ));
+                }
+                if let Some(position) = axis.map_value(&tick.value)?
+                    && spec.visible
+                {
+                    axis.ticks.push(GuideTick {
+                        position,
+                        label: tick.label.clone(),
+                    });
+                }
+            }
+            axis.ticks.sort_by(|a, b| a.position.total_cmp(&b.position));
+        }
+        Ok(axis)
+    })();
+    result.map_err(|mut e: crate::Diagnostic| {
         e.message = format!("Scale {}: {}", spec.id.get(), e.message);
         e
     })
@@ -415,6 +454,11 @@ fn positive_extent(
         for mark in layer.marks() {
             match &mark.geometry {
                 PreparedGeometry::Point(p) => include(*p, false)?,
+                PreparedGeometry::Polygon(points) => {
+                    for p in points {
+                        include(*p, true)?;
+                    }
+                }
                 PreparedGeometry::BandRun { lower, upper } => {
                     for p in lower.iter().chain(upper) {
                         include(*p, true)?;
@@ -427,7 +471,8 @@ fn positive_extent(
                 }
                 PreparedGeometry::Rule { from, to }
                 | PreparedGeometry::Rectangle { from, to }
-                | PreparedGeometry::Bar { from, to, .. } => {
+                | PreparedGeometry::Bar { from, to, .. }
+                | PreparedGeometry::NativePaint { from, to, .. } => {
                     include(*from, true)?;
                     include(*to, true)?;
                 }

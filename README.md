@@ -3,9 +3,10 @@
 Rust-native grammar-of-graphics project with a portable core, headless publication export,
 a standalone GPUI host and optional Kit integration.
 
-**Status: WP-11 built-in scale and geometry families implemented, with shared Rust/Python/WASM
-fixtures and inspected native vector rendering. WP-12 facets and shared layout are next;
-G1 retains its accepted scope and G2–G4 remain open.**
+**Status: WP-14 Cartesian/publication alpha is implemented. G2 passes its
+[feature matrix](docs/alpha-api.md), including facets, themes, vector publication,
+public custom extensions and 36 actual Rust/Python/WASM cases. WP-15 state ownership
+is next; streaming, complete interaction and production gates G3/G4 remain open.**
 
 ## Start here
 
@@ -43,7 +44,7 @@ ownership contracts. It also verifies identity/explicit-bin statistics, line gap
 heterogeneous layer geometry and transform reuse. Scale/layout tests add domain policies,
 UTC calendar and precision fixtures, categorical identity, measured margins and viewport
 separation. Presented-scene inspection verifies clipping, provenance, keyboard steps and
-stale-event rejection. The full statistical family remains later work.
+stale-event rejection. Built-in statistics/positions, facets, themes and extensions are also covered; see the alpha matrix.
 Use `mise exec -- cargo ...` for one-off Cargo commands, or activate
 mise in your shell for editor and terminal tool selection.
 
