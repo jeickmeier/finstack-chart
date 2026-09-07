@@ -79,6 +79,14 @@ impl Chart {
     fn definition(&self, py: Python<'_>) -> PyResult<String> {
         py.detach(|| self.inner.definition()).map_err(failure)
     }
+    /// Acknowledge a scene for subsequent input; no window or interpreter objects enter core.
+    fn present(&mut self, py: Python<'_>) -> PyResult<String> {
+        py.detach(|| self.inner.present()).map_err(failure)
+    }
+    /// Dispatch an origin/revision/scene-fenced shared action and return effective events.
+    fn dispatch(&mut self, py: Python<'_>, input: String) -> PyResult<String> {
+        py.detach(|| self.inner.dispatch(&input)).map_err(failure)
+    }
     /// Return the separate versioned state snapshot.
     fn state(&self, py: Python<'_>) -> PyResult<String> {
         py.detach(|| self.inner.state()).map_err(failure)

@@ -192,6 +192,14 @@ fn state_restore_cannot_reuse_revision_for_changed_content() {
     );
     assert_eq!(s.state_json().unwrap(), before);
     snapshot["viewport_revision"] = json!("2");
+    // WP-15 adds an independent durable component fence to the existing viewport fence.
+    assert_eq!(
+        s.restore_state(&snapshot.to_string(), Revision::new(1))
+            .unwrap_err()
+            .code,
+        DiagnosticCode::RevisionConflict
+    );
+    snapshot["interaction"]["revisions"]["durable"] = json!("2");
     s.restore_state(&snapshot.to_string(), Revision::new(1))
         .unwrap();
     assert_eq!(s.state().viewport().x, Some((0., 2.)));

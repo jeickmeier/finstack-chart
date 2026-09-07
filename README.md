@@ -3,10 +3,11 @@
 Rust-native grammar-of-graphics project with a portable core, headless publication export,
 a standalone GPUI host and optional Kit integration.
 
-**Status: WP-14 Cartesian/publication alpha is implemented. G2 passes its
+**Status: WP-15 shared action/state ownership is implemented. G2 passes its
 [feature matrix](docs/alpha-api.md), including facets, themes, vector publication,
-public custom extensions and 36 actual Rust/Python/WASM cases. WP-15 state ownership
-is next; streaming, complete interaction and production gates G3/G4 remain open.**
+public custom extensions and 36 actual Rust/Python/WASM cases. A shared action trace
+now proves gesture/cancellation/controlled-state behavior in each runtime. WP-16 indexed
+interaction is next; streaming and production gates G3/G4 remain open.**
 
 ## Start here
 
@@ -109,3 +110,8 @@ Read [AGENTS.md](AGENTS.md) for contributor instructions. Repository-local
 `chart-work-package` and `chart-contract-review` skills provide scoped execution and
 review workflows; see [AI development](docs/ai-development.md). No API keys, paid model
 calls or external reference runtimes are needed for infrastructure checks.
+
+The [state/action contract](docs/state-action-contract.md) covers origins, controlled
+revision fences, transient previews, bounded annotation undo and explicit scene ownership.
+Run `mise exec -- cargo run -p chart-gallery --example actions_gallery --locked` for
+native preview/cancel/commit/undo/freeze controls.

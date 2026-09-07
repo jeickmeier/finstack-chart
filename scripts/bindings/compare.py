@@ -267,3 +267,15 @@ for name in ('extension-histogram','alpha-candle-colors'):
     pdf=str(paths[0]/f'statistics-{name}.pdf')
     assert not subprocess.check_output(['pdfimages','-list',pdf],text=True).strip().splitlines()[2:]
 print('PASS WP-14 FIX-17: registered custom density/schema, exact counts/membership, common generated builtin points and shared axes, custom labels/hit/semantics/selection/keyboard order, vector exports and independent up/down/doji candle colors')
+
+traces = [json.loads((p/'actions-state-trace.json').read_text()) for p in paths]
+for trace in traces[1:]: same(traces[0], trace, 0.)
+for runtime in paths:
+    xml = {name:ET.parse(runtime/f'actions-{name}.svg').getroot() for name in ('preview','cancel','commit','undo','redo')}
+    def furniture(doc):
+        # Metadata differs across state revisions; compare rendered content only.
+        return [ET.tostring(e) for e in doc if not e.tag.endswith('metadata')]
+    assert furniture(xml['preview']) == furniture(xml['commit']) == furniture(xml['redo'])
+    assert furniture(xml['cancel']) == furniture(xml['undo'])
+    assert furniture(xml['cancel']) != furniture(xml['commit'])
+print('PASS WP-15 exact Rust/Python/WASM action events and component revisions; real-font preview/cancel/commit/undo/redo geometry')

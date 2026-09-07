@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Add the shared revision-fenced action reducer, distinct interaction state, explicit scene
+  acknowledgment, pinned gesture previews/cancellation, bounded annotation undo/redo,
+  controlled replacements, linked sequence tracking and freeze/resume ownership. Native,
+  Python and WASM dispatch use the same core; saved state excludes ephemeral previews.
+
 - Add typed facet wrap/grid, shared/free named scales, stable panel targets and aligned guides.
 - Add explicit theme cascade, rich/rotated/tabular typography, publication furniture/insets,
   optional Kit theme integration and physical SVG/PDF/PNG preview.

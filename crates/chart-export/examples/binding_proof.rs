@@ -1,4 +1,6 @@
 //! Native execution of the same versioned fixture consumed by Python and real WASM.
+#[path = "common/actions_trace.rs"]
+mod actions_trace;
 use chart_export::portable::PortableChart;
 use std::{fs, path::PathBuf};
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -10,6 +12,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             .unwrap_or_else(|| "artifacts/wp-09/native".into()),
     );
     fs::create_dir_all(&output)?;
+    actions_trace::run(&root, &output)?;
     let mut chart = PortableChart::new(
         &fs::read_to_string(fixture.join("chart.json"))?,
         &fs::read_to_string(fixture.join("data.json"))?,

@@ -8,7 +8,7 @@ use std::sync::Arc;
 pub struct Session {
     definition: ChartEnvelope,
     store: DataStore,
-    state: ChartState,
+    reducer: ActionReducer,
     compiler: Compiler,
 }
 impl Session {
@@ -29,7 +29,7 @@ impl Session {
         let mut session = Self {
             definition,
             store: data.into_store()?,
-            state: ChartState::default(),
+            reducer: ActionReducer::default(),
             compiler: Compiler::with_extensions(extensions),
         };
         session.prepare()?;
@@ -45,7 +45,7 @@ impl Session {
     }
     /// Current minimal state; mutations use revision-fenced actions.
     pub fn state(&self) -> &ChartState {
-        &self.state
+        self.reducer.state()
     }
     /// Immutable registrations retained for coherent publication capture.
     pub fn extensions(&self) -> &Arc<ExtensionRegistry> {
@@ -60,30 +60,35 @@ impl Session {
     }
     /// Serialize exact state/revisions in their separate envelope.
     pub fn state_json(&self) -> ChartResult<String> {
-        encode(&StateEnvelope::capture(self.definition(), &self.state))
+        encode(&StateEnvelope::capture(
+            self.definition(),
+            self.reducer.state(),
+        ))
     }
     /// Restore an explicit state snapshot, guarded by the current state's expected revision.
     pub fn restore_state(&mut self, input: &str, expected: Revision) -> ChartResult<()> {
-        if expected != self.state.revision() {
+        if expected != self.reducer.state().revision() {
             return Err(error(
                 DiagnosticCode::RevisionConflict,
                 "Stale state restore",
             ));
         }
         let state: StateEnvelope = decode(input)?;
-        let next = state.into_state(self.definition())?;
-        if next.revision() < self.state.revision()
-            || next.viewport_revision() < self.state.viewport_revision()
-            || (next.revision() == self.state.revision() && next != self.state)
-            || (next.viewport_revision() == self.state.viewport_revision()
-                && next.viewport() != self.state.viewport())
+        let mut next = state.into_state(self.definition())?;
+        next.retain_transient_from(self.reducer.state());
+        if next.revision() < self.reducer.state().revision()
+            || next.viewport_revision() < self.reducer.state().viewport_revision()
+            || (next.revision() == self.reducer.state().revision() && &next != self.reducer.state())
+            || (next.viewport_revision() == self.reducer.state().viewport_revision()
+                && next.viewport() != self.reducer.state().viewport())
         {
             return Err(error(
                 DiagnosticCode::RevisionConflict,
                 "State restore would regress or reuse a revision for different content",
             ));
         }
-        self.state = next;
+        self.reducer
+            .accept_controlled(&self.definition.definition, expected, next)?;
         Ok(())
     }
     /// Validate then apply the existing atomic transaction; typed outcomes preserve replay/conflicts.
@@ -96,15 +101,35 @@ impl Session {
         let envelope: ActionEnvelope = decode(input)?;
         version(envelope.version)?;
         if envelope.definition_revision != self.definition().revision
-            || envelope.expected_state != self.state.revision()
+            || envelope.expected_state != self.reducer.state().revision()
         {
             return Err(error(
                 DiagnosticCode::RevisionConflict,
                 "Action definition/state revision is stale",
             ));
         }
-        self.state
-            .apply(&self.definition.definition, envelope.action)
+        let request = self.reducer.request(
+            &self.definition.definition,
+            envelope.action,
+            ActionOrigin::Programmatic,
+        );
+        Ok(self
+            .reducer
+            .dispatch(&self.definition.definition, request)?
+            .outcome)
+    }
+    /// Acknowledge the caller's actual scene before scene-dependent actions.
+    pub fn present(&mut self, scene: Arc<crate::layout::LaidOutChart>) {
+        self.reducer.present(scene);
+    }
+    /// Full shared reducer with explicit origin/state/scene fences and effective events.
+    pub fn dispatch(&mut self, input: &str) -> ChartResult<DispatchOutcome> {
+        let request: ActionRequest = decode(input)?;
+        self.reducer.dispatch(&self.definition.definition, request)
+    }
+    /// Inspect runtime ownership without exposing mutable state.
+    pub fn reducer(&self) -> &ActionReducer {
+        &self.reducer
     }
     /// Shared preparation; no binding-specific chart or stat algorithm.
     pub fn prepare(&mut self) -> ChartResult<Arc<PreparedChart>> {
@@ -112,7 +137,7 @@ impl Session {
             .prepare(
                 &self.definition.definition,
                 &self.store.snapshot(),
-                &self.state,
+                self.reducer.state(),
                 CompileLimits::default(),
             )
             .map(Arc::new)
@@ -148,7 +173,7 @@ impl Session {
             })).collect::<Vec<_>>(),
         })).collect::<Vec<_>>();
         encode(
-            &json!({"version":VERSION,"definition_revision":prepared.definition_revision(),"store_revision":data.revision(),"state":StateEnvelope::capture(self.definition(),&self.state),"datasets":datasets,"layers":layers,"panels":panels}),
+            &json!({"version":VERSION,"definition_revision":prepared.definition_revision(),"store_revision":data.revision(),"state":StateEnvelope::capture(self.definition(),self.reducer.state()),"datasets":datasets,"layers":layers,"panels":panels}),
         )
     }
 }

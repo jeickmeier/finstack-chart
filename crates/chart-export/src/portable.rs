@@ -149,6 +149,7 @@ impl ProfileEnvelope {
     }
 }
 struct Inner {
+    presented: Option<FigureSnapshot>,
     core: Session,
     profile: PublicationProfile,
     fonts: FontResources,
@@ -180,14 +181,18 @@ impl PortableChart {
         let profile: ProfileEnvelope = portable::decode(profile)?;
         let core = Session::with_extensions(chart, data, extensions)?;
         let (profile, fonts) = profile.build(font)?;
-        let chart = Self {
+        let mut chart = Self {
             inner: Some(Inner {
+                presented: None,
                 core,
                 profile,
                 fonts,
             }),
         };
-        chart.capture()?;
+        let figure = chart.capture()?;
+        let inner = chart.get_mut()?;
+        inner.core.present(figure.layout().clone());
+        inner.presented = Some(figure);
         Ok(chart)
     }
     fn get(&self) -> ChartResult<&Inner> {
@@ -199,6 +204,14 @@ impl PortableChart {
     /// Immutable figure using the exact shared exporter; callers may retain it after disposal.
     pub fn capture(&self) -> ChartResult<FigureSnapshot> {
         let i = self.get()?;
+        if i.core.reducer().frozen_scene().is_some() {
+            return i.presented.clone().ok_or_else(|| {
+                error(
+                    DiagnosticCode::Validation,
+                    "Frozen portable chart has no presented figure.",
+                )
+            });
+        }
         FigureSnapshot::capture_with_extensions(
             i.core.definition(),
             i.core.source(),
@@ -269,6 +282,20 @@ impl PortableChart {
     /// Apply an exact revision-fenced action and return the typed outcome.
     pub fn action(&mut self, input: &str) -> ChartResult<String> {
         portable::encode(&self.get_mut()?.core.apply_action(input)?)
+    }
+    /// Acknowledge the scene a headless client chooses to show/use for input. Until this call,
+    /// pending state/data changes cannot silently replace the prior interaction basis.
+    pub fn present(&mut self) -> ChartResult<String> {
+        let figure = self.capture()?;
+        let i = self.get_mut()?;
+        i.core.present(figure.layout().clone());
+        i.presented = Some(figure);
+        self.scene()
+    }
+    /// Full common reducer with explicit origin/state/scene fences. Call present after displaying
+    /// a new scene; active gestures retain their original basis across later presentations.
+    pub fn dispatch(&mut self, input: &str) -> ChartResult<String> {
+        portable::encode(&self.get_mut()?.core.dispatch(input)?)
     }
     /// Canonical chart round-trip representation.
     pub fn definition(&self) -> ChartResult<String> {

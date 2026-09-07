@@ -97,3 +97,28 @@ for (const proofCase of [...JSON.parse(fs.readFileSync(path.join(root,'fixtures/
 }
 save('statistics',JSON.stringify(statistics)); save('statistics-scenes',JSON.stringify(scenes));
 console.log(`PASS ${Object.keys(statistics).length} statistic/position/family cases in actual WASM`);
+
+// WP-15: same authored action/state expectations through real WebAssembly.
+function subset(actual, expected) {
+    if (Array.isArray(expected)) { assert.equal(actual.length,expected.length); expected.forEach((v,i)=>subset(actual[i],v)); }
+    else if (expected!==null && typeof expected==='object') { for(const [k,v] of Object.entries(expected)) subset(actual[k],v); }
+    else assert.equal(actual,expected);
+}
+const actionProof = new bindings.Chart(fs.readFileSync(path.join(root,'fixtures/actions/chart.json'),'utf8'),read('data'),read('profile'),Uint8Array.from(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))));
+let actionStamp=JSON.parse(actionProof.present()).stamp; const actionTrace=[];
+for (const step of JSON.parse(fs.readFileSync(path.join(root,'fixtures/actions/trace.json'),'utf8'))) {
+    const before=JSON.parse(actionProof.state());
+    const request={definition_revision:before.definition_revision,expected_state:step.expected_state??before.state_revision,origin:step.origin??'Control',scene:actionStamp,action:step.action};
+    let result;
+    try { result=JSON.parse(actionProof.dispatch(JSON.stringify(request))); assert(!step.error,step.name); }
+    catch(error) { const code=JSON.parse(error.message).code; assert.equal(code,step.error,step.name); result={error:code}; }
+    const after=JSON.parse(actionProof.state());
+    if(step.expect) subset(result,step.expect);
+    if(step.state) subset(after,step.state);
+    if(step.error) assert.deepEqual(after,before);
+    if(step.export) fs.writeFileSync(path.join(output,`actions-${step.export}.svg`),actionProof.svg());
+    if(step.present) actionStamp=JSON.parse(actionProof.present()).stamp;
+    actionTrace.push({name:step.name,result,state:after});
+}
+save('actions-state-trace',JSON.stringify(actionTrace));actionProof.dispose();actionProof.free();
+console.log(`PASS WP-15 WASM shared action trace: ${actionTrace.length} transitions`);

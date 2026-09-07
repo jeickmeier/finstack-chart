@@ -1,0 +1,568 @@
+[
+  {
+    "name": "configure",
+    "action": {
+      "Configure": {
+        "max_targets": 4096,
+        "history_capacity": 2,
+        "manual_view_enters_history": true
+      }
+    },
+    "expect": {
+      "event": {
+        "durable": true,
+        "presentation_changed": false
+      }
+    },
+    "state": {
+      "interaction": {
+        "revisions": {
+          "configuration": "1",
+          "durable": "1"
+        }
+      }
+    }
+  },
+  {
+    "name": "configure-noop",
+    "action": {
+      "Configure": {
+        "max_targets": 4096,
+        "history_capacity": 2,
+        "manual_view_enters_history": true
+      }
+    },
+    "expect": {
+      "event": null
+    }
+  },
+  {
+    "name": "hover",
+    "action": {
+      "SetHover": [
+        {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        }
+      ]
+    },
+    "origin": "Pointer",
+    "expect": {
+      "event": {
+        "durable": false,
+        "presentation_changed": false
+      }
+    },
+    "state": {
+      "interaction": {
+        "selection": [],
+        "revisions": {
+          "hover": "1",
+          "focus": "0",
+          "durable": "1"
+        }
+      }
+    }
+  },
+  {
+    "name": "hover-noop",
+    "action": {
+      "SetHover": [
+        {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        }
+      ]
+    },
+    "origin": "Pointer",
+    "expect": {
+      "event": null,
+      "outcome": {
+        "changed": false
+      }
+    }
+  },
+  {
+    "name": "focus",
+    "action": {
+      "SetFocus": {
+        "epoch": "9007199254746001",
+        "layer": "9007199254742003",
+        "panel": null,
+        "identity": {
+          "Source": {
+            "dataset": "9007199254741001",
+            "key": "9007199254743001"
+          }
+        }
+      }
+    },
+    "origin": "Keyboard",
+    "state": {
+      "interaction": {
+        "revisions": {
+          "hover": "1",
+          "focus": "1"
+        }
+      }
+    }
+  },
+  {
+    "name": "pin",
+    "action": {
+      "SetPinned": {
+        "epoch": "9007199254746001",
+        "layer": "9007199254742003",
+        "panel": null,
+        "identity": {
+          "Source": {
+            "dataset": "9007199254741001",
+            "key": "9007199254743001"
+          }
+        }
+      }
+    },
+    "state": {
+      "interaction": {
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "select",
+    "action": {
+      "Select": {
+        "change": "Add",
+        "targets": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "state": {
+      "interaction": {
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "stale",
+    "action": {
+      "SetLegendVisible": false
+    },
+    "expected_state": "0",
+    "error": "CHART_REVISION_CONFLICT"
+  },
+  {
+    "name": "begin-annotation",
+    "action": {
+      "BeginGesture": {
+        "id": "1",
+        "kind": {
+          "Annotation": "threshold"
+        }
+      }
+    }
+  },
+  {
+    "name": "preview",
+    "action": {
+      "PreviewGesture": {
+        "id": "1",
+        "preview": {
+          "Annotation": {
+            "id": "threshold",
+            "anchor": {
+              "Figure": {
+                "x": 0.7,
+                "y": 0.1
+              }
+            },
+            "text": {
+              "lines": [
+                [
+                  {
+                    "text": "Threshold"
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            },
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "priority": 0,
+            "collision": "Keep",
+            "callout": null,
+            "overflow": false
+          }
+        }
+      }
+    },
+    "expect": {
+      "event": {
+        "durable": false,
+        "presentation_changed": true
+      }
+    },
+    "state": {
+      "interaction": {
+        "annotations": {}
+      }
+    },
+    "export": "preview"
+  },
+  {
+    "name": "cancel",
+    "action": {
+      "CancelGesture": "CaptureLost"
+    },
+    "expect": {
+      "event": {
+        "cancellation": "CaptureLost"
+      }
+    },
+    "state": {
+      "interaction": {
+        "annotations": {}
+      }
+    },
+    "export": "cancel"
+  },
+  {
+    "name": "begin-annotation-again",
+    "action": {
+      "BeginGesture": {
+        "id": "2",
+        "kind": {
+          "Annotation": "threshold"
+        }
+      }
+    }
+  },
+  {
+    "name": "preview-again",
+    "action": {
+      "PreviewGesture": {
+        "id": "2",
+        "preview": {
+          "Annotation": {
+            "id": "threshold",
+            "anchor": {
+              "Figure": {
+                "x": 0.7,
+                "y": 0.1
+              }
+            },
+            "text": {
+              "lines": [
+                [
+                  {
+                    "text": "Threshold"
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            },
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "priority": 0,
+            "collision": "Keep",
+            "callout": null,
+            "overflow": false
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "commit",
+    "action": {
+      "CommitGesture": {
+        "id": "2"
+      }
+    },
+    "expect": {
+      "event": {
+        "durable": true,
+        "presentation_changed": false
+      }
+    },
+    "state": {
+      "interaction": {
+        "annotations": {
+          "threshold": {
+            "id": "threshold",
+            "anchor": {
+              "Figure": {
+                "x": 0.7,
+                "y": 0.1
+              }
+            },
+            "text": {
+              "lines": [
+                [
+                  {
+                    "text": "Threshold"
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            },
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "priority": 0,
+            "collision": "Keep",
+            "callout": null,
+            "overflow": false
+          }
+        },
+        "revisions": {
+          "annotations": "1"
+        }
+      }
+    },
+    "export": "commit"
+  },
+  {
+    "name": "undo",
+    "action": "Undo",
+    "state": {
+      "interaction": {
+        "annotations": {},
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "export": "undo"
+  },
+  {
+    "name": "redo",
+    "action": "Redo",
+    "state": {
+      "interaction": {
+        "annotations": {
+          "threshold": {
+            "id": "threshold",
+            "anchor": {
+              "Figure": {
+                "x": 0.7,
+                "y": 0.1
+              }
+            },
+            "text": {
+              "lines": [
+                [
+                  {
+                    "text": "Threshold"
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            },
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "priority": 0,
+            "collision": "Keep",
+            "callout": null,
+            "overflow": false
+          }
+        }
+      }
+    },
+    "export": "redo"
+  },
+  {
+    "name": "viewport",
+    "action": {
+      "SetViewport": {
+        "x": [
+          0.5,
+          1.5
+        ],
+        "y": null
+      }
+    },
+    "state": {
+      "viewport": {
+        "x": [
+          0.5,
+          1.5
+        ]
+      },
+      "interaction": {
+        "follow": "InspectHistory"
+      }
+    },
+    "present": true
+  },
+  {
+    "name": "freeze",
+    "action": {
+      "SetFollow": "FreezePresentation"
+    },
+    "state": {
+      "interaction": {
+        "follow": "FreezePresentation"
+      }
+    }
+  },
+  {
+    "name": "resume",
+    "action": "ResumeLatest",
+    "state": {
+      "viewport": {
+        "x": [
+          0.5,
+          1.5
+        ]
+      },
+      "interaction": {
+        "follow": "FollowLatest"
+      }
+    }
+  },
+  {
+    "name": "legend",
+    "action": {
+      "SetLegendVisible": false
+    },
+    "state": {
+      "interaction": {
+        "legend_visible": false
+      }
+    }
+  },
+  {
+    "name": "linked",
+    "action": {
+      "Synchronize": {
+        "revision": "1",
+        "viewport": {
+          "x": [
+            0.0,
+            2.0
+          ],
+          "y": null
+        },
+        "selection": null
+      }
+    },
+    "origin": {
+      "Linked": "overview"
+    },
+    "expect": {
+      "event": {
+        "origin": {
+          "Linked": "overview"
+        }
+      }
+    }
+  },
+  {
+    "name": "linked-echo",
+    "action": {
+      "Synchronize": {
+        "revision": "1",
+        "viewport": {
+          "x": [
+            0.0,
+            2.0
+          ],
+          "y": null
+        },
+        "selection": null
+      }
+    },
+    "origin": {
+      "Linked": "overview"
+    },
+    "expect": {
+      "event": null
+    }
+  },
+  {
+    "name": "reset",
+    "action": "Reset",
+    "state": {
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "interaction": {
+        "annotations": {},
+        "selection": [],
+        "pinned": null,
+        "legend_visible": true,
+        "follow": "FollowLatest"
+      }
+    }
+  }
+]

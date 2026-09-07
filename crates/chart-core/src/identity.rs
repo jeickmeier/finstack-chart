@@ -96,7 +96,8 @@ impl Revision {
 }
 
 /// Compilation inputs identifying a scene. Comparing stamps does not schedule or present it.
-#[derive(serde::Serialize, Clone, Copy, Debug, Default, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Default, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct SceneStamp {
     /// Definition revision.
     pub definition: Revision,

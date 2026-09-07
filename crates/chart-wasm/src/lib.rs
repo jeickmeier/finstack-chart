@@ -69,6 +69,14 @@ impl Chart {
     pub fn definition(&self) -> Result<String, JsError> {
         self.inner.definition().map_err(failure)
     }
+    /// Acknowledge a scene for subsequent input.
+    pub fn present(&mut self) -> Result<String, JsError> {
+        self.inner.present().map_err(failure)
+    }
+    /// Dispatch an origin/revision/scene-fenced shared action with effective events.
+    pub fn dispatch(&mut self, input: &str) -> Result<String, JsError> {
+        self.inner.dispatch(input).map_err(failure)
+    }
     /// Exact state snapshot envelope.
     pub fn state(&self) -> Result<String, JsError> {
         self.inner.state().map_err(failure)

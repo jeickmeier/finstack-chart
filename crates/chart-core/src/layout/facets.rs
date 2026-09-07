@@ -38,6 +38,9 @@ fn panel_label(key: &crate::grammar::PanelKey) -> String {
 }
 
 fn legends(chart: &PreparedChart) -> Vec<ColorLegend> {
+    if !chart.state().legend_visible() {
+        return vec![];
+    }
     let mut legends = vec![];
     for legend in chart.layers().iter().filter_map(|l| l.color_legend()) {
         // Identity, full domain/palette, continuous/discrete semantics and missing policy agree.

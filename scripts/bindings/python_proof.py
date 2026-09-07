@@ -125,3 +125,32 @@ for case in json.loads((ROOT / "fixtures/statistics/portable-cases.json").read_t
         print("PASS Python FIX-06: missing facet policy and unknown target panel rejected")
 save("statistics", json.dumps(statistics)); save("statistics-scenes", json.dumps(scenes))
 print(f"PASS {len(statistics)} statistic/position/family cases in the actual Python extension")
+
+# WP-15: one portable action trace shared with Rust/WASM; expected values are authored.
+def subset(actual, expected):
+    if isinstance(expected, dict):
+        for key, value in expected.items(): subset(actual[key], value)
+    elif isinstance(expected, list):
+        assert len(actual) == len(expected)
+        for a, b in zip(actual, expected): subset(a, b)
+    else: assert actual == expected, (actual, expected)
+proof = Chart((ROOT / 'fixtures/actions/chart.json').read_text(),read('data'),read('profile'),(ROOT / 'fixtures/capability/fonts/NotoSans-Regular.ttf').read_bytes())
+stamp = json.loads(proof.present())['stamp']; trace = []
+for step in json.loads((ROOT / 'fixtures/actions/trace.json').read_text()):
+    before = json.loads(proof.state())
+    request = dict(definition_revision=before['definition_revision'],expected_state=step.get('expected_state',before['state_revision']),origin=step.get('origin','Control'),scene=stamp,action=step['action'])
+    try:
+        result = json.loads(proof.dispatch(json.dumps(request)))
+        assert 'error' not in step, step['name']
+    except ChartError as error:
+        code = json.loads(error.args[0])['code']; assert code == step.get('error'), (step['name'], code)
+        result = {'error':code}
+    after = json.loads(proof.state())
+    if 'expect' in step: subset(result,step['expect'])
+    if 'state' in step: subset(after,step['state'])
+    if 'error' in step: assert after == before
+    if 'export' in step: (output / f"actions-{step['export']}.svg").write_bytes(proof.export('svg'))
+    if step.get('present'): stamp = json.loads(proof.present())['stamp']
+    trace.append(dict(name=step['name'],result=result,state=after))
+save('actions-state-trace',json.dumps(trace)); proof.dispose()
+print(f'PASS WP-15 Python shared action trace: {len(trace)} transitions')

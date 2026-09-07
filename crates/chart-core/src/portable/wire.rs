@@ -219,6 +219,9 @@ pub struct ActionEnvelope {
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct StateEnvelope {
+    /// Optional committed interaction state; ephemeral pointer/gesture values are excluded.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub interaction: Option<crate::state::InteractionSnapshot>,
     /// Supported envelope version.
     pub version: u32,
     /// Definition fence.
@@ -237,9 +240,10 @@ impl StateEnvelope {
         Self {
             version: super::VERSION,
             definition_revision: d.revision,
+            interaction: Some(s.interaction_snapshot()),
             state_revision: s.revision(),
             viewport_revision: s.viewport_revision(),
-            viewport: s.viewport(),
+            viewport: s.committed_viewport(),
             hidden_layers: d
                 .layers
                 .iter()
@@ -256,13 +260,17 @@ impl StateEnvelope {
                 "State definition revision disagrees",
             ));
         }
-        ChartState::from_portable(
+        let mut state = ChartState::from_portable(
             d,
             self.state_revision,
             self.viewport_revision,
             self.viewport,
             self.hidden_layers,
-        )
+        )?;
+        if let Some(interaction) = self.interaction {
+            state.restore_interaction(d, interaction)?;
+        }
+        Ok(state)
     }
 }
 

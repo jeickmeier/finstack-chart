@@ -4,7 +4,10 @@ use chart_core::grammar::{ChartDefinition, CompileLimits, Compiler, PreparedChar
 use chart_core::inspection::{InputOrigin, InspectionAction, Inspector};
 use chart_core::layout::LayoutRequest;
 use chart_core::services::Units;
-use chart_core::state::{ChartAction, ChartState};
+use chart_core::state::{
+    ActionOrigin, ActionReducer, ActionRequest, ChartAction, ChartState, DispatchOutcome,
+    MarkTarget,
+};
 use chart_core::{ChartResult, Diagnostic, Point, Rect, Revision};
 use gpui::{
     AnyElement, App, Bounds, Context, FocusHandle, IntoElement, MouseButton, Pixels, Render, Role,
@@ -87,7 +90,7 @@ impl ChartInput {
 pub struct ChartView {
     definition: ChartDefinition,
     source: SnapshotHandle<StoreSnapshot>,
-    state: ChartState,
+    reducer: ActionReducer,
     compiler: Compiler,
     prepared: Arc<PreparedChart>,
     font: NativeFont,
@@ -118,7 +121,7 @@ impl ChartView {
         Self {
             definition,
             source,
-            state,
+            reducer: ActionReducer::new(state),
             compiler,
             prepared,
             font,
@@ -150,7 +153,7 @@ impl ChartView {
             .prepare(
                 &self.definition,
                 &source,
-                &self.state,
+                self.reducer.state(),
                 CompileLimits::default(),
             )
             .inspect_err(|e| {
@@ -169,18 +172,28 @@ impl ChartView {
         definition: ChartDefinition,
         cx: &mut Context<Self>,
     ) -> ChartResult<()> {
+        let mut next = self.reducer.clone();
+        if next.state().active_gesture().is_some() {
+            let request = next.request(
+                &self.definition,
+                ChartAction::CancelGesture(chart_core::state::CancelReason::TargetRemoved),
+                ActionOrigin::Programmatic,
+            );
+            next.dispatch(&self.definition, request)?;
+        }
         let prepared = self
             .compiler
             .prepare(
                 &definition,
                 &self.source,
-                &self.state,
+                next.state(),
                 CompileLimits::default(),
             )
             .inspect_err(|e| {
                 self.last_error = Some(e.clone());
                 cx.notify();
             })?;
+        self.reducer = next;
         self.definition = definition;
         self.prepared = Arc::new(prepared);
         self.last_error = None;
@@ -204,43 +217,116 @@ impl ChartView {
     pub fn layout_request(&self) -> &LayoutRequest {
         &self.request
     }
-    /// Dispatch viewport/visibility/reset through the core reducer, then prepare atomically.
+    /// Dispatch caller controls/programmatic actions through the retained core reducer.
     pub fn dispatch_chart(
         &mut self,
         action: ChartAction,
         cx: &mut Context<Self>,
     ) -> ChartResult<bool> {
-        let mut state = self.state.clone();
-        let outcome = state.apply(&self.definition, action)?;
-        if !outcome.changed {
+        let request = self
+            .reducer
+            .request(&self.definition, action, ActionOrigin::Programmatic);
+        Ok(self.dispatch_action(request, cx)?.outcome.changed)
+    }
+    /// Current semantic state, including distinct component revisions.
+    pub fn state(&self) -> &ChartState {
+        self.reducer.state()
+    }
+    /// Prepare a control/input request using current state and the presented or pinned basis.
+    pub fn action_request(&self, action: ChartAction, origin: ActionOrigin) -> ActionRequest {
+        self.reducer.request(&self.definition, action, origin)
+    }
+    /// Exact pinned axes/source for host gesture coordinate conversion, never pending geometry.
+    pub fn gesture_basis(&self) -> Option<&Arc<chart_core::layout::LaidOutChart>> {
+        self.reducer.gesture_basis()
+    }
+    /// Apply a current controlled response atomically with required preparation.
+    pub fn accept_controlled(
+        &mut self,
+        expected: Revision,
+        state: ChartState,
+        cx: &mut Context<Self>,
+    ) -> ChartResult<bool> {
+        let mut next = self.reducer.clone();
+        if !next.accept_controlled(&self.definition, expected, state)? {
             return Ok(false);
         }
         let prepared = self.compiler.prepare(
             &self.definition,
             &self.source,
-            &state,
+            next.state(),
             CompileLimits::default(),
         )?;
-        self.state = state;
+        self.reducer = next;
         self.prepared = Arc::new(prepared);
         cx.notify();
         Ok(true)
     }
-    /// Programmatic and native events use the same core inspection reducer/presented snapshot.
+    /// Full origin/scene/revision-fenced path. Failed preparation leaves reducer/history intact.
+    pub fn dispatch_action(
+        &mut self,
+        request: ActionRequest,
+        cx: &mut Context<Self>,
+    ) -> ChartResult<DispatchOutcome> {
+        let mut next = self.reducer.clone();
+        let result = next.dispatch(&self.definition, request)?;
+        if result
+            .event
+            .as_ref()
+            .is_some_and(|e| e.presentation_changed)
+        {
+            let prepared = self.compiler.prepare(
+                &self.definition,
+                &self.source,
+                next.state(),
+                CompileLimits::default(),
+            )?;
+            self.prepared = Arc::new(prepared);
+        }
+        self.reducer = next;
+        if result.outcome.changed {
+            cx.notify();
+        }
+        Ok(result)
+    }
+    /// Resolve native input using the exact presented inspector, then dispatch semantic actions.
     pub fn dispatch_inspection(
         &mut self,
         action: InspectionAction,
         origin: InputOrigin,
         cx: &mut Context<Self>,
     ) -> ChartResult<bool> {
-        let Some(inspector) = &mut self.inspector else {
+        let Some(mut inspector) = self.inspector.clone() else {
             return Ok(false);
         };
-        let outcome = inspector.dispatch(inspector.presented().scene().stamp(), action, origin)?;
-        if outcome.changed {
+        let stamp = inspector.presented().scene().stamp();
+        let inspected = inspector.dispatch(stamp, action, origin)?;
+        let epoch = inspector.presented().prepared().source().get()?.epoch();
+        let targets: Vec<_> = inspector
+            .hits()
+            .iter()
+            .map(|h| MarkTarget::from_inspected(h, epoch))
+            .collect::<std::collections::BTreeSet<_>>()
+            .into_iter()
+            .collect();
+        let semantic = match action {
+            InspectionAction::Hover(_) => ChartAction::SetHover(targets),
+            InspectionAction::StepFocus { .. } => ChartAction::SetFocus(targets.into_iter().next()),
+            InspectionAction::Clear => ChartAction::ClearInspection,
+        };
+        let origin = match origin {
+            InputOrigin::Pointer => ActionOrigin::Pointer,
+            InputOrigin::Keyboard => ActionOrigin::Keyboard,
+            InputOrigin::Programmatic => ActionOrigin::Programmatic,
+        };
+        let mut request = self.reducer.request(&self.definition, semantic, origin);
+        request.scene = Some(stamp);
+        let outcome = self.dispatch_action(request, cx)?;
+        self.inspector = Some(inspector);
+        if inspected.changed {
             cx.notify();
         }
-        Ok(outcome.changed)
+        Ok(outcome.outcome.changed || inspected.changed)
     }
     /// Last successfully painted inspection snapshot; never a pending preparation.
     pub fn inspector(&self) -> Option<&Inspector> {
@@ -255,6 +341,9 @@ impl ChartView {
         self.metrics
     }
     fn prepaint(&mut self, bounds: Bounds<Pixels>, window: &Window) -> Option<Rc<NativeFrame>> {
+        if self.reducer.frozen_scene().is_some() {
+            return self.frame.clone();
+        }
         let key = (
             bounds,
             self.request.revision,
@@ -396,6 +485,7 @@ impl Render for ChartView {
                                 .as_ref()
                                 .is_none_or(|old| !Rc::ptr_eq(old, &frame))
                             {
+                                this.reducer.present(frame.chart.clone());
                                 this.inspector = Inspector::new(frame.chart.clone(), 10., 32).ok();
                                 this.frame = Some(frame);
                                 let weak = cx.entity().downgrade();

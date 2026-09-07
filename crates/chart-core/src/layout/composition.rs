@@ -33,7 +33,7 @@ pub(super) fn prepare(
     r: &LayoutRequest,
     m: &dyn TextMeasurer,
 ) -> ChartResult<Option<Furniture>> {
-    let Some(f) = &chart.definition().figure else {
+    let Some(f) = chart.state().figure(chart.definition()) else {
         return Ok(None);
     };
     f.validate(r.limits)?;
@@ -224,9 +224,8 @@ pub(super) fn finish(
 ) -> ChartResult<()> {
     let f = chart
         .prepared
-        .definition()
-        .figure
-        .clone()
+        .state()
+        .figure(chart.prepared.definition())
         .ok_or_else(|| invalid("Missing captured figure furniture."))?;
     let mut items = chart.scene.items().to_vec();
     let mut occupied = vec![];
