@@ -57,9 +57,9 @@ fn fix07_empty_constant_descending_and_explicit_domains_are_locked() {
         );
     }
     assert_eq!(
-        ScaleKind::from_name("log").unwrap_err().code,
+        ScaleKind::from_name("unknown").unwrap_err().code,
         DiagnosticCode::UnsupportedCapability
-    ); // Full log mathematics is WP-11.
+    );
     assert!(Bounds::new(f64::NAN, 1.).is_err());
     assert!(
         LinearScale::resolve(

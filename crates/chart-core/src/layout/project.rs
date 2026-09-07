@@ -26,6 +26,16 @@ impl ResolvedAxis {
     pub fn map(&self, value: f64, layer_space: &ValueSpace) -> ChartResult<Option<f64>> {
         match (&self.scale, layer_space) {
             (ResolvedScale::Linear(scale), space) if space == &self.space => scale.map(value),
+            (ResolvedScale::Nonlinear(scale), space) if space == &self.space => scale.map(value),
+            (
+                ResolvedScale::Session(scale),
+                ValueSpace::Timestamp {
+                    representation,
+                    origin,
+                },
+            ) if representation.unit == scale.calendar().unit => {
+                scale.map(timestamp(value, *origin)?)
+            }
             (
                 ResolvedScale::Utc(scale),
                 ValueSpace::Timestamp {
@@ -33,7 +43,10 @@ impl ResolvedAxis {
                     origin,
                 },
             ) if representation.unit == scale.unit() => scale.map(timestamp(value, *origin)?),
-            (ResolvedScale::Band(scale), ValueSpace::Categorical { categories }) => {
+            (
+                ResolvedScale::Band(_) | ResolvedScale::Point(_),
+                ValueSpace::Categorical { categories },
+            ) => {
                 if !value.is_finite()
                     || value < 0.
                     || value.fract() != 0.
@@ -44,7 +57,11 @@ impl ResolvedAxis {
                         "Category ordinal does not address its layer catalog.",
                     ));
                 }
-                scale.center(&categories[value as usize])
+                match &self.scale {
+                    ResolvedScale::Band(scale) => scale.center(&categories[value as usize]),
+                    ResolvedScale::Point(scale) => scale.center(&categories[value as usize]),
+                    _ => unreachable!(),
+                }
             }
             _ => Err(error(
                 DiagnosticCode::SchemaConflict,
@@ -152,6 +169,72 @@ pub(super) fn project(
                 primitive,
             };
             match &mark.geometry {
+                PreparedGeometry::BandRun { lower, upper } => {
+                    let mut lo = vec![];
+                    let mut hi = vec![];
+                    let mut targets = vec![];
+                    let flush = |out: &mut Output,
+                                 lo: &mut Vec<Point>,
+                                 hi: &mut Vec<Point>,
+                                 targets: &mut Vec<Target>|
+                     -> ChartResult<()> {
+                        if lo.is_empty() {
+                            return Ok(());
+                        }
+                        if lo.len() == 1 {
+                            out.push(
+                                item(Primitive::Rule {
+                                    from: lo[0],
+                                    to: hi[0],
+                                    stroke,
+                                }),
+                                std::mem::take(targets),
+                                request,
+                            )?;
+                            lo.clear();
+                            hi.clear();
+                            return Ok(());
+                        }
+                        let mut commands: Vec<_> = lo
+                            .iter()
+                            .chain(hi.iter().rev())
+                            .enumerate()
+                            .map(|(i, p)| {
+                                if i == 0 {
+                                    PathCommand::MoveTo(*p)
+                                } else {
+                                    PathCommand::LineTo(*p)
+                                }
+                            })
+                            .collect();
+                        commands.push(PathCommand::Close);
+                        let mirrored: Vec<_> = targets.iter().rev().cloned().collect();
+                        targets.extend(mirrored);
+                        out.push(
+                            item(Primitive::FilledPath {
+                                commands,
+                                fill: mark.style.color,
+                            }),
+                            std::mem::take(targets),
+                            request,
+                        )?;
+                        lo.clear();
+                        hi.clear();
+                        Ok(())
+                    };
+                    for ((a, b), target) in lower.iter().zip(upper).zip(&mark.targets) {
+                        if let (Some(a), Some(b)) = (point(*a, target, 0.)?, point(*b, target, 0.)?)
+                        {
+                            lo.push(a);
+                            hi.push(b);
+                            targets.push(target.clone());
+                        } else {
+                            out.omitted += 1;
+                            flush(&mut out, &mut lo, &mut hi, &mut targets)?;
+                        }
+                    }
+                    flush(&mut out, &mut lo, &mut hi, &mut targets)?;
+                }
                 PreparedGeometry::LineRun(points) => {
                     let mut run = Vec::new();
                     let mut targets = vec![];
@@ -198,6 +281,33 @@ pub(super) fn project(
                         }
                     }
                     flush(&mut out, &mut run, &mut targets)?;
+                }
+                PreparedGeometry::Bar { from, to, width } => {
+                    if let (Some(a), Some(b)) = (
+                        point(*from, &mark.targets[0], 0.)?,
+                        point(*to, &mark.targets[0], 0.)?,
+                    ) {
+                        let primitive = if a.y() == b.y() {
+                            Primitive::Rule {
+                                from: Point::new(a.x() - width / 2., a.y())?,
+                                to: Point::new(a.x() + width / 2., a.y())?,
+                                stroke,
+                            }
+                        } else {
+                            Primitive::Rectangle {
+                                bounds: Rect::new(
+                                    a.x() - width / 2.,
+                                    a.y().min(b.y()),
+                                    *width,
+                                    (b.y() - a.y()).abs(),
+                                )?,
+                                fill: mark.style.color,
+                            }
+                        };
+                        out.push(item(primitive), mark.targets.clone(), request)?;
+                    } else {
+                        out.omitted += 1;
+                    }
                 }
                 PreparedGeometry::Point(p) => {
                     if let Some(center) = point(*p, &mark.targets[0], 0.)? {

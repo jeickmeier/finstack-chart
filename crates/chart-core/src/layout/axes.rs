@@ -9,6 +9,94 @@ fn resolve_axis_inner(
     spec: &AxisSpec,
     plot: Rect,
 ) -> ChartResult<ResolvedAxis> {
+    if let AxisScale::Secondary {
+        source,
+        factor,
+        offset,
+    } = spec.scale
+    {
+        if !factor.is_finite()
+            || factor == 0.
+            || !offset.is_finite()
+            || spec.viewport.is_some()
+            || spec.range.is_some()
+            || spec.outside != OutsidePolicy::Extend
+        {
+            return Err(error(
+                DiagnosticCode::Validation,
+                "Secondary axes need a finite nonzero multiplier and finite offset, and inherit source viewport/range/outside policies.",
+            ));
+        }
+        if chart.scale_domains().contains_key(&spec.id) {
+            return Err(error(
+                DiagnosticCode::SchemaConflict,
+                "Secondary axes are guide-only; layers bind their primary numeric scale.",
+            ));
+        }
+        let primary = r
+            .axes
+            .iter()
+            .find(|a| a.id == source && a.side.horizontal() == spec.side.horizontal())
+            .ok_or_else(|| {
+                error(
+                    DiagnosticCode::SchemaConflict,
+                    "Secondary axis requires a source axis in the same orientation.",
+                )
+            })?;
+        if matches!(primary.scale, AxisScale::Secondary { .. }) {
+            return Err(error(
+                DiagnosticCode::SchemaConflict,
+                "Secondary axes must reference a primary scale directly.",
+            ));
+        }
+        let mut primary = primary.clone();
+        primary.visible = spec.visible;
+        let resolved = resolve_axis_inner(chart, r, &primary, plot)?;
+        let (domain, view) = match &resolved.scale {
+            ResolvedScale::Linear(s) => (s.domain(), s.viewport()),
+            ResolvedScale::Nonlinear(s) => (s.domain(), s.viewport()),
+            _ => {
+                return Err(error(
+                    DiagnosticCode::SchemaConflict,
+                    "Secondary unit mappings require an invertible numeric primary scale.",
+                ));
+            }
+        };
+        let convert = |v: f64| -> ChartResult<f64> {
+            let value = v.mul_add(factor, offset);
+            if value.is_finite() {
+                Ok(value)
+            } else {
+                Err(error(
+                    DiagnosticCode::PrecisionLoss,
+                    "Secondary unit conversion exceeds finite range.",
+                ))
+            }
+        };
+        let domain = Bounds::new(convert(domain.start())?, convert(domain.end())?)?.distinct()?;
+        Bounds::new(convert(view.start())?, convert(view.end())?)?.distinct()?;
+        let ticks = resolved
+            .ticks
+            .iter()
+            .map(|t| {
+                let value = match &resolved.scale {
+                    ResolvedScale::Linear(s) => s.invert(t.position)?,
+                    ResolvedScale::Nonlinear(s) => s.invert(t.position)?,
+                    _ => unreachable!(),
+                };
+                Ok(GuideTick {
+                    position: t.position,
+                    label: format_nonlinear_tick(convert(value)?),
+                })
+            })
+            .collect::<ChartResult<_>>()?;
+        return Ok(ResolvedAxis {
+            spec: spec.clone(),
+            space: ValueSpace::Data,
+            scale: ResolvedScale::Secondary { source, domain },
+            ticks,
+        });
+    }
     let empty = DomainContributions::default();
     let d = chart.scale_domains().get(&spec.id).unwrap_or(&empty);
     let horizontal = spec.side.horizontal();
@@ -67,6 +155,90 @@ fn resolve_axis_inner(
                 }
             }
             ResolvedScale::Linear(scale)
+        }
+        (
+            AxisScale::Nonlinear { transform, domain },
+            ValueSpace::Data | ValueSpace::Transformed { .. },
+        ) => {
+            let contribution = if matches!(transform, ScaleTransform::Log { .. }) {
+                positive_extent(chart, spec)?
+            } else {
+                extent
+            };
+            let scale = NonlinearScale::resolve(
+                contribution,
+                domain,
+                transform,
+                range,
+                viewport,
+                spec.outside,
+            )?;
+            if spec.visible {
+                for t in scale.ticks(r.target_ticks, r.max_ticks)? {
+                    if let Some(position) = scale.map(t.value)? {
+                        ticks.push(GuideTick {
+                            position,
+                            label: t.label,
+                        });
+                    }
+                }
+            }
+            ResolvedScale::Nonlinear(scale)
+        }
+        (AxisScale::Point(options), ValueSpace::Categorical { categories }) => {
+            if viewport.is_some() || spec.outside != OutsidePolicy::Extend {
+                return Err(error(
+                    DiagnosticCode::UnsupportedCapability,
+                    "Point scales use category domains without numeric viewport policies.",
+                ));
+            }
+            let scale = PointScale::resolve(categories, &options, range)?;
+            if spec.visible {
+                let stride = scale.domain().len().div_ceil(r.max_ticks).max(1);
+                for label in scale.domain().iter().step_by(stride) {
+                    if let Some(position) = scale.center(label)? {
+                        ticks.push(GuideTick {
+                            position,
+                            label: label.clone(),
+                        });
+                    }
+                }
+            }
+            ResolvedScale::Point(scale)
+        }
+        (
+            AxisScale::Session(calendar),
+            ValueSpace::Timestamp {
+                representation,
+                origin,
+            },
+        ) => {
+            if calendar.unit != representation.unit {
+                return Err(error(
+                    DiagnosticCode::SchemaConflict,
+                    "Session calendar and source timestamp units must agree.",
+                ));
+            }
+            let view = viewport
+                .map(|b| {
+                    Ok(TimeBounds {
+                        start: project::timestamp(b.start(), *origin)?,
+                        end: project::timestamp(b.end(), *origin)?,
+                    })
+                })
+                .transpose()?;
+            let scale = SessionScale::new(calendar, range, view, spec.outside)?;
+            if spec.visible {
+                for t in scale.ticks(r.target_ticks, r.max_ticks)? {
+                    if let Some(position) = scale.map(t.value)? {
+                        ticks.push(GuideTick {
+                            position,
+                            label: t.label,
+                        });
+                    }
+                }
+            }
+            ResolvedScale::Session(scale)
         }
         (AxisScale::Band(options), ValueSpace::Categorical { categories }) => {
             if viewport.is_some() || spec.outside != OutsidePolicy::Extend {
@@ -169,4 +341,78 @@ pub(super) fn resolve_axis(
         e.message = format!("Scale {}: {}", spec.id.get(), e.message);
         e
     })
+}
+
+// Domain training scans eligible post-position geometry, never the visible viewport.
+fn positive_extent(
+    chart: &PreparedChart,
+    axis: &AxisSpec,
+) -> ChartResult<Option<crate::grammar::Extent>> {
+    use crate::grammar::{Extent, PreparedGeometry};
+    let mut extent: Option<Extent> = None;
+    for layer in chart.layers() {
+        let binding = if axis.side.horizontal() {
+            layer.scales().x
+        } else {
+            layer.scales().y
+        };
+        if binding != axis.id {
+            continue;
+        }
+        let authored = chart
+            .definition()
+            .layers
+            .iter()
+            .find(|l| l.id == layer.id())
+            .expect("prepared layer exists");
+        let mut include = |point: crate::Point, baseline_dependent: bool| -> ChartResult<()> {
+            let value = if axis.side.horizontal() {
+                point.x()
+            } else {
+                point.y()
+            };
+            if value <= 0. {
+                if baseline_dependent || authored.invalid == crate::data::InvalidPolicy::Strict {
+                    return Err(error(
+                        DiagnosticCode::NumericalDomain,
+                        "Log geometry requires positive coordinates and a valid declared interval baseline.",
+                    ));
+                }
+                return Ok(());
+            }
+            extent = Some(match extent {
+                None => Extent {
+                    minimum: value,
+                    maximum: value,
+                },
+                Some(e) => Extent {
+                    minimum: e.minimum.min(value),
+                    maximum: e.maximum.max(value),
+                },
+            });
+            Ok(())
+        };
+        for mark in layer.marks() {
+            match &mark.geometry {
+                PreparedGeometry::Point(p) => include(*p, false)?,
+                PreparedGeometry::BandRun { lower, upper } => {
+                    for p in lower.iter().chain(upper) {
+                        include(*p, true)?;
+                    }
+                }
+                PreparedGeometry::LineRun(points) => {
+                    for p in points {
+                        include(*p, false)?;
+                    }
+                }
+                PreparedGeometry::Rule { from, to }
+                | PreparedGeometry::Rectangle { from, to }
+                | PreparedGeometry::Bar { from, to, .. } => {
+                    include(*from, true)?;
+                    include(*to, true)?;
+                }
+            }
+        }
+    }
+    Ok(extent)
 }

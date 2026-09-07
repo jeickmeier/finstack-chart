@@ -2,17 +2,24 @@
 //! Domain training is separate from visible viewport and destination range projection.
 
 mod band;
+mod color;
 mod linear;
+mod nonlinear;
+mod session;
 mod utc;
 
 pub use band::*;
+pub use color::*;
 pub use linear::*;
+pub use nonlinear::*;
+pub use session::*;
 pub use utc::*;
 
 use crate::{ChartResult, Diagnostic, DiagnosticCode};
 
 /// Finite ordered or descending endpoints; equality is allowed before domain resolution.
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct Bounds {
     start: f64,
     end: f64,
@@ -61,7 +68,8 @@ impl Bounds {
 }
 
 /// Declared handling outside the visible scale domain; statistics are never filtered here.
-#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Default, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum OutsidePolicy {
     /// Preserve finite extrapolated geometry for clipping at the plot bounds (default).
     #[default]
@@ -86,23 +94,33 @@ pub struct ScaleCapabilities {
 pub enum ScaleKind {
     /// Continuous affine mapping.
     Linear,
+    /// Positive logarithmic numeric coordinates.
+    Log,
+    /// Signed logarithmic numeric coordinates with a linear threshold.
+    Symlog,
+    /// Categorical centers with no width.
+    Point,
+    /// Supplied active-session timestamps.
+    Session,
     /// Categorical centers/extents.
     Band,
     /// Integer Unix timestamps with explicit units and UTC calendar ticks.
     Utc,
 }
 impl ScaleKind {
-    /// Resolve the implemented family; `log`, `symlog` and unknown names remain WP-11.
+    /// Resolve an implemented positional family by its portable name.
     pub fn from_name(name: &str) -> ChartResult<Self> {
         match name {
             "linear" => Ok(Self::Linear),
+            "log" => Ok(Self::Log),
+            "symlog" => Ok(Self::Symlog),
+            "point" => Ok(Self::Point),
+            "session" => Ok(Self::Session),
             "band" => Ok(Self::Band),
             "utc" => Ok(Self::Utc),
             _ => Err(error(
                 DiagnosticCode::UnsupportedCapability,
-                format!(
-                    "Scale family {name:?} is not implemented; use linear/band/UTC or wait for the full WP-11 family."
-                ),
+                format!("Unknown positional scale family {name:?}."),
             )),
         }
     }

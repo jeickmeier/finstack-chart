@@ -3,19 +3,23 @@ use crate::data::TimeUnit;
 use crate::{ChartResult, DiagnosticCode};
 
 /// Exact integer Unix-timestamp endpoints, in the scale's explicit source units.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct TimeBounds {
     /// First endpoint; descending order is allowed.
+    #[serde(with = "crate::portable::signed")]
     pub start: i64,
     /// Second endpoint; constant domains expand by one source second where representable.
+    #[serde(with = "crate::portable::signed")]
     pub end: i64,
 }
 
 /// UTC tick alignment; no timezone database, receipt clock, local locale or exchange calendar.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum UtcInterval {
     /// Aligned multiples of source ticks from the Unix epoch; primarily subsecond labels.
-    Ticks(u64),
+    Ticks(#[serde(with = "crate::portable::unsigned")] u64),
     /// Aligned whole seconds from the Unix epoch.
     Seconds(u32),
     /// UTC midnight-aligned day steps.

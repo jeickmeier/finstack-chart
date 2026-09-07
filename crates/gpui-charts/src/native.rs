@@ -319,8 +319,20 @@ impl NativeFrame {
                             native_color(stroke.color),
                         )
                     }
-                    Primitive::Path { commands, stroke } => {
-                        let mut path = PathBuilder::stroke(pixel(stroke.width)?);
+                    Primitive::Path { commands, .. } | Primitive::FilledPath { commands, .. } => {
+                        let (mut path, color) = match &item.primitive {
+                            Primitive::Path { stroke, .. } => {
+                                (PathBuilder::stroke(pixel(stroke.width)?), stroke.color)
+                            }
+                            Primitive::FilledPath { fill, .. } => (
+                                PathBuilder::fill().with_style(gpui::PathStyle::Fill(
+                                    gpui::FillOptions::default()
+                                        .with_fill_rule(gpui::FillRule::NonZero),
+                                )),
+                                *fill,
+                            ),
+                            _ => unreachable!(),
+                        };
                         for c in commands {
                             match c {
                                 PathCommand::MoveTo(p) => {
@@ -344,7 +356,7 @@ impl NativeFrame {
                         Paint::Path(
                             path.build()
                                 .map_err(|e| error(DiagnosticCode::Validation, e.to_string()))?,
-                            native_color(stroke.color),
+                            native_color(color),
                         )
                     }
                 };

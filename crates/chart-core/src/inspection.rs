@@ -134,7 +134,7 @@ impl Inspector {
                         }
                     }
                 }
-                Primitive::Path { commands, .. } => {
+                Primitive::Path { commands, .. } | Primitive::FilledPath { commands, .. } => {
                     for (p, t) in commands
                         .iter()
                         .filter_map(|c| match c {

@@ -10,6 +10,7 @@ description = "Standalone native chart gallery and capability examples."
 workspace = true
 
 [dependencies]
+serde.workspace = true
 chart-core.workspace = true
 chart-export.workspace = true
 gpui-charts.workspace = true

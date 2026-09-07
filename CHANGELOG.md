@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Add portable log/symlog/point/color/supplied-session scales and guide-only secondary unit axes.
+- Add area/ribbon filled paths across native/SVG/PDF/PNG, interval bars, validated OHLC and
+  independently validated volume, and rectangular heatmap recipes over the shared compiler.
+- Extend actual Rust/Python/WASM proofs with 12 family fixtures and a native family gallery.
+  New enum variants and Rust struct fields affect exhaustive matches/literal construction;
+  portable axes/color/low/high fields are optional. See the scale/geometry contract.
+
 - Add initial `chart-core` identities/revisions, structured diagnostics, finite geometry,
   bounded immutable scene construction and synchronous text/resource service contracts.
 - Add public contract tests and a Rustdoc example; inspect core/export dependency

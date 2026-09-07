@@ -940,3 +940,201 @@ fn projection_overflow_and_category_or_guide_budgets_fail_without_replacing_a_sc
     );
     assert_eq!(m.calls.get(), 0);
 }
+
+#[test]
+fn wp11_portable_log_axis_and_secondary_units_use_shared_projection() {
+    let s = source(&[-1., 1., 10., 100.], &[0., 10., 20., 30.]);
+    let mut log = AxisSpec::new(XS, AxisSide::Bottom);
+    // Isolate unit-guide alignment from separately tested cross-axis corner-label thinning.
+    log.visible = false;
+    log.scale = AxisScale::Nonlinear {
+        transform: ScaleTransform::Log { base: 10. },
+        domain: ContinuousDomain::default(),
+    };
+    let mut secondary = AxisSpec::new(ScaleId::new(8), AxisSide::Right);
+    secondary.scale = AxisScale::Secondary {
+        source: YS,
+        factor: 1.8,
+        offset: 32.,
+    };
+    let d = points()
+        .axis(log)
+        .axis(AxisSpec::new(YS, AxisSide::Left))
+        .axis(secondary);
+    let roundtrip: ChartDefinition =
+        serde_json::from_str(&serde_json::to_string(&d).unwrap()).unwrap();
+    assert_eq!(roundtrip, d);
+    let prepared = prepare(&d, &s, &ChartState::default());
+    let laid = layout(prepared.clone(), &request(), &Metrics::new(4.)).unwrap();
+    let ResolvedScale::Nonlinear(log) = &laid.axes()[&XS].scale else {
+        panic!("log")
+    };
+    assert!((log.domain().start() - 1.).abs() < 1e-12);
+    assert!((log.domain().end() - 100.).abs() < 1e-10);
+    assert_eq!(prepared.layers()[0].marks().len(), 4);
+    assert_eq!(
+        laid.scene()
+            .items()
+            .iter()
+            .filter(|i| i.layer == Some(L))
+            .count(),
+        3
+    );
+    let ResolvedScale::Secondary { domain, .. } = &laid.axes()[&ScaleId::new(8)].scale else {
+        panic!("secondary")
+    };
+    assert_eq!(*domain, Bounds::new(32., 86.).unwrap());
+    assert_eq!(
+        laid.axes()[&YS]
+            .ticks
+            .iter()
+            .map(|t| t.position)
+            .collect::<Vec<_>>(),
+        laid.axes()[&ScaleId::new(8)]
+            .ticks
+            .iter()
+            .map(|t| t.position)
+            .collect::<Vec<_>>()
+    );
+}
+
+#[test]
+fn wp11_area_and_ribbon_split_missing_and_validate_bounds() {
+    let s = source(&[0., 1., 2., 3., 4.], &[1., 2., f64::NAN, 4., 3.]);
+    let d = ChartDefinition::new(Revision::INITIAL).layer(Layer::new(
+        L,
+        DATA,
+        Geom::area(),
+        SourceAes::new().x(X).y(Y),
+    ));
+    let prepared = prepare(&d, &s, &ChartState::default());
+    assert_eq!(prepared.layers()[0].marks().len(), 2);
+    assert_eq!(prepared.layers()[0].invalid_geometry(), 1);
+    assert_eq!(prepared.layers()[0].domains().y.unwrap().minimum, 0.);
+    let laid = layout(prepared, &request(), &Metrics::new(4.)).unwrap();
+    assert_eq!(
+        laid.scene()
+            .items()
+            .iter()
+            .filter(|i| matches!(i.primitive, Primitive::FilledPath { .. }))
+            .count(),
+        2
+    );
+    let d = ChartDefinition::new(Revision::INITIAL).layer(Layer::new(
+        L,
+        DATA,
+        Geom::ribbon(),
+        SourceAes::new().x(X).y(Y).y2(Numeric::Literal(3.)),
+    ));
+    let prepared = prepare(&d, &s, &ChartState::default());
+    assert_eq!(prepared.layers()[0].invalid_geometry(), 2);
+    assert_eq!(prepared.layers()[0].marks().len(), 2);
+    let mut req = request();
+    req.axes[1].scale = AxisScale::Nonlinear {
+        transform: ScaleTransform::Log { base: 10. },
+        domain: ContinuousDomain::default(),
+    };
+    assert!(
+        layout(
+            prepare(
+                &ChartDefinition::new(Revision::INITIAL).layer(Layer::new(
+                    L,
+                    DATA,
+                    Geom::area(),
+                    SourceAes::new().x(X).y(Y)
+                )),
+                &s,
+                &ChartState::default()
+            ),
+            &req,
+            &Metrics::new(4.)
+        )
+        .is_err()
+    );
+}
+
+#[test]
+fn wp11_ohlc_validation_and_volume_invalidity_are_independent() {
+    let s = source(&[0., 1., 2., 3.], &[2., 3., 8., -1.]);
+    let price = Layer::ohlc(
+        L,
+        DATA,
+        SourceAes::new()
+            .x(X)
+            .y(Y)
+            .y2(Numeric::Literal(3.))
+            .bounds(Numeric::Literal(1.), Numeric::Literal(5.)),
+        8.,
+    );
+    let volume = Layer::volume(LayerId::new(6), DATA, X, Y, 8.).scaled(XS, ScaleId::new(8));
+    let d = ChartDefinition::new(Revision::INITIAL)
+        .layer(price)
+        .layer(volume);
+    let prepared = prepare(&d, &s, &ChartState::default());
+    assert_eq!(prepared.layers()[0].invalid_geometry(), 2);
+    assert_eq!(prepared.layers()[1].invalid_geometry(), 1);
+    assert_eq!(prepared.layers()[0].marks().len(), 4);
+    assert_eq!(prepared.layers()[1].marks().len(), 3);
+    assert_eq!(
+        prepared.layers()[0].domains().y.unwrap(),
+        Extent {
+            minimum: 1.,
+            maximum: 5.
+        }
+    );
+    let mut req = request();
+    req.axes
+        .push(AxisSpec::new(ScaleId::new(8), AxisSide::Right));
+    let laid = layout(prepared, &req, &Metrics::new(4.)).unwrap();
+    assert_eq!(
+        laid.scene()
+            .items()
+            .iter()
+            .filter(|i| i.layer == Some(L))
+            .count(),
+        4
+    );
+}
+
+#[test]
+fn wp11_mapped_color_changes_styles_and_metadata_without_numeric_domain_changes() {
+    let s = source(&[0., 1., 2.], &[0., 5., 10.]);
+    let d = points();
+    let before = prepare(&d, &s, &ChartState::default());
+    let mut d = d.clone();
+    let black = chart_core::scene::Color {
+        red: 0,
+        green: 0,
+        blue: 0,
+        alpha: 255,
+    };
+    let white = chart_core::scene::Color {
+        red: 255,
+        green: 255,
+        blue: 255,
+        alpha: 255,
+    };
+    d.layers[0].color = Some(ColorEncoding {
+        id: ScaleId::new(20),
+        input: ColorInput::Numeric(Numeric::Field(Y)),
+        scale: ColorScale::Continuous {
+            domain: Bounds::new(0., 10.).unwrap(),
+            palette: vec![black, white],
+            clamp: true,
+            missing: black,
+        },
+    });
+    let after = prepare(&d, &s, &ChartState::default());
+    assert_eq!(before.scale_domains(), after.scale_domains());
+    assert_eq!(after.layers()[0].marks()[1].style.color.red, 128);
+    assert_eq!(after.layers()[0].color_legend().unwrap().entries.len(), 2);
+    let limits = CompileLimits {
+        max_groups: 1,
+        ..Default::default()
+    };
+    assert!(
+        Compiler::new()
+            .prepare(&d, &s.snapshot(), &ChartState::default(), limits)
+            .is_err()
+    );
+}

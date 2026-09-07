@@ -1,0 +1,63 @@
+[check] $ python3 scripts/check_repository.py
+PASS: workspace edges, host isolation, single pinned GPUI identity, optional Kit and local Markdown file links.
+Core/export isolation targets: aarch64-apple-darwin, x86_64-unknown-linux-gnu, wasm32-unknown-unknown
+Scope: default resolved features; graph checks are not target execution. External links/anchors and unlisted host packages need review.
+licenses ok, sources ok
+   Compiling chart-gallery v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/chart-gallery)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.73s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling gpui-charts v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+   Compiling gpui-charts-kit v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts-kit)
+   Compiling chart-gallery v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/chart-gallery)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.20s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+   Compiling chart-gallery v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/chart-gallery)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.06s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+    Checking chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Checking gpui-charts v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts)
+    Checking chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Checking gpui-charts-kit v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts-kit)
+    Checking chart-gallery v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/chart-gallery)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.66s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+    Checking chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Checking chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Checking gpui-charts v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts)
+    Checking chart-wasm v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-wasm)
+    Checking chart-python v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-python)
+    Checking gpui-charts-kit v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts-kit)
+    Checking chart-gallery v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/chart-gallery)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.73s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+    Checking chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Checking chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Checking gpui-charts v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts)
+    Checking gpui-charts-kit v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts-kit)
+    Checking chart-wasm v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-wasm)
+    Checking chart-gallery v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/chart-gallery)
+    Checking chart-python v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-python)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.18s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+    Checking gpui-charts v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts)
+ Documenting chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+ Documenting gpui-charts v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts)
+ Documenting chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+ Documenting chart-python v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-python)
+ Documenting chart-wasm v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-wasm)
+ Documenting chart-gallery v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/chart-gallery)
+ Documenting gpui-charts-kit v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts-kit)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.69s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+   Generated /Users/jeickmeier/Projects/finstack-chart/target/doc/chart_core/index.html and 6 other files
+    Checking chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.56s

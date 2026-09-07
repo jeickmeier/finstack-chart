@@ -3,7 +3,8 @@ use crate::grammar::Extent;
 use crate::{ChartResult, DiagnosticCode};
 
 /// Baseline/zero contribution policy, applied to automatically trained domains only.
-#[derive(Clone, Copy, Debug, Default, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Default, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum Baseline {
     /// No additional domain contribution.
     #[default]
@@ -15,7 +16,8 @@ pub enum Baseline {
 }
 
 /// Continuous domain policy. Explicit nonconstant domains remain exact and retain direction.
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct ContinuousDomain {
     /// Exact requested domain; baseline/padding/nice apply only when this is absent.
     pub explicit: Option<Bounds>,

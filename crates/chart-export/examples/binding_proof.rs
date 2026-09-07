@@ -34,9 +34,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     fs::write(output.join("chart.svg"), chart.export("svg")?)?;
     fs::write(output.join("chart.pdf"), chart.export("pdf")?)?;
     fs::write(output.join("chart.png"), chart.export("png")?)?;
-    let cases: Vec<serde_json::Value> = serde_json::from_str(&fs::read_to_string(
+    let mut cases: Vec<serde_json::Value> = serde_json::from_str(&fs::read_to_string(
         root.join("fixtures/statistics/portable-cases.json"),
     )?)?;
+    cases.extend(serde_json::from_str::<Vec<serde_json::Value>>(
+        &fs::read_to_string(root.join("fixtures/families/portable-cases.json"))?,
+    )?);
     let mut statistics = serde_json::Map::new();
     let mut scenes = serde_json::Map::new();
     for case in cases {
@@ -57,6 +60,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             output.join(format!("statistics-{name}.png")),
             chart.export("png")?,
         )?;
+        if name.starts_with("family-") {
+            fs::write(
+                output.join(format!("statistics-{name}.pdf")),
+                chart.export("pdf")?,
+            )?;
+        }
         chart.dispose();
     }
     fs::write(

@@ -33,11 +33,17 @@ pub(super) fn validate(
     domains: &DomainContributions,
     limits: CompileLimits,
 ) -> ChartResult<()> {
+    if matches!(layer.geom, Geom::Ohlc { .. }) && layer.position != Position::Identity {
+        return Err(error(
+            DiagnosticCode::UnsupportedCapability,
+            "OHLC uses identity positioning to keep open/close and price bounds coherent.",
+        ));
+    }
     match &layer.position {
         Position::Identity => {}
         Position::Stack(s) => {
             order(&s.order, limits)?;
-            if !matches!(layer.geom, Geom::Rectangle | Geom::Rule)
+            if !matches!(layer.geom, Geom::Rectangle | Geom::Rule | Geom::Bar { .. })
                 || !domains.y_space.as_ref().is_none_or(additive_space)
             {
                 return Err(error(
@@ -122,7 +128,7 @@ pub(super) fn apply(
     }
     match &layer.position {
         Position::Dodge(_) => {
-            if matches!(layer.geom, Geom::Rectangle | Geom::Rule)
+            if matches!(layer.geom, Geom::Rectangle | Geom::Rule | Geom::Bar { .. })
                 && rows
                     .iter()
                     .any(|r| matches!((r.x,r.x2),(Some(x),Some(x2)) if x!=x2))

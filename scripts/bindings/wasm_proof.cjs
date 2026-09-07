@@ -67,11 +67,11 @@ console.log(`PASS WASM: real Node WebAssembly, portable fixture, copies, invalid
 
 // WP-10: shared portable builtin semantics and final destination scenes in actual WASM.
 const statistics = {}, scenes = {};
-for (const proofCase of JSON.parse(fs.readFileSync(path.join(root,'fixtures/statistics/portable-cases.json'),'utf8'))) {
+for (const proofCase of [...JSON.parse(fs.readFileSync(path.join(root,'fixtures/statistics/portable-cases.json'),'utf8')), ...JSON.parse(fs.readFileSync(path.join(root,'fixtures/families/portable-cases.json'),'utf8'))]) {
     const proof = new bindings.Chart(JSON.stringify(proofCase.chart),JSON.stringify(proofCase.data),read('profile'),Uint8Array.from(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))));
     statistics[proofCase.name] = JSON.parse(proof.semantics()); scenes[proofCase.name] = JSON.parse(proof.scene());
     fs.writeFileSync(path.join(output,`statistics-${proofCase.name}.svg`),proof.svg());
     proof.dispose(); proof.free();
 }
 save('statistics',JSON.stringify(statistics)); save('statistics-scenes',JSON.stringify(scenes));
-console.log(`PASS ${Object.keys(statistics).length} WP-10 statistic/position cases in actual WASM`);
+console.log(`PASS ${Object.keys(statistics).length} statistic/position/family cases in actual WASM`);

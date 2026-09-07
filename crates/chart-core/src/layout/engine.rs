@@ -83,9 +83,12 @@ fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
         if let Some(v) = a.range {
             v.distinct()?;
         }
-        if let AxisScale::Band(o) = &a.scale
-            && let Some(d) = &o.domain
-        {
+        let explicit_categories = match &a.scale {
+            AxisScale::Band(o) => o.domain.as_ref(),
+            AxisScale::Point(o) => o.domain.as_ref(),
+            _ => None,
+        };
+        if let Some(d) = explicit_categories {
             require_within(d.len() <= r.max_categories, "explicit category")?;
             charge_categories(d)?;
         }
@@ -118,19 +121,31 @@ fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
             let n = match &m.geometry {
                 PreparedGeometry::Point(_) => 1,
                 PreparedGeometry::LineRun(p) => p.len(),
+                PreparedGeometry::BandRun { lower, upper } => lower.len() + upper.len(),
                 _ => 2,
             };
             require_within(n <= vertices, "layout vertex")?;
             vertices -= n;
             // Omission can split a line into at most one singleton per input vertex.
-            let count = if matches!(m.geometry, PreparedGeometry::LineRun(_)) {
+            let count = if matches!(
+                m.geometry,
+                PreparedGeometry::LineRun(_) | PreparedGeometry::BandRun { .. }
+            ) {
                 n
             } else {
                 1
             };
             require_within(count <= items, "layout potential item")?;
             items -= count;
-            if matches!(m.geometry, PreparedGeometry::LineRun(_)) {
+            if matches!(
+                m.geometry,
+                PreparedGeometry::LineRun(_) | PreparedGeometry::BandRun { .. }
+            ) {
+                let n = if matches!(m.geometry, PreparedGeometry::BandRun { .. }) {
+                    n.saturating_mul(2)
+                } else {
+                    n
+                };
                 require_within(n <= paths, "layout path command")?;
                 paths -= n;
             }
@@ -441,6 +456,11 @@ pub fn layout(
     request: &LayoutRequest,
     measurer: &dyn TextMeasurer,
 ) -> ChartResult<LaidOutChart> {
+    let mut effective = request.clone();
+    if !prepared.definition().axes.is_empty() {
+        effective.axes.clone_from(&prepared.definition().axes);
+    }
+    let request = &effective;
     let stamp = SceneStamp {
         definition: prepared.definition_revision(),
         store: prepared.source().get()?.revision(),

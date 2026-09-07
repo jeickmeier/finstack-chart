@@ -1,0 +1,2568 @@
+[
+  {
+    "name": "family-log-gaps",
+    "chart": {
+      "version": 1,
+      "definition": {
+        "revision": "1",
+        "mappings": {
+          "x": null,
+          "y": null,
+          "x2": null,
+          "y2": null,
+          "size": null,
+          "group": null
+        },
+        "transforms": [],
+        "layers": [
+          {
+            "id": "1",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Field": "1"
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": null,
+                "y2": null,
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": {
+              "Line": {
+                "order": "X",
+                "connect_gaps": false
+              }
+            },
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude"
+          }
+        ],
+        "axes": [
+          {
+            "id": "0",
+            "side": "Bottom",
+            "scale": "Auto",
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true
+          },
+          {
+            "id": "1",
+            "side": "Left",
+            "scale": {
+              "Nonlinear": {
+                "transform": {
+                  "Log": {
+                    "base": 10.0
+                  }
+                },
+                "domain": {
+                  "explicit": null,
+                  "baseline": "None",
+                  "padding": 0.0,
+                  "nice": false,
+                  "nice_ticks": 6
+                }
+              }
+            },
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true
+          }
+        ]
+      }
+    },
+    "data": {
+      "version": 1,
+      "epoch": "1",
+      "datasets": [
+        {
+          "id": "1",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "1",
+                "name": "field_1",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "2",
+                "name": "field_2",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003",
+              "9007199254743004",
+              "9007199254743005"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Float64": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    1,
+                    10,
+                    -2,
+                    100,
+                    1000
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "family-symlog",
+    "chart": {
+      "version": 1,
+      "definition": {
+        "revision": "1",
+        "mappings": {
+          "x": null,
+          "y": null,
+          "x2": null,
+          "y2": null,
+          "size": null,
+          "group": null
+        },
+        "transforms": [],
+        "layers": [
+          {
+            "id": "1",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Field": "1"
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": null,
+                "y2": null,
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": "Point",
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude"
+          }
+        ],
+        "axes": [
+          {
+            "id": "0",
+            "side": "Bottom",
+            "scale": "Auto",
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true
+          },
+          {
+            "id": "1",
+            "side": "Left",
+            "scale": {
+              "Nonlinear": {
+                "transform": {
+                  "Symlog": {
+                    "threshold": 2.0
+                  }
+                },
+                "domain": {
+                  "explicit": null,
+                  "baseline": "None",
+                  "padding": 0.0,
+                  "nice": false,
+                  "nice_ticks": 6
+                }
+              }
+            },
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true
+          }
+        ]
+      }
+    },
+    "data": {
+      "version": 1,
+      "epoch": "1",
+      "datasets": [
+        {
+          "id": "1",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "1",
+                "name": "field_1",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "2",
+                "name": "field_2",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003",
+              "9007199254743004",
+              "9007199254743005"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Float64": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    -100,
+                    -10,
+                    0,
+                    10,
+                    100
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "family-point-color",
+    "chart": {
+      "version": 1,
+      "definition": {
+        "revision": "1",
+        "mappings": {
+          "x": null,
+          "y": null,
+          "x2": null,
+          "y2": null,
+          "size": null,
+          "group": null
+        },
+        "transforms": [],
+        "layers": [
+          {
+            "id": "1",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Category": "1"
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": null,
+                "y2": null,
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": "Point",
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude",
+            "color": {
+              "id": "20",
+              "input": {
+                "Category": "1"
+              },
+              "scale": {
+                "Discrete": {
+                  "domain": [
+                    "Alpha",
+                    "Beta",
+                    "Gamma"
+                  ],
+                  "palette": [
+                    {
+                      "red": 30,
+                      "green": 125,
+                      "blue": 180,
+                      "alpha": 210
+                    },
+                    {
+                      "red": 220,
+                      "green": 70,
+                      "blue": 55,
+                      "alpha": 210
+                    },
+                    {
+                      "red": 128,
+                      "green": 128,
+                      "blue": 128,
+                      "alpha": 70
+                    }
+                  ],
+                  "missing": {
+                    "red": 128,
+                    "green": 128,
+                    "blue": 128,
+                    "alpha": 70
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "axes": [
+          {
+            "id": "0",
+            "side": "Bottom",
+            "scale": {
+              "Point": {
+                "domain": [
+                  "Alpha",
+                  "Beta",
+                  "Gamma"
+                ],
+                "padding": 0.5
+              }
+            },
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true
+          },
+          {
+            "id": "1",
+            "side": "Left",
+            "scale": "Auto",
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true
+          }
+        ]
+      }
+    },
+    "data": {
+      "version": 1,
+      "epoch": "1",
+      "datasets": [
+        {
+          "id": "1",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "1",
+                "name": "field_1",
+                "kind": "Categorical",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "2",
+                "name": "field_2",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Categorical": {
+                    "codes": [
+                      0,
+                      1,
+                      2
+                    ],
+                    "dictionary": [
+                      "Gamma",
+                      "Alpha",
+                      "Beta"
+                    ]
+                  }
+                },
+                "validity": [
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    3,
+                    1,
+                    2
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "family-area",
+    "chart": {
+      "version": 1,
+      "definition": {
+        "revision": "1",
+        "mappings": {
+          "x": null,
+          "y": null,
+          "x2": null,
+          "y2": null,
+          "size": null,
+          "group": null
+        },
+        "transforms": [],
+        "layers": [
+          {
+            "id": "1",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Field": "1"
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": null,
+                "y2": null,
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": {
+              "Area": {
+                "order": "X",
+                "connect_gaps": false,
+                "baseline": 0.0
+              }
+            },
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude"
+          }
+        ]
+      }
+    },
+    "data": {
+      "version": 1,
+      "epoch": "1",
+      "datasets": [
+        {
+          "id": "1",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "1",
+                "name": "field_1",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "2",
+                "name": "field_2",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003",
+              "9007199254743004",
+              "9007199254743005",
+              "9007199254743006"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Float64": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    1,
+                    3,
+                    0,
+                    2,
+                    4,
+                    3
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  false,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "family-ribbon",
+    "chart": {
+      "version": 1,
+      "definition": {
+        "revision": "1",
+        "mappings": {
+          "x": null,
+          "y": null,
+          "x2": null,
+          "y2": null,
+          "size": null,
+          "group": null
+        },
+        "transforms": [],
+        "layers": [
+          {
+            "id": "1",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Field": "1"
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": null,
+                "y2": {
+                  "Field": "3"
+                },
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": {
+              "Ribbon": {
+                "order": "X",
+                "connect_gaps": false
+              }
+            },
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude"
+          }
+        ]
+      }
+    },
+    "data": {
+      "version": 1,
+      "epoch": "1",
+      "datasets": [
+        {
+          "id": "1",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "1",
+                "name": "field_1",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "2",
+                "name": "field_2",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "3",
+                "name": "field_3",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003",
+              "9007199254743004",
+              "9007199254743005",
+              "9007199254743006"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Float64": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    1,
+                    2,
+                    0,
+                    2,
+                    4,
+                    3
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  false,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    3,
+                    5,
+                    4,
+                    1,
+                    6,
+                    5
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "family-heatmap",
+    "chart": {
+      "version": 1,
+      "definition": {
+        "revision": "1",
+        "mappings": {
+          "x": null,
+          "y": null,
+          "x2": null,
+          "y2": null,
+          "size": null,
+          "group": null
+        },
+        "transforms": [],
+        "layers": [
+          {
+            "id": "1",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Field": "1"
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": {
+                  "Field": "3"
+                },
+                "y2": {
+                  "Field": "4"
+                },
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": "Rectangle",
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude",
+            "color": {
+              "id": "20",
+              "input": {
+                "Numeric": {
+                  "Field": "5"
+                }
+              },
+              "scale": {
+                "Continuous": {
+                  "domain": {
+                    "start": 0,
+                    "end": 5
+                  },
+                  "palette": [
+                    {
+                      "red": 30,
+                      "green": 125,
+                      "blue": 180,
+                      "alpha": 210
+                    },
+                    {
+                      "red": 220,
+                      "green": 70,
+                      "blue": 55,
+                      "alpha": 210
+                    }
+                  ],
+                  "clamp": true,
+                  "missing": {
+                    "red": 128,
+                    "green": 128,
+                    "blue": 128,
+                    "alpha": 70
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "data": {
+      "version": 1,
+      "epoch": "1",
+      "datasets": [
+        {
+          "id": "1",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "1",
+                "name": "field_1",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "2",
+                "name": "field_2",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "3",
+                "name": "field_3",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "4",
+                "name": "field_4",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "5",
+                "name": "field_5",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003",
+              "9007199254743004",
+              "9007199254743005",
+              "9007199254743006"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Float64": [
+                    0,
+                    1,
+                    2,
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    0,
+                    0,
+                    0,
+                    1,
+                    1,
+                    1
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    1,
+                    2,
+                    3,
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    1,
+                    1,
+                    1,
+                    2,
+                    2,
+                    2
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    0
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  false
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "family-grouped-bars",
+    "chart": {
+      "version": 1,
+      "definition": {
+        "revision": "1",
+        "mappings": {
+          "x": null,
+          "y": null,
+          "x2": null,
+          "y2": null,
+          "size": null,
+          "group": null
+        },
+        "transforms": [],
+        "layers": [
+          {
+            "id": "1",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Category": "4"
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": {
+                  "Category": "4"
+                },
+                "y2": {
+                  "Literal": 0
+                },
+                "group": "3",
+                "size": null
+              }
+            },
+            "inherit": false,
+            "geom": "Rectangle",
+            "position": {
+              "Dodge": {
+                "order": [
+                  {
+                    "Int": "0"
+                  },
+                  {
+                    "Int": "1"
+                  },
+                  {
+                    "Int": "2"
+                  }
+                ],
+                "width": 0.9
+              }
+            },
+            "style": {
+              "color": {
+                "red": 180,
+                "green": 200,
+                "blue": 215,
+                "alpha": 140
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude",
+            "color": {
+              "id": "20",
+              "input": "Group",
+              "scale": {
+                "Discrete": {
+                  "domain": null,
+                  "palette": [
+                    {
+                      "red": 30,
+                      "green": 125,
+                      "blue": 180,
+                      "alpha": 210
+                    },
+                    {
+                      "red": 220,
+                      "green": 70,
+                      "blue": 55,
+                      "alpha": 210
+                    },
+                    {
+                      "red": 128,
+                      "green": 128,
+                      "blue": 128,
+                      "alpha": 70
+                    }
+                  ],
+                  "missing": {
+                    "red": 128,
+                    "green": 128,
+                    "blue": 128,
+                    "alpha": 70
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "data": {
+      "version": 1,
+      "epoch": "1",
+      "datasets": [
+        {
+          "id": "1",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "1",
+                "name": "x",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "2",
+                "name": "y",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "3",
+                "name": "group",
+                "kind": "Int64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "4",
+                "name": "category",
+                "kind": "Categorical",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Float64": [
+                    0,
+                    0
+                  ]
+                },
+                "validity": [
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    1,
+                    2
+                  ]
+                },
+                "validity": [
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Int64": [
+                    "0",
+                    "2"
+                  ]
+                },
+                "validity": [
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Categorical": {
+                    "codes": [
+                      0,
+                      0
+                    ],
+                    "dictionary": [
+                      "A"
+                    ]
+                  }
+                },
+                "validity": [
+                  true,
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "family-stacked-bars",
+    "chart": {
+      "version": 1,
+      "definition": {
+        "revision": "1",
+        "mappings": {
+          "x": null,
+          "y": null,
+          "x2": null,
+          "y2": null,
+          "size": null,
+          "group": null
+        },
+        "transforms": [],
+        "layers": [
+          {
+            "id": "1",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Literal": 0
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": {
+                  "Literal": 1
+                },
+                "y2": {
+                  "Literal": 0
+                },
+                "group": "3",
+                "size": null
+              }
+            },
+            "inherit": false,
+            "geom": "Rectangle",
+            "position": {
+              "Stack": {
+                "order": [
+                  {
+                    "Int": "0"
+                  },
+                  {
+                    "Int": "1"
+                  },
+                  {
+                    "Int": "2"
+                  },
+                  {
+                    "Int": "3"
+                  }
+                ],
+                "normalize": false
+              }
+            },
+            "style": {
+              "color": {
+                "red": 180,
+                "green": 200,
+                "blue": 215,
+                "alpha": 140
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude",
+            "color": {
+              "id": "20",
+              "input": "Group",
+              "scale": {
+                "Discrete": {
+                  "domain": null,
+                  "palette": [
+                    {
+                      "red": 30,
+                      "green": 125,
+                      "blue": 180,
+                      "alpha": 210
+                    },
+                    {
+                      "red": 220,
+                      "green": 70,
+                      "blue": 55,
+                      "alpha": 210
+                    },
+                    {
+                      "red": 128,
+                      "green": 128,
+                      "blue": 128,
+                      "alpha": 70
+                    }
+                  ],
+                  "missing": {
+                    "red": 128,
+                    "green": 128,
+                    "blue": 128,
+                    "alpha": 70
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "data": {
+      "version": 1,
+      "epoch": "1",
+      "datasets": [
+        {
+          "id": "1",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "1",
+                "name": "x",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "2",
+                "name": "y",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "3",
+                "name": "group",
+                "kind": "Int64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "4",
+                "name": "category",
+                "kind": "Categorical",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003",
+              "9007199254743004"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Float64": [
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    2,
+                    3,
+                    -1,
+                    -4
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Int64": [
+                    "0",
+                    "1",
+                    "2",
+                    "3"
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Categorical": {
+                    "codes": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    "dictionary": [
+                      "A"
+                    ]
+                  }
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "family-ohlc-volume",
+    "chart": {
+      "version": 1,
+      "definition": {
+        "revision": "1",
+        "mappings": {
+          "x": null,
+          "y": null,
+          "x2": null,
+          "y2": null,
+          "size": null,
+          "group": null
+        },
+        "transforms": [],
+        "layers": [
+          {
+            "id": "1",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Field": "1"
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": null,
+                "y2": {
+                  "Field": "3"
+                },
+                "size": null,
+                "group": null,
+                "low": {
+                  "Field": "4"
+                },
+                "high": {
+                  "Field": "5"
+                }
+              }
+            },
+            "inherit": false,
+            "geom": {
+              "Ohlc": {
+                "width": 12.0
+              }
+            },
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude"
+          },
+          {
+            "id": "2",
+            "scales": {
+              "x": "0",
+              "y": "8"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Field": "1"
+                },
+                "y": {
+                  "Field": "6"
+                },
+                "x2": null,
+                "y2": {
+                  "Literal": 0
+                },
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": {
+              "Bar": {
+                "width": 7.0,
+                "nonnegative": true
+              }
+            },
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 128,
+                "green": 128,
+                "blue": 128,
+                "alpha": 70
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude"
+          }
+        ],
+        "axes": [
+          {
+            "id": "0",
+            "side": "Bottom",
+            "scale": "Auto",
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true
+          },
+          {
+            "id": "1",
+            "side": "Left",
+            "scale": "Auto",
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true
+          },
+          {
+            "id": "8",
+            "side": "Right",
+            "scale": "Auto",
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true
+          }
+        ]
+      }
+    },
+    "data": {
+      "version": 1,
+      "epoch": "1",
+      "datasets": [
+        {
+          "id": "1",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "1",
+                "name": "field_1",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "2",
+                "name": "field_2",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "3",
+                "name": "field_3",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "4",
+                "name": "field_4",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "5",
+                "name": "field_5",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "6",
+                "name": "field_6",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003",
+              "9007199254743004",
+              "9007199254743005"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Float64": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    2,
+                    3,
+                    5,
+                    4,
+                    6
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    3,
+                    2,
+                    4,
+                    5,
+                    6
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    1,
+                    1,
+                    3,
+                    2,
+                    4
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    4,
+                    5,
+                    6,
+                    6,
+                    7
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    10,
+                    -1,
+                    30,
+                    20,
+                    15
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "family-secondary",
+    "chart": {
+      "version": 1,
+      "definition": {
+        "revision": "1",
+        "mappings": {
+          "x": null,
+          "y": null,
+          "x2": null,
+          "y2": null,
+          "size": null,
+          "group": null
+        },
+        "transforms": [],
+        "layers": [
+          {
+            "id": "1",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Field": "1"
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": null,
+                "y2": null,
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": "Point",
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude"
+          }
+        ],
+        "axes": [
+          {
+            "id": "0",
+            "side": "Bottom",
+            "scale": "Auto",
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true
+          },
+          {
+            "id": "1",
+            "side": "Left",
+            "scale": "Auto",
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true
+          },
+          {
+            "id": "8",
+            "side": "Right",
+            "scale": {
+              "Secondary": {
+                "source": "1",
+                "factor": 1.8,
+                "offset": 32.0
+              }
+            },
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true
+          }
+        ]
+      }
+    },
+    "data": {
+      "version": 1,
+      "epoch": "1",
+      "datasets": [
+        {
+          "id": "1",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "1",
+                "name": "field_1",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "2",
+                "name": "field_2",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003",
+              "9007199254743004"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Float64": [
+                    0,
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    0,
+                    10,
+                    20,
+                    30
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "family-session",
+    "chart": {
+      "version": 1,
+      "definition": {
+        "revision": "1",
+        "mappings": {
+          "x": null,
+          "y": null,
+          "x2": null,
+          "y2": null,
+          "size": null,
+          "group": null
+        },
+        "transforms": [],
+        "layers": [
+          {
+            "id": "1",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Timestamp": {
+                    "field": "1",
+                    "origin": "1709164800000"
+                  }
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": null,
+                "y2": null,
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": {
+              "Line": {
+                "order": "X",
+                "connect_gaps": false
+              }
+            },
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude"
+          }
+        ],
+        "axes": [
+          {
+            "id": "0",
+            "side": "Bottom",
+            "scale": {
+              "Session": {
+                "id": "supplied-fixture-only",
+                "revision": "1",
+                "unit": "Milliseconds",
+                "sessions": [
+                  {
+                    "start": "1709164800000",
+                    "end": "1709251200000"
+                  },
+                  {
+                    "start": "1709510400000",
+                    "end": "1709596800000"
+                  }
+                ],
+                "closed": "Omit"
+              }
+            },
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true
+          },
+          {
+            "id": "1",
+            "side": "Left",
+            "scale": "Auto",
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true
+          }
+        ]
+      }
+    },
+    "data": {
+      "version": 1,
+      "epoch": "1",
+      "datasets": [
+        {
+          "id": "1",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "1",
+                "name": "field_1",
+                "kind": {
+                  "Timestamp": {
+                    "unit": "Milliseconds",
+                    "timezone": "UTC"
+                  }
+                },
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "2",
+                "name": "field_2",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003",
+              "9007199254743004",
+              "9007199254743005"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Timestamp": [
+                    "1709164800000",
+                    "1709208000000",
+                    "1709337600000",
+                    "1709510400000",
+                    "1709596800000"
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    1,
+                    3,
+                    9,
+                    2,
+                    4
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "family-utc-leap",
+    "chart": {
+      "version": 1,
+      "definition": {
+        "revision": "1",
+        "mappings": {
+          "x": null,
+          "y": null,
+          "x2": null,
+          "y2": null,
+          "size": null,
+          "group": null
+        },
+        "transforms": [],
+        "layers": [
+          {
+            "id": "1",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1"
+            },
+            "filters": [],
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "mappings": {
+              "Source": {
+                "x": {
+                  "Timestamp": {
+                    "field": "1",
+                    "origin": "1709164800000"
+                  }
+                },
+                "y": {
+                  "Field": "2"
+                },
+                "x2": null,
+                "y2": null,
+                "size": null,
+                "group": null
+              }
+            },
+            "inherit": false,
+            "geom": {
+              "Line": {
+                "order": "X",
+                "connect_gaps": false
+              }
+            },
+            "position": "Identity",
+            "style": {
+              "color": {
+                "red": 30,
+                "green": 125,
+                "blue": 180,
+                "alpha": 210
+              },
+              "radius": 3.0,
+              "stroke_width": 1.5
+            },
+            "invalid": "Exclude"
+          }
+        ],
+        "axes": [
+          {
+            "id": "0",
+            "side": "Bottom",
+            "scale": {
+              "Utc": {
+                "domain": null,
+                "interval": {
+                  "Days": 1
+                }
+              }
+            },
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true
+          },
+          {
+            "id": "1",
+            "side": "Left",
+            "scale": "Auto",
+            "viewport": null,
+            "range": null,
+            "outside": "Extend",
+            "visible": true
+          }
+        ]
+      }
+    },
+    "data": {
+      "version": 1,
+      "epoch": "1",
+      "datasets": [
+        {
+          "id": "1",
+          "batch": {
+            "schema_version": "1",
+            "fields": [
+              {
+                "id": "1",
+                "name": "field_1",
+                "kind": {
+                  "Timestamp": {
+                    "unit": "Milliseconds",
+                    "timezone": "UTC"
+                  }
+                },
+                "nullable": true,
+                "unit": null,
+                "label": null
+              },
+              {
+                "id": "2",
+                "name": "field_2",
+                "kind": "Float64",
+                "nullable": true,
+                "unit": null,
+                "label": null
+              }
+            ],
+            "keys": [
+              "9007199254743001",
+              "9007199254743002",
+              "9007199254743003",
+              "9007199254743004"
+            ],
+            "columns": [
+              {
+                "values": {
+                  "Timestamp": [
+                    "1709078400000",
+                    "1709164800000",
+                    "1709251200000",
+                    "1709337600000"
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              },
+              {
+                "values": {
+                  "Float64": [
+                    1,
+                    2,
+                    3,
+                    2
+                  ]
+                },
+                "validity": [
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "formatted": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+]

@@ -117,6 +117,7 @@ impl Session {
                 json!({
                     "id":l.id(),"visible":l.visible(),"domains":l.domains(),"rows":l.table().rows(),
                     "schema":l.table().schema(),"operations":l.table().operations(),
+                    "color_legend":l.color_legend(),"invalid_geometry":l.invalid_geometry(),
                     "targets":l.marks().iter().flat_map(|m|m.targets.iter()).collect::<Vec<_>>(),
                 })
             })

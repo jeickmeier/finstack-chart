@@ -1,7 +1,8 @@
 use crate::grammar::{PreparedChart, ValueSpace};
 use crate::provenance::Target;
 use crate::scales::{
-    BandOptions, BandScale, Bounds, ContinuousDomain, LinearScale, OutsidePolicy, TimeBounds,
+    BandOptions, BandScale, Bounds, ContinuousDomain, LinearScale, NonlinearScale, OutsidePolicy,
+    PointOptions, PointScale, ScaleTransform, SessionCalendar, SessionScale, TimeBounds,
     UtcInterval, UtcScale,
 };
 use crate::scene::Scene;
@@ -12,7 +13,10 @@ use std::{collections::BTreeMap, sync::Arc};
 /// Hard cap on axis measurement/layout passes (plus at most one compact-state label).
 pub const MAX_LAYOUT_PASSES: usize = 4;
 /// One independent guide per side; secondary unit mappings are a separate future construct.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd)]
+#[derive(
+    serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd,
+)]
+#[serde(deny_unknown_fields)]
 pub enum AxisSide {
     /// Horizontal lower guide.
     Bottom,
@@ -30,13 +34,34 @@ impl AxisSide {
     }
 }
 /// Declared family and training policy; automatic selection follows the encoded value space.
-#[derive(Clone, Debug, Default, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Default, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub enum AxisScale {
     /// Linear numeric, band categorical, or UTC timestamp with automatic ticks.
     #[default]
     Auto,
     /// Linear domain precedence/baseline/padding/nice policy.
     Linear(ContinuousDomain),
+    /// Invertible nonlinear numeric mapping with data-space domain policies.
+    Nonlinear {
+        /// Coordinate transformation.
+        transform: ScaleTransform,
+        /// Domain policy applied in transformed coordinates.
+        domain: ContinuousDomain,
+    },
+    /// Categorical centers without band extents.
+    Point(PointOptions),
+    /// Supplied active sessions compressed into contiguous time.
+    Session(SessionCalendar),
+    /// Alternate-unit guide over another numeric axis; cannot bind layer coordinates.
+    Secondary {
+        /// Existing primary numeric scale identity.
+        source: ScaleId,
+        /// Finite nonzero unit multiplier.
+        factor: f64,
+        /// Finite unit offset.
+        offset: f64,
+    },
     /// Stable labels with optional exact explicit domain/order.
     Band(BandOptions),
     /// UTC integer domain and optional calendar tick interval.
@@ -48,7 +73,8 @@ pub enum AxisScale {
     },
 }
 /// One named positional scale and optional plain guide.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct AxisSpec {
     /// Must match a layer scale binding (or an empty primary guide).
     pub id: ScaleId,
@@ -145,6 +171,19 @@ impl LayoutRequest {
 pub enum ResolvedScale {
     /// Numeric mapping/inversion in calculation space.
     Linear(LinearScale),
+    /// Numeric nonlinear mapping/inversion.
+    Nonlinear(NonlinearScale),
+    /// Category centers without band widths.
+    Point(PointScale),
+    /// Supplied active-session timestamp mapping.
+    Session(SessionScale),
+    /// Guide-only alternate units over a primary numeric domain.
+    Secondary {
+        /// Source scale identity.
+        source: ScaleId,
+        /// Alternate-unit represented domain.
+        domain: Bounds,
+    },
     /// Exact label lookup and band extent; no numeric inverse.
     Band(BandScale),
     /// Exact source timestamp mapping/inversion.

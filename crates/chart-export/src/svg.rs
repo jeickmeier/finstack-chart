@@ -127,7 +127,7 @@ pub(crate) fn build(
                     stroke.width,
                     alpha(stroke.color)
                 )?,
-                Primitive::Path { commands, stroke } => {
+                Primitive::Path { commands, .. } | Primitive::FilledPath { commands, .. } => {
                     write!(out, "<path id=\"item-{index}\" d=\"")?;
                     for c in commands {
                         match c {
@@ -149,13 +149,22 @@ pub(crate) fn build(
                             PathCommand::Close => out.write_str("Z ")?,
                         }
                     }
-                    write!(
-                        out,
-                        "\" fill=\"none\" stroke=\"{}\" stroke-width=\"{}\" stroke-opacity=\"{}\"/>",
-                        color(stroke.color),
-                        stroke.width,
-                        alpha(stroke.color)
-                    )?;
+                    match &item.primitive {
+                        Primitive::Path { stroke, .. } => write!(
+                            out,
+                            "\" fill=\"none\" stroke=\"{}\" stroke-width=\"{}\" stroke-opacity=\"{}\"/>",
+                            color(stroke.color),
+                            stroke.width,
+                            alpha(stroke.color)
+                        )?,
+                        Primitive::FilledPath { fill, .. } => write!(
+                            out,
+                            "\" fill=\"{}\" fill-opacity=\"{}\" fill-rule=\"nonzero\"/>",
+                            color(*fill),
+                            alpha(*fill)
+                        )?,
+                        _ => unreachable!(),
+                    }
                 }
                 Primitive::Text {
                     origin,

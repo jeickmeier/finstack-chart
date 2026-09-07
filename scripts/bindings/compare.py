@@ -123,4 +123,32 @@ for data,scene in zip(statistics,scenes):
 for name in statistics[0]:
     svgs=[(p/f'statistics-{name}.svg').read_bytes() for p in paths]
     assert all(svg==svgs[0] for svg in svgs[1:]),name
-print(f'PASS WP-10: {len(statistics[0])} cases in Rust/Python/WASM, independent stats/provenance, scenes within 1e-10 pt, SVG bytes exact')
+print(f'PASS shared fixtures: {len(statistics[0])} cases in Rust/Python/WASM, independent stats/provenance, scenes within 1e-10 pt, SVG bytes exact')
+
+# WP-11 independent expectations, in addition to the unchanged three-runtime comparisons.
+for data, scenes in zip(statistics,scenes):
+    def family(name): return data['family-'+name]['layers']
+    def marks(name,layer='1'): return [i['primitive'] for i in scenes['family-'+name]['items'] if i['layer']==layer]
+    assert len(marks('log-gaps'))==2 and all('Path' in p for p in marks('log-gaps'))
+    assert len(family('log-gaps')[0]['rows']['Source'])==5
+    assert len(marks('area'))==2 and family('area')[0]['invalid_geometry']==1
+    assert family('area')[0]['domains']['y']=={'minimum':0.,'maximum':4.}
+    assert len(marks('ribbon'))==2 and family('ribbon')[0]['invalid_geometry']==2
+    assert all('FilledPath' in p for p in marks('area')+marks('ribbon'))
+    legend=family('point-color')[0]['color_legend']
+    assert legend['id']=='20' and [p[0] for p in legend['entries']]==['Alpha','Beta','Gamma'] and not legend['continuous']
+    assert len(marks('heatmap'))==6 and family('heatmap')[0]['color_legend']['continuous']
+    assert marks('heatmap')[-1]['Rectangle']['fill']=={'red':128,'green':128,'blue':128,'alpha':70}
+    price,volume=family('ohlc-volume')
+    assert price['invalid_geometry']==0 and volume['invalid_geometry']==1
+    assert price['domains']['y']=={'minimum':1.,'maximum':7.} and volume['domains']['y']=={'minimum':0.,'maximum':30.}
+    assert len(marks('ohlc-volume'))==10 and len(marks('ohlc-volume','2'))==4
+    assert len(marks('session'))==2 and len(family('session')[0]['rows']['Source'])==5
+    labels=[i['primitive']['Text']['text'] for i in scenes['family-utc-leap']['items'] if 'Text' in i['primitive']]
+    assert any('2024-02-29' in t for t in labels)
+    assert family('stacked-bars')[0]['domains']['y']=={'minimum':-5.,'maximum':5.}
+for name in statistics[0]:
+    if name.startswith('family-'):
+        pdf=str(paths[0]/f'statistics-{name}.pdf')
+        assert not subprocess.check_output(['pdfimages','-list',pdf],text=True).strip().splitlines()[2:]
+print('PASS WP-11: independent log/run gaps, area/ribbon boundaries, color/missing metadata, price/volume validation, supplied sessions, leap day, signed stack and vector PDF expectations')

@@ -258,6 +258,12 @@ pub struct SourceAes {
     pub x2: Option<Numeric>,
     /// Rule/rectangle second vertical endpoint or explicit baseline.
     pub y2: Option<Numeric>,
+    /// OHLC lower price bound.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub low: Option<Numeric>,
+    /// OHLC upper price bound.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub high: Option<Numeric>,
     /// Positive point radius or stroke width, interpreted in eventual destination units.
     pub size: Option<Numeric>,
     /// Group lines independently; default is a single authored group.
@@ -288,6 +294,12 @@ impl SourceAes {
         self.y2 = Some(value.into());
         self
     }
+    /// Bind OHLC low and high; y is open and y2 is close.
+    pub fn bounds(mut self, low: impl Into<Numeric>, high: impl Into<Numeric>) -> Self {
+        self.low = Some(low.into());
+        self.high = Some(high.into());
+        self
+    }
     /// Bind point radius/stroke width; this is distinct from constant styling.
     pub fn size(mut self, value: impl Into<Numeric>) -> Self {
         self.size = Some(value.into());
@@ -304,6 +316,8 @@ impl SourceAes {
             y: self.y.clone().or_else(|| base.y.clone()),
             x2: self.x2.clone().or_else(|| base.x2.clone()),
             y2: self.y2.clone().or_else(|| base.y2.clone()),
+            low: self.low.clone().or_else(|| base.low.clone()),
+            high: self.high.clone().or_else(|| base.high.clone()),
             size: self.size.clone().or_else(|| base.size.clone()),
             group: self.group.or(base.group),
         }
@@ -413,12 +427,73 @@ pub enum Geom {
         /// Explicitly bridge invalid rows; false is the default recipe policy.
         connect_gaps: bool,
     },
+    /// Filled run between y and an explicit calculation-space baseline.
+    Area {
+        /// Run ordering.
+        order: LineOrder,
+        /// Bridge missing values only when explicitly requested.
+        connect_gaps: bool,
+        /// Finite baseline; zero by default through `Geom::area()`.
+        baseline: f64,
+    },
+    /// Filled run between lower y and upper y2 at each x; lower must not exceed upper.
+    Ribbon {
+        /// Run ordering.
+        order: LineOrder,
+        /// Bridge missing values only when explicitly requested.
+        connect_gaps: bool,
+    },
+    /// Interval bar centered at x, from y to explicit y2 baseline.
+    Bar {
+        /// Positive width in destination units.
+        width: f64,
+        /// Reject negative y values independently (for volume and other nonnegative measures).
+        nonnegative: bool,
+    },
+    /// OHLC candle: y=open, y2=close, low/high bound both.
+    Ohlc {
+        /// Positive body width in destination units.
+        width: f64,
+    },
     /// Rule from (x,y) to (x2,y2).
     Rule,
     /// Rectangle spanning both supplied endpoints, including its explicit baseline.
     Rectangle,
 }
 impl Geom {
+    /// Zero-baseline area, ordered by x and split at gaps.
+    pub fn area() -> Self {
+        Self::Area {
+            order: LineOrder::X,
+            connect_gaps: false,
+            baseline: 0.,
+        }
+    }
+    /// Lower/upper ribbon, ordered by x and split at gaps.
+    pub fn ribbon() -> Self {
+        Self::Ribbon {
+            order: LineOrder::X,
+            connect_gaps: false,
+        }
+    }
+    pub(crate) fn run(self) -> Option<(LineOrder, bool)> {
+        match self {
+            Self::Line {
+                order,
+                connect_gaps,
+            }
+            | Self::Area {
+                order,
+                connect_gaps,
+                ..
+            }
+            | Self::Ribbon {
+                order,
+                connect_gaps,
+            } => Some((order, connect_gaps)),
+            _ => None,
+        }
+    }
     /// Straight x-ordered lines split at every invalid row by default.
     pub fn line() -> Self {
         Self::Line {
@@ -523,6 +598,9 @@ pub struct Layer {
     pub position: Position,
     /// Constant styling.
     pub style: Style,
+    /// Optional stage-aware color mapping with semantic legend metadata.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub color: Option<super::ColorEncoding>,
     /// Invalid required values exclude with counts or fail preparation.
     pub invalid: InvalidPolicy,
 }
@@ -541,6 +619,7 @@ impl Layer {
             geom,
             position: Position::Identity,
             style: Style::default(),
+            color: None,
             invalid: InvalidPolicy::Exclude,
         }
     }
@@ -559,9 +638,63 @@ impl Layer {
             ..Self::binned(id, data, Geom::Rectangle, BinAes::histogram())
         }
     }
+    /// Interval bar recipe with an explicit zero baseline; signed values remain valid.
+    pub fn bars(
+        id: LayerId,
+        data: impl Into<DataRef>,
+        x: impl Into<Numeric>,
+        value: impl Into<Numeric>,
+        width: f64,
+    ) -> Self {
+        Self::new(
+            id,
+            data,
+            Geom::Bar {
+                width,
+                nonnegative: false,
+            },
+            SourceAes::new().x(x).y(value).y2(Numeric::Literal(0.)),
+        )
+    }
+    /// Nonnegative volume recipe, validated independently from any price layer.
+    pub fn volume(
+        id: LayerId,
+        data: impl Into<DataRef>,
+        x: impl Into<Numeric>,
+        value: impl Into<Numeric>,
+        width: f64,
+    ) -> Self {
+        Self::new(
+            id,
+            data,
+            Geom::Bar {
+                width,
+                nonnegative: true,
+            },
+            SourceAes::new().x(x).y(value).y2(Numeric::Literal(0.)),
+        )
+    }
+    /// OHLC candle recipe using x, y=open, y2=close and low/high source bounds.
+    pub fn ohlc(id: LayerId, data: impl Into<DataRef>, mappings: SourceAes, width: f64) -> Self {
+        Self::new(id, data, Geom::Ohlc { width }, mappings)
+    }
+    /// Rectangular heatmap cells using explicit x/x2/y/y2 intervals and color values.
+    pub fn cells(
+        id: LayerId,
+        data: impl Into<DataRef>,
+        mappings: SourceAes,
+        color: super::ColorEncoding,
+    ) -> Self {
+        Self::new(id, data, Geom::Rectangle, mappings).colored(color)
+    }
     /// Bind this layer to independently trained named scales.
     pub fn scaled(mut self, x: ScaleId, y: ScaleId) -> Self {
         self.scales = ScaleBindings { x, y };
+        self
+    }
+    /// Bind color without changing positional domains.
+    pub fn colored(mut self, color: super::ColorEncoding) -> Self {
+        self.color = Some(color);
         self
     }
     /// Choose an explicit constant style.
@@ -586,6 +719,9 @@ pub struct ChartDefinition {
     pub mappings: SourceAes,
     /// Named operations; declaration order need not match dependency order.
     pub transforms: Vec<TransformDefinition>,
+    /// Optional portable axes; when nonempty these replace destination default axes.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub axes: Vec<crate::layout::AxisSpec>,
     /// Submission order is paint order; duplicate layer IDs reject.
     pub layers: Vec<Layer>,
 }
@@ -596,6 +732,7 @@ impl ChartDefinition {
             revision,
             mappings: SourceAes::new(),
             transforms: vec![],
+            axes: vec![],
             layers: vec![],
         }
     }
@@ -607,6 +744,11 @@ impl ChartDefinition {
     /// Append a named graph node.
     pub fn transform(mut self, transform: TransformDefinition) -> Self {
         self.transforms.push(transform);
+        self
+    }
+    /// Author a portable named axis and guide.
+    pub fn axis(mut self, axis: crate::layout::AxisSpec) -> Self {
+        self.axes.push(axis);
         self
     }
     /// Append an erased heterogeneous layer in paint order.

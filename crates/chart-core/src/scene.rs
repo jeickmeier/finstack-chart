@@ -87,6 +87,13 @@ pub enum Primitive {
         /// Solid stroke.
         stroke: Stroke,
     },
+    /// Closed path filled using the nonzero winding rule.
+    FilledPath {
+        /// Explicit closed subpaths with at least one drawing segment.
+        commands: Vec<PathCommand>,
+        /// Solid interior color.
+        fill: Color,
+    },
     /// One plain text run; measurement/painting must use this explicit font descriptor.
     Text {
         /// Baseline origin in scene units.
@@ -189,7 +196,7 @@ fn validate(
                 }
                 result
             }
-            Primitive::Path { commands, .. } => {
+            Primitive::Path { commands, .. } | Primitive::FilledPath { commands, .. } => {
                 let result = require_within(commands.len() <= path_remaining, "total path command");
                 if result.is_ok() {
                     path_remaining -= commands.len();
@@ -256,13 +263,20 @@ fn validate_primitive(
             )?;
             Ok(())
         }
-        Primitive::Path { commands, stroke } => {
-            positive(stroke.width, "Stroke width must be finite and positive.")?;
+        Primitive::Path { commands, .. } | Primitive::FilledPath { commands, .. } => {
+            if let Primitive::Path { stroke, .. } = primitive {
+                positive(stroke.width, "Stroke width must be finite and positive.")?;
+            }
             let mut open = false;
             let mut drawn = false;
             for command in commands {
                 match command {
-                    PathCommand::MoveTo(_) => open = true,
+                    PathCommand::MoveTo(_) => {
+                        if open && matches!(primitive, Primitive::FilledPath { .. }) {
+                            return Err(path_error());
+                        }
+                        open = true;
+                    }
                     PathCommand::Close if open => open = false,
                     PathCommand::LineTo(_)
                     | PathCommand::QuadraticTo(_, _)
@@ -274,7 +288,7 @@ fn validate_primitive(
                     _ => return Err(path_error()),
                 }
             }
-            if !drawn {
+            if !drawn || (matches!(primitive, Primitive::FilledPath { .. }) && open) {
                 return Err(path_error());
             }
             Ok(())

@@ -54,6 +54,7 @@
 //! # }
 //! ```
 
+mod colors;
 mod compiler;
 mod definition;
 pub(crate) mod positions;
@@ -63,6 +64,7 @@ mod statistics;
 mod stats;
 mod typed;
 
+pub use colors::*;
 pub use compiler::Compiler;
 pub use definition::*;
 pub use prepared::*;

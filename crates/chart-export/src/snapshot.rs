@@ -289,8 +289,10 @@ fn preflight(
                     point(*center)?;
                     profile.f32(*radius)?;
                 }
-                Primitive::Path { commands, stroke } => {
-                    profile.f32(stroke.width)?;
+                Primitive::Path { commands, .. } | Primitive::FilledPath { commands, .. } => {
+                    if let Primitive::Path { stroke, .. } = &item.primitive {
+                        profile.f32(stroke.width)?;
+                    }
                     for c in commands {
                         match c {
                             PathCommand::MoveTo(a) | PathCommand::LineTo(a) => point(*a)?,

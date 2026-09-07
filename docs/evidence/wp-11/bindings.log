@@ -1,0 +1,38 @@
+[bindings-proof] $ python3 scripts/run_binding_proofs.py artifacts/wp-11
+RUN cargo run -p chart-export --example binding_proof --locked -- /Users/jeickmeier/Projects/finstack-chart/artifacts/wp-11/native
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.14s
+     Running `target/debug/examples/binding_proof /Users/jeickmeier/Projects/finstack-chart/artifacts/wp-11/native`
+PASS native shared portable fixture, transaction replay, action and controlled disposal
+RUN cargo build -p chart-python --features extension-module --locked
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+   Compiling chart-python v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-python)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.95s
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/python_proof.py /Users/jeickmeier/Projects/finstack-chart/artifacts/wp-11/python-module /Users/jeickmeier/Projects/finstack-chart/artifacts/wp-11/python
+PASS Python: actual extension, portable fixture, copies, detached thread progress, disposal and 13 malformed input cases
+PASS 24 statistic/position/family cases in the actual Python extension
+RUN cargo build -p chart-wasm --target wasm32-unknown-unknown --locked
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+   Compiling chart-wasm v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-wasm)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.82s
+RUN /tmp/wp09-tools/wasm-bindgen-0.2.128-aarch64-apple-darwin/wasm-bindgen /Users/jeickmeier/Projects/finstack-chart/target/wasm32-unknown-unknown/debug/chart_wasm.wasm --target nodejs --out-dir /Users/jeickmeier/Projects/finstack-chart/artifacts/wp-11/wasm-module
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/wasm_proof.cjs /Users/jeickmeier/Projects/finstack-chart/artifacts/wp-11/wasm-module /Users/jeickmeier/Projects/finstack-chart/artifacts/wp-11/wasm
+PASS WASM: real Node WebAssembly, portable fixture, copies, invalidated old memory view, repeated updates, disposal and 13 malformed cases
+PASS 24 statistic/position/family cases in actual WASM
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/compare.py /Users/jeickmeier/Projects/finstack-chart/artifacts/wp-11
+PASS three-runtime initial: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime definition: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime transaction: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime replay: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime action: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime final: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS three-runtime scene: exact identities/types/state; numeric tolerance 0.01 pt
+PASS three-runtime state: exact identities/types/state; numeric tolerance 1e-10 absolute
+PASS independent domains/bin counts/members, large IDs, exact nanosecond times, UInt64/Int64 extremes, null/display values, replay, physical vector SVG and per-item target alignment
+PASS exact SVG bytes across Rust/Python/WASM
+PASS actual Rust/Python PDF vector/font policy and PNG dimensions
+PASS shared fixtures: 24 cases in Rust/Python/WASM, independent stats/provenance, scenes within 1e-10 pt, SVG bytes exact
+PASS WP-11: independent log/run gaps, area/ribbon boundaries, color/missing metadata, price/volume validation, supplied sessions, leap day, signed stack and vector PDF expectations
+PASS WP-09/10/11 runtime proof. Results: /Users/jeickmeier/Projects/finstack-chart/artifacts/wp-11

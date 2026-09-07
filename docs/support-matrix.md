@@ -1,7 +1,8 @@
 # Support and evidence matrix
 
-Updated: 6 September 2026. Intended support is not verified product support.
-Current statistical/position and portable runtime evidence is in the
+Updated: 7 September 2026. Intended support is not verified product support.
+Current family/native/runtime evidence is in the [WP-11 report](evidence/wp-11-completion-2026-09-07.md).
+Prior statistical/position and portable runtime evidence is in the
 [WP-10 report](evidence/wp-10-completion-2026-09-06.md), extending the
 [WP-09 report](evidence/wp-09-completion-2026-09-06.md),
 with the precise [proof-support matrix](portable-contract.md#proof-support-matrix). G1 is passed
@@ -16,14 +17,14 @@ earlier infrastructure checks in the [bootstrap report](evidence/bootstrap-2026-
 
 | Surface | Required scope | Current implementation/evidence | Open gate |
 | --- | --- | --- | --- |
-| Portable Rust core | Synchronous host-independent semantics on macOS/Linux | Data, built-in statistics/positions and foundational scales/layout implemented; 109 core tests and 2 Rustdoc examples pass on macOS, including FIX-01–05 statistical/geometry subsets and WP-06 FIX-07 scope; actual binding and export consumers exercised; remaining scale/geometry/facet/theme families pending | WP-11 onward; G2/G4 |
-| macOS Apple Silicon GPUI | First desktop host | Pinned GPUI/platform 0.3.3; standalone compiled line/point/bar/UTC scenes inspected on macOS 26.5.2 arm64 at scale 2; real fonts, keyboard/hover, remount, resize, failed updates and teardown exercised | Full capabilities WP-11–21 |
+| Portable Rust core | Synchronous host-independent semantics on macOS/Linux | Data, built-in statistics/positions and required scale/geometry families and layout implemented; 117 core tests and 2 Rustdoc examples pass on macOS, including FIX-01–05 statistical/geometry subsets and WP-06 FIX-07 scope; actual binding and export consumers exercised; facets/themes/extensions remain pending | WP-12 onward; G2/G4 |
+| macOS Apple Silicon GPUI | First desktop host | Pinned GPUI/platform 0.3.3; standalone compiled line/point/bar/UTC scenes inspected on macOS 26.5.2 arm64 at scale 2; real fonts, keyboard/hover, remount, resize, failed updates and teardown exercised | Full capabilities WP-12–21 |
 | Linux headless core/export | Core tests and headless use | Target dependency isolation verified; CI configured; no Linux execution recorded locally | WP-21 |
 | Browser WASM target | Core compilation; minimal runtime proof | Core/export compile for `wasm32-unknown-unknown`; the actual wasm-bindgen module executes in single-threaded Node WebAssembly with scene/SVG, exact data and lifetime proofs | Full coverage WP-14/21 |
 | Optional Kit | Compatible theme/control adapter | Kit 0.6.0 input/buttons exercised against the same GPUI identity; optional dependency preserved; chart theme/control adapter pending | WP-13/17 |
 | SVG/PDF/PNG | Vector marks, explicit fonts/dimensions and publication output | Actual text/outline SVG/PDF and 300/600 DPI PNG inspected; explicit embedded/subset fonts, physical sizes and zero PDF image objects verified; public immutable shared-core capture and inspected native publication preview; 13 export tests pass, including shared binding session ownership | WP-13/20 |
-| Python headless | Minimal batch/correction/action/export equivalence | Actual PyO3 0.29.2 / CPython 3.14.6 module: shared fixture plus 12 WP-10 stats/position cases, correction/action/state/export, detached interpreter and owned/disposed resources; full packaging remains pending | Full coverage WP-14/21 |
-| WASM scene/SVG | Minimal actual runtime and ownership proof | Actual wasm-bindgen 0.2.128 / Node 24.14.0 module: shared fixture plus 12 WP-10 stats/position cases and exact SVG, exact integers/times, forced memory growth, returned copies, repeated actions and disposal | Full coverage WP-14/21 |
+| Python headless | Minimal batch/correction/action/export equivalence | Actual PyO3 0.29.2 / CPython 3.14.6 module: shared fixture plus 24 WP-10/11 statistics/position/family cases, correction/action/state/export, detached interpreter and owned/disposed resources; full packaging remains pending | Full coverage WP-14/21 |
+| WASM scene/SVG | Minimal actual runtime and ownership proof | Actual wasm-bindgen 0.2.128 / Node 24.14.0 module: shared fixture plus 24 WP-10/11 statistics/position/family cases and exact SVG, exact integers/times, forced memory growth, returned copies, repeated actions and disposal | Full coverage WP-14/21 |
 | Accessibility | Keyboard equivalence plus verified platform exposure/data alternative | Native input/button/status/image hooks observed and keyboard actions exercised; no screen-reader/data-alternative certification | WP-17/21 |
 | Streaming/performance | FIX-08–11/14, PERF-01–05 | Ordered atomic data operations and count retention pass data-only FIX-08/09 subsets; ADR-008 starting profile retained; queues/time windows/incremental chart computation and PERF cases unverified | WP-18–22 |
 | Other desktop platforms | Optional expansion after evidence | Not declared supported | Separate capability work |
@@ -72,3 +73,9 @@ inspection and commands. The basic native Scene renderer, plain-text measurement
 implemented in WP-07. Full themes, multi-panel layout, rich destination typography, sustained live exports
 and full platform accessibility
 remain unverified until their owning packages implement and exercise them.
+
+WP-11 adds 12 portable family cases, all inspected as actual native GPUI vector charts,
+plus SVG/PDF/PNG output. Eight additional focused core tests verify scales, area/ribbon
+gaps, color invariance, secondary units and independent price/volume validity. The
+[family contract](scale-geometry-contract.md) describes remaining limitations; no other
+platform, screen-reader or performance gate is inferred from these macOS results.

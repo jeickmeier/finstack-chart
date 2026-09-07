@@ -91,6 +91,7 @@ impl Compiler {
         };
         let graph_diagnostics = diagnostics.clone();
         let mut layers = vec![];
+        let mut colors = BTreeMap::new();
         let mut scale_domains = BTreeMap::new();
         let mut budget = GeometryBudget {
             limits,
@@ -136,6 +137,15 @@ impl Compiler {
                 &eligible_domains(&prepared),
             )
             .map_err(|e| context(e, data, Some(layer.id)))?;
+            if let Some(legend) = &prepared.color_legend {
+                if colors.get(&legend.id).is_some_and(|old| old != legend) {
+                    return Err(error(
+                        DiagnosticCode::SchemaConflict,
+                        "Layers sharing a color scale ID must resolve compatible domains and palettes; supply an explicit shared domain.",
+                    ));
+                }
+                colors.insert(legend.id, legend.clone());
+            }
             layers.push(prepared);
         }
         let mut domains = DomainContributions::default();
@@ -236,6 +246,14 @@ fn validate_definition(
                 "Layer IDs must be unique.",
             ));
         }
+        if let Geom::Bar { width, .. } | Geom::Ohlc { width } = layer.geom
+            && (!width.is_finite() || width <= 0.)
+        {
+            return Err(error(
+                DiagnosticCode::NumericalDomain,
+                "Bar/candle width must be finite and positive.",
+            ));
+        }
         stats::validate_stat(&layer.statistic, limits)?;
         stats::validate_filters(&layer.filters, limits)?;
         if !layer.style.radius.is_finite()
@@ -300,6 +318,9 @@ pub(super) struct EncodedRow {
     pub(super) y: Option<f64>,
     pub(super) x2: Option<f64>,
     pub(super) y2: Option<f64>,
+    pub(super) color: Option<crate::scene::Color>,
+    pub(super) low: Option<f64>,
+    pub(super) high: Option<f64>,
     pub(super) size: Option<f64>,
     pub(super) group: Option<GroupValue>,
     pub(super) ordinal: u64,
@@ -382,13 +403,19 @@ fn eligible_domains(layer: &PreparedLayer) -> DomainContributions {
             for mark in &layer.marks {
                 match &mark.geometry {
                     PreparedGeometry::Point(p) => include(*p),
+                    PreparedGeometry::BandRun { lower, upper } => {
+                        for p in lower.iter().chain(upper) {
+                            include(*p);
+                        }
+                    }
                     PreparedGeometry::LineRun(points) => {
                         for p in points {
                             include(*p);
                         }
                     }
                     PreparedGeometry::Rule { from, to }
-                    | PreparedGeometry::Rectangle { from, to } => {
+                    | PreparedGeometry::Rectangle { from, to }
+                    | PreparedGeometry::Bar { from, to, .. } => {
                         include(*from);
                         include(*to);
                     }
@@ -492,8 +519,23 @@ fn source_binding(
             "Rules/rectangles require both second endpoints; baselines must be explicit.",
         ));
     }
+    if matches!(layer.geom, Geom::Bar { .. } | Geom::Ohlc { .. }) && aes.y2.is_none() {
+        return Err(error(
+            DiagnosticCode::SchemaConflict,
+            "Bars/candles require an explicit y2 baseline/close.",
+        ));
+    }
+    if matches!(layer.geom, Geom::Ohlc { .. }) && (aes.low.is_none() || aes.high.is_none()) {
+        return Err(error(
+            DiagnosticCode::SchemaConflict,
+            "OHLC requires low and high numeric bounds.",
+        ));
+    }
     // Validate even unused inherited fields so unrelated schemas require explicit overrides.
-    for value in [&aes.x, &aes.y, &aes.x2, &aes.y2].into_iter().flatten() {
+    for value in [&aes.x, &aes.y, &aes.x2, &aes.y2, &aes.low, &aes.high]
+        .into_iter()
+        .flatten()
+    {
         coordinate_space(data, value)?;
     }
     if let Some(size) = &aes.size {
@@ -511,6 +553,32 @@ fn source_binding(
             merge_space(&mut domains.y_space, &source_space(data, value)?)?;
         }
     }
+    if matches!(
+        layer.geom,
+        Geom::Ribbon { .. } | Geom::Bar { .. } | Geom::Ohlc { .. }
+    ) {
+        let y2 = aes.y2.as_ref().ok_or_else(|| {
+            error(
+                DiagnosticCode::SchemaConflict,
+                "Ribbon requires a y2 upper-bound mapping.",
+            )
+        })?;
+        merge_space(&mut domains.y_space, &source_space(data, y2)?)?;
+    }
+    for bound in [&aes.low, &aes.high].into_iter().flatten() {
+        merge_space(&mut domains.y_space, &source_space(data, bound)?)?;
+    }
+    if matches!(layer.geom, Geom::Ohlc { .. } | Geom::Bar { .. })
+        && matches!(
+            domains.y_space,
+            Some(ValueSpace::Categorical { .. } | ValueSpace::Timestamp { .. })
+        )
+    {
+        return Err(error(
+            DiagnosticCode::SchemaConflict,
+            "Bar/OHLC values must be numeric.",
+        ));
+    }
     validate_line_size(layer, aes.size.is_some())?;
     Ok((aes, domains))
 }
@@ -519,6 +587,12 @@ fn bin_binding(
     aes: &BinAes,
     space: &ValueSpace,
 ) -> ChartResult<DomainContributions> {
+    if matches!(layer.geom, Geom::Ohlc { .. }) {
+        return Err(error(
+            DiagnosticCode::SchemaConflict,
+            "OHLC requires source open/close/low/high mappings.",
+        ));
+    }
     let endpoints = matches!(layer.geom, Geom::Rule | Geom::Rectangle);
     let mut domains = DomainContributions::default();
     if endpoints && (aes.x2.is_none() || aes.y2.is_none()) {
@@ -540,11 +614,20 @@ fn bin_binding(
             merge_space(&mut domains.y_space, &bin_space(space, value)?)?;
         }
     }
+    if matches!(layer.geom, Geom::Ribbon { .. } | Geom::Bar { .. }) {
+        let y2 = aes.y2.as_ref().ok_or_else(|| {
+            error(
+                DiagnosticCode::SchemaConflict,
+                "Ribbon requires a generated y2 upper-bound mapping.",
+            )
+        })?;
+        merge_space(&mut domains.y_space, &bin_space(space, y2)?)?;
+    }
     validate_line_size(layer, aes.size.is_some())?;
     Ok(domains)
 }
 fn validate_line_size(layer: &Layer, mapped: bool) -> ChartResult<()> {
-    if matches!(layer.geom, Geom::Line { .. } | Geom::Rectangle) && mapped {
+    if (layer.geom.run().is_some() || matches!(layer.geom, Geom::Rectangle)) && mapped {
         return Err(error(
             DiagnosticCode::UnsupportedCapability,
             "Mapped size currently supports point radius and rule stroke width; use constant styling for lines and rectangles.",
@@ -620,6 +703,9 @@ fn prepare_layer(
                         y: coordinate(row, y),
                         x2: aes.x2.as_ref().and_then(|v| coordinate(row, v)),
                         y2: aes.y2.as_ref().and_then(|v| coordinate(row, v)),
+                        color: None,
+                        low: aes.low.as_ref().and_then(|v| coordinate(row, v)),
+                        high: aes.high.as_ref().and_then(|v| coordinate(row, v)),
                         size: aes.size.as_ref().and_then(|v| coordinate(row, v)),
                         group: group_value(row, &grouping),
                         ordinal: r.ordinal,
@@ -663,6 +749,9 @@ fn prepare_layer(
                         y: value(r, &aes.y),
                         x2: aes.x2.as_ref().and_then(|v| value(r, v)),
                         y2: aes.y2.as_ref().and_then(|v| value(r, v)),
+                        color: None,
+                        low: None,
+                        high: None,
                         size: aes.size.as_ref().and_then(|v| value(r, v)),
                         group: Some(r.group.clone()),
                         ordinal: i as u64,
@@ -683,6 +772,9 @@ fn prepare_layer(
                     y: bin_number(r, &aes.y),
                     x2: aes.x2.as_ref().and_then(|v| bin_number(r, v)),
                     y2: aes.y2.as_ref().and_then(|v| bin_number(r, v)),
+                    color: None,
+                    low: None,
+                    high: None,
                     size: aes.size.as_ref().and_then(|v| bin_number(r, v)),
                     group: Some(r.group.clone()),
                     ordinal: i as u64,
@@ -699,15 +791,49 @@ fn prepare_layer(
             ));
         }
     };
-    if matches!(layer.geom, Geom::Line { .. }) && mapped_size {
+    if layer.geom.run().is_some() && mapped_size {
         return Err(error(
             DiagnosticCode::UnsupportedCapability,
             "Mapped size currently supports point radius and rule stroke width; use constant styling for lines and rectangles.",
         ));
     }
+    if let Geom::Area { baseline, .. } = layer.geom {
+        if !baseline.is_finite()
+            || matches!(
+                domains.y_space,
+                Some(ValueSpace::Categorical { .. } | ValueSpace::Timestamp { .. })
+            )
+        {
+            return Err(error(
+                DiagnosticCode::NumericalDomain,
+                "Area baseline requires a finite numeric calculation space.",
+            ));
+        }
+        for row in &mut encoded {
+            row.y2 = Some(baseline);
+        }
+    }
+    if matches!(layer.geom, Geom::Ribbon { .. }) {
+        for row in &mut encoded {
+            if !matches!((row.y, row.y2), (Some(a), Some(b)) if a <= b) {
+                row.y = None;
+                row.y2 = None;
+            }
+        }
+    }
+    if let Geom::Bar { nonnegative, .. } = layer.geom {
+        for row in &mut encoded {
+            row.x2 = row.x;
+            if nonnegative && row.y.is_some_and(|y| y < 0.) {
+                row.y = None;
+            }
+        }
+    }
+    let color_legend = super::colors::apply(layer, data, &table, &mut encoded, limits)?;
     super::positions::apply(layer, &domains, &mut encoded, limits)?;
     super::positions::output_space(layer, &mut domains);
     let mut prepared = PreparedLayer {
+        color_legend,
         position: layer.position.clone(),
         id: layer.id,
         scales: layer.scales,
@@ -719,11 +845,7 @@ fn prepare_layer(
         visible: state.is_visible(layer.id),
     };
     let mut samples = vec![];
-    if let Geom::Line {
-        order,
-        connect_gaps,
-    } = layer.geom
-    {
+    if let Some((_, connect_gaps)) = layer.geom.run() {
         let mut groups: Vec<(GroupValue, Vec<EncodedRow>)> = vec![];
         let mut indexes = BTreeMap::new();
         let mut boundary = 0;
@@ -761,6 +883,23 @@ fn prepare_layer(
             groups[i].1.push(row);
         }
         for (group, rows) in groups {
+            let mut style = layer.style;
+            let mut color = None;
+            for row in rows.iter().filter(|r| r.x.is_some() && r.y.is_some()) {
+                if let Some(c) = row.color {
+                    if color.is_some_and(|old| old != c) {
+                        return Err(error(
+                            DiagnosticCode::UnsupportedCapability,
+                            "Filled/line runs require color constant within each group; use a group color mapping.",
+                        ));
+                    }
+                    color = Some(c);
+                }
+            }
+            if let Some(c) = color {
+                style.color = c;
+            }
+
             // Missing x has no sortable position. It separates authored blocks before x ordering.
             let mut block = vec![];
             for row in rows {
@@ -770,9 +909,8 @@ fn prepare_layer(
                             &mut prepared,
                             &mut block,
                             &group,
-                            order,
-                            connect_gaps,
-                            layer.style,
+                            style,
+                            layer.geom,
                             vertices,
                         )?;
                     }
@@ -784,26 +922,85 @@ fn prepare_layer(
                 &mut prepared,
                 &mut block,
                 &group,
-                order,
-                connect_gaps,
-                layer.style,
+                style,
+                layer.geom,
                 vertices,
             )?;
         }
     } else {
         for row in encoded {
+            let base_style = Style {
+                color: row.color.unwrap_or(layer.style.color),
+                ..layer.style
+            };
             let style = if mapped_size {
                 row.size.filter(|v| *v > 0.).map(|size| Style {
                     radius: size,
                     stroke_width: size,
-                    ..layer.style
+                    ..base_style
                 })
             } else {
-                Some(layer.style)
+                Some(base_style)
             };
+            if let Geom::Ohlc { width } = layer.geom
+                && let (
+                    Some(x),
+                    Some(open),
+                    Some(close),
+                    Some(low),
+                    Some(high),
+                    Some(group),
+                    Some(style),
+                ) = (
+                    row.x,
+                    row.y,
+                    row.y2,
+                    row.low,
+                    row.high,
+                    row.group.as_ref(),
+                    style,
+                )
+                && low <= open
+                && open <= high
+                && low <= close
+                && close <= high
+            {
+                charge(vertices, 6, "OHLC vertex")?;
+                for geometry in [
+                    PreparedGeometry::Rule {
+                        from: Point::new(x, low)?,
+                        to: Point::new(x, high)?,
+                    },
+                    PreparedGeometry::Bar {
+                        from: Point::new(x, open)?,
+                        to: Point::new(x, close)?,
+                        width,
+                    },
+                ] {
+                    include_geometry(&mut prepared.domains, &geometry);
+                    prepared.marks.push(PreparedMark {
+                        geometry,
+                        targets: vec![row.target.clone()],
+                        group: group.clone(),
+                        style,
+                    });
+                }
+                continue;
+            }
             let geometry = match (row.x, row.y) {
                 (Some(x), Some(y)) => match layer.geom {
                     Geom::Point => Some(PreparedGeometry::Point(Point::new(x, y)?)),
+                    Geom::Bar { width, .. } => row
+                        .y2
+                        .map(|y2| {
+                            Ok(PreparedGeometry::Bar {
+                                from: Point::new(x, y)?,
+                                to: Point::new(x, y2)?,
+                                width,
+                            })
+                        })
+                        .transpose()?,
+                    Geom::Ohlc { .. } => None,
                     Geom::Rule => match (row.x2, row.y2) {
                         (Some(x2), Some(y2)) => Some(PreparedGeometry::Rule {
                             from: Point::new(x, y)?,
@@ -818,7 +1015,7 @@ fn prepare_layer(
                         }),
                         _ => None,
                     },
-                    Geom::Line { .. } => None,
+                    Geom::Line { .. } | Geom::Area { .. } | Geom::Ribbon { .. } => None,
                 },
                 _ => None,
             };
@@ -826,8 +1023,8 @@ fn prepare_layer(
                 let n = match geometry {
                     PreparedGeometry::Point(_) => 1,
                     PreparedGeometry::Rule { .. } => 2,
-                    PreparedGeometry::Rectangle { .. } => 4,
-                    PreparedGeometry::LineRun(_) => 0,
+                    PreparedGeometry::Rectangle { .. } | PreparedGeometry::Bar { .. } => 4,
+                    PreparedGeometry::LineRun(_) | PreparedGeometry::BandRun { .. } => 0,
                 };
                 charge(vertices, n, "vertex")?;
                 include_geometry(&mut prepared.domains, &geometry);
@@ -863,11 +1060,11 @@ fn emit_line_block(
     prepared: &mut PreparedLayer,
     rows: &mut Vec<EncodedRow>,
     group: &GroupValue,
-    order: LineOrder,
-    connect: bool,
     style: Style,
+    geom: Geom,
     vertices: &mut usize,
 ) -> ChartResult<()> {
+    let (order, connect) = geom.run().expect("run geometry");
     if order == LineOrder::X {
         rows.sort_by(|a, b| {
             // Signed zeros are equal x values and therefore use insertion ordinal.
@@ -877,28 +1074,62 @@ fn emit_line_block(
         });
     }
     let mut points = vec![];
+    let mut upper = vec![];
     let mut targets = vec![];
     for row in rows.drain(..) {
         if let (Some(x), Some(y)) = (row.x, row.y) {
-            charge(vertices, 1, "vertex")?;
+            charge(
+                vertices,
+                if matches!(geom, Geom::Line { .. }) {
+                    1
+                } else {
+                    2
+                },
+                "vertex",
+            )?;
             points.push(Point::new(x, y)?);
+            if !matches!(geom, Geom::Line { .. }) {
+                upper.push(Point::new(x, row.y2.expect("validated boundary"))?);
+            }
             targets.push(row.target);
         } else if !connect {
-            push_run(prepared, &mut points, &mut targets, group, style);
+            push_run(
+                prepared,
+                &mut points,
+                &mut upper,
+                &mut targets,
+                group,
+                style,
+            );
         }
     }
-    push_run(prepared, &mut points, &mut targets, group, style);
+    push_run(
+        prepared,
+        &mut points,
+        &mut upper,
+        &mut targets,
+        group,
+        style,
+    );
     Ok(())
 }
 fn push_run(
     prepared: &mut PreparedLayer,
     points: &mut Vec<Point>,
+    upper: &mut Vec<Point>,
     targets: &mut Vec<Target>,
     group: &GroupValue,
     style: Style,
 ) {
     if !points.is_empty() {
-        let geometry = PreparedGeometry::LineRun(std::mem::take(points));
+        let geometry = if upper.is_empty() {
+            PreparedGeometry::LineRun(std::mem::take(points))
+        } else {
+            PreparedGeometry::BandRun {
+                lower: std::mem::take(points),
+                upper: std::mem::take(upper),
+            }
+        };
         include_geometry(&mut prepared.domains, &geometry);
         prepared.marks.push(PreparedMark {
             geometry,
@@ -915,6 +1146,11 @@ fn include_geometry(domains: &mut DomainContributions, geometry: &PreparedGeomet
     };
     match geometry {
         PreparedGeometry::Point(p) => include(*p),
+        PreparedGeometry::BandRun { lower, upper } => {
+            for p in lower.iter().chain(upper) {
+                include(*p);
+            }
+        }
         PreparedGeometry::LineRun(points) => {
             for p in points {
                 include(*p);
@@ -924,7 +1160,7 @@ fn include_geometry(domains: &mut DomainContributions, geometry: &PreparedGeomet
             include(*from);
             include(*to);
         }
-        PreparedGeometry::Rectangle { from, to } => {
+        PreparedGeometry::Rectangle { from, to } | PreparedGeometry::Bar { from, to, .. } => {
             include(*from);
             include(*to);
         }
@@ -1067,6 +1303,12 @@ fn statistical_binding(
     aes: &StatAes,
     fields: &[StatColumn],
 ) -> ChartResult<DomainContributions> {
+    if matches!(layer.geom, Geom::Ohlc { .. }) {
+        return Err(error(
+            DiagnosticCode::SchemaConflict,
+            "OHLC requires source open/close/low/high mappings.",
+        ));
+    }
     let space = |value: &StatNumeric| -> ChartResult<Option<ValueSpace>> {
         match value {
             StatNumeric::Literal(v) if v.is_finite() => Ok(None),
@@ -1111,6 +1353,15 @@ fn statistical_binding(
             ));
         };
         merge_space(&mut d.x_space, &space(x2)?)?;
+        merge_space(&mut d.y_space, &space(y2)?)?;
+    }
+    if matches!(layer.geom, Geom::Ribbon { .. } | Geom::Bar { .. }) {
+        let y2 = aes.y2.as_ref().ok_or_else(|| {
+            error(
+                DiagnosticCode::SchemaConflict,
+                "Ribbon requires a generated y2 upper-bound mapping.",
+            )
+        })?;
         merge_space(&mut d.y_space, &space(y2)?)?;
     }
     Ok(d)

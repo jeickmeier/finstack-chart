@@ -3,7 +3,8 @@ use crate::{ChartResult, DiagnosticCode};
 use std::collections::{BTreeMap, BTreeSet};
 
 /// Stable categorical-domain and band-space policy.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct BandOptions {
     /// Exact domain/order when provided; otherwise retained first-seen labels are used.
     pub domain: Option<Vec<String>>,

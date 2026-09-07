@@ -3,9 +3,9 @@
 Rust-native grammar-of-graphics project with a portable core, headless publication export,
 a standalone GPUI host and optional Kit integration.
 
-**Status: WP-10 built-in statistics and positions implemented and verified through Rust,
-Python and actual WASM. Count, bins, summaries, OLS, stack/normalize, dodge and jitter share
-one compiler. WP-11 is next; G1 retains its minimal accepted scope and G2–G4 remain open.**
+**Status: WP-11 built-in scale and geometry families implemented, with shared Rust/Python/WASM
+fixtures and inspected native vector rendering. WP-12 facets and shared layout are next;
+G1 retains its accepted scope and G2–G4 remain open.**
 
 ## Start here
 

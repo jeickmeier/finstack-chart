@@ -1,6 +1,6 @@
 # Portable contract v1 and binding proof surface
 
-This is the WP-09 / G1 foundation with WP-10 statistical/position coverage, executable
+This is the WP-09 / G1 foundation with WP-10 statistics/positions and WP-11 scale/geometry coverage, executable
 Rust validation and actual Python/WASM fixtures. It is not the complete future G4 schema. See [ADR-006](adr/006-portable-specification-and-binding-proofs.md)
 for ownership, dependency identity, versioning and bounds; see the
 [fixture](../fixtures/bindings/README.md) for commands and independent expectations.
@@ -24,15 +24,17 @@ work. Field/object order does not affect meaning.
 
 The chart DTO includes identity/count/explicit and automatic bins/summary/intercept OLS,
 named transforms, affine stat spaces, source filters, generated/source mappings, grouping,
-point/line/rule/rectangle geoms, identity/stack/normalize/dodge/seeded jitter positions,
+point/line/area/ribbon/bar/OHLC/rule/rectangle geoms, identity/stack/normalize/dodge/seeded jitter positions,
 explicit styling, gap/order/invalid policies and named scale bindings.
 [Statistics and positions](statistics-contract.md) specifies the operation versions, typed
 output fields, defaults, failure behavior and exact recomputation capabilities.
 Operation descriptors are `{ "id": "chart.bin", "version": "1" }`; unknown registrations
 and mismatched versions/parameters reject. The complete definitions are round-trippable
-native core structs, not a parallel Python/JS grammar implementation. Explicit axes/theme/
-facet configuration beyond the basic profile is not represented yet and cannot be silently
-added as an extra field.
+native core structs, not a parallel Python/JS grammar implementation. Optional `definition.axes`
+now authors linear/log/symlog/band/point/UTC/supplied-session and secondary-unit policies.
+Optional layer `color` and source `low`/`high` mappings are specified in the
+[scale/geometry contract](scale-geometry-contract.md). Facet/theme fields remain future work.
+Semantic layer results additionally expose `color_legend` and `invalid_geometry`.
 
 Batch fields are `schema_version`, `fields`, `keys`, `columns`. A field has `id`, `name`,
 `kind`, `nullable`, optional `unit`/`label`. Column objects have `values`, `validity`, optional
@@ -97,7 +99,8 @@ Python Rust-only work detaches the interpreter; callbacks per point/frame are no
 | --- | --- | --- |
 | Definition round trip | Same normalized histogram, line and point layers in native Rust/Python/WASM | Existing other normalized built-ins are exposed; full cross-runtime family coverage follows later packages. Unknown/future/native operations reject. |
 | Data | All seven kinds ingested; correction/replay; null payload/display metadata; exact UInt64/Int64 extremes, >2^53 IDs and nanosecond timestamps compared | Owned JSON batches; no Arrow/NumPy/buffer borrowing, decimal arithmetic or zero-copy promise. |
-| Statistics/targets/positions | Original correction fixture plus 12 actual WP-10 cases: count, summary, OLS, automatic/overflow bins, transformed values, stack/normalize, dodge and both jitter units; generated schemas, exact model/aggregate membership and final scenes agree | Built-in scope documented in the statistics contract; facet/scale/geometry extensions and full family parity remain WP-11–14/21. |
+| Statistics/targets/positions | Original correction fixture plus 12 actual WP-10 cases: count, summary, OLS, automatic/overflow bins, transformed values, stack/normalize, dodge and both jitter units; generated schemas, exact model/aggregate membership and final scenes agree | Built-in scope documented in the statistics contract; facets/themes/extensions and full platform parity remain WP-12–14/21. |
+| Scale/geometry families | 12 additional WP-11 cases through actual Rust/Python/WASM; log/symlog/point/color/sessions, area/ribbon/bars/heatmap/OHLC, independent and secondary axes; exact SVG and vector PDF checks | [Family contract](scale-geometry-contract.md); full platform/fidelity gate remains WP-21. |
 | Actions/state | Viewport action, unchanged bin population, exact resulting revisions; restore and stale action/conflict handling | Minimal viewport/visibility/reset API, no full gesture/selection/follow scheduler. |
 | Scene/publication | Point-scene JSON compared; exact fixture SVG bytes in all runtimes; Python/Rust PDF/PNG verified and inspected | Basic static-font profile; full typography/composition remains WP-13. WASM PDF/PNG not exposed or advertised by the proof. |
 | Python lifetime | Actual CPython 3.14.6 extension, input mutation, immutable returned bytes, interpreter-detached progress, disposal | Local module build; no wheels/notebooks/viewer, interpreter/free-threaded matrix or Python per-point callbacks. |

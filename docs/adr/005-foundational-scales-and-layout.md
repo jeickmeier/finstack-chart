@@ -171,3 +171,18 @@ external comparison uses the published finite-input R-7 examples from
 Rust tests never require a reference engine. Actual Rust/Python/WASM cases independently
 compare stats/provenance, final destination scenes and SVG output. The WP-10 evidence report
 records the executed scope; this is not full G2 or G4 certification.
+
+## Accepted WP-11 extension — 7 September 2026
+
+The [scale and geometry contract](../scale-geometry-contract.md) now defines implemented
+log/symlog/point/color/supplied-session families, portable axis policies and distinct
+secondary unit guides, area/ribbon fills and OHLC/volume/interval/cell recipes. These use
+the existing compiler and destination scene pipeline. The palette is declared sRGB-byte
+interpolation; supplied calendars imply no exchange correctness. Nonlinear labels round
+to twelve significant digits while mapping values remain unchanged.
+
+The native family example adds a direct dependency on already-locked workspace `serde`
+only to decode the shared fixture catalog; no package/version was added to the lockfile.
+Actual core tests, macOS vector captures, SVG/PDF/PNG and Rust/Python/WASM evidence are in
+the [WP-11 report](../evidence/wp-11-completion-2026-09-07.md). This closes the required
+family slice, not facets/theme/extension G2 or full release gates.

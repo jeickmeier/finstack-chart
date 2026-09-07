@@ -190,7 +190,9 @@ pub(crate) fn pdf(
                 }
                 (primitive, Some(usvg::Node::Path(node))) => {
                     match primitive {
-                        Primitive::Rectangle { fill: c, .. } | Primitive::Point { fill: c, .. } => {
+                        Primitive::Rectangle { fill: c, .. }
+                        | Primitive::Point { fill: c, .. }
+                        | Primitive::FilledPath { fill: c, .. } => {
                             surface.set_fill(Some(fill(*c)));
                             surface.set_stroke(None);
                         }

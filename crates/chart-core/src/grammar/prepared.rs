@@ -262,6 +262,22 @@ pub enum PreparedGeometry {
     Point(Point),
     /// Ordered straight run, including a one-vertex isolated run that must not bridge a gap.
     LineRun(Vec<Point>),
+    /// Aligned lower/upper run vertices with one semantic target per pair.
+    BandRun {
+        /// First boundary in run order.
+        lower: Vec<Point>,
+        /// Second boundary in the same run order.
+        upper: Vec<Point>,
+    },
+    /// Vertical interval with an explicit destination width.
+    Bar {
+        /// Value endpoint at the category/time/numeric center.
+        from: Point,
+        /// Baseline/second endpoint at the same center.
+        to: Point,
+        /// Positive destination width.
+        width: f64,
+    },
     /// Two independent endpoints.
     Rule {
         /// First endpoint.
@@ -294,6 +310,7 @@ pub struct PreparedMark {
 /// One prepared layer in paint order.
 #[derive(Clone, Debug)]
 pub struct PreparedLayer {
+    pub(crate) color_legend: Option<crate::scales::ColorLegend>,
     pub(crate) position: super::Position,
     pub(crate) id: LayerId,
     pub(crate) scales: super::ScaleBindings,
@@ -305,6 +322,10 @@ pub struct PreparedLayer {
     pub(crate) visible: bool,
 }
 impl PreparedLayer {
+    /// Exact color identity, palette and domain metadata.
+    pub fn color_legend(&self) -> Option<&crate::scales::ColorLegend> {
+        self.color_legend.as_ref()
+    }
     /// Exact semantic/display position policy.
     pub fn position(&self) -> &super::Position {
         &self.position
