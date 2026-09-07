@@ -55,8 +55,10 @@ pub enum Mutation {
     /// Replace authored row order. Reused keys keep ordinals; new keys get new ordinals.
     /// Schema changes require a strictly greater schema version.
     ReplaceSnapshot(NormalizedBatch),
-    /// Update and immediately enforce count retention in declared operation order.
+    /// Update and immediately enforce retention in declared operation order.
     SetRetention(RetentionPolicy),
+    /// Advance the supplied watermark of an existing event-time retention policy.
+    AdvanceWatermark(i64),
     /// Rebuild one first-seen category order from currently retained authored rows.
     ResetCategoryOrder(FieldId),
 }
@@ -83,7 +85,8 @@ pub struct Transaction {
     pub operations: Vec<Operation>,
 }
 impl Transaction {
-    fn bytes(&self) -> usize {
+    /// Conservative logical payload charge used by transaction and ingestion budgets.
+    pub fn payload_bytes(&self) -> usize {
         self.operations.iter().fold(
             self.id
                 .0
@@ -95,6 +98,7 @@ impl Transaction {
                     | Mutation::UpsertByKey(b)
                     | Mutation::ReplaceSnapshot(b) => b.payload_bytes(),
                     Mutation::RemoveKeys(keys) => keys.len().saturating_mul(8),
+                    Mutation::SetRetention(_) => 64,
                     _ => 16,
                 })
             },
@@ -115,6 +119,8 @@ pub struct OperationCounts {
     pub absent: usize,
     /// Keys removed by automatic count retention.
     pub evicted: usize,
+    /// Incoming rows explicitly discarded by the event-time late-drop policy.
+    pub late_dropped: usize,
 }
 
 /// Completed transaction acknowledgement, including net revision and removal effects.
@@ -138,7 +144,7 @@ impl CommitReceipt {
     fn bytes(&self) -> usize {
         64usize
             .saturating_add(self.datasets.len().saturating_mul(32))
-            .saturating_add(self.operations.len().saturating_mul(40))
+            .saturating_add(self.operations.len().saturating_mul(48))
             .saturating_add(self.removed_sources.len().saturating_mul(16))
     }
 }
@@ -277,9 +283,16 @@ impl DataStore {
     }
     /// Validate and stage everything, then publish one atomic commit or return unchanged state.
     pub fn apply(&mut self, transaction: Transaction) -> CommitOutcome {
+        self.apply_checked(transaction, |_| Ok(()))
+    }
+    pub(crate) fn apply_checked(
+        &mut self,
+        transaction: Transaction,
+        check: impl FnOnce(&SnapshotHandle<StoreSnapshot>) -> ChartResult<()>,
+    ) -> CommitOutcome {
         if transaction.operations.len() > self.limits.max_operations
             || transaction.expected.len() > self.limits.max_datasets
-            || transaction.bytes() > self.limits.max_transaction_bytes
+            || transaction.payload_bytes() > self.limits.max_transaction_bytes
         {
             return CommitOutcome::Rejected(error(
                 DiagnosticCode::ResourceLimit,
@@ -335,12 +348,20 @@ impl DataStore {
             Ok(value) => value,
             Err(e) => return CommitOutcome::Rejected(e),
         };
-        let bytes = transaction.bytes().saturating_add(receipt.bytes());
+        let bytes = transaction.payload_bytes().saturating_add(receipt.bytes());
         if bytes > self.limits.dedup_bytes {
             return CommitOutcome::Rejected(error(
                 DiagnosticCode::ResourceLimit,
                 "Transaction plus receipt cannot fit the replay horizon; raise the budget or reduce the payload.",
             ));
+        }
+        let next = if receipt.changed {
+            Arc::new(next)
+        } else {
+            self.state.clone()
+        };
+        if let Err(e) = check(&SnapshotHandle::from_arc(next.clone())) {
+            return CommitOutcome::Rejected(e);
         }
         while self.replay.len() >= self.limits.dedup_entries
             || self.replay_bytes.saturating_add(bytes) > self.limits.dedup_bytes
@@ -350,7 +371,7 @@ impl DataStore {
             }
         }
         if receipt.changed {
-            self.state = Arc::new(next);
+            self.state = next;
         }
         self.replay_bytes += bytes;
         self.replay.push_back(Remembered {
@@ -524,6 +545,45 @@ fn mutate(
     limits: DataLimits,
 ) -> ChartResult<OperationCounts> {
     let mut counts = OperationCounts::default();
+    // Validate the whole incoming representation before any explicitly lossy filtering.
+    let filtered;
+    let mutation = if let RetentionPolicy::EventTime(window) = data.retention {
+        match mutation {
+            Mutation::AppendBatch(batch)
+            | Mutation::UpsertByKey(batch)
+            | Mutation::ReplaceSnapshot(batch) => {
+                batch.validate(limits)?;
+                if data.schema().field(window.field).map(|(_, f)| &f.kind)
+                    != batch.schema().field(window.field).map(|(_, f)| &f.kind)
+                {
+                    return Err(error(
+                        DiagnosticCode::SchemaConflict,
+                        "Disable event-time retention explicitly before changing its timestamp representation.",
+                    ));
+                }
+                if matches!(mutation, Mutation::AppendBatch(_)) {
+                    let existing: BTreeSet<_> = data.rows().map(|r| r.key()).collect();
+                    if batch.keys().iter().any(|k| existing.contains(k)) {
+                        return Err(error(
+                            DiagnosticCode::Validation,
+                            "Append key already exists, including a row that would be dropped as late.",
+                        ));
+                    }
+                }
+                let (batch, dropped) = window.filter(batch)?;
+                counts.late_dropped = dropped;
+                filtered = match mutation {
+                    Mutation::AppendBatch(_) => Mutation::AppendBatch(batch),
+                    Mutation::UpsertByKey(_) => Mutation::UpsertByKey(batch),
+                    _ => Mutation::ReplaceSnapshot(batch),
+                };
+                &filtered
+            }
+            _ => mutation,
+        }
+    } else {
+        mutation
+    };
     match mutation {
         Mutation::AppendBatch(batch) | Mutation::UpsertByKey(batch) => {
             batch.validate(limits)?;
@@ -644,7 +704,35 @@ fn mutate(
             data.add_categories(batch, limits)?;
         }
         Mutation::SetRetention(policy) => {
+            if let RetentionPolicy::EventTime(next) = policy {
+                next.validate(data)?;
+                if let RetentionPolicy::EventTime(old) = data.retention
+                    && old.field == next.field
+                    && next.watermark < old.watermark
+                {
+                    return Err(error(
+                        DiagnosticCode::RevisionConflict,
+                        "Event-time watermark cannot regress; changing width/lateness does not reset it.",
+                    ));
+                }
+            }
             data.retention = *policy;
+        }
+        Mutation::AdvanceWatermark(watermark) => {
+            let RetentionPolicy::EventTime(mut window) = data.retention else {
+                return Err(error(
+                    DiagnosticCode::Validation,
+                    "AdvanceWatermark requires an event-time retention policy.",
+                ));
+            };
+            if *watermark < window.watermark {
+                return Err(error(
+                    DiagnosticCode::RevisionConflict,
+                    "Event-time watermark cannot regress.",
+                ));
+            }
+            window.watermark = *watermark;
+            data.retention = RetentionPolicy::EventTime(window);
         }
         Mutation::ResetCategoryOrder(field) => {
             if !data.categories.contains_key(field) {
@@ -675,6 +763,22 @@ fn mutate(
             .take(data.len() - max)
             .map(|(_, key)| *key)
             .collect();
+        counts.evicted = remove(data, &keys);
+    }
+    if let RetentionPolicy::EventTime(window) = data.retention {
+        window.validate(data)?;
+        let mut keys = BTreeSet::new();
+        for row in data.rows() {
+            let Some(crate::data::ValueRef::Timestamp(t)) = row.value(window.field) else {
+                return Err(error(
+                    DiagnosticCode::Validation,
+                    "Retained observations must have valid event timestamps.",
+                ));
+            };
+            if i128::from(t) < window.cutoff() {
+                keys.insert(row.key());
+            }
+        }
         counts.evicted = remove(data, &keys);
     }
     check_size(data, limits)?;

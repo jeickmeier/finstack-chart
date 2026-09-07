@@ -71,6 +71,10 @@ impl Chart {
         py.detach(|| self.inner.transaction(&input))
             .map_err(failure)
     }
+    /// Queue, commit or inspect shared streaming state; queued never means committed.
+    fn stream(&mut self, py: Python<'_>, input: String) -> PyResult<String> {
+        py.detach(|| self.inner.stream(&input)).map_err(failure)
+    }
     /// Apply a versioned action with definition/state revision fences.
     fn action(&mut self, py: Python<'_>, input: String) -> PyResult<String> {
         py.detach(|| self.inner.action(&input)).map_err(failure)

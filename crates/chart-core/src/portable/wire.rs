@@ -134,6 +134,8 @@ pub enum MutationWire {
     ReplaceSnapshot(BatchWire),
     /// Update explicit count retention.
     SetRetention(RetentionWire),
+    /// Nondecreasing supplied event-time watermark, encoded as an exact decimal string.
+    AdvanceWatermark(#[serde(with = "super::signed")] i64),
     /// Reset one first-seen category catalog.
     ResetCategoryOrder(FieldId),
 }
@@ -147,7 +149,9 @@ impl MutationWire {
             Self::SetRetention(r) => Mutation::SetRetention(match r {
                 RetentionWire::Unbounded => RetentionPolicy::Unbounded,
                 RetentionWire::Count(rows) => RetentionPolicy::Count(rows as usize),
+                RetentionWire::EventTime(window) => RetentionPolicy::EventTime(window),
             }),
+            Self::AdvanceWatermark(w) => Mutation::AdvanceWatermark(w),
             Self::ResetCategoryOrder(f) => Mutation::ResetCategoryOrder(f),
         })
     }
@@ -283,4 +287,6 @@ pub enum RetentionWire {
     Unbounded,
     /// Evict oldest insertion ordinals beyond this count.
     Count(u32),
+    /// Inclusive event-time horizon; all integer ticks are canonical decimal strings.
+    EventTime(crate::data::EventTimeWindow),
 }

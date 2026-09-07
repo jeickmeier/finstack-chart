@@ -1,8 +1,10 @@
 //! Immutable typed rows and normalized columnar snapshots, independent of any host runtime.
 
 mod columns;
+mod retention;
 mod schema;
 mod snapshot;
+pub use retention::{EventTimeWindow, LateDataPolicy};
 
 pub use columns::{
     Column, ColumnValues, InvalidPolicy, NormalizedBatch, NumericProjection, ValueRef,

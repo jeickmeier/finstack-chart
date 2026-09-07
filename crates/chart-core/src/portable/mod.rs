@@ -4,6 +4,8 @@ mod encoding;
 mod input;
 pub use input::{InputOperation, InputQuery, NavigationWire, SelectionWire};
 mod session;
+mod stream;
+pub use stream::{StreamEnvelope, StreamOperation};
 mod wire;
 use crate::{ChartResult, Diagnostic, DiagnosticCode};
 pub(crate) use encoding::{floats, signed, signed_vec, unsigned, unsigned_vec, wire_identity};

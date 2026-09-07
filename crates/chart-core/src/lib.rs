@@ -43,6 +43,7 @@ pub mod editing;
 pub mod geometry;
 pub mod grammar;
 pub mod identity;
+pub mod ingestion;
 pub mod inspection;
 pub mod layout;
 pub mod limits;

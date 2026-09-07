@@ -56,6 +56,8 @@
 
 mod colors;
 mod compiler;
+mod incremental_bins;
+pub use incremental_bins::StatUpdateMetrics;
 mod definition;
 mod extensions;
 mod facets;

@@ -1,5 +1,6 @@
 //! Shared revision-fenced state/actions. The retained reducer owns gesture snapshots and history.
 //! Data mutations remain in the transaction engine; selection never filters source populations.
+mod follow;
 mod reducer;
 mod types;
 mod windows;

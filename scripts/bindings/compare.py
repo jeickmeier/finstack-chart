@@ -2,6 +2,7 @@
 import hashlib
 import json
 import math
+import statistics as statistics_oracle
 import re
 import struct
 import subprocess
@@ -114,7 +115,9 @@ for data,scene in zip(statistics,scenes):
     for name,case in scene.items():
         assert len(case['items'])==len(case['targets'])
         assert all('position' not in target for targets in case['targets'] for target in targets)
-        assert layer(name)['operations'][0]['incremental']=={'append':False,'window':False,'correction':False,'full_recompute':True}
+        operation=layer(name)['operations'][0]
+        specialized=isinstance(operation['parameters'],dict) and 'Bin' in operation['parameters']
+        assert operation['incremental']=={'append':specialized,'window':specialized,'correction':specialized,'full_recompute':True}
     # Fixed slots [0,1,2] with missing middle group: equal bar widths, one slot gap.
     rects=[i['primitive']['Rectangle']['bounds'] for i in scene['dodge']['items'] if i['layer']=='1']
     assert len(rects)==2
@@ -295,3 +298,44 @@ for runtime, trace in zip(paths, input_traces):
     assert furniture(xml['edit-cancel']) == furniture(xml['edit-undo'])
     assert furniture(xml['edit-cancel']) != furniture(xml['edit-commit'])
 print('PASS WP-17 actual Rust/Python/WASM accessible data, snapped annotation preview/cancel/commit/undo/redo, linked provenance, echoes, missing keys and clipped/category selections')
+
+stream_case=json.loads((Path(__file__).resolve().parents[2]/'fixtures/streaming/replay.json').read_text())
+stream_traces=[json.loads((p/'stream-trace.json').read_text()) for p in paths]
+for trace in stream_traces[1:]:same(stream_traces[0],trace,1e-12)
+def stream_subset(actual,expected):
+    if isinstance(expected,dict):
+        for k,v in expected.items():stream_subset(actual[k],v)
+    elif isinstance(expected,list):
+        assert len(actual)==len(expected)
+        for a,b in zip(actual,expected):stream_subset(a,b)
+    else:assert actual==expected,(actual,expected)
+for runtime,trace in zip(paths,stream_traces):
+    assert len(trace)==len(stream_case['steps'])==70
+    for result,step in zip(trace,stream_case['steps']):
+        assert result['name']==step['name']
+        if 'expected' in step:stream_subset(result['result'],step['expected'])
+        semantic=result['semantics'];assert semantic['store_revision']==step['revision'],step['name']
+        assert semantic['datasets'][0]['retention']==step['retention'],step['name']
+        rows=[]
+        for chunk in semantic['datasets'][0]['chunks']:
+            rows.extend(map(list,zip(chunk['keys'],chunk['columns'][0]['values']['Timestamp'],chunk['columns'][1]['values']['Float64'])))
+        assert rows==step['rows'],step['name']
+        actual_bins=semantic['transforms'][0]['rows']['Binned'];edges=[0,10,20,30,50]
+        for i,b in enumerate(actual_bins):
+            members=sorted([k for k,t,y in rows if edges[i]<=y and (y<edges[i+1] or (i==3 and y==50))],key=int)
+            assert b['count']==str(len(members))
+            assert b['target']['Aggregate']['members']==members
+            assert b['target']['Aggregate']['input']['revision']==step['revision']
+        summaries=semantic['transforms'][1]['rows']['Statistical']
+        values=[r[2] for r in rows]
+        assert len(summaries)==1
+        summary=summaries[0]
+        assert summary['count']==str(len(rows))
+        assert summary['members']==sorted([r[0] for r in rows],key=int)
+        actual_values={str(v['field']):v['value'] for v in summary['values']}
+        if values:
+            expected={'Min':min(values),'Max':max(values),'Sum':math.fsum(values),'Mean':statistics_oracle.mean(values),"{'Quantile': 0}":min(values),"{'Quantile': 1}":statistics_oracle.median(values),"{'Quantile': 2}":max(values)}
+            for field,value in expected.items():assert abs(actual_values[field]-value)<=1e-12,(step['name'],field)
+        else:assert all(v is None for v in actual_values.values())
+    for svg in paths[0].glob('stream-*.svg'):assert svg.read_bytes()==(runtime/svg.name).read_bytes(),svg.name
+print('PASS WP-18 70-step actual Rust/Python/WASM queue/retention/replay trace; independent retained rows and exact bin memberships; historical pins and exact SVG bytes')

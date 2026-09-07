@@ -119,12 +119,13 @@ impl Statistic {
             parameters: StatParameters::Ols(spec),
         }
     }
-    /// All current builtins reuse unchanged snapshots and otherwise recompute exactly.
+    /// Explicit bins support exact unfiltered full-source chunk updates. Filtered/faceted or
+    /// transformed-source populations, automatic bins and other statistics use exact batch fallbacks.
     pub fn incremental_capabilities(&self) -> IncrementalCapabilities {
         IncrementalCapabilities {
-            append: false,
-            window: false,
-            correction: false,
+            append: matches!(self.parameters, StatParameters::Bin(_)),
+            window: matches!(self.parameters, StatParameters::Bin(_)),
+            correction: matches!(self.parameters, StatParameters::Bin(_)),
             full_recompute: true,
         }
     }

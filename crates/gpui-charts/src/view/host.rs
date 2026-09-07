@@ -42,6 +42,8 @@ pub struct HostContext {
 pub enum ChartHostEvent {
     /// One effective common reducer event; linked origin is preserved for echo suppression.
     StateChanged(StateEvent),
+    /// Exact target removals and historical pin status after accepted source preparation.
+    DataReconciled(chart_core::state::Reconciliation),
     /// Explicit capability dispatch with retained presented resources.
     Requested {
         /// Operation the host enabled and handles.
@@ -61,6 +63,10 @@ pub(super) struct HostState {
     summary: Option<String>,
 }
 impl ChartView {
+    /// Original pinned values/provenance, explicitly labeled when historical after ingestion.
+    pub fn pinned_description(&self) -> ChartResult<Option<chart_core::state::PinnedDescription>> {
+        self.reducer.describe_pinned()
+    }
     /// Declare only operations for which the host has installed an event handler.
     pub fn set_host_commands(&mut self, commands: &[HostCommand], cx: &mut Context<Self>) {
         self.host.enabled = commands.iter().copied().collect();

@@ -248,6 +248,7 @@ pub(crate) struct StatRequest<'a> {
 }
 pub(crate) fn run(
     extensions: &ExtensionRegistry,
+    bin_cache: &mut super::incremental_bins::BinCache,
     input: Arc<PreparedTable>,
     data: &DatasetSnapshot,
     request: StatRequest<'_>,
@@ -269,12 +270,11 @@ pub(crate) fn run(
         input: table.rows.len(),
         ..Default::default()
     };
-    let index: BTreeMap<_, _> =
-        if !filters.is_empty() || !matches!(stat.parameters, StatParameters::Identity) {
-            data.rows().map(|r| (r.key(), r)).collect()
-        } else {
-            BTreeMap::new()
-        };
+    let index: BTreeMap<_, _> = if !filters.is_empty() {
+        data.rows().map(|r| (r.key(), r)).collect()
+    } else {
+        BTreeMap::new()
+    };
     if !filters.is_empty() {
         let PreparedRows::Source(rows) = &table.rows else {
             return Err(error(
@@ -374,60 +374,23 @@ pub(crate) fn run(
                     transform: transform.clone(),
                 },
             };
-            let n = spec.edges.len() - 1;
-            let mut groups: Vec<(GroupValue, Vec<Vec<RowKey>>)> = Vec::new();
-            let mut by_group = BTreeMap::new();
-            if spec.grouping == Grouping::All {
-                add_group(GroupValue::All, n, &mut groups, &mut by_group, limits)?;
-            }
-            let mut samples = Vec::new();
-            for row in rows.iter() {
-                let source = index[&row.key];
-                let Some(group) = group_value(source, &spec.grouping) else {
-                    counts.invalid_stat += 1;
-                    if samples.len() < 32 {
-                        samples.push(row.key);
-                    }
-                    continue;
-                };
-                let group_index = if let Some(i) = by_group.get(&group) {
-                    *i
-                } else {
-                    add_group(group, n, &mut groups, &mut by_group, limits)?
-                };
-                let value = number(source, &spec.input).and_then(|v| match &spec.space {
-                    StatSpace::Data => Some(v),
-                    StatSpace::Transformed(t) => {
-                        let v = t.factor * v + t.offset;
-                        v.is_finite().then_some(v)
-                    }
-                });
-                let Some(value) = value else {
-                    counts.invalid_stat += 1;
-                    if samples.len() < 32 {
-                        samples.push(row.key);
-                    }
-                    continue;
-                };
-                if value < spec.edges[0] {
-                    counts.below += 1;
-                    if spec.outliers != OutlierPolicy::Overflow {
-                        continue;
-                    }
-                }
-                if value > spec.edges[n] {
-                    counts.above += 1;
-                    if spec.outliers != OutlierPolicy::Overflow {
-                        continue;
-                    }
-                }
-                let bin = spec
-                    .edges
-                    .partition_point(|edge| *edge <= value)
-                    .saturating_sub(1)
-                    .min(n - 1);
-                groups[group_index].1[bin].push(row.key);
-            }
+            let accumulated = bin_cache.run(
+                data,
+                rows,
+                spec,
+                scope,
+                filters.is_empty()
+                    && input.operations.is_empty()
+                    && matches!(stat.parameters, StatParameters::Bin(_)),
+                limits,
+            )?;
+            let (invalid, below, above) = accumulated.counts();
+            counts.invalid_stat = invalid;
+            counts.below = below;
+            counts.above = above;
+            let samples = accumulated.invalid_samples(rows);
+            let groups = accumulated.groups(data, spec);
+            bin_cache.restore(scope, accumulated);
             warning(
                 policy,
                 counts.invalid_stat,
@@ -456,21 +419,6 @@ pub(crate) fn run(
                 ),
                 diagnostics,
             )?;
-            // For categorical fields, retain the store's explicit first-seen category history.
-            if let Grouping::Field(field) = &spec.grouping
-                && let Some(order) = data.categories(*field)
-            {
-                groups.sort_by_key(|(g, _)| match g {
-                    GroupValue::Text(label) => {
-                        order.iter().position(|s| s == label).unwrap_or(usize::MAX)
-                    }
-                    _ => usize::MAX,
-                });
-            }
-            // Canonical order for noncategorical groups and member sets.
-            if !matches!(&spec.grouping, Grouping::Field(f) if data.categories(*f).is_some()) {
-                groups.sort_by(|a, b| a.0.cmp(&b.0));
-            }
             let mut output = Vec::new();
             for (group, bins) in groups {
                 for (i, mut members) in bins.into_iter().enumerate() {
@@ -534,28 +482,4 @@ pub(crate) fn run(
         counts,
     });
     Ok(Arc::new(table))
-}
-fn add_group(
-    group: GroupValue,
-    n: usize,
-    groups: &mut Vec<(GroupValue, Vec<Vec<RowKey>>)>,
-    index: &mut BTreeMap<GroupValue, usize>,
-    limits: CompileLimits,
-) -> ChartResult<usize> {
-    if groups.len() >= limits.max_groups
-        || groups
-            .len()
-            .checked_add(1)
-            .and_then(|g| g.checked_mul(n))
-            .is_none_or(|rows| rows > limits.max_prepared_rows)
-    {
-        return Err(error(
-            DiagnosticCode::ResourceLimit,
-            "Bin group/output row budget exceeded.",
-        ));
-    }
-    let i = groups.len();
-    index.insert(group.clone(), i);
-    groups.push((group, vec![vec![]; n]));
-    Ok(i)
 }

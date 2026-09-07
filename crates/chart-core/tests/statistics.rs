@@ -636,7 +636,11 @@ fn exact_batch_fallback_after_append_correction_removal_and_reorder() {
             );
             let cap = current.transform(TransformId::new(i)).unwrap().operations()[0].incremental;
             assert!(cap.full_recompute);
-            assert!(!cap.append && !cap.window && !cap.correction);
+            let specialized = matches!(stats[i as usize].parameters, StatParameters::Bin(_));
+            assert_eq!(
+                (cap.append, cap.window, cap.correction),
+                (specialized, specialized, specialized)
+            );
         }
         // Independent final OLS: y=[1,4,5] at x=[0,1,2], slope=2, intercept=4/3.
         if s.snapshot().get().unwrap().dataset(DATA).unwrap().len() == 3 {

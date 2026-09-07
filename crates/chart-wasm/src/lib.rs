@@ -61,6 +61,10 @@ impl Chart {
     pub fn transaction(&mut self, input: &str) -> Result<String, JsError> {
         self.inner.transaction(input).map_err(failure)
     }
+    /// Queue, commit or inspect shared streaming state; queued never means committed.
+    pub fn stream(&mut self, input: &str) -> Result<String, JsError> {
+        self.inner.stream(input).map_err(failure)
+    }
     /// Apply a revision-fenced action and return its outcome JSON.
     pub fn action(&mut self, input: &str) -> Result<String, JsError> {
         self.inner.action(input).map_err(failure)

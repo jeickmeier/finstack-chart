@@ -198,3 +198,23 @@ for case in sum((json.loads((ROOT / p).read_text()) for p in ['fixtures/interact
     chart.dispose()
 save('input-trace',json.dumps(input_trace))
 print(f'PASS WP-16/17 Python shared input queries/actions: {len(input_trace)} steps')
+
+stream_case=json.loads((ROOT/'fixtures/streaming/replay.json').read_text())
+chart=Chart(json.dumps(stream_case['chart']),json.dumps(stream_case['data']),(ROOT/'fixtures/interaction/profile.json').read_text(),(ROOT/'fixtures/capability/fonts/NotoSans-Regular.ttf').read_bytes())
+stamp=json.loads(chart.present())['stamp'];stream_trace=[]
+for step in stream_case['steps']:
+    try:
+        if 'transaction' in step: result=json.loads(chart.transaction(json.dumps(step['transaction'])))
+        elif 'stream' in step: result=json.loads(chart.stream(json.dumps(dict(version=1,operation=step['stream']))))
+        else:
+            state=json.loads(chart.state())
+            result=json.loads(chart.dispatch(json.dumps(dict(definition_revision=state['definition_revision'],expected_state=state['state_revision'],scene=stamp,origin='Control',action=step['action']))))
+        assert 'error' not in step,step['name']
+    except ChartError as error:
+        code=json.loads(error.args[0])['code'];assert code==step['error'];result={'error':code}
+    semantic=json.loads(chart.semantics());state=json.loads(chart.state())
+    if step.get('present'):
+        stamp=json.loads(chart.present())['stamp'];(output/f"stream-{step['name']}.svg").write_bytes(chart.export('svg'))
+    stream_trace.append(dict(name=step['name'],result=result,semantics=semantic,state=state))
+save('stream-trace',json.dumps(stream_trace));chart.dispose()
+print(f'PASS WP-18 Python streaming replay: {len(stream_trace)} steps')

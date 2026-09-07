@@ -158,7 +158,7 @@ impl ChartView {
         source: SnapshotHandle<StoreSnapshot>,
         cx: &mut Context<Self>,
     ) -> ChartResult<()> {
-        let prepared = self
+        let mut prepared = self
             .compiler
             .prepare(
                 &self.definition,
@@ -170,9 +170,24 @@ impl ChartView {
                 self.last_error = Some(e.clone());
                 cx.notify();
             })?;
+        let mut next = self.reducer.clone();
+        let reconciliation = next.reconcile_prepared(&prepared)?;
+        if reconciliation.transition.outcome.changed {
+            prepared = self.compiler.prepare(
+                &self.definition,
+                &source,
+                next.state(),
+                CompileLimits::default(),
+            )?;
+        }
+        self.reducer = next;
+        if self.reducer.state().active_gesture().is_none() {
+            self.release_input();
+        }
         self.source = source;
         self.prepared = Arc::new(prepared);
         self.last_error = None;
+        cx.emit(ChartHostEvent::DataReconciled(reconciliation));
         cx.notify();
         Ok(())
     }

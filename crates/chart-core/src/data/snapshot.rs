@@ -112,13 +112,15 @@ pub struct DatasetVersion {
     pub schema_version: SchemaVersion,
 }
 
-/// Implemented retention policies. Event-time/watermark retention belongs to WP-18.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+/// Explicit retention; count order and event time are independent of physical row order.
+#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
 pub enum RetentionPolicy {
     /// Keep all rows within the caller's data budget.
     Unbounded,
     /// Keep at most this many rows, evicting oldest insertion ordinals first.
     Count(usize),
+    /// Keep an inclusive event-time window with an explicitly supplied watermark.
+    EventTime(super::EventTimeWindow),
 }
 
 #[derive(Debug)]
@@ -131,6 +133,12 @@ struct ChunkData {
 #[derive(Clone, Debug)]
 pub struct DataChunk(Arc<ChunkData>);
 impl DataChunk {
+    pub(crate) fn cache_identity(&self) -> usize {
+        Arc::as_ptr(&self.0) as usize
+    }
+    pub(crate) fn rows(&self) -> impl Iterator<Item = RowView<'_>> {
+        (0..self.batch().len()).map(|index| RowView { chunk: self, index })
+    }
     pub(crate) fn new(batch: NormalizedBatch, ordinals: Vec<u64>) -> Self {
         Self(Arc::new(ChunkData { batch, ordinals }))
     }
@@ -158,7 +166,7 @@ impl DataChunk {
             self.ordinals().to_vec(),
         ))
     }
-    fn shares(&self, other: &Self) -> bool {
+    pub(crate) fn shares(&self, other: &Self) -> bool {
         Arc::ptr_eq(&self.0, &other.0)
     }
 }
@@ -284,7 +292,7 @@ impl DatasetSnapshot {
         }
         Ok(order.to_vec())
     }
-    /// Current count-retention policy.
+    /// Current explicit count/event-time retention policy and supplied watermark.
     pub fn retention(&self) -> RetentionPolicy {
         self.retention
     }

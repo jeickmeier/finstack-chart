@@ -170,6 +170,11 @@ impl Gallery {
                     self.pending[index] = Some(event.clone());
                 }
             }
+            ChartHostEvent::DataReconciled(result) => {
+                if let Some(event) = &result.transition.event {
+                    self.pending[index] = Some(event.clone());
+                }
+            }
             ChartHostEvent::Requested { command, context } => {
                 self.status = match command {
                     HostCommand::ContextMenu => "Context menu uses the captured chart scene".into(),

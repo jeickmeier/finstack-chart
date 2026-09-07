@@ -258,3 +258,26 @@ pub struct DispatchOutcome {
     /// Absent for redundant input; acknowledgements need not emit application events.
     pub event: Option<StateEvent>,
 }
+
+/// Observable removal reconciliation against a newly accepted source/prepared population.
+#[derive(Serialize, Clone, Debug, PartialEq)]
+pub struct Reconciliation {
+    /// Active selection identities no longer present in the current population.
+    pub removed_selection: Vec<MarkTarget>,
+    /// Source/store stamp to which this outcome applies.
+    pub store_revision: Revision,
+    /// A pinned tooltip owns its original scene, whose inputs now differ from current data.
+    pub pinned_historical: bool,
+    /// Common revision/event outcome, including TargetRemoved gesture cancellation.
+    pub transition: DispatchOutcome,
+}
+/// Bounded semantic description from the original explicitly pinned scene.
+#[derive(Serialize, Clone, Debug, PartialEq)]
+pub struct PinnedDescription {
+    /// True means the retained source snapshot differs from currently accepted data.
+    pub historical: bool,
+    /// Original coherent scene stamp, never relabeled as a current observation.
+    pub scene: SceneStamp,
+    /// Exact original values/provenance plus current focus/selection flags.
+    pub target: crate::accessibility::AccessibleTarget,
+}

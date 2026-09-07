@@ -28,6 +28,9 @@ pub struct ActionReducer {
     presented: Option<Arc<LaidOutChart>>,
     gesture_basis: Option<Arc<LaidOutChart>>,
     frozen: Option<Arc<LaidOutChart>>,
+    pinned: Option<Arc<LaidOutChart>>,
+    current_source: Option<crate::data::SnapshotHandle<crate::data::StoreSnapshot>>,
+    followed_source: Option<(crate::SourceEpoch, Revision)>,
     history: VecDeque<Command>,
     redo: Vec<Command>,
     links: BTreeMap<String, LinkRecord>,
@@ -54,6 +57,9 @@ impl ActionReducer {
             presented: None,
             gesture_basis: None,
             frozen: None,
+            pinned: None,
+            current_source: None,
+            followed_source: None,
             history: VecDeque::new(),
             redo: Vec::new(),
             links: BTreeMap::new(),
@@ -124,10 +130,15 @@ impl ActionReducer {
     }
     fn prune_indexes(&mut self) {
         self.target_indexes.retain(|i| {
-            [&self.presented, &self.gesture_basis, &self.frozen]
-                .into_iter()
-                .flatten()
-                .any(|s| i.scene.ptr_eq(&Arc::downgrade(s)))
+            [
+                &self.presented,
+                &self.gesture_basis,
+                &self.frozen,
+                &self.pinned,
+            ]
+            .into_iter()
+            .flatten()
+            .any(|s| i.scene.ptr_eq(&Arc::downgrade(s)))
         });
     }
     /// Currently acknowledged visible scene (freeze, when active, takes precedence).
@@ -141,6 +152,163 @@ impl ActionReducer {
     /// Explicit frozen scene retained independently of source ingestion.
     pub fn frozen_scene(&self) -> Option<&Arc<LaidOutChart>> {
         self.frozen.as_ref()
+    }
+    /// At most one original pinned scene; explicitly unpin to release historical resources.
+    pub fn pinned_scene(&self) -> Option<&Arc<LaidOutChart>> {
+        self.pinned.as_ref()
+    }
+    /// Whether the pinned observation/model describes an older coherent source snapshot.
+    pub fn pinned_is_historical(&self) -> bool {
+        match (&self.pinned, &self.current_source) {
+            (Some(scene), Some(current)) => {
+                match (scene.prepared().source().get(), current.get()) {
+                    (Ok(old), Ok(new)) => {
+                        old.epoch() != new.epoch() || old.revision() != new.revision()
+                    }
+                    _ => true,
+                }
+            }
+            _ => false,
+        }
+    }
+    /// Resolve the original pinned observation, with an explicit historical label.
+    pub fn describe_pinned(&self) -> ChartResult<Option<PinnedDescription>> {
+        let (Some(scene), Some(target)) = (&self.pinned, self.state.pinned()) else {
+            return Ok(None);
+        };
+        let inspector = crate::inspection::Inspector::new(scene.clone(), 10., 32)?;
+        let hit = inspector.target(target)?.ok_or_else(|| {
+            error(
+                DiagnosticCode::MissingResource,
+                "Pinned target is absent from its original scene.",
+            )
+        })?;
+        Ok(Some(PinnedDescription {
+            historical: self.pinned_is_historical(),
+            scene: scene.scene().stamp(),
+            target: inspector.describe_target(hit, &self.state)?,
+        }))
+    }
+    /// Prune evicted source identities immediately on acceptance, preserving original pinned
+    /// values and frozen/gesture scenes. Does not acknowledge a pending scene as presented.
+    pub fn reconcile_source(
+        &mut self,
+        definition: &ChartDefinition,
+        source: &crate::data::SnapshotHandle<crate::data::StoreSnapshot>,
+    ) -> ChartResult<Reconciliation> {
+        let snapshot = source.get()?;
+        let valid = |t: &MarkTarget| {
+            t.epoch == snapshot.epoch()
+                && match &t.identity {
+                    TargetIdentity::Source { dataset, key } => snapshot
+                        .dataset(*dataset)
+                        .is_ok_and(|d| d.row(*key).is_some()),
+                    TargetIdentity::Aggregate { dataset, .. } => snapshot.dataset(*dataset).is_ok(),
+                    TargetIdentity::Derived { datasets, .. } => {
+                        datasets.iter().all(|id| snapshot.dataset(*id).is_ok())
+                    }
+                }
+        };
+        self.reconcile_with(definition, source, valid)
+    }
+    /// Reconcile group/model/mark availability after exact preparation; hidden and clipped
+    /// prepared targets remain valid, while disappeared groups/facets are explicitly removed.
+    pub fn reconcile_prepared(
+        &mut self,
+        prepared: &crate::grammar::PreparedChart,
+    ) -> ChartResult<Reconciliation> {
+        let source = prepared.source();
+        let epoch = source.get()?.epoch();
+        let available: BTreeSet<_> = prepared
+            .semantic_targets()
+            .filter(|t| t.selectable)
+            .map(|t| MarkTarget {
+                epoch,
+                layer: t.layer,
+                panel: t.panel.cloned(),
+                identity: t.target.into(),
+            })
+            .collect();
+        let mut next = self.clone();
+        let result =
+            next.reconcile_with(prepared.definition(), source, |t| available.contains(t))?;
+        let stamp = (source.get()?.epoch(), source.get()?.revision());
+        if next.state.follow() == FollowMode::FollowLatest && next.followed_source != Some(stamp) {
+            super::follow::advance(&mut next.state, prepared)?;
+        }
+        next.followed_source = Some(stamp);
+        // Publish all removal/follow changes as one revisioned transition.
+        // reconcile_with ran on the candidate; reset its counters before the combined publish.
+        next.state.revision = self.state.revision;
+        next.state.viewport_revision = self.state.viewport_revision;
+        next.state.revisions = self.state.revisions.clone();
+        let transition = self.publish(
+            prepared.definition(),
+            next,
+            ActionOrigin::Programmatic,
+            result.transition.event.and_then(|e| e.cancellation),
+        )?;
+        Ok(Reconciliation {
+            transition,
+            ..result
+        })
+    }
+    fn reconcile_with(
+        &mut self,
+        definition: &ChartDefinition,
+        source: &crate::data::SnapshotHandle<crate::data::StoreSnapshot>,
+        valid: impl Fn(&MarkTarget) -> bool,
+    ) -> ChartResult<Reconciliation> {
+        if self.disposed {
+            return Err(error(
+                DiagnosticCode::DisposedHandle,
+                "Cannot reconcile a disposed reducer.",
+            ));
+        }
+        if let Some(old) = &self.current_source {
+            let (old, new) = (old.get()?, source.get()?);
+            if new.epoch() < old.epoch()
+                || (new.epoch() == old.epoch() && new.revision() < old.revision())
+            {
+                return Err(error(
+                    DiagnosticCode::RevisionConflict,
+                    "Reconciliation cannot regress accepted source revisions.",
+                ));
+            }
+        }
+        let mut next = self.clone();
+        let removed_selection: Vec<_> = self
+            .state
+            .durable
+            .selection
+            .iter()
+            .filter(|t| !valid(t))
+            .cloned()
+            .collect();
+        next.state.durable.selection.retain(&valid);
+        next.state.hover.retain(&valid);
+        if next.state.focus.as_ref().is_some_and(|t| !valid(t)) {
+            next.state.focus = None;
+        }
+        let cancel = next.state.active.as_ref().is_some_and(|g| matches!(g.kind,GestureKind::Selection) && (!removed_selection.is_empty() || matches!(&g.preview, Some(GesturePreview::Selection(v)) if v.iter().any(|t| !valid(t)))));
+        if cancel {
+            next.state.active = None;
+            next.gesture_basis = None;
+        }
+        next.current_source = Some(source.clone());
+        let historical = next.pinned_is_historical();
+        let transition = self.publish(
+            definition,
+            next,
+            ActionOrigin::Programmatic,
+            cancel.then_some(CancelReason::TargetRemoved),
+        )?;
+        Ok(Reconciliation {
+            removed_selection,
+            store_revision: source.get()?.revision(),
+            pinned_historical: historical,
+            transition,
+        })
     }
     /// Bounded undo/redo command counts; transient actions never add commands.
     pub fn history_lengths(&self) -> (usize, usize) {
@@ -210,6 +378,19 @@ impl ActionReducer {
         while next.redo.len() > next.state.configuration.history_capacity {
             next.redo.remove(0);
         }
+        self.publish(definition, next, request.origin, cancellation)
+    }
+    fn publish(
+        &mut self,
+        definition: &ChartDefinition,
+        mut next: Self,
+        origin: ActionOrigin,
+        cancellation: Option<CancelReason>,
+    ) -> ChartResult<DispatchOutcome> {
+        let before = &self.state;
+        if next.state.durable.pinned.is_none() {
+            next.pinned = None;
+        }
         let changed = *before != next.state;
         let viewport_changed = before.viewport() != next.state.viewport()
             || before.axis_windows() != next.state.axis_windows();
@@ -250,7 +431,7 @@ impl ActionReducer {
             bump!(configuration, a.configuration != b.configuration);
             Some(StateEvent {
                 revision: b.revision,
-                origin: request.origin.clone(),
+                origin,
                 durable: durable_changed,
                 presentation_changed,
                 cancellation,
@@ -302,6 +483,12 @@ impl ActionReducer {
         }
         let chart = self.basis(stamp, gesture)?;
         chart.prepared().source().get()?;
+        if selectable && let Some(source) = &self.current_source {
+            let source = source.get()?;
+            if targets.iter().any(|t| t.epoch != source.epoch() || matches!(t.identity, TargetIdentity::Source { dataset, key } if !source.dataset(dataset).is_ok_and(|d| d.row(key).is_some()))) {
+                return Err(error(DiagnosticCode::Validation, "Selection target was evicted from current data; historical inspection does not restore an active selection."));
+            }
+        }
         // The exact Arc identity prevents equal revision stamps from borrowing another scene's targets.
         let available = self
             .target_indexes
@@ -401,6 +588,13 @@ impl ActionReducer {
             }
             SetPinned(target) => {
                 self.check_targets(target.as_slice(), r.scene, false, false)?;
+                if target != &self.state.durable.pinned {
+                    self.pinned = if target.is_some() {
+                        Some(self.basis(r.scene, false)?.clone())
+                    } else {
+                        None
+                    };
+                }
                 self.state.durable.pinned = target.clone();
             }
             Select { change, targets } => {
@@ -797,6 +991,19 @@ impl ActionReducer {
                 "A controlled freeze requires an existing captured scene; dispatch freeze explicitly.",
             ));
         }
+        if state.pinned() != self.state.pinned() {
+            self.check_targets(
+                state.durable.pinned.as_slice(),
+                self.presented().map(|s| s.scene().stamp()),
+                false,
+                false,
+            )?;
+            self.pinned = if state.pinned().is_some() {
+                self.presented().cloned()
+            } else {
+                None
+            };
+        }
         self.state = state;
         self.history.clear();
         self.redo.clear();
@@ -819,6 +1026,9 @@ impl ActionReducer {
         self.state.focus = None;
         self.presented = None;
         self.frozen = None;
+        self.pinned = None;
+        self.current_source = None;
+        self.followed_source = None;
         self.gesture_basis = None;
         self.history.clear();
         self.redo.clear();

@@ -279,6 +279,10 @@ impl PortableChart {
     pub fn transaction(&mut self, input: &str) -> ChartResult<String> {
         portable::encode(&self.get_mut()?.core.apply_transaction(input)?)
     }
+    /// Bounded queue acceptance/commit/status and explicitly historical pinned observations.
+    pub fn stream(&mut self, input: &str) -> ChartResult<String> {
+        self.get_mut()?.core.stream(input)
+    }
     /// Apply an exact revision-fenced action and return the typed outcome.
     pub fn action(&mut self, input: &str) -> ChartResult<String> {
         portable::encode(&self.get_mut()?.core.apply_action(input)?)

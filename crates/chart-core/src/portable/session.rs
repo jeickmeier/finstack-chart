@@ -11,6 +11,8 @@ pub struct Session {
     reducer: ActionReducer,
     compiler: Compiler,
     inspectors: Vec<crate::inspection::Inspector>,
+    queue: crate::ingestion::IngestionQueue,
+    reconciliation: Option<Reconciliation>,
 }
 impl Session {
     /// Decode and validate versioned chart/data inputs, including builtin operations and schemas.
@@ -33,6 +35,8 @@ impl Session {
             reducer: ActionReducer::default(),
             compiler: Compiler::with_extensions(extensions),
             inspectors: vec![],
+            queue: crate::ingestion::IngestionQueue::new(crate::ingestion::QueueLimits::default())?,
+            reconciliation: None,
         };
         session.prepare()?;
         Ok(session)
@@ -97,7 +101,60 @@ impl Session {
     /// Validate then apply the existing atomic transaction; typed outcomes preserve replay/conflicts.
     pub fn apply_transaction(&mut self, input: &str) -> ChartResult<CommitOutcome> {
         let envelope: TransactionEnvelope = decode(input)?;
-        Ok(self.store.apply(envelope.into_transaction()?))
+        let mut next = self.reducer.clone();
+        let mut reconciliation = None;
+        let definition = &self.definition.definition;
+        let outcome = self
+            .store
+            .apply_checked(envelope.into_transaction()?, |source| {
+                reconciliation = Some(next.reconcile_source(definition, source)?);
+                Ok(())
+            });
+        if matches!(outcome, CommitOutcome::Applied(_)) {
+            self.reducer = next;
+            self.reconciliation = reconciliation;
+            self.prune_inspectors();
+        }
+        Ok(outcome)
+    }
+    /// Synchronous bounded queue operations and historical-pin inspection with explicit outcomes.
+    pub fn stream(&mut self, input: &str) -> ChartResult<String> {
+        let envelope: StreamEnvelope = decode(input)?;
+        version(envelope.version)?;
+        match envelope.operation {
+            StreamOperation::ConfigureQueue(limits) => {
+                if self.queue.status().transactions != 0 {
+                    return Err(error(
+                        DiagnosticCode::Validation,
+                        "Drain accepted transactions before changing queue policy.",
+                    ));
+                }
+                self.queue = crate::ingestion::IngestionQueue::new(limits)?;
+                encode(&self.queue.limits())
+            }
+            StreamOperation::Enqueue(transaction) => {
+                encode(&self.queue.enqueue(transaction.into_transaction()?))
+            }
+            StreamOperation::CommitNext => {
+                let mut next = self.reducer.clone();
+                let mut reconciliation = None;
+                let definition = &self.definition.definition;
+                let result = self.queue.commit_next_checked(&mut self.store, |source| {
+                    reconciliation = Some(next.reconcile_source(definition, source)?);
+                    Ok(())
+                });
+                if matches!(&result, Some((_, CommitOutcome::Applied(_)))) {
+                    self.reducer = next;
+                    self.reconciliation = reconciliation.clone();
+                    self.prune_inspectors();
+                }
+                encode(&result.map(|(id, outcome)| json!({"id":id.as_str(),"outcome":outcome,"reconciliation":reconciliation})))
+            }
+            StreamOperation::Status => encode(
+                &json!({"limits":self.queue.limits(),"queue":self.queue.status(),"epoch":self.source().get()?.epoch(),"store_revision":self.source().get()?.revision(),"reconciliation":self.reconciliation}),
+            ),
+            StreamOperation::Pinned => encode(&self.reducer.describe_pinned()?),
+        }
     }
     /// Validate exact definition/state fences, then use the common action reducer.
     pub fn apply_action(&mut self, input: &str) -> ChartResult<ActionOutcome> {
@@ -144,6 +201,7 @@ impl Session {
                 reducer.presented(),
                 reducer.gesture_basis(),
                 reducer.frozen_scene(),
+                reducer.pinned_scene(),
             ]
             .into_iter()
             .flatten()
@@ -267,14 +325,24 @@ impl Session {
     }
     /// Shared preparation; no binding-specific chart or stat algorithm.
     pub fn prepare(&mut self) -> ChartResult<Arc<PreparedChart>> {
-        self.compiler
-            .prepare(
+        let mut prepared = self.compiler.prepare(
+            &self.definition.definition,
+            &self.store.snapshot(),
+            self.reducer.state(),
+            CompileLimits::default(),
+        )?;
+        let result = self.reducer.reconcile_prepared(&prepared)?;
+        if result.transition.outcome.changed {
+            prepared = self.compiler.prepare(
                 &self.definition.definition,
                 &self.store.snapshot(),
                 self.reducer.state(),
                 CompileLimits::default(),
-            )
-            .map(Arc::new)
+            )?;
+            self.reconciliation = Some(result);
+            self.prune_inspectors();
+        }
+        Ok(Arc::new(prepared))
     }
     /// Semantic result DTO for runtime comparison: domains, generated rows, targets, exact sources.
     pub fn semantics_json(&mut self) -> ChartResult<String> {
@@ -282,7 +350,7 @@ impl Session {
         let source = self.store.snapshot();
         let data = source.get()?;
         let datasets=data.datasets().map(|d| json!({
-            "version":d.version(),"schema":d.schema(),
+            "version":d.version(),"schema":d.schema(),"retention":d.retention(),
             "chunks":d.chunks().iter().map(|c|BatchWire::from_batch(c.batch())).collect::<Vec<_>>(),
         })).collect::<Vec<_>>();
         let layers = prepared
@@ -306,8 +374,9 @@ impl Session {
                 "targets":l.marks().iter().flat_map(|m|m.targets.iter()).collect::<Vec<_>>(),
             })).collect::<Vec<_>>(),
         })).collect::<Vec<_>>();
+        let transforms=self.definition().transforms.iter().filter_map(|node|prepared.transform(node.id).map(|table|json!({"id":node.id,"rows":table.rows(),"schema":table.schema(),"operations":table.operations(),"space":table.space()}))).collect::<Vec<_>>();
         encode(
-            &json!({"version":VERSION,"definition_revision":prepared.definition_revision(),"store_revision":data.revision(),"state":StateEnvelope::capture(self.definition(),self.reducer.state()),"datasets":datasets,"layers":layers,"panels":panels}),
+            &json!({"version":VERSION,"definition_revision":prepared.definition_revision(),"store_revision":data.revision(),"state":StateEnvelope::capture(self.definition(),self.reducer.state()),"datasets":datasets,"layers":layers,"panels":panels,"transforms":transforms}),
         )
     }
 }

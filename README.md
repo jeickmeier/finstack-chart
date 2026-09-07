@@ -3,7 +3,7 @@
 Rust-native grammar-of-graphics project with a portable core, headless publication export,
 a standalone GPUI host and optional Kit integration.
 
-**Status: WP-17 semantic linking, constrained annotation editing and host controls are implemented. G2 passes its
+**Status: WP-18 bounded ingestion, retention, exact bin updates and historical inspection are implemented. G2 passes its
 [feature matrix](docs/alpha-api.md), including facets, themes, vector publication,
 public custom extensions and 36 actual Rust/Python/WASM cases. A shared action trace
 proves gesture/cancellation/controlled-state behavior in each runtime; 47 shared input
@@ -122,3 +122,7 @@ Run `mise exec -- cargo run -p chart-gallery --example host_tools_gallery --lock
 for linked charts/table, snapped threshold/range handles and replaceable native controls.
 [WP-17 evidence](docs/evidence/wp-17-completion-2026-09-07.md) records actual runtime
 checks and the accessibility limitations of the supported native target.
+
+[Streaming contract](docs/streaming-contract.md) and
+[WP-18 evidence](docs/evidence/wp-18-completion-2026-09-07.md) document exact replay,
+queue acknowledgements, retention/follow semantics and remaining performance gates.

@@ -161,3 +161,21 @@ for (const c of ['fixtures/interaction/cases.json','fixtures/host-tools/cases.js
 }
 save('input-trace',JSON.stringify(inputTrace));
 console.log(`PASS WP-16/17 WASM shared input queries/actions: ${inputTrace.length} steps`);
+
+const streamCase=JSON.parse(fs.readFileSync(path.join(root,'fixtures/streaming/replay.json'),'utf8'));
+const streamChart=new bindings.Chart(JSON.stringify(streamCase.chart),JSON.stringify(streamCase.data),fs.readFileSync(path.join(root,'fixtures/interaction/profile.json'),'utf8'),Uint8Array.from(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))));
+let streamStamp=JSON.parse(streamChart.present()).stamp;const streamTrace=[];
+for(const step of streamCase.steps){
+    let result;
+    try{
+        if(step.transaction)result=JSON.parse(streamChart.transaction(JSON.stringify(step.transaction)));
+        else if(step.stream)result=JSON.parse(streamChart.stream(JSON.stringify({version:1,operation:step.stream})));
+        else{const state=JSON.parse(streamChart.state());result=JSON.parse(streamChart.dispatch(JSON.stringify({definition_revision:state.definition_revision,expected_state:state.state_revision,scene:streamStamp,origin:'Control',action:step.action})));}
+        assert(!step.error,step.name);
+    }catch(error){const code=JSON.parse(error.message).code;assert.equal(code,step.error);result={error:code};}
+    const semantics=JSON.parse(streamChart.semantics()),state=JSON.parse(streamChart.state());
+    if(step.present){streamStamp=JSON.parse(streamChart.present()).stamp;fs.writeFileSync(path.join(output,`stream-${step.name}.svg`),streamChart.svg());}
+    streamTrace.push({name:step.name,result,semantics,state});
+}
+save('stream-trace',JSON.stringify(streamTrace));streamChart.dispose();streamChart.free();
+console.log(`PASS WP-18 WASM streaming replay: ${streamTrace.length} steps`);

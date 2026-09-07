@@ -1,0 +1,5580 @@
+{
+  "name": "stream-retention-replay",
+  "seed": 180923,
+  "chart": {
+    "version": 1,
+    "definition": {
+      "revision": "1",
+      "mappings": {
+        "x": null,
+        "y": null,
+        "x2": null,
+        "y2": null,
+        "size": null,
+        "group": null
+      },
+      "transforms": [
+        {
+          "id": "10",
+          "input": {
+            "Dataset": "1"
+          },
+          "filters": [],
+          "statistic": {
+            "operation": {
+              "id": "chart.bin",
+              "version": "1"
+            },
+            "parameters": {
+              "Bin": {
+                "input": {
+                  "Field": "2"
+                },
+                "edges": [
+                  0,
+                  10,
+                  20,
+                  30,
+                  50
+                ],
+                "outliers": "Exclude",
+                "grouping": "All",
+                "space": "Data"
+              }
+            }
+          },
+          "invalid": "Exclude"
+        },
+        {
+          "id": "11",
+          "input": {
+            "Dataset": "1"
+          },
+          "filters": [],
+          "statistic": {
+            "operation": {
+              "id": "chart.summary",
+              "version": "1"
+            },
+            "parameters": {
+              "Summary": {
+                "input": {
+                  "Field": "2"
+                },
+                "grouping": "All",
+                "quantiles": [
+                  0,
+                  0.5,
+                  1
+                ],
+                "empty_sum_zero": false,
+                "space": "Data"
+              }
+            }
+          },
+          "invalid": "Exclude"
+        }
+      ],
+      "layers": [
+        {
+          "id": "1",
+          "scales": {
+            "x": "0",
+            "y": "1"
+          },
+          "clip": "Plot",
+          "data": {
+            "Dataset": "1"
+          },
+          "filters": [],
+          "statistic": {
+            "operation": {
+              "id": "chart.identity",
+              "version": "1"
+            },
+            "parameters": "Identity"
+          },
+          "mappings": {
+            "Source": {
+              "x": {
+                "Timestamp": {
+                  "field": "1",
+                  "origin": "9007199254741001"
+                }
+              },
+              "y": {
+                "Field": "2"
+              },
+              "x2": null,
+              "y2": null,
+              "size": null,
+              "group": null
+            }
+          },
+          "inherit": false,
+          "geom": "Point",
+          "position": "Identity",
+          "style": {
+            "color": {
+              "red": 30,
+              "green": 125,
+              "blue": 180,
+              "alpha": 210
+            },
+            "radius": 3.0,
+            "stroke_width": 1.5
+          },
+          "invalid": "Exclude"
+        }
+      ],
+      "axes": []
+    }
+  },
+  "data": {
+    "version": 1,
+    "epoch": "1",
+    "datasets": [
+      {
+        "id": "1",
+        "batch": {
+          "schema_version": "1",
+          "fields": [
+            {
+              "id": "1",
+              "name": "event_time",
+              "kind": {
+                "Timestamp": {
+                  "unit": "Nanoseconds",
+                  "timezone": "UTC"
+                }
+              },
+              "nullable": true,
+              "unit": null,
+              "label": null
+            },
+            {
+              "id": "2",
+              "name": "value",
+              "kind": "Float64",
+              "nullable": true,
+              "unit": null,
+              "label": null
+            }
+          ],
+          "keys": [
+            "9007199254743001",
+            "9007199254743002",
+            "9007199254743003",
+            "9007199254743004",
+            "9007199254743005"
+          ],
+          "columns": [
+            {
+              "values": {
+                "Timestamp": [
+                  "9007199254741001",
+                  "9007199254741006",
+                  "9007199254741011",
+                  "9007199254741016",
+                  "9007199254741021"
+                ]
+              },
+              "validity": [
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "formatted": null
+            },
+            {
+              "values": {
+                "Float64": [
+                  5.0,
+                  15.0,
+                  25.0,
+                  35.0,
+                  45.0
+                ]
+              },
+              "validity": [
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "formatted": null
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "steps": [
+    {
+      "name": "select-source",
+      "rows": [
+        [
+          "9007199254743001",
+          "9007199254741001",
+          5.0
+        ],
+        [
+          "9007199254743002",
+          "9007199254741006",
+          15.0
+        ],
+        [
+          "9007199254743003",
+          "9007199254741011",
+          25.0
+        ],
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "0",
+      "retention": "Unbounded",
+      "action": {
+        "Select": {
+          "change": "Replace",
+          "targets": [
+            {
+              "epoch": "1",
+              "layer": "1",
+              "panel": null,
+              "identity": {
+                "Source": {
+                  "dataset": "1",
+                  "key": "9007199254743001"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "pin-source",
+      "rows": [
+        [
+          "9007199254743001",
+          "9007199254741001",
+          5.0
+        ],
+        [
+          "9007199254743002",
+          "9007199254741006",
+          15.0
+        ],
+        [
+          "9007199254743003",
+          "9007199254741011",
+          25.0
+        ],
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "0",
+      "retention": "Unbounded",
+      "action": {
+        "SetPinned": {
+          "epoch": "1",
+          "layer": "1",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "1",
+              "key": "9007199254743001"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "pin-current",
+      "rows": [
+        [
+          "9007199254743001",
+          "9007199254741001",
+          5.0
+        ],
+        [
+          "9007199254743002",
+          "9007199254741006",
+          15.0
+        ],
+        [
+          "9007199254743003",
+          "9007199254741011",
+          25.0
+        ],
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "0",
+      "retention": "Unbounded",
+      "stream": "Pinned",
+      "expected": {
+        "historical": false,
+        "target": {
+          "target": {
+            "epoch": "1",
+            "layer": "1",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "1",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "freeze",
+      "rows": [
+        [
+          "9007199254743001",
+          "9007199254741001",
+          5.0
+        ],
+        [
+          "9007199254743002",
+          "9007199254741006",
+          15.0
+        ],
+        [
+          "9007199254743003",
+          "9007199254741011",
+          25.0
+        ],
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "0",
+      "retention": "Unbounded",
+      "action": {
+        "SetFollow": "FreezePresentation"
+      }
+    },
+    {
+      "name": "queue-capacity",
+      "rows": [
+        [
+          "9007199254743001",
+          "9007199254741001",
+          5.0
+        ],
+        [
+          "9007199254743002",
+          "9007199254741006",
+          15.0
+        ],
+        [
+          "9007199254743003",
+          "9007199254741011",
+          25.0
+        ],
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "0",
+      "retention": "Unbounded",
+      "stream": {
+        "ConfigureQueue": {
+          "transactions": 1,
+          "rows": 4,
+          "bytes": 4096,
+          "overload": "Backpressure"
+        }
+      }
+    },
+    {
+      "name": "queue-policy",
+      "rows": [
+        [
+          "9007199254743001",
+          "9007199254741001",
+          5.0
+        ],
+        [
+          "9007199254743002",
+          "9007199254741006",
+          15.0
+        ],
+        [
+          "9007199254743003",
+          "9007199254741011",
+          25.0
+        ],
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "0",
+      "retention": "Unbounded",
+      "stream": {
+        "Enqueue": {
+          "version": 1,
+          "id": "retention-queued",
+          "epoch": "1",
+          "expected": [
+            {
+              "dataset": "1",
+              "revision": "0",
+              "schema_version": "1"
+            }
+          ],
+          "operations": [
+            {
+              "dataset": "1",
+              "mutation": {
+                "SetRetention": {
+                  "EventTime": {
+                    "field": "1",
+                    "width": "15",
+                    "allowed_lateness": "2",
+                    "watermark": "9007199254741021",
+                    "late": "Reject"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "expected": "Queued"
+    },
+    {
+      "name": "queue-duplicate",
+      "rows": [
+        [
+          "9007199254743001",
+          "9007199254741001",
+          5.0
+        ],
+        [
+          "9007199254743002",
+          "9007199254741006",
+          15.0
+        ],
+        [
+          "9007199254743003",
+          "9007199254741011",
+          25.0
+        ],
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "0",
+      "retention": "Unbounded",
+      "stream": {
+        "Enqueue": {
+          "version": 1,
+          "id": "retention-queued",
+          "epoch": "1",
+          "expected": [
+            {
+              "dataset": "1",
+              "revision": "0",
+              "schema_version": "1"
+            }
+          ],
+          "operations": [
+            {
+              "dataset": "1",
+              "mutation": {
+                "SetRetention": {
+                  "EventTime": {
+                    "field": "1",
+                    "width": "15",
+                    "allowed_lateness": "2",
+                    "watermark": "9007199254741021",
+                    "late": "Reject"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "expected": "AlreadyQueued"
+    },
+    {
+      "name": "cannot-reconfigure-accepted-work",
+      "rows": [
+        [
+          "9007199254743001",
+          "9007199254741001",
+          5.0
+        ],
+        [
+          "9007199254743002",
+          "9007199254741006",
+          15.0
+        ],
+        [
+          "9007199254743003",
+          "9007199254741011",
+          25.0
+        ],
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "0",
+      "retention": "Unbounded",
+      "stream": {
+        "ConfigureQueue": {
+          "transactions": 1,
+          "rows": 1,
+          "bytes": 100,
+          "overload": "DropNewest"
+        }
+      },
+      "error": "CHART_VALIDATION"
+    },
+    {
+      "name": "queue-backpressure",
+      "rows": [
+        [
+          "9007199254743001",
+          "9007199254741001",
+          5.0
+        ],
+        [
+          "9007199254743002",
+          "9007199254741006",
+          15.0
+        ],
+        [
+          "9007199254743003",
+          "9007199254741011",
+          25.0
+        ],
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "0",
+      "retention": "Unbounded",
+      "stream": {
+        "Enqueue": {
+          "version": 1,
+          "id": "backpressured",
+          "epoch": "1",
+          "expected": [
+            {
+              "dataset": "1",
+              "revision": "0",
+              "schema_version": "1"
+            }
+          ],
+          "operations": [
+            {
+              "dataset": "1",
+              "mutation": {
+                "AppendBatch": {
+                  "schema_version": "1",
+                  "fields": [
+                    {
+                      "id": "1",
+                      "name": "event_time",
+                      "kind": {
+                        "Timestamp": {
+                          "unit": "Nanoseconds",
+                          "timezone": "UTC"
+                        }
+                      },
+                      "nullable": true,
+                      "unit": null,
+                      "label": null
+                    },
+                    {
+                      "id": "2",
+                      "name": "value",
+                      "kind": "Float64",
+                      "nullable": true,
+                      "unit": null,
+                      "label": null
+                    }
+                  ],
+                  "keys": [
+                    "9007199254743011"
+                  ],
+                  "columns": [
+                    {
+                      "values": {
+                        "Timestamp": [
+                          "9007199254741026"
+                        ]
+                      },
+                      "validity": [
+                        true
+                      ],
+                      "formatted": null
+                    },
+                    {
+                      "values": {
+                        "Float64": [
+                          25.0
+                        ]
+                      },
+                      "validity": [
+                        true
+                      ],
+                      "formatted": null
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "expected": "Backpressure"
+    },
+    {
+      "name": "queued-not-committed",
+      "rows": [
+        [
+          "9007199254743001",
+          "9007199254741001",
+          5.0
+        ],
+        [
+          "9007199254743002",
+          "9007199254741006",
+          15.0
+        ],
+        [
+          "9007199254743003",
+          "9007199254741011",
+          25.0
+        ],
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "0",
+      "retention": "Unbounded",
+      "stream": "Status",
+      "expected": {
+        "store_revision": "0",
+        "queue": {
+          "transactions": 1,
+          "accepted": "1",
+          "backpressured": "1"
+        }
+      }
+    },
+    {
+      "name": "commit-policy",
+      "rows": [
+        [
+          "9007199254743002",
+          "9007199254741006",
+          15.0
+        ],
+        [
+          "9007199254743003",
+          "9007199254741011",
+          25.0
+        ],
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "1",
+      "retention": {
+        "EventTime": {
+          "field": "1",
+          "width": "15",
+          "allowed_lateness": "2",
+          "watermark": "9007199254741021",
+          "late": "Reject"
+        }
+      },
+      "stream": "CommitNext",
+      "expected": {
+        "outcome": {
+          "Applied": {
+            "store_revision": "1",
+            "operations": [
+              {
+                "evicted": 1
+              }
+            ]
+          }
+        },
+        "reconciliation": {
+          "removed_selection": [
+            {
+              "epoch": "1",
+              "layer": "1",
+              "panel": null,
+              "identity": {
+                "Source": {
+                  "dataset": "1",
+                  "key": "9007199254743001"
+                }
+              }
+            }
+          ],
+          "pinned_historical": true
+        }
+      }
+    },
+    {
+      "name": "pin-historical",
+      "rows": [
+        [
+          "9007199254743002",
+          "9007199254741006",
+          15.0
+        ],
+        [
+          "9007199254743003",
+          "9007199254741011",
+          25.0
+        ],
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "1",
+      "retention": {
+        "EventTime": {
+          "field": "1",
+          "width": "15",
+          "allowed_lateness": "2",
+          "watermark": "9007199254741021",
+          "late": "Reject"
+        }
+      },
+      "stream": "Pinned",
+      "expected": {
+        "historical": true,
+        "target": {
+          "target": {
+            "epoch": "1",
+            "layer": "1",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "1",
+                "key": "9007199254743001"
+              }
+            }
+          },
+          "cells": [
+            {
+              "value": "9007199254741001 Nanoseconds UTC"
+            },
+            {
+              "value": "5"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "cannot-select-evicted-frozen-mark",
+      "rows": [
+        [
+          "9007199254743002",
+          "9007199254741006",
+          15.0
+        ],
+        [
+          "9007199254743003",
+          "9007199254741011",
+          25.0
+        ],
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "1",
+      "retention": {
+        "EventTime": {
+          "field": "1",
+          "width": "15",
+          "allowed_lateness": "2",
+          "watermark": "9007199254741021",
+          "late": "Reject"
+        }
+      },
+      "action": {
+        "Select": {
+          "change": "Add",
+          "targets": [
+            {
+              "epoch": "1",
+              "layer": "1",
+              "panel": null,
+              "identity": {
+                "Source": {
+                  "dataset": "1",
+                  "key": "9007199254743001"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "error": "CHART_VALIDATION"
+    },
+    {
+      "name": "resume",
+      "rows": [
+        [
+          "9007199254743002",
+          "9007199254741006",
+          15.0
+        ],
+        [
+          "9007199254743003",
+          "9007199254741011",
+          25.0
+        ],
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "1",
+      "retention": {
+        "EventTime": {
+          "field": "1",
+          "width": "15",
+          "allowed_lateness": "2",
+          "watermark": "9007199254741021",
+          "late": "Reject"
+        }
+      },
+      "action": "ResumeLatest",
+      "present": true
+    },
+    {
+      "name": "retention-replay",
+      "rows": [
+        [
+          "9007199254743002",
+          "9007199254741006",
+          15.0
+        ],
+        [
+          "9007199254743003",
+          "9007199254741011",
+          25.0
+        ],
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "1",
+      "retention": {
+        "EventTime": {
+          "field": "1",
+          "width": "15",
+          "allowed_lateness": "2",
+          "watermark": "9007199254741021",
+          "late": "Reject"
+        }
+      },
+      "transaction": {
+        "version": 1,
+        "id": "retention-queued",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "0",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "SetRetention": {
+                "EventTime": {
+                  "field": "1",
+                  "width": "15",
+                  "allowed_lateness": "2",
+                  "watermark": "9007199254741021",
+                  "late": "Reject"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "AlreadyApplied": {
+          "store_revision": "1"
+        }
+      }
+    },
+    {
+      "name": "advance-watermark",
+      "rows": [
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "2",
+      "retention": {
+        "EventTime": {
+          "field": "1",
+          "width": "15",
+          "allowed_lateness": "2",
+          "watermark": "9007199254741031",
+          "late": "Reject"
+        }
+      },
+      "transaction": {
+        "version": 1,
+        "id": "advance-watermark",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "1",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AdvanceWatermark": "9007199254741031"
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "2"
+        }
+      },
+      "present": true
+    },
+    {
+      "name": "atomic-late-reject",
+      "rows": [
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "2",
+      "retention": {
+        "EventTime": {
+          "field": "1",
+          "width": "15",
+          "allowed_lateness": "2",
+          "watermark": "9007199254741031",
+          "late": "Reject"
+        }
+      },
+      "transaction": {
+        "version": 1,
+        "id": "atomic-late-reject",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "2",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743012"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741032"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        10.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "dataset": "1",
+            "mutation": {
+              "UpsertByKey": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743005"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741001"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        0.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Rejected": {
+          "code": "CHART_VALIDATION"
+        }
+      }
+    },
+    {
+      "name": "choose-late-drop",
+      "rows": [
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "3",
+      "retention": {
+        "EventTime": {
+          "field": "1",
+          "width": "15",
+          "allowed_lateness": "2",
+          "watermark": "9007199254741031",
+          "late": "Drop"
+        }
+      },
+      "transaction": {
+        "version": 1,
+        "id": "choose-late-drop",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "2",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "SetRetention": {
+                "EventTime": {
+                  "field": "1",
+                  "width": "15",
+                  "allowed_lateness": "2",
+                  "watermark": "9007199254741031",
+                  "late": "Drop"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "3"
+        }
+      }
+    },
+    {
+      "name": "future-does-not-advance",
+      "rows": [
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ],
+        [
+          "9007199254743013",
+          "9007199254742001",
+          7.0
+        ]
+      ],
+      "revision": "4",
+      "retention": {
+        "EventTime": {
+          "field": "1",
+          "width": "15",
+          "allowed_lateness": "2",
+          "watermark": "9007199254741031",
+          "late": "Drop"
+        }
+      },
+      "transaction": {
+        "version": 1,
+        "id": "future-does-not-advance",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "3",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743013"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254742001"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        7.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "4"
+        }
+      },
+      "present": true
+    },
+    {
+      "name": "drop-and-accept",
+      "rows": [
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ],
+        [
+          "9007199254743013",
+          "9007199254742001",
+          7.0
+        ],
+        [
+          "9007199254743015",
+          "9007199254741026",
+          29.0
+        ]
+      ],
+      "revision": "5",
+      "retention": {
+        "EventTime": {
+          "field": "1",
+          "width": "15",
+          "allowed_lateness": "2",
+          "watermark": "9007199254741031",
+          "late": "Drop"
+        }
+      },
+      "transaction": {
+        "version": 1,
+        "id": "drop-and-accept",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "4",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "UpsertByKey": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743014",
+                  "9007199254743015"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741001",
+                        "9007199254741026"
+                      ]
+                    },
+                    "validity": [
+                      true,
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        1.0,
+                        29.0
+                      ]
+                    },
+                    "validity": [
+                      true,
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "5",
+          "operations": [
+            {
+              "late_dropped": 1,
+              "inserted": 1,
+              "updated": 0
+            }
+          ]
+        }
+      },
+      "present": true
+    },
+    {
+      "name": "count-retention",
+      "rows": [
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ],
+        [
+          "9007199254743013",
+          "9007199254742001",
+          7.0
+        ],
+        [
+          "9007199254743015",
+          "9007199254741026",
+          29.0
+        ]
+      ],
+      "revision": "6",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "count-retention",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "5",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "SetRetention": {
+                "Count": 8
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "6"
+        }
+      }
+    },
+    {
+      "name": "inspect-window",
+      "rows": [
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ],
+        [
+          "9007199254743013",
+          "9007199254742001",
+          7.0
+        ],
+        [
+          "9007199254743015",
+          "9007199254741026",
+          29.0
+        ]
+      ],
+      "revision": "6",
+      "retention": {
+        "Count": 8
+      },
+      "action": {
+        "SetViewport": {
+          "x": [
+            0,
+            40
+          ],
+          "y": null
+        }
+      },
+      "present": true
+    },
+    {
+      "name": "replay-00",
+      "rows": [
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ],
+        [
+          "9007199254743013",
+          "9007199254742001",
+          7.0
+        ],
+        [
+          "9007199254743015",
+          "9007199254741026",
+          29.0
+        ],
+        [
+          "9007199254743101",
+          "9007199254741019",
+          31.0
+        ]
+      ],
+      "revision": "7",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-00",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "6",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743101"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741019"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        31.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "7"
+        }
+      },
+      "present": true
+    },
+    {
+      "name": "replay-01",
+      "rows": [
+        [
+          "9007199254743004",
+          "9007199254741016",
+          35.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ],
+        [
+          "9007199254743013",
+          "9007199254742001",
+          7.0
+        ],
+        [
+          "9007199254743015",
+          "9007199254741026",
+          29.0
+        ],
+        [
+          "9007199254743101",
+          "9007199254741019",
+          31.0
+        ],
+        [
+          "9007199254743102",
+          "9007199254741060",
+          16.0
+        ]
+      ],
+      "revision": "8",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-01",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "7",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743102"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741060"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        16.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "8"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-02",
+      "rows": [
+        [
+          "9007199254743004",
+          "9007199254741030",
+          16.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ],
+        [
+          "9007199254743013",
+          "9007199254742001",
+          7.0
+        ],
+        [
+          "9007199254743015",
+          "9007199254741026",
+          29.0
+        ],
+        [
+          "9007199254743101",
+          "9007199254741019",
+          31.0
+        ],
+        [
+          "9007199254743102",
+          "9007199254741060",
+          16.0
+        ]
+      ],
+      "revision": "9",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-02",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "8",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "UpsertByKey": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743004"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741030"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        16.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "9"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-03",
+      "rows": [
+        [
+          "9007199254743004",
+          "9007199254741030",
+          16.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ],
+        [
+          "9007199254743013",
+          "9007199254742001",
+          7.0
+        ],
+        [
+          "9007199254743015",
+          "9007199254741026",
+          29.0
+        ],
+        [
+          "9007199254743102",
+          "9007199254741060",
+          16.0
+        ]
+      ],
+      "revision": "10",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-03",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "9",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "RemoveKeys": [
+                "9007199254743101",
+                "9007199254753000"
+              ]
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "10"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-04",
+      "rows": [
+        [
+          "9007199254743004",
+          "9007199254741030",
+          16.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ],
+        [
+          "9007199254743013",
+          "9007199254742001",
+          7.0
+        ],
+        [
+          "9007199254743015",
+          "9007199254741026",
+          29.0
+        ],
+        [
+          "9007199254743102",
+          "9007199254741060",
+          16.0
+        ],
+        [
+          "9007199254743105",
+          "9007199254741014",
+          48.0
+        ]
+      ],
+      "revision": "11",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-04",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "10",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743105"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741014"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        48.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "11"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-05",
+      "rows": [
+        [
+          "9007199254743004",
+          "9007199254741030",
+          16.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ],
+        [
+          "9007199254743013",
+          "9007199254742001",
+          7.0
+        ],
+        [
+          "9007199254743015",
+          "9007199254741026",
+          29.0
+        ],
+        [
+          "9007199254743102",
+          "9007199254741060",
+          16.0
+        ],
+        [
+          "9007199254743105",
+          "9007199254741014",
+          48.0
+        ],
+        [
+          "9007199254743106",
+          "9007199254741034",
+          13.0
+        ]
+      ],
+      "revision": "12",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-05",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "11",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743106"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741034"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        13.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "12"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-06",
+      "rows": [
+        [
+          "9007199254743013",
+          "9007199254742001",
+          7.0
+        ],
+        [
+          "9007199254743015",
+          "9007199254741026",
+          29.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "13",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-06",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "12",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "ReplaceSnapshot": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743013",
+                  "9007199254743015",
+                  "9007199254743005"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254742001",
+                        "9007199254741026",
+                        "9007199254741021"
+                      ]
+                    },
+                    "validity": [
+                      true,
+                      true,
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        7.0,
+                        29.0,
+                        45.0
+                      ]
+                    },
+                    "validity": [
+                      true,
+                      true,
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "13"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-07",
+      "rows": [
+        [
+          "9007199254743015",
+          "9007199254741026",
+          29.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ]
+      ],
+      "revision": "14",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-07",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "13",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "RemoveKeys": [
+                "9007199254743013",
+                "9007199254753000"
+              ]
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "14"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-08",
+      "rows": [
+        [
+          "9007199254743015",
+          "9007199254741026",
+          29.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ],
+        [
+          "9007199254743109",
+          "9007199254741032",
+          24.0
+        ]
+      ],
+      "revision": "15",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-08",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "14",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743109"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741032"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        24.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "15"
+        }
+      },
+      "present": true
+    },
+    {
+      "name": "replay-09",
+      "rows": [
+        [
+          "9007199254743015",
+          "9007199254741026",
+          29.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741021",
+          45.0
+        ],
+        [
+          "9007199254743109",
+          "9007199254741032",
+          24.0
+        ],
+        [
+          "9007199254743110",
+          "9007199254741039",
+          21.0
+        ]
+      ],
+      "revision": "16",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-09",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "15",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743110"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741039"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        21.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "16"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-10",
+      "rows": [
+        [
+          "9007199254743015",
+          "9007199254741026",
+          29.0
+        ],
+        [
+          "9007199254743005",
+          "9007199254741017",
+          1.0
+        ],
+        [
+          "9007199254743109",
+          "9007199254741032",
+          24.0
+        ],
+        [
+          "9007199254743110",
+          "9007199254741039",
+          21.0
+        ]
+      ],
+      "revision": "17",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-10",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "16",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "UpsertByKey": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743005"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741017"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        1.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "17"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-11",
+      "rows": [
+        [
+          "9007199254743005",
+          "9007199254741017",
+          1.0
+        ],
+        [
+          "9007199254743109",
+          "9007199254741032",
+          24.0
+        ],
+        [
+          "9007199254743110",
+          "9007199254741039",
+          21.0
+        ]
+      ],
+      "revision": "18",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-11",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "17",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "RemoveKeys": [
+                "9007199254743015",
+                "9007199254753000"
+              ]
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "18"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-12",
+      "rows": [
+        [
+          "9007199254743005",
+          "9007199254741017",
+          1.0
+        ],
+        [
+          "9007199254743109",
+          "9007199254741032",
+          24.0
+        ],
+        [
+          "9007199254743110",
+          "9007199254741039",
+          21.0
+        ],
+        [
+          "9007199254743113",
+          "9007199254741062",
+          12.0
+        ]
+      ],
+      "revision": "19",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-12",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "18",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743113"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741062"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        12.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "19"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-13",
+      "rows": [
+        [
+          "9007199254743110",
+          "9007199254741039",
+          21.0
+        ],
+        [
+          "9007199254743109",
+          "9007199254741032",
+          24.0
+        ]
+      ],
+      "revision": "20",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-13",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "19",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "ReplaceSnapshot": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743110",
+                  "9007199254743109"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741039",
+                        "9007199254741032"
+                      ]
+                    },
+                    "validity": [
+                      true,
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        21.0,
+                        24.0
+                      ]
+                    },
+                    "validity": [
+                      true,
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "20"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-14",
+      "rows": [
+        [
+          "9007199254743110",
+          "9007199254741058",
+          23.0
+        ],
+        [
+          "9007199254743109",
+          "9007199254741032",
+          24.0
+        ]
+      ],
+      "revision": "21",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-14",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "20",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "UpsertByKey": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743110"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741058"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        23.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "21"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-15",
+      "rows": [
+        [
+          "9007199254743110",
+          "9007199254741058",
+          23.0
+        ]
+      ],
+      "revision": "22",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-15",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "21",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "RemoveKeys": [
+                "9007199254743109",
+                "9007199254753000"
+              ]
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "22"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-16",
+      "rows": [
+        [
+          "9007199254743110",
+          "9007199254741058",
+          23.0
+        ],
+        [
+          "9007199254743117",
+          "9007199254741031",
+          39.0
+        ]
+      ],
+      "revision": "23",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-16",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "22",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743117"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741031"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        39.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "23"
+        }
+      },
+      "present": true
+    },
+    {
+      "name": "replay-17",
+      "rows": [
+        [
+          "9007199254743110",
+          "9007199254741058",
+          23.0
+        ],
+        [
+          "9007199254743117",
+          "9007199254741031",
+          39.0
+        ],
+        [
+          "9007199254743118",
+          "9007199254741055",
+          47.0
+        ]
+      ],
+      "revision": "24",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-17",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "23",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743118"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741055"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        47.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "24"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-18",
+      "rows": [
+        [
+          "9007199254743110",
+          "9007199254741058",
+          23.0
+        ],
+        [
+          "9007199254743117",
+          "9007199254741039",
+          23.0
+        ],
+        [
+          "9007199254743118",
+          "9007199254741055",
+          47.0
+        ]
+      ],
+      "revision": "25",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-18",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "24",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "UpsertByKey": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743117"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741039"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        23.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "25"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-19",
+      "rows": [
+        [
+          "9007199254743117",
+          "9007199254741039",
+          23.0
+        ],
+        [
+          "9007199254743118",
+          "9007199254741055",
+          47.0
+        ]
+      ],
+      "revision": "26",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-19",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "25",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "RemoveKeys": [
+                "9007199254743110",
+                "9007199254753000"
+              ]
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "26"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-20",
+      "rows": [
+        [
+          "9007199254743117",
+          "9007199254741039",
+          23.0
+        ]
+      ],
+      "revision": "27",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-20",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "26",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "ReplaceSnapshot": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743117"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741039"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        23.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "27"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-21",
+      "rows": [
+        [
+          "9007199254743117",
+          "9007199254741039",
+          23.0
+        ],
+        [
+          "9007199254743122",
+          "9007199254741017",
+          16.0
+        ]
+      ],
+      "revision": "28",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-21",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "27",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743122"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741017"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        16.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "28"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-22",
+      "rows": [
+        [
+          "9007199254743117",
+          "9007199254741058",
+          22.0
+        ],
+        [
+          "9007199254743122",
+          "9007199254741017",
+          16.0
+        ]
+      ],
+      "revision": "29",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-22",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "28",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "UpsertByKey": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743117"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741058"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        22.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "29"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-23",
+      "rows": [
+        [
+          "9007199254743117",
+          "9007199254741058",
+          22.0
+        ]
+      ],
+      "revision": "30",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-23",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "29",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "RemoveKeys": [
+                "9007199254743122",
+                "9007199254753000"
+              ]
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "30"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-24",
+      "rows": [
+        [
+          "9007199254743117",
+          "9007199254741058",
+          22.0
+        ],
+        [
+          "9007199254743125",
+          "9007199254741056",
+          6.0
+        ]
+      ],
+      "revision": "31",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-24",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "30",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743125"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741056"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        6.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "31"
+        }
+      },
+      "present": true
+    },
+    {
+      "name": "replay-25",
+      "rows": [
+        [
+          "9007199254743117",
+          "9007199254741058",
+          22.0
+        ],
+        [
+          "9007199254743125",
+          "9007199254741056",
+          6.0
+        ],
+        [
+          "9007199254743126",
+          "9007199254741033",
+          23.0
+        ]
+      ],
+      "revision": "32",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-25",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "31",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743126"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741033"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        23.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "32"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-26",
+      "rows": [
+        [
+          "9007199254743117",
+          "9007199254741058",
+          22.0
+        ],
+        [
+          "9007199254743125",
+          "9007199254741056",
+          6.0
+        ],
+        [
+          "9007199254743126",
+          "9007199254741070",
+          40.0
+        ]
+      ],
+      "revision": "33",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-26",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "32",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "UpsertByKey": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743126"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741070"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        40.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "33"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-27",
+      "rows": [
+        [
+          "9007199254743126",
+          "9007199254741070",
+          40.0
+        ]
+      ],
+      "revision": "34",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-27",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "33",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "ReplaceSnapshot": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743126"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741070"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        40.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "34"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-28",
+      "rows": [
+        [
+          "9007199254743126",
+          "9007199254741070",
+          40.0
+        ],
+        [
+          "9007199254743129",
+          "9007199254741070",
+          19.0
+        ]
+      ],
+      "revision": "35",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-28",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "34",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743129"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741070"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        19.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "35"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-29",
+      "rows": [
+        [
+          "9007199254743126",
+          "9007199254741070",
+          40.0
+        ],
+        [
+          "9007199254743129",
+          "9007199254741070",
+          19.0
+        ],
+        [
+          "9007199254743130",
+          "9007199254741013",
+          15.0
+        ]
+      ],
+      "revision": "36",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-29",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "35",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743130"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741013"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        15.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "36"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-30",
+      "rows": [
+        [
+          "9007199254743126",
+          "9007199254741049",
+          46.0
+        ],
+        [
+          "9007199254743129",
+          "9007199254741070",
+          19.0
+        ],
+        [
+          "9007199254743130",
+          "9007199254741013",
+          15.0
+        ]
+      ],
+      "revision": "37",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-30",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "36",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "UpsertByKey": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743126"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741049"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        46.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "37"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-31",
+      "rows": [
+        [
+          "9007199254743126",
+          "9007199254741049",
+          46.0
+        ],
+        [
+          "9007199254743130",
+          "9007199254741013",
+          15.0
+        ]
+      ],
+      "revision": "38",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-31",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "37",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "RemoveKeys": [
+                "9007199254743129",
+                "9007199254753000"
+              ]
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "38"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-32",
+      "rows": [
+        [
+          "9007199254743126",
+          "9007199254741049",
+          46.0
+        ],
+        [
+          "9007199254743130",
+          "9007199254741013",
+          15.0
+        ],
+        [
+          "9007199254743133",
+          "9007199254741045",
+          18.0
+        ]
+      ],
+      "revision": "39",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-32",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "38",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743133"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741045"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        18.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "39"
+        }
+      },
+      "present": true
+    },
+    {
+      "name": "replay-33",
+      "rows": [
+        [
+          "9007199254743126",
+          "9007199254741049",
+          46.0
+        ],
+        [
+          "9007199254743130",
+          "9007199254741013",
+          15.0
+        ],
+        [
+          "9007199254743133",
+          "9007199254741045",
+          18.0
+        ],
+        [
+          "9007199254743134",
+          "9007199254741033",
+          20.0
+        ]
+      ],
+      "revision": "40",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-33",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "39",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743134"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741033"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        20.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "40"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-34",
+      "rows": [
+        [
+          "9007199254743130",
+          "9007199254741013",
+          15.0
+        ],
+        [
+          "9007199254743126",
+          "9007199254741049",
+          46.0
+        ]
+      ],
+      "revision": "41",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-34",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "40",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "ReplaceSnapshot": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743130",
+                  "9007199254743126"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741013",
+                        "9007199254741049"
+                      ]
+                    },
+                    "validity": [
+                      true,
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        15.0,
+                        46.0
+                      ]
+                    },
+                    "validity": [
+                      true,
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "41"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-35",
+      "rows": [
+        [
+          "9007199254743130",
+          "9007199254741013",
+          15.0
+        ]
+      ],
+      "revision": "42",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-35",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "41",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "RemoveKeys": [
+                "9007199254743126",
+                "9007199254753000"
+              ]
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "42"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-36",
+      "rows": [
+        [
+          "9007199254743130",
+          "9007199254741013",
+          15.0
+        ],
+        [
+          "9007199254743137",
+          "9007199254741024",
+          0.0
+        ]
+      ],
+      "revision": "43",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-36",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "42",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743137"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741024"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        0.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "43"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-37",
+      "rows": [
+        [
+          "9007199254743130",
+          "9007199254741013",
+          15.0
+        ],
+        [
+          "9007199254743137",
+          "9007199254741024",
+          0.0
+        ],
+        [
+          "9007199254743138",
+          "9007199254741044",
+          23.0
+        ]
+      ],
+      "revision": "44",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-37",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "43",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "AppendBatch": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743138"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741044"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        23.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "44"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-38",
+      "rows": [
+        [
+          "9007199254743130",
+          "9007199254741019",
+          22.0
+        ],
+        [
+          "9007199254743137",
+          "9007199254741024",
+          0.0
+        ],
+        [
+          "9007199254743138",
+          "9007199254741044",
+          23.0
+        ]
+      ],
+      "revision": "45",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-38",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "44",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "UpsertByKey": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "event_time",
+                    "kind": {
+                      "Timestamp": {
+                        "unit": "Nanoseconds",
+                        "timezone": "UTC"
+                      }
+                    },
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "value",
+                    "kind": "Float64",
+                    "nullable": true,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743130"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Timestamp": [
+                        "9007199254741019"
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        22.0
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ],
+                    "formatted": null
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "45"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "replay-39",
+      "rows": [
+        [
+          "9007199254743137",
+          "9007199254741024",
+          0.0
+        ],
+        [
+          "9007199254743138",
+          "9007199254741044",
+          23.0
+        ]
+      ],
+      "revision": "46",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "replay-39",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "45",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "RemoveKeys": [
+                "9007199254743130",
+                "9007199254753000"
+              ]
+            }
+          }
+        ]
+      },
+      "expected": {
+        "Applied": {
+          "store_revision": "46"
+        }
+      },
+      "present": false
+    },
+    {
+      "name": "queue-drained",
+      "rows": [
+        [
+          "9007199254743137",
+          "9007199254741024",
+          0.0
+        ],
+        [
+          "9007199254743138",
+          "9007199254741044",
+          23.0
+        ]
+      ],
+      "revision": "46",
+      "retention": {
+        "Count": 8
+      },
+      "stream": "Status",
+      "expected": {
+        "queue": {
+          "transactions": 0,
+          "rows": 0,
+          "bytes": 0,
+          "committed": "1",
+          "failed": "0"
+        }
+      }
+    },
+    {
+      "name": "replay-old-receipt-current-data",
+      "rows": [
+        [
+          "9007199254743137",
+          "9007199254741024",
+          0.0
+        ],
+        [
+          "9007199254743138",
+          "9007199254741044",
+          23.0
+        ]
+      ],
+      "revision": "46",
+      "retention": {
+        "Count": 8
+      },
+      "transaction": {
+        "version": 1,
+        "id": "retention-queued",
+        "epoch": "1",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "0",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "SetRetention": {
+                "EventTime": {
+                  "field": "1",
+                  "width": "15",
+                  "allowed_lateness": "2",
+                  "watermark": "9007199254741021",
+                  "late": "Reject"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "expected": {
+        "AlreadyApplied": {
+          "store_revision": "1"
+        }
+      }
+    },
+    {
+      "name": "choose-lossy-overload",
+      "rows": [
+        [
+          "9007199254743137",
+          "9007199254741024",
+          0.0
+        ],
+        [
+          "9007199254743138",
+          "9007199254741044",
+          23.0
+        ]
+      ],
+      "revision": "46",
+      "retention": {
+        "Count": 8
+      },
+      "stream": {
+        "ConfigureQueue": {
+          "transactions": 1,
+          "rows": 1,
+          "bytes": 4096,
+          "overload": "DropNewest"
+        }
+      }
+    },
+    {
+      "name": "explicit-drop-newest",
+      "rows": [
+        [
+          "9007199254743137",
+          "9007199254741024",
+          0.0
+        ],
+        [
+          "9007199254743138",
+          "9007199254741044",
+          23.0
+        ]
+      ],
+      "revision": "46",
+      "retention": {
+        "Count": 8
+      },
+      "stream": {
+        "Enqueue": {
+          "version": 1,
+          "id": "dropped-newest",
+          "epoch": "1",
+          "expected": [
+            {
+              "dataset": "1",
+              "revision": "46",
+              "schema_version": "1"
+            }
+          ],
+          "operations": [
+            {
+              "dataset": "1",
+              "mutation": {
+                "AppendBatch": {
+                  "schema_version": "1",
+                  "fields": [
+                    {
+                      "id": "1",
+                      "name": "event_time",
+                      "kind": {
+                        "Timestamp": {
+                          "unit": "Nanoseconds",
+                          "timezone": "UTC"
+                        }
+                      },
+                      "nullable": true,
+                      "unit": null,
+                      "label": null
+                    },
+                    {
+                      "id": "2",
+                      "name": "value",
+                      "kind": "Float64",
+                      "nullable": true,
+                      "unit": null,
+                      "label": null
+                    }
+                  ],
+                  "keys": [
+                    "9007199254743901",
+                    "9007199254743902"
+                  ],
+                  "columns": [
+                    {
+                      "values": {
+                        "Timestamp": [
+                          "9007199254741101",
+                          "9007199254741102"
+                        ]
+                      },
+                      "validity": [
+                        true,
+                        true
+                      ],
+                      "formatted": null
+                    },
+                    {
+                      "values": {
+                        "Float64": [
+                          1.0,
+                          2.0
+                        ]
+                      },
+                      "validity": [
+                        true,
+                        true
+                      ],
+                      "formatted": null
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "expected": "Dropped"
+    },
+    {
+      "name": "explicit-loss-accounting",
+      "rows": [
+        [
+          "9007199254743137",
+          "9007199254741024",
+          0.0
+        ],
+        [
+          "9007199254743138",
+          "9007199254741044",
+          23.0
+        ]
+      ],
+      "revision": "46",
+      "retention": {
+        "Count": 8
+      },
+      "stream": "Status",
+      "expected": {
+        "queue": {
+          "transactions": 0,
+          "accepted": "0",
+          "dropped": "1",
+          "dropped_rows": "2"
+        }
+      }
+    },
+    {
+      "name": "no-dropped-commit",
+      "rows": [
+        [
+          "9007199254743137",
+          "9007199254741024",
+          0.0
+        ],
+        [
+          "9007199254743138",
+          "9007199254741044",
+          23.0
+        ]
+      ],
+      "revision": "46",
+      "retention": {
+        "Count": 8
+      },
+      "stream": "CommitNext",
+      "expected": null
+    },
+    {
+      "name": "unpin",
+      "rows": [
+        [
+          "9007199254743137",
+          "9007199254741024",
+          0.0
+        ],
+        [
+          "9007199254743138",
+          "9007199254741044",
+          23.0
+        ]
+      ],
+      "revision": "46",
+      "retention": {
+        "Count": 8
+      },
+      "action": {
+        "SetPinned": null
+      }
+    },
+    {
+      "name": "released-pin",
+      "rows": [
+        [
+          "9007199254743137",
+          "9007199254741024",
+          0.0
+        ],
+        [
+          "9007199254743138",
+          "9007199254741044",
+          23.0
+        ]
+      ],
+      "revision": "46",
+      "retention": {
+        "Count": 8
+      },
+      "stream": "Pinned",
+      "expected": null,
+      "present": true
+    }
+  ]
+}

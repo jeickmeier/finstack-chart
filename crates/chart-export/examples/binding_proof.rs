@@ -3,6 +3,8 @@
 mod actions_trace;
 #[path = "common/input_trace.rs"]
 mod input_trace;
+#[path = "common/stream_trace.rs"]
+mod stream_trace;
 use chart_export::portable::PortableChart;
 use std::{fs, path::PathBuf};
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -16,6 +18,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     fs::create_dir_all(&output)?;
     actions_trace::run(&root, &output)?;
     input_trace::run(&root, &output)?;
+    stream_trace::run(&root, &output)?;
     let mut chart = PortableChart::new(
         &fs::read_to_string(fixture.join("chart.json"))?,
         &fs::read_to_string(fixture.join("data.json"))?,

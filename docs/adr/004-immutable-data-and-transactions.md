@@ -120,3 +120,16 @@ atomic failure, ownership release, exact IDs/time, replay limits and chunk shari
 WP-05 consumes normalized data and provenance for grammar preparation. Python/WASM wire
 encoding and runtime lifetimes remain WP-09; WASM compilation is not binding execution.
 No full canonical fixture, PERF case or G1–G4 gate is closed by this package.
+
+## WP-18: explicit retention and bounded ingestion
+
+Accepted 7 September 2026. `IngestionQueue` owns bounded in-memory acceptance and
+explicit FIFO drain; queued acknowledgement is distinct from atomic store commitment.
+Count eviction uses insertion ordinal, independent of presentation order. Event-time
+retention uses a supplied nondecreasing watermark and exact inclusive integer cutoff;
+future input cannot advance it. Rejection is default; optional drops are counted.
+Immutable snapshots retain evicted chunks only through existing explicit ownership.
+Exact explicit-edge bin classification reuses bounded immutable chunk contributions;
+other paths declare batch fallbacks. No dependency or core threading requirement changed.
+See the [streaming contract](../streaming-contract.md) and
+[WP-18 evidence](../evidence/wp-18-completion-2026-09-07.md).

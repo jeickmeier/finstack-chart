@@ -84,3 +84,15 @@ Expose bounded semantic descriptions independently of rendering. Native accessib
 and a linked table consume those descriptions. Actual tree exposure is verified, with
 OS-focus/screen-reader limitations recorded in the [host tools contract](../host-tools-contract.md)
 and [WP-17 evidence](../evidence/wp-17-completion-2026-09-07.md). No dependency changed.
+
+## WP-18: source reconciliation and follow policy
+
+Accepted 7 September 2026. Reconciliation is an atomic reducer transition after source
+commit/preparation. It removes absent active selections, updates aggregate identities,
+cancels invalidated gestures and emits an observable outcome. Historical pins keep one
+original presented scene; descriptions identify historical values and unpin releases
+that ownership. Freeze owns its coherent scene independently of latest ingestion.
+Follow-latest preserves explicit horizontal span and aligns to latest retained prepared
+extent; inspect-history and vertical windows remain stable. Typed timestamps stay exact.
+Native and portable adapters call the shared reducer. See the
+[streaming contract](../streaming-contract.md). Bounded scheduling remains WP-19.

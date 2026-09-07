@@ -27,6 +27,7 @@ pub struct Compiler {
     pub(crate) extensions: Arc<ExtensionRegistry>,
     cache: BTreeMap<Option<PanelKey>, CachedGraph>,
     presentation: Option<(PreparedChart, CompileLimits)>,
+    bin_cache: super::incremental_bins::BinCache,
 }
 impl Compiler {
     /// Empty compiler; no host services, threads or I/O are needed for data preparation.
@@ -48,6 +49,11 @@ impl Compiler {
     pub fn clear_cache(&mut self) {
         self.cache.clear();
         self.presentation = None;
+        self.bin_cache.clear();
+    }
+    /// Exact explicit-bin contribution work from the most recent preparation.
+    pub fn update_metrics(&self) -> StatUpdateMetrics {
+        self.bin_cache.metrics
     }
     /// Validate, filter/map, compute stats, bind outputs, position, collect domains and emit
     /// immutable data-space geometry. Scale/range/layout preparation follows in WP-06.
@@ -59,6 +65,7 @@ impl Compiler {
         limits: CompileLimits,
     ) -> ChartResult<PreparedChart> {
         let snapshot = source.get()?;
+        self.bin_cache.begin(limits.max_prepared_rows);
         if let Some((previous, old_limits)) = &self.presentation {
             let old = previous.definition();
             if *old_limits == limits
@@ -99,7 +106,15 @@ impl Compiler {
         } else {
             self.cache.retain(|key, _| key.is_none());
             self.prepare_scoped(definition, source, state, limits, None)
-        }?;
+        };
+        let result = match result {
+            Ok(result) => result,
+            Err(e) => {
+                self.bin_cache.clear();
+                return Err(e);
+            }
+        };
+        self.bin_cache.finish();
         self.presentation = Some((result.clone(), limits));
         Ok(result)
     }
@@ -151,6 +166,7 @@ impl Compiler {
                 let start = diagnostics.len();
                 let table = stats::run(
                     &self.extensions,
+                    &mut self.bin_cache,
                     input,
                     data,
                     stats::StatRequest {
@@ -209,6 +225,7 @@ impl Compiler {
             let start = diagnostics.len();
             let table = stats::run(
                 &self.extensions,
+                &mut self.bin_cache,
                 input,
                 data,
                 stats::StatRequest {
