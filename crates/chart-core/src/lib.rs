@@ -37,8 +37,10 @@ pub mod diagnostic;
 pub mod geometry;
 pub mod grammar;
 pub mod identity;
+pub mod layout;
 pub mod limits;
 pub mod provenance;
+pub mod scales;
 pub mod scene;
 pub mod services;
 pub mod state;
@@ -47,7 +49,7 @@ pub mod transaction;
 pub use diagnostic::{ChartResult, Diagnostic, DiagnosticCode, DiagnosticContext, Severity};
 pub use geometry::{Point, Rect};
 pub use identity::{
-    AggregateId, DatasetId, DerivedId, FieldId, LayerId, ResourceId, Revision, RowKey, SceneStamp,
-    SchemaVersion, SourceEpoch, TransformId,
+    AggregateId, DatasetId, DerivedId, FieldId, LayerId, ResourceId, Revision, RowKey, ScaleId,
+    SceneStamp, SchemaVersion, SourceEpoch, TransformId,
 };
 pub use limits::Limits;

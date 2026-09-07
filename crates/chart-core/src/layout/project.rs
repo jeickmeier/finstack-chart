@@ -1,0 +1,202 @@
+use super::*;
+use crate::grammar::{ClipPolicy, PreparedGeometry, ValueSpace};
+use crate::provenance::Target;
+use crate::scales::error;
+use crate::scene::{PathCommand, Primitive, SceneItem, Stroke};
+use crate::{ChartResult, DiagnosticCode, Point, Rect};
+use std::collections::BTreeMap;
+
+pub(super) fn timestamp(value: f64, origin: i64) -> ChartResult<i64> {
+    if !value.is_finite() || value.fract() != 0. || value.abs() > (1_u64 << 53) as f64 {
+        return Err(error(
+            DiagnosticCode::PrecisionLoss,
+            "UTC coordinates must preserve exact integer source ticks.",
+        ));
+    }
+    i64::try_from(i128::from(origin) + value as i128).map_err(|_| {
+        error(
+            DiagnosticCode::PrecisionLoss,
+            "Timestamp origin addition exceeds i64.",
+        )
+    })
+}
+impl ResolvedAxis {
+    /// Map a prepared layer coordinate using that layer's exact value-space metadata.
+    /// Category ordinals never become identities; UTC adds the checked integer origin first.
+    pub fn map(&self, value: f64, layer_space: &ValueSpace) -> ChartResult<Option<f64>> {
+        match (&self.scale, layer_space) {
+            (ResolvedScale::Linear(scale), space) if space == &self.space => scale.map(value),
+            (
+                ResolvedScale::Utc(scale),
+                ValueSpace::Timestamp {
+                    representation,
+                    origin,
+                },
+            ) if representation.unit == scale.unit() => scale.map(timestamp(value, *origin)?),
+            (ResolvedScale::Band(scale), ValueSpace::Categorical { categories }) => {
+                if !value.is_finite()
+                    || value < 0.
+                    || value.fract() != 0.
+                    || value >= categories.len() as f64
+                {
+                    return Err(error(
+                        DiagnosticCode::PrecisionLoss,
+                        "Category ordinal does not address its layer catalog.",
+                    ));
+                }
+                scale.center(&categories[value as usize])
+            }
+            _ => Err(error(
+                DiagnosticCode::SchemaConflict,
+                "Prepared coordinate space is incompatible with its named scale.",
+            )),
+        }
+    }
+}
+
+pub(super) struct Output {
+    pub items: Vec<SceneItem>,
+    pub targets: Vec<Vec<Target>>,
+    pub omitted: usize,
+}
+impl Output {
+    pub fn push(
+        &mut self,
+        item: SceneItem,
+        targets: Vec<Target>,
+        request: &LayoutRequest,
+    ) -> ChartResult<()> {
+        crate::limits::require_within(
+            self.items.len() < request.limits.max_items,
+            "layout scene item",
+        )?;
+        self.items.push(item);
+        self.targets.push(targets);
+        Ok(())
+    }
+}
+pub(super) fn project(
+    chart: &crate::grammar::PreparedChart,
+    axes: &BTreeMap<crate::ScaleId, ResolvedAxis>,
+    plot: Rect,
+    request: &LayoutRequest,
+) -> ChartResult<Output> {
+    let mut out = Output {
+        items: vec![],
+        targets: vec![],
+        omitted: 0,
+    };
+    for layer in chart.layers().iter().filter(|l| l.visible()) {
+        let x = &axes[&layer.scales().x];
+        let y = &axes[&layer.scales().y];
+        let xspace = layer.domains().x_space.as_ref().unwrap_or(&x.space);
+        let yspace = layer.domains().y_space.as_ref().unwrap_or(&y.space);
+        let point = |p: Point| -> ChartResult<Option<Point>> {
+            match (x.map(p.x(), xspace)?, y.map(p.y(), yspace)?) {
+                (Some(a), Some(b)) => Ok(Some(Point::new(a, b)?)),
+                _ => Ok(None),
+            }
+        };
+        let clip = Some(if layer.clip() == ClipPolicy::Plot {
+            plot
+        } else {
+            request.bounds
+        });
+        for mark in layer.marks() {
+            let stroke = Stroke {
+                color: mark.style.color,
+                width: mark.style.stroke_width,
+            };
+            let item = |primitive| SceneItem {
+                layer: Some(layer.id()),
+                clip,
+                primitive,
+            };
+            match &mark.geometry {
+                PreparedGeometry::LineRun(points) => {
+                    let mut run = Vec::new();
+                    let mut targets = vec![];
+                    let flush = |out: &mut Output,
+                                 run: &mut Vec<Point>,
+                                 targets: &mut Vec<Target>|
+                     -> ChartResult<()> {
+                        if run.is_empty() {
+                            return Ok(());
+                        }
+                        let primitive = if run.len() == 1 {
+                            Primitive::Point {
+                                center: run[0],
+                                radius: stroke.width / 2.,
+                                fill: stroke.color,
+                            }
+                        } else {
+                            Primitive::Path {
+                                commands: run
+                                    .iter()
+                                    .enumerate()
+                                    .map(|(i, p)| {
+                                        if i == 0 {
+                                            PathCommand::MoveTo(*p)
+                                        } else {
+                                            PathCommand::LineTo(*p)
+                                        }
+                                    })
+                                    .collect(),
+                                stroke,
+                            }
+                        };
+                        out.push(item(primitive), std::mem::take(targets), request)?;
+                        run.clear();
+                        Ok(())
+                    };
+                    for (p, target) in points.iter().zip(&mark.targets) {
+                        if let Some(p) = point(*p)? {
+                            run.push(p);
+                            targets.push(target.clone());
+                        } else {
+                            out.omitted += 1;
+                            flush(&mut out, &mut run, &mut targets)?;
+                        }
+                    }
+                    flush(&mut out, &mut run, &mut targets)?;
+                }
+                PreparedGeometry::Point(p) => {
+                    if let Some(center) = point(*p)? {
+                        out.push(
+                            item(Primitive::Point {
+                                center,
+                                radius: mark.style.radius,
+                                fill: mark.style.color,
+                            }),
+                            mark.targets.clone(),
+                            request,
+                        )?;
+                    } else {
+                        out.omitted += 1;
+                    }
+                }
+                PreparedGeometry::Rule { from, to } | PreparedGeometry::Rectangle { from, to } => {
+                    if let (Some(from), Some(to)) = (point(*from)?, point(*to)?) {
+                        let primitive = if matches!(mark.geometry, PreparedGeometry::Rule { .. }) {
+                            Primitive::Rule { from, to, stroke }
+                        } else {
+                            Primitive::Rectangle {
+                                bounds: Rect::new(
+                                    from.x().min(to.x()),
+                                    from.y().min(to.y()),
+                                    (to.x() - from.x()).abs(),
+                                    (to.y() - from.y()).abs(),
+                                )?,
+                                fill: mark.style.color,
+                            }
+                        };
+                        out.push(item(primitive), mark.targets.clone(), request)?;
+                    } else {
+                        out.omitted += 1;
+                    }
+                }
+            }
+        }
+    }
+    Ok(out)
+}

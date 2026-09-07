@@ -25,6 +25,11 @@ pub enum GroupValue {
 /// Declared axis calculation space, preventing silent double transforms or mixed origins.
 #[derive(Clone, Debug, PartialEq)]
 pub enum ValueSpace {
+    /// Stable label catalog; geometry stores a checked ordinal into this layer catalog.
+    Categorical {
+        /// Labels in retained source order; never dictionary codes or source identities.
+        categories: Vec<String>,
+    },
     /// Numeric source units or a generated count.
     Data,
     /// Relative ticks, preserving the exact source timestamp representation and origin.
@@ -191,7 +196,7 @@ impl PreparedTable {
     }
 }
 
-/// Finite data-space domain extent. Empty axes have no extent; WP-06 chooses fallbacks.
+/// Finite data-space domain extent. Empty axes have no extent; Scale resolution chooses documented fallbacks.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Extent {
     /// Minimum contributing endpoint.
@@ -266,6 +271,8 @@ pub struct PreparedMark {
 #[derive(Clone, Debug)]
 pub struct PreparedLayer {
     pub(crate) id: LayerId,
+    pub(crate) scales: super::ScaleBindings,
+    pub(crate) clip: super::ClipPolicy,
     pub(crate) table: Arc<PreparedTable>,
     pub(crate) marks: Vec<PreparedMark>,
     pub(crate) domains: DomainContributions,
@@ -273,6 +280,14 @@ pub struct PreparedLayer {
     pub(crate) visible: bool,
 }
 impl PreparedLayer {
+    /// Bound positional scale identities.
+    pub fn scales(&self) -> super::ScaleBindings {
+        self.scales
+    }
+    /// Shared destination clipping policy.
+    pub fn clip(&self) -> super::ClipPolicy {
+        self.clip
+    }
     /// Stable source layer identity.
     pub fn id(&self) -> LayerId {
         self.id
@@ -308,7 +323,7 @@ pub struct PreparationMetrics {
     pub reused_transforms: usize,
 }
 
-/// Immutable prepared scene foundation. WP-06 adds scales, coordinates, guides and layout.
+/// Immutable grammar output consumed by the shared scale/layout stage.
 /// It owns no typed source rows or callbacks; its handle pins one coherent source snapshot.
 #[derive(Clone, Debug)]
 pub struct PreparedChart {
@@ -316,12 +331,17 @@ pub struct PreparedChart {
     pub(crate) source: SnapshotHandle<StoreSnapshot>,
     pub(crate) state: ChartState,
     pub(crate) layers: Vec<PreparedLayer>,
+    pub(crate) scale_domains: BTreeMap<crate::ScaleId, DomainContributions>,
     pub(crate) transforms: BTreeMap<TransformId, Arc<PreparedTable>>,
     pub(crate) domains: DomainContributions,
     pub(crate) diagnostics: Vec<Diagnostic>,
     pub(crate) metrics: PreparationMetrics,
 }
 impl PreparedChart {
+    /// Independently trained named scales; each entry occupies exactly one orientation.
+    pub fn scale_domains(&self) -> &BTreeMap<crate::ScaleId, DomainContributions> {
+        &self.scale_domains
+    }
     /// Exact captured normalized definition.
     pub fn definition(&self) -> &ChartDefinition {
         &self.definition
@@ -346,7 +366,8 @@ impl PreparedChart {
     pub fn transform(&self, id: TransformId) -> Option<&Arc<PreparedTable>> {
         self.transforms.get(&id)
     }
-    /// Combined compatible-axis contributions, including hidden layers and all endpoints.
+    /// Primary x/y contributions, including hidden layers and all eligible endpoints.
+    /// Other named axes are available through `scale_domains`.
     pub fn domains(&self) -> &DomainContributions {
         &self.domains
     }

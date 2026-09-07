@@ -91,7 +91,7 @@ impl Compiler {
         };
         let graph_diagnostics = diagnostics.clone();
         let mut layers = vec![];
-        let mut domains = DomainContributions::default();
+        let mut scale_domains = BTreeMap::new();
         let mut budget = GeometryBudget {
             limits,
             vertices: limits.max_vertices,
@@ -130,9 +130,22 @@ impl Compiler {
             for e in &mut diagnostics[start..] {
                 *e = context(e.clone(), data, Some(layer.id));
             }
-            merge_domains(&mut domains, &prepared.domains)
-                .map_err(|e| context(e, data, Some(layer.id)))?;
+            merge_named(
+                &mut scale_domains,
+                layer.scales,
+                &eligible_domains(&prepared),
+            )
+            .map_err(|e| context(e, data, Some(layer.id)))?;
             layers.push(prepared);
+        }
+        let mut domains = DomainContributions::default();
+        if let Some(d) = scale_domains.get(&crate::ScaleId::new(0)) {
+            domains.x = d.x;
+            domains.x_space = d.x_space.clone();
+        }
+        if let Some(d) = scale_domains.get(&crate::ScaleId::new(1)) {
+            domains.y = d.y;
+            domains.y_space = d.y_space.clone();
         }
         let result = PreparedChart {
             definition: Arc::new(definition.clone()),
@@ -141,6 +154,7 @@ impl Compiler {
             layers,
             transforms: tables.clone(),
             domains,
+            scale_domains,
             diagnostics,
             metrics: PreparationMetrics {
                 evaluated_transforms: if reuse { 0 } else { tables.len() },
@@ -292,8 +306,24 @@ struct EncodedRow {
     target: Target,
     key: Option<RowKey>,
 }
+fn coordinate_space(data: &DatasetSnapshot, value: &Numeric) -> ChartResult<ValueSpace> {
+    if let Numeric::Category(id) = value {
+        return data
+            .categories(*id)
+            .map(|v| ValueSpace::Categorical {
+                categories: v.to_vec(),
+            })
+            .ok_or_else(|| {
+                error(
+                    DiagnosticCode::SchemaConflict,
+                    "Band encoding requires a categorical source field.",
+                )
+            });
+    }
+    numeric_space(data, value)
+}
 fn source_space(data: &DatasetSnapshot, value: &Numeric) -> ChartResult<Option<ValueSpace>> {
-    let space = numeric_space(data, value)?;
+    let space = coordinate_space(data, value)?;
     Ok(if matches!(value, Numeric::Literal(_)) {
         None
     } else {
@@ -327,10 +357,100 @@ fn merge_space(a: &mut Option<ValueSpace>, b: &Option<ValueSpace>) -> ChartResul
         if a.as_ref().is_some_and(|prior| prior != space) {
             return Err(error(
                 DiagnosticCode::SchemaConflict,
-                "Incompatible calculation spaces or timestamp origins share an axis; use compatible mappings or later independent scales.",
+                "Incompatible calculation spaces or timestamp origins share an axis; use compatible mappings or independently named scales.",
             ));
         }
         *a = Some(space.clone());
+    }
+    Ok(())
+}
+// Train categorical membership from eligible post-stat geometry, ordered by the retained
+// source catalog. Keep the layer catalog unchanged so geometry ordinals still decode exactly.
+fn eligible_domains(layer: &PreparedLayer) -> DomainContributions {
+    let mut d = layer.domains.clone();
+    for horizontal in [true, false] {
+        let space = if horizontal {
+            &mut d.x_space
+        } else {
+            &mut d.y_space
+        };
+        if let Some(ValueSpace::Categorical { categories }) = space {
+            let mut used = BTreeSet::new();
+            let mut include = |p: Point| {
+                used.insert(if horizontal { p.x() } else { p.y() } as usize);
+            };
+            for mark in &layer.marks {
+                match &mark.geometry {
+                    PreparedGeometry::Point(p) => include(*p),
+                    PreparedGeometry::LineRun(points) => {
+                        for p in points {
+                            include(*p);
+                        }
+                    }
+                    PreparedGeometry::Rule { from, to }
+                    | PreparedGeometry::Rectangle { from, to } => {
+                        include(*from);
+                        include(*to);
+                    }
+                }
+            }
+            *categories = categories
+                .iter()
+                .enumerate()
+                .filter(|(i, _)| used.contains(i))
+                .map(|(_, s)| s.clone())
+                .collect();
+        }
+    }
+    d
+}
+fn merge_named(
+    all: &mut BTreeMap<crate::ScaleId, DomainContributions>,
+    bindings: ScaleBindings,
+    d: &DomainContributions,
+) -> ChartResult<()> {
+    for (id, horizontal) in [(bindings.x, true), (bindings.y, false)] {
+        let a = all.entry(id).or_default();
+        if (horizontal && a.y_space.is_some()) || (!horizontal && a.x_space.is_some()) {
+            return Err(error(
+                DiagnosticCode::SchemaConflict,
+                "A named scale cannot serve both x and y.",
+            ));
+        }
+        let b = if horizontal {
+            DomainContributions {
+                x: d.x,
+                x_space: Some(d.x_space.clone().unwrap_or(ValueSpace::Data)),
+                ..Default::default()
+            }
+        } else {
+            DomainContributions {
+                y: d.y,
+                y_space: Some(d.y_space.clone().unwrap_or(ValueSpace::Data)),
+                ..Default::default()
+            }
+        };
+        // Union layer catalogs only here: each layer retains its own ordinal-to-label mapping.
+        let (prior, next) = if horizontal {
+            (&mut a.x_space, &b.x_space)
+        } else {
+            (&mut a.y_space, &b.y_space)
+        };
+        if let (
+            Some(ValueSpace::Categorical { categories: p }),
+            Some(ValueSpace::Categorical { categories: n }),
+        ) = (prior, next)
+        {
+            let mut seen: BTreeSet<String> = p.iter().cloned().collect();
+            p.extend(n.iter().filter(|v| seen.insert((*v).clone())).cloned());
+            let extent = if horizontal { &mut a.x } else { &mut a.y };
+            if let Some(e) = if horizontal { b.x } else { b.y } {
+                Extent::include(extent, e.minimum);
+                Extent::include(extent, e.maximum);
+            }
+        } else {
+            merge_domains(a, &b)?;
+        }
     }
     Ok(())
 }
@@ -373,11 +493,11 @@ fn source_binding(
         ));
     }
     // Validate even unused inherited fields so unrelated schemas require explicit overrides.
-    for value in [&aes.x, &aes.y, &aes.x2, &aes.y2, &aes.size]
-        .into_iter()
-        .flatten()
-    {
-        numeric_space(data, value)?;
+    for value in [&aes.x, &aes.y, &aes.x2, &aes.y2].into_iter().flatten() {
+        coordinate_space(data, value)?;
+    }
+    if let Some(size) = &aes.size {
+        numeric_space(data, size)?;
     }
     let grouping = aes.group.map_or(Grouping::All, Grouping::Field);
     validate_group(data, &grouping)?;
@@ -461,16 +581,46 @@ fn prepare_layer(
             };
             let grouping = aes.group.map_or(Grouping::All, Grouping::Field);
             let index: BTreeMap<_, _> = data.rows().map(|r| (r.key(), r)).collect();
+            let catalogs: BTreeMap<_, BTreeMap<&str, f64>> = [&aes.x, &aes.y, &aes.x2, &aes.y2]
+                .into_iter()
+                .flatten()
+                .filter_map(|v| {
+                    if let Numeric::Category(id) = v {
+                        Some((
+                            *id,
+                            data.categories(*id)
+                                .unwrap_or_default()
+                                .iter()
+                                .enumerate()
+                                .map(|(i, s)| (s.as_str(), i as f64))
+                                .collect(),
+                        ))
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+            let coordinate = |row: crate::data::RowView<'_>, value: &Numeric| {
+                if let Numeric::Category(id) = value {
+                    if let Some(crate::data::ValueRef::Category(label)) = row.value(*id) {
+                        catalogs.get(id)?.get(label).copied()
+                    } else {
+                        None
+                    }
+                } else {
+                    number(row, value)
+                }
+            };
             let encoded = rows
                 .iter()
                 .map(|r| {
                     let row = index[&r.key];
                     EncodedRow {
-                        x: number(row, x),
-                        y: number(row, y),
-                        x2: aes.x2.as_ref().and_then(|v| number(row, v)),
-                        y2: aes.y2.as_ref().and_then(|v| number(row, v)),
-                        size: aes.size.as_ref().and_then(|v| number(row, v)),
+                        x: coordinate(row, x),
+                        y: coordinate(row, y),
+                        x2: aes.x2.as_ref().and_then(|v| coordinate(row, v)),
+                        y2: aes.y2.as_ref().and_then(|v| coordinate(row, v)),
+                        size: aes.size.as_ref().and_then(|v| coordinate(row, v)),
                         group: group_value(row, &grouping),
                         ordinal: r.ordinal,
                         target: Target::Source(SourceRef {
@@ -517,6 +667,8 @@ fn prepare_layer(
     }
     let mut prepared = PreparedLayer {
         id: layer.id,
+        scales: layer.scales,
+        clip: layer.clip,
         table,
         marks: vec![],
         domains,
@@ -755,7 +907,7 @@ fn preflight_schemas(
             .map_err(|e| context(e, data, None))?;
         shapes.insert(node.id, output);
     }
-    let mut domains = DomainContributions::default();
+    let mut domains = BTreeMap::new();
     for layer in &definition.layers {
         let input = input_shape(layer.data, &shapes)?;
         let data = snapshot.dataset(input.dataset)?;
@@ -772,7 +924,8 @@ fn preflight_schemas(
             )),
         }
         .map_err(|e| context(e, data, Some(layer.id)))?;
-        merge_domains(&mut domains, &binding).map_err(|e| context(e, data, Some(layer.id)))?;
+        merge_named(&mut domains, layer.scales, &binding)
+            .map_err(|e| context(e, data, Some(layer.id)))?;
     }
     Ok(())
 }

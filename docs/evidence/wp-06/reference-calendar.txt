@@ -1,0 +1,12 @@
+Independent Python datetime UTC reference check, integer timedelta arithmetic.
+0001-01-01 UTC = -62135596800 Unix seconds; PASS
+1900-03-01 UTC = -2203891200 Unix seconds; PASS
+2000-02-29 UTC = 951782400 Unix seconds; PASS
+2023-11-15 UTC = 1700006400 Unix seconds; PASS
+2023-12-01 UTC = 1701388800 Unix seconds; PASS
+2024-01-01 UTC = 1704067200 Unix seconds; PASS
+2024-02-01 UTC = 1706745600 Unix seconds; PASS
+2024-02-29 UTC = 1709164800 Unix seconds; PASS
+2024-03-01 UTC = 1709251200 Unix seconds; PASS
+2024-03-03 UTC = 1709424000 Unix seconds; PASS
+9999-12-31 UTC = 253402214400 Unix seconds; PASS

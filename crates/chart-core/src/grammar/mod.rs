@@ -1,7 +1,7 @@
 //! Typed authoring and one staged, dependency-free grammar preparation engine.
 //!
 //! Output geometry is in declared calculation/data space, not destination pixels.
-//! Scale mapping, axes and text-aware layout are the next preparation boundary (WP-06).
+//! [`crate::layout`] maps this output into destination geometry with axes and text-aware margins.
 
 //! Typed native inputs lower to the same explicit bin/rectangle recipe as field-based layers:
 //!
@@ -31,6 +31,25 @@
 //! };
 //! assert_eq!(bins.iter().map(|bin| bin.count).collect::<Vec<_>>(), vec![2, 2]);
 //! assert_eq!(prepared.layers()[0].marks().len(), 2);
+//!
+//! // Resolve using the destination's exact font and measurement service.
+//! use chart_core::layout::{layout, LayoutRequest, LayoutStatus};
+//! use chart_core::services::{ResourceDescriptor, ResourceKind, TextMeasurer,
+//!                            TextMetrics, TextRequest, Units};
+//! struct FixtureMetrics;
+//! impl TextMeasurer for FixtureMetrics {
+//!     fn measure(&self, text: TextRequest<'_>) -> ChartResult<TextMetrics> {
+//!         // Demonstration only: real hosts must shape/paint this exact font and units.
+//!         TextMetrics::new(text.text.chars().count() as f64 * 6., 9., 3.)
+//!     }
+//! }
+//! let font = ResourceDescriptor { id: chart_core::ResourceId::new(1),
+//!     revision: Revision::new(1), kind: ResourceKind::Font, byte_len: 123 };
+//! let request = LayoutRequest::new(chart_core::Rect::new(0., 0., 400., 240.)?,
+//!                                  Units::Points, font);
+//! let result = layout(std::sync::Arc::new(prepared), &request, &FixtureMetrics)?;
+//! assert_eq!(result.status(), LayoutStatus::Ready);
+//! assert_eq!(result.targets().len(), result.scene().items().len());
 //! # Ok(())
 //! # }
 //! ```

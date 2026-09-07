@@ -198,3 +198,13 @@ ownership. Source processing and geometry still perform row scans. These bounds 
 RSS measurements nor sustained-load/performance certification. The [WP-05 report](../evidence/wp-05-completion-2026-09-06.md)
 records independent semantic/geometry, cache, lifetime and numerical counterexamples.
 WP-06 consumes this output for scales, ticks and layout; G1 still requires WP-06–09 evidence.
+
+## WP-06 consumer update
+
+[ADR-005](005-foundational-scales-and-layout.md) now implements the scale/layout handoff
+above: named positional scale IDs and categorical encodings, independently trained domains,
+linear/band/UTC mapping, four-pass plain-text layout and a destination Scene retaining clips
+and per-mark/vertex targets. `PreparedChart` remains the upstream data/stat snapshot;
+`LaidOutChart` owns its destination result. `SceneStamp::state` now distinguishes visibility
+changes from viewport changes. Full native/export consumers and richer typography remain
+WP-07/08/12/13. The earlier WP-05 statements describe that package's historical boundary.

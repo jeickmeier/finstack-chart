@@ -3,10 +3,10 @@
 Rust-native grammar-of-graphics project with a portable core, headless publication export,
 a standalone GPUI host and optional Kit integration.
 
-**Status: WP-05 grammar preparation complete. Typed data, composed layers and histogram
-recipes share one compiler producing data-space geometry, domains and semantic targets.
-WP-06 scales/layout is ready; public rendering/export and bindings remain unimplemented.
-G0 capability evidence is retained for the initial macOS host; G1–G4 remain open.**
+**Status: WP-06 foundational scales and destination layout implemented. Linear, categorical
+band and UTC scales project the shared grammar output into finite scenes with plain axes,
+explicit clips and bounded text-aware margins. WP-07 native integration and WP-08 export
+are next; G0 capability evidence is retained and G1–G4 remain open.**
 
 ## Start here
 
@@ -41,8 +41,9 @@ and core WASM compilation), and `test` (macOS workspace or Linux core/export tes
 The core suite checks identities/revisions, finite geometry, bounded scene construction
 and synchronous service boundaries, plus data/schema, replay, retention and snapshot
 ownership contracts. It also verifies identity/explicit-bin statistics, line gaps,
-heterogeneous layer geometry and transform reuse. Rendering and the full statistical
-family remain later gates.
+heterogeneous layer geometry and transform reuse. Scale/layout tests add domain policies,
+UTC calendar and precision fixtures, categorical identity, measured margins and viewport
+separation. Actual rendering and the full statistical family remain later gates.
 Use `mise exec -- cargo ...` for one-off Cargo commands, or activate
 mise in your shell for editor and terminal tool selection.
 
@@ -72,7 +73,10 @@ contract suite and example. [Changes](CHANGELOG.md) and
 [WP-02 evidence](docs/evidence/wp-02-completion-2026-09-06.md) record compatibility and
 the precise validation boundary. The [grammar Rustdoc example](crates/chart-core/src/grammar/mod.rs)
 builds a typed histogram through the shared compiler; [WP-05 evidence](docs/evidence/wp-05-completion-2026-09-06.md)
-records the generated-schema, domain, provenance and state contracts.
+records the generated-schema, domain, provenance and state contracts. The same example now
+continues through destination layout. [ADR-005](docs/adr/005-foundational-scales-and-layout.md)
+and [WP-06 evidence](docs/evidence/wp-06-completion-2026-09-06.md) record scale, tick, clip,
+font-metric and layout policies.
 
 The root is a virtual Cargo workspace named by this repository, not a `finstack-chart`
 facade crate. Package ownership follows ARC-01. Default members are `chart-core`,

@@ -31,6 +31,7 @@ fn stamp() -> SceneStamp {
         definition: Revision::new(2),
         store: Revision::new(9),
         layout: Revision::new(4),
+        state: Revision::new(8),
         viewport: Revision::new(7),
     }
 }

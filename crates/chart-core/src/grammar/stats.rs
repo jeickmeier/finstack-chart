@@ -87,6 +87,12 @@ pub(crate) fn numeric_space(data: &DatasetSnapshot, value: &Numeric) -> ChartRes
                 ))
             };
         }
+        Numeric::Category(id) => {
+            return Err(field_error(
+                *id,
+                "Categorical encodings cannot be used as numeric statistic/filter/size inputs.",
+            ));
+        }
         Numeric::Field(id) => (*id, None),
         Numeric::Timestamp { field, origin } => (*field, Some(*origin)),
     };
@@ -137,6 +143,7 @@ fn field_error(id: FieldId, message: &str) -> Diagnostic {
 }
 pub(crate) fn number(row: RowView<'_>, value: &Numeric) -> Option<f64> {
     let value = match value {
+        Numeric::Category(_) => None,
         Numeric::Literal(v) => Some(*v),
         Numeric::Field(id) => match row.value(*id)? {
             ValueRef::Float64(v) => Some(v),

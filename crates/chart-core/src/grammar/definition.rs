@@ -1,6 +1,6 @@
 use crate::data::InvalidPolicy;
 use crate::scene::Color;
-use crate::{DatasetId, FieldId, LayerId, Revision, TransformId};
+use crate::{DatasetId, FieldId, LayerId, Revision, ScaleId, TransformId};
 
 /// Exact builtin operation identity/version; unknown or mismatched registrations fail.
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -42,11 +42,13 @@ impl From<TransformId> for DataRef {
     }
 }
 
-/// Portable numeric mapping evaluated against source rows only.
+/// Portable coordinate/numeric mapping evaluated against source rows only.
 #[derive(Clone, Debug, PartialEq)]
 pub enum Numeric {
     /// Numeric source field; integer precision is checked, timestamps require `Timestamp`.
     Field(FieldId),
+    /// Stable categorical label projected through a band scale; invalid in numeric statistics.
+    Category(FieldId),
     /// Explicit constant encoding, separate from a geometry's constant style.
     Literal(f64),
     /// Timestamp projection in original ticks after checked integer-origin subtraction.
@@ -239,12 +241,12 @@ impl SourceAes {
     pub fn new() -> Self {
         Self::default()
     }
-    /// Bind x to a numeric field or literal.
+    /// Bind x to a numeric field, literal, timestamp or explicit category encoding.
     pub fn x(mut self, value: impl Into<Numeric>) -> Self {
         self.x = Some(value.into());
         self
     }
-    /// Bind y to a numeric field or literal.
+    /// Bind y to a numeric field, literal, timestamp or explicit category encoding.
     pub fn y(mut self, value: impl Into<Numeric>) -> Self {
         self.y = Some(value.into());
         self
@@ -424,11 +426,41 @@ impl Default for Style {
     }
 }
 
+/// Named positional scale bindings. IDs zero and one are the default x and y scales.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct ScaleBindings {
+    /// Horizontal scale identity.
+    pub x: ScaleId,
+    /// Vertical scale identity.
+    pub y: ScaleId,
+}
+impl Default for ScaleBindings {
+    fn default() -> Self {
+        Self {
+            x: ScaleId::new(0),
+            y: ScaleId::new(1),
+        }
+    }
+}
+/// Destination clip shared by painting and future hit testing/export.
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+pub enum ClipPolicy {
+    /// Clip to the resolved plot rectangle.
+    #[default]
+    Plot,
+    /// Declared annotation overflow, bounded by the figure.
+    Figure,
+}
+
 /// One heterogeneous grammar layer, erased to portable fields before preparation.
 #[derive(Clone, Debug, PartialEq)]
 pub struct Layer {
     /// Stable identity; vector order controls paint order.
     pub id: LayerId,
+    /// Named horizontal and vertical scale bindings.
+    pub scales: ScaleBindings,
+    /// Explicit annotation overflow policy.
+    pub clip: ClipPolicy,
     /// Dataset or shared transform output.
     pub data: DataRef,
     /// Source filters, before statistics and domains.
@@ -453,6 +485,8 @@ impl Layer {
     pub fn new(id: LayerId, data: impl Into<DataRef>, geom: Geom, mappings: SourceAes) -> Self {
         Self {
             id,
+            scales: ScaleBindings::default(),
+            clip: ClipPolicy::default(),
             data: data.into(),
             filters: vec![],
             statistic: Statistic::identity(),
@@ -478,6 +512,11 @@ impl Layer {
             statistic: Statistic::bin(spec),
             ..Self::binned(id, data, Geom::Rectangle, BinAes::histogram())
         }
+    }
+    /// Bind this layer to independently trained named scales.
+    pub fn scaled(mut self, x: ScaleId, y: ScaleId) -> Self {
+        self.scales = ScaleBindings { x, y };
+        self
     }
     /// Choose an explicit constant style.
     pub fn styled(mut self, style: Style) -> Self {

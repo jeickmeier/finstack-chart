@@ -30,6 +30,7 @@ identity!(
     LayerId,
     "Identity of a definition layer, independent of paint order."
 );
+identity!(ScaleId, "Identity of a named positional scale.");
 identity!(FieldId, "Identity of a field within its dataset schema.");
 identity!(
     ResourceId,
@@ -101,6 +102,8 @@ pub struct SceneStamp {
     pub store: Revision,
     /// Layout/resource/profile revision supplied by the owner.
     pub layout: Revision,
+    /// Captured presentation state revision, including layer visibility.
+    pub state: Revision,
     /// Viewport revision.
     pub viewport: Revision,
 }

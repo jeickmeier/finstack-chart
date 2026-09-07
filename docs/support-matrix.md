@@ -1,18 +1,19 @@
 # Support and evidence matrix
 
 Updated: 6 September 2026. Intended support is not verified product support.
-Current grammar/prepared-geometry evidence is recorded in the
-[WP-05 completion report](evidence/wp-05-completion-2026-09-06.md); native/export capability
+Current scale/destination-layout evidence is recorded in the
+[WP-06 completion report](evidence/wp-06-completion-2026-09-06.md), following
+[WP-05 grammar evidence](evidence/wp-05-completion-2026-09-06.md); native/export capability
 evidence remains in the [WP-03 report](evidence/wp-03-completion-2026-09-06.md). Dependency/build
 selection remains in the [WP-01 report](evidence/wp-01-completion-2026-09-06.md), with
 earlier infrastructure checks in the [bootstrap report](evidence/bootstrap-2026-09-06.md).
 
 | Surface | Required scope | Current implementation/evidence | Open gate |
 | --- | --- | --- | --- |
-| Portable Rust core | Synchronous host-independent semantics on macOS/Linux | Data and initial grammar compiler implemented; 59 core tests and 2 Rustdoc examples pass on macOS, including FIX-01/02 prepared geometry and composite layers; scale/layout and full statistical families remain pending | WP-06 onward; G1/G4 |
+| Portable Rust core | Synchronous host-independent semantics on macOS/Linux | Data, initial grammar and foundational scales/layout implemented; 84 core tests and 2 Rustdoc examples pass on macOS, including FIX-01/02 prepared geometry and WP-06 FIX-07 destination/precision/text-layout scope; real renderers and full families remain pending | WP-07 onward; G1/G4 |
 | macOS Apple Silicon GPUI | First desktop host | Pinned GPUI/platform 0.3.3; actual vector capability fixture inspected on macOS 26.5.2 arm64 at scale 2; input, remount, resize and teardown exercised; public chart renderer pending | WP-07/21 |
 | Linux headless core/export | Core tests and headless use | Target dependency isolation verified; CI configured; no Linux execution recorded locally | WP-08/21 |
-| Browser WASM target | Core compilation; minimal runtime proof | Implemented core including data/transactions/grammar compiles for `wasm32-unknown-unknown`; target graph isolation verified; no runtime binding | WP-09 |
+| Browser WASM target | Core compilation; minimal runtime proof | Implemented core including data/transactions/grammar/scales/layout compiles for `wasm32-unknown-unknown`; target graph isolation verified; no runtime binding | WP-09 |
 | Optional Kit | Compatible theme/control adapter | Kit 0.6.0 input/buttons exercised against the same GPUI identity; optional dependency preserved; chart theme/control adapter pending | WP-13/17 |
 | SVG/PDF/PNG | Vector marks, explicit fonts/dimensions and publication output | Actual text/outline SVG/PDF and 300/600 DPI PNG inspected; explicit embedded/subset fonts, physical sizes and zero PDF image objects verified; candidate dependencies dev-only | WP-08/13 |
 | Python headless | Minimal batch/correction/action/export equivalence | Rust shell only; no extension or packaging | WP-09 |
@@ -37,7 +38,9 @@ isolation. WP-02 also verifies finite geometry, bounded immutable scenes and syn
 services with deterministic test doubles. WP-04 adds data validity/revisions/provenance,
 bounded replay, count retention and snapshot-sharing/lifetime checks. WP-05 adds typed
 authoring, identity/explicit-bin outputs, endpoint geometry, transform reuse and minimal
-viewport/visibility actions. These are data-space preparations, not destination rendering.
+viewport/visibility actions. WP-06 adds linear/band/UTC scales, named domains, explicit clips,
+finite destination scenes and bounded plain-text layout with deterministic measurement doubles.
+These checks do not establish actual destination font shaping/painting or output fidelity.
 Full primitive/font/export and binding parity
 cannot be inferred from foundation tests or the small capability fixture.
 
@@ -52,5 +55,6 @@ native and export results for the fixed primitives, typography, clips, gradients
 dimensions and controls, with concrete paths for unsupported capabilities.
 [The completion report](evidence/wp-03-completion-2026-09-06.md) links actual artifacts,
 inspection and commands. General rendering/diagnostics, destination measurement bridges,
-all themes, multi-panel/tight bounds, live snapshots and full platform accessibility
+all themes, multi-panel layout, real destination typography at tight bounds, live snapshots
+and full platform accessibility
 remain unverified until their owning packages implement and exercise them.
