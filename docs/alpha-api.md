@@ -5,6 +5,18 @@ changes reviewed explicitly. It does not promise production SemVer stability, pu
 packages, completed streaming or release support. [Specification](spec/gpui-charts-specification.md)
 semantics govern names; [status](implementation-status.md) owns the remaining packages.
 
+The [primary authoring plan](impl_plans/primary-authoring-api-plan.md), AUT-01–09 and
+[ADR-013](adr/013-primary-authoring-api.md) now define the successor public surface
+over an assumed completed original WP-01–23 baseline. All features must become
+accessible through the primary builders/runtime; the table below remains the current
+historical alpha API, not the proposed developer entry point. The refactor is planned,
+with migration and G-AUTH evidence still open; no new API is available merely because
+its sketch appears in the plan.
+
+The scale PASS row below records the original 0.1.0 alpha subset. The required
+0.2.0 [D3 scale parity work](impl_plans/d3-scale-parity-plan.md), SCL-06–08/FIX-20,
+remains open through SP-01–07 and G-SCALE; this alpha matrix does not certify it.
+
 ## Authoring and ownership
 
 | Surface | Chosen alpha API and contract |

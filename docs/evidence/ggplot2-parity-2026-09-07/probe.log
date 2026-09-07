@@ -1,0 +1,10 @@
+Date: 2026-09-07; cwd: /Users/jeickmeier/Projects/finstack-chart
+Base: 127fe2d4853f89b62ba59a17248485e3c378ba60 plus concurrent working tree
+Environment: Darwin arm64; rustc 1.97.1
+Command (inside mise exec): rustc --edition=2024 docs/evidence/ggplot2-parity-2026-09-07/probe.rs --extern chart_core=target/debug/deps/libchart_core-3430399c6f5173db.rlib -L dependency=target/debug/deps -o /tmp/ggplot-parity-probe-retained
+Core rlib SHA256: 3a5d30795551b2b9ab7c35ff0c2823fdd246fad63c3b96daceefbb4d5775f2fe
+Prepared legend: Some("PARITY_LEGEND"), entries=2
+Non-faceted legend title scene items: 0
+Faceted positive-control legend title scene items: 1
+Category color without explicit group: Some((UnsupportedCapability, "Filled/line runs require color constant within each group; use a group color mapping."))
+With explicit group: success=true

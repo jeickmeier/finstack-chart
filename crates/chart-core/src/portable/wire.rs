@@ -206,7 +206,7 @@ impl TransactionEnvelope {
         })
     }
 }
-/// Revision-fenced minimal action envelope. It never changes the statistical population.
+/// Programmatic action envelope with exact definition/state fences.
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ActionEnvelope {
@@ -216,10 +216,10 @@ pub struct ActionEnvelope {
     pub definition_revision: Revision,
     /// Expected state revision; stale host replies cannot overwrite newer state.
     pub expected_state: Revision,
-    /// Viewport, visibility or reset action.
+    /// Shared action; scene-dependent variants additionally require an acknowledged scene.
     pub action: ChartAction,
 }
-/// Exact portable minimal state snapshot, separate from the definition.
+/// Exact portable durable state snapshot, separate from the definition and transient previews.
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct StateEnvelope {

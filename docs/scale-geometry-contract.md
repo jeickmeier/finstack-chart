@@ -5,6 +5,17 @@ WP-11 extends the existing compiler, named scale layout and immutable scene. The
 [family fixtures](../fixtures/families/README.md) and
 [completion report](evidence/wp-11-completion-2026-09-07.md) record executed scope.
 
+This document describes the implemented WP-11/0.1.0 behavior. Specification 0.2.0
+adds required D3 scale parity under SCL-06–08; the
+[scale parity plan](impl_plans/d3-scale-parity-plan.md) tracks missing families and
+changes to the positive-only log, tick, category, interpolation and calendar contracts.
+Those changes are planned, not implemented or certified by this report.
+
+Specification 0.3.0 additionally requires CHR-01–06 and the
+[scale-chromatic parity plan](impl_plans/d3-scale-chromatic-parity-plan.md). Named schemes,
+Brewer splines, lookup/analytic/cyclical ramps and their portable operations are planned;
+the raw palettes described below retain their existing meaning.
+
 ## Positional scales
 
 A nonempty `ChartDefinition.axes` replaces the destination's default axis list. Each

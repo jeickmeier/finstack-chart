@@ -55,7 +55,7 @@ up to 32 named finite/exact semantic values, atomic-target or disabled selection
 and a stable keyboard order separate from paint order. Semantic text is bounded to 8 KiB.
 Custom regions and values survive theme resolution, projection, facet and inset placement.
 The presented inspector uses the declared hit shape, not its bounding box, and the
-actual scene stamp. The full gesture/selection action system follows in WP-15/16.
+actual scene stamp. The [interaction contract](interaction-contract.md) defines the shared gesture/selection action system.
 
 `NativePaint` carries numeric bounds, color, operation/version and bounded JSON, never
 GPUI objects. `NativePainterRegistry` lives in `gpui-charts`; its `Rc<dyn NativePainter>`

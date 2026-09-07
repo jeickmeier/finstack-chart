@@ -1,10 +1,98 @@
 # Rust-native GPUI chart library: architecture and implementation plan
 
-Project document version: 0.1.0. Revised 6 September 2026. This document records the independent grammar-of-graphics architecture informed by ggplot2, TanStack Charts, D3, and Apache ECharts, including custom publication design, streaming, full interaction and future bindings. It is architecture rationale and reference research; no chart library has been implemented or benchmarked as part of this planning exercise. API examples and crate names below are proposals.
+Project document version: 0.5.0. Revised 7 September 2026. This document records the independent grammar-of-graphics architecture informed by ggplot2, TanStack Charts, D3, and Apache ECharts, including custom publication design, streaming, full interaction and future bindings. It is architecture rationale and reference research; current implementation evidence belongs to the status ledger. API examples below remain historical proposals unless adopted by an implementation contract.
 
 This file is one part of the project handoff. Read the [project specification](gpui-charts-specification.md) for normative requirements, precise semantic defaults, scope and release gates; read the [implementation plan](../impl_plans/gpui-charts-implementation-plan.md) for ordered work packages, dependencies, ownership, evidence and the AI-developer kickoff prompt. Explicit project-owner instructions take precedence, followed by the specification. This migration document provides rationale rather than a competing implementation backlog. Its dependency snapshots are dated research; implementation must verify and pin the host-compatible versions.
 
 ## Recommendation
+
+The owner's [primary authoring API plan](../impl_plans/primary-authoring-api-plan.md)
+supersedes earlier proposals that expose low-level engine construction as the ordinary
+developer workflow. AUT-01–09 make concise authoring the main API for every delivered
+feature, over the same normalized engine and typed runtime. AP-00–09 assume original
+WP-01–23 completion for planning and migrate data, grammar/design, live state, native/
+export and bindings before G-AUTH. This is not a status claim for the live checkout.
+No additional façade crate or second compiler is selected; see
+[ADR-013](../adr/013-primary-authoring-api.md). Existing numerical defaults and portable
+identities are preserved unless explicitly versioned.
+
+The [Phase 2 parity plan](../impl_plans/phase-2-parity-implementation-plan.md)
+consolidates the eight D3 module lanes and adds full ggplot2 4.0.3 chart capabilities
+under specification GG2-01–12. It explicitly supersedes historical deferrals below for
+ggplot2 analytical fitting/density, geographic and polar/radial coordinates,
+mathematical labels and saving devices. Keep one Rust compiler/scale/color/path engine,
+with explicit legacy/D3/ggplot2 policies and versioned migrations. Heavy model, text,
+projection and device dependencies require bounded capability/portability spikes and
+ADRs before adoption; this planning task selects none. Pure core has no compulsory
+I/O, interpreter, host objects or threading. Phase 1 WP-01–20 continues, while the
+eight D3 gates and G-GGPLOT join G3 at G-PARITY before final WP-21–23/G4. Browser and
+Python distribution products, arbitrary R execution and unrelated D3 modules remain
+outside this addition. Detailed package inventories live in the linked plans only.
+
+The hierarchy scope addition is required by HIR-01–08 and the
+[D3 hierarchy parity plan](../impl_plans/d3-hierarchy-parity-plan.md). Use the pinned
+d3-hierarchy 3.1.2 surface as the development reference, including node operations,
+all five layouts, packing helpers, custom tilers and resquarify history. Put one checked
+hierarchy engine in core; keep immutable topology/results and explicit layout history
+separate from host objects. Reuse shared shape arcs/links for Cartesian/radial recipes.
+Actual portable operations, native/publication artifacts and history-aware update proofs
+are required before G-HIERARCHY passes. The former hierarchy deferral below is superseded;
+general network/force/Sankey layout and clustering algorithms remain future scope.
+
+The path scope refinement requires PTH-01–06 and the
+[D3 path parity plan](../impl_plans/d3-path-parity-plan.md), using d3-path 3.1.0 as
+the behavioral reference. WP-P01–04 own one Rust builder/sink, arc geometry and SVG
+precision implementation consumed by WP-S01. Keep authoring state and finite scene
+validation distinct, preserving continuation and signed rectangle semantics through
+explicit normalization/migration. The standalone serializer needs no GPUI or fonts;
+native paint consumes numeric geometry. This elaborates the shape foundation budget
+rather than creating a second path engine. Earlier minimal scene examples below do
+not establish path parity.
+
+The interpolation scope addition requires ITP-01–08 and the
+[D3 interpolation parity plan](../impl_plans/d3-interpolate-parity-plan.md). One pure
+`chart-core` interpolation module owns values, colors, composition, affine transforms
+and smooth zoom trajectories. Scales and transitions consume it; hosts supply clocks
+and context resolution. Typed/owned outputs adapt JS objects without losing defined
+capabilities. D3 remains an isolated reference tool, not a production dependency.
+WP-IP01 will record the exact source/color/parser compatibility decisions in ADR-005/006;
+this planning addendum does not adopt a new dependency or certify parity.
+
+The color addition requires COL-01–06 and the
+[D3 color parity plan](../impl_plans/d3-color-parity-plan.md). Shared core floating-point
+color values and conversion remain separate from final sRGB8 scene paint. Preserve
+undefined components and precision through math; version portable exceptional values
+and lower once for native/export. CLR-01–05 own this work; WP-IP04 consumes its kernels
+for interpolation and SP-04 integrates scales, and CP-01–05 retain scale-chromatic catalog ownership. Required
+G-COLOR evidence includes standalone Rust/Python/WASM methods and integrated artifacts.
+Historical byte-paint examples below do not prove color parity.
+
+
+Specification 0.3.0 adds CHR-01–06 and the
+[D3 scale-chromatic parity plan](../impl_plans/d3-scale-chromatic-parity-plan.md).
+Keep exact named palettes and pure ramp evaluators in core; reuse SP-04 interpolation
+and scale normalization. Preserve old palette definitions through explicit migration,
+use D3 only as a pinned development oracle, retain D3/ColorBrewer source notices and
+require actual binding, guide, update and publication proof before G-CHROMATIC.
+The catalog is required production scope; the historical smaller color model below
+is not a parity claim.
+
+The scale scope addition requires SCL-06–08 and the
+[D3 scale parity plan](../impl_plans/d3-scale-parity-plan.md). Complete d3-scale
+capabilities are a production objective alongside shape and axis parity. Shared Rust
+scale kernels own mapping, ticks, nice and formatting; scales and axis guides consume
+the shared interpolation engine where needed. Preserve existing recipes through explicit defaults and versioned descriptor
+migration. D3-compatible descriptors supply reference defaults and behavior. Local
+calendar operations receive explicit timezone resources, and D3 stays a development
+oracle. The original smaller scale set below describes initial delivery, not release scope.
+
+The 7 September axis scope addition is specified by AXIS-01–07 and the
+[D3 axis parity plan](../impl_plans/d3-axis-parity-plan.md). Keep scales and guides in
+the shared Rust engine, use portable component roles in place of browser objects,
+preserve existing defaults through an explicit compatibility profile, and require axis
+transitions before full parity claims. D3 remains a reference-fixture dependency rather
+than a production runtime. This addendum supplements the shape parity work and does not
+claim that either parity surface is implemented.
 
 Build an independent Rust grammar of graphics with a GPUI renderer and optional GPUI Kit integration. Select each subsystem's design on its merits: ggplot2 for the layered statistical grammar; TanStack for typed, composable application-facing authoring and scene separation; D3 for modular numerical and geometry algorithms; ECharts for datasets, actions, and interactive application components. Establish one coherent native contract, with existing GPUI Kit code informing drawing and integration.
 
@@ -12,7 +100,7 @@ The product should offer both convenient components such as `LineChart` and a co
 
 Four cross-cutting requirements shape the foundation: complete theme control and desktop-publishing-quality figures; continuous updates with stable interaction state; a comprehensive extensible action/interaction model; and a portable Rust core suitable for future Python and WASM adapters. Theme/export, data-update, and portable specification contracts must be implemented early. Production Python packages and a browser host remain future deliverables, with small feasibility prototypes required before the core API stabilizes.
 
-Our documented grammar and behavior are authoritative. Reference libraries provide design examples and selected test oracles; reproducing any one's full API or feature set is not a release objective. Production chart compilation, statistics, layout, interaction, and geometry execute in Rust. R and JavaScript are optional development-only reference tools. Arbitrary R expressions, JavaScript functions, DOM elements, and CSS are outside the native API.
+Our documented grammar and behavior are authoritative. Reference libraries provide design examples and selected test oracles. The owner-requested exception is complete d3-shape capability parity under specification SHP-01–10; the [shape plan](../impl_plans/d3-shape-parity-plan.md) pins the reference, inventories gaps and defines the native API adaptations. This does not expand scope to every D3 module or JavaScript API syntax. Production chart compilation, statistics, layout, interaction, and geometry execute in Rust. R and JavaScript are optional development-only reference tools. Arbitrary R expressions, serialized JavaScript functions, DOM elements, and CSS are outside the native API.
 
 ## 1. Evidence and reference implementations
 
@@ -78,7 +166,7 @@ Keep a short design decision record for each subsystem: required behavior, consi
 | `Geom` | The representation of prepared values: points, lines, rectangles, ribbons, text, and custom geometry. |
 | `Position` | An explicit adjustment such as stacking, dodging, or jitter. |
 | `Scale` | Domain and mapping for position, color, size, opacity, or shape. |
-| `Coord` | Coordinate projection, clipping, aspect ratio, and viewport semantics; Cartesian initially, polar later. |
+| `Coord` | Coordinate projection, clipping, aspect ratio, and viewport semantics; Cartesian plus required D3 radial shape projection; general polar-axis products later. |
 | `Facet` | Partition into repeated panels, including data/group scope and scale-sharing policy. |
 | `Guide` / `Theme` | Explanation of encodings and centralized appearance rules. |
 | `Interaction` | State and actions controlling inspection, selection, viewport, and connected views. |
@@ -105,7 +193,7 @@ Start with four library crates and one development application. Keep internal mo
 | `chart-python` — future | PyO3 adapter for specs, column batches, actions, scenes and headless export | Depends on core/export; native viewer and interactive notebooks are separate integrations. |
 | `chart-wasm` — future | wasm-bindgen adapter and browser-facing data/action interface | Depends on portable core; browser rendering/events supplied by a separate host. |
 
-Use feature-gated modules for advanced statistics, temporal extras, polar geometry, and export formats. Define the portable schema from the start; serialization support may remain feature-gated. A columnar adapter can integrate Arrow/Polars data later without making either a mandatory core dependency. Finance recipes belong in an optional module or downstream package; the generic library should not depend on pricing or portfolio analytics.
+Use feature-gated modules for optional advanced statistics and temporal extras where justified. Required SHP radial geometry and required export formats cannot be deferred as optional expansion. Define the portable schema from the start; serialization support may remain feature-gated only within the specification's required proof boundaries. A columnar adapter can integrate Arrow/Polars data later without making either a mandatory core dependency. Finance recipes belong in an optional module or downstream package; the generic library should not depend on pricing or portfolio analytics.
 
 Define host service boundaries for text/font resolution, task scheduling, clocks, resource loading, and frame presentation. The core supports synchronous/cooperative execution as its baseline; native workers and browser workers are adapter choices. Require `Send`/`Sync` where a native task crosses threads instead of exposing GPUI or interpreter objects through the portable model. Export functions accept bytes/resources and return bytes; file dialogs and filesystem writes belong to the host.
 
@@ -328,8 +416,9 @@ Test semantics at each layer: numeric/property tests for stats/scales/transforms
 | Vertical slice | Native layer/stat/geom contracts; identity stat plus one bin/summary stat; linear/band/UTC scales; line/point/rule/rectangle geoms; axes, native text, hover; theme/spec/delta/action contracts, an export/font capability proof, and minimal Python/WASM core prototypes. |
 | Cartesian alpha | Area/ribbon, grouped/stacked bars, scatter, cells/heatmaps, histogram, simple statistical overlays, initial facets, semantic guides, numeric color scales, custom extensions, three contrasting themes, multi-panel figure layout, and initial SVG/PDF/PNG output. |
 | Interactive streaming beta | Multiple scales/panes, log/symlog, zoom/pan/brush/lasso, linked cursor/table selection, editable annotations, full supported-chart action paths, append/correction/removal streams, stable navigation and bounded queues. Finance recipes can exercise candlestick/volume and explicit session-time support. |
-| Production release for selected scope | Publication and sustained-streaming gates, keyboard/accessibility verification, interaction cancellation/ownership checks, portable-core binding proofs, robust resize/disposal, documentation, platform CI and fidelity/error diagnostics. |
-| Optional expansion | Advanced facet/guide variants, polar/pie/radar, box/violin distributions, hierarchy, Sankey, geography/projections, contours/vector fields, and richer motion as separately estimated modules. |
+| Required D3 shape completion | Complete curves, general areas, arcs/pies, radial shapes/links, symbols, stack orders/offsets and custom shape protocols; see WP-S01–08 and G-SHAPE. |
+| Production release for selected scope | G-SHAPE, publication and sustained-streaming gates, keyboard/accessibility verification, interaction cancellation/ownership checks, portable-core binding proofs, robust resize/disposal, documentation, platform CI and fidelity/error diagnostics. |
+| Optional expansion | Advanced facet/guide variants, general polar axes/radar products, box/violin distributions, Sankey, geography/projections, contours/vector fields, and richer motion as separately estimated modules. Required D3 arcs/pies/radial/link generators and HIR-01–08 hierarchy operations/layouts are excluded from this deferred list. |
 | Future distribution/integration | Production Python wheels and ergonomic APIs, native Python viewer, browser host and WASM package, and interactive notebook widgets; estimate and release these separately from the early portability proofs. |
 
 Introduce the facet/shared-scale and stat/geom abstractions before expanding specialized chart families. Initial chart statistics should stay small and auditable: identity, count/bin, summaries/quantiles, and a simple linear fit. The specification fixes their defaults, including bin edges, quantile interpolation, mixed-sign normalization and source-data statistical space. Density and more sophisticated fitting can follow as optional modules. Advanced financial analytics, factor attribution, and valuation results should be computed in the application or existing finance library and passed as rows. Preserve provenance and parameter metadata for computed overlays.
