@@ -111,7 +111,7 @@ pub(super) fn project(
         let clip = Some(if layer.clip() == ClipPolicy::Plot {
             plot
         } else {
-            request.bounds
+            request.figure_bounds.unwrap_or(request.bounds)
         });
         for mark in layer.marks() {
             let point = |p: Point, target: &Target, edge: f64| -> ChartResult<Option<Point>> {

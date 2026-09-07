@@ -350,6 +350,11 @@ fn positive_extent(
 ) -> ChartResult<Option<crate::grammar::Extent>> {
     use crate::grammar::{Extent, PreparedGeometry};
     let mut extent: Option<Extent> = None;
+    let chart = chart
+        .shared_training
+        .as_deref()
+        .filter(|shared| shared.scale_domains().contains_key(&axis.id))
+        .unwrap_or(chart);
     for layer in chart.layers() {
         let binding = if axis.side.horizontal() {
             layer.scales().x

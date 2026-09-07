@@ -20,12 +20,12 @@ const INK: Color = Color {
     alpha: 255,
 };
 
-fn pressure(message: &str) -> Diagnostic {
+pub(super) fn pressure(message: &str) -> Diagnostic {
     let mut d = error(DiagnosticCode::LayoutPressure, message);
     d.severity = Severity::Warning;
     d
 }
-fn text_request<'a>(r: &'a LayoutRequest, text: &'a str) -> TextRequest<'a> {
+pub(super) fn text_request<'a>(r: &'a LayoutRequest, text: &'a str) -> TextRequest<'a> {
     TextRequest {
         text,
         font: &r.font,
@@ -480,95 +480,100 @@ fn layout_inner(
     measurer: &dyn TextMeasurer,
     stamp: SceneStamp,
 ) -> ChartResult<LaidOutChart> {
-    preflight(&prepared, request)?;
-    let mut m = [request.padding; 4];
-    let mut axes = BTreeMap::new();
-    let mut labels = BTreeMap::new();
-    let mut diagnostics = prepared.diagnostics().to_vec();
-    let mut passes = 0;
-    let mut final_plot = None;
+    if prepared.definition().facets.is_some() {
+        return super::facets::layout_facets(prepared, request, measurer, stamp);
+    }
+    solve_panels(vec![(prepared, request.clone())], measurer, stamp)?
+        .pop()
+        .ok_or_else(|| error(DiagnosticCode::Validation, "No layout panel."))
+}
+
+/// One synchronized four-pass solve. All panels use the maximum required side margins.
+pub(super) fn solve_panels(
+    inputs: Vec<(Arc<PreparedChart>, LayoutRequest)>,
+    measurer: &dyn TextMeasurer,
+    stamp: SceneStamp,
+) -> ChartResult<Vec<LaidOutChart>> {
+    struct Work {
+        prepared: Arc<PreparedChart>,
+        request: LayoutRequest,
+        axes: BTreeMap<ScaleId, ResolvedAxis>,
+        labels: BTreeMap<ScaleId, Vec<Label>>,
+        plot: Option<Rect>,
+        diagnostics: Vec<Diagnostic>,
+        passes: usize,
+    }
+    let mut work = Vec::new();
+    let mut m = [0_f64; 4];
+    for (prepared, request) in inputs {
+        preflight(&prepared, &request)?;
+        for side in &mut m {
+            *side = side.max(request.padding);
+        }
+        work.push(Work {
+            diagnostics: prepared.diagnostics().to_vec(),
+            prepared,
+            request,
+            axes: BTreeMap::new(),
+            labels: BTreeMap::new(),
+            plot: None,
+            passes: 0,
+        });
+    }
     for pass in 0..MAX_LAYOUT_PASSES {
-        let Some(p) = plot(request, m)? else {
-            break;
-        };
-        axes = request
-            .axes
-            .iter()
-            .map(|s| Ok((s.id, resolve_axis(&prepared, request, s, p)?)))
-            .collect::<ChartResult<_>>()?;
-        labels = measure_axes(&axes, request, measurer)?;
-        passes = pass + 1;
-        let next = margins(&axes, &labels, request, m);
-        final_plot = Some(p);
+        let mut next = m;
+        for w in &mut work {
+            w.plot = plot(&w.request, m)?;
+            let Some(p) = w.plot else {
+                w.axes.clear();
+                continue;
+            };
+            w.axes = w
+                .request
+                .axes
+                .iter()
+                .map(|s| Ok((s.id, resolve_axis(&w.prepared, &w.request, s, p)?)))
+                .collect::<ChartResult<_>>()?;
+            w.labels = measure_axes(&w.axes, &w.request, measurer)?;
+            w.passes = pass + 1;
+            next = margins(&w.axes, &w.labels, &w.request, next);
+        }
         if next == m {
             break;
         }
         if pass + 1 == MAX_LAYOUT_PASSES {
-            diagnostics.push(pressure("Margin solver reached its four-pass cap; labels are deterministically thinned to fit."));
+            for w in &mut work {
+                w.diagnostics.push(pressure("Margin solver reached its four-pass cap; labels are deterministically thinned to fit."));
+            }
             break;
         }
         m = next;
-        final_plot = None;
     }
-    let (mut output, status) = if let Some(p) = final_plot {
-        let mut output = project::project(&prepared, &axes, p, request)?;
-        let has_population =
-            prepared
-                .layers()
-                .iter()
-                .filter(|l| l.visible())
-                .any(|l| match l.table().rows() {
-                    crate::grammar::PreparedRows::Binned(bins) => bins.iter().any(|b| b.count > 0),
-                    crate::grammar::PreparedRows::Source(_)
-                    | crate::grammar::PreparedRows::Statistical(_) => !l.marks().is_empty(),
-                });
-        let status = if output.items.is_empty() || !has_population {
-            LayoutStatus::NoData
+    work.into_iter().map(|mut w| {
+        let request = &w.request;
+        let (mut output, status) = if let Some(p) = w.plot {
+            let mut output = project::project(&w.prepared, &w.axes, p, request)?;
+            let has_population = w.prepared.layers().iter().filter(|l| l.visible()).any(|l| match l.table().rows() {
+                crate::grammar::PreparedRows::Binned(bins) => bins.iter().any(|b| b.count > 0),
+                crate::grammar::PreparedRows::Source(_) | crate::grammar::PreparedRows::Statistical(_) => !l.marks().is_empty(),
+            });
+            let status = if output.items.is_empty() || !has_population { LayoutStatus::NoData } else { LayoutStatus::Ready };
+            if guides(&mut w.axes, &w.labels, p, request, &mut output)? {
+                w.diagnostics.push(pressure("Overlapping, duplicate or out-of-figure tick labels were deterministically thinned."));
+            }
+            (output,status)
         } else {
-            LayoutStatus::Ready
+            w.axes.clear();
+            let mut output = Output {items: vec![],targets:vec![],omitted:0};
+            compact("Not enough space",request,measurer,&mut output)?;
+            w.diagnostics.push(pressure("Bounds and destination text metrics cannot accommodate the minimum useful plot."));
+            (output,LayoutStatus::NoSpace)
         };
-        if guides(&mut axes, &labels, p, request, &mut output)? {
-            diagnostics.push(pressure("Overlapping, duplicate or out-of-figure tick labels were deterministically thinned."));
-        }
-        (output, status)
-    } else {
-        axes.clear();
-        let mut output = Output {
-            items: vec![],
-            targets: vec![],
-            omitted: 0,
-        };
-        compact("Not enough space", request, measurer, &mut output)?;
-        diagnostics.push(pressure(
-            "Bounds and destination text metrics cannot accommodate the minimum useful plot.",
-        ));
-        (output, LayoutStatus::NoSpace)
-    };
-    if status == LayoutStatus::NoData {
-        compact("No data", request, measurer, &mut output)?;
-    }
-    if output.omitted > 0 {
-        diagnostics.push(pressure(&format!(
-            "Explicit scale policies omitted {} marks/vertices; source statistics are unchanged.",
-            output.omitted
-        )));
-    }
-    let scene = Scene::new(
-        stamp,
-        request.units,
-        request.bounds,
-        &output.items,
-        &[request.font],
-        request.limits,
-    )?;
-    Ok(LaidOutChart {
-        prepared,
-        scene,
-        plot: final_plot,
-        axes,
-        targets: output.targets,
-        diagnostics,
-        status,
-        passes,
-    })
+        if status == LayoutStatus::NoData { compact("No data",request,measurer,&mut output)?; }
+        if output.omitted > 0 { w.diagnostics.push(pressure(&format!("Explicit scale policies omitted {} marks/vertices; source statistics are unchanged.",output.omitted))); }
+        let scene = Scene::new(stamp,request.units,request.bounds,&output.items,&[request.font],request.limits)?;
+        Ok(LaidOutChart {prepared:w.prepared,scene,plot:w.plot,axes:w.axes,
+            item_panels: vec![None; output.targets.len()], panels: vec![],
+            targets:output.targets,diagnostics:w.diagnostics,status,passes:w.passes})
+    }).collect()
 }

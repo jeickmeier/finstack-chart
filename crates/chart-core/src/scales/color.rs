@@ -30,6 +30,8 @@ pub enum ColorScale {
 /// Semantic legend metadata, independent of its eventual destination layout.
 #[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub struct ColorLegend {
+    /// Declared semantic guide title, used when checking guide compatibility.
+    pub title: Option<String>,
     /// Scale identity.
     pub id: crate::ScaleId,
     /// Exact category or numeric labels paired with colors.
@@ -176,6 +178,7 @@ impl ColorScale {
             ),
         };
         Ok(ColorLegend {
+            title: None,
             id,
             continuous,
             missing,

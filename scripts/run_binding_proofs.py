@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build and execute the actual WP-09/10/11 native/PyO3/wasm-bindgen proof, using pinned crates.
+"""Build and execute the actual WP-09/10/11/12 native/PyO3/wasm-bindgen proof, using pinned crates.
 
 Run under mise; WASM_BINDGEN may name a task-local matching CLI. No downloads occur here.
 """
@@ -45,4 +45,4 @@ run("wasm-build", ["cargo","build","-p","chart-wasm","--target","wasm32-unknown-
 run("wasm-generate", [cli,ROOT / "target/wasm32-unknown-unknown/debug/chart_wasm.wasm","--target","nodejs","--out-dir",output / "wasm-module"])
 run("wasm", [node,ROOT / "scripts/bindings/wasm_proof.cjs",output / "wasm-module",output / "wasm"])
 run("compare", [sys.executable,ROOT / "scripts/bindings/compare.py",output])
-print(f"PASS WP-09/10/11 runtime proof. Results: {output}")
+print(f"PASS WP-09/10/11/12 runtime proof. Results: {output}")

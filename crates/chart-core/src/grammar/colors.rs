@@ -22,6 +22,9 @@ pub enum ColorInput {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct ColorEncoding {
+    /// Human-readable legend title; absent uses a generic color label.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub title: Option<String>,
     /// Shared color scale identity.
     pub id: ScaleId,
     /// Stage-specific value.
@@ -40,6 +43,16 @@ pub(super) fn apply(
     let Some(encoding) = &layer.color else {
         return Ok(None);
     };
+    if encoding
+        .title
+        .as_ref()
+        .is_some_and(|title| title.len() > 4096)
+    {
+        return Err(error(
+            DiagnosticCode::ResourceLimit,
+            "Color legend title exceeds 4096 bytes.",
+        ));
+    }
     let palette_len = match &encoding.scale {
         ColorScale::Discrete {
             domain, palette, ..
@@ -182,5 +195,7 @@ pub(super) fn apply(
             encoding.scale.numeric_validated(values[i])?
         });
     }
-    Ok(Some(encoding.scale.legend(encoding.id, &labels)?))
+    let mut legend = encoding.scale.legend(encoding.id, &labels)?;
+    legend.title.clone_from(&encoding.title);
+    Ok(Some(legend))
 }

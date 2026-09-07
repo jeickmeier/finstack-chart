@@ -122,8 +122,17 @@ impl Session {
                 })
             })
             .collect::<Vec<_>>();
+        let panels = prepared.panels().iter().map(|p| json!({
+            "key":p.key,"row":p.row,"column":p.column,"scale_domains":p.chart.scale_domains(),
+            "layers":p.chart.layers().iter().map(|l| json!({
+                "id":l.id(),"visible":l.visible(),"domains":l.domains(),"rows":l.table().rows(),
+                "schema":l.table().schema(),"operations":l.table().operations(),
+                "color_legend":l.color_legend(),"invalid_geometry":l.invalid_geometry(),
+                "targets":l.marks().iter().flat_map(|m|m.targets.iter()).collect::<Vec<_>>(),
+            })).collect::<Vec<_>>(),
+        })).collect::<Vec<_>>();
         encode(
-            &json!({"version":VERSION,"definition_revision":prepared.definition_revision(),"store_revision":data.revision(),"state":StateEnvelope::capture(self.definition(),&self.state),"datasets":datasets,"layers":layers}),
+            &json!({"version":VERSION,"definition_revision":prepared.definition_revision(),"store_revision":data.revision(),"state":StateEnvelope::capture(self.definition(),&self.state),"datasets":datasets,"layers":layers,"panels":panels}),
         )
     }
 }

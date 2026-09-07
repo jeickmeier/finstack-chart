@@ -186,3 +186,19 @@ only to decode the shared fixture catalog; no package/version was added to the l
 Actual core tests, macOS vector captures, SVG/PDF/PNG and Rust/Python/WASM evidence are in
 the [WP-11 report](../evidence/wp-11-completion-2026-09-07.md). This closes the required
 family slice, not facets/theme/extension G2 or full release gates.
+
+
+## Accepted WP-12 extension — 7 September 2026
+
+[The facet/layout contract](../facet-layout-contract.md) supplies exact typed panel keys,
+explicit wrap/grid catalogs, keep/drop and broadcast/target policies, group/facet/chart
+statistical scopes and per-panel graph caches over one coherent source snapshot. Shared
+axes merge compatible post-position contributions; free axes preserve separate training.
+A synchronized four-pass solver aligns all panel margins. Compatible color guides collect
+only when their complete semantic metadata agrees; all destinations retain the same clips
+and panel identities. Row/value/geometry budgets apply across the whole figure.
+
+[WP-12 evidence](../evidence/wp-12-completion-2026-09-07.md) records FIX-06, nine focused
+tests, seven shared runtime cases, native resize/compact/recovery and vector exports.
+This extends the existing compiler/layout and adds no dependency. Full themes, rich
+typography and publication furniture remain WP-13; G2 stays open until WP-14.

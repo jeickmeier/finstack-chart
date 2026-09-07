@@ -40,6 +40,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     cases.extend(serde_json::from_str::<Vec<serde_json::Value>>(
         &fs::read_to_string(root.join("fixtures/families/portable-cases.json"))?,
     )?);
+    cases.extend(serde_json::from_str::<Vec<serde_json::Value>>(
+        &fs::read_to_string(root.join("fixtures/facets/portable-cases.json"))?,
+    )?);
     let mut statistics = serde_json::Map::new();
     let mut scenes = serde_json::Map::new();
     for case in cases {
@@ -47,7 +50,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let mut chart = PortableChart::new(
             &case["chart"].to_string(),
             &case["data"].to_string(),
-            &fs::read_to_string(fixture.join("profile.json"))?,
+            &case.get("profile").map_or_else(
+                || fs::read_to_string(fixture.join("profile.json")),
+                |p| Ok(p.to_string()),
+            )?,
             fs::read(root.join("fixtures/capability/fonts/NotoSans-Regular.ttf"))?,
         )?;
         statistics.insert(name.into(), serde_json::from_str(&chart.semantics()?)?);
@@ -60,13 +66,40 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             output.join(format!("statistics-{name}.png")),
             chart.export("png")?,
         )?;
-        if name.starts_with("family-") {
+        if name.starts_with("family-") || name.starts_with("facet-") {
             fs::write(
                 output.join(format!("statistics-{name}.pdf")),
                 chart.export("pdf")?,
             )?;
         }
         chart.dispose();
+        if name == "facet-shared-broadcast" {
+            for (target, expected) in [
+                (None, chart_core::DiagnosticCode::SchemaConflict),
+                (
+                    Some(serde_json::json!({"Panels":[{"values":[{"Text":"absent"}]}]})),
+                    chart_core::DiagnosticCode::Validation,
+                ),
+            ] {
+                let mut bad = case["chart"].clone();
+                let layer = bad["definition"]["layers"][1]
+                    .as_object_mut()
+                    .ok_or("layer object")?;
+                if let Some(target) = target {
+                    layer.insert("facet".into(), target);
+                } else {
+                    layer.remove("facet");
+                }
+                let result = PortableChart::new(
+                    &bad.to_string(),
+                    &case["data"].to_string(),
+                    &case["profile"].to_string(),
+                    fs::read(root.join("fixtures/capability/fonts/NotoSans-Regular.ttf"))?,
+                );
+                assert_eq!(result.err().ok_or("invalid facet accepted")?.code, expected);
+            }
+            println!("PASS Rust FIX-06: missing facet policy and unknown target panel rejected");
+        }
     }
     fs::write(
         output.join("statistics.json"),

@@ -163,6 +163,10 @@ pub struct PopulationCounts {
 /// Auditable stat invocation with exact update capability and population accounting.
 #[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub struct OperationRecord {
+    /// Explicit grouped, per-facet or whole-chart statistical population.
+    pub scope: super::StatScope,
+    /// Matched panel population, absent for chart-wide or broadcast inputs.
+    pub panel: Option<super::PanelKey>,
     /// Registered operation identity/version.
     pub operation: OperationRef,
     /// Exact builtin parameters, including explicit edges and numeric input mapping.
@@ -377,6 +381,8 @@ pub struct PreparationMetrics {
 /// It owns no typed source rows or callbacks; its handle pins one coherent source snapshot.
 #[derive(Clone, Debug)]
 pub struct PreparedChart {
+    pub(crate) panels: Vec<super::PreparedPanel>,
+    pub(crate) shared_training: Option<Arc<PreparedChart>>,
     pub(crate) definition: Arc<ChartDefinition>,
     pub(crate) source: SnapshotHandle<StoreSnapshot>,
     pub(crate) state: ChartState,
@@ -388,6 +394,10 @@ pub struct PreparedChart {
     pub(crate) metrics: PreparationMetrics,
 }
 impl PreparedChart {
+    /// Explicit ordered facet populations; empty for a single-panel chart.
+    pub fn panels(&self) -> &[super::PreparedPanel] {
+        &self.panels
+    }
     /// Independently trained named scales; each entry occupies exactly one orientation.
     pub fn scale_domains(&self) -> &BTreeMap<crate::ScaleId, DomainContributions> {
         &self.scale_domains

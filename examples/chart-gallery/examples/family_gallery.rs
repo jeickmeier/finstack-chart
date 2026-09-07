@@ -59,7 +59,12 @@ impl Render for Gallery {
                     } else {
                         0xffffff
                     }))
-                    .child(case.name.trim_start_matches("family-").to_owned())
+                    .child(
+                        case.name
+                            .trim_start_matches("family-")
+                            .trim_start_matches("facet-")
+                            .to_owned(),
+                    )
                     .on_click(cx.listener(move |this, _, _, cx| {
                         this.selected = index;
                         this.chart = Self::mount(&this.cases[index], &this.font, cx);
@@ -77,7 +82,19 @@ impl Render for Gallery {
             .bg(rgb(0xf4f7fa))
             .text_color(rgb(0x203b4c))
             .font_family("Noto Sans")
-            .child(div().text_xl().child("Chart families"))
+            .child(
+                div().text_xl().child(
+                    if self
+                        .cases
+                        .first()
+                        .is_some_and(|c| c.name.starts_with("facet-"))
+                    {
+                        "Facets and shared layout"
+                    } else {
+                        "Chart families"
+                    },
+                ),
+            )
             .child(
                 div().child(
                     "Portable fixtures · Native vector rendering · Shared scales and semantics",
@@ -95,9 +112,17 @@ impl Render for Gallery {
     }
 }
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let cases: Vec<Case> = decode(include_str!(
-        "../../../fixtures/families/portable-cases.json"
-    ))?;
+    let cases: Vec<Case> = if std::env::args().any(|arg| arg == "--facets")
+        || std::env::current_exe()?
+            .file_stem()
+            .is_some_and(|name| name == "facet_gallery")
+    {
+        decode(include_str!("../../../fixtures/facets/portable-cases.json"))?
+    } else {
+        decode(include_str!(
+            "../../../fixtures/families/portable-cases.json"
+        ))?
+    };
     let selected = std::env::args()
         .nth(1)
         .and_then(|v| v.parse().ok())

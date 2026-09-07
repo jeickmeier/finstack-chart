@@ -4,35 +4,32 @@ Updated: 7 September 2026. Specification version: 0.1.0.
 Bootstrap committed at `fbc9782` (starting commit: `19f4a27`); WP-01 committed at `dfe38e8`.
 WP-02 committed at `435e127`; WP-03 at `3a86189`; WP-04 at `d0a6c48`.
 WP-05 is committed at `3cf1b33`; WP-06 at `f8657fb`; WP-07/08 at `fac148a`.
-WP-09/10 are committed at `c5ec829`. Their original reports retain the revision context
+WP-09/10 are committed at `c5ec829`; WP-11 at `a6fb2ea`. Their original reports retain the revision context
 from the time the evidence was produced.
 
 ## Current handoff
 
 **Owner assignment: complete WP-11 through WP-23 in prerequisite order and commit after
-each completed package. WP-11 is DONE; WP-12 is next.** Starting revision was `c5ec829`;
-this handoff belongs to the WP-11 completion commit. The prior WP-12 sequencing question
-is resolved and its prerequisite-check report is retained as historical evidence.
+each completed package. WP-11/12 are DONE; WP-13 is next.** This handoff belongs to the
+WP-12 completion commit, starting from WP-11 commit `a6fb2ea`.
 
-WP-11 adds checked log/symlog/point/color/supplied-session scales, portable named axis
-policies and separate secondary-unit guides; area/ribbon vector fills, interval bars,
-heatmaps and validated OHLC with independently validated volume use the shared engine.
-[The report](evidence/wp-11-completion-2026-09-07.md) records scope, commands, native and
-export captures, precision, runtime fixtures and remaining gates. The
-[scale/geometry contract](scale-geometry-contract.md) and
-[ADR-005](adr/005-foundational-scales-and-layout.md) record consequential choices.
+WP-12 adds explicit typed wrap/grid panels, keep/drop and mandatory broadcast/target
+policies, group/facet/chart statistics, compatible guide collection and aligned shared/free
+scales. One four-pass solver projects every panel through the existing scene engine.
+[The report](evidence/wp-12-completion-2026-09-07.md),
+[contract](facet-layout-contract.md) and [ADR-005](adr/005-foundational-scales-and-layout.md)
+record semantics, limits, commands, artifacts and remaining gates.
 
 `mise run fmt`, `mise run check`, `mise run test` and actual `bindings-proof` pass locally.
-**133 tests pass** (117 core, 13 export, 1 native conversion and 2 Rustdoc examples).
-Twenty-four cases run in each of Rust, Python and actual Node WebAssembly, including 12
-new family fixtures. Semantics agree within 1e-12, scenes within 1e-10 points, and SVG
-bytes match exactly. All 12 native family views, representative PNGs and an actual vector
-PDF render were visually inspected. No new dependency package/version was introduced.
+**142 tests pass** (126 core, 13 export, 1 native conversion and 2 Rustdoc examples).
+Thirty-one cases execute in Rust, Python and Node WebAssembly, including seven new facet
+fixtures and two negative FIX-06 cases per host. Semantics agree within 1e-12, scenes within
+1e-10 points, and SVG bytes match exactly. All seven native views, native compact/recovery,
+representative PNGs and a rendered vector PDF were visually inspected. No dependency changed.
 
-WP-09/10 are committed at `c5ec829` and retain their accepted scopes. G0/G1 remain passed
-at recorded scopes; G2–G4 remain open. Existing dependency advisories and the `block`
-future-compiler warning remain unresolved. Linux/full accessibility/release packaging
-and performance remain unverified. **Next: WP-12 facets, guides and shared layout.**
+G0/G1 remain passed at recorded scopes; G2–G4 remain open. Existing dependency advisories
+and the `block` future-compiler warning remain unresolved. Linux/full accessibility/release
+packaging and performance remain unverified. **Next: WP-13 themes and publication composition.**
 
 ## Work packages
 
@@ -52,9 +49,9 @@ The final column records outstanding prerequisites/blockers and the next action.
 | WP-08 — Headless export and snapshot foundation | DONE | Unassigned | `fac148a` | ARC-02, EXP-01, EXP-02, EXP-03, EXP-04, LAY-04, SCN-03 | [Completion evidence](evidence/wp-08-completion-2026-09-06.md); [ADR-003](adr/003-font-and-renderer-capability-route.md) | Basic headless formats, explicit resources and minimal FIX-13/14 accepted; full composition/live exports remain WP-13/20. |
 | WP-09 — Portable schema and executable binding proofs | DONE | Unassigned | `c5ec829` | BND-01, BND-02, BND-03, BND-04, ARC-02, DAT-01, QLT-01 | [Completion evidence](evidence/wp-09-completion-2026-09-06.md); [ADR-006](adr/006-portable-specification-and-binding-proofs.md) | Version 1 subset and actual Rust/Python/WASM FIX-15/16 accepted; extend builtin coverage through WP-10–14 and full parity at WP-21. |
 | WP-10 — Complete statistical and position semantics | DONE | Unassigned | `c5ec829` | GRA-03, GRA-04, GRA-05, GRA-08, DAT-05, DAT-06, QLT-02 | [Completion evidence](evidence/wp-10-completion-2026-09-06.md); [contract](statistics-contract.md); [ADR-005](adr/005-foundational-scales-and-layout.md) | Built-in stats/positions and FIX-02–05 accepted; exact full-recompute fallback declared. Extend families in WP-11 and specialized streaming in WP-18. |
-| WP-11 — Required scale and geometry families | DONE | Unassigned | WP-11 completion commit | GRA-06, SCL-01, SCL-02, SCL-03, SCL-04, SCL-05, SCN-01, SCN-03, DAT-05 | [Completion evidence](evidence/wp-11-completion-2026-09-07.md); [contract](scale-geometry-contract.md) | Required families and FIX-01/03/07 scope accepted through native/export/actual bindings; proceed to shared layout in WP-12. |
-| WP-12 — Facets, guides and shared layout | READY | Codex | — | GRA-07, GRA-08, SCL-05, LAY-01, LAY-02, LAY-03 | [Prerequisite check](evidence/wp-12-prerequisite-check-2026-09-06.md) | WP-10/11 complete; implement panel scopes, shared/free alignment and compatible guides. Prior prerequisite check is historical. |
-| WP-13 — Full themes and publication composition | NOT STARTED | Unassigned | — | THM-01, THM-02, THM-03, LAY-02, LAY-03, LAY-04, EXP-01, EXP-02, EXP-04, GPU-03 | None | Satisfy prerequisites: WP-08, WP-12. |
+| WP-11 — Required scale and geometry families | DONE | Unassigned | `a6fb2ea` | GRA-06, SCL-01, SCL-02, SCL-03, SCL-04, SCL-05, SCN-01, SCN-03, DAT-05 | [Completion evidence](evidence/wp-11-completion-2026-09-07.md); [contract](scale-geometry-contract.md) | Required families and FIX-01/03/07 scope accepted through native/export/actual bindings; proceed to shared layout in WP-12. |
+| WP-12 — Facets, guides and shared layout | DONE | Unassigned | WP-12 completion commit | GRA-07, GRA-08, SCL-05, LAY-01, LAY-02, LAY-03 | [Completion evidence](evidence/wp-12-completion-2026-09-07.md); [contract](facet-layout-contract.md) | FIX-06 and facet/shared-layout scope accepted through core/native/export/actual bindings; full typography and composition remain WP-13. |
+| WP-13 — Full themes and publication composition | READY | Codex | — | THM-01, THM-02, THM-03, LAY-02, LAY-03, LAY-04, EXP-01, EXP-02, EXP-04, GPU-03 | None | WP-08/12 complete; implement full themes, publication furniture and fidelity proof. |
 | WP-14 — Extension contracts and alpha API | NOT STARTED | Unassigned | — | SCP-01, SCP-02, ARC-03, GRA-01, GRA-08, SCN-02, SCN-03, INT-06, BND-01, THM-03, QLT-05 | None | Satisfy prerequisites: WP-09, WP-11, WP-12, WP-13. |
 | WP-15 — Complete action reducer and state ownership | NOT STARTED | Unassigned | — | INT-01, INT-02, INT-05, INT-06, SCN-04, STM-02, QLT-01 | None | Satisfy prerequisites: WP-07, WP-14. |
 | WP-16 — Hit testing, navigation and selection | NOT STARTED | Unassigned | — | INT-03, INT-04, INT-05, INT-06, SCL-01, SCN-04, STM-05 | None | Satisfy prerequisites: WP-11, WP-15. |

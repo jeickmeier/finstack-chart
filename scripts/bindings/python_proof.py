@@ -91,11 +91,22 @@ print(f"PASS Python: actual extension, portable fixture, copies, detached thread
 
 # WP-10: every new builtin executes through the actual extension and existing export engine.
 statistics = {}; scenes = {}
-for case in json.loads((ROOT / "fixtures/statistics/portable-cases.json").read_text()) + json.loads((ROOT / "fixtures/families/portable-cases.json").read_text()):
-    proof = Chart(json.dumps(case["chart"]), json.dumps(case["data"]), read("profile"), (ROOT / "fixtures/capability/fonts/NotoSans-Regular.ttf").read_bytes())
+for case in json.loads((ROOT / "fixtures/statistics/portable-cases.json").read_text()) + json.loads((ROOT / "fixtures/families/portable-cases.json").read_text()) + json.loads((ROOT / "fixtures/facets/portable-cases.json").read_text()):
+    proof = Chart(json.dumps(case["chart"]), json.dumps(case["data"]), json.dumps(case["profile"]) if "profile" in case else read("profile"), (ROOT / "fixtures/capability/fonts/NotoSans-Regular.ttf").read_bytes())
     statistics[case["name"]] = json.loads(proof.semantics())
     scenes[case["name"]] = json.loads(proof.scene())
     (output / f"statistics-{case['name']}.svg").write_bytes(proof.export("svg"))
     proof.dispose()
+    if case["name"] == "facet-shared-broadcast":
+        for target, expected in [(None, "CHART_SCHEMA_CONFLICT"), ({"Panels":[{"values":[{"Text":"absent"}]}]}, "CHART_VALIDATION")]:
+            bad = json.loads(json.dumps(case["chart"]))
+            if target is None: bad["definition"]["layers"][1].pop("facet")
+            else: bad["definition"]["layers"][1]["facet"] = target
+            try:
+                Chart(json.dumps(bad), json.dumps(case["data"]), json.dumps(case["profile"]), (ROOT / "fixtures/capability/fonts/NotoSans-Regular.ttf").read_bytes())
+                raise AssertionError("invalid facet target accepted")
+            except ChartError as error:
+                assert json.loads(error.args[0])["code"] == expected
+        print("PASS Python FIX-06: missing facet policy and unknown target panel rejected")
 save("statistics", json.dumps(statistics)); save("statistics-scenes", json.dumps(scenes))
 print(f"PASS {len(statistics)} statistic/position/family cases in the actual Python extension")

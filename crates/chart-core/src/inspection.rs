@@ -32,6 +32,8 @@ pub enum InspectionAction {
 /// Exact presented mark or line vertex; no interpolation or invented source row.
 #[derive(Clone, Debug, PartialEq)]
 pub struct InspectedTarget {
+    /// Stable facet identity; absent for a single-panel chart.
+    pub panel: Option<crate::grammar::PanelKey>,
     /// Originating layer.
     pub layer: LayerId,
     /// Exact source or aggregate provenance.
@@ -88,7 +90,13 @@ impl Inspector {
             ));
         }
         let mut candidates = vec![];
-        for (item, targets) in presented.scene().items().iter().zip(presented.targets()) {
+        for (index, (item, targets)) in presented
+            .scene()
+            .items()
+            .iter()
+            .zip(presented.targets())
+            .enumerate()
+        {
             let Some(layer) = item.layer else { continue };
             let line = presented
                 .prepared()
@@ -103,6 +111,7 @@ impl Inspector {
                 if rectangle.is_some() || contains(clip, position) {
                     candidates.push(Candidate {
                         hit: InspectedTarget {
+                            panel: presented.item_panels()[index].clone(),
                             layer,
                             target: target.clone(),
                             position,

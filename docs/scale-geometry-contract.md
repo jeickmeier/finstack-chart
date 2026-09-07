@@ -95,5 +95,5 @@ This is an additive pre-1.0 source/wire change: new public enum variants affect 
 matches; new struct fields require updates for Rust literal construction. `axes`, layer
 `color` and source low/high fields are optional in portable JSON. Existing fixtures retain
 their original numerical tolerances. The same full definitions and fixtures execute in
-Rust, Python and single-threaded Node WASM. Native evidence is macOS only. Facets, full
+Rust, Python and single-threaded Node WASM. Native evidence is macOS only. [Facets](facet-layout-contract.md) are now implemented in WP-12; full
 themes, extensions, complete interaction/indexing and release-platform gates remain open.

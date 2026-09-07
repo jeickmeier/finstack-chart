@@ -67,11 +67,20 @@ console.log(`PASS WASM: real Node WebAssembly, portable fixture, copies, invalid
 
 // WP-10: shared portable builtin semantics and final destination scenes in actual WASM.
 const statistics = {}, scenes = {};
-for (const proofCase of [...JSON.parse(fs.readFileSync(path.join(root,'fixtures/statistics/portable-cases.json'),'utf8')), ...JSON.parse(fs.readFileSync(path.join(root,'fixtures/families/portable-cases.json'),'utf8'))]) {
-    const proof = new bindings.Chart(JSON.stringify(proofCase.chart),JSON.stringify(proofCase.data),read('profile'),Uint8Array.from(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))));
+for (const proofCase of [...JSON.parse(fs.readFileSync(path.join(root,'fixtures/statistics/portable-cases.json'),'utf8')), ...JSON.parse(fs.readFileSync(path.join(root,'fixtures/families/portable-cases.json'),'utf8')), ...JSON.parse(fs.readFileSync(path.join(root,'fixtures/facets/portable-cases.json'),'utf8'))]) {
+    const proof = new bindings.Chart(JSON.stringify(proofCase.chart),JSON.stringify(proofCase.data),proofCase.profile ? JSON.stringify(proofCase.profile) : read('profile'),Uint8Array.from(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))));
     statistics[proofCase.name] = JSON.parse(proof.semantics()); scenes[proofCase.name] = JSON.parse(proof.scene());
     fs.writeFileSync(path.join(output,`statistics-${proofCase.name}.svg`),proof.svg());
     proof.dispose(); proof.free();
+    if (proofCase.name === 'facet-shared-broadcast') {
+        for (const [target,expected] of [[null,'CHART_SCHEMA_CONFLICT'],[{Panels:[{values:[{Text:'absent'}]}]},'CHART_VALIDATION']]) {
+            const bad=JSON.parse(JSON.stringify(proofCase.chart));
+            if(target===null) delete bad.definition.layers[1].facet;
+            else bad.definition.layers[1].facet=target;
+            assert.throws(()=>new bindings.Chart(JSON.stringify(bad),JSON.stringify(proofCase.data),JSON.stringify(proofCase.profile),Uint8Array.from(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf')))),error=>JSON.parse(error.message).code===expected);
+        }
+        console.log('PASS WASM FIX-06: missing facet policy and unknown target panel rejected');
+    }
 }
 save('statistics',JSON.stringify(statistics)); save('statistics-scenes',JSON.stringify(scenes));
 console.log(`PASS ${Object.keys(statistics).length} statistic/position/family cases in actual WASM`);

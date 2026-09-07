@@ -10,6 +10,7 @@ use std::{
 };
 
 struct CachedGraph {
+    scope: Option<facets::PanelScope>,
     source: SnapshotHandle<StoreSnapshot>,
     definitions: Vec<TransformDefinition>,
     limits: CompileLimits,
@@ -19,10 +20,11 @@ struct CachedGraph {
 }
 
 /// One synchronous preparation route for typed-normalized authoring, recipes and layers.
-/// A bounded single graph cache retains at most the last successful source/graph snapshot.
+/// A bounded graph cache retains each authored panel scope for the current source/graph.
+/// New source or transform definitions release prior cache entries; prepared owners stay valid.
 #[derive(Default)]
 pub struct Compiler {
-    cache: Option<CachedGraph>,
+    cache: BTreeMap<Option<PanelKey>, CachedGraph>,
 }
 impl Compiler {
     /// Empty compiler; no host services, threads or I/O are needed for data preparation.
@@ -31,7 +33,7 @@ impl Compiler {
     }
     /// Release cached graph/source ownership; existing prepared charts remain valid.
     pub fn clear_cache(&mut self) {
-        self.cache = None;
+        self.cache.clear();
     }
     /// Validate, filter/map, compute stats, bind outputs, position, collect domains and emit
     /// immutable data-space geometry. Scale/range/layout preparation follows in WP-06.
@@ -43,9 +45,40 @@ impl Compiler {
         limits: CompileLimits,
     ) -> ChartResult<PreparedChart> {
         let snapshot = source.get()?;
+        if self.cache.values().any(|c| {
+            c.definitions != definition.transforms
+                || !c.source.get().is_ok_and(|old| std::ptr::eq(old, snapshot))
+        }) {
+            self.cache.clear();
+        }
+        if definition.facets.is_some() {
+            self.cache.retain(|key, _| {
+                key.as_ref().is_some_and(|key| {
+                    definition
+                        .facets
+                        .as_ref()
+                        .is_some_and(|spec| spec.order.contains(key))
+                })
+            });
+            return facets::prepare_facets(self, definition, source, state, limits);
+        }
+        self.cache.retain(|key, _| key.is_none());
+        self.prepare_scoped(definition, source, state, limits, None)
+    }
+    pub(crate) fn prepare_scoped(
+        &mut self,
+        definition: &ChartDefinition,
+        source: &SnapshotHandle<StoreSnapshot>,
+        state: &ChartState,
+        limits: CompileLimits,
+        scope: Option<&facets::PanelScope>,
+    ) -> ChartResult<PreparedChart> {
+        let snapshot = source.get()?;
         let order = validate_definition(definition, snapshot, limits)?;
-        let reuse = self.cache.as_ref().is_some_and(|c| {
-            c.definitions == definition.transforms
+        let cache_key = scope.map(|s| s.key.clone());
+        let reuse = self.cache.get(&cache_key).is_some_and(|c| {
+            c.scope.as_ref() == scope
+                && c.definitions == definition.transforms
                 && c.limits == limits
                 && c.source.get().is_ok_and(|old| std::ptr::eq(old, snapshot))
         });
@@ -53,7 +86,7 @@ impl Compiler {
         let (tables, mut diagnostics, graph_rows) = if reuse {
             let c = self
                 .cache
-                .as_ref()
+                .get(&cache_key)
                 .ok_or_else(|| error(DiagnosticCode::Validation, "Graph cache is absent."))?;
             charge(&mut remaining, c.rows, "prepared row")?;
             (c.tables.clone(), c.diagnostics.clone(), c.rows)
@@ -62,17 +95,37 @@ impl Compiler {
             let mut diagnostics = vec![];
             for id in order {
                 let node = &definition.transforms[id];
-                let input = resolve_input(node.input, snapshot, &tables, remaining)?;
+                if !facets::targeted(&node.facet, scope) {
+                    continue;
+                }
+                let input = resolve_input(
+                    node.input,
+                    snapshot,
+                    &tables,
+                    remaining,
+                    scope,
+                    &node.facet,
+                    node.scope,
+                )?;
                 let data = snapshot.dataset(input.input.dataset)?;
+                let input = facets::filter_panel(input, data, scope, &node.facet, node.scope)?;
+                let statistic = facets::scoped_stat(&node.statistic, node.scope);
                 let start = diagnostics.len();
                 let table = stats::run(
                     input,
                     data,
                     stats::StatRequest {
-                        stat: &node.statistic,
+                        stat: &statistic,
+                        population: node.scope,
+                        panel: facets::population_panel(scope, &node.facet, node.scope),
                         filters: &node.filters,
                         policy: node.invalid,
-                        scope: &format!("transform:{}", node.id.get()),
+                        scope: &facets::operation_scope(
+                            "transform",
+                            node.id.get(),
+                            node.scope,
+                            scope,
+                        ),
                     },
                     CompileLimits {
                         max_prepared_rows: remaining,
@@ -98,17 +151,32 @@ impl Compiler {
             vertices: limits.max_vertices,
         };
         for layer in &definition.layers {
-            let input = resolve_input(layer.data, snapshot, &tables, remaining)?;
+            if !facets::targeted(&layer.facet, scope) {
+                continue;
+            }
+            let input = resolve_input(
+                layer.data,
+                snapshot,
+                &tables,
+                remaining,
+                scope,
+                &layer.facet,
+                layer.scope,
+            )?;
             let data = snapshot.dataset(input.input.dataset)?;
+            let input = facets::filter_panel(input, data, scope, &layer.facet, layer.scope)?;
+            let statistic = facets::scoped_stat(&layer.statistic, layer.scope);
             let start = diagnostics.len();
             let table = stats::run(
                 input,
                 data,
                 stats::StatRequest {
-                    stat: &layer.statistic,
+                    stat: &statistic,
+                    population: layer.scope,
+                    panel: facets::population_panel(scope, &layer.facet, layer.scope),
                     filters: &layer.filters,
                     policy: layer.invalid,
-                    scope: &format!("layer:{}", layer.id.get()),
+                    scope: &facets::operation_scope("layer", layer.id.get(), layer.scope, scope),
                 },
                 CompileLimits {
                     max_prepared_rows: remaining,
@@ -158,6 +226,8 @@ impl Compiler {
             domains.y_space = d.y_space.clone();
         }
         let result = PreparedChart {
+            panels: vec![],
+            shared_training: None,
             definition: Arc::new(definition.clone()),
             source: source.clone(),
             state: state.clone(),
@@ -171,14 +241,18 @@ impl Compiler {
                 reused_transforms: if reuse { tables.len() } else { 0 },
             },
         };
-        self.cache = Some(CachedGraph {
-            source: source.clone(),
-            definitions: definition.transforms.clone(),
-            limits,
-            tables,
-            diagnostics: graph_diagnostics,
-            rows: graph_rows,
-        });
+        self.cache.insert(
+            cache_key,
+            CachedGraph {
+                scope: scope.cloned(),
+                source: source.clone(),
+                definitions: definition.transforms.clone(),
+                limits,
+                tables,
+                diagnostics: graph_diagnostics,
+                rows: graph_rows,
+            },
+        );
         Ok(result)
     }
 }
@@ -203,9 +277,14 @@ fn resolve_input(
     snapshot: &StoreSnapshot,
     tables: &BTreeMap<TransformId, Arc<PreparedTable>>,
     remaining: usize,
+    scope: Option<&facets::PanelScope>,
+    target: &FacetTarget,
+    stat: StatScope,
 ) -> ChartResult<Arc<PreparedTable>> {
     match input {
-        DataRef::Dataset(id) => stats::source_table(snapshot.dataset(id)?, remaining),
+        DataRef::Dataset(id) => {
+            facets::source_table(snapshot.dataset(id)?, remaining, scope, target, stat)
+        }
         DataRef::Transform(id) => tables.get(&id).cloned().ok_or_else(|| {
             error(
                 DiagnosticCode::MissingResource,
@@ -214,7 +293,7 @@ fn resolve_input(
         }),
     }
 }
-fn validate_definition(
+pub(super) fn validate_definition(
     definition: &ChartDefinition,
     snapshot: &StoreSnapshot,
     limits: CompileLimits,
@@ -387,7 +466,7 @@ fn merge_space(a: &mut Option<ValueSpace>, b: &Option<ValueSpace>) -> ChartResul
 }
 // Train categorical membership from eligible post-stat geometry, ordered by the retained
 // source catalog. Keep the layer catalog unchanged so geometry ordinals still decode exactly.
-fn eligible_domains(layer: &PreparedLayer) -> DomainContributions {
+pub(super) fn eligible_domains(layer: &PreparedLayer) -> DomainContributions {
     let mut d = layer.domains.clone();
     for horizontal in [true, false] {
         let space = if horizontal {
@@ -431,56 +510,66 @@ fn eligible_domains(layer: &PreparedLayer) -> DomainContributions {
     }
     d
 }
-fn merge_named(
+pub(super) fn merge_named(
     all: &mut BTreeMap<crate::ScaleId, DomainContributions>,
     bindings: ScaleBindings,
     d: &DomainContributions,
 ) -> ChartResult<()> {
     for (id, horizontal) in [(bindings.x, true), (bindings.y, false)] {
-        let a = all.entry(id).or_default();
-        if (horizontal && a.y_space.is_some()) || (!horizontal && a.x_space.is_some()) {
-            return Err(error(
-                DiagnosticCode::SchemaConflict,
-                "A named scale cannot serve both x and y.",
-            ));
-        }
-        let b = if horizontal {
-            DomainContributions {
-                x: d.x,
-                x_space: Some(d.x_space.clone().unwrap_or(ValueSpace::Data)),
-                ..Default::default()
-            }
-        } else {
-            DomainContributions {
-                y: d.y,
-                y_space: Some(d.y_space.clone().unwrap_or(ValueSpace::Data)),
-                ..Default::default()
-            }
-        };
-        // Union layer catalogs only here: each layer retains its own ordinal-to-label mapping.
-        let (prior, next) = if horizontal {
-            (&mut a.x_space, &b.x_space)
-        } else {
-            (&mut a.y_space, &b.y_space)
-        };
-        if let (
-            Some(ValueSpace::Categorical { categories: p }),
-            Some(ValueSpace::Categorical { categories: n }),
-        ) = (prior, next)
-        {
-            let mut seen: BTreeSet<String> = p.iter().cloned().collect();
-            p.extend(n.iter().filter(|v| seen.insert((*v).clone())).cloned());
-            let extent = if horizontal { &mut a.x } else { &mut a.y };
-            if let Some(e) = if horizontal { b.x } else { b.y } {
-                Extent::include(extent, e.minimum);
-                Extent::include(extent, e.maximum);
-            }
-        } else {
-            merge_domains(a, &b)?;
-        }
+        merge_axis(all, id, horizontal, d)?;
     }
     Ok(())
 }
+pub(super) fn merge_axis(
+    all: &mut BTreeMap<crate::ScaleId, DomainContributions>,
+    id: crate::ScaleId,
+    horizontal: bool,
+    d: &DomainContributions,
+) -> ChartResult<()> {
+    let a = all.entry(id).or_default();
+    if (horizontal && a.y_space.is_some()) || (!horizontal && a.x_space.is_some()) {
+        return Err(error(
+            DiagnosticCode::SchemaConflict,
+            "A named scale cannot serve both x and y.",
+        ));
+    }
+    let b = if horizontal {
+        DomainContributions {
+            x: d.x,
+            x_space: Some(d.x_space.clone().unwrap_or(ValueSpace::Data)),
+            ..Default::default()
+        }
+    } else {
+        DomainContributions {
+            y: d.y,
+            y_space: Some(d.y_space.clone().unwrap_or(ValueSpace::Data)),
+            ..Default::default()
+        }
+    };
+    // Union layer catalogs only here: each layer retains its own ordinal-to-label mapping.
+    let (prior, next) = if horizontal {
+        (&mut a.x_space, &b.x_space)
+    } else {
+        (&mut a.y_space, &b.y_space)
+    };
+    if let (
+        Some(ValueSpace::Categorical { categories: p }),
+        Some(ValueSpace::Categorical { categories: n }),
+    ) = (prior, next)
+    {
+        let mut seen: BTreeSet<String> = p.iter().cloned().collect();
+        p.extend(n.iter().filter(|v| seen.insert((*v).clone())).cloned());
+        let extent = if horizontal { &mut a.x } else { &mut a.y };
+        if let Some(e) = if horizontal { b.x } else { b.y } {
+            Extent::include(extent, e.minimum);
+            Extent::include(extent, e.maximum);
+        }
+    } else {
+        merge_domains(a, &b)?;
+    }
+    Ok(())
+}
+
 fn merge_domains(a: &mut DomainContributions, b: &DomainContributions) -> ChartResult<()> {
     merge_space(&mut a.x_space, &b.x_space)?;
     merge_space(&mut a.y_space, &b.y_space)?;
@@ -1184,16 +1273,28 @@ fn preflight_schemas(
         let node = &definition.transforms[i];
         let input = input_shape(node.input, &shapes)?;
         let data = snapshot.dataset(input.dataset)?;
-        let output = stat_shape(input, data, &node.statistic, &node.filters, limits)
-            .map_err(|e| context(e, data, None))?;
+        let output = stat_shape(
+            input,
+            data,
+            &facets::scoped_stat(&node.statistic, node.scope),
+            &node.filters,
+            limits,
+        )
+        .map_err(|e| context(e, data, None))?;
         shapes.insert(node.id, output);
     }
     let mut domains = BTreeMap::new();
     for layer in &definition.layers {
         let input = input_shape(layer.data, &shapes)?;
         let data = snapshot.dataset(input.dataset)?;
-        let output = stat_shape(input, data, &layer.statistic, &layer.filters, limits)
-            .map_err(|e| context(e, data, Some(layer.id)))?;
+        let output = stat_shape(
+            input,
+            data,
+            &facets::scoped_stat(&layer.statistic, layer.scope),
+            &layer.filters,
+            limits,
+        )
+        .map_err(|e| context(e, data, Some(layer.id)))?;
         let mut binding = match (&output.bins, &output.statistical, &layer.mappings) {
             (None, None, Mappings::Source(aes)) => {
                 source_binding(layer, aes, &definition.mappings, data).map(|(_, domain)| domain)

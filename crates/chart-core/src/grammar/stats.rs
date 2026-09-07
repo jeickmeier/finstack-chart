@@ -165,6 +165,11 @@ pub(crate) fn number(row: RowView<'_>, value: &Numeric) -> Option<f64> {
     };
     value.filter(|v| v.is_finite())
 }
+pub(crate) fn filter_matches(row: RowView<'_>, filter: &SourceFilter) -> Option<bool> {
+    number(row, &filter.value).map(|v| {
+        !filter.minimum.is_some_and(|min| v < min) && !filter.maximum.is_some_and(|max| v > max)
+    })
+}
 pub(crate) fn group_value(row: RowView<'_>, group: &Grouping) -> Option<GroupValue> {
     match group {
         Grouping::All => Some(GroupValue::All),
@@ -181,22 +186,29 @@ pub(crate) fn source_table(
     data: &DatasetSnapshot,
     max_rows: usize,
 ) -> ChartResult<Arc<PreparedTable>> {
-    if data.len() > max_rows {
-        return Err(error(
-            DiagnosticCode::ResourceLimit,
-            "Source preparation row budget exceeded.",
-        ));
+    source_table_where(data, max_rows, |_| true)
+}
+pub(crate) fn source_table_where(
+    data: &DatasetSnapshot,
+    max_rows: usize,
+    mut eligible: impl FnMut(RowView<'_>) -> bool,
+) -> ChartResult<Arc<PreparedTable>> {
+    let mut rows = Vec::new();
+    for row in data.rows().filter(|row| eligible(*row)) {
+        if rows.len() == max_rows {
+            return Err(error(
+                DiagnosticCode::ResourceLimit,
+                "Source preparation row budget exceeded.",
+            ));
+        }
+        rows.push(SourceRow {
+            key: row.key(),
+            ordinal: row.ordinal(),
+        });
     }
     Ok(Arc::new(PreparedTable {
         schema: OutputSchema::Source(data.schema().clone()),
-        rows: PreparedRows::Source(
-            data.rows()
-                .map(|r| SourceRow {
-                    key: r.key(),
-                    ordinal: r.ordinal(),
-                })
-                .collect(),
-        ),
+        rows: PreparedRows::Source(rows.into()),
         input: data.version(),
         space: ValueSpace::Data,
         operations: vec![],
@@ -226,6 +238,8 @@ pub(crate) fn warning(
 
 pub(crate) struct StatRequest<'a> {
     pub stat: &'a Statistic,
+    pub population: StatScope,
+    pub panel: Option<&'a PanelKey>,
     pub filters: &'a [SourceFilter],
     pub policy: InvalidPolicy,
     pub scope: &'a str,
@@ -239,6 +253,8 @@ pub(crate) fn run(
 ) -> ChartResult<Arc<PreparedTable>> {
     let StatRequest {
         stat,
+        population,
+        panel,
         filters,
         policy,
         scope,
@@ -272,7 +288,7 @@ pub(crate) fn run(
             let source = index[&row.key];
             let mut keep = true;
             for filter in filters {
-                match number(source, &filter.value) {
+                match filter_matches(source, filter) {
                     None => {
                         counts.invalid_filter += 1;
                         if samples.len() < 32 {
@@ -281,10 +297,7 @@ pub(crate) fn run(
                         keep = false;
                         break;
                     }
-                    Some(value)
-                        if filter.minimum.is_some_and(|min| value < min)
-                            || filter.maximum.is_some_and(|max| value > max) =>
-                    {
+                    Some(false) => {
                         counts.filtered += 1;
                         keep = false;
                         break;
@@ -494,6 +507,8 @@ pub(crate) fn run(
     };
     counts.output = table.rows.len();
     table.operations.push(OperationRecord {
+        scope: population,
+        panel: panel.cloned(),
         operation: stat.operation.clone(),
         parameters: stat.parameters.clone(),
         input: table.input,

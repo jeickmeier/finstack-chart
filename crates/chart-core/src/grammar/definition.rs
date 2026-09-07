@@ -72,7 +72,7 @@ impl From<FieldId> for Numeric {
     }
 }
 
-/// Stable source grouping. Facet/panel scopes are not implemented by this minimal engine.
+/// Stable source grouping within the declared statistical population scope.
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Default, Eq, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub enum Grouping {
@@ -222,6 +222,12 @@ impl Default for Statistic {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct TransformDefinition {
+    /// Explicit missing-facet and panel targeting policy.
+    #[serde(default)]
+    pub facet: super::FacetTarget,
+    /// Group, facet or whole-chart statistical population.
+    #[serde(default)]
+    pub scope: super::StatScope,
     /// Stable graph identity.
     pub id: TransformId,
     /// Dataset or earlier dependency (declaration order is irrelevant).
@@ -238,6 +244,8 @@ impl TransformDefinition {
     pub fn new(id: TransformId, input: impl Into<DataRef>, statistic: Statistic) -> Self {
         Self {
             id,
+            facet: super::FacetTarget::default(),
+            scope: super::StatScope::default(),
             input: input.into(),
             filters: vec![],
             statistic,
@@ -576,6 +584,12 @@ pub enum ClipPolicy {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Layer {
+    /// Explicit missing-facet and panel targeting policy.
+    #[serde(default)]
+    pub facet: super::FacetTarget,
+    /// Group, facet or whole-chart statistical population.
+    #[serde(default)]
+    pub scope: super::StatScope,
     /// Stable identity; vector order controls paint order.
     pub id: LayerId,
     /// Named horizontal and vertical scale bindings.
@@ -609,6 +623,8 @@ impl Layer {
     pub fn new(id: LayerId, data: impl Into<DataRef>, geom: Geom, mappings: SourceAes) -> Self {
         Self {
             id,
+            facet: super::FacetTarget::default(),
+            scope: super::StatScope::default(),
             scales: ScaleBindings::default(),
             clip: ClipPolicy::default(),
             data: data.into(),
@@ -713,6 +729,9 @@ impl Layer {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct ChartDefinition {
+    /// Optional explicit facet catalog and panel layout.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub facets: Option<super::FacetSpec>,
     /// Caller-owned definition revision; advance on effective authored changes.
     pub revision: Revision,
     /// Optional default source aesthetic mappings, checked per inheriting layer.
@@ -730,6 +749,7 @@ impl ChartDefinition {
     pub fn new(revision: Revision) -> Self {
         Self {
             revision,
+            facets: None,
             mappings: SourceAes::new(),
             transforms: vec![],
             axes: vec![],

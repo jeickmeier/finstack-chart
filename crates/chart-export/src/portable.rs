@@ -142,8 +142,16 @@ impl PortableChart {
                 std::iter::repeat_with(Vec::new).take(figure.metadata().profile.annotations.len()),
             )
             .collect();
+        let item_panels: Vec<_> = std::iter::once(None)
+            .chain(figure.layout().item_panels().iter().cloned())
+            .chain(std::iter::repeat_n(
+                None,
+                figure.metadata().profile.annotations.len(),
+            ))
+            .collect();
+        let panels = figure.layout().panels().iter().map(|p|json!({"key":p.key,"row":p.row,"column":p.column,"bounds":p.bounds,"plot":p.chart.plot()})).collect::<Vec<_>>();
         portable::encode(
-            &json!({"version":portable::VERSION,"stamp":figure.scene().stamp(),"units":figure.scene().units(),"bounds":figure.scene().bounds(),"items":figure.scene().items(),"resources":figure.scene().resources(),"targets":targets,"diagnostics":figure.layout().diagnostics(),"fonts":figure.metadata().fonts.iter().map(|f|json!({"id":f.id,"revision":f.revision,"sha256":f.sha256})).collect::<Vec<_>>() }),
+            &json!({"version":portable::VERSION,"stamp":figure.scene().stamp(),"units":figure.scene().units(),"bounds":figure.scene().bounds(),"items":figure.scene().items(),"resources":figure.scene().resources(),"targets":targets,"item_panels":item_panels,"panels":panels,"diagnostics":figure.layout().diagnostics(),"fonts":figure.metadata().fonts.iter().map(|f|json!({"id":f.id,"revision":f.revision,"sha256":f.sha256})).collect::<Vec<_>>() }),
         )
     }
     /// Return bytes for the explicitly requested format; no host file I/O or silent fallback.

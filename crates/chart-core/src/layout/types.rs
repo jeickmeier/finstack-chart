@@ -109,6 +109,9 @@ impl AxisSpec {
 /// Explicit bounded layout request; all dimensions share the destination units.
 #[derive(Clone, Debug)]
 pub struct LayoutRequest {
+    /// Optional enclosing figure clip for layers explicitly allowing figure overflow.
+    /// Facet layout supplies the outer figure; plot clips remain panel-local.
+    pub figure_bounds: Option<Rect>,
     /// Finite destination figure.
     pub bounds: Rect,
     /// Destination measurement/painting convention.
@@ -146,6 +149,7 @@ impl LayoutRequest {
     pub fn new(bounds: Rect, units: Units, font: ResourceDescriptor) -> Self {
         Self {
             bounds,
+            figure_bounds: None,
             units,
             font,
             revision: Revision::INITIAL,
@@ -222,6 +226,8 @@ pub enum LayoutStatus {
 /// One coherent immutable layout, retaining the exact prepared/stat/source snapshot.
 #[derive(Clone, Debug)]
 pub struct LaidOutChart {
+    pub(crate) panels: Vec<LaidOutPanel>,
+    pub(crate) item_panels: Vec<Option<crate::grammar::PanelKey>>,
     pub(crate) prepared: Arc<PreparedChart>,
     pub(crate) scene: Scene,
     pub(crate) plot: Option<Rect>,
@@ -231,7 +237,29 @@ pub struct LaidOutChart {
     pub(crate) status: LayoutStatus,
     pub(crate) passes: usize,
 }
+/// One facet destination retaining exact panel bounds, scales and source preparation.
+#[derive(Clone, Debug)]
+pub struct LaidOutPanel {
+    /// Stable semantic identity.
+    pub key: crate::grammar::PanelKey,
+    /// Authored row position.
+    pub row: usize,
+    /// Authored column position.
+    pub column: usize,
+    /// Full panel cell, including the facet header.
+    pub bounds: Rect,
+    /// Resolved panel scene with common figure coordinates.
+    pub chart: Arc<LaidOutChart>,
+}
 impl LaidOutChart {
+    /// Resolved facets in explicit order; empty on a single-panel chart.
+    pub fn panels(&self) -> &[LaidOutPanel] {
+        &self.panels
+    }
+    /// Panel identity for every scene item; figure furniture has no panel.
+    pub fn item_panels(&self) -> &[Option<crate::grammar::PanelKey>] {
+        &self.item_panels
+    }
     /// Exact immutable prepared source/stat inputs; layout never reruns them.
     pub fn prepared(&self) -> &Arc<PreparedChart> {
         &self.prepared

@@ -57,6 +57,7 @@
 mod colors;
 mod compiler;
 mod definition;
+mod facets;
 pub(crate) mod positions;
 mod prepared;
 mod statistical_types;
@@ -67,6 +68,7 @@ mod typed;
 pub use colors::*;
 pub use compiler::Compiler;
 pub use definition::*;
+pub use facets::*;
 pub use prepared::*;
 pub use statistical_types::*;
 pub use typed::*;

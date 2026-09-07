@@ -152,3 +152,45 @@ for name in statistics[0]:
         pdf=str(paths[0]/f'statistics-{name}.pdf')
         assert not subprocess.check_output(['pdfimages','-list',pdf],text=True).strip().splitlines()[2:]
 print('PASS WP-11: independent log/run gaps, area/ribbon boundaries, color/missing metadata, price/volume validation, supplied sessions, leap day, signed stack and vector PDF expectations')
+
+# WP-12: independent FIX-06 expectations and panel-aware destination checks.
+for runtime in paths:
+    data=json.loads((runtime/'statistics.json').read_text())
+    scene=json.loads((runtime/'statistics-scenes.json').read_text())
+    shared=data['facet-shared-broadcast']['panels']
+    assert [p['key']['values'][0]['Text'] for p in shared]==['B','A']
+    assert [len(p['layers'][0]['rows']['Source']) for p in shared]==[2,3]
+    assert [len(p['layers'][1]['rows']['Source']) for p in shared]==[1,1]
+    assert [len(p['layers']) for p in data['facet-free-target']['panels']]==[1,2]
+    for name in ('facet-shared-broadcast','facet-free-target','facet-grid-empty'):
+        output=scene[name]
+        assert len(output['items'])==len(output['targets'])==len(output['item_panels'])
+        assert all(panel['plot'] is not None for panel in output['panels'])
+        for item,targets,panel in zip(output['items'],output['targets'],output['item_panels']):
+            if targets: assert panel is not None and item['layer'] is not None
+        plots=[p['plot'] for p in output['panels']]
+        assert all(abs(p['width']-plots[0]['width'])<1e-10 and abs(p['height']-plots[0]['height'])<1e-10 for p in plots)
+    output=scene['facet-shared-broadcast']
+    threshold=[i['primitive']['Rule']['from']['y'] for i in output['items'] if i['layer']=='2']
+    assert len(threshold)==2 and abs(threshold[0]-threshold[1])<1e-10
+    plot=output['panels'][0]['plot']
+    points=[i['primitive']['Point']['center'] for i,p in zip(output['items'],output['item_panels']) if i['layer']=='1' and p['values']==[{'Text':'B'}]]
+    assert abs(points[0]['y']-(plot['origin']['y']+(120-100)/(120-1)*plot['height']))<1e-10
+    grid=data['facet-grid-empty']['panels']
+    assert len(grid)==6 and all(not p['layers'][0]['rows']['Source'] for p in grid[-2:])
+    expected={'group-summary':[[100.,120.],[2.,9.]],'panel-summary':[[110.],[13./3.]],'chart-summary':[[233./5.],[233./5.]]}
+    for name,wanted in expected.items():
+        panels=data['facet-'+name]['panels']
+        actual=[[float(next(v['value'] for v in row['values'] if v['field']=='Mean')) for row in p['layers'][0]['rows']['Statistical']] for p in panels]
+        same(actual,wanted,1e-12)
+        for p in panels:
+            op=p['layers'][0]['operations'][-1]
+            assert op['scope']=={'group-summary':'Group','panel-summary':'Facet','chart-summary':'Chart'}[name]
+            assert op['panel']==(None if name=='chart-summary' else p['key'])
+    assert data['facet-chart-summary']['panels'][0]['layers'][0]['targets']==data['facet-chart-summary']['panels'][1]['layers'][0]['targets']
+    texts=[i['primitive']['Text']['text'] for i in scene['facet-shared-broadcast']['items'] if 'Text' in i['primitive']]
+    assert texts.count('Group')==1
+for name in data:
+    if name.startswith('facet-'):
+        assert not subprocess.check_output(['pdfimages','-list',str(paths[0]/f'statistics-{name}.pdf')],text=True).strip().splitlines()[2:]
+print('PASS WP-12 FIX-06: typed panel order/membership, broadcast/target, shared/free scales, aligned six-panel grid, grouped/facet/chart means, per-item panel identity, collected guides and vector PDF')
