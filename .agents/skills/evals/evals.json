@@ -1,0 +1,12 @@
+{
+  "skill_name": "finstack-binding-parity-reviewer",
+  "evals": [
+    {
+      "id": 1,
+      "name": "agent-api-binding-drift",
+      "prompt": "Review the Agent API changes across Rust, bindings/finstack-ai-python, and bindings/finstack-ai-wasm. I want to know if the Python stubs, WASM names, public-item inventory, and tests all match the canonical Rust API.",
+      "expected_output": "A binding parity review that lists every mirrored surface checked, flags missing stubs/exports/public-item entries, and recommends targeted check-public-items/conformance/WASM verification.",
+      "files": []
+    }
+  ]
+}

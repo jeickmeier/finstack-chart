@@ -1,0 +1,12 @@
+{
+  "skill_name": "finstack-rust-architecture-review",
+  "evals": [
+    {
+      "id": 1,
+      "name": "kernel-reducer-architecture",
+      "prompt": "Review the architecture of crates/finstack-ai-kernel/src/reducer for ownership boundaries, public API shape, binding exposure, and maintainability risks.",
+      "expected_output": "A verdict-led architecture review with architecture map, findings, what works, remediation order, and verification commands.",
+      "files": []
+    }
+  ]
+}
