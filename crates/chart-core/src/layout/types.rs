@@ -127,7 +127,7 @@ impl AxisSpec {
     }
 }
 /// Explicit bounded layout request; all dimensions share the destination units.
-#[derive(Clone, Debug)]
+#[derive(serde::Serialize, Clone, Debug)]
 pub struct LayoutRequest {
     /// Host tokens, preceding named theme and plot overrides.
     pub host_theme: crate::theme::ThemePatch,

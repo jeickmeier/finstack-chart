@@ -3,7 +3,7 @@
 use crate::{ChartResult, Diagnostic, DiagnosticCode};
 
 /// Per-construction budgets. Callers own input allocation; wire decoding is not implemented.
-#[derive(Clone, Copy, Debug)]
+#[derive(serde::Serialize, Clone, Copy, Debug)]
 pub struct Limits {
     /// Maximum scene items, including decorative items.
     pub max_items: usize,
@@ -14,8 +14,10 @@ pub struct Limits {
     /// Maximum resource descriptors per scene.
     pub max_resources: usize,
     /// Maximum bytes for one resource, before asking a host to resolve it.
+    #[serde(with = "crate::portable::unsigned")]
     pub max_resource_bytes: u64,
     /// Maximum sum of declared resource bytes in a scene.
+    #[serde(with = "crate::portable::unsigned")]
     pub max_total_resource_bytes: u64,
 }
 

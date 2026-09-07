@@ -1,0 +1,1039 @@
+{
+  "chart": {
+    "version": 1,
+    "definition": {
+      "revision": "1",
+      "mappings": {
+        "x": null,
+        "y": null,
+        "x2": null,
+        "y2": null,
+        "size": null,
+        "group": null
+      },
+      "transforms": [],
+      "layers": [
+        {
+          "id": "1",
+          "scales": {
+            "x": "0",
+            "y": "1"
+          },
+          "clip": "Plot",
+          "data": {
+            "Dataset": "1"
+          },
+          "filters": [],
+          "statistic": {
+            "operation": {
+              "id": "chart.identity",
+              "version": "1"
+            },
+            "parameters": "Identity"
+          },
+          "mappings": {
+            "Source": {
+              "x": {
+                "Field": "1"
+              },
+              "y": {
+                "Field": "2"
+              },
+              "x2": null,
+              "y2": null,
+              "size": null,
+              "group": null
+            }
+          },
+          "inherit": true,
+          "geom": {
+            "Line": {
+              "order": "X",
+              "connect_gaps": false
+            }
+          },
+          "position": "Identity",
+          "style": {
+            "color": {
+              "red": 35,
+              "green": 90,
+              "blue": 150,
+              "alpha": 255
+            },
+            "radius": 3.0,
+            "stroke_width": 1.5
+          },
+          "invalid": "Exclude"
+        },
+        {
+          "id": "2",
+          "scales": {
+            "x": "0",
+            "y": "1"
+          },
+          "clip": "Plot",
+          "data": {
+            "Dataset": "2"
+          },
+          "filters": [],
+          "statistic": {
+            "operation": {
+              "id": "chart.identity",
+              "version": "1"
+            },
+            "parameters": "Identity"
+          },
+          "mappings": {
+            "Source": {
+              "x": {
+                "Field": "1"
+              },
+              "y": {
+                "Field": "2"
+              },
+              "x2": null,
+              "y2": null,
+              "size": null,
+              "group": null
+            }
+          },
+          "inherit": true,
+          "geom": {
+            "Line": {
+              "order": "X",
+              "connect_gaps": false
+            }
+          },
+          "position": "Identity",
+          "style": {
+            "color": {
+              "red": 190,
+              "green": 60,
+              "blue": 65,
+              "alpha": 255
+            },
+            "radius": 3.0,
+            "stroke_width": 1.5
+          },
+          "invalid": "Exclude"
+        }
+      ],
+      "figure": {
+        "version": 1,
+        "annotations": [
+          {
+            "id": "threshold",
+            "anchor": {
+              "Figure": {
+                "x": 0.1,
+                "y": 0.1
+              }
+            },
+            "text": {
+              "lines": [
+                [
+                  {
+                    "text": "Before capture"
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            },
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "priority": 0,
+            "collision": "Keep",
+            "callout": null,
+            "overflow": false
+          }
+        ]
+      }
+    }
+  },
+  "data": {
+    "version": 1,
+    "epoch": "9007199254746001",
+    "datasets": [
+      {
+        "id": "1",
+        "batch": {
+          "schema_version": "1",
+          "fields": [
+            {
+              "id": "1",
+              "name": "x",
+              "kind": "Float64",
+              "nullable": false,
+              "unit": null,
+              "label": null
+            },
+            {
+              "id": "2",
+              "name": "y",
+              "kind": "Float64",
+              "nullable": false,
+              "unit": null,
+              "label": null
+            }
+          ],
+          "keys": [
+            "9007199254743001",
+            "9007199254743002",
+            "9007199254743003",
+            "9007199254743004",
+            "9007199254743005",
+            "9007199254743006",
+            "9007199254743007",
+            "9007199254743008"
+          ],
+          "columns": [
+            {
+              "values": {
+                "Float64": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              "validity": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ]
+            },
+            {
+              "values": {
+                "Float64": [
+                  0,
+                  1,
+                  4,
+                  9,
+                  16,
+                  25,
+                  36,
+                  49
+                ]
+              },
+              "validity": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "2",
+        "batch": {
+          "schema_version": "1",
+          "fields": [
+            {
+              "id": "1",
+              "name": "x",
+              "kind": "Float64",
+              "nullable": false,
+              "unit": null,
+              "label": null
+            },
+            {
+              "id": "2",
+              "name": "y",
+              "kind": "Float64",
+              "nullable": false,
+              "unit": null,
+              "label": null
+            }
+          ],
+          "keys": [
+            "9007199254743001",
+            "9007199254743002",
+            "9007199254743003",
+            "9007199254743004",
+            "9007199254743005",
+            "9007199254743006",
+            "9007199254743007",
+            "9007199254743008"
+          ],
+          "columns": [
+            {
+              "values": {
+                "Float64": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              "validity": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ]
+            },
+            {
+              "values": {
+                "Float64": [
+                  0,
+                  -1,
+                  -4,
+                  -9,
+                  -16,
+                  -25,
+                  -36,
+                  -49
+                ]
+              },
+              "validity": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "steps": [
+    {
+      "name": "viewport",
+      "kind": "action",
+      "action": {
+        "SetViewport": {
+          "x": [
+            2,
+            5
+          ],
+          "y": null
+        }
+      }
+    },
+    {
+      "name": "select",
+      "kind": "action",
+      "action": {
+        "Select": {
+          "change": "Replace",
+          "targets": [
+            {
+              "epoch": "9007199254746001",
+              "layer": "1",
+              "panel": null,
+              "identity": {
+                "Source": {
+                  "dataset": "1",
+                  "key": "9007199254743004"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "present-before",
+      "kind": "present"
+    },
+    {
+      "name": "visible-before",
+      "kind": "begin",
+      "options": {
+        "format": "svg"
+      }
+    },
+    {
+      "name": "atomic-one",
+      "kind": "transaction",
+      "transaction": {
+        "version": 1,
+        "id": "live-export-1",
+        "epoch": "9007199254746001",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "0",
+            "schema_version": "1"
+          },
+          {
+            "dataset": "2",
+            "revision": "0",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "UpsertByKey": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "x",
+                    "kind": "Float64",
+                    "nullable": false,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "y",
+                    "kind": "Float64",
+                    "nullable": false,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743004",
+                  "9007199254743009"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Float64": [
+                        3,
+                        8
+                      ]
+                    },
+                    "validity": [
+                      true,
+                      true
+                    ]
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        100,
+                        64
+                      ]
+                    },
+                    "validity": [
+                      true,
+                      true
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "dataset": "2",
+            "mutation": {
+              "UpsertByKey": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "x",
+                    "kind": "Float64",
+                    "nullable": false,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "y",
+                    "kind": "Float64",
+                    "nullable": false,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743004",
+                  "9007199254743009"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Float64": [
+                        3,
+                        8
+                      ]
+                    },
+                    "validity": [
+                      true,
+                      true
+                    ]
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        -100,
+                        -64
+                      ]
+                    },
+                    "validity": [
+                      true,
+                      true
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "edit-committed",
+      "kind": "action",
+      "action": {
+        "SetAnnotation": {
+          "id": "threshold",
+          "anchor": {
+            "Figure": {
+              "x": 0.1,
+              "y": 0.1
+            }
+          },
+          "text": {
+            "lines": [
+              [
+                {
+                  "text": "After one"
+                }
+              ]
+            ],
+            "line_spacing": 1.2,
+            "rotation": 0.0
+          },
+          "offset": [
+            0.0,
+            0.0
+          ],
+          "priority": 0,
+          "collision": "Keep",
+          "callout": null,
+          "overflow": false
+        }
+      }
+    },
+    {
+      "name": "current-full",
+      "kind": "begin",
+      "options": {
+        "format": "svg",
+        "basis": "Current",
+        "full_domain": true,
+        "width_pt": 600,
+        "height_pt": 300,
+        "output_theme": {
+          "color_mode": "Grayscale"
+        }
+      }
+    },
+    {
+      "name": "capacity-rejected",
+      "kind": "begin",
+      "options": {
+        "format": "svg"
+      },
+      "error": "CHART_RESOURCE_LIMIT"
+    },
+    {
+      "name": "newer-first",
+      "kind": "export",
+      "job": "current-full"
+    },
+    {
+      "name": "present-after-one",
+      "kind": "present"
+    },
+    {
+      "name": "older-last",
+      "kind": "export",
+      "job": "visible-before"
+    },
+    {
+      "name": "begin-cancel",
+      "kind": "begin",
+      "options": {
+        "format": "png"
+      }
+    },
+    {
+      "name": "cancel-pending",
+      "kind": "cancel",
+      "job": "begin-cancel"
+    },
+    {
+      "name": "cancelled-unavailable",
+      "kind": "export",
+      "job": "begin-cancel",
+      "error": "CHART_DISPOSED_HANDLE"
+    },
+    {
+      "name": "begin-raster-limit",
+      "kind": "begin",
+      "options": {
+        "format": "png",
+        "dpi": 100000
+      }
+    },
+    {
+      "name": "raster-limit",
+      "kind": "export",
+      "job": "begin-raster-limit",
+      "error": "CHART_RESOURCE_LIMIT"
+    },
+    {
+      "name": "begin-preview",
+      "kind": "action",
+      "action": {
+        "BeginGesture": {
+          "id": "1",
+          "kind": {
+            "Annotation": "threshold"
+          }
+        }
+      }
+    },
+    {
+      "name": "preview-annotation",
+      "kind": "action",
+      "action": {
+        "PreviewGesture": {
+          "id": "1",
+          "preview": {
+            "Annotation": {
+              "id": "threshold",
+              "anchor": {
+                "Figure": {
+                  "x": 0.1,
+                  "y": 0.1
+                }
+              },
+              "text": {
+                "lines": [
+                  [
+                    {
+                      "text": "Uncommitted preview"
+                    }
+                  ]
+                ],
+                "line_spacing": 1.2,
+                "rotation": 0.0
+              },
+              "offset": [
+                0.0,
+                0.0
+              ],
+              "priority": 0,
+              "collision": "Keep",
+              "callout": null,
+              "overflow": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "present-preview",
+      "kind": "present"
+    },
+    {
+      "name": "clean-preview",
+      "kind": "begin",
+      "options": {
+        "format": "svg"
+      }
+    },
+    {
+      "name": "include-preview",
+      "kind": "begin",
+      "options": {
+        "format": "svg",
+        "interaction": {
+          "selection": true,
+          "hover": true,
+          "focus": true,
+          "preview": true
+        }
+      }
+    },
+    {
+      "name": "cancel-preview",
+      "kind": "action",
+      "action": {
+        "CancelGesture": "Explicit"
+      }
+    },
+    {
+      "name": "atomic-two",
+      "kind": "transaction",
+      "transaction": {
+        "version": 1,
+        "id": "live-export-2",
+        "epoch": "9007199254746001",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "1",
+            "schema_version": "1"
+          },
+          {
+            "dataset": "2",
+            "revision": "1",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "UpsertByKey": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "x",
+                    "kind": "Float64",
+                    "nullable": false,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "y",
+                    "kind": "Float64",
+                    "nullable": false,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743004"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Float64": [
+                        3
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ]
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        200
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "dataset": "2",
+            "mutation": {
+              "UpsertByKey": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "x",
+                    "kind": "Float64",
+                    "nullable": false,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "y",
+                    "kind": "Float64",
+                    "nullable": false,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743004"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Float64": [
+                        3
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ]
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        -200
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "clean-committed",
+      "kind": "export",
+      "job": "clean-preview"
+    },
+    {
+      "name": "included-transient",
+      "kind": "export",
+      "job": "include-preview"
+    },
+    {
+      "name": "present-latest",
+      "kind": "present"
+    },
+    {
+      "name": "latest-full",
+      "kind": "begin",
+      "options": {
+        "format": "svg",
+        "basis": "Current",
+        "full_domain": true
+      }
+    },
+    {
+      "name": "latest",
+      "kind": "export",
+      "job": "latest-full"
+    },
+    {
+      "name": "freeze",
+      "kind": "action",
+      "action": {
+        "SetFollow": "FreezePresentation"
+      }
+    },
+    {
+      "name": "atomic-three",
+      "kind": "transaction",
+      "transaction": {
+        "version": 1,
+        "id": "live-export-3",
+        "epoch": "9007199254746001",
+        "expected": [
+          {
+            "dataset": "1",
+            "revision": "2",
+            "schema_version": "1"
+          },
+          {
+            "dataset": "2",
+            "revision": "2",
+            "schema_version": "1"
+          }
+        ],
+        "operations": [
+          {
+            "dataset": "1",
+            "mutation": {
+              "UpsertByKey": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "x",
+                    "kind": "Float64",
+                    "nullable": false,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "y",
+                    "kind": "Float64",
+                    "nullable": false,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743004"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Float64": [
+                        3
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ]
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        300
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "dataset": "2",
+            "mutation": {
+              "UpsertByKey": {
+                "schema_version": "1",
+                "fields": [
+                  {
+                    "id": "1",
+                    "name": "x",
+                    "kind": "Float64",
+                    "nullable": false,
+                    "unit": null,
+                    "label": null
+                  },
+                  {
+                    "id": "2",
+                    "name": "y",
+                    "kind": "Float64",
+                    "nullable": false,
+                    "unit": null,
+                    "label": null
+                  }
+                ],
+                "keys": [
+                  "9007199254743004"
+                ],
+                "columns": [
+                  {
+                    "values": {
+                      "Float64": [
+                        3
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ]
+                  },
+                  {
+                    "values": {
+                      "Float64": [
+                        -300
+                      ]
+                    },
+                    "validity": [
+                      true
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "frozen-full",
+      "kind": "begin",
+      "options": {
+        "format": "svg",
+        "full_domain": true
+      }
+    },
+    {
+      "name": "current-during-freeze",
+      "kind": "begin",
+      "options": {
+        "format": "svg",
+        "basis": "Current",
+        "full_domain": true
+      }
+    },
+    {
+      "name": "frozen-historical",
+      "kind": "export",
+      "job": "frozen-full"
+    },
+    {
+      "name": "current-during-freeze-result",
+      "kind": "export",
+      "job": "current-during-freeze"
+    },
+    {
+      "name": "resume",
+      "kind": "action",
+      "action": "ResumeLatest"
+    },
+    {
+      "name": "present-after-freeze",
+      "kind": "present"
+    },
+    {
+      "name": "status",
+      "kind": "status"
+    },
+    {
+      "name": "held-at-disposal",
+      "kind": "begin",
+      "options": {
+        "format": "svg"
+      }
+    },
+    {
+      "name": "dispose",
+      "kind": "dispose"
+    },
+    {
+      "name": "disposed-chart",
+      "kind": "export",
+      "job": "held-at-disposal",
+      "error": "CHART_DISPOSED_HANDLE"
+    }
+  ]
+}

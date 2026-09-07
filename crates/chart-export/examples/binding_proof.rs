@@ -5,6 +5,8 @@ mod actions_trace;
 mod dense_proof;
 #[path = "common/input_trace.rs"]
 mod input_trace;
+#[path = "common/live_export_proof.rs"]
+mod live_export_proof;
 #[path = "common/stream_trace.rs"]
 mod stream_trace;
 use chart_export::portable::PortableChart;
@@ -22,6 +24,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     input_trace::run(&root, &output)?;
     stream_trace::run(&root, &output)?;
     dense_proof::run(&root, &output)?;
+    live_export_proof::run(&root, &output)?;
     let mut chart = PortableChart::new(
         &fs::read_to_string(fixture.join("chart.json"))?,
         &fs::read_to_string(fixture.join("data.json"))?,

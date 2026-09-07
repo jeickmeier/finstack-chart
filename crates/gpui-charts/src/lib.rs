@@ -7,5 +7,5 @@ pub use custom::{NativePainter, NativePainterRegistry, PreparedNativePaint};
 pub use native::NativeFont;
 pub use view::{
     ChartHostEvent, ChartInput, ChartView, ControlBuilder, ControlSlot, HostCommand, HostContext,
-    NativeAnnotationTool, NativeDragTool, NativeMetrics, TooltipBuilder,
+    NativeAnnotationTool, NativeDragTool, NativeMetrics, PresentedCapture, TooltipBuilder,
 };

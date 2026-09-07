@@ -98,3 +98,12 @@ progress, compatible stale rejection and preliminary PERF-01/02 CPU stages. Inde
 construction and retained geometry memory remain concrete bottlenecks. These finite
 measurements do not satisfy native total-frame/GPU, sustained PERF-03, PERF-04/05 or
 memory-plateau gates; the original budgets above remain unchanged.
+
+## WP-20 preliminary coherent publication
+
+[WP-20 evidence](../evidence/wp-20-completion-2026-09-07.md) deliberately pauses each
+native export at captured and prepared boundaries for two seconds. Phase/resume
+nanosecond timestamps separate artificial waiting from preparation/encoding; host
+save time is separate. Two eight-row datasets receive atomic updates every 50 ms,
+with annotation/theme changes. This finite test demonstrates live serviceability and
+resource release, not the required PERF-03/05 workload, memory plateau or latency gate.

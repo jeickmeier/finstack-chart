@@ -190,3 +190,5 @@ for(const test of JSON.parse(fs.readFileSync(path.join(root,'fixtures/dense/case
     fs.writeFileSync(path.join(output,`dense-${test.name}.svg`),result.svg);delete result.svg;
     fs.writeFileSync(path.join(output,`dense-${test.name}.json`),JSON.stringify(result));c.dispose();c.free();
 }
+
+require('./live_export_proof.cjs')({bindings,root,output});

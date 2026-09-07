@@ -3,7 +3,7 @@
 Rust-native grammar-of-graphics project with a portable core, headless publication export,
 a standalone GPUI host and optional Kit integration.
 
-**Status: WP-19 bounded background preparation, stage caches and exact-lookup density rendering are implemented. G2 passes its
+**Status: WP-20 bounded coherent live export is implemented alongside background preparation, caches and exact-lookup density rendering. G2 passes its
 [feature matrix](docs/alpha-api.md), including facets, themes, vector publication,
 public custom extensions and 36 actual Rust/Python/WASM cases. A shared action trace
 proves gesture/cancellation/controlled-state behavior in each runtime; 47 shared input
@@ -130,3 +130,9 @@ queue acknowledgements, retention/follow semantics and remaining performance gat
 [Scheduling and density contract](docs/scheduling-density-contract.md) and
 [WP-19 evidence](docs/evidence/wp-19-completion-2026-09-07.md) cover bounded workers,
 monotonic presentation, dense line/candle paint and preliminary CPU/index measurements.
+
+[Live-export contract](docs/live-export-contract.md) and
+[WP-20 evidence](docs/evidence/wp-20-completion-2026-09-07.md) cover immutable captures,
+interaction inclusion, bounded jobs and release on cancellation/error. Run
+`mise exec -- cargo run -p chart-gallery --example live_export_gallery --locked`
+for deliberately slowed native SVG/PDF/PNG exports during atomic data updates.

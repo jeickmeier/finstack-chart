@@ -89,6 +89,14 @@ impl Chart {
     pub fn dispatch(&mut self, input: &str) -> Result<String, JsError> {
         self.inner.dispatch(input).map_err(failure)
     }
+    /// Capture/cancel/status for bounded immutable export jobs.
+    pub fn export_control(&mut self, input: &str) -> Result<String, JsError> {
+        self.inner.export_control(input).map_err(failure)
+    }
+    /// Run a captured export later; returns owned output bytes.
+    pub fn export_job(&mut self, job: &str) -> Result<Vec<u8>, JsError> {
+        self.inner.export_job(job).map_err(failure)
+    }
     /// Exact state snapshot envelope.
     pub fn state(&self) -> Result<String, JsError> {
         self.inner.state().map_err(failure)

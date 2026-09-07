@@ -3,7 +3,7 @@ use chart_core::data::{DatasetVersion, SnapshotHandle, StoreSnapshot};
 use chart_core::grammar::{ChartDefinition, CompileLimits, Compiler};
 use chart_core::layout::{LaidOutChart, layout};
 use chart_core::scene::{PathCommand, Primitive, Scene, SceneItem};
-use chart_core::state::{ChartAction, ChartState, Viewport};
+use chart_core::state::ChartState;
 use chart_core::{
     ChartResult, Diagnostic, DiagnosticCode, Rect, ResourceId, Revision, SceneStamp, SchemaVersion,
     SourceEpoch,
@@ -23,12 +23,20 @@ pub struct FontManifest {
 /// Reproduction inputs, returned with bytes. This is not the WP-09 portable wire envelope.
 #[derive(Clone, Debug)]
 pub struct Reproducibility {
+    /// Complete authored definition captured before any later edits.
+    pub definition: ChartDefinition,
+    /// Explicit state inclusion policy; legacy direct captures preserve all state.
+    pub interaction: chart_core::state::InteractionCapture,
+    /// Actual presented scene used by the host, when capture came from presentation.
+    pub origin_scene: Option<SceneStamp>,
     /// Exact encoding/font engine versions and crate version.
     pub engines: String,
     /// Effective publication scene stamp.
     pub stamp: SceneStamp,
     /// Original captured interaction state, before the explicit full-domain policy.
     pub captured_state: ChartState,
+    /// Effective state actually prepared after inclusion and full-domain policies.
+    pub effective_state: ChartState,
     /// Coherent source transaction epoch.
     pub source_epoch: SourceEpoch,
     /// Captured per-dataset versions and schema versions.
@@ -88,18 +96,36 @@ impl FigureSnapshot {
         source: SnapshotHandle<StoreSnapshot>,
         state: &ChartState,
         fonts: FontResources,
-        mut profile: PublicationProfile,
+        profile: PublicationProfile,
         extensions: Arc<chart_core::grammar::ExtensionRegistry>,
     ) -> ChartResult<Self> {
+        crate::FigureRequest::new(
+            definition.clone(),
+            source,
+            state.clone(),
+            fonts,
+            profile,
+            chart_core::state::InteractionCapture::ALL,
+        )?
+        .with_extensions(extensions)
+        .prepare()
+    }
+    /// Prepare one previously acquired immutable request on a caller-selected executor.
+    pub fn capture_request(request: &crate::FigureRequest) -> ChartResult<Self> {
+        let definition = &request.definition;
+        let source = request.source.clone();
+        let fonts = request.fonts.clone();
+        let mut profile = request.profile.clone();
+        let extensions = request.extensions.clone();
+        let state = &request.state;
         profile.validate()?;
         profile.layout.bounds = Rect::new(0., 0., profile.page.width(), profile.page.height())?;
         let captured_profile = profile.clone();
         let captured_state = state.clone();
         let mut effective_definition = definition.clone();
-        let mut effective_state = state.clone();
+        let mut effective_state = state.capture_interaction(request.interaction);
         if profile.view == ViewMode::FullDomain {
-            effective_state.apply(definition, ChartAction::SetViewport(Viewport::default()))?;
-            effective_state.apply(definition, ChartAction::SetAxisWindows(Default::default()))?;
+            effective_state = effective_state.capture_full_domain();
             for axis in &mut effective_definition.axes {
                 axis.viewport = None;
             }
@@ -198,12 +224,16 @@ impl FigureSnapshot {
             }
             let data = source.get()?;
             let metadata = Reproducibility {
+                definition: definition.clone(),
+                interaction: request.interaction,
+                origin_scene: request.origin_scene,
                 engines: format!(
                     "chart-export {}; chart-text 0.1.0; usvg/resvg 0.48.1; harfrust 0.12.0; krilla 0.8.2; skrifa 0.44.0/0.42.1; PNG 0.17.16",
                     env!("CARGO_PKG_VERSION")
                 ),
                 stamp: scene.stamp(),
                 captured_state,
+                effective_state,
                 source_epoch: data.epoch(),
                 datasets: data
                     .datasets()

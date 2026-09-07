@@ -92,6 +92,21 @@ impl ChartInput {
     }
 }
 
+/// Thread-transferable immutable presentation capture. Contains no GPUI window, painter,
+/// text-system or entity handles. The exporter supplies its own publication measurement.
+#[derive(Clone)]
+pub struct PresentedCapture {
+    /// Exact raw laid-out source underlying the last painted (possibly dense/frozen) scene.
+    pub chart: Arc<chart_core::layout::LaidOutChart>,
+    /// Painted geometry state plus the inspection overlays acknowledged by that paint.
+    pub state: ChartState,
+    /// Captured native layout/theme/resource policy; publication must choose point dimensions.
+    pub layout: LayoutRequest,
+    /// Exact supplied font resources, independent of the native text registry.
+    pub fonts: Vec<(chart_core::services::ResourceDescriptor, Arc<[u8]>)>,
+    /// Exact versioned portable extension implementations for publication preparation.
+    pub extensions: Arc<chart_core::grammar::ExtensionRegistry>,
+}
 /// One retained chart entity with bounded pane/overlay elements and one cached native frame.
 /// Datasets are supplied as immutable snapshots, never recreated inside Render.
 pub struct ChartView {
@@ -105,6 +120,7 @@ pub struct ChartView {
     request: LayoutRequest,
     focus: FocusHandle,
     frame: Option<Rc<NativeFrame>>,
+    painted_state: Option<ChartState>,
     cached: Option<Rc<NativeFrame>>,
     attempted: Option<(Bounds<Pixels>, Revision, usize)>,
     inspector: Option<Inspector>,
@@ -142,6 +158,7 @@ impl ChartView {
             request,
             focus: cx.focus_handle(),
             frame: None,
+            painted_state: None,
             cached: None,
             attempted: None,
             inspector: None,
@@ -402,6 +419,35 @@ impl ChartView {
         }
         Ok(outcome.outcome.changed || inspected.changed)
     }
+    /// Capture the last coherent painted source, geometry state, inspection and resources.
+    /// Pending data/annotation/theme changes cannot enter this capture before they are painted.
+    pub fn capture_presented(&self) -> ChartResult<PresentedCapture> {
+        let frame = self
+            .frame
+            .as_ref()
+            .filter(|_| self.inspector.is_some() && self.painted_state.is_some())
+            .ok_or_else(|| {
+                crate::native::error(
+                    chart_core::DiagnosticCode::Validation,
+                    "No coherent painted chart is available for capture.",
+                )
+            })?;
+        let painted = self
+            .painted_state
+            .as_ref()
+            .unwrap_or(frame.chart.prepared().state());
+        Ok(PresentedCapture {
+            chart: frame.chart.clone(),
+            state: frame
+                .chart
+                .prepared()
+                .state()
+                .with_painted_inspection(painted),
+            layout: frame.request.clone(),
+            fonts: frame.fonts.clone(),
+            extensions: self.compiler.extensions().clone(),
+        })
+    }
     /// Last successfully painted inspection snapshot; never a pending preparation.
     pub fn inspector(&self) -> Option<&Inspector> {
         self.inspector.as_ref()
@@ -642,6 +688,9 @@ impl Render for ChartView {
                             .and_then(|()| this.paint_edit_handles(window))
                         {
                             this.last_error = Some(e);
+                            this.painted_state = None;
+                        } else if painted {
+                            this.painted_state = Some(this.state().clone());
                         }
                     });
                     let move_owner = paint.clone();

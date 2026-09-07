@@ -45,4 +45,4 @@ run("wasm-build", ["cargo","build","-p","chart-wasm","--features","extension-pro
 run("wasm-generate", [cli,ROOT / "target/wasm32-unknown-unknown/debug/chart_wasm.wasm","--target","nodejs","--out-dir",output / "wasm-module"])
 run("wasm", [node,ROOT / "scripts/bindings/wasm_proof.cjs",output / "wasm-module",output / "wasm"])
 run("compare", [sys.executable,ROOT / "scripts/bindings/compare.py",output])
-print(f"PASS WP-09/10/11/12/13/14/15/16/17/18/19 runtime proof. Results: {output}")
+print(f"PASS WP-09/10/11/12/13/14/15/16/17/18/19/20 runtime proof. Results: {output}")

@@ -1,0 +1,510 @@
+{
+  "version": 1,
+  "engines": "chart-export 0.1.0; chart-text 0.1.0; usvg/resvg 0.48.1; harfrust 0.12.0; krilla 0.8.2; skrifa 0.44.0/0.42.1; PNG 0.17.16",
+  "stamp": {
+    "definition": "1",
+    "store": "0",
+    "layout": "0",
+    "state": "3",
+    "viewport": "1"
+  },
+  "origin_scene": {
+    "definition": "1",
+    "store": "0",
+    "layout": "1",
+    "state": "1",
+    "viewport": "1"
+  },
+  "definition": {
+    "figure": {
+      "version": 1,
+      "title": null,
+      "subtitle": null,
+      "caption": null,
+      "source_notes": [],
+      "footnotes": [],
+      "panel_letters": [],
+      "annotations": [
+        {
+          "id": "threshold",
+          "anchor": {
+            "Figure": {
+              "x": 0.1,
+              "y": 0.1
+            }
+          },
+          "text": {
+            "lines": [
+              [
+                {
+                  "text": "Before capture",
+                  "font": null,
+                  "fallback": [],
+                  "weight": 400,
+                  "size": 1.0,
+                  "color": null,
+                  "language": "und",
+                  "direction": "LeftToRight",
+                  "tabular": false
+                }
+              ]
+            ],
+            "line_spacing": 1.2,
+            "rotation": 0.0
+          },
+          "offset": [
+            0.0,
+            0.0
+          ],
+          "priority": 0,
+          "collision": "Keep",
+          "callout": null,
+          "overflow": false
+        }
+      ],
+      "insets": []
+    },
+    "revision": "1",
+    "mappings": {
+      "x": null,
+      "y": null,
+      "x2": null,
+      "y2": null,
+      "size": null,
+      "group": null
+    },
+    "transforms": [],
+    "layers": [
+      {
+        "facet": "Match",
+        "scope": "Group",
+        "id": "1",
+        "scales": {
+          "x": "0",
+          "y": "1"
+        },
+        "clip": "Plot",
+        "data": {
+          "Dataset": "1"
+        },
+        "filters": [],
+        "statistic": {
+          "operation": {
+            "id": "chart.identity",
+            "version": "1"
+          },
+          "parameters": "Identity"
+        },
+        "mappings": {
+          "Source": {
+            "x": {
+              "Field": "1"
+            },
+            "y": {
+              "Field": "2"
+            },
+            "x2": null,
+            "y2": null,
+            "size": null,
+            "group": null
+          }
+        },
+        "inherit": true,
+        "geom": {
+          "Line": {
+            "order": "X",
+            "connect_gaps": false
+          }
+        },
+        "position": "Identity",
+        "style": {
+          "color": {
+            "red": 35,
+            "green": 90,
+            "blue": 150,
+            "alpha": 255
+          },
+          "radius": 3.0,
+          "stroke_width": 1.5
+        },
+        "invalid": "Exclude"
+      },
+      {
+        "facet": "Match",
+        "scope": "Group",
+        "id": "2",
+        "scales": {
+          "x": "0",
+          "y": "1"
+        },
+        "clip": "Plot",
+        "data": {
+          "Dataset": "2"
+        },
+        "filters": [],
+        "statistic": {
+          "operation": {
+            "id": "chart.identity",
+            "version": "1"
+          },
+          "parameters": "Identity"
+        },
+        "mappings": {
+          "Source": {
+            "x": {
+              "Field": "1"
+            },
+            "y": {
+              "Field": "2"
+            },
+            "x2": null,
+            "y2": null,
+            "size": null,
+            "group": null
+          }
+        },
+        "inherit": true,
+        "geom": {
+          "Line": {
+            "order": "X",
+            "connect_gaps": false
+          }
+        },
+        "position": "Identity",
+        "style": {
+          "color": {
+            "red": 190,
+            "green": 60,
+            "blue": 65,
+            "alpha": 255
+          },
+          "radius": 3.0,
+          "stroke_width": 1.5
+        },
+        "invalid": "Exclude"
+      }
+    ]
+  },
+  "source_epoch": "9007199254746001",
+  "datasets": [
+    [
+      {
+        "dataset": "1",
+        "revision": "0",
+        "schema_version": "1"
+      },
+      "1"
+    ],
+    [
+      {
+        "dataset": "2",
+        "revision": "0",
+        "schema_version": "1"
+      },
+      "1"
+    ]
+  ],
+  "state": {
+    "revision": "3",
+    "viewport_revision": "1",
+    "viewport": {
+      "x": [
+        2.0,
+        5.0
+      ],
+      "y": null
+    },
+    "committed_viewport": {
+      "x": [
+        2.0,
+        5.0
+      ],
+      "y": null
+    },
+    "windows": {},
+    "hidden_layers": [],
+    "interaction": {
+      "follow": "InspectHistory",
+      "legend_visible": true,
+      "selection": [],
+      "pinned": null,
+      "annotations": {},
+      "configuration": {
+        "max_targets": 4096,
+        "history_capacity": 64,
+        "manual_view_enters_history": true
+      },
+      "revisions": {
+        "durable": "1",
+        "follow": "1",
+        "hover": "2",
+        "focus": "0",
+        "pin": "0",
+        "selection": "0",
+        "visibility": "0",
+        "annotations": "0",
+        "gesture": "0",
+        "configuration": "0"
+      }
+    },
+    "hover": [],
+    "focus": null,
+    "active_gesture": null,
+    "effective_annotations": [
+      {
+        "id": "threshold",
+        "anchor": {
+          "Figure": {
+            "x": 0.1,
+            "y": 0.1
+          }
+        },
+        "text": {
+          "lines": [
+            [
+              {
+                "text": "Before capture",
+                "font": null,
+                "fallback": [],
+                "weight": 400,
+                "size": 1.0,
+                "color": null,
+                "language": "und",
+                "direction": "LeftToRight",
+                "tabular": false
+              }
+            ]
+          ],
+          "line_spacing": 1.2,
+          "rotation": 0.0
+        },
+        "offset": [
+          0.0,
+          0.0
+        ],
+        "priority": 0,
+        "collision": "Keep",
+        "callout": null,
+        "overflow": false
+      }
+    ]
+  },
+  "effective_state": {
+    "revision": "3",
+    "viewport_revision": "1",
+    "viewport": {
+      "x": [
+        2.0,
+        5.0
+      ],
+      "y": null
+    },
+    "committed_viewport": {
+      "x": [
+        2.0,
+        5.0
+      ],
+      "y": null
+    },
+    "windows": {},
+    "hidden_layers": [],
+    "interaction": {
+      "follow": "InspectHistory",
+      "legend_visible": true,
+      "selection": [],
+      "pinned": null,
+      "annotations": {},
+      "configuration": {
+        "max_targets": 4096,
+        "history_capacity": 64,
+        "manual_view_enters_history": true
+      },
+      "revisions": {
+        "durable": "1",
+        "follow": "1",
+        "hover": "2",
+        "focus": "0",
+        "pin": "0",
+        "selection": "0",
+        "visibility": "0",
+        "annotations": "0",
+        "gesture": "0",
+        "configuration": "0"
+      }
+    },
+    "hover": [],
+    "focus": null,
+    "active_gesture": null,
+    "effective_annotations": [
+      {
+        "id": "threshold",
+        "anchor": {
+          "Figure": {
+            "x": 0.1,
+            "y": 0.1
+          }
+        },
+        "text": {
+          "lines": [
+            [
+              {
+                "text": "Before capture",
+                "font": null,
+                "fallback": [],
+                "weight": 400,
+                "size": 1.0,
+                "color": null,
+                "language": "und",
+                "direction": "LeftToRight",
+                "tabular": false
+              }
+            ]
+          ],
+          "line_spacing": 1.2,
+          "rotation": 0.0
+        },
+        "offset": [
+          0.0,
+          0.0
+        ],
+        "priority": 0,
+        "collision": "Keep",
+        "callout": null,
+        "overflow": false
+      }
+    ]
+  },
+  "interaction_policy": {
+    "selection": false,
+    "hover": false,
+    "focus": false,
+    "preview": false
+  },
+  "fonts": [
+    {
+      "id": "1",
+      "revision": "1",
+      "sha256": "2ec33f84606cbaa0a1a944488e14f97faf2f6a25ecdd8354f5358f06da13c7d9"
+    }
+  ],
+  "profile": {
+    "page": {
+      "width": 500.0,
+      "height": 300.0
+    },
+    "layout": {
+      "host_theme": {
+        "color_mode": null,
+        "gradient": null,
+        "background": null,
+        "panel": null,
+        "foreground": null,
+        "grid": null,
+        "mark": null,
+        "annotation": null,
+        "focus": null,
+        "selection": null,
+        "font_size": null,
+        "padding": null,
+        "gap": null,
+        "tick_length": null,
+        "stroke_width": null,
+        "dashes": null,
+        "symbol": null
+      },
+      "interaction_theme": {},
+      "output_theme": {
+        "color_mode": null,
+        "gradient": null,
+        "background": null,
+        "panel": null,
+        "foreground": null,
+        "grid": null,
+        "mark": null,
+        "annotation": null,
+        "focus": null,
+        "selection": null,
+        "font_size": null,
+        "padding": null,
+        "gap": null,
+        "tick_length": null,
+        "stroke_width": null,
+        "dashes": null,
+        "symbol": null
+      },
+      "figure_bounds": null,
+      "bounds": {
+        "origin": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "width": 500.0,
+        "height": 300.0
+      },
+      "units": "Points",
+      "revision": "0",
+      "font": {
+        "id": "1",
+        "revision": "1",
+        "kind": "Font",
+        "byte_len": "556216"
+      },
+      "font_size": 12.0,
+      "axes": [
+        {
+          "label_rotation": 0.0,
+          "id": "0",
+          "side": "Bottom",
+          "scale": "Auto",
+          "viewport": null,
+          "range": null,
+          "outside": "Extend",
+          "visible": true
+        },
+        {
+          "label_rotation": 0.0,
+          "id": "1",
+          "side": "Left",
+          "scale": "Auto",
+          "viewport": null,
+          "range": null,
+          "outside": "Extend",
+          "visible": true
+        }
+      ],
+      "padding": 8.0,
+      "minimum_plot": [
+        24.0,
+        24.0
+      ],
+      "tick_length": 4.0,
+      "label_gap": 4.0,
+      "target_ticks": 6,
+      "max_ticks": 128,
+      "max_categories": 10000,
+      "max_vertices": 1000000,
+      "limits": {
+        "max_items": 100000,
+        "max_path_commands": 1000000,
+        "max_text_bytes": 1048576,
+        "max_resources": 256,
+        "max_resource_bytes": "67108864",
+        "max_total_resource_bytes": "268435456"
+      }
+    },
+    "view": "VisibleView",
+    "text": "Preserve",
+    "dpi": 144,
+    "background": {
+      "red": 255,
+      "green": 255,
+      "blue": 255,
+      "alpha": 255
+    },
+    "annotation_revision": "0",
+    "annotations": [],
+    "precision": 0.01,
+    "max_raster_pixels": "32000000",
+    "max_output_bytes": 67108864
+  }
+}

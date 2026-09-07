@@ -25,7 +25,7 @@ pub struct NativeFont {
     pub(crate) descriptor: ResourceDescriptor,
     bytes: Arc<[u8]>,
     font: Font,
-    faces: BTreeMap<chart_core::ResourceId, (ResourceDescriptor, Arc<[u8]>)>,
+    pub(crate) faces: BTreeMap<chart_core::ResourceId, (ResourceDescriptor, Arc<[u8]>)>,
 }
 #[derive(Default)]
 struct FontRegistry(BTreeMap<String, NativeFont>);
@@ -292,6 +292,8 @@ struct Item {
     paint: Paint,
 }
 pub(crate) struct NativeFrame {
+    pub request: LayoutRequest,
+    pub fonts: Vec<(ResourceDescriptor, Arc<[u8]>)>,
     pub job: Option<chart_core::scheduling::JobToken>,
     pub density: chart_core::dense::DensityMetrics,
     pub chart: Arc<LaidOutChart>,
@@ -523,6 +525,8 @@ impl NativeFrame {
             items.push(result);
         }
         Ok(Self {
+            request,
+            fonts: font.faces.values().cloned().collect(),
             job: None,
             density: reduced.metrics().clone(),
             chart,

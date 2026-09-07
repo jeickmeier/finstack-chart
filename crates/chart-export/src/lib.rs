@@ -3,15 +3,21 @@
 //! No file I/O, system-font scan, GPUI initialization or mandatory workers are used.
 mod encode;
 mod fonts;
+mod jobs;
 mod profile;
+mod request;
 mod snapshot;
 mod svg;
 use chart_core::{Diagnostic, DiagnosticCode};
 pub use fonts::{FontResource, FontResources};
+pub use jobs::{
+    ExportCancellation, ExportJob, ExportLimits, ExportMetrics, ExportPhase, ExportQueue,
+};
 pub use profile::{
     ExportCapabilities, Format, PageSize, PublicationProfile, TextMode, TextRepresentation,
     ViewMode,
 };
+pub use request::FigureRequest;
 pub use snapshot::{ExportArtifact, FigureSnapshot, FontManifest, Reproducibility};
 fn error(code: DiagnosticCode, message: impl Into<String>) -> Diagnostic {
     Diagnostic::error(
@@ -23,3 +29,7 @@ fn error(code: DiagnosticCode, message: impl Into<String>) -> Diagnostic {
 
 /// Owned host-independent session used by the minimal binding proofs.
 pub mod portable;
+
+fn serialize_u64<S: serde::Serializer>(value: &u64, serializer: S) -> Result<S::Ok, S::Error> {
+    serializer.serialize_str(&value.to_string())
+}

@@ -177,6 +177,29 @@ pub struct InteractionSnapshot {
     /// Component revision fences.
     pub revisions: StateRevisions,
 }
+/// Explicit inclusion policy for a derived immutable publication state.
+/// Visibility, committed annotations and declared viewport always remain captured.
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Default, Eq, PartialEq)]
+#[serde(default, deny_unknown_fields)]
+pub struct InteractionCapture {
+    /// Retain selection and pinned target; otherwise omit them from publication styling.
+    pub selection: bool,
+    /// Retain hovered targets; host tooltip elements are never portable figure content.
+    pub hover: bool,
+    /// Retain keyboard inspection focus; native focus-ring controls remain host-only.
+    pub focus: bool,
+    /// Retain the currently captured gesture preview, including annotation/navigation edits.
+    pub preview: bool,
+}
+impl InteractionCapture {
+    /// Preserve the entire captured semantic state, including transient previews.
+    pub const ALL: Self = Self {
+        selection: true,
+        hover: true,
+        focus: true,
+        preview: true,
+    };
+}
 /// Owned semantic state cloned into preparation; no window, history or scene handle is stored.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ChartState {
@@ -190,6 +213,74 @@ pub struct ChartState {
     revisions: StateRevisions,
 }
 impl ChartState {
+    /// Derive publication state without mutating live state or inventing new action revisions.
+    /// The caller retains the original state and policy in reproducibility metadata.
+    pub fn capture_interaction(&self, policy: InteractionCapture) -> Self {
+        let mut state = self.clone();
+        if !policy.selection {
+            state.durable.selection.clear();
+            state.durable.pinned = None;
+        }
+        if !policy.hover {
+            state.hover.clear();
+        }
+        if !policy.focus {
+            state.focus = None;
+        }
+        if !policy.preview
+            || (!policy.selection
+                && matches!(
+                    state.active.as_ref().and_then(|g| g.preview.as_ref()),
+                    Some(GesturePreview::Selection(_))
+                ))
+        {
+            state.active = None;
+        }
+        state
+    }
+    /// Derive full-domain publication state without dispatching live actions. This clears
+    /// committed and preview navigation while retaining selected annotation/selection previews.
+    /// Captured action revisions remain provenance; the output policy identifies the projection.
+    pub fn capture_full_domain(&self) -> Self {
+        let mut state = self.clone();
+        state.durable.viewport = Viewport::default();
+        state.durable.windows.clear();
+        if matches!(
+            state.active.as_ref().map(|g| &g.kind),
+            Some(GestureKind::Viewport)
+        ) {
+            state.active = None;
+        }
+        state
+    }
+    /// Combine this exact painted geometry state with inspection overlays actually painted by
+    /// the host. Navigation, annotations and visibility remain from this geometry snapshot.
+    pub fn with_painted_inspection(&self, painted: &Self) -> Self {
+        let mut state = self.clone();
+        state.durable.selection = painted.durable.selection.clone();
+        state.durable.pinned = painted.durable.pinned.clone();
+        state.hover = painted.hover.clone();
+        state.focus = painted.focus.clone();
+        state.revision = state.revision.max(painted.revision);
+        if matches!(
+            painted.active.as_ref().map(|g| &g.kind),
+            Some(GestureKind::Selection)
+        ) {
+            state.active = painted.active.clone();
+            state.revisions.gesture = painted.revisions.gesture;
+        } else if matches!(
+            state.active.as_ref().map(|g| &g.kind),
+            Some(GestureKind::Selection)
+        ) {
+            state.active = None;
+            state.revisions.gesture = painted.revisions.gesture;
+        }
+        state.revisions.selection = painted.revisions.selection;
+        state.revisions.pin = painted.revisions.pin;
+        state.revisions.hover = painted.revisions.hover;
+        state.revisions.focus = painted.revisions.focus;
+        state
+    }
     pub(crate) fn from_portable(
         definition: &ChartDefinition,
         revision: Revision,

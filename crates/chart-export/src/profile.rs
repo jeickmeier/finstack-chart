@@ -5,7 +5,7 @@ use chart_core::services::{ResourceDescriptor, Units};
 use chart_core::{ChartResult, DiagnosticCode, Rect, Revision};
 
 /// Physical page size. All publication computation uses 72 points per inch.
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, PartialEq)]
 pub struct PageSize {
     width: f64,
     height: f64,
@@ -35,7 +35,7 @@ impl PageSize {
     }
 }
 /// Which captured domains are laid out; neither mode changes upstream statistics.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
 pub enum ViewMode {
     /// Honor captured state and named-axis viewports.
     VisibleView,
@@ -43,7 +43,7 @@ pub enum ViewMode {
     FullDomain,
 }
 /// Explicit editing/search tradeoff for vector outputs.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
 pub enum TextMode {
     /// SVG embeds full permitted font bytes; PDF embeds subsets and Unicode maps.
     Preserve,
@@ -51,7 +51,7 @@ pub enum TextMode {
     Outline,
 }
 /// Encoded output representation.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Format {
     /// Vector SVG.
     Svg,
@@ -61,7 +61,7 @@ pub enum Format {
     Png,
 }
 /// Text representation promised by the selected output mode.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
 pub enum TextRepresentation {
     /// Plain text embeds fonts; rich runs use exact positioned outlines with logical SVG labels.
     MixedPositionedOutlines,
@@ -75,7 +75,7 @@ pub enum TextRepresentation {
     Pixels,
 }
 /// Capabilities of this format/mode; no implicit localized or whole-figure fallback occurs.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
 pub struct ExportCapabilities {
     /// Native callback paint is unsupported in every headless format.
     pub native_painters: bool,
@@ -101,7 +101,7 @@ impl Format {
     }
 }
 /// Owned settings captured before publication layout. No native controls are exported.
-#[derive(Clone, Debug)]
+#[derive(serde::Serialize, Clone, Debug)]
 pub struct PublicationProfile {
     /// Physical output page. Actual layout bounds are derived from this size.
     pub page: PageSize,
@@ -122,6 +122,7 @@ pub struct PublicationProfile {
     /// Maximum permitted binary32 coordinate conversion error, in points (0 < value <= 0.25).
     pub precision: f64,
     /// Pre-allocation raster pixel cap.
+    #[serde(serialize_with = "crate::serialize_u64")]
     pub max_raster_pixels: u64,
     /// Limit on each returned encoded payload, also used while constructing SVG.
     pub max_output_bytes: usize,

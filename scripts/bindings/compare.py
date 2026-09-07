@@ -385,3 +385,6 @@ for case in dense_cases:
                 assert color['red']==color['green']==color['blue']
         assert sorted(seen)==list(range(256)) and len(seen)==len(set(seen))
 print('PASS WP-19 actual Rust/Python/WASM density: exact raw lookup/publication unchanged; ordered gap endpoints and visible extrema; first/high/low/last OHLC and compensated valid-volume sums; exact SVG bytes')
+
+from compare_live_export import check as check_live_export
+check_live_export(paths, same)

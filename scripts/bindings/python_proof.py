@@ -230,3 +230,6 @@ for case in json.loads((ROOT/'fixtures/dense/cases.json').read_text()):
     (output/f"dense-{case['name']}.svg").write_text(result.pop('svg'))
     (output/f"dense-{case['name']}.json").write_text(json.dumps(result))
     chart.dispose()
+
+from live_export_proof import run as live_export_run
+live_export_run(Chart, ChartError, ROOT, output)

@@ -80,6 +80,15 @@ impl Chart {
     fn stream(&mut self, py: Python<'_>, input: String) -> PyResult<String> {
         py.detach(|| self.inner.stream(&input)).map_err(failure)
     }
+    /// Capture/cancel/status for bounded immutable export jobs; never runs a Python callback.
+    fn export_control(&mut self, py: Python<'_>, input: String) -> PyResult<String> {
+        py.detach(|| self.inner.export_control(&input))
+            .map_err(failure)
+    }
+    /// Run a retained capture after later live updates, returning owned bytes.
+    fn export_job(&mut self, py: Python<'_>, job: String) -> PyResult<Vec<u8>> {
+        py.detach(|| self.inner.export_job(&job)).map_err(failure)
+    }
     /// Apply a versioned action with definition/state revision fences.
     fn action(&mut self, py: Python<'_>, input: String) -> PyResult<String> {
         py.detach(|| self.inner.action(&input)).map_err(failure)

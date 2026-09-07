@@ -4,6 +4,7 @@ use crate::{
     FigureSnapshot, FontResource, FontResources, Format, PageSize, PublicationProfile, TextMode,
     ViewMode, error,
 };
+mod live_export;
 use base64::Engine;
 use chart_core::{
     portable::{self, Session},
@@ -149,6 +150,9 @@ impl ProfileEnvelope {
     }
 }
 struct Inner {
+    exports: crate::ExportQueue,
+    export_jobs: std::collections::BTreeMap<Revision, crate::ExportJob>,
+    last_export: Option<serde_json::Value>,
     presented: Option<FigureSnapshot>,
     core: Session,
     profile: PublicationProfile,
@@ -183,6 +187,9 @@ impl PortableChart {
         let (profile, fonts) = profile.build(font)?;
         let mut chart = Self {
             inner: Some(Inner {
+                exports: crate::ExportQueue::new(crate::ExportLimits::default())?,
+                export_jobs: Default::default(),
+                last_export: None,
                 presented: None,
                 core,
                 profile,

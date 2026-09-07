@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "scope": "finite native FIX-14; not sustained PERF-03/05",
+  "commits": 400,
+  "metrics": {
+    "pending": 0,
+    "running": 0,
+    "rows": 0,
+    "input_bytes": 0,
+    "peak_jobs": 2,
+    "submitted": "4",
+    "completed": "3",
+    "failed": "0",
+    "cancelled": "1",
+    "rejected": "1",
+    "disposed": true
+  },
+  "timings": [
+    {
+      "job": "0",
+      "format": "Svg",
+      "capture_ms": 35.52275,
+      "prepare_ms": 13.384,
+      "encode_ms": 3.735792,
+      "host_save_ms": 1.089917,
+      "completed_at_commit": 77
+    },
+    {
+      "job": "1",
+      "format": "Pdf",
+      "capture_ms": 25.356708,
+      "prepare_ms": 12.889667,
+      "encode_ms": 4.029541,
+      "host_save_ms": 1.047,
+      "completed_at_commit": 77
+    },
+    {
+      "job": "3",
+      "format": "Png",
+      "capture_ms": 19.99575,
+      "prepare_ms": 12.595208,
+      "encode_ms": 619.451333,
+      "host_save_ms": 0.875417,
+      "completed_at_commit": 400
+    }
+  ]
+}
