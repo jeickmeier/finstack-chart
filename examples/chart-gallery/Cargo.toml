@@ -22,6 +22,7 @@ gpui-charts-kit = { workspace = true, optional = true }
 
 [features]
 default = []
+performance = ["gpui/profiler"]
 kit = ["dep:gpui-charts-kit", "dep:gpui-kit"]
 
 [dev-dependencies]
@@ -33,3 +34,7 @@ ttf-parser = "=0.25.1"
 [[example]]
 name = "capability_spike"
 required-features = ["kit"]
+
+[[example]]
+name = "finite_benchmark"
+required-features = ["performance"]

@@ -1,0 +1,90 @@
+{
+  "callbacks": {
+    "displayed": 1739,
+    "skipped": 1,
+    "missing_callbacks": 0
+  },
+  "gpu_ns": {
+    "count": 1739,
+    "p50": 735250,
+    "p95": 1396416,
+    "p99": 1611167,
+    "max": 1892042
+  },
+  "scene_begin_to_display_ns": {
+    "count": 1739,
+    "p50": 29523959,
+    "p95": 78773375,
+    "p99": 82050209,
+    "max": 96460459
+  },
+  "workload": {
+    "seconds": 60,
+    "full_sustained_protocol": false,
+    "owner_stopped_partial": false,
+    "unobserved_tail_commits": 0,
+    "accepted_commits": 700,
+    "observed_seconds_after_warmup": 60.0,
+    "measured_commits": 600,
+    "measured_upsert_rows": 600000,
+    "ingest_to_present_ns": {
+      "count": 600,
+      "p50": 131275042,
+      "p95": 165759375,
+      "p99": 208559166,
+      "max": 216526958
+    },
+    "ingest_to_present_budget_pass": true,
+    "commit_ms": {
+      "count": 600,
+      "p50": 5.175708,
+      "p95": 5.44525,
+      "p99": 5.563625,
+      "max": 15.590917
+    },
+    "hover_cpu_ms": {
+      "count": 1721,
+      "p50": 0.028666,
+      "p95": 0.092792,
+      "p99": 0.122542,
+      "max": 0.283791
+    },
+    "export_count": 1,
+    "export_comparison": {
+      "overlap_ingest_to_present_ns": {
+        "count": 1,
+        "p50": 128569542,
+        "p95": 128569542,
+        "p99": 128569542,
+        "max": 128569542
+      },
+      "other_ingest_to_present_ns": {
+        "count": 599,
+        "p50": 131377833,
+        "p95": 166075666,
+        "p99": 208652917,
+        "max": 216526958
+      },
+      "worker_ns": {
+        "count": 1,
+        "p50": 106888625,
+        "p95": 106888625,
+        "p99": 106888625,
+        "max": 106888625
+      },
+      "interpretation": "Descriptive overlap samples; no causal overhead estimate from a small sample"
+    },
+    "peak_sampled_rss_kib": 1879008,
+    "accepted_operations_reconciled": true,
+    "chart_and_export_scenes_released": true,
+    "rss_kib": [
+      1789888,
+      1879008,
+      1384320,
+      813472,
+      1311104,
+      1319520,
+      899408
+    ]
+  }
+}

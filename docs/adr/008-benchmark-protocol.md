@@ -1,6 +1,6 @@
 # ADR-008: Benchmark protocol and starting profile
 
-Status: ACCEPTED protocol at WP-03; PERF-01–PERF-05 execution remains WP-22.
+Status: ACCEPTED protocol, with the owner duration exception below. WP-22 records measured results and unresolved limits.
 Date: 6 September 2026. Requirements: QLT-04; PERF-01–PERF-05.
 
 ## Reference environment
@@ -107,3 +107,37 @@ nanosecond timestamps separate artificial waiting from preparation/encoding; hos
 save time is separate. Two eight-row datasets receive atomic updates every 50 ms,
 with annotation/theme changes. This finite test demonstrates live serviceability and
 resource release, not the required PERF-03/05 workload, memory plateau or latency gate.
+
+## WP-22 instrumentation and owner exception (7 September 2026)
+
+The owner explicitly said “no need for this 30min long test.” The ongoing run was
+terminated at 9,484 commits (938.4 measured seconds after warm-up). The 30-minute duration
+is waived for this assignment; no full-duration success is claimed. All numerical budgets,
+retention, operation accounting and snapshot correctness remain unchanged. A separate
+60-second run includes graceful drain and disposal. Its result does not erase failures
+in the interrupted trace. Expanded parity workloads remain outside this assignment.
+
+The release examples use GPUI's optional `profiler` feature only in the gallery. Full
+`Window::draw` CPU duration, platform submission duration, Metal command-buffer GPU
+start/end and actual `MTLDrawable.presentedTime` are recorded separately. The local
+Objective-C probe attaches completion/presentation handlers only inside the benchmark
+process; it changes no installed framework or library. Callback arrival is never used
+as the presentation timestamp. Skipped drawables with zero presentation time are counted.
+
+The checker joins each drawable to the latest completed chart paint in that process.
+Host/Unix clock pairs captured at drawable acquisition connect actual display to source
+revision stamps. For a frame-work budget it conservatively sums full GPUI draw, submission
+and GPU work; overlap is counted twice. Draw-to-display and display cadence are reported
+separately, including display queue residence. Streaming latency ends at the first actual
+displayed coherent revision including the committed operation. All quantiles are nearest
+rank. See [WP-22 evidence](../evidence/wp-22-completion-2026-09-07.md) for results and limits.
+
+Native finite cases use a 1,200-pixel chart at scale 2, 120 warm-up ticks and 600 measured
+ticks. The million-row example explicitly raises its caller-selected potential-item and
+path budgets to 1,100,000; it retains all source rows. Streaming uses 1,000 rows each
+100 ms (10,000 rows/sec), including one correction per batch, periodic removal and
+100,000-row retention. An independent ordered reference is checked every 100 batches.
+Finite raw/dense dashboard runs retain the same 50,000 scatter observations and 12
+10,000-row line charts. Dense means the existing line envelope; scatter remains exact
+in both modes. There is no claimed scatter aggregation crossover or new statistical
+population. The report identifies precisely which representation was measured.

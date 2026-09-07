@@ -1,5 +1,5 @@
 use super::*;
-use std::collections::{BTreeMap, BTreeSet};
+use std::collections::{BTreeMap, btree_map::Entry};
 type IdentityKey = (
     Option<crate::grammar::PanelKey>,
     LayerId,
@@ -91,19 +91,24 @@ struct Node {
 #[derive(Debug)]
 struct XGroup {
     x: f64,
-    indices: Vec<usize>,
+    indices: std::ops::Range<usize>,
 }
 #[derive(Debug)]
 struct Lines {
     clip: Rect,
     groups: Vec<XGroup>,
+    indices: Vec<usize>,
+}
+#[derive(Debug)]
+pub(super) struct IdentityEntry {
+    pub keyboard_index: usize,
+    pub bounds: Bounds,
 }
 #[derive(Debug)]
 pub(super) struct Index {
     pub candidates: Vec<Candidate>,
     pub keyboard: Vec<usize>,
-    pub highlights: BTreeMap<IdentityKey, Bounds>,
-    pub semantic: BTreeMap<IdentityKey, usize>,
+    pub identities: BTreeMap<IdentityKey, IdentityEntry>,
     nodes: Vec<Node>,
     order: Vec<usize>,
     lines: Vec<Lines>,
@@ -122,7 +127,7 @@ impl Index {
                 groups.push(vec![i])
             }
         }
-        let mut seen = BTreeSet::new();
+        let mut identities = BTreeMap::new();
         let mut keyboard = vec![];
         for mut group in groups {
             group.sort_by_key(|i| {
@@ -133,26 +138,28 @@ impl Index {
             });
             for i in group {
                 let c = &candidates[i];
-                if seen.insert((
+                if let Entry::Vacant(entry) = identities.entry((
                     c.hit.panel.clone(),
                     c.hit.layer,
                     crate::state::TargetIdentity::from(&c.hit.target),
                 )) {
+                    entry.insert(IdentityEntry {
+                        keyboard_index: i,
+                        bounds: c.bounds,
+                    });
                     keyboard.push(i)
                 }
             }
         }
-        let mut highlights: BTreeMap<IdentityKey, Bounds> = BTreeMap::new();
         for c in &candidates {
             let key = (
                 c.hit.panel.clone(),
                 c.hit.layer,
                 crate::state::TargetIdentity::from(&c.hit.target),
             );
-            highlights
-                .entry(key)
-                .and_modify(|b| *b = b.union(c.bounds))
-                .or_insert(c.bounds);
+            if let Some(entry) = identities.get_mut(&key) {
+                entry.bounds = entry.bounds.union(c.bounds);
+            }
         }
         let mut lines: Vec<Lines> = vec![];
         for (i, c) in candidates.iter().enumerate().filter(|(_, c)| c.line) {
@@ -163,50 +170,39 @@ impl Index {
                     lines.push(Lines {
                         clip: c.clip,
                         groups: vec![],
+                        indices: vec![],
                     });
                     lines.len() - 1
                 });
-            lines[n].groups.push(XGroup {
-                x: c.hit.position.x(),
-                indices: vec![i],
-            });
+            lines[n].indices.push(i);
         }
+        // One contiguous candidate array per clip avoids a heap allocation per x.
+        // Equal x retains front-to-back order, including equivalent signed zeros.
         for l in &mut lines {
-            l.groups.sort_by(|a, b| a.x.total_cmp(&b.x));
-            let mut merged: Vec<XGroup> = vec![];
-            for g in l.groups.drain(..) {
-                if let Some(last) = merged.last_mut().filter(|last| last.x == g.x) {
-                    last.indices.extend(g.indices);
-                } else {
-                    merged.push(g)
+            l.indices.sort_unstable_by(|a, b| {
+                let x = candidates[*a].hit.position.x();
+                let y = candidates[*b].hit.position.x();
+                if x == y { b.cmp(a) } else { x.total_cmp(&y) }
+            });
+            let mut start = 0;
+            while start < l.indices.len() {
+                let x = candidates[l.indices[start]].hit.position.x();
+                let mut end = start + 1;
+                while end < l.indices.len() && candidates[l.indices[end]].hit.position.x() == x {
+                    end += 1;
                 }
+                l.groups.push(XGroup {
+                    x,
+                    indices: start..end.min(start + 128),
+                });
+                start = end;
             }
-            for g in &mut merged {
-                g.indices.sort_unstable_by(|a, b| b.cmp(a));
-                g.indices.truncate(128);
-            }
-            l.groups = merged;
         }
         let order = (0..candidates.len()).collect();
-        let semantic = keyboard
-            .iter()
-            .map(|i| {
-                let hit = &candidates[*i].hit;
-                (
-                    (
-                        hit.panel.clone(),
-                        hit.layer,
-                        crate::state::TargetIdentity::from(&hit.target),
-                    ),
-                    *i,
-                )
-            })
-            .collect();
         let mut index = Self {
             candidates,
             keyboard,
-            highlights,
-            semantic,
+            identities,
             nodes: vec![],
             order,
             lines,
@@ -391,7 +387,7 @@ impl Index {
                     .into_iter()
                     .flatten()
                 {
-                    for i in &line.groups[g].indices {
+                    for i in &line.indices[line.groups[g].indices.clone()] {
                         consider(*i);
                     }
                 }
@@ -446,4 +442,55 @@ pub(super) fn clip_segment(a: Point, b: Point, r: Rect) -> Option<(Point, Point)
         Point::new(a.x() + low * dx, a.y() + low * dy).ok()?,
         Point::new(a.x() + high * dx, a.y() + high * dy).ok()?,
     ))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn duplicate_x_signed_zeros_keep_frontmost_128_and_all_keyboard_identities() {
+        let clip = Rect::new(-1., -1., 2., 2.).unwrap();
+        let candidates = (0_u64..300)
+            .map(|i| {
+                let position = Point::new(if i.is_multiple_of(2) { -0. } else { 0. }, 0.).unwrap();
+                Candidate {
+                    custom: None,
+                    hit: InspectedTarget {
+                        values: vec![],
+                        selection: crate::grammar::SelectionPolicy::AtomicTarget,
+                        panel: None,
+                        layer: LayerId::new(1),
+                        target: Target::Source(crate::provenance::SourceRef {
+                            dataset: crate::DatasetId::new(1),
+                            key: crate::RowKey::new(i + 1),
+                        }),
+                        position,
+                    },
+                    clip,
+                    rectangle: None,
+                    line: true,
+                    segment: None,
+                    bounds: Bounds::point(position),
+                    layer_order: 0,
+                }
+            })
+            .collect();
+        let index = Index::new(candidates);
+        let point = Point::new(0., 0.).unwrap();
+        let actual = index.query(point, InspectionMode::NearestX, 1., 128, false, clip);
+        let reference = index.query(point, InspectionMode::NearestX, 1., 128, true, clip);
+        assert_eq!(actual.hits, reference.hits);
+        let keys: Vec<_> = actual
+            .hits
+            .iter()
+            .map(|h| match h.target {
+                Target::Source(s) => s.key.get(),
+                _ => panic!("source"),
+            })
+            .collect();
+        assert_eq!(keys, (173..=300).rev().collect::<Vec<_>>());
+        assert_eq!(actual.examined, 128);
+        assert_eq!(index.keyboard, (0..300).collect::<Vec<_>>());
+        assert_eq!(index.identities.len(), 300);
+    }
 }

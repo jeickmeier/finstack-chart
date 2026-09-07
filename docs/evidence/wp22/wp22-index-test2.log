@@ -1,0 +1,57 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.61s
+     Running tests/actions.rs (target/debug/deps/actions-0bafc8ebd05c6d61)
+
+running 9 tests
+test controlled_acknowledgements_cannot_overwrite_newer_actions_or_reuse_components ... ok
+test linked_sequences_are_bounded_idempotent_and_preserve_origin_without_feedback_history ... ok
+test invalid_previews_and_resource_caps_preserve_valid_state_and_bounded_history ... ok
+test gestures_pin_old_coordinates_cancel_without_committing_and_reject_competing_owners ... ok
+test effective_changes_separate_hover_focus_pin_selection_follow_and_visibility ... ok
+test legacy_viewports_replace_primary_named_windows_without_losing_other_axes ... ok
+test freeze_resume_and_disposal_release_only_owned_snapshot_resources ... ok
+test frozen_resize_advances_projection_without_admitting_later_semantics ... ok
+test annotation_preview_is_one_undo_command_and_cancellation_never_changes_source_or_history ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/dense.rs (target/debug/deps/dense-04eea7a86372767d)
+
+running 3 tests
+test envelope_preserves_chronological_endpoints_and_extrema_per_bucket ... ok
+test candle_buckets_use_chronological_first_open_high_low_last_close_and_valid_volume ... ok
+test reduced_scene_preserves_gap_boundaries_and_exact_raw_lookup_for_discarded_vertices ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/host_tools.rs (target/debug/deps/host_tools-5c0351ea52739d7e)
+
+running 10 tests
+test time_constraints_roundtrip_as_decimal_strings_without_integer_narrowing ... ok
+test threshold_connector_uses_authored_endpoints_independent_of_label_offset ... ok
+test accessible_page_preserves_exact_keys_values_and_bounded_pagination ... ok
+test range_handles_reject_crossing_and_pinned_edits_ignore_resize_then_cancel ... ok
+test semantic_links_remap_layer_ids_and_suppress_cycles_without_source_edits ... ok
+test threshold_translation_snaps_both_endpoints_and_commits_one_undo_command ... ok
+test linked_windows_use_semantic_values_and_preserve_unrelated_axes ... ok
+test linked_selection_survives_viewport_clipping_and_hidden_receiving_layers ... ok
+test aggregate_links_and_descriptions_preserve_membership_revision ... ok
+test exact_timestamp_and_category_editing_use_presented_typed_coordinates ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/inspection.rs (target/debug/deps/inspection-c1e1b404e2483de2)
+
+running 10 tests
+test empty_inspection_and_invalid_options_are_recoverable ... ok
+test keyboard_wrap_clear_idempotency_and_stale_stamp_are_atomic ... ok
+test scatter_nearest_radius_clips_and_equal_distance_z_order ... ok
+test brushes_lasso_series_and_limits_preserve_vertex_provenance ... ok
+test nearest_x_groups_preserve_gap_targets_and_never_invent_interpolation ... ok
+test rectangle_selection_intersects_bars_instead_of_testing_centers ... ok
+test histogram_hit_retains_aggregate_members_and_respects_containment ... ok
+test stable_keyboard_identity_survives_rebuild_and_removal_clears_it ... ok
+test candle_wicks_are_contained_and_keyboard_deduplicates_each_candle ... ok
+test dense_spatial_and_sorted_x_match_scan_without_source_work ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.40s

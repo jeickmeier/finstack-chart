@@ -317,9 +317,9 @@ impl Inspector {
         }
         Ok(self
             .index
-            .semantic
+            .identities
             .get(&(target.panel.clone(), target.layer, target.identity.clone()))
-            .map(|i| &self.index.candidates[*i].hit))
+            .map(|entry| &self.index.candidates[entry.keyboard_index].hit))
     }
     /// Reduce an action only against its presented stamp; redundant targets are idempotent.
     pub fn dispatch(
@@ -410,10 +410,11 @@ impl Inspector {
             .filter(|t| t.epoch == epoch)
             .filter_map(|t| {
                 self.index
-                    .highlights
+                    .identities
                     .get(&(t.panel.clone(), t.layer, t.identity.clone()))
             })
-            .map(|b| {
+            .map(|entry| {
+                let b = entry.bounds;
                 let x0 = (b.x0 - 4.).max(scene.origin().x());
                 let x1 = (b.x1 + 4.).min(scene.max_x());
                 let y0 = (b.y0 - 4.).max(scene.origin().y());

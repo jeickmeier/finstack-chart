@@ -9,29 +9,29 @@ Original reports retain the revision context from their evidence runs.
 
 ## Current handoff
 
-**Owner assignment: complete original WP-11 through WP-23 and commit after each
-completed package. WP-11–21 are DONE; WP-22 is READY for original-scope performance.**
-Expanded Phase 2/parity and primary-authoring acceptance remains open under the
-owner's scope clarification. Concurrent planning/review documentation is preserved.
+**Owner assignment: original WP-11 through WP-23, with a commit per package.
+WP-11–22 are DONE in that scope; WP-23 is READY for local release documentation.**
+The owner explicitly waived the 30-minute test. Expanded parity/authoring acceptance
+remains open under the separate original-scope clarification.
 
-WP-21 fixes frozen native resize without admitting later data/theme changes, and
-reproduces/fixes idle background redraw starvation with bounded explicit frame demand.
-Both final four-chart runs paint revision 160 and drain to zero lag before disposal.
-The native hardening trace and inspected captures cover tiny bounds, malformed data/font
-recovery and 20 old-entity releases. See [completion evidence](evidence/wp-21-completion-2026-09-07.md),
-[ADR-009](adr/009-supported-platform-and-accessibility.md) and the [support matrix](support-matrix.md).
+WP-22 adds measured exact-index storage consolidation and native CPU/GPU/actual-display
+instrumentation. Visible ten-line p95 hover/frame work is 0.092666/11.689291 ms;
+short-stream actual ingest-to-display p95 is 165.759375 ms across 600,000 measured
+row updates. All accepted IDs and retained reference values reconcile. The coherent
+concurrent PDF and chart/export resources drain and release. Both 13-chart dashboard
+modes present revision 120; the report explicitly identifies exact scatter and line reduction.
 
-Final macOS fmt/check/test pass: **218 tests** (175 core, 33 export, five external-extension,
-one native conversion, four Rustdoc). Actual Rust/Python/Node WASM fixtures pass: 36 cases,
-23 actions, 47 input steps, 70 stream steps, three density cases and 40 live-export steps.
-Linux aarch64 headless execution passes **212 tests**, all-target checks/docs, full Rust
-fixtures and unchanged cross-host comparison against actual Python/WASM output.
-CI adds actual portable runtime jobs; no remote execution is claimed.
+See [WP-22 evidence](evidence/wp-22-completion-2026-09-07.md) and
+[ADR-008](adr/008-benchmark-protocol.md) for raw distributions, memory high-water,
+failed normal-window display traces and the duration/visibility limitations. The owner-
+stopped trace is retained and fails the unfiltered latency budget; it is not a passing
+30-minute result. Current expanded production G4 remains OPEN.
 
-Original FIX-01–18 and G3 pass. Native screen-reader/OS focus and non-macOS-native
-limits remain explicit. Finite runs do not satisfy PERF-01–05; expanded parity/authoring
-and G4 remain open, as do dependency advisories and the upstream `block` warning.
-**Next: original WP-22 measured performance, sustained ingestion and concurrent export.**
+Final fmt/check/test and performance-feature Clippy pass; 219 macOS tests and actual
+Rust/Python/Node WASM fixture comparisons pass. Linux headless rerun passes 213 tests.
+Existing dependency advisories, OS accessibility limits and distribution metadata remain
+explicit. **Next: finish original WP-23 evidence index, developer/release guide and local
+unpublished source candidate; leave expanded certification open.**
 
 ## Work packages
 
@@ -61,9 +61,9 @@ The final column records outstanding prerequisites/blockers and the next action.
 | WP-18 — Streaming retention and incremental computation | DONE | Unassigned | `30ca2e8` | DAT-03, DAT-04, DAT-06, STM-01, STM-02, STM-03, GRA-08, QLT-01 | [Completion evidence](evidence/wp-18-completion-2026-09-07.md); [contract](streaming-contract.md) | Original queue/retention/incremental/follow acceptance passes; 70-step three-host replay and native lifecycle inspected. Sustained PERF and G3 remain open. |
 | WP-19 — Bounded scheduling, caches and dense representation | DONE | Unassigned | `e57246d` | STM-04, STM-05, SCN-04, GPU-02, QLT-04 | [Completion evidence](evidence/wp-19-completion-2026-09-07.md); [contract](scheduling-density-contract.md) | Original bounded-worker/cache/density acceptance passes; actual four-chart progress and three-host dense proofs. Preliminary PERF identifies index/memory bottlenecks; intermittent native redraw question retained. |
 | WP-20 — Coherent exports during live interaction | DONE | Unassigned | `9d86ef7` | EXP-03, EXP-04, DAT-06, STM-02, SCN-04, QLT-04 | [Completion evidence](evidence/wp-20-completion-2026-09-07.md); [contract](live-export-contract.md) | Original coherent capture/bounded lifetime acceptance passes; actual 40-step three-host replay and finite native exports during 400 atomic commits. Sustained PERF and native hardening remain open. |
-| WP-21 — Correctness, fidelity and supported-platform hardening | DONE (original scope) | Unassigned | Included in this completion commit | SCP-03, QLT-01/02/03, GPU-02/03, BND-03/04, FIX-01–18 | [Completion evidence](evidence/wp-21-completion-2026-09-07.md); [ADR-009](adr/009-supported-platform-and-accessibility.md) | Original acceptance passes including fixed native frozen resize/redraw and actual macOS/Linux/headless bindings. Expanded parity/authoring acceptance remains open and requires the separately listed packages/gates. |
-| WP-22 — Measured performance and sustained-load release gate | READY (original scope) | Codex | — | STM-01, STM-03, STM-04, STM-05, EXP-03, QLT-04 | None | Original WP-19/20 prerequisites complete under owner clarification. Expanded acceptance still requires: WP-19, WP-20. |
-| WP-23 — Production documentation and release readiness | NOT STARTED | Unassigned | — | SCP-01, SCP-02, SCP-03, ARC-04, BND-01, QLT-05, QLT-06 | None | Satisfy prerequisites: WP-21, WP-22. |
+| WP-21 — Correctness, fidelity and supported-platform hardening | DONE (original scope) | Unassigned | `4c099ee` | SCP-03, QLT-01/02/03, GPU-02/03, BND-03/04, FIX-01–18 | [Completion evidence](evidence/wp-21-completion-2026-09-07.md); [ADR-009](adr/009-supported-platform-and-accessibility.md) | Original acceptance passes including fixed native frozen resize/redraw and actual macOS/Linux/headless bindings. Expanded parity/authoring acceptance remains open and requires the separately listed packages/gates. |
+| WP-22 — Measured performance and sustained-load release gate | DONE (original scope; owner duration waiver) | Unassigned | Included in this completion commit | STM-01/03/04/05, EXP-03, QLT-04, PERF-01–05 | [Completion evidence](evidence/wp-22-completion-2026-09-07.md); [ADR-008](adr/008-benchmark-protocol.md) | Visible short budgets and exact accounting pass; interrupted/occluded failures and memory limits retained. Thirty-minute duration explicitly owner-waived. Expanded workloads and current G4 stay open. |
+| WP-23 — Production documentation and release readiness | READY (original scope) | Codex | — | SCP-01, SCP-02, SCP-03, ARC-04, BND-01, QLT-05, QLT-06 | None | Original WP-21/22 evidence available; prepare local source candidate with qualifications. Expanded acceptance still requires: WP-21, WP-22. |
 
 ## Cumulative gates
 

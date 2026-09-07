@@ -1,0 +1,6407 @@
+{
+  "callbacks": {
+    "displayed": 909,
+    "skipped": 1,
+    "missing_callbacks": 0
+  },
+  "gpu_ns": {
+    "count": 909,
+    "p50": 1109792,
+    "p95": 1864000,
+    "p99": 1985208,
+    "max": 2120375
+  },
+  "scene_begin_to_display_ns": {
+    "count": 909,
+    "p50": 27776500,
+    "p95": 44604292,
+    "p99": 45450126,
+    "max": 52908958
+  },
+  "workload": {
+    "mode": "million",
+    "hover_cpu_ns": {
+      "count": 600,
+      "p50": 70708,
+      "p95": 112876,
+      "p99": 134584,
+      "max": 161459
+    },
+    "total_frame_work_ns": {
+      "count": 604,
+      "p50": 4183501,
+      "p95": 5191000,
+      "p99": 5836959,
+      "max": 6494959
+    },
+    "frame_work_budget_pass": true,
+    "hover_budget_pass": true,
+    "draw_to_gpu_complete_ns": {
+      "count": 604,
+      "p50": 4593916,
+      "p95": 5729583,
+      "p99": 6375125,
+      "max": 19486041
+    },
+    "draw_to_display_ns": {
+      "count": 604,
+      "p50": 28132292,
+      "p95": 28883208,
+      "p99": 36487751,
+      "max": 49630416
+    },
+    "display_interval_ns": {
+      "count": 603,
+      "p50": 16666541,
+      "p95": 24999792,
+      "p99": 25000541,
+      "max": 25000792
+    },
+    "full_frame_samples": [
+      {
+        "drawable": 245,
+        "draw_ns": 1628750,
+        "submit_ns": 556667,
+        "gpu_ns": 1762542,
+        "total_frame_work_ns": 3947959,
+        "draw_to_gpu_complete_ns": 4417041,
+        "draw_to_display_ns": 32963666,
+        "display_unix_ns": "1788818302265974833"
+      },
+      {
+        "drawable": 246,
+        "draw_ns": 1628750,
+        "submit_ns": 556667,
+        "gpu_ns": 1077875,
+        "total_frame_work_ns": 3263292,
+        "draw_to_gpu_complete_ns": 10950457,
+        "draw_to_display_ns": 41296916,
+        "display_unix_ns": "1788818302274308083"
+      },
+      {
+        "drawable": 247,
+        "draw_ns": 1628750,
+        "submit_ns": 556667,
+        "gpu_ns": 1078626,
+        "total_frame_work_ns": 3264043,
+        "draw_to_gpu_complete_ns": 19486041,
+        "draw_to_display_ns": 49630416,
+        "display_unix_ns": "1788818302282641583"
+      },
+      {
+        "drawable": 248,
+        "draw_ns": 1791375,
+        "submit_ns": 2966292,
+        "gpu_ns": 1080375,
+        "total_frame_work_ns": 5838042,
+        "draw_to_gpu_complete_ns": 6370582,
+        "draw_to_display_ns": 36633541,
+        "display_unix_ns": "1788818302290974583"
+      },
+      {
+        "drawable": 249,
+        "draw_ns": 1791375,
+        "submit_ns": 2966292,
+        "gpu_ns": 1079292,
+        "total_frame_work_ns": 5836959,
+        "draw_to_gpu_complete_ns": 14807124,
+        "draw_to_display_ns": 44967333,
+        "display_unix_ns": "1788818302299308375"
+      },
+      {
+        "drawable": 250,
+        "draw_ns": 2180709,
+        "submit_ns": 2614500,
+        "gpu_ns": 1196917,
+        "total_frame_work_ns": 5992126,
+        "draw_to_gpu_complete_ns": 6453917,
+        "draw_to_display_ns": 36487751,
+        "display_unix_ns": "1788818302307641834"
+      },
+      {
+        "drawable": 251,
+        "draw_ns": 2180709,
+        "submit_ns": 2614500,
+        "gpu_ns": 1699750,
+        "total_frame_work_ns": 6494959,
+        "draw_to_gpu_complete_ns": 15377250,
+        "draw_to_display_ns": 44820792,
+        "display_unix_ns": "1788818302315974875"
+      },
+      {
+        "drawable": 252,
+        "draw_ns": 2908958,
+        "submit_ns": 1715958,
+        "gpu_ns": 1083125,
+        "total_frame_work_ns": 5708041,
+        "draw_to_gpu_complete_ns": 6194333,
+        "draw_to_display_ns": 36519167,
+        "display_unix_ns": "1788818302324307792"
+      },
+      {
+        "drawable": 253,
+        "draw_ns": 2664750,
+        "submit_ns": 812834,
+        "gpu_ns": 1088458,
+        "total_frame_work_ns": 4566042,
+        "draw_to_gpu_complete_ns": 5254332,
+        "draw_to_display_ns": 29103458,
+        "display_unix_ns": "1788818302332641250"
+      },
+      {
+        "drawable": 254,
+        "draw_ns": 2541000,
+        "submit_ns": 1014791,
+        "gpu_ns": 1074750,
+        "total_frame_work_ns": 4630541,
+        "draw_to_gpu_complete_ns": 5165167,
+        "draw_to_display_ns": 28174542,
+        "display_unix_ns": "1788818302349308458"
+      },
+      {
+        "drawable": 255,
+        "draw_ns": 2579417,
+        "submit_ns": 953875,
+        "gpu_ns": 1078000,
+        "total_frame_work_ns": 4611292,
+        "draw_to_gpu_complete_ns": 5134833,
+        "draw_to_display_ns": 28103417,
+        "display_unix_ns": "1788818302365974417"
+      },
+      {
+        "drawable": 256,
+        "draw_ns": 2675333,
+        "submit_ns": 911500,
+        "gpu_ns": 1085084,
+        "total_frame_work_ns": 4671917,
+        "draw_to_gpu_complete_ns": 5218792,
+        "draw_to_display_ns": 28626918,
+        "display_unix_ns": "1788818302382641126"
+      },
+      {
+        "drawable": 257,
+        "draw_ns": 2022959,
+        "submit_ns": 802291,
+        "gpu_ns": 1085458,
+        "total_frame_work_ns": 3910708,
+        "draw_to_gpu_complete_ns": 4591125,
+        "draw_to_display_ns": 28847959,
+        "display_unix_ns": "1788818302399307542"
+      },
+      {
+        "drawable": 258,
+        "draw_ns": 2111334,
+        "submit_ns": 776833,
+        "gpu_ns": 1082625,
+        "total_frame_work_ns": 3970792,
+        "draw_to_gpu_complete_ns": 4575667,
+        "draw_to_display_ns": 28141126,
+        "display_unix_ns": "1788818302415974542"
+      },
+      {
+        "drawable": 259,
+        "draw_ns": 3505042,
+        "submit_ns": 966583,
+        "gpu_ns": 1092583,
+        "total_frame_work_ns": 5564208,
+        "draw_to_gpu_complete_ns": 6252666,
+        "draw_to_display_ns": 28814083,
+        "display_unix_ns": "1788818302440973750"
+      },
+      {
+        "drawable": 260,
+        "draw_ns": 1710500,
+        "submit_ns": 560250,
+        "gpu_ns": 1080459,
+        "total_frame_work_ns": 3351209,
+        "draw_to_gpu_complete_ns": 3788749,
+        "draw_to_display_ns": 19793208,
+        "display_unix_ns": "1788818302449307375"
+      },
+      {
+        "drawable": 261,
+        "draw_ns": 1310708,
+        "submit_ns": 629375,
+        "gpu_ns": 1082792,
+        "total_frame_work_ns": 3022875,
+        "draw_to_gpu_complete_ns": 3156916,
+        "draw_to_display_ns": 19889791,
+        "display_unix_ns": "1788818302457641250"
+      },
+      {
+        "drawable": 262,
+        "draw_ns": 1238750,
+        "submit_ns": 524250,
+        "gpu_ns": 1082625,
+        "total_frame_work_ns": 2845625,
+        "draw_to_gpu_complete_ns": 2981374,
+        "draw_to_display_ns": 19883166,
+        "display_unix_ns": "1788818302474307375"
+      },
+      {
+        "drawable": 263,
+        "draw_ns": 1130584,
+        "submit_ns": 436834,
+        "gpu_ns": 1084125,
+        "total_frame_work_ns": 2651543,
+        "draw_to_gpu_complete_ns": 2788750,
+        "draw_to_display_ns": 19886167,
+        "display_unix_ns": "1788818302490973583"
+      },
+      {
+        "drawable": 264,
+        "draw_ns": 936125,
+        "submit_ns": 389333,
+        "gpu_ns": 1087208,
+        "total_frame_work_ns": 2412666,
+        "draw_to_gpu_complete_ns": 2869667,
+        "draw_to_display_ns": 19889626,
+        "display_unix_ns": "1788818302507640542"
+      },
+      {
+        "drawable": 265,
+        "draw_ns": 880000,
+        "submit_ns": 352708,
+        "gpu_ns": 1087083,
+        "total_frame_work_ns": 2319791,
+        "draw_to_gpu_complete_ns": 2729583,
+        "draw_to_display_ns": 19892500,
+        "display_unix_ns": "1788818302524307042"
+      },
+      {
+        "drawable": 266,
+        "draw_ns": 934125,
+        "submit_ns": 502167,
+        "gpu_ns": 1085125,
+        "total_frame_work_ns": 2521417,
+        "draw_to_gpu_complete_ns": 2918374,
+        "draw_to_display_ns": 20683041,
+        "display_unix_ns": "1788818302540973958"
+      },
+      {
+        "drawable": 267,
+        "draw_ns": 1012875,
+        "submit_ns": 385708,
+        "gpu_ns": 1086208,
+        "total_frame_work_ns": 2484791,
+        "draw_to_gpu_complete_ns": 2910583,
+        "draw_to_display_ns": 19882417,
+        "display_unix_ns": "1788818302557640250"
+      },
+      {
+        "drawable": 268,
+        "draw_ns": 1049959,
+        "submit_ns": 384792,
+        "gpu_ns": 1099125,
+        "total_frame_work_ns": 2533876,
+        "draw_to_gpu_complete_ns": 3004750,
+        "draw_to_display_ns": 19873542,
+        "display_unix_ns": "1788818302574306708"
+      },
+      {
+        "drawable": 269,
+        "draw_ns": 1208208,
+        "submit_ns": 454375,
+        "gpu_ns": 1102000,
+        "total_frame_work_ns": 2764583,
+        "draw_to_gpu_complete_ns": 3245958,
+        "draw_to_display_ns": 20054083,
+        "display_unix_ns": "1788818302590973500"
+      },
+      {
+        "drawable": 270,
+        "draw_ns": 1184250,
+        "submit_ns": 426250,
+        "gpu_ns": 1143458,
+        "total_frame_work_ns": 2753958,
+        "draw_to_gpu_complete_ns": 3228208,
+        "draw_to_display_ns": 19858209,
+        "display_unix_ns": "1788818302607640042"
+      },
+      {
+        "drawable": 271,
+        "draw_ns": 1197250,
+        "submit_ns": 431375,
+        "gpu_ns": 1130125,
+        "total_frame_work_ns": 2758750,
+        "draw_to_gpu_complete_ns": 2877375,
+        "draw_to_display_ns": 19866250,
+        "display_unix_ns": "1788818302624306208"
+      },
+      {
+        "drawable": 272,
+        "draw_ns": 1265291,
+        "submit_ns": 494375,
+        "gpu_ns": 1106375,
+        "total_frame_work_ns": 2866041,
+        "draw_to_gpu_complete_ns": 3011124,
+        "draw_to_display_ns": 19854416,
+        "display_unix_ns": "1788818302640973375"
+      },
+      {
+        "drawable": 273,
+        "draw_ns": 1445750,
+        "submit_ns": 579292,
+        "gpu_ns": 1122875,
+        "total_frame_work_ns": 3147917,
+        "draw_to_gpu_complete_ns": 3537666,
+        "draw_to_display_ns": 19854292,
+        "display_unix_ns": "1788818302657639250"
+      },
+      {
+        "drawable": 274,
+        "draw_ns": 1410292,
+        "submit_ns": 543667,
+        "gpu_ns": 1121875,
+        "total_frame_work_ns": 3075834,
+        "draw_to_gpu_complete_ns": 3229625,
+        "draw_to_display_ns": 19853792,
+        "display_unix_ns": "1788818302674306375"
+      },
+      {
+        "drawable": 275,
+        "draw_ns": 1365625,
+        "submit_ns": 585667,
+        "gpu_ns": 668458,
+        "total_frame_work_ns": 2619750,
+        "draw_to_gpu_complete_ns": 3319291,
+        "draw_to_display_ns": 19883166,
+        "display_unix_ns": "1788818302690973083"
+      },
+      {
+        "drawable": 276,
+        "draw_ns": 1541334,
+        "submit_ns": 664917,
+        "gpu_ns": 725417,
+        "total_frame_work_ns": 2931668,
+        "draw_to_gpu_complete_ns": 3120292,
+        "draw_to_display_ns": 20787875,
+        "display_unix_ns": "1788818302715972958"
+      },
+      {
+        "drawable": 277,
+        "draw_ns": 1615959,
+        "submit_ns": 841167,
+        "gpu_ns": 603500,
+        "total_frame_work_ns": 3060626,
+        "draw_to_gpu_complete_ns": 3157458,
+        "draw_to_display_ns": 19805875,
+        "display_unix_ns": "1788818302724305625"
+      },
+      {
+        "drawable": 278,
+        "draw_ns": 1582334,
+        "submit_ns": 634041,
+        "gpu_ns": 698750,
+        "total_frame_work_ns": 2915125,
+        "draw_to_gpu_complete_ns": 3086042,
+        "draw_to_display_ns": 19875168,
+        "display_unix_ns": "1788818302740972459"
+      },
+      {
+        "drawable": 279,
+        "draw_ns": 1641458,
+        "submit_ns": 636125,
+        "gpu_ns": 778125,
+        "total_frame_work_ns": 3055708,
+        "draw_to_gpu_complete_ns": 3225082,
+        "draw_to_display_ns": 19880874,
+        "display_unix_ns": "1788818302757638583"
+      },
+      {
+        "drawable": 280,
+        "draw_ns": 1676917,
+        "submit_ns": 690916,
+        "gpu_ns": 825334,
+        "total_frame_work_ns": 3193167,
+        "draw_to_gpu_complete_ns": 3298166,
+        "draw_to_display_ns": 20800166,
+        "display_unix_ns": "1788818302782639124"
+      },
+      {
+        "drawable": 281,
+        "draw_ns": 1663041,
+        "submit_ns": 527750,
+        "gpu_ns": 776625,
+        "total_frame_work_ns": 2967416,
+        "draw_to_gpu_complete_ns": 3083082,
+        "draw_to_display_ns": 19804208,
+        "display_unix_ns": "1788818302790971542"
+      },
+      {
+        "drawable": 282,
+        "draw_ns": 1317750,
+        "submit_ns": 539958,
+        "gpu_ns": 779958,
+        "total_frame_work_ns": 2637666,
+        "draw_to_gpu_complete_ns": 2862041,
+        "draw_to_display_ns": 19888625,
+        "display_unix_ns": "1788818302807638792"
+      },
+      {
+        "drawable": 283,
+        "draw_ns": 1284709,
+        "submit_ns": 500375,
+        "gpu_ns": 799542,
+        "total_frame_work_ns": 2584626,
+        "draw_to_gpu_complete_ns": 2752666,
+        "draw_to_display_ns": 19876166,
+        "display_unix_ns": "1788818302824304916"
+      },
+      {
+        "drawable": 284,
+        "draw_ns": 1169834,
+        "submit_ns": 470167,
+        "gpu_ns": 826750,
+        "total_frame_work_ns": 2466751,
+        "draw_to_gpu_complete_ns": 2590541,
+        "draw_to_display_ns": 19881208,
+        "display_unix_ns": "1788818302840971708"
+      },
+      {
+        "drawable": 285,
+        "draw_ns": 1190333,
+        "submit_ns": 467167,
+        "gpu_ns": 1146083,
+        "total_frame_work_ns": 2803583,
+        "draw_to_gpu_complete_ns": 2931708,
+        "draw_to_display_ns": 19891584,
+        "display_unix_ns": "1788818302857638042"
+      },
+      {
+        "drawable": 286,
+        "draw_ns": 1309417,
+        "submit_ns": 539916,
+        "gpu_ns": 1522208,
+        "total_frame_work_ns": 3371541,
+        "draw_to_gpu_complete_ns": 3962707,
+        "draw_to_display_ns": 19880999,
+        "display_unix_ns": "1788818302874304916"
+      },
+      {
+        "drawable": 287,
+        "draw_ns": 1218875,
+        "submit_ns": 554875,
+        "gpu_ns": 1126250,
+        "total_frame_work_ns": 2900000,
+        "draw_to_gpu_complete_ns": 3044041,
+        "draw_to_display_ns": 19882375,
+        "display_unix_ns": "1788818302890971042"
+      },
+      {
+        "drawable": 288,
+        "draw_ns": 2499208,
+        "submit_ns": 541208,
+        "gpu_ns": 1105250,
+        "total_frame_work_ns": 4145666,
+        "draw_to_gpu_complete_ns": 4524207,
+        "draw_to_display_ns": 28011832,
+        "display_unix_ns": "1788818302915971249"
+      },
+      {
+        "drawable": 289,
+        "draw_ns": 2706125,
+        "submit_ns": 931084,
+        "gpu_ns": 1108458,
+        "total_frame_work_ns": 4745667,
+        "draw_to_gpu_complete_ns": 5239291,
+        "draw_to_display_ns": 28553125,
+        "display_unix_ns": "1788818302932638334"
+      },
+      {
+        "drawable": 290,
+        "draw_ns": 1208292,
+        "submit_ns": 485500,
+        "gpu_ns": 1127250,
+        "total_frame_work_ns": 2821042,
+        "draw_to_gpu_complete_ns": 2952167,
+        "draw_to_display_ns": 20455543,
+        "display_unix_ns": "1788818302940971584"
+      },
+      {
+        "drawable": 291,
+        "draw_ns": 2380167,
+        "submit_ns": 843625,
+        "gpu_ns": 1120417,
+        "total_frame_work_ns": 4344209,
+        "draw_to_gpu_complete_ns": 4560583,
+        "draw_to_display_ns": 28802792,
+        "display_unix_ns": "1788818302965971500"
+      },
+      {
+        "drawable": 292,
+        "draw_ns": 2531917,
+        "submit_ns": 830834,
+        "gpu_ns": 1115333,
+        "total_frame_work_ns": 4478084,
+        "draw_to_gpu_complete_ns": 4981416,
+        "draw_to_display_ns": 28196375,
+        "display_unix_ns": "1788818302982637750"
+      },
+      {
+        "drawable": 293,
+        "draw_ns": 2155208,
+        "submit_ns": 692208,
+        "gpu_ns": 1115167,
+        "total_frame_work_ns": 3962583,
+        "draw_to_gpu_complete_ns": 4140124,
+        "draw_to_display_ns": 28175041,
+        "display_unix_ns": "1788818303007637375"
+      },
+      {
+        "drawable": 294,
+        "draw_ns": 2474500,
+        "submit_ns": 885792,
+        "gpu_ns": 1119250,
+        "total_frame_work_ns": 4479542,
+        "draw_to_gpu_complete_ns": 4649291,
+        "draw_to_display_ns": 28605917,
+        "display_unix_ns": "1788818303024304209"
+      },
+      {
+        "drawable": 295,
+        "draw_ns": 2262250,
+        "submit_ns": 1101792,
+        "gpu_ns": 1116542,
+        "total_frame_work_ns": 4480584,
+        "draw_to_gpu_complete_ns": 5052875,
+        "draw_to_display_ns": 28194667,
+        "display_unix_ns": "1788818303040970625"
+      },
+      {
+        "drawable": 296,
+        "draw_ns": 1339167,
+        "submit_ns": 610167,
+        "gpu_ns": 1381458,
+        "total_frame_work_ns": 3330792,
+        "draw_to_gpu_complete_ns": 3402416,
+        "draw_to_display_ns": 20470291,
+        "display_unix_ns": "1788818303049303541"
+      },
+      {
+        "drawable": 297,
+        "draw_ns": 1643209,
+        "submit_ns": 863250,
+        "gpu_ns": 1117208,
+        "total_frame_work_ns": 3623667,
+        "draw_to_gpu_complete_ns": 4447833,
+        "draw_to_display_ns": 28200292,
+        "display_unix_ns": "1788818303074303917"
+      },
+      {
+        "drawable": 298,
+        "draw_ns": 1405875,
+        "submit_ns": 538583,
+        "gpu_ns": 1148042,
+        "total_frame_work_ns": 3092500,
+        "draw_to_gpu_complete_ns": 3248666,
+        "draw_to_display_ns": 19841916,
+        "display_unix_ns": "1788818303082637166"
+      },
+      {
+        "drawable": 299,
+        "draw_ns": 1306875,
+        "submit_ns": 583875,
+        "gpu_ns": 1126750,
+        "total_frame_work_ns": 3017500,
+        "draw_to_gpu_complete_ns": 3193000,
+        "draw_to_display_ns": 19880709,
+        "display_unix_ns": "1788818303099303125"
+      },
+      {
+        "drawable": 300,
+        "draw_ns": 2449791,
+        "submit_ns": 821500,
+        "gpu_ns": 1110291,
+        "total_frame_work_ns": 4381582,
+        "draw_to_gpu_complete_ns": 4900707,
+        "draw_to_display_ns": 28181542,
+        "display_unix_ns": "1788818303124303917"
+      },
+      {
+        "drawable": 301,
+        "draw_ns": 1132875,
+        "submit_ns": 461458,
+        "gpu_ns": 1113125,
+        "total_frame_work_ns": 2707458,
+        "draw_to_gpu_complete_ns": 2845374,
+        "draw_to_display_ns": 19877666,
+        "display_unix_ns": "1788818303132636958"
+      },
+      {
+        "drawable": 302,
+        "draw_ns": 2618000,
+        "submit_ns": 1117500,
+        "gpu_ns": 1118209,
+        "total_frame_work_ns": 4853709,
+        "draw_to_gpu_complete_ns": 5478666,
+        "draw_to_display_ns": 28781458,
+        "display_unix_ns": "1788818303157636583"
+      },
+      {
+        "drawable": 303,
+        "draw_ns": 3295833,
+        "submit_ns": 858416,
+        "gpu_ns": 1114125,
+        "total_frame_work_ns": 5268374,
+        "draw_to_gpu_complete_ns": 5742833,
+        "draw_to_display_ns": 28156459,
+        "display_unix_ns": "1788818303174303209"
+      },
+      {
+        "drawable": 304,
+        "draw_ns": 3191583,
+        "submit_ns": 966250,
+        "gpu_ns": 1117375,
+        "total_frame_work_ns": 5275208,
+        "draw_to_gpu_complete_ns": 5793749,
+        "draw_to_display_ns": 28752000,
+        "display_unix_ns": "1788818303190969750"
+      },
+      {
+        "drawable": 305,
+        "draw_ns": 2149625,
+        "submit_ns": 675208,
+        "gpu_ns": 1118375,
+        "total_frame_work_ns": 3943208,
+        "draw_to_gpu_complete_ns": 4268248,
+        "draw_to_display_ns": 20720916,
+        "display_unix_ns": "1788818303199302875"
+      },
+      {
+        "drawable": 306,
+        "draw_ns": 2225167,
+        "submit_ns": 796416,
+        "gpu_ns": 1125417,
+        "total_frame_work_ns": 4147000,
+        "draw_to_gpu_complete_ns": 4688583,
+        "draw_to_display_ns": 28166167,
+        "display_unix_ns": "1788818303224302417"
+      },
+      {
+        "drawable": 307,
+        "draw_ns": 2190000,
+        "submit_ns": 665500,
+        "gpu_ns": 1123125,
+        "total_frame_work_ns": 3978625,
+        "draw_to_gpu_complete_ns": 4555083,
+        "draw_to_display_ns": 28719542,
+        "display_unix_ns": "1788818303240969667"
+      },
+      {
+        "drawable": 308,
+        "draw_ns": 2386625,
+        "submit_ns": 867875,
+        "gpu_ns": 1128375,
+        "total_frame_work_ns": 4382875,
+        "draw_to_gpu_complete_ns": 5016707,
+        "draw_to_display_ns": 28117624,
+        "display_unix_ns": "1788818303257635833"
+      },
+      {
+        "drawable": 309,
+        "draw_ns": 2262792,
+        "submit_ns": 1033334,
+        "gpu_ns": 1124250,
+        "total_frame_work_ns": 4420376,
+        "draw_to_gpu_complete_ns": 5084667,
+        "draw_to_display_ns": 28204043,
+        "display_unix_ns": "1788818303274302501"
+      },
+      {
+        "drawable": 310,
+        "draw_ns": 1338083,
+        "submit_ns": 852792,
+        "gpu_ns": 1124500,
+        "total_frame_work_ns": 3315375,
+        "draw_to_gpu_complete_ns": 4014374,
+        "draw_to_display_ns": 28076500,
+        "display_unix_ns": "1788818303290969334"
+      },
+      {
+        "drawable": 311,
+        "draw_ns": 1179417,
+        "submit_ns": 474292,
+        "gpu_ns": 1128500,
+        "total_frame_work_ns": 2782209,
+        "draw_to_gpu_complete_ns": 2932499,
+        "draw_to_display_ns": 20454250,
+        "display_unix_ns": "1788818303299302250"
+      },
+      {
+        "drawable": 312,
+        "draw_ns": 1236750,
+        "submit_ns": 438292,
+        "gpu_ns": 1133292,
+        "total_frame_work_ns": 2808334,
+        "draw_to_gpu_complete_ns": 2956000,
+        "draw_to_display_ns": 19861042,
+        "display_unix_ns": "1788818303315969250"
+      },
+      {
+        "drawable": 313,
+        "draw_ns": 1502208,
+        "submit_ns": 512958,
+        "gpu_ns": 1131375,
+        "total_frame_work_ns": 3146541,
+        "draw_to_gpu_complete_ns": 3772625,
+        "draw_to_display_ns": 19846167,
+        "display_unix_ns": "1788818303332635542"
+      },
+      {
+        "drawable": 314,
+        "draw_ns": 1215000,
+        "submit_ns": 476500,
+        "gpu_ns": 1150958,
+        "total_frame_work_ns": 2842458,
+        "draw_to_gpu_complete_ns": 3109499,
+        "draw_to_display_ns": 19873749,
+        "display_unix_ns": "1788818303349302374"
+      },
+      {
+        "drawable": 315,
+        "draw_ns": 1225833,
+        "submit_ns": 448041,
+        "gpu_ns": 1159500,
+        "total_frame_work_ns": 2833374,
+        "draw_to_gpu_complete_ns": 2949707,
+        "draw_to_display_ns": 19844916,
+        "display_unix_ns": "1788818303365968958"
+      },
+      {
+        "drawable": 316,
+        "draw_ns": 1086583,
+        "submit_ns": 399750,
+        "gpu_ns": 1173250,
+        "total_frame_work_ns": 2659583,
+        "draw_to_gpu_complete_ns": 2787249,
+        "draw_to_display_ns": 19874999,
+        "display_unix_ns": "1788818303382635083"
+      },
+      {
+        "drawable": 317,
+        "draw_ns": 1203500,
+        "submit_ns": 439333,
+        "gpu_ns": 1155750,
+        "total_frame_work_ns": 2798583,
+        "draw_to_gpu_complete_ns": 2953708,
+        "draw_to_display_ns": 20459042,
+        "display_unix_ns": "1788818303399302042"
+      },
+      {
+        "drawable": 318,
+        "draw_ns": 3680916,
+        "submit_ns": 841917,
+        "gpu_ns": 1547125,
+        "total_frame_work_ns": 6069958,
+        "draw_to_gpu_complete_ns": 6571082,
+        "draw_to_display_ns": 28066124,
+        "display_unix_ns": "1788818303424301333"
+      },
+      {
+        "drawable": 319,
+        "draw_ns": 1202375,
+        "submit_ns": 425625,
+        "gpu_ns": 1152875,
+        "total_frame_work_ns": 2780875,
+        "draw_to_gpu_complete_ns": 3209541,
+        "draw_to_display_ns": 19820708,
+        "display_unix_ns": "1788818303432634875"
+      },
+      {
+        "drawable": 320,
+        "draw_ns": 1163208,
+        "submit_ns": 454375,
+        "gpu_ns": 1155751,
+        "total_frame_work_ns": 2773334,
+        "draw_to_gpu_complete_ns": 2894750,
+        "draw_to_display_ns": 19842459,
+        "display_unix_ns": "1788818303449301376"
+      },
+      {
+        "drawable": 321,
+        "draw_ns": 2872250,
+        "submit_ns": 476000,
+        "gpu_ns": 1133208,
+        "total_frame_work_ns": 4481458,
+        "draw_to_gpu_complete_ns": 4925874,
+        "draw_to_display_ns": 28054749,
+        "display_unix_ns": "1788818303474301624"
+      },
+      {
+        "drawable": 322,
+        "draw_ns": 1136875,
+        "submit_ns": 439333,
+        "gpu_ns": 1159833,
+        "total_frame_work_ns": 2736041,
+        "draw_to_gpu_complete_ns": 3222291,
+        "draw_to_display_ns": 19849875,
+        "display_unix_ns": "1788818303482634375"
+      },
+      {
+        "drawable": 323,
+        "draw_ns": 1098625,
+        "submit_ns": 453375,
+        "gpu_ns": 1173500,
+        "total_frame_work_ns": 2725500,
+        "draw_to_gpu_complete_ns": 3168374,
+        "draw_to_display_ns": 19885583,
+        "display_unix_ns": "1788818303499301625"
+      },
+      {
+        "drawable": 324,
+        "draw_ns": 2597292,
+        "submit_ns": 983042,
+        "gpu_ns": 1132375,
+        "total_frame_work_ns": 4712709,
+        "draw_to_gpu_complete_ns": 5235166,
+        "draw_to_display_ns": 28513500,
+        "display_unix_ns": "1788818303524301250"
+      },
+      {
+        "drawable": 325,
+        "draw_ns": 2589458,
+        "submit_ns": 1085167,
+        "gpu_ns": 1148625,
+        "total_frame_work_ns": 4823250,
+        "draw_to_gpu_complete_ns": 5303166,
+        "draw_to_display_ns": 28489500,
+        "display_unix_ns": "1788818303540967542"
+      },
+      {
+        "drawable": 326,
+        "draw_ns": 2575459,
+        "submit_ns": 846167,
+        "gpu_ns": 1142500,
+        "total_frame_work_ns": 4564126,
+        "draw_to_gpu_complete_ns": 4994583,
+        "draw_to_display_ns": 28030292,
+        "display_unix_ns": "1788818303557634583"
+      },
+      {
+        "drawable": 327,
+        "draw_ns": 2195208,
+        "submit_ns": 938041,
+        "gpu_ns": 1140083,
+        "total_frame_work_ns": 4273332,
+        "draw_to_gpu_complete_ns": 4814583,
+        "draw_to_display_ns": 28155292,
+        "display_unix_ns": "1788818303574300542"
+      },
+      {
+        "drawable": 328,
+        "draw_ns": 2639875,
+        "submit_ns": 870958,
+        "gpu_ns": 1145250,
+        "total_frame_work_ns": 4656083,
+        "draw_to_gpu_complete_ns": 5249374,
+        "draw_to_display_ns": 28086541,
+        "display_unix_ns": "1788818303590967833"
+      },
+      {
+        "drawable": 329,
+        "draw_ns": 2384500,
+        "submit_ns": 901666,
+        "gpu_ns": 1140875,
+        "total_frame_work_ns": 4427041,
+        "draw_to_gpu_complete_ns": 4957374,
+        "draw_to_display_ns": 28142541,
+        "display_unix_ns": "1788818303607634291"
+      },
+      {
+        "drawable": 330,
+        "draw_ns": 2719958,
+        "submit_ns": 902875,
+        "gpu_ns": 1144875,
+        "total_frame_work_ns": 4767708,
+        "draw_to_gpu_complete_ns": 5367041,
+        "draw_to_display_ns": 28751500,
+        "display_unix_ns": "1788818303624300875"
+      },
+      {
+        "drawable": 331,
+        "draw_ns": 2884375,
+        "submit_ns": 887041,
+        "gpu_ns": 1069875,
+        "total_frame_work_ns": 4841291,
+        "draw_to_gpu_complete_ns": 5591667,
+        "draw_to_display_ns": 27837043,
+        "display_unix_ns": "1788818303640967001"
+      },
+      {
+        "drawable": 332,
+        "draw_ns": 2243709,
+        "submit_ns": 795875,
+        "gpu_ns": 1070625,
+        "total_frame_work_ns": 4110209,
+        "draw_to_gpu_complete_ns": 4786958,
+        "draw_to_display_ns": 28196709,
+        "display_unix_ns": "1788818303657634000"
+      },
+      {
+        "drawable": 333,
+        "draw_ns": 2313791,
+        "submit_ns": 958166,
+        "gpu_ns": 1072750,
+        "total_frame_work_ns": 4344707,
+        "draw_to_gpu_complete_ns": 5119458,
+        "draw_to_display_ns": 29033666,
+        "display_unix_ns": "1788818303674300458"
+      },
+      {
+        "drawable": 334,
+        "draw_ns": 2438583,
+        "submit_ns": 728125,
+        "gpu_ns": 1072750,
+        "total_frame_work_ns": 4239458,
+        "draw_to_gpu_complete_ns": 4926083,
+        "draw_to_display_ns": 28149625,
+        "display_unix_ns": "1788818303690967000"
+      },
+      {
+        "drawable": 335,
+        "draw_ns": 1640750,
+        "submit_ns": 1267250,
+        "gpu_ns": 1070375,
+        "total_frame_work_ns": 3978375,
+        "draw_to_gpu_complete_ns": 4063999,
+        "draw_to_display_ns": 28118249,
+        "display_unix_ns": "1788818303707632833"
+      },
+      {
+        "drawable": 336,
+        "draw_ns": 1284542,
+        "submit_ns": 571291,
+        "gpu_ns": 1080458,
+        "total_frame_work_ns": 2936291,
+        "draw_to_gpu_complete_ns": 3163750,
+        "draw_to_display_ns": 19812959,
+        "display_unix_ns": "1788818303715966375"
+      },
+      {
+        "drawable": 337,
+        "draw_ns": 1481083,
+        "submit_ns": 585458,
+        "gpu_ns": 1079209,
+        "total_frame_work_ns": 3145750,
+        "draw_to_gpu_complete_ns": 3851749,
+        "draw_to_display_ns": 19881458,
+        "display_unix_ns": "1788818303732633042"
+      },
+      {
+        "drawable": 338,
+        "draw_ns": 1517459,
+        "submit_ns": 683458,
+        "gpu_ns": 1078125,
+        "total_frame_work_ns": 3279042,
+        "draw_to_gpu_complete_ns": 3591376,
+        "draw_to_display_ns": 19875210,
+        "display_unix_ns": "1788818303749300251"
+      },
+      {
+        "drawable": 339,
+        "draw_ns": 1179083,
+        "submit_ns": 413917,
+        "gpu_ns": 1066083,
+        "total_frame_work_ns": 2659083,
+        "draw_to_gpu_complete_ns": 2782124,
+        "draw_to_display_ns": 19853125,
+        "display_unix_ns": "1788818303765966667"
+      },
+      {
+        "drawable": 340,
+        "draw_ns": 2450041,
+        "submit_ns": 987584,
+        "gpu_ns": 1067042,
+        "total_frame_work_ns": 4504667,
+        "draw_to_gpu_complete_ns": 4980874,
+        "draw_to_display_ns": 28167749,
+        "display_unix_ns": "1788818303790965791"
+      },
+      {
+        "drawable": 341,
+        "draw_ns": 1111541,
+        "submit_ns": 411667,
+        "gpu_ns": 1077791,
+        "total_frame_work_ns": 2600999,
+        "draw_to_gpu_complete_ns": 2731207,
+        "draw_to_display_ns": 20448750,
+        "display_unix_ns": "1788818303799299250"
+      },
+      {
+        "drawable": 342,
+        "draw_ns": 3372167,
+        "submit_ns": 918458,
+        "gpu_ns": 1088209,
+        "total_frame_work_ns": 5378834,
+        "draw_to_gpu_complete_ns": 5994791,
+        "draw_to_display_ns": 28099583,
+        "display_unix_ns": "1788818303824299500"
+      },
+      {
+        "drawable": 343,
+        "draw_ns": 2777583,
+        "submit_ns": 920541,
+        "gpu_ns": 1077542,
+        "total_frame_work_ns": 4775666,
+        "draw_to_gpu_complete_ns": 5380958,
+        "draw_to_display_ns": 28795083,
+        "display_unix_ns": "1788818303840966083"
+      },
+      {
+        "drawable": 344,
+        "draw_ns": 2849209,
+        "submit_ns": 1574167,
+        "gpu_ns": 1073708,
+        "total_frame_work_ns": 5497084,
+        "draw_to_gpu_complete_ns": 6070417,
+        "draw_to_display_ns": 28750293,
+        "display_unix_ns": "1788818303857632209"
+      },
+      {
+        "drawable": 345,
+        "draw_ns": 2381542,
+        "submit_ns": 919000,
+        "gpu_ns": 1077125,
+        "total_frame_work_ns": 4377667,
+        "draw_to_gpu_complete_ns": 4960958,
+        "draw_to_display_ns": 28727625,
+        "display_unix_ns": "1788818303874298916"
+      },
+      {
+        "drawable": 346,
+        "draw_ns": 2459375,
+        "submit_ns": 967625,
+        "gpu_ns": 1080083,
+        "total_frame_work_ns": 4507083,
+        "draw_to_gpu_complete_ns": 5104582,
+        "draw_to_display_ns": 28547083,
+        "display_unix_ns": "1788818303890965500"
+      },
+      {
+        "drawable": 347,
+        "draw_ns": 2644416,
+        "submit_ns": 914917,
+        "gpu_ns": 1080917,
+        "total_frame_work_ns": 4640250,
+        "draw_to_gpu_complete_ns": 5400624,
+        "draw_to_display_ns": 28172332,
+        "display_unix_ns": "1788818303907632416"
+      },
+      {
+        "drawable": 348,
+        "draw_ns": 2802333,
+        "submit_ns": 775000,
+        "gpu_ns": 1081000,
+        "total_frame_work_ns": 4658333,
+        "draw_to_gpu_complete_ns": 4900041,
+        "draw_to_display_ns": 28594750,
+        "display_unix_ns": "1788818303924298333"
+      },
+      {
+        "drawable": 349,
+        "draw_ns": 1126375,
+        "submit_ns": 469625,
+        "gpu_ns": 1074417,
+        "total_frame_work_ns": 2670417,
+        "draw_to_gpu_complete_ns": 2825458,
+        "draw_to_display_ns": 24059166,
+        "display_unix_ns": "1788818303940964833"
+      },
+      {
+        "drawable": 350,
+        "draw_ns": 1184417,
+        "submit_ns": 467416,
+        "gpu_ns": 1074625,
+        "total_frame_work_ns": 2726458,
+        "draw_to_gpu_complete_ns": 2841416,
+        "draw_to_display_ns": 20583333,
+        "display_unix_ns": "1788818303949298583"
+      },
+      {
+        "drawable": 351,
+        "draw_ns": 1480208,
+        "submit_ns": 708166,
+        "gpu_ns": 1075250,
+        "total_frame_work_ns": 3263624,
+        "draw_to_gpu_complete_ns": 3684040,
+        "draw_to_display_ns": 19873457,
+        "display_unix_ns": "1788818303965965541"
+      },
+      {
+        "drawable": 352,
+        "draw_ns": 2110959,
+        "submit_ns": 1042958,
+        "gpu_ns": 1092583,
+        "total_frame_work_ns": 4246500,
+        "draw_to_gpu_complete_ns": 4672708,
+        "draw_to_display_ns": 28768167,
+        "display_unix_ns": "1788818303990965125"
+      },
+      {
+        "drawable": 353,
+        "draw_ns": 1770667,
+        "submit_ns": 686167,
+        "gpu_ns": 1089834,
+        "total_frame_work_ns": 3546668,
+        "draw_to_gpu_complete_ns": 3994874,
+        "draw_to_display_ns": 20322333,
+        "display_unix_ns": "1788818303999298208"
+      },
+      {
+        "drawable": 354,
+        "draw_ns": 1789959,
+        "submit_ns": 687208,
+        "gpu_ns": 1083792,
+        "total_frame_work_ns": 3560959,
+        "draw_to_gpu_complete_ns": 3736959,
+        "draw_to_display_ns": 20798793,
+        "display_unix_ns": "1788818304015964709"
+      },
+      {
+        "drawable": 355,
+        "draw_ns": 2441042,
+        "submit_ns": 657791,
+        "gpu_ns": 1075209,
+        "total_frame_work_ns": 4174042,
+        "draw_to_gpu_complete_ns": 4614166,
+        "draw_to_display_ns": 28145958,
+        "display_unix_ns": "1788818304040964250"
+      },
+      {
+        "drawable": 356,
+        "draw_ns": 1948250,
+        "submit_ns": 726083,
+        "gpu_ns": 1078708,
+        "total_frame_work_ns": 3753041,
+        "draw_to_gpu_complete_ns": 4215083,
+        "draw_to_display_ns": 28206042,
+        "display_unix_ns": "1788818304057631500"
+      },
+      {
+        "drawable": 357,
+        "draw_ns": 1864750,
+        "submit_ns": 701750,
+        "gpu_ns": 1077958,
+        "total_frame_work_ns": 3644458,
+        "draw_to_gpu_complete_ns": 4082957,
+        "draw_to_display_ns": 20646333,
+        "display_unix_ns": "1788818304065964667"
+      },
+      {
+        "drawable": 358,
+        "draw_ns": 1965292,
+        "submit_ns": 748334,
+        "gpu_ns": 1093583,
+        "total_frame_work_ns": 3807209,
+        "draw_to_gpu_complete_ns": 4157916,
+        "draw_to_display_ns": 28256458,
+        "display_unix_ns": "1788818304090964125"
+      },
+      {
+        "drawable": 359,
+        "draw_ns": 1949417,
+        "submit_ns": 757916,
+        "gpu_ns": 1083375,
+        "total_frame_work_ns": 3790708,
+        "draw_to_gpu_complete_ns": 3965082,
+        "draw_to_display_ns": 28213374,
+        "display_unix_ns": "1788818304107630666"
+      },
+      {
+        "drawable": 360,
+        "draw_ns": 1967042,
+        "submit_ns": 770834,
+        "gpu_ns": 1087250,
+        "total_frame_work_ns": 3825126,
+        "draw_to_gpu_complete_ns": 3946958,
+        "draw_to_display_ns": 20447292,
+        "display_unix_ns": "1788818304115964042"
+      },
+      {
+        "drawable": 361,
+        "draw_ns": 1896792,
+        "submit_ns": 671125,
+        "gpu_ns": 1080708,
+        "total_frame_work_ns": 3648625,
+        "draw_to_gpu_complete_ns": 4069708,
+        "draw_to_display_ns": 20661625,
+        "display_unix_ns": "1788818304132630708"
+      },
+      {
+        "drawable": 362,
+        "draw_ns": 1918333,
+        "submit_ns": 724209,
+        "gpu_ns": 1082375,
+        "total_frame_work_ns": 3724917,
+        "draw_to_gpu_complete_ns": 4165249,
+        "draw_to_display_ns": 28215458,
+        "display_unix_ns": "1788818304157630458"
+      },
+      {
+        "drawable": 363,
+        "draw_ns": 2156750,
+        "submit_ns": 692708,
+        "gpu_ns": 1092125,
+        "total_frame_work_ns": 3941583,
+        "draw_to_gpu_complete_ns": 4090708,
+        "draw_to_display_ns": 20276709,
+        "display_unix_ns": "1788818304165963542"
+      },
+      {
+        "drawable": 364,
+        "draw_ns": 2793500,
+        "submit_ns": 835000,
+        "gpu_ns": 1089750,
+        "total_frame_work_ns": 4718250,
+        "draw_to_gpu_complete_ns": 5246416,
+        "draw_to_display_ns": 28759042,
+        "display_unix_ns": "1788818304190963792"
+      },
+      {
+        "drawable": 365,
+        "draw_ns": 2681750,
+        "submit_ns": 843084,
+        "gpu_ns": 1088875,
+        "total_frame_work_ns": 4613709,
+        "draw_to_gpu_complete_ns": 5202167,
+        "draw_to_display_ns": 28872376,
+        "display_unix_ns": "1788818304207630417"
+      },
+      {
+        "drawable": 366,
+        "draw_ns": 2678375,
+        "submit_ns": 838917,
+        "gpu_ns": 1098750,
+        "total_frame_work_ns": 4616042,
+        "draw_to_gpu_complete_ns": 5275416,
+        "draw_to_display_ns": 28728042,
+        "display_unix_ns": "1788818304224296875"
+      },
+      {
+        "drawable": 367,
+        "draw_ns": 2467375,
+        "submit_ns": 913000,
+        "gpu_ns": 1095042,
+        "total_frame_work_ns": 4475417,
+        "draw_to_gpu_complete_ns": 4968833,
+        "draw_to_display_ns": 27916250,
+        "display_unix_ns": "1788818304240964000"
+      },
+      {
+        "drawable": 368,
+        "draw_ns": 3166166,
+        "submit_ns": 951083,
+        "gpu_ns": 1089042,
+        "total_frame_work_ns": 5206291,
+        "draw_to_gpu_complete_ns": 5783833,
+        "draw_to_display_ns": 28798833,
+        "display_unix_ns": "1788818304257630458"
+      },
+      {
+        "drawable": 369,
+        "draw_ns": 1678250,
+        "submit_ns": 670875,
+        "gpu_ns": 1140125,
+        "total_frame_work_ns": 3489250,
+        "draw_to_gpu_complete_ns": 3608749,
+        "draw_to_display_ns": 23829624,
+        "display_unix_ns": "1788818304274296958"
+      },
+      {
+        "drawable": 370,
+        "draw_ns": 2259708,
+        "submit_ns": 999292,
+        "gpu_ns": 1091625,
+        "total_frame_work_ns": 4350625,
+        "draw_to_gpu_complete_ns": 4794583,
+        "draw_to_display_ns": 28117083,
+        "display_unix_ns": "1788818304299296250"
+      },
+      {
+        "drawable": 371,
+        "draw_ns": 2202792,
+        "submit_ns": 725625,
+        "gpu_ns": 1093958,
+        "total_frame_work_ns": 4022375,
+        "draw_to_gpu_complete_ns": 4519166,
+        "draw_to_display_ns": 28156375,
+        "display_unix_ns": "1788818304315962875"
+      },
+      {
+        "drawable": 372,
+        "draw_ns": 2841167,
+        "submit_ns": 762792,
+        "gpu_ns": 1090000,
+        "total_frame_work_ns": 4693959,
+        "draw_to_gpu_complete_ns": 5265041,
+        "draw_to_display_ns": 28468500,
+        "display_unix_ns": "1788818304332630083"
+      },
+      {
+        "drawable": 373,
+        "draw_ns": 2193666,
+        "submit_ns": 734958,
+        "gpu_ns": 1093000,
+        "total_frame_work_ns": 4021624,
+        "draw_to_gpu_complete_ns": 4584874,
+        "draw_to_display_ns": 28166750,
+        "display_unix_ns": "1788818304349296084"
+      },
+      {
+        "drawable": 374,
+        "draw_ns": 2356125,
+        "submit_ns": 851375,
+        "gpu_ns": 1091625,
+        "total_frame_work_ns": 4299125,
+        "draw_to_gpu_complete_ns": 4878082,
+        "draw_to_display_ns": 28256666,
+        "display_unix_ns": "1788818304365962958"
+      },
+      {
+        "drawable": 375,
+        "draw_ns": 2506458,
+        "submit_ns": 734250,
+        "gpu_ns": 1095001,
+        "total_frame_work_ns": 4335709,
+        "draw_to_gpu_complete_ns": 5019291,
+        "draw_to_display_ns": 28644416,
+        "display_unix_ns": "1788818304382629583"
+      },
+      {
+        "drawable": 376,
+        "draw_ns": 2251584,
+        "submit_ns": 832458,
+        "gpu_ns": 1092167,
+        "total_frame_work_ns": 4176209,
+        "draw_to_gpu_complete_ns": 4898834,
+        "draw_to_display_ns": 28446584,
+        "display_unix_ns": "1788818304399296250"
+      },
+      {
+        "drawable": 377,
+        "draw_ns": 2474459,
+        "submit_ns": 802000,
+        "gpu_ns": 1106917,
+        "total_frame_work_ns": 4383376,
+        "draw_to_gpu_complete_ns": 4899500,
+        "draw_to_display_ns": 28809834,
+        "display_unix_ns": "1788818304415962709"
+      },
+      {
+        "drawable": 378,
+        "draw_ns": 2356291,
+        "submit_ns": 802333,
+        "gpu_ns": 1104625,
+        "total_frame_work_ns": 4263249,
+        "draw_to_gpu_complete_ns": 4481457,
+        "draw_to_display_ns": 28546582,
+        "display_unix_ns": "1788818304432629291"
+      },
+      {
+        "drawable": 379,
+        "draw_ns": 1964208,
+        "submit_ns": 1013250,
+        "gpu_ns": 1095917,
+        "total_frame_work_ns": 4073375,
+        "draw_to_gpu_complete_ns": 4266250,
+        "draw_to_display_ns": 28191709,
+        "display_unix_ns": "1788818304449295542"
+      },
+      {
+        "drawable": 380,
+        "draw_ns": 2255792,
+        "submit_ns": 821959,
+        "gpu_ns": 1105750,
+        "total_frame_work_ns": 4183501,
+        "draw_to_gpu_complete_ns": 4439167,
+        "draw_to_display_ns": 28184126,
+        "display_unix_ns": "1788818304465962667"
+      },
+      {
+        "drawable": 381,
+        "draw_ns": 2820000,
+        "submit_ns": 1037292,
+        "gpu_ns": 1104624,
+        "total_frame_work_ns": 4961916,
+        "draw_to_gpu_complete_ns": 5453998,
+        "draw_to_display_ns": 28181124,
+        "display_unix_ns": "1788818304482629083"
+      },
+      {
+        "drawable": 382,
+        "draw_ns": 3004417,
+        "submit_ns": 858125,
+        "gpu_ns": 1102625,
+        "total_frame_work_ns": 4965167,
+        "draw_to_gpu_complete_ns": 5396458,
+        "draw_to_display_ns": 28151000,
+        "display_unix_ns": "1788818304499294958"
+      },
+      {
+        "drawable": 383,
+        "draw_ns": 1473084,
+        "submit_ns": 509083,
+        "gpu_ns": 1107708,
+        "total_frame_work_ns": 3089875,
+        "draw_to_gpu_complete_ns": 3255625,
+        "draw_to_display_ns": 20292584,
+        "display_unix_ns": "1788818304507628459"
+      },
+      {
+        "drawable": 384,
+        "draw_ns": 2647334,
+        "submit_ns": 771750,
+        "gpu_ns": 1101499,
+        "total_frame_work_ns": 4520583,
+        "draw_to_gpu_complete_ns": 4687125,
+        "draw_to_display_ns": 28145501,
+        "display_unix_ns": "1788818304532629042"
+      },
+      {
+        "drawable": 385,
+        "draw_ns": 2532333,
+        "submit_ns": 894250,
+        "gpu_ns": 1166833,
+        "total_frame_work_ns": 4593416,
+        "draw_to_gpu_complete_ns": 4803207,
+        "draw_to_display_ns": 28132833,
+        "display_unix_ns": "1788818304549295167"
+      },
+      {
+        "drawable": 386,
+        "draw_ns": 2574834,
+        "submit_ns": 831375,
+        "gpu_ns": 1103125,
+        "total_frame_work_ns": 4509334,
+        "draw_to_gpu_complete_ns": 4699708,
+        "draw_to_display_ns": 28132292,
+        "display_unix_ns": "1788818304565962042"
+      },
+      {
+        "drawable": 387,
+        "draw_ns": 2218375,
+        "submit_ns": 780084,
+        "gpu_ns": 1109250,
+        "total_frame_work_ns": 4107709,
+        "draw_to_gpu_complete_ns": 4680541,
+        "draw_to_display_ns": 28746125,
+        "display_unix_ns": "1788818304582628625"
+      },
+      {
+        "drawable": 388,
+        "draw_ns": 2467500,
+        "submit_ns": 913916,
+        "gpu_ns": 1115875,
+        "total_frame_work_ns": 4497291,
+        "draw_to_gpu_complete_ns": 5316374,
+        "draw_to_display_ns": 28206499,
+        "display_unix_ns": "1788818304599294291"
+      },
+      {
+        "drawable": 389,
+        "draw_ns": 2510750,
+        "submit_ns": 877250,
+        "gpu_ns": 1110000,
+        "total_frame_work_ns": 4498000,
+        "draw_to_gpu_complete_ns": 5179124,
+        "draw_to_display_ns": 28263500,
+        "display_unix_ns": "1788818304615961292"
+      },
+      {
+        "drawable": 390,
+        "draw_ns": 2489209,
+        "submit_ns": 767875,
+        "gpu_ns": 1115250,
+        "total_frame_work_ns": 4372334,
+        "draw_to_gpu_complete_ns": 5165167,
+        "draw_to_display_ns": 28537543,
+        "display_unix_ns": "1788818304632628334"
+      },
+      {
+        "drawable": 391,
+        "draw_ns": 2211625,
+        "submit_ns": 751708,
+        "gpu_ns": 1110250,
+        "total_frame_work_ns": 4073583,
+        "draw_to_gpu_complete_ns": 4267417,
+        "draw_to_display_ns": 20197959,
+        "display_unix_ns": "1788818304640961167"
+      },
+      {
+        "drawable": 392,
+        "draw_ns": 2496458,
+        "submit_ns": 800166,
+        "gpu_ns": 1111292,
+        "total_frame_work_ns": 4407916,
+        "draw_to_gpu_complete_ns": 4581666,
+        "draw_to_display_ns": 28806666,
+        "display_unix_ns": "1788818304665961333"
+      },
+      {
+        "drawable": 393,
+        "draw_ns": 2276125,
+        "submit_ns": 833041,
+        "gpu_ns": 1106625,
+        "total_frame_work_ns": 4215791,
+        "draw_to_gpu_complete_ns": 4783541,
+        "draw_to_display_ns": 28140000,
+        "display_unix_ns": "1788818304682627542"
+      },
+      {
+        "drawable": 394,
+        "draw_ns": 2383042,
+        "submit_ns": 833667,
+        "gpu_ns": 1123750,
+        "total_frame_work_ns": 4340459,
+        "draw_to_gpu_complete_ns": 4527916,
+        "draw_to_display_ns": 20667875,
+        "display_unix_ns": "1788818304690960792"
+      },
+      {
+        "drawable": 395,
+        "draw_ns": 2803084,
+        "submit_ns": 984750,
+        "gpu_ns": 1110250,
+        "total_frame_work_ns": 4898084,
+        "draw_to_gpu_complete_ns": 5379916,
+        "draw_to_display_ns": 28162208,
+        "display_unix_ns": "1788818304715960333"
+      },
+      {
+        "drawable": 396,
+        "draw_ns": 2791000,
+        "submit_ns": 865583,
+        "gpu_ns": 1105000,
+        "total_frame_work_ns": 4761583,
+        "draw_to_gpu_complete_ns": 5258124,
+        "draw_to_display_ns": 28189375,
+        "display_unix_ns": "1788818304732627125"
+      },
+      {
+        "drawable": 397,
+        "draw_ns": 2226333,
+        "submit_ns": 830541,
+        "gpu_ns": 1114875,
+        "total_frame_work_ns": 4171749,
+        "draw_to_gpu_complete_ns": 4684625,
+        "draw_to_display_ns": 28119376,
+        "display_unix_ns": "1788818304757626959"
+      },
+      {
+        "drawable": 398,
+        "draw_ns": 2283417,
+        "submit_ns": 958792,
+        "gpu_ns": 1105875,
+        "total_frame_work_ns": 4348084,
+        "draw_to_gpu_complete_ns": 5512874,
+        "draw_to_display_ns": 28199416,
+        "display_unix_ns": "1788818304765960416"
+      },
+      {
+        "drawable": 399,
+        "draw_ns": 2270750,
+        "submit_ns": 796208,
+        "gpu_ns": 1113625,
+        "total_frame_work_ns": 4180583,
+        "draw_to_gpu_complete_ns": 4740208,
+        "draw_to_display_ns": 28596334,
+        "display_unix_ns": "1788818304782627250"
+      },
+      {
+        "drawable": 400,
+        "draw_ns": 1789375,
+        "submit_ns": 660333,
+        "gpu_ns": 1109792,
+        "total_frame_work_ns": 3559500,
+        "draw_to_gpu_complete_ns": 3707376,
+        "draw_to_display_ns": 19778876,
+        "display_unix_ns": "1788818304790959917"
+      },
+      {
+        "drawable": 401,
+        "draw_ns": 2462542,
+        "submit_ns": 709541,
+        "gpu_ns": 1108750,
+        "total_frame_work_ns": 4280833,
+        "draw_to_gpu_complete_ns": 4698708,
+        "draw_to_display_ns": 28379500,
+        "display_unix_ns": "1788818304815960250"
+      },
+      {
+        "drawable": 402,
+        "draw_ns": 2225667,
+        "submit_ns": 456250,
+        "gpu_ns": 1115875,
+        "total_frame_work_ns": 3797792,
+        "draw_to_gpu_complete_ns": 3977375,
+        "draw_to_display_ns": 20226209,
+        "display_unix_ns": "1788818304824293792"
+      },
+      {
+        "drawable": 403,
+        "draw_ns": 2921125,
+        "submit_ns": 913333,
+        "gpu_ns": 1116292,
+        "total_frame_work_ns": 4950750,
+        "draw_to_gpu_complete_ns": 5440625,
+        "draw_to_display_ns": 28194292,
+        "display_unix_ns": "1788818304849293500"
+      },
+      {
+        "drawable": 404,
+        "draw_ns": 2128250,
+        "submit_ns": 826125,
+        "gpu_ns": 1111500,
+        "total_frame_work_ns": 4065875,
+        "draw_to_gpu_complete_ns": 4277541,
+        "draw_to_display_ns": 28202833,
+        "display_unix_ns": "1788818304865960125"
+      },
+      {
+        "drawable": 405,
+        "draw_ns": 2451958,
+        "submit_ns": 904750,
+        "gpu_ns": 1118125,
+        "total_frame_work_ns": 4474833,
+        "draw_to_gpu_complete_ns": 4991041,
+        "draw_to_display_ns": 28205083,
+        "display_unix_ns": "1788818304882626125"
+      },
+      {
+        "drawable": 406,
+        "draw_ns": 1894542,
+        "submit_ns": 707625,
+        "gpu_ns": 1135125,
+        "total_frame_work_ns": 3737292,
+        "draw_to_gpu_complete_ns": 3913416,
+        "draw_to_display_ns": 20630083,
+        "display_unix_ns": "1788818304890960166"
+      },
+      {
+        "drawable": 407,
+        "draw_ns": 2298083,
+        "submit_ns": 787416,
+        "gpu_ns": 1131417,
+        "total_frame_work_ns": 4216916,
+        "draw_to_gpu_complete_ns": 4506957,
+        "draw_to_display_ns": 20519041,
+        "display_unix_ns": "1788818304907626000"
+      },
+      {
+        "drawable": 408,
+        "draw_ns": 3025875,
+        "submit_ns": 929042,
+        "gpu_ns": 1118875,
+        "total_frame_work_ns": 5073792,
+        "draw_to_gpu_complete_ns": 5574542,
+        "draw_to_display_ns": 28567959,
+        "display_unix_ns": "1788818304932626375"
+      },
+      {
+        "drawable": 409,
+        "draw_ns": 2660792,
+        "submit_ns": 916750,
+        "gpu_ns": 1117374,
+        "total_frame_work_ns": 4694916,
+        "draw_to_gpu_complete_ns": 5178374,
+        "draw_to_display_ns": 28213500,
+        "display_unix_ns": "1788818304949292833"
+      },
+      {
+        "drawable": 410,
+        "draw_ns": 2346333,
+        "submit_ns": 923584,
+        "gpu_ns": 1116458,
+        "total_frame_work_ns": 4386375,
+        "draw_to_gpu_complete_ns": 4935999,
+        "draw_to_display_ns": 28146958,
+        "display_unix_ns": "1788818304965958958"
+      },
+      {
+        "drawable": 411,
+        "draw_ns": 2431458,
+        "submit_ns": 749292,
+        "gpu_ns": 1117791,
+        "total_frame_work_ns": 4298541,
+        "draw_to_gpu_complete_ns": 5041499,
+        "draw_to_display_ns": 28544834,
+        "display_unix_ns": "1788818304982626209"
+      },
+      {
+        "drawable": 412,
+        "draw_ns": 2155000,
+        "submit_ns": 844834,
+        "gpu_ns": 1126875,
+        "total_frame_work_ns": 4126709,
+        "draw_to_gpu_complete_ns": 4703167,
+        "draw_to_display_ns": 20596001,
+        "display_unix_ns": "1788818304990959376"
+      },
+      {
+        "drawable": 413,
+        "draw_ns": 2193458,
+        "submit_ns": 793125,
+        "gpu_ns": 1123999,
+        "total_frame_work_ns": 4110582,
+        "draw_to_gpu_complete_ns": 4653290,
+        "draw_to_display_ns": 28265125,
+        "display_unix_ns": "1788818305015958959"
+      },
+      {
+        "drawable": 414,
+        "draw_ns": 2999583,
+        "submit_ns": 809541,
+        "gpu_ns": 1137833,
+        "total_frame_work_ns": 4946957,
+        "draw_to_gpu_complete_ns": 5455124,
+        "draw_to_display_ns": 28511874,
+        "display_unix_ns": "1788818305032625624"
+      },
+      {
+        "drawable": 415,
+        "draw_ns": 2272833,
+        "submit_ns": 817125,
+        "gpu_ns": 1134208,
+        "total_frame_work_ns": 4224166,
+        "draw_to_gpu_complete_ns": 4785625,
+        "draw_to_display_ns": 28153209,
+        "display_unix_ns": "1788818305049291834"
+      },
+      {
+        "drawable": 416,
+        "draw_ns": 1990875,
+        "submit_ns": 783458,
+        "gpu_ns": 1141208,
+        "total_frame_work_ns": 3915541,
+        "draw_to_gpu_complete_ns": 4447000,
+        "draw_to_display_ns": 28257375,
+        "display_unix_ns": "1788818305065958583"
+      },
+      {
+        "drawable": 417,
+        "draw_ns": 2530708,
+        "submit_ns": 847875,
+        "gpu_ns": 1129167,
+        "total_frame_work_ns": 4507750,
+        "draw_to_gpu_complete_ns": 5150874,
+        "draw_to_display_ns": 28551833,
+        "display_unix_ns": "1788818305082624792"
+      },
+      {
+        "drawable": 418,
+        "draw_ns": 2311625,
+        "submit_ns": 920333,
+        "gpu_ns": 1135792,
+        "total_frame_work_ns": 4367750,
+        "draw_to_gpu_complete_ns": 4863625,
+        "draw_to_display_ns": 28185667,
+        "display_unix_ns": "1788818305099291542"
+      },
+      {
+        "drawable": 419,
+        "draw_ns": 2055584,
+        "submit_ns": 870625,
+        "gpu_ns": 1137459,
+        "total_frame_work_ns": 4063668,
+        "draw_to_gpu_complete_ns": 4770833,
+        "draw_to_display_ns": 28222334,
+        "display_unix_ns": "1788818305115958209"
+      },
+      {
+        "drawable": 420,
+        "draw_ns": 2571541,
+        "submit_ns": 1008417,
+        "gpu_ns": 1132625,
+        "total_frame_work_ns": 4712583,
+        "draw_to_gpu_complete_ns": 5272833,
+        "draw_to_display_ns": 28563083,
+        "display_unix_ns": "1788818305132624958"
+      },
+      {
+        "drawable": 421,
+        "draw_ns": 2961459,
+        "submit_ns": 871291,
+        "gpu_ns": 1135875,
+        "total_frame_work_ns": 4968625,
+        "draw_to_gpu_complete_ns": 5189375,
+        "draw_to_display_ns": 28807376,
+        "display_unix_ns": "1788818305157624667"
+      },
+      {
+        "drawable": 422,
+        "draw_ns": 2326125,
+        "submit_ns": 931167,
+        "gpu_ns": 1138792,
+        "total_frame_work_ns": 4396084,
+        "draw_to_gpu_complete_ns": 4878292,
+        "draw_to_display_ns": 28162500,
+        "display_unix_ns": "1788818305165958291"
+      },
+      {
+        "drawable": 423,
+        "draw_ns": 2543584,
+        "submit_ns": 791083,
+        "gpu_ns": 1133708,
+        "total_frame_work_ns": 4468375,
+        "draw_to_gpu_complete_ns": 4963333,
+        "draw_to_display_ns": 28516125,
+        "display_unix_ns": "1788818305182625000"
+      },
+      {
+        "drawable": 424,
+        "draw_ns": 2438459,
+        "submit_ns": 927958,
+        "gpu_ns": 1140375,
+        "total_frame_work_ns": 4506792,
+        "draw_to_gpu_complete_ns": 5035542,
+        "draw_to_display_ns": 28951251,
+        "display_unix_ns": "1788818305199291459"
+      },
+      {
+        "drawable": 425,
+        "draw_ns": 3070959,
+        "submit_ns": 872667,
+        "gpu_ns": 1137666,
+        "total_frame_work_ns": 5081292,
+        "draw_to_gpu_complete_ns": 5533083,
+        "draw_to_display_ns": 28247918,
+        "display_unix_ns": "1788818305215957709"
+      },
+      {
+        "drawable": 426,
+        "draw_ns": 2805542,
+        "submit_ns": 746750,
+        "gpu_ns": 1141125,
+        "total_frame_work_ns": 4693417,
+        "draw_to_gpu_complete_ns": 4855875,
+        "draw_to_display_ns": 28516125,
+        "display_unix_ns": "1788818305232623875"
+      },
+      {
+        "drawable": 427,
+        "draw_ns": 2714250,
+        "submit_ns": 927292,
+        "gpu_ns": 1151292,
+        "total_frame_work_ns": 4792834,
+        "draw_to_gpu_complete_ns": 5487542,
+        "draw_to_display_ns": 28864376,
+        "display_unix_ns": "1788818305249291084"
+      },
+      {
+        "drawable": 428,
+        "draw_ns": 2616083,
+        "submit_ns": 781833,
+        "gpu_ns": 1139208,
+        "total_frame_work_ns": 4537124,
+        "draw_to_gpu_complete_ns": 5005124,
+        "draw_to_display_ns": 28804249,
+        "display_unix_ns": "1788818305265957624"
+      },
+      {
+        "drawable": 429,
+        "draw_ns": 2242958,
+        "submit_ns": 918334,
+        "gpu_ns": 1142000,
+        "total_frame_work_ns": 4303292,
+        "draw_to_gpu_complete_ns": 4906999,
+        "draw_to_display_ns": 28141333,
+        "display_unix_ns": "1788818305282624500"
+      },
+      {
+        "drawable": 430,
+        "draw_ns": 2152083,
+        "submit_ns": 775542,
+        "gpu_ns": 1148875,
+        "total_frame_work_ns": 4076500,
+        "draw_to_gpu_complete_ns": 4244583,
+        "draw_to_display_ns": 20565584,
+        "display_unix_ns": "1788818305290957709"
+      },
+      {
+        "drawable": 431,
+        "draw_ns": 2358042,
+        "submit_ns": 801833,
+        "gpu_ns": 1149417,
+        "total_frame_work_ns": 4309292,
+        "draw_to_gpu_complete_ns": 4953292,
+        "draw_to_display_ns": 28802084,
+        "display_unix_ns": "1788818305315957542"
+      },
+      {
+        "drawable": 432,
+        "draw_ns": 2407750,
+        "submit_ns": 897625,
+        "gpu_ns": 1056625,
+        "total_frame_work_ns": 4362000,
+        "draw_to_gpu_complete_ns": 4862791,
+        "draw_to_display_ns": 28106750,
+        "display_unix_ns": "1788818305332623792"
+      },
+      {
+        "drawable": 433,
+        "draw_ns": 3037292,
+        "submit_ns": 977875,
+        "gpu_ns": 1061542,
+        "total_frame_work_ns": 5076709,
+        "draw_to_gpu_complete_ns": 5603084,
+        "draw_to_display_ns": 28458959,
+        "display_unix_ns": "1788818305349290750"
+      },
+      {
+        "drawable": 434,
+        "draw_ns": 2672208,
+        "submit_ns": 907667,
+        "gpu_ns": 1064875,
+        "total_frame_work_ns": 4644750,
+        "draw_to_gpu_complete_ns": 5157374,
+        "draw_to_display_ns": 28212833,
+        "display_unix_ns": "1788818305365957333"
+      },
+      {
+        "drawable": 435,
+        "draw_ns": 2600708,
+        "submit_ns": 723708,
+        "gpu_ns": 1063708,
+        "total_frame_work_ns": 4388124,
+        "draw_to_gpu_complete_ns": 4899999,
+        "draw_to_display_ns": 28553958,
+        "display_unix_ns": "1788818305382623542"
+      },
+      {
+        "drawable": 436,
+        "draw_ns": 3000375,
+        "submit_ns": 1355083,
+        "gpu_ns": 1065750,
+        "total_frame_work_ns": 5421208,
+        "draw_to_gpu_complete_ns": 5914458,
+        "draw_to_display_ns": 28803792,
+        "display_unix_ns": "1788818305407623292"
+      },
+      {
+        "drawable": 437,
+        "draw_ns": 2269792,
+        "submit_ns": 795583,
+        "gpu_ns": 1065584,
+        "total_frame_work_ns": 4130959,
+        "draw_to_gpu_complete_ns": 4602999,
+        "draw_to_display_ns": 28272250,
+        "display_unix_ns": "1788818305415957042"
+      },
+      {
+        "drawable": 438,
+        "draw_ns": 1802083,
+        "submit_ns": 701917,
+        "gpu_ns": 1069250,
+        "total_frame_work_ns": 3573250,
+        "draw_to_gpu_complete_ns": 4042166,
+        "draw_to_display_ns": 20603000,
+        "display_unix_ns": "1788818305424290208"
+      },
+      {
+        "drawable": 439,
+        "draw_ns": 2509958,
+        "submit_ns": 685833,
+        "gpu_ns": 1069875,
+        "total_frame_work_ns": 4265666,
+        "draw_to_gpu_complete_ns": 4751749,
+        "draw_to_display_ns": 28148291,
+        "display_unix_ns": "1788818305449289916"
+      },
+      {
+        "drawable": 440,
+        "draw_ns": 3420208,
+        "submit_ns": 785208,
+        "gpu_ns": 1067959,
+        "total_frame_work_ns": 5273375,
+        "draw_to_gpu_complete_ns": 5729583,
+        "draw_to_display_ns": 28172375,
+        "display_unix_ns": "1788818305465956625"
+      },
+      {
+        "drawable": 441,
+        "draw_ns": 3318333,
+        "submit_ns": 875833,
+        "gpu_ns": 1066750,
+        "total_frame_work_ns": 5260916,
+        "draw_to_gpu_complete_ns": 5732750,
+        "draw_to_display_ns": 28535417,
+        "display_unix_ns": "1788818305482623375"
+      },
+      {
+        "drawable": 442,
+        "draw_ns": 2833750,
+        "submit_ns": 918459,
+        "gpu_ns": 1064500,
+        "total_frame_work_ns": 4816709,
+        "draw_to_gpu_complete_ns": 5315958,
+        "draw_to_display_ns": 28680250,
+        "display_unix_ns": "1788818305499289000"
+      },
+      {
+        "drawable": 443,
+        "draw_ns": 2084916,
+        "submit_ns": 810875,
+        "gpu_ns": 1070208,
+        "total_frame_work_ns": 3965999,
+        "draw_to_gpu_complete_ns": 4380040,
+        "draw_to_display_ns": 28199582,
+        "display_unix_ns": "1788818305515956416"
+      },
+      {
+        "drawable": 444,
+        "draw_ns": 1926083,
+        "submit_ns": 685792,
+        "gpu_ns": 1075916,
+        "total_frame_work_ns": 3687791,
+        "draw_to_gpu_complete_ns": 4165207,
+        "draw_to_display_ns": 19851542,
+        "display_unix_ns": "1788818305524289167"
+      },
+      {
+        "drawable": 445,
+        "draw_ns": 2659125,
+        "submit_ns": 1410875,
+        "gpu_ns": 1074125,
+        "total_frame_work_ns": 5144125,
+        "draw_to_gpu_complete_ns": 5524208,
+        "draw_to_display_ns": 28931583,
+        "display_unix_ns": "1788818305549289375"
+      },
+      {
+        "drawable": 446,
+        "draw_ns": 2695542,
+        "submit_ns": 790583,
+        "gpu_ns": 1074500,
+        "total_frame_work_ns": 4560625,
+        "draw_to_gpu_complete_ns": 4738292,
+        "draw_to_display_ns": 28143876,
+        "display_unix_ns": "1788818305565955459"
+      },
+      {
+        "drawable": 447,
+        "draw_ns": 2382458,
+        "submit_ns": 877792,
+        "gpu_ns": 1079208,
+        "total_frame_work_ns": 4339458,
+        "draw_to_gpu_complete_ns": 4867041,
+        "draw_to_display_ns": 28121250,
+        "display_unix_ns": "1788818305582622125"
+      },
+      {
+        "drawable": 448,
+        "draw_ns": 1692625,
+        "submit_ns": 783791,
+        "gpu_ns": 1086625,
+        "total_frame_work_ns": 3563041,
+        "draw_to_gpu_complete_ns": 3715083,
+        "draw_to_display_ns": 20613958,
+        "display_unix_ns": "1788818305590955249"
+      },
+      {
+        "drawable": 449,
+        "draw_ns": 2744292,
+        "submit_ns": 786792,
+        "gpu_ns": 1077375,
+        "total_frame_work_ns": 4608459,
+        "draw_to_gpu_complete_ns": 4908749,
+        "draw_to_display_ns": 28840000,
+        "display_unix_ns": "1788818305615955542"
+      },
+      {
+        "drawable": 450,
+        "draw_ns": 2689625,
+        "submit_ns": 994416,
+        "gpu_ns": 1086000,
+        "total_frame_work_ns": 4770041,
+        "draw_to_gpu_complete_ns": 5318083,
+        "draw_to_display_ns": 28548542,
+        "display_unix_ns": "1788818305632621583"
+      },
+      {
+        "drawable": 451,
+        "draw_ns": 2069084,
+        "submit_ns": 658083,
+        "gpu_ns": 1077458,
+        "total_frame_work_ns": 3804625,
+        "draw_to_gpu_complete_ns": 3996333,
+        "draw_to_display_ns": 20543834,
+        "display_unix_ns": "1788818305640955292"
+      },
+      {
+        "drawable": 452,
+        "draw_ns": 2857959,
+        "submit_ns": 712833,
+        "gpu_ns": 1074542,
+        "total_frame_work_ns": 4645334,
+        "draw_to_gpu_complete_ns": 5122917,
+        "draw_to_display_ns": 28200292,
+        "display_unix_ns": "1788818305665955208"
+      },
+      {
+        "drawable": 453,
+        "draw_ns": 1911958,
+        "submit_ns": 759459,
+        "gpu_ns": 1078750,
+        "total_frame_work_ns": 3750167,
+        "draw_to_gpu_complete_ns": 3940958,
+        "draw_to_display_ns": 20232125,
+        "display_unix_ns": "1788818305674288458"
+      },
+      {
+        "drawable": 454,
+        "draw_ns": 2162500,
+        "submit_ns": 739375,
+        "gpu_ns": 1085375,
+        "total_frame_work_ns": 3987250,
+        "draw_to_gpu_complete_ns": 4135750,
+        "draw_to_display_ns": 20631584,
+        "display_unix_ns": "1788818305690954500"
+      },
+      {
+        "drawable": 455,
+        "draw_ns": 2892625,
+        "submit_ns": 970833,
+        "gpu_ns": 1085583,
+        "total_frame_work_ns": 4949041,
+        "draw_to_gpu_complete_ns": 5429666,
+        "draw_to_display_ns": 28114417,
+        "display_unix_ns": "1788818305715955209"
+      },
+      {
+        "drawable": 456,
+        "draw_ns": 2286791,
+        "submit_ns": 866125,
+        "gpu_ns": 1072958,
+        "total_frame_work_ns": 4225874,
+        "draw_to_gpu_complete_ns": 4414874,
+        "draw_to_display_ns": 28518124,
+        "display_unix_ns": "1788818305732621416"
+      },
+      {
+        "drawable": 457,
+        "draw_ns": 2808416,
+        "submit_ns": 750500,
+        "gpu_ns": 1085500,
+        "total_frame_work_ns": 4644416,
+        "draw_to_gpu_complete_ns": 4811166,
+        "draw_to_display_ns": 28818750,
+        "display_unix_ns": "1788818305749288125"
+      },
+      {
+        "drawable": 458,
+        "draw_ns": 2622875,
+        "submit_ns": 669500,
+        "gpu_ns": 1079208,
+        "total_frame_work_ns": 4371583,
+        "draw_to_gpu_complete_ns": 4830124,
+        "draw_to_display_ns": 28244291,
+        "display_unix_ns": "1788818305765954208"
+      },
+      {
+        "drawable": 459,
+        "draw_ns": 2681667,
+        "submit_ns": 925875,
+        "gpu_ns": 1081417,
+        "total_frame_work_ns": 4688959,
+        "draw_to_gpu_complete_ns": 5204250,
+        "draw_to_display_ns": 28261250,
+        "display_unix_ns": "1788818305782621458"
+      },
+      {
+        "drawable": 460,
+        "draw_ns": 2212125,
+        "submit_ns": 799041,
+        "gpu_ns": 1086542,
+        "total_frame_work_ns": 4097708,
+        "draw_to_gpu_complete_ns": 4536792,
+        "draw_to_display_ns": 28137250,
+        "display_unix_ns": "1788818305799287333"
+      },
+      {
+        "drawable": 461,
+        "draw_ns": 1194916,
+        "submit_ns": 402334,
+        "gpu_ns": 1096625,
+        "total_frame_work_ns": 2693875,
+        "draw_to_gpu_complete_ns": 2850249,
+        "draw_to_display_ns": 19905583,
+        "display_unix_ns": "1788818305807620792"
+      },
+      {
+        "drawable": 462,
+        "draw_ns": 2390417,
+        "submit_ns": 666541,
+        "gpu_ns": 1099749,
+        "total_frame_work_ns": 4156707,
+        "draw_to_gpu_complete_ns": 4465290,
+        "draw_to_display_ns": 20535708,
+        "display_unix_ns": "1788818305824287583"
+      },
+      {
+        "drawable": 463,
+        "draw_ns": 2047875,
+        "submit_ns": 810708,
+        "gpu_ns": 1084958,
+        "total_frame_work_ns": 3943541,
+        "draw_to_gpu_complete_ns": 4594041,
+        "draw_to_display_ns": 28204750,
+        "display_unix_ns": "1788818305849287250"
+      },
+      {
+        "drawable": 464,
+        "draw_ns": 2574167,
+        "submit_ns": 966375,
+        "gpu_ns": 1087125,
+        "total_frame_work_ns": 4627667,
+        "draw_to_gpu_complete_ns": 5107041,
+        "draw_to_display_ns": 28169958,
+        "display_unix_ns": "1788818305865953458"
+      },
+      {
+        "drawable": 465,
+        "draw_ns": 2380500,
+        "submit_ns": 841125,
+        "gpu_ns": 1088958,
+        "total_frame_work_ns": 4310583,
+        "draw_to_gpu_complete_ns": 4823249,
+        "draw_to_display_ns": 28115833,
+        "display_unix_ns": "1788818305882620958"
+      },
+      {
+        "drawable": 466,
+        "draw_ns": 2974292,
+        "submit_ns": 932125,
+        "gpu_ns": 1086125,
+        "total_frame_work_ns": 4992542,
+        "draw_to_gpu_complete_ns": 5514374,
+        "draw_to_display_ns": 28776666,
+        "display_unix_ns": "1788818305907620333"
+      },
+      {
+        "drawable": 467,
+        "draw_ns": 2541375,
+        "submit_ns": 746958,
+        "gpu_ns": 1092833,
+        "total_frame_work_ns": 4381166,
+        "draw_to_gpu_complete_ns": 4966957,
+        "draw_to_display_ns": 28836791,
+        "display_unix_ns": "1788818305915953833"
+      },
+      {
+        "drawable": 468,
+        "draw_ns": 2233791,
+        "submit_ns": 817000,
+        "gpu_ns": 1092125,
+        "total_frame_work_ns": 4142916,
+        "draw_to_gpu_complete_ns": 4420583,
+        "draw_to_display_ns": 28547958,
+        "display_unix_ns": "1788818305932619875"
+      },
+      {
+        "drawable": 469,
+        "draw_ns": 2217791,
+        "submit_ns": 769833,
+        "gpu_ns": 1105333,
+        "total_frame_work_ns": 4092957,
+        "draw_to_gpu_complete_ns": 4235165,
+        "draw_to_display_ns": 20572624,
+        "display_unix_ns": "1788818305940953708"
+      },
+      {
+        "drawable": 470,
+        "draw_ns": 2506667,
+        "submit_ns": 726000,
+        "gpu_ns": 1086125,
+        "total_frame_work_ns": 4318792,
+        "draw_to_gpu_complete_ns": 4491541,
+        "draw_to_display_ns": 20510125,
+        "display_unix_ns": "1788818305957619625"
+      },
+      {
+        "drawable": 471,
+        "draw_ns": 2263250,
+        "submit_ns": 997917,
+        "gpu_ns": 1090709,
+        "total_frame_work_ns": 4351876,
+        "draw_to_gpu_complete_ns": 4878292,
+        "draw_to_display_ns": 28278209,
+        "display_unix_ns": "1788818305982620250"
+      },
+      {
+        "drawable": 472,
+        "draw_ns": 2614959,
+        "submit_ns": 753458,
+        "gpu_ns": 1119167,
+        "total_frame_work_ns": 4487584,
+        "draw_to_gpu_complete_ns": 5050167,
+        "draw_to_display_ns": 28778834,
+        "display_unix_ns": "1788818305999286792"
+      },
+      {
+        "drawable": 473,
+        "draw_ns": 3402125,
+        "submit_ns": 770958,
+        "gpu_ns": 1419667,
+        "total_frame_work_ns": 5592750,
+        "draw_to_gpu_complete_ns": 6028625,
+        "draw_to_display_ns": 28238792,
+        "display_unix_ns": "1788818306015953042"
+      },
+      {
+        "drawable": 474,
+        "draw_ns": 2977125,
+        "submit_ns": 1074458,
+        "gpu_ns": 1087917,
+        "total_frame_work_ns": 5139500,
+        "draw_to_gpu_complete_ns": 5661458,
+        "draw_to_display_ns": 28532208,
+        "display_unix_ns": "1788818306032620083"
+      },
+      {
+        "drawable": 475,
+        "draw_ns": 2520000,
+        "submit_ns": 894792,
+        "gpu_ns": 1103333,
+        "total_frame_work_ns": 4518125,
+        "draw_to_gpu_complete_ns": 5136040,
+        "draw_to_display_ns": 28957999,
+        "display_unix_ns": "1788818306049285833"
+      },
+      {
+        "drawable": 476,
+        "draw_ns": 2643083,
+        "submit_ns": 844500,
+        "gpu_ns": 1099458,
+        "total_frame_work_ns": 4587041,
+        "draw_to_gpu_complete_ns": 4873499,
+        "draw_to_display_ns": 28817541,
+        "display_unix_ns": "1788818306065953041"
+      },
+      {
+        "drawable": 477,
+        "draw_ns": 2624125,
+        "submit_ns": 863333,
+        "gpu_ns": 1098500,
+        "total_frame_work_ns": 4585958,
+        "draw_to_gpu_complete_ns": 5137874,
+        "draw_to_display_ns": 28118166,
+        "display_unix_ns": "1788818306082619791"
+      },
+      {
+        "drawable": 478,
+        "draw_ns": 2219500,
+        "submit_ns": 874333,
+        "gpu_ns": 1098667,
+        "total_frame_work_ns": 4192500,
+        "draw_to_gpu_complete_ns": 4674041,
+        "draw_to_display_ns": 28938833,
+        "display_unix_ns": "1788818306099286125"
+      },
+      {
+        "drawable": 479,
+        "draw_ns": 2711459,
+        "submit_ns": 996250,
+        "gpu_ns": 1094000,
+        "total_frame_work_ns": 4801709,
+        "draw_to_gpu_complete_ns": 5359292,
+        "draw_to_display_ns": 28197709,
+        "display_unix_ns": "1788818306115952750"
+      },
+      {
+        "drawable": 480,
+        "draw_ns": 2622833,
+        "submit_ns": 798667,
+        "gpu_ns": 1096500,
+        "total_frame_work_ns": 4518000,
+        "draw_to_gpu_complete_ns": 5015083,
+        "draw_to_display_ns": 28540500,
+        "display_unix_ns": "1788818306132619250"
+      },
+      {
+        "drawable": 481,
+        "draw_ns": 2495958,
+        "submit_ns": 742500,
+        "gpu_ns": 1099584,
+        "total_frame_work_ns": 4338042,
+        "draw_to_gpu_complete_ns": 4794083,
+        "draw_to_display_ns": 28663042,
+        "display_unix_ns": "1788818306149285792"
+      },
+      {
+        "drawable": 482,
+        "draw_ns": 1769875,
+        "submit_ns": 702334,
+        "gpu_ns": 1098667,
+        "total_frame_work_ns": 3570876,
+        "draw_to_gpu_complete_ns": 3721166,
+        "draw_to_display_ns": 20512541,
+        "display_unix_ns": "1788818306157619291"
+      },
+      {
+        "drawable": 483,
+        "draw_ns": 2239416,
+        "submit_ns": 975542,
+        "gpu_ns": 1093625,
+        "total_frame_work_ns": 4308583,
+        "draw_to_gpu_complete_ns": 4979540,
+        "draw_to_display_ns": 28530916,
+        "display_unix_ns": "1788818306182619125"
+      },
+      {
+        "drawable": 484,
+        "draw_ns": 2372792,
+        "submit_ns": 855958,
+        "gpu_ns": 1100792,
+        "total_frame_work_ns": 4329542,
+        "draw_to_gpu_complete_ns": 4813833,
+        "draw_to_display_ns": 28112375,
+        "display_unix_ns": "1788818306207618250"
+      },
+      {
+        "drawable": 485,
+        "draw_ns": 2254875,
+        "submit_ns": 868250,
+        "gpu_ns": 1097333,
+        "total_frame_work_ns": 4220458,
+        "draw_to_gpu_complete_ns": 4747124,
+        "draw_to_display_ns": 28217541,
+        "display_unix_ns": "1788818306215952375"
+      },
+      {
+        "drawable": 486,
+        "draw_ns": 2421209,
+        "submit_ns": 985916,
+        "gpu_ns": 1183000,
+        "total_frame_work_ns": 4590125,
+        "draw_to_gpu_complete_ns": 5068792,
+        "draw_to_display_ns": 28280459,
+        "display_unix_ns": "1788818306232618500"
+      },
+      {
+        "drawable": 487,
+        "draw_ns": 2498500,
+        "submit_ns": 802000,
+        "gpu_ns": 1105375,
+        "total_frame_work_ns": 4405875,
+        "draw_to_gpu_complete_ns": 5045291,
+        "draw_to_display_ns": 28352875,
+        "display_unix_ns": "1788818306249285458"
+      },
+      {
+        "drawable": 488,
+        "draw_ns": 3043958,
+        "submit_ns": 838625,
+        "gpu_ns": 1104875,
+        "total_frame_work_ns": 4987458,
+        "draw_to_gpu_complete_ns": 5488000,
+        "draw_to_display_ns": 28769708,
+        "display_unix_ns": "1788818306265952041"
+      },
+      {
+        "drawable": 489,
+        "draw_ns": 2019416,
+        "submit_ns": 746708,
+        "gpu_ns": 1107541,
+        "total_frame_work_ns": 3873665,
+        "draw_to_gpu_complete_ns": 4054957,
+        "draw_to_display_ns": 23372542,
+        "display_unix_ns": "1788818306282617834"
+      },
+      {
+        "drawable": 490,
+        "draw_ns": 2647750,
+        "submit_ns": 807250,
+        "gpu_ns": 1110000,
+        "total_frame_work_ns": 4565000,
+        "draw_to_gpu_complete_ns": 5190208,
+        "draw_to_display_ns": 28694042,
+        "display_unix_ns": "1788818306307617917"
+      },
+      {
+        "drawable": 491,
+        "draw_ns": 2505375,
+        "submit_ns": 878000,
+        "gpu_ns": 1114958,
+        "total_frame_work_ns": 4498333,
+        "draw_to_gpu_complete_ns": 5126041,
+        "draw_to_display_ns": 28921333,
+        "display_unix_ns": "1788818306324284166"
+      },
+      {
+        "drawable": 492,
+        "draw_ns": 2355041,
+        "submit_ns": 1032583,
+        "gpu_ns": 1101250,
+        "total_frame_work_ns": 4488874,
+        "draw_to_gpu_complete_ns": 5026291,
+        "draw_to_display_ns": 28193916,
+        "display_unix_ns": "1788818306340951125"
+      },
+      {
+        "drawable": 493,
+        "draw_ns": 2812667,
+        "submit_ns": 991417,
+        "gpu_ns": 1111333,
+        "total_frame_work_ns": 4915417,
+        "draw_to_gpu_complete_ns": 5486916,
+        "draw_to_display_ns": 28736125,
+        "display_unix_ns": "1788818306357618000"
+      },
+      {
+        "drawable": 494,
+        "draw_ns": 2165458,
+        "submit_ns": 749750,
+        "gpu_ns": 1117958,
+        "total_frame_work_ns": 4033166,
+        "draw_to_gpu_complete_ns": 4570500,
+        "draw_to_display_ns": 20731126,
+        "display_unix_ns": "1788818306365951334"
+      },
+      {
+        "drawable": 495,
+        "draw_ns": 2612542,
+        "submit_ns": 916209,
+        "gpu_ns": 1113208,
+        "total_frame_work_ns": 4641959,
+        "draw_to_gpu_complete_ns": 5291750,
+        "draw_to_display_ns": 28710375,
+        "display_unix_ns": "1788818306390951125"
+      },
+      {
+        "drawable": 496,
+        "draw_ns": 2584084,
+        "submit_ns": 816333,
+        "gpu_ns": 1115208,
+        "total_frame_work_ns": 4515625,
+        "draw_to_gpu_complete_ns": 5198458,
+        "draw_to_display_ns": 28693167,
+        "display_unix_ns": "1788818306407617167"
+      },
+      {
+        "drawable": 497,
+        "draw_ns": 2467792,
+        "submit_ns": 771042,
+        "gpu_ns": 1105958,
+        "total_frame_work_ns": 4344792,
+        "draw_to_gpu_complete_ns": 4950875,
+        "draw_to_display_ns": 28595292,
+        "display_unix_ns": "1788818306424284083"
+      },
+      {
+        "drawable": 498,
+        "draw_ns": 2682792,
+        "submit_ns": 1020291,
+        "gpu_ns": 1110875,
+        "total_frame_work_ns": 4813958,
+        "draw_to_gpu_complete_ns": 5248083,
+        "draw_to_display_ns": 28095459,
+        "display_unix_ns": "1788818306440950459"
+      },
+      {
+        "drawable": 499,
+        "draw_ns": 3228833,
+        "submit_ns": 967875,
+        "gpu_ns": 1106583,
+        "total_frame_work_ns": 5303291,
+        "draw_to_gpu_complete_ns": 5850249,
+        "draw_to_display_ns": 28800999,
+        "display_unix_ns": "1788818306457616791"
+      },
+      {
+        "drawable": 500,
+        "draw_ns": 2480167,
+        "submit_ns": 718958,
+        "gpu_ns": 1110417,
+        "total_frame_work_ns": 4309542,
+        "draw_to_gpu_complete_ns": 4779042,
+        "draw_to_display_ns": 28664667,
+        "display_unix_ns": "1788818306474283417"
+      },
+      {
+        "drawable": 501,
+        "draw_ns": 2814250,
+        "submit_ns": 713000,
+        "gpu_ns": 1125500,
+        "total_frame_work_ns": 4652750,
+        "draw_to_gpu_complete_ns": 5141833,
+        "draw_to_display_ns": 28191958,
+        "display_unix_ns": "1788818306490949916"
+      },
+      {
+        "drawable": 502,
+        "draw_ns": 2322417,
+        "submit_ns": 762084,
+        "gpu_ns": 1109250,
+        "total_frame_work_ns": 4193751,
+        "draw_to_gpu_complete_ns": 4707708,
+        "draw_to_display_ns": 28194584,
+        "display_unix_ns": "1788818306507617334"
+      },
+      {
+        "drawable": 503,
+        "draw_ns": 2263708,
+        "submit_ns": 804500,
+        "gpu_ns": 1118167,
+        "total_frame_work_ns": 4186375,
+        "draw_to_gpu_complete_ns": 4611791,
+        "draw_to_display_ns": 28569291,
+        "display_unix_ns": "1788818306524283416"
+      },
+      {
+        "drawable": 504,
+        "draw_ns": 2020209,
+        "submit_ns": 685750,
+        "gpu_ns": 1118750,
+        "total_frame_work_ns": 3824709,
+        "draw_to_gpu_complete_ns": 4287875,
+        "draw_to_display_ns": 20403584,
+        "display_unix_ns": "1788818306532616875"
+      },
+      {
+        "drawable": 505,
+        "draw_ns": 2712458,
+        "submit_ns": 883417,
+        "gpu_ns": 1114958,
+        "total_frame_work_ns": 4710833,
+        "draw_to_gpu_complete_ns": 5186457,
+        "draw_to_display_ns": 28194041,
+        "display_unix_ns": "1788818306557616333"
+      },
+      {
+        "drawable": 506,
+        "draw_ns": 2750208,
+        "submit_ns": 822916,
+        "gpu_ns": 1115167,
+        "total_frame_work_ns": 4688291,
+        "draw_to_gpu_complete_ns": 5286416,
+        "draw_to_display_ns": 28729166,
+        "display_unix_ns": "1788818306574282791"
+      },
+      {
+        "drawable": 507,
+        "draw_ns": 2457584,
+        "submit_ns": 853500,
+        "gpu_ns": 1119250,
+        "total_frame_work_ns": 4430334,
+        "draw_to_gpu_complete_ns": 4964166,
+        "draw_to_display_ns": 28151916,
+        "display_unix_ns": "1788818306590949874"
+      },
+      {
+        "drawable": 508,
+        "draw_ns": 2571042,
+        "submit_ns": 818375,
+        "gpu_ns": 1128375,
+        "total_frame_work_ns": 4517792,
+        "draw_to_gpu_complete_ns": 5066791,
+        "draw_to_display_ns": 28804583,
+        "display_unix_ns": "1788818306607616500"
+      },
+      {
+        "drawable": 509,
+        "draw_ns": 2022208,
+        "submit_ns": 804667,
+        "gpu_ns": 1138417,
+        "total_frame_work_ns": 3965292,
+        "draw_to_gpu_complete_ns": 4509999,
+        "draw_to_display_ns": 28164749,
+        "display_unix_ns": "1788818306624282666"
+      },
+      {
+        "drawable": 510,
+        "draw_ns": 3015625,
+        "submit_ns": 896792,
+        "gpu_ns": 1135166,
+        "total_frame_work_ns": 5047583,
+        "draw_to_gpu_complete_ns": 5625082,
+        "draw_to_display_ns": 28745583,
+        "display_unix_ns": "1788818306640949208"
+      },
+      {
+        "drawable": 511,
+        "draw_ns": 2276375,
+        "submit_ns": 847333,
+        "gpu_ns": 1124125,
+        "total_frame_work_ns": 4247833,
+        "draw_to_gpu_complete_ns": 4794124,
+        "draw_to_display_ns": 28736833,
+        "display_unix_ns": "1788818306657615667"
+      },
+      {
+        "drawable": 512,
+        "draw_ns": 2008833,
+        "submit_ns": 845958,
+        "gpu_ns": 1148125,
+        "total_frame_work_ns": 4002916,
+        "draw_to_gpu_complete_ns": 4273458,
+        "draw_to_display_ns": 20265584,
+        "display_unix_ns": "1788818306665949584"
+      },
+      {
+        "drawable": 513,
+        "draw_ns": 2079333,
+        "submit_ns": 1083166,
+        "gpu_ns": 1125833,
+        "total_frame_work_ns": 4288332,
+        "draw_to_gpu_complete_ns": 4816707,
+        "draw_to_display_ns": 28166874,
+        "display_unix_ns": "1788818306690949083"
+      },
+      {
+        "drawable": 514,
+        "draw_ns": 1106792,
+        "submit_ns": 438959,
+        "gpu_ns": 1528667,
+        "total_frame_work_ns": 3074418,
+        "draw_to_gpu_complete_ns": 3299625,
+        "draw_to_display_ns": 19788625,
+        "display_unix_ns": "1788818306699282458"
+      },
+      {
+        "drawable": 515,
+        "draw_ns": 1108666,
+        "submit_ns": 515792,
+        "gpu_ns": 1136458,
+        "total_frame_work_ns": 2760916,
+        "draw_to_gpu_complete_ns": 3169958,
+        "draw_to_display_ns": 19864708,
+        "display_unix_ns": "1788818306715949208"
+      },
+      {
+        "drawable": 516,
+        "draw_ns": 2284541,
+        "submit_ns": 444875,
+        "gpu_ns": 1140875,
+        "total_frame_work_ns": 3870291,
+        "draw_to_gpu_complete_ns": 4019958,
+        "draw_to_display_ns": 28109917,
+        "display_unix_ns": "1788818306740949001"
+      },
+      {
+        "drawable": 517,
+        "draw_ns": 1978416,
+        "submit_ns": 694250,
+        "gpu_ns": 1135583,
+        "total_frame_work_ns": 3808249,
+        "draw_to_gpu_complete_ns": 3945999,
+        "draw_to_display_ns": 28087833,
+        "display_unix_ns": "1788818306757615667"
+      },
+      {
+        "drawable": 518,
+        "draw_ns": 2399792,
+        "submit_ns": 497000,
+        "gpu_ns": 1144417,
+        "total_frame_work_ns": 4041209,
+        "draw_to_gpu_complete_ns": 4204042,
+        "draw_to_display_ns": 19863626,
+        "display_unix_ns": "1788818306765948209"
+      },
+      {
+        "drawable": 519,
+        "draw_ns": 1287750,
+        "submit_ns": 429209,
+        "gpu_ns": 1173875,
+        "total_frame_work_ns": 2890834,
+        "draw_to_gpu_complete_ns": 2965833,
+        "draw_to_display_ns": 20499917,
+        "display_unix_ns": "1788818306782614750"
+      },
+      {
+        "drawable": 520,
+        "draw_ns": 2485833,
+        "submit_ns": 603042,
+        "gpu_ns": 1140875,
+        "total_frame_work_ns": 4229750,
+        "draw_to_gpu_complete_ns": 4745791,
+        "draw_to_display_ns": 28215625,
+        "display_unix_ns": "1788818306807614584"
+      },
+      {
+        "drawable": 521,
+        "draw_ns": 2088625,
+        "submit_ns": 1034250,
+        "gpu_ns": 1566375,
+        "total_frame_work_ns": 4689250,
+        "draw_to_gpu_complete_ns": 5233666,
+        "draw_to_display_ns": 28177875,
+        "display_unix_ns": "1788818306824281375"
+      },
+      {
+        "drawable": 522,
+        "draw_ns": 2276042,
+        "submit_ns": 873666,
+        "gpu_ns": 1143667,
+        "total_frame_work_ns": 4293375,
+        "draw_to_gpu_complete_ns": 4593000,
+        "draw_to_display_ns": 28026834,
+        "display_unix_ns": "1788818306840948084"
+      },
+      {
+        "drawable": 523,
+        "draw_ns": 2348041,
+        "submit_ns": 611000,
+        "gpu_ns": 1141500,
+        "total_frame_work_ns": 4100541,
+        "draw_to_gpu_complete_ns": 4459791,
+        "draw_to_display_ns": 28110041,
+        "display_unix_ns": "1788818306857615125"
+      },
+      {
+        "drawable": 524,
+        "draw_ns": 1332584,
+        "submit_ns": 483542,
+        "gpu_ns": 1168458,
+        "total_frame_work_ns": 2984584,
+        "draw_to_gpu_complete_ns": 3270666,
+        "draw_to_display_ns": 20450125,
+        "display_unix_ns": "1788818306865948000"
+      },
+      {
+        "drawable": 525,
+        "draw_ns": 2330750,
+        "submit_ns": 605542,
+        "gpu_ns": 1139833,
+        "total_frame_work_ns": 4076125,
+        "draw_to_gpu_complete_ns": 4310749,
+        "draw_to_display_ns": 28213833,
+        "display_unix_ns": "1788818306890948333"
+      },
+      {
+        "drawable": 526,
+        "draw_ns": 2392458,
+        "submit_ns": 862625,
+        "gpu_ns": 1140458,
+        "total_frame_work_ns": 4395541,
+        "draw_to_gpu_complete_ns": 4648291,
+        "draw_to_display_ns": 28193458,
+        "display_unix_ns": "1788818306907614708"
+      },
+      {
+        "drawable": 527,
+        "draw_ns": 2330875,
+        "submit_ns": 942250,
+        "gpu_ns": 1147042,
+        "total_frame_work_ns": 4420167,
+        "draw_to_gpu_complete_ns": 4759542,
+        "draw_to_display_ns": 28117875,
+        "display_unix_ns": "1788818306924281333"
+      },
+      {
+        "drawable": 528,
+        "draw_ns": 2803709,
+        "submit_ns": 886083,
+        "gpu_ns": 1146375,
+        "total_frame_work_ns": 4836167,
+        "draw_to_gpu_complete_ns": 5066375,
+        "draw_to_display_ns": 28125876,
+        "display_unix_ns": "1788818306940947709"
+      },
+      {
+        "drawable": 529,
+        "draw_ns": 2061333,
+        "submit_ns": 723916,
+        "gpu_ns": 1151791,
+        "total_frame_work_ns": 3937040,
+        "draw_to_gpu_complete_ns": 4197290,
+        "draw_to_display_ns": 20490458,
+        "display_unix_ns": "1788818306949281083"
+      },
+      {
+        "drawable": 530,
+        "draw_ns": 2248333,
+        "submit_ns": 791250,
+        "gpu_ns": 1149167,
+        "total_frame_work_ns": 4188750,
+        "draw_to_gpu_complete_ns": 4335458,
+        "draw_to_display_ns": 20529250,
+        "display_unix_ns": "1788818306965947583"
+      },
+      {
+        "drawable": 531,
+        "draw_ns": 2552709,
+        "submit_ns": 786708,
+        "gpu_ns": 1669875,
+        "total_frame_work_ns": 5009292,
+        "draw_to_gpu_complete_ns": 5141542,
+        "draw_to_display_ns": 28004709,
+        "display_unix_ns": "1788818306990947167"
+      },
+      {
+        "drawable": 532,
+        "draw_ns": 2268583,
+        "submit_ns": 865416,
+        "gpu_ns": 1144375,
+        "total_frame_work_ns": 4278374,
+        "draw_to_gpu_complete_ns": 4457916,
+        "draw_to_display_ns": 28125625,
+        "display_unix_ns": "1788818307007614333"
+      },
+      {
+        "drawable": 533,
+        "draw_ns": 3087708,
+        "submit_ns": 843000,
+        "gpu_ns": 1064667,
+        "total_frame_work_ns": 4995375,
+        "draw_to_gpu_complete_ns": 5256208,
+        "draw_to_display_ns": 28794417,
+        "display_unix_ns": "1788818307024280417"
+      },
+      {
+        "drawable": 534,
+        "draw_ns": 2285542,
+        "submit_ns": 709250,
+        "gpu_ns": 1072875,
+        "total_frame_work_ns": 4067667,
+        "draw_to_gpu_complete_ns": 4316374,
+        "draw_to_display_ns": 28172291,
+        "display_unix_ns": "1788818307040946666"
+      },
+      {
+        "drawable": 535,
+        "draw_ns": 2632792,
+        "submit_ns": 879209,
+        "gpu_ns": 1073750,
+        "total_frame_work_ns": 4585751,
+        "draw_to_gpu_complete_ns": 5370000,
+        "draw_to_display_ns": 28161792,
+        "display_unix_ns": "1788818307057613750"
+      },
+      {
+        "drawable": 536,
+        "draw_ns": 2725708,
+        "submit_ns": 979584,
+        "gpu_ns": 1072583,
+        "total_frame_work_ns": 4777875,
+        "draw_to_gpu_complete_ns": 5566749,
+        "draw_to_display_ns": 28182375,
+        "display_unix_ns": "1788818307074279875"
+      },
+      {
+        "drawable": 537,
+        "draw_ns": 1239375,
+        "submit_ns": 812167,
+        "gpu_ns": 1063833,
+        "total_frame_work_ns": 3115375,
+        "draw_to_gpu_complete_ns": 3273291,
+        "draw_to_display_ns": 19827708,
+        "display_unix_ns": "1788818307082613208"
+      },
+      {
+        "drawable": 538,
+        "draw_ns": 3008875,
+        "submit_ns": 989625,
+        "gpu_ns": 1064125,
+        "total_frame_work_ns": 5062625,
+        "draw_to_gpu_complete_ns": 5538541,
+        "draw_to_display_ns": 28114083,
+        "display_unix_ns": "1788818307107613625"
+      },
+      {
+        "drawable": 539,
+        "draw_ns": 3043709,
+        "submit_ns": 883292,
+        "gpu_ns": 1066875,
+        "total_frame_work_ns": 4993876,
+        "draw_to_gpu_complete_ns": 5480833,
+        "draw_to_display_ns": 28165542,
+        "display_unix_ns": "1788818307124279500"
+      },
+      {
+        "drawable": 540,
+        "draw_ns": 2691625,
+        "submit_ns": 936583,
+        "gpu_ns": 1069417,
+        "total_frame_work_ns": 4697625,
+        "draw_to_gpu_complete_ns": 4954791,
+        "draw_to_display_ns": 28186708,
+        "display_unix_ns": "1788818307140946583"
+      },
+      {
+        "drawable": 541,
+        "draw_ns": 2426416,
+        "submit_ns": 777166,
+        "gpu_ns": 1065375,
+        "total_frame_work_ns": 4268957,
+        "draw_to_gpu_complete_ns": 4758416,
+        "draw_to_display_ns": 28129958,
+        "display_unix_ns": "1788818307157613375"
+      },
+      {
+        "drawable": 542,
+        "draw_ns": 2487083,
+        "submit_ns": 885417,
+        "gpu_ns": 1072875,
+        "total_frame_work_ns": 4445375,
+        "draw_to_gpu_complete_ns": 4894291,
+        "draw_to_display_ns": 28154625,
+        "display_unix_ns": "1788818307174279250"
+      },
+      {
+        "drawable": 543,
+        "draw_ns": 3038875,
+        "submit_ns": 707000,
+        "gpu_ns": 1068125,
+        "total_frame_work_ns": 4814000,
+        "draw_to_gpu_complete_ns": 5275499,
+        "draw_to_display_ns": 28023416,
+        "display_unix_ns": "1788818307190945875"
+      },
+      {
+        "drawable": 544,
+        "draw_ns": 1300500,
+        "submit_ns": 443291,
+        "gpu_ns": 1073417,
+        "total_frame_work_ns": 2817208,
+        "draw_to_gpu_complete_ns": 2957208,
+        "draw_to_display_ns": 19870250,
+        "display_unix_ns": "1788818307199279625"
+      },
+      {
+        "drawable": 545,
+        "draw_ns": 3127250,
+        "submit_ns": 894417,
+        "gpu_ns": 1072125,
+        "total_frame_work_ns": 5093792,
+        "draw_to_gpu_complete_ns": 5548082,
+        "draw_to_display_ns": 28635458,
+        "display_unix_ns": "1788818307224279417"
+      },
+      {
+        "drawable": 546,
+        "draw_ns": 2791709,
+        "submit_ns": 1057000,
+        "gpu_ns": 1071041,
+        "total_frame_work_ns": 4919750,
+        "draw_to_gpu_complete_ns": 5397415,
+        "draw_to_display_ns": 28122958,
+        "display_unix_ns": "1788818307240946208"
+      },
+      {
+        "drawable": 547,
+        "draw_ns": 2489459,
+        "submit_ns": 743667,
+        "gpu_ns": 1074250,
+        "total_frame_work_ns": 4307376,
+        "draw_to_gpu_complete_ns": 4763916,
+        "draw_to_display_ns": 28962083,
+        "display_unix_ns": "1788818307257612041"
+      },
+      {
+        "drawable": 548,
+        "draw_ns": 2832417,
+        "submit_ns": 750667,
+        "gpu_ns": 1074208,
+        "total_frame_work_ns": 4657292,
+        "draw_to_gpu_complete_ns": 5130958,
+        "draw_to_display_ns": 28089084,
+        "display_unix_ns": "1788818307274278584"
+      },
+      {
+        "drawable": 549,
+        "draw_ns": 2724000,
+        "submit_ns": 889667,
+        "gpu_ns": 1074625,
+        "total_frame_work_ns": 4688292,
+        "draw_to_gpu_complete_ns": 5194250,
+        "draw_to_display_ns": 28821876,
+        "display_unix_ns": "1788818307290945959"
+      },
+      {
+        "drawable": 550,
+        "draw_ns": 3020625,
+        "submit_ns": 880667,
+        "gpu_ns": 1080250,
+        "total_frame_work_ns": 4981542,
+        "draw_to_gpu_complete_ns": 5125624,
+        "draw_to_display_ns": 28290291,
+        "display_unix_ns": "1788818307307612375"
+      },
+      {
+        "drawable": 551,
+        "draw_ns": 1108125,
+        "submit_ns": 440917,
+        "gpu_ns": 1079125,
+        "total_frame_work_ns": 2628167,
+        "draw_to_gpu_complete_ns": 3031124,
+        "draw_to_display_ns": 19877958,
+        "display_unix_ns": "1788818307315945667"
+      },
+      {
+        "drawable": 552,
+        "draw_ns": 1147375,
+        "submit_ns": 457917,
+        "gpu_ns": 1076875,
+        "total_frame_work_ns": 2682167,
+        "draw_to_gpu_complete_ns": 3080291,
+        "draw_to_display_ns": 20449750,
+        "display_unix_ns": "1788818307332611792"
+      },
+      {
+        "drawable": 553,
+        "draw_ns": 1154208,
+        "submit_ns": 451417,
+        "gpu_ns": 1078083,
+        "total_frame_work_ns": 2683708,
+        "draw_to_gpu_complete_ns": 3086207,
+        "draw_to_display_ns": 19894416,
+        "display_unix_ns": "1788818307349278208"
+      },
+      {
+        "drawable": 554,
+        "draw_ns": 1010500,
+        "submit_ns": 400291,
+        "gpu_ns": 1078833,
+        "total_frame_work_ns": 2489624,
+        "draw_to_gpu_complete_ns": 2888665,
+        "draw_to_display_ns": 20274749,
+        "display_unix_ns": "1788818307365944708"
+      },
+      {
+        "drawable": 555,
+        "draw_ns": 979834,
+        "submit_ns": 388709,
+        "gpu_ns": 1088958,
+        "total_frame_work_ns": 2457501,
+        "draw_to_gpu_complete_ns": 2853375,
+        "draw_to_display_ns": 19855750,
+        "display_unix_ns": "1788818307382611916"
+      },
+      {
+        "drawable": 556,
+        "draw_ns": 996083,
+        "submit_ns": 389958,
+        "gpu_ns": 1081875,
+        "total_frame_work_ns": 2467916,
+        "draw_to_gpu_complete_ns": 2887958,
+        "draw_to_display_ns": 20453417,
+        "display_unix_ns": "1788818307399278084"
+      },
+      {
+        "drawable": 557,
+        "draw_ns": 951250,
+        "submit_ns": 404208,
+        "gpu_ns": 1075125,
+        "total_frame_work_ns": 2430583,
+        "draw_to_gpu_complete_ns": 2832208,
+        "draw_to_display_ns": 20696375,
+        "display_unix_ns": "1788818307415945041"
+      },
+      {
+        "drawable": 558,
+        "draw_ns": 966625,
+        "submit_ns": 381500,
+        "gpu_ns": 1081750,
+        "total_frame_work_ns": 2429875,
+        "draw_to_gpu_complete_ns": 2833290,
+        "draw_to_display_ns": 20454166,
+        "display_unix_ns": "1788818307432611375"
+      },
+      {
+        "drawable": 559,
+        "draw_ns": 1030292,
+        "submit_ns": 402292,
+        "gpu_ns": 1866250,
+        "total_frame_work_ns": 3298834,
+        "draw_to_gpu_complete_ns": 3430958,
+        "draw_to_display_ns": 20490125,
+        "display_unix_ns": "1788818307449277833"
+      },
+      {
+        "drawable": 560,
+        "draw_ns": 986417,
+        "submit_ns": 388708,
+        "gpu_ns": 1081250,
+        "total_frame_work_ns": 2456375,
+        "draw_to_gpu_complete_ns": 2875708,
+        "draw_to_display_ns": 19869375,
+        "display_unix_ns": "1788818307465944083"
+      },
+      {
+        "drawable": 561,
+        "draw_ns": 986000,
+        "submit_ns": 431458,
+        "gpu_ns": 1344125,
+        "total_frame_work_ns": 2761583,
+        "draw_to_gpu_complete_ns": 2820457,
+        "draw_to_display_ns": 20410957,
+        "display_unix_ns": "1788818307482610499"
+      },
+      {
+        "drawable": 562,
+        "draw_ns": 943375,
+        "submit_ns": 375750,
+        "gpu_ns": 1086083,
+        "total_frame_work_ns": 2405208,
+        "draw_to_gpu_complete_ns": 2836249,
+        "draw_to_display_ns": 19889791,
+        "display_unix_ns": "1788818307499278041"
+      },
+      {
+        "drawable": 563,
+        "draw_ns": 1019625,
+        "submit_ns": 444583,
+        "gpu_ns": 1469375,
+        "total_frame_work_ns": 2933583,
+        "draw_to_gpu_complete_ns": 3419666,
+        "draw_to_display_ns": 19879333,
+        "display_unix_ns": "1788818307515943750"
+      },
+      {
+        "drawable": 564,
+        "draw_ns": 1020750,
+        "submit_ns": 431417,
+        "gpu_ns": 1105625,
+        "total_frame_work_ns": 2557792,
+        "draw_to_gpu_complete_ns": 2620333,
+        "draw_to_display_ns": 19807959,
+        "display_unix_ns": "1788818307532610459"
+      },
+      {
+        "drawable": 565,
+        "draw_ns": 1014375,
+        "submit_ns": 407291,
+        "gpu_ns": 1106125,
+        "total_frame_work_ns": 2527791,
+        "draw_to_gpu_complete_ns": 2601417,
+        "draw_to_display_ns": 19883417,
+        "display_unix_ns": "1788818307549277583"
+      },
+      {
+        "drawable": 566,
+        "draw_ns": 982166,
+        "submit_ns": 411250,
+        "gpu_ns": 1350000,
+        "total_frame_work_ns": 2743416,
+        "draw_to_gpu_complete_ns": 2841708,
+        "draw_to_display_ns": 19887292,
+        "display_unix_ns": "1788818307565943542"
+      },
+      {
+        "drawable": 567,
+        "draw_ns": 1033750,
+        "submit_ns": 423750,
+        "gpu_ns": 1373125,
+        "total_frame_work_ns": 2830625,
+        "draw_to_gpu_complete_ns": 2907875,
+        "draw_to_display_ns": 19865500,
+        "display_unix_ns": "1788818307582609958"
+      },
+      {
+        "drawable": 568,
+        "draw_ns": 1008917,
+        "submit_ns": 440666,
+        "gpu_ns": 1090000,
+        "total_frame_work_ns": 2539583,
+        "draw_to_gpu_complete_ns": 2973625,
+        "draw_to_display_ns": 19886125,
+        "display_unix_ns": "1788818307599281291"
+      },
+      {
+        "drawable": 569,
+        "draw_ns": 1019292,
+        "submit_ns": 422708,
+        "gpu_ns": 1084500,
+        "total_frame_work_ns": 2526500,
+        "draw_to_gpu_complete_ns": 2940499,
+        "draw_to_display_ns": 19878249,
+        "display_unix_ns": "1788818307615943499"
+      },
+      {
+        "drawable": 570,
+        "draw_ns": 910333,
+        "submit_ns": 380958,
+        "gpu_ns": 1084875,
+        "total_frame_work_ns": 2376166,
+        "draw_to_gpu_complete_ns": 2768249,
+        "draw_to_display_ns": 19888500,
+        "display_unix_ns": "1788818307632610000"
+      },
+      {
+        "drawable": 571,
+        "draw_ns": 921416,
+        "submit_ns": 376584,
+        "gpu_ns": 1083458,
+        "total_frame_work_ns": 2381458,
+        "draw_to_gpu_complete_ns": 2814583,
+        "draw_to_display_ns": 19886667,
+        "display_unix_ns": "1788818307649276417"
+      },
+      {
+        "drawable": 572,
+        "draw_ns": 869875,
+        "submit_ns": 360500,
+        "gpu_ns": 1086250,
+        "total_frame_work_ns": 2316625,
+        "draw_to_gpu_complete_ns": 2755333,
+        "draw_to_display_ns": 19888709,
+        "display_unix_ns": "1788818307665942834"
+      },
+      {
+        "drawable": 573,
+        "draw_ns": 944458,
+        "submit_ns": 372541,
+        "gpu_ns": 1089792,
+        "total_frame_work_ns": 2406791,
+        "draw_to_gpu_complete_ns": 2838708,
+        "draw_to_display_ns": 19893917,
+        "display_unix_ns": "1788818307682610167"
+      },
+      {
+        "drawable": 574,
+        "draw_ns": 1036333,
+        "submit_ns": 419625,
+        "gpu_ns": 1370083,
+        "total_frame_work_ns": 2826041,
+        "draw_to_gpu_complete_ns": 2888957,
+        "draw_to_display_ns": 19873124,
+        "display_unix_ns": "1788818307699276458"
+      },
+      {
+        "drawable": 575,
+        "draw_ns": 1024916,
+        "submit_ns": 377208,
+        "gpu_ns": 1109375,
+        "total_frame_work_ns": 2511499,
+        "draw_to_gpu_complete_ns": 2571207,
+        "draw_to_display_ns": 19867124,
+        "display_unix_ns": "1788818307715942666"
+      },
+      {
+        "drawable": 576,
+        "draw_ns": 1073000,
+        "submit_ns": 406083,
+        "gpu_ns": 1091958,
+        "total_frame_work_ns": 2571041,
+        "draw_to_gpu_complete_ns": 2672291,
+        "draw_to_display_ns": 19840792,
+        "display_unix_ns": "1788818307732609876"
+      },
+      {
+        "drawable": 577,
+        "draw_ns": 1172708,
+        "submit_ns": 479000,
+        "gpu_ns": 1439250,
+        "total_frame_work_ns": 3090958,
+        "draw_to_gpu_complete_ns": 3155083,
+        "draw_to_display_ns": 19875875,
+        "display_unix_ns": "1788818307749275708"
+      },
+      {
+        "drawable": 578,
+        "draw_ns": 1144584,
+        "submit_ns": 479833,
+        "gpu_ns": 1265750,
+        "total_frame_work_ns": 2890167,
+        "draw_to_gpu_complete_ns": 2955166,
+        "draw_to_display_ns": 19882583,
+        "display_unix_ns": "1788818307765943208"
+      },
+      {
+        "drawable": 579,
+        "draw_ns": 1245125,
+        "submit_ns": 533708,
+        "gpu_ns": 1222751,
+        "total_frame_work_ns": 3001584,
+        "draw_to_gpu_complete_ns": 3076333,
+        "draw_to_display_ns": 19870708,
+        "display_unix_ns": "1788818307782609375"
+      },
+      {
+        "drawable": 580,
+        "draw_ns": 1136417,
+        "submit_ns": 487542,
+        "gpu_ns": 1096375,
+        "total_frame_work_ns": 2720334,
+        "draw_to_gpu_complete_ns": 2845167,
+        "draw_to_display_ns": 19885834,
+        "display_unix_ns": "1788818307799275375"
+      },
+      {
+        "drawable": 581,
+        "draw_ns": 1057375,
+        "submit_ns": 463125,
+        "gpu_ns": 1097792,
+        "total_frame_work_ns": 2618292,
+        "draw_to_gpu_complete_ns": 3076624,
+        "draw_to_display_ns": 19877666,
+        "display_unix_ns": "1788818307815942958"
+      },
+      {
+        "drawable": 582,
+        "draw_ns": 959250,
+        "submit_ns": 405500,
+        "gpu_ns": 1102250,
+        "total_frame_work_ns": 2467000,
+        "draw_to_gpu_complete_ns": 2589624,
+        "draw_to_display_ns": 19889000,
+        "display_unix_ns": "1788818307832608917"
+      },
+      {
+        "drawable": 583,
+        "draw_ns": 895458,
+        "submit_ns": 391000,
+        "gpu_ns": 1097709,
+        "total_frame_work_ns": 2384167,
+        "draw_to_gpu_complete_ns": 2806416,
+        "draw_to_display_ns": 19860125,
+        "display_unix_ns": "1788818307849275959"
+      },
+      {
+        "drawable": 584,
+        "draw_ns": 1014417,
+        "submit_ns": 398125,
+        "gpu_ns": 1096542,
+        "total_frame_work_ns": 2509084,
+        "draw_to_gpu_complete_ns": 2950000,
+        "draw_to_display_ns": 20224459,
+        "display_unix_ns": "1788818307865941709"
+      },
+      {
+        "drawable": 585,
+        "draw_ns": 917375,
+        "submit_ns": 387500,
+        "gpu_ns": 1097042,
+        "total_frame_work_ns": 2401917,
+        "draw_to_gpu_complete_ns": 2828499,
+        "draw_to_display_ns": 19836041,
+        "display_unix_ns": "1788818307882608583"
+      },
+      {
+        "drawable": 586,
+        "draw_ns": 989125,
+        "submit_ns": 403416,
+        "gpu_ns": 1142417,
+        "total_frame_work_ns": 2534958,
+        "draw_to_gpu_complete_ns": 2607125,
+        "draw_to_display_ns": 19844375,
+        "display_unix_ns": "1788818307899274958"
+      },
+      {
+        "drawable": 587,
+        "draw_ns": 1084291,
+        "submit_ns": 447000,
+        "gpu_ns": 1266125,
+        "total_frame_work_ns": 2797416,
+        "draw_to_gpu_complete_ns": 2858458,
+        "draw_to_display_ns": 19872834,
+        "display_unix_ns": "1788818307915942084"
+      },
+      {
+        "drawable": 588,
+        "draw_ns": 1088667,
+        "submit_ns": 445417,
+        "gpu_ns": 1328125,
+        "total_frame_work_ns": 2862209,
+        "draw_to_gpu_complete_ns": 2925416,
+        "draw_to_display_ns": 19883250,
+        "display_unix_ns": "1788818307932608500"
+      },
+      {
+        "drawable": 589,
+        "draw_ns": 1164375,
+        "submit_ns": 463584,
+        "gpu_ns": 1288458,
+        "total_frame_work_ns": 2916417,
+        "draw_to_gpu_complete_ns": 2980832,
+        "draw_to_display_ns": 19876582,
+        "display_unix_ns": "1788818307949274999"
+      },
+      {
+        "drawable": 590,
+        "draw_ns": 1048041,
+        "submit_ns": 425791,
+        "gpu_ns": 1107000,
+        "total_frame_work_ns": 2580832,
+        "draw_to_gpu_complete_ns": 2717540,
+        "draw_to_display_ns": 19882916,
+        "display_unix_ns": "1788818307965941125"
+      },
+      {
+        "drawable": 591,
+        "draw_ns": 959500,
+        "submit_ns": 411833,
+        "gpu_ns": 1234708,
+        "total_frame_work_ns": 2606041,
+        "draw_to_gpu_complete_ns": 3004749,
+        "draw_to_display_ns": 19889708,
+        "display_unix_ns": "1788818307982607958"
+      },
+      {
+        "drawable": 592,
+        "draw_ns": 957916,
+        "submit_ns": 391667,
+        "gpu_ns": 1102458,
+        "total_frame_work_ns": 2452041,
+        "draw_to_gpu_complete_ns": 2865708,
+        "draw_to_display_ns": 19886459,
+        "display_unix_ns": "1788818307999274334"
+      },
+      {
+        "drawable": 593,
+        "draw_ns": 929875,
+        "submit_ns": 408958,
+        "gpu_ns": 1104833,
+        "total_frame_work_ns": 2443666,
+        "draw_to_gpu_complete_ns": 2576124,
+        "draw_to_display_ns": 19879375,
+        "display_unix_ns": "1788818308015941417"
+      },
+      {
+        "drawable": 594,
+        "draw_ns": 1052541,
+        "submit_ns": 416167,
+        "gpu_ns": 1258416,
+        "total_frame_work_ns": 2727124,
+        "draw_to_gpu_complete_ns": 2809081,
+        "draw_to_display_ns": 19883624,
+        "display_unix_ns": "1788818308032607958"
+      },
+      {
+        "drawable": 595,
+        "draw_ns": 1105583,
+        "submit_ns": 423291,
+        "gpu_ns": 1364750,
+        "total_frame_work_ns": 2893624,
+        "draw_to_gpu_complete_ns": 3010332,
+        "draw_to_display_ns": 19880832,
+        "display_unix_ns": "1788818308049274124"
+      },
+      {
+        "drawable": 596,
+        "draw_ns": 1122709,
+        "submit_ns": 418541,
+        "gpu_ns": 1124250,
+        "total_frame_work_ns": 2665500,
+        "draw_to_gpu_complete_ns": 2836875,
+        "draw_to_display_ns": 19874251,
+        "display_unix_ns": "1788818308065940917"
+      },
+      {
+        "drawable": 597,
+        "draw_ns": 1112709,
+        "submit_ns": 443000,
+        "gpu_ns": 1144167,
+        "total_frame_work_ns": 2699876,
+        "draw_to_gpu_complete_ns": 2837458,
+        "draw_to_display_ns": 19842875,
+        "display_unix_ns": "1788818308082607000"
+      },
+      {
+        "drawable": 598,
+        "draw_ns": 1246541,
+        "submit_ns": 495541,
+        "gpu_ns": 1252625,
+        "total_frame_work_ns": 2994707,
+        "draw_to_gpu_complete_ns": 3058291,
+        "draw_to_display_ns": 19877833,
+        "display_unix_ns": "1788818308099274000"
+      },
+      {
+        "drawable": 599,
+        "draw_ns": 1261875,
+        "submit_ns": 499083,
+        "gpu_ns": 1111083,
+        "total_frame_work_ns": 2872041,
+        "draw_to_gpu_complete_ns": 3302000,
+        "draw_to_display_ns": 19869584,
+        "display_unix_ns": "1788818308115941042"
+      },
+      {
+        "drawable": 600,
+        "draw_ns": 1033167,
+        "submit_ns": 417875,
+        "gpu_ns": 1109625,
+        "total_frame_work_ns": 2560667,
+        "draw_to_gpu_complete_ns": 2690667,
+        "draw_to_display_ns": 19878792,
+        "display_unix_ns": "1788818308132607500"
+      },
+      {
+        "drawable": 601,
+        "draw_ns": 984250,
+        "submit_ns": 394375,
+        "gpu_ns": 1107875,
+        "total_frame_work_ns": 2486500,
+        "draw_to_gpu_complete_ns": 2907875,
+        "draw_to_display_ns": 19886542,
+        "display_unix_ns": "1788818308149273958"
+      },
+      {
+        "drawable": 602,
+        "draw_ns": 949125,
+        "submit_ns": 382042,
+        "gpu_ns": 1110250,
+        "total_frame_work_ns": 2441417,
+        "draw_to_gpu_complete_ns": 2572457,
+        "draw_to_display_ns": 19889291,
+        "display_unix_ns": "1788818308165940458"
+      },
+      {
+        "drawable": 603,
+        "draw_ns": 1077167,
+        "submit_ns": 419916,
+        "gpu_ns": 1272751,
+        "total_frame_work_ns": 2769834,
+        "draw_to_gpu_complete_ns": 2828208,
+        "draw_to_display_ns": 19878875,
+        "display_unix_ns": "1788818308182606750"
+      },
+      {
+        "drawable": 604,
+        "draw_ns": 1013916,
+        "submit_ns": 418166,
+        "gpu_ns": 1112750,
+        "total_frame_work_ns": 2544832,
+        "draw_to_gpu_complete_ns": 2613249,
+        "draw_to_display_ns": 19893124,
+        "display_unix_ns": "1788818308199273333"
+      },
+      {
+        "drawable": 605,
+        "draw_ns": 1097292,
+        "submit_ns": 446250,
+        "gpu_ns": 1109250,
+        "total_frame_work_ns": 2652792,
+        "draw_to_gpu_complete_ns": 2720000,
+        "draw_to_display_ns": 19867792,
+        "display_unix_ns": "1788818308215940583"
+      },
+      {
+        "drawable": 606,
+        "draw_ns": 1124416,
+        "submit_ns": 482500,
+        "gpu_ns": 1514166,
+        "total_frame_work_ns": 3121082,
+        "draw_to_gpu_complete_ns": 3249248,
+        "draw_to_display_ns": 20625541,
+        "display_unix_ns": "1788818308232607000"
+      },
+      {
+        "drawable": 607,
+        "draw_ns": 1374542,
+        "submit_ns": 492792,
+        "gpu_ns": 1146583,
+        "total_frame_work_ns": 3013917,
+        "draw_to_gpu_complete_ns": 3137249,
+        "draw_to_display_ns": 19849166,
+        "display_unix_ns": "1788818308249273166"
+      },
+      {
+        "drawable": 608,
+        "draw_ns": 1253500,
+        "submit_ns": 524208,
+        "gpu_ns": 1204458,
+        "total_frame_work_ns": 2982166,
+        "draw_to_gpu_complete_ns": 3050749,
+        "draw_to_display_ns": 19839499,
+        "display_unix_ns": "1788818308265939666"
+      },
+      {
+        "drawable": 609,
+        "draw_ns": 1169875,
+        "submit_ns": 473958,
+        "gpu_ns": 1120125,
+        "total_frame_work_ns": 2763958,
+        "draw_to_gpu_complete_ns": 3245333,
+        "draw_to_display_ns": 25771959,
+        "display_unix_ns": "1788818308290939334"
+      },
+      {
+        "drawable": 610,
+        "draw_ns": 1397708,
+        "submit_ns": 576042,
+        "gpu_ns": 1208291,
+        "total_frame_work_ns": 3182041,
+        "draw_to_gpu_complete_ns": 3261706,
+        "draw_to_display_ns": 19833791,
+        "display_unix_ns": "1788818308307605875"
+      },
+      {
+        "drawable": 611,
+        "draw_ns": 1254500,
+        "submit_ns": 457084,
+        "gpu_ns": 1122125,
+        "total_frame_work_ns": 2833709,
+        "draw_to_gpu_complete_ns": 2968583,
+        "draw_to_display_ns": 19792125,
+        "display_unix_ns": "1788818308324272375"
+      },
+      {
+        "drawable": 612,
+        "draw_ns": 1146083,
+        "submit_ns": 421166,
+        "gpu_ns": 1119125,
+        "total_frame_work_ns": 2686374,
+        "draw_to_gpu_complete_ns": 2810624,
+        "draw_to_display_ns": 19863499,
+        "display_unix_ns": "1788818308340939124"
+      },
+      {
+        "drawable": 613,
+        "draw_ns": 1159125,
+        "submit_ns": 450042,
+        "gpu_ns": 1339167,
+        "total_frame_work_ns": 2948334,
+        "draw_to_gpu_complete_ns": 3017500,
+        "draw_to_display_ns": 19828042,
+        "display_unix_ns": "1788818308357606167"
+      },
+      {
+        "drawable": 614,
+        "draw_ns": 1071875,
+        "submit_ns": 425709,
+        "gpu_ns": 1141375,
+        "total_frame_work_ns": 2638959,
+        "draw_to_gpu_complete_ns": 2725208,
+        "draw_to_display_ns": 19873791,
+        "display_unix_ns": "1788818308374272708"
+      },
+      {
+        "drawable": 615,
+        "draw_ns": 1206792,
+        "submit_ns": 473708,
+        "gpu_ns": 1142958,
+        "total_frame_work_ns": 2823458,
+        "draw_to_gpu_complete_ns": 2898666,
+        "draw_to_display_ns": 19889542,
+        "display_unix_ns": "1788818308390939125"
+      },
+      {
+        "drawable": 616,
+        "draw_ns": 1209458,
+        "submit_ns": 466250,
+        "gpu_ns": 1156000,
+        "total_frame_work_ns": 2831708,
+        "draw_to_gpu_complete_ns": 2895582,
+        "draw_to_display_ns": 19824916,
+        "display_unix_ns": "1788818308407605625"
+      },
+      {
+        "drawable": 617,
+        "draw_ns": 1193750,
+        "submit_ns": 471084,
+        "gpu_ns": 1128917,
+        "total_frame_work_ns": 2793751,
+        "draw_to_gpu_complete_ns": 2907625,
+        "draw_to_display_ns": 19801459,
+        "display_unix_ns": "1788818308424272626"
+      },
+      {
+        "drawable": 618,
+        "draw_ns": 1284375,
+        "submit_ns": 446500,
+        "gpu_ns": 1125208,
+        "total_frame_work_ns": 2856083,
+        "draw_to_gpu_complete_ns": 2927624,
+        "draw_to_display_ns": 20214333,
+        "display_unix_ns": "1788818308440938750"
+      },
+      {
+        "drawable": 619,
+        "draw_ns": 1186750,
+        "submit_ns": 458041,
+        "gpu_ns": 1228250,
+        "total_frame_work_ns": 2873041,
+        "draw_to_gpu_complete_ns": 2965290,
+        "draw_to_display_ns": 19843707,
+        "display_unix_ns": "1788818308457605041"
+      },
+      {
+        "drawable": 620,
+        "draw_ns": 1090917,
+        "submit_ns": 440334,
+        "gpu_ns": 1145500,
+        "total_frame_work_ns": 2676751,
+        "draw_to_gpu_complete_ns": 2910042,
+        "draw_to_display_ns": 19881167,
+        "display_unix_ns": "1788818308474271583"
+      },
+      {
+        "drawable": 621,
+        "draw_ns": 1078875,
+        "submit_ns": 434750,
+        "gpu_ns": 1142292,
+        "total_frame_work_ns": 2655917,
+        "draw_to_gpu_complete_ns": 2859833,
+        "draw_to_display_ns": 19877250,
+        "display_unix_ns": "1788818308490938292"
+      },
+      {
+        "drawable": 622,
+        "draw_ns": 1040375,
+        "submit_ns": 431833,
+        "gpu_ns": 1134501,
+        "total_frame_work_ns": 2606709,
+        "draw_to_gpu_complete_ns": 2676792,
+        "draw_to_display_ns": 19803917,
+        "display_unix_ns": "1788818308507605458"
+      },
+      {
+        "drawable": 623,
+        "draw_ns": 1035875,
+        "submit_ns": 477167,
+        "gpu_ns": 1137417,
+        "total_frame_work_ns": 2650459,
+        "draw_to_gpu_complete_ns": 2836333,
+        "draw_to_display_ns": 19854042,
+        "display_unix_ns": "1788818308524271709"
+      },
+      {
+        "drawable": 624,
+        "draw_ns": 949292,
+        "submit_ns": 408750,
+        "gpu_ns": 1133542,
+        "total_frame_work_ns": 2491584,
+        "draw_to_gpu_complete_ns": 2609084,
+        "draw_to_display_ns": 19880084,
+        "display_unix_ns": "1788818308540937875"
+      },
+      {
+        "drawable": 625,
+        "draw_ns": 979292,
+        "submit_ns": 412583,
+        "gpu_ns": 1135083,
+        "total_frame_work_ns": 2526958,
+        "draw_to_gpu_complete_ns": 2704583,
+        "draw_to_display_ns": 19875875,
+        "display_unix_ns": "1788818308557604750"
+      },
+      {
+        "drawable": 626,
+        "draw_ns": 944875,
+        "submit_ns": 375500,
+        "gpu_ns": 1137458,
+        "total_frame_work_ns": 2457833,
+        "draw_to_gpu_complete_ns": 2590334,
+        "draw_to_display_ns": 19854334,
+        "display_unix_ns": "1788818308574271125"
+      },
+      {
+        "drawable": 627,
+        "draw_ns": 1062542,
+        "submit_ns": 434000,
+        "gpu_ns": 1392042,
+        "total_frame_work_ns": 2888584,
+        "draw_to_gpu_complete_ns": 3019292,
+        "draw_to_display_ns": 19869084,
+        "display_unix_ns": "1788818308590938209"
+      },
+      {
+        "drawable": 628,
+        "draw_ns": 1125291,
+        "submit_ns": 426042,
+        "gpu_ns": 1255126,
+        "total_frame_work_ns": 2806459,
+        "draw_to_gpu_complete_ns": 2867708,
+        "draw_to_display_ns": 19859625,
+        "display_unix_ns": "1788818308607604750"
+      },
+      {
+        "drawable": 629,
+        "draw_ns": 1074166,
+        "submit_ns": 412542,
+        "gpu_ns": 1138125,
+        "total_frame_work_ns": 2624833,
+        "draw_to_gpu_complete_ns": 2735124,
+        "draw_to_display_ns": 19827458,
+        "display_unix_ns": "1788818308624270583"
+      },
+      {
+        "drawable": 630,
+        "draw_ns": 1035250,
+        "submit_ns": 415333,
+        "gpu_ns": 1142125,
+        "total_frame_work_ns": 2592708,
+        "draw_to_gpu_complete_ns": 2732249,
+        "draw_to_display_ns": 19809125,
+        "display_unix_ns": "1788818308640937292"
+      },
+      {
+        "drawable": 631,
+        "draw_ns": 934042,
+        "submit_ns": 363041,
+        "gpu_ns": 1139833,
+        "total_frame_work_ns": 2436916,
+        "draw_to_gpu_complete_ns": 2843417,
+        "draw_to_display_ns": 19869084,
+        "display_unix_ns": "1788818308657604542"
+      },
+      {
+        "drawable": 632,
+        "draw_ns": 937500,
+        "submit_ns": 378250,
+        "gpu_ns": 1137375,
+        "total_frame_work_ns": 2453125,
+        "draw_to_gpu_complete_ns": 2872167,
+        "draw_to_display_ns": 19876834,
+        "display_unix_ns": "1788818308674270209"
+      },
+      {
+        "drawable": 633,
+        "draw_ns": 995791,
+        "submit_ns": 398875,
+        "gpu_ns": 1157417,
+        "total_frame_work_ns": 2552083,
+        "draw_to_gpu_complete_ns": 2617624,
+        "draw_to_display_ns": 19883208,
+        "display_unix_ns": "1788818308690937667"
+      },
+      {
+        "drawable": 634,
+        "draw_ns": 1083416,
+        "submit_ns": 396125,
+        "gpu_ns": 1154875,
+        "total_frame_work_ns": 2634416,
+        "draw_to_gpu_complete_ns": 2701666,
+        "draw_to_display_ns": 19814625,
+        "display_unix_ns": "1788818308707603917"
+      },
+      {
+        "drawable": 635,
+        "draw_ns": 1010250,
+        "submit_ns": 449458,
+        "gpu_ns": 1435375,
+        "total_frame_work_ns": 2895083,
+        "draw_to_gpu_complete_ns": 2996875,
+        "draw_to_display_ns": 20802876,
+        "display_unix_ns": "1788818308724270417"
+      },
+      {
+        "drawable": 636,
+        "draw_ns": 999375,
+        "submit_ns": 388667,
+        "gpu_ns": 1079375,
+        "total_frame_work_ns": 2467417,
+        "draw_to_gpu_complete_ns": 2639541,
+        "draw_to_display_ns": 19904375,
+        "display_unix_ns": "1788818308740936958"
+      },
+      {
+        "drawable": 637,
+        "draw_ns": 1103250,
+        "submit_ns": 375542,
+        "gpu_ns": 1075375,
+        "total_frame_work_ns": 2554167,
+        "draw_to_gpu_complete_ns": 2676791,
+        "draw_to_display_ns": 19835791,
+        "display_unix_ns": "1788818308757603208"
+      },
+      {
+        "drawable": 638,
+        "draw_ns": 994583,
+        "submit_ns": 646958,
+        "gpu_ns": 1074917,
+        "total_frame_work_ns": 2716458,
+        "draw_to_gpu_complete_ns": 3168041,
+        "draw_to_display_ns": 19889541,
+        "display_unix_ns": "1788818308774270416"
+      },
+      {
+        "drawable": 639,
+        "draw_ns": 1095292,
+        "submit_ns": 499417,
+        "gpu_ns": 1066750,
+        "total_frame_work_ns": 2661459,
+        "draw_to_gpu_complete_ns": 2796208,
+        "draw_to_display_ns": 19842125,
+        "display_unix_ns": "1788818308790937125"
+      },
+      {
+        "drawable": 640,
+        "draw_ns": 1026708,
+        "submit_ns": 408958,
+        "gpu_ns": 1065875,
+        "total_frame_work_ns": 2501541,
+        "draw_to_gpu_complete_ns": 2624457,
+        "draw_to_display_ns": 19876874,
+        "display_unix_ns": "1788818308807603041"
+      },
+      {
+        "drawable": 641,
+        "draw_ns": 998583,
+        "submit_ns": 374333,
+        "gpu_ns": 1067500,
+        "total_frame_work_ns": 2440416,
+        "draw_to_gpu_complete_ns": 2507000,
+        "draw_to_display_ns": 19887584,
+        "display_unix_ns": "1788818308824270209"
+      },
+      {
+        "drawable": 642,
+        "draw_ns": 991625,
+        "submit_ns": 401417,
+        "gpu_ns": 1092375,
+        "total_frame_work_ns": 2485417,
+        "draw_to_gpu_complete_ns": 2603665,
+        "draw_to_display_ns": 19887957,
+        "display_unix_ns": "1788818308840936166"
+      },
+      {
+        "drawable": 643,
+        "draw_ns": 1076209,
+        "submit_ns": 390708,
+        "gpu_ns": 1082875,
+        "total_frame_work_ns": 2549792,
+        "draw_to_gpu_complete_ns": 2667250,
+        "draw_to_display_ns": 19825917,
+        "display_unix_ns": "1788818308857603125"
+      },
+      {
+        "drawable": 644,
+        "draw_ns": 1094250,
+        "submit_ns": 438167,
+        "gpu_ns": 1081750,
+        "total_frame_work_ns": 2614167,
+        "draw_to_gpu_complete_ns": 2686249,
+        "draw_to_display_ns": 19826208,
+        "display_unix_ns": "1788818308874269375"
+      },
+      {
+        "drawable": 645,
+        "draw_ns": 1063042,
+        "submit_ns": 419625,
+        "gpu_ns": 1085250,
+        "total_frame_work_ns": 2567917,
+        "draw_to_gpu_complete_ns": 2685541,
+        "draw_to_display_ns": 19811958,
+        "display_unix_ns": "1788818308890936083"
+      },
+      {
+        "drawable": 646,
+        "draw_ns": 1071584,
+        "submit_ns": 374416,
+        "gpu_ns": 1103875,
+        "total_frame_work_ns": 2549875,
+        "draw_to_gpu_complete_ns": 2654917,
+        "draw_to_display_ns": 19884626,
+        "display_unix_ns": "1788818308907602834"
+      },
+      {
+        "drawable": 647,
+        "draw_ns": 1143167,
+        "submit_ns": 596667,
+        "gpu_ns": 1074251,
+        "total_frame_work_ns": 2814085,
+        "draw_to_gpu_complete_ns": 2914541,
+        "draw_to_display_ns": 20117625,
+        "display_unix_ns": "1788818308924269250"
+      },
+      {
+        "drawable": 648,
+        "draw_ns": 1072458,
+        "submit_ns": 405750,
+        "gpu_ns": 1081000,
+        "total_frame_work_ns": 2559208,
+        "draw_to_gpu_complete_ns": 2688707,
+        "draw_to_display_ns": 19849416,
+        "display_unix_ns": "1788818308940936250"
+      },
+      {
+        "drawable": 649,
+        "draw_ns": 1070917,
+        "submit_ns": 419292,
+        "gpu_ns": 1074875,
+        "total_frame_work_ns": 2565084,
+        "draw_to_gpu_complete_ns": 2749499,
+        "draw_to_display_ns": 19878166,
+        "display_unix_ns": "1788818308957602291"
+      },
+      {
+        "drawable": 650,
+        "draw_ns": 1001125,
+        "submit_ns": 383250,
+        "gpu_ns": 1077625,
+        "total_frame_work_ns": 2462000,
+        "draw_to_gpu_complete_ns": 2613708,
+        "draw_to_display_ns": 19872625,
+        "display_unix_ns": "1788818308974268500"
+      },
+      {
+        "drawable": 651,
+        "draw_ns": 1083708,
+        "submit_ns": 432416,
+        "gpu_ns": 1182542,
+        "total_frame_work_ns": 2698666,
+        "draw_to_gpu_complete_ns": 2785374,
+        "draw_to_display_ns": 20326749,
+        "display_unix_ns": "1788818308990935583"
+      },
+      {
+        "drawable": 652,
+        "draw_ns": 1033791,
+        "submit_ns": 403042,
+        "gpu_ns": 1084625,
+        "total_frame_work_ns": 2521458,
+        "draw_to_gpu_complete_ns": 2643832,
+        "draw_to_display_ns": 19877333,
+        "display_unix_ns": "1788818309007602167"
+      },
+      {
+        "drawable": 653,
+        "draw_ns": 1058542,
+        "submit_ns": 376250,
+        "gpu_ns": 1075125,
+        "total_frame_work_ns": 2509917,
+        "draw_to_gpu_complete_ns": 2607625,
+        "draw_to_display_ns": 19886792,
+        "display_unix_ns": "1788818309024268958"
+      },
+      {
+        "drawable": 654,
+        "draw_ns": 1002083,
+        "submit_ns": 395208,
+        "gpu_ns": 1081292,
+        "total_frame_work_ns": 2478583,
+        "draw_to_gpu_complete_ns": 2595541,
+        "draw_to_display_ns": 19856624,
+        "display_unix_ns": "1788818309040935249"
+      },
+      {
+        "drawable": 655,
+        "draw_ns": 1007500,
+        "submit_ns": 397083,
+        "gpu_ns": 1077792,
+        "total_frame_work_ns": 2482375,
+        "draw_to_gpu_complete_ns": 2556333,
+        "draw_to_display_ns": 19864042,
+        "display_unix_ns": "1788818309057601542"
+      },
+      {
+        "drawable": 656,
+        "draw_ns": 994458,
+        "submit_ns": 398666,
+        "gpu_ns": 1083792,
+        "total_frame_work_ns": 2476916,
+        "draw_to_gpu_complete_ns": 2669875,
+        "draw_to_display_ns": 19856042,
+        "display_unix_ns": "1788818309074268667"
+      },
+      {
+        "drawable": 657,
+        "draw_ns": 1075334,
+        "submit_ns": 425167,
+        "gpu_ns": 1097208,
+        "total_frame_work_ns": 2597709,
+        "draw_to_gpu_complete_ns": 2733666,
+        "draw_to_display_ns": 19799417,
+        "display_unix_ns": "1788818309090934667"
+      },
+      {
+        "drawable": 658,
+        "draw_ns": 1055500,
+        "submit_ns": 517084,
+        "gpu_ns": 1120917,
+        "total_frame_work_ns": 2693501,
+        "draw_to_gpu_complete_ns": 2810041,
+        "draw_to_display_ns": 19832375,
+        "display_unix_ns": "1788818309107601917"
+      },
+      {
+        "drawable": 659,
+        "draw_ns": 1033042,
+        "submit_ns": 367333,
+        "gpu_ns": 1116000,
+        "total_frame_work_ns": 2516375,
+        "draw_to_gpu_complete_ns": 2641250,
+        "draw_to_display_ns": 19860167,
+        "display_unix_ns": "1788818309124268250"
+      },
+      {
+        "drawable": 660,
+        "draw_ns": 1075250,
+        "submit_ns": 556833,
+        "gpu_ns": 1089875,
+        "total_frame_work_ns": 2721958,
+        "draw_to_gpu_complete_ns": 3170375,
+        "draw_to_display_ns": 19816042,
+        "display_unix_ns": "1788818309140934292"
+      },
+      {
+        "drawable": 661,
+        "draw_ns": 1009584,
+        "submit_ns": 385625,
+        "gpu_ns": 1078208,
+        "total_frame_work_ns": 2473417,
+        "draw_to_gpu_complete_ns": 2596750,
+        "draw_to_display_ns": 19828501,
+        "display_unix_ns": "1788818309157601084"
+      },
+      {
+        "drawable": 662,
+        "draw_ns": 979042,
+        "submit_ns": 380958,
+        "gpu_ns": 1080417,
+        "total_frame_work_ns": 2440417,
+        "draw_to_gpu_complete_ns": 2564209,
+        "draw_to_display_ns": 19864959,
+        "display_unix_ns": "1788818309174268042"
+      },
+      {
+        "drawable": 663,
+        "draw_ns": 1066125,
+        "submit_ns": 386833,
+        "gpu_ns": 1081250,
+        "total_frame_work_ns": 2534208,
+        "draw_to_gpu_complete_ns": 2634333,
+        "draw_to_display_ns": 19849250,
+        "display_unix_ns": "1788818309190934583"
+      },
+      {
+        "drawable": 664,
+        "draw_ns": 1044541,
+        "submit_ns": 392167,
+        "gpu_ns": 1079333,
+        "total_frame_work_ns": 2516041,
+        "draw_to_gpu_complete_ns": 2646249,
+        "draw_to_display_ns": 19884125,
+        "display_unix_ns": "1788818309207600542"
+      },
+      {
+        "drawable": 665,
+        "draw_ns": 975000,
+        "submit_ns": 392792,
+        "gpu_ns": 1080708,
+        "total_frame_work_ns": 2448500,
+        "draw_to_gpu_complete_ns": 2566833,
+        "draw_to_display_ns": 19888292,
+        "display_unix_ns": "1788818309224267917"
+      },
+      {
+        "drawable": 666,
+        "draw_ns": 1087375,
+        "submit_ns": 403875,
+        "gpu_ns": 1109792,
+        "total_frame_work_ns": 2601042,
+        "draw_to_gpu_complete_ns": 2720375,
+        "draw_to_display_ns": 19879584,
+        "display_unix_ns": "1788818309240933875"
+      },
+      {
+        "drawable": 667,
+        "draw_ns": 1020167,
+        "submit_ns": 402417,
+        "gpu_ns": 1114000,
+        "total_frame_work_ns": 2536584,
+        "draw_to_gpu_complete_ns": 2666084,
+        "draw_to_display_ns": 19892126,
+        "display_unix_ns": "1788818309257600792"
+      },
+      {
+        "drawable": 668,
+        "draw_ns": 1057458,
+        "submit_ns": 424625,
+        "gpu_ns": 1096750,
+        "total_frame_work_ns": 2578833,
+        "draw_to_gpu_complete_ns": 2687374,
+        "draw_to_display_ns": 19842583,
+        "display_unix_ns": "1788818309274267625"
+      },
+      {
+        "drawable": 669,
+        "draw_ns": 1051667,
+        "submit_ns": 360834,
+        "gpu_ns": 1114625,
+        "total_frame_work_ns": 2527126,
+        "draw_to_gpu_complete_ns": 2589166,
+        "draw_to_display_ns": 19852542,
+        "display_unix_ns": "1788818309290933834"
+      },
+      {
+        "drawable": 670,
+        "draw_ns": 1131959,
+        "submit_ns": 386000,
+        "gpu_ns": 1129375,
+        "total_frame_work_ns": 2647334,
+        "draw_to_gpu_complete_ns": 3153041,
+        "draw_to_display_ns": 19848167,
+        "display_unix_ns": "1788818309307599875"
+      },
+      {
+        "drawable": 671,
+        "draw_ns": 1218791,
+        "submit_ns": 487500,
+        "gpu_ns": 1114917,
+        "total_frame_work_ns": 2821208,
+        "draw_to_gpu_complete_ns": 2947583,
+        "draw_to_display_ns": 19844125,
+        "display_unix_ns": "1788818309324267042"
+      },
+      {
+        "drawable": 672,
+        "draw_ns": 1023250,
+        "submit_ns": 439625,
+        "gpu_ns": 1084458,
+        "total_frame_work_ns": 2547333,
+        "draw_to_gpu_complete_ns": 2666750,
+        "draw_to_display_ns": 19889376,
+        "display_unix_ns": "1788818309340933209"
+      },
+      {
+        "drawable": 673,
+        "draw_ns": 1087041,
+        "submit_ns": 399375,
+        "gpu_ns": 1090583,
+        "total_frame_work_ns": 2576999,
+        "draw_to_gpu_complete_ns": 3080957,
+        "draw_to_display_ns": 19857749,
+        "display_unix_ns": "1788818309357600458"
+      },
+      {
+        "drawable": 674,
+        "draw_ns": 1014167,
+        "submit_ns": 448000,
+        "gpu_ns": 1088500,
+        "total_frame_work_ns": 2550667,
+        "draw_to_gpu_complete_ns": 2654000,
+        "draw_to_display_ns": 19887000,
+        "display_unix_ns": "1788818309374266583"
+      },
+      {
+        "drawable": 675,
+        "draw_ns": 1009541,
+        "submit_ns": 447917,
+        "gpu_ns": 1095750,
+        "total_frame_work_ns": 2553208,
+        "draw_to_gpu_complete_ns": 2698624,
+        "draw_to_display_ns": 19888083,
+        "display_unix_ns": "1788818309390933167"
+      },
+      {
+        "drawable": 676,
+        "draw_ns": 1007125,
+        "submit_ns": 385583,
+        "gpu_ns": 1089875,
+        "total_frame_work_ns": 2482583,
+        "draw_to_gpu_complete_ns": 2589749,
+        "draw_to_display_ns": 19822250,
+        "display_unix_ns": "1788818309407599792"
+      },
+      {
+        "drawable": 677,
+        "draw_ns": 1059500,
+        "submit_ns": 412333,
+        "gpu_ns": 1097375,
+        "total_frame_work_ns": 2569208,
+        "draw_to_gpu_complete_ns": 2682541,
+        "draw_to_display_ns": 19814583,
+        "display_unix_ns": "1788818309424266625"
+      },
+      {
+        "drawable": 678,
+        "draw_ns": 904250,
+        "submit_ns": 405000,
+        "gpu_ns": 1355834,
+        "total_frame_work_ns": 2665084,
+        "draw_to_gpu_complete_ns": 2750625,
+        "draw_to_display_ns": 20557042,
+        "display_unix_ns": "1788818309440932500"
+      },
+      {
+        "drawable": 679,
+        "draw_ns": 1103250,
+        "submit_ns": 407250,
+        "gpu_ns": 1095875,
+        "total_frame_work_ns": 2606375,
+        "draw_to_gpu_complete_ns": 2708541,
+        "draw_to_display_ns": 19865833,
+        "display_unix_ns": "1788818309457599333"
+      },
+      {
+        "drawable": 680,
+        "draw_ns": 1100625,
+        "submit_ns": 434958,
+        "gpu_ns": 1106583,
+        "total_frame_work_ns": 2642166,
+        "draw_to_gpu_complete_ns": 2761958,
+        "draw_to_display_ns": 19882417,
+        "display_unix_ns": "1788818309474266250"
+      },
+      {
+        "drawable": 681,
+        "draw_ns": 1088250,
+        "submit_ns": 428166,
+        "gpu_ns": 1098958,
+        "total_frame_work_ns": 2615374,
+        "draw_to_gpu_complete_ns": 2723417,
+        "draw_to_display_ns": 20674959,
+        "display_unix_ns": "1788818309490932375"
+      },
+      {
+        "drawable": 682,
+        "draw_ns": 1000000,
+        "submit_ns": 453333,
+        "gpu_ns": 1096000,
+        "total_frame_work_ns": 2549333,
+        "draw_to_gpu_complete_ns": 2670624,
+        "draw_to_display_ns": 19868208,
+        "display_unix_ns": "1788818309507599042"
+      },
+      {
+        "drawable": 683,
+        "draw_ns": 1083417,
+        "submit_ns": 449541,
+        "gpu_ns": 1096375,
+        "total_frame_work_ns": 2629333,
+        "draw_to_gpu_complete_ns": 2752208,
+        "draw_to_display_ns": 19888417,
+        "display_unix_ns": "1788818309524265459"
+      },
+      {
+        "drawable": 684,
+        "draw_ns": 994167,
+        "submit_ns": 479667,
+        "gpu_ns": 1098542,
+        "total_frame_work_ns": 2572376,
+        "draw_to_gpu_complete_ns": 2705750,
+        "draw_to_display_ns": 20194292,
+        "display_unix_ns": "1788818309540931833"
+      },
+      {
+        "drawable": 685,
+        "draw_ns": 1102167,
+        "submit_ns": 420333,
+        "gpu_ns": 1098292,
+        "total_frame_work_ns": 2620792,
+        "draw_to_gpu_complete_ns": 3039709,
+        "draw_to_display_ns": 19885376,
+        "display_unix_ns": "1788818309557598542"
+      },
+      {
+        "drawable": 686,
+        "draw_ns": 1006583,
+        "submit_ns": 434708,
+        "gpu_ns": 1098250,
+        "total_frame_work_ns": 2539541,
+        "draw_to_gpu_complete_ns": 2943290,
+        "draw_to_display_ns": 19810749,
+        "display_unix_ns": "1788818309574265833"
+      },
+      {
+        "drawable": 687,
+        "draw_ns": 998292,
+        "submit_ns": 442625,
+        "gpu_ns": 1491500,
+        "total_frame_work_ns": 2932417,
+        "draw_to_gpu_complete_ns": 3028541,
+        "draw_to_display_ns": 20658750,
+        "display_unix_ns": "1788818309590931625"
+      },
+      {
+        "drawable": 688,
+        "draw_ns": 1031917,
+        "submit_ns": 409542,
+        "gpu_ns": 1181542,
+        "total_frame_work_ns": 2623001,
+        "draw_to_gpu_complete_ns": 2751833,
+        "draw_to_display_ns": 19894125,
+        "display_unix_ns": "1788818309607598250"
+      },
+      {
+        "drawable": 689,
+        "draw_ns": 1028000,
+        "submit_ns": 366833,
+        "gpu_ns": 1153333,
+        "total_frame_work_ns": 2548166,
+        "draw_to_gpu_complete_ns": 2610250,
+        "draw_to_display_ns": 20192251,
+        "display_unix_ns": "1788818309624265376"
+      },
+      {
+        "drawable": 690,
+        "draw_ns": 1190541,
+        "submit_ns": 420000,
+        "gpu_ns": 1121750,
+        "total_frame_work_ns": 2732291,
+        "draw_to_gpu_complete_ns": 2799457,
+        "draw_to_display_ns": 20349624,
+        "display_unix_ns": "1788818309649264958"
+      },
+      {
+        "drawable": 691,
+        "draw_ns": 1037250,
+        "submit_ns": 437209,
+        "gpu_ns": 1106000,
+        "total_frame_work_ns": 2580459,
+        "draw_to_gpu_complete_ns": 2721582,
+        "draw_to_display_ns": 19917625,
+        "display_unix_ns": "1788818309657597750"
+      },
+      {
+        "drawable": 692,
+        "draw_ns": 963125,
+        "submit_ns": 394667,
+        "gpu_ns": 1111959,
+        "total_frame_work_ns": 2469751,
+        "draw_to_gpu_complete_ns": 2602666,
+        "draw_to_display_ns": 19820417,
+        "display_unix_ns": "1788818309674265084"
+      },
+      {
+        "drawable": 693,
+        "draw_ns": 1100375,
+        "submit_ns": 434750,
+        "gpu_ns": 1379250,
+        "total_frame_work_ns": 2914375,
+        "draw_to_gpu_complete_ns": 2990250,
+        "draw_to_display_ns": 20632833,
+        "display_unix_ns": "1788818309690931708"
+      },
+      {
+        "drawable": 694,
+        "draw_ns": 936708,
+        "submit_ns": 357750,
+        "gpu_ns": 1131583,
+        "total_frame_work_ns": 2426041,
+        "draw_to_gpu_complete_ns": 2871457,
+        "draw_to_display_ns": 19907666,
+        "display_unix_ns": "1788818309707597458"
+      },
+      {
+        "drawable": 695,
+        "draw_ns": 920542,
+        "submit_ns": 365583,
+        "gpu_ns": 1140708,
+        "total_frame_work_ns": 2426833,
+        "draw_to_gpu_complete_ns": 2775000,
+        "draw_to_display_ns": 20203417,
+        "display_unix_ns": "1788818309724264667"
+      },
+      {
+        "drawable": 696,
+        "draw_ns": 950833,
+        "submit_ns": 474583,
+        "gpu_ns": 1141083,
+        "total_frame_work_ns": 2566499,
+        "draw_to_gpu_complete_ns": 2990666,
+        "draw_to_display_ns": 19855917,
+        "display_unix_ns": "1788818309740930875"
+      },
+      {
+        "drawable": 697,
+        "draw_ns": 2286792,
+        "submit_ns": 624250,
+        "gpu_ns": 1112167,
+        "total_frame_work_ns": 4023209,
+        "draw_to_gpu_complete_ns": 4481208,
+        "draw_to_display_ns": 28189417,
+        "display_unix_ns": "1788818309765931084"
+      },
+      {
+        "drawable": 698,
+        "draw_ns": 2037083,
+        "submit_ns": 718500,
+        "gpu_ns": 1119750,
+        "total_frame_work_ns": 3875333,
+        "draw_to_gpu_complete_ns": 4324624,
+        "draw_to_display_ns": 28199749,
+        "display_unix_ns": "1788818309782597333"
+      },
+      {
+        "drawable": 699,
+        "draw_ns": 2190375,
+        "submit_ns": 710500,
+        "gpu_ns": 1118750,
+        "total_frame_work_ns": 4019625,
+        "draw_to_gpu_complete_ns": 4402416,
+        "draw_to_display_ns": 28200042,
+        "display_unix_ns": "1788818309799264084"
+      },
+      {
+        "drawable": 700,
+        "draw_ns": 2118583,
+        "submit_ns": 710166,
+        "gpu_ns": 1114792,
+        "total_frame_work_ns": 3943541,
+        "draw_to_gpu_complete_ns": 4457958,
+        "draw_to_display_ns": 28190958,
+        "display_unix_ns": "1788818309815930292"
+      },
+      {
+        "drawable": 701,
+        "draw_ns": 2384167,
+        "submit_ns": 749042,
+        "gpu_ns": 1109791,
+        "total_frame_work_ns": 4243000,
+        "draw_to_gpu_complete_ns": 4556999,
+        "draw_to_display_ns": 28175167,
+        "display_unix_ns": "1788818309832597750"
+      },
+      {
+        "drawable": 702,
+        "draw_ns": 2492667,
+        "submit_ns": 1032125,
+        "gpu_ns": 1114333,
+        "total_frame_work_ns": 4639125,
+        "draw_to_gpu_complete_ns": 5187000,
+        "draw_to_display_ns": 28650542,
+        "display_unix_ns": "1788818309849263625"
+      },
+      {
+        "drawable": 703,
+        "draw_ns": 2213667,
+        "submit_ns": 726625,
+        "gpu_ns": 1120125,
+        "total_frame_work_ns": 4060417,
+        "draw_to_gpu_complete_ns": 4716375,
+        "draw_to_display_ns": 28786376,
+        "display_unix_ns": "1788818309865930334"
+      },
+      {
+        "drawable": 704,
+        "draw_ns": 2389875,
+        "submit_ns": 846584,
+        "gpu_ns": 1110875,
+        "total_frame_work_ns": 4347334,
+        "draw_to_gpu_complete_ns": 4844666,
+        "draw_to_display_ns": 28514875,
+        "display_unix_ns": "1788818309882596750"
+      },
+      {
+        "drawable": 705,
+        "draw_ns": 2209667,
+        "submit_ns": 830875,
+        "gpu_ns": 1110542,
+        "total_frame_work_ns": 4151084,
+        "draw_to_gpu_complete_ns": 4626791,
+        "draw_to_display_ns": 28916541,
+        "display_unix_ns": "1788818309899263916"
+      },
+      {
+        "drawable": 706,
+        "draw_ns": 2233291,
+        "submit_ns": 700042,
+        "gpu_ns": 1111583,
+        "total_frame_work_ns": 4044916,
+        "draw_to_gpu_complete_ns": 4562499,
+        "draw_to_display_ns": 28196958,
+        "display_unix_ns": "1788818309915930500"
+      },
+      {
+        "drawable": 707,
+        "draw_ns": 2450041,
+        "submit_ns": 863292,
+        "gpu_ns": 1115542,
+        "total_frame_work_ns": 4428875,
+        "draw_to_gpu_complete_ns": 4966416,
+        "draw_to_display_ns": 28133458,
+        "display_unix_ns": "1788818309932596667"
+      },
+      {
+        "drawable": 708,
+        "draw_ns": 2543208,
+        "submit_ns": 724708,
+        "gpu_ns": 1123417,
+        "total_frame_work_ns": 4391333,
+        "draw_to_gpu_complete_ns": 4953541,
+        "draw_to_display_ns": 28867916,
+        "display_unix_ns": "1788818309949263583"
+      },
+      {
+        "drawable": 709,
+        "draw_ns": 2287958,
+        "submit_ns": 795375,
+        "gpu_ns": 1126375,
+        "total_frame_work_ns": 4209708,
+        "draw_to_gpu_complete_ns": 4936250,
+        "draw_to_display_ns": 28802042,
+        "display_unix_ns": "1788818309965929667"
+      },
+      {
+        "drawable": 710,
+        "draw_ns": 2582750,
+        "submit_ns": 776666,
+        "gpu_ns": 1117583,
+        "total_frame_work_ns": 4476999,
+        "draw_to_gpu_complete_ns": 5229958,
+        "draw_to_display_ns": 28861292,
+        "display_unix_ns": "1788818309982596417"
+      },
+      {
+        "drawable": 711,
+        "draw_ns": 2695375,
+        "submit_ns": 837000,
+        "gpu_ns": 1120875,
+        "total_frame_work_ns": 4653250,
+        "draw_to_gpu_complete_ns": 5167166,
+        "draw_to_display_ns": 28240500,
+        "display_unix_ns": "1788818309999263334"
+      },
+      {
+        "drawable": 712,
+        "draw_ns": 2369792,
+        "submit_ns": 845041,
+        "gpu_ns": 1122542,
+        "total_frame_work_ns": 4337375,
+        "draw_to_gpu_complete_ns": 4896666,
+        "draw_to_display_ns": 28130874,
+        "display_unix_ns": "1788818310015929749"
+      },
+      {
+        "drawable": 713,
+        "draw_ns": 2603709,
+        "submit_ns": 1075625,
+        "gpu_ns": 1115500,
+        "total_frame_work_ns": 4794834,
+        "draw_to_gpu_complete_ns": 5314541,
+        "draw_to_display_ns": 28219375,
+        "display_unix_ns": "1788818310032596208"
+      },
+      {
+        "drawable": 714,
+        "draw_ns": 2778500,
+        "submit_ns": 903916,
+        "gpu_ns": 1119792,
+        "total_frame_work_ns": 4802208,
+        "draw_to_gpu_complete_ns": 5312875,
+        "draw_to_display_ns": 28207959,
+        "display_unix_ns": "1788818310049262959"
+      },
+      {
+        "drawable": 715,
+        "draw_ns": 2356417,
+        "submit_ns": 942666,
+        "gpu_ns": 1120000,
+        "total_frame_work_ns": 4419083,
+        "draw_to_gpu_complete_ns": 4968875,
+        "draw_to_display_ns": 28178959,
+        "display_unix_ns": "1788818310065929500"
+      },
+      {
+        "drawable": 716,
+        "draw_ns": 3195416,
+        "submit_ns": 931708,
+        "gpu_ns": 1122125,
+        "total_frame_work_ns": 5249249,
+        "draw_to_gpu_complete_ns": 5766833,
+        "draw_to_display_ns": 28660625,
+        "display_unix_ns": "1788818310082596000"
+      },
+      {
+        "drawable": 717,
+        "draw_ns": 2945084,
+        "submit_ns": 987541,
+        "gpu_ns": 1130584,
+        "total_frame_work_ns": 5063209,
+        "draw_to_gpu_complete_ns": 5615999,
+        "draw_to_display_ns": 28560250,
+        "display_unix_ns": "1788818310099262750"
+      },
+      {
+        "drawable": 718,
+        "draw_ns": 3223375,
+        "submit_ns": 957500,
+        "gpu_ns": 1130583,
+        "total_frame_work_ns": 5311458,
+        "draw_to_gpu_complete_ns": 5796416,
+        "draw_to_display_ns": 28768875,
+        "display_unix_ns": "1788818310115928584"
+      },
+      {
+        "drawable": 719,
+        "draw_ns": 2365959,
+        "submit_ns": 761375,
+        "gpu_ns": 1126375,
+        "total_frame_work_ns": 4253709,
+        "draw_to_gpu_complete_ns": 4783957,
+        "draw_to_display_ns": 28492833,
+        "display_unix_ns": "1788818310132595833"
+      },
+      {
+        "drawable": 720,
+        "draw_ns": 1873875,
+        "submit_ns": 666042,
+        "gpu_ns": 1126917,
+        "total_frame_work_ns": 3666834,
+        "draw_to_gpu_complete_ns": 4120084,
+        "draw_to_display_ns": 28205959,
+        "display_unix_ns": "1788818310149261792"
+      },
+      {
+        "drawable": 721,
+        "draw_ns": 2161917,
+        "submit_ns": 618333,
+        "gpu_ns": 1135625,
+        "total_frame_work_ns": 3915875,
+        "draw_to_gpu_complete_ns": 4383791,
+        "draw_to_display_ns": 28227625,
+        "display_unix_ns": "1788818310165928750"
+      },
+      {
+        "drawable": 722,
+        "draw_ns": 2223875,
+        "submit_ns": 842333,
+        "gpu_ns": 1134292,
+        "total_frame_work_ns": 4200500,
+        "draw_to_gpu_complete_ns": 4716458,
+        "draw_to_display_ns": 28126208,
+        "display_unix_ns": "1788818310182595541"
+      },
+      {
+        "drawable": 723,
+        "draw_ns": 2365791,
+        "submit_ns": 712916,
+        "gpu_ns": 1140083,
+        "total_frame_work_ns": 4218790,
+        "draw_to_gpu_complete_ns": 4730999,
+        "draw_to_display_ns": 28128750,
+        "display_unix_ns": "1788818310199261459"
+      },
+      {
+        "drawable": 724,
+        "draw_ns": 2445208,
+        "submit_ns": 1166708,
+        "gpu_ns": 1134875,
+        "total_frame_work_ns": 4746791,
+        "draw_to_gpu_complete_ns": 5366832,
+        "draw_to_display_ns": 28823291,
+        "display_unix_ns": "1788818310215928708"
+      },
+      {
+        "drawable": 725,
+        "draw_ns": 2958917,
+        "submit_ns": 821166,
+        "gpu_ns": 1148000,
+        "total_frame_work_ns": 4928083,
+        "draw_to_gpu_complete_ns": 5417209,
+        "draw_to_display_ns": 28172876,
+        "display_unix_ns": "1788818310232595167"
+      },
+      {
+        "drawable": 726,
+        "draw_ns": 2635750,
+        "submit_ns": 974834,
+        "gpu_ns": 1138625,
+        "total_frame_work_ns": 4749209,
+        "draw_to_gpu_complete_ns": 5257707,
+        "draw_to_display_ns": 28860957,
+        "display_unix_ns": "1788818310249261624"
+      },
+      {
+        "drawable": 727,
+        "draw_ns": 2634416,
+        "submit_ns": 777833,
+        "gpu_ns": 1142708,
+        "total_frame_work_ns": 4554957,
+        "draw_to_gpu_complete_ns": 5052374,
+        "draw_to_display_ns": 28192208,
+        "display_unix_ns": "1788818310265927958"
+      },
+      {
+        "drawable": 728,
+        "draw_ns": 3110792,
+        "submit_ns": 947916,
+        "gpu_ns": 1137208,
+        "total_frame_work_ns": 5195916,
+        "draw_to_gpu_complete_ns": 5713625,
+        "draw_to_display_ns": 28656417,
+        "display_unix_ns": "1788818310282595125"
+      },
+      {
+        "drawable": 729,
+        "draw_ns": 1888125,
+        "submit_ns": 777625,
+        "gpu_ns": 1147583,
+        "total_frame_work_ns": 3813333,
+        "draw_to_gpu_complete_ns": 4089332,
+        "draw_to_display_ns": 23318916,
+        "display_unix_ns": "1788818310299261333"
+      },
+      {
+        "drawable": 730,
+        "draw_ns": 2328708,
+        "submit_ns": 824292,
+        "gpu_ns": 1151375,
+        "total_frame_work_ns": 4304375,
+        "draw_to_gpu_complete_ns": 4874458,
+        "draw_to_display_ns": 28174458,
+        "display_unix_ns": "1788818310324261125"
+      },
+      {
+        "drawable": 731,
+        "draw_ns": 2717292,
+        "submit_ns": 869125,
+        "gpu_ns": 1147375,
+        "total_frame_work_ns": 4733792,
+        "draw_to_gpu_complete_ns": 5287874,
+        "draw_to_display_ns": 28804416,
+        "display_unix_ns": "1788818310340927416"
+      },
+      {
+        "drawable": 732,
+        "draw_ns": 1647833,
+        "submit_ns": 782750,
+        "gpu_ns": 1147250,
+        "total_frame_work_ns": 3577833,
+        "draw_to_gpu_complete_ns": 4069208,
+        "draw_to_display_ns": 20418083,
+        "display_unix_ns": "1788818310349261333"
+      },
+      {
+        "drawable": 733,
+        "draw_ns": 1851917,
+        "submit_ns": 768042,
+        "gpu_ns": 1146375,
+        "total_frame_work_ns": 3766334,
+        "draw_to_gpu_complete_ns": 4454041,
+        "draw_to_display_ns": 28208250,
+        "display_unix_ns": "1788818310374261000"
+      },
+      {
+        "drawable": 734,
+        "draw_ns": 2152625,
+        "submit_ns": 832625,
+        "gpu_ns": 1148750,
+        "total_frame_work_ns": 4134000,
+        "draw_to_gpu_complete_ns": 4730375,
+        "draw_to_display_ns": 28154917,
+        "display_unix_ns": "1788818310390927000"
+      },
+      {
+        "drawable": 735,
+        "draw_ns": 2316208,
+        "submit_ns": 828625,
+        "gpu_ns": 1066709,
+        "total_frame_work_ns": 4211542,
+        "draw_to_gpu_complete_ns": 4813582,
+        "draw_to_display_ns": 28650041,
+        "display_unix_ns": "1788818310407594333"
+      },
+      {
+        "drawable": 736,
+        "draw_ns": 2957250,
+        "submit_ns": 803500,
+        "gpu_ns": 1068667,
+        "total_frame_work_ns": 4829417,
+        "draw_to_gpu_complete_ns": 5491917,
+        "draw_to_display_ns": 29058084,
+        "display_unix_ns": "1788818310424260959"
+      },
+      {
+        "drawable": 737,
+        "draw_ns": 2289834,
+        "submit_ns": 881417,
+        "gpu_ns": 1068250,
+        "total_frame_work_ns": 4239501,
+        "draw_to_gpu_complete_ns": 4821416,
+        "draw_to_display_ns": 28157375,
+        "display_unix_ns": "1788818310440927083"
+      },
+      {
+        "drawable": 738,
+        "draw_ns": 2578208,
+        "submit_ns": 794334,
+        "gpu_ns": 1069917,
+        "total_frame_work_ns": 4442459,
+        "draw_to_gpu_complete_ns": 5131250,
+        "draw_to_display_ns": 28724750,
+        "display_unix_ns": "1788818310457594000"
+      },
+      {
+        "drawable": 739,
+        "draw_ns": 3008708,
+        "submit_ns": 1249334,
+        "gpu_ns": 1067500,
+        "total_frame_work_ns": 5325542,
+        "draw_to_gpu_complete_ns": 5943499,
+        "draw_to_display_ns": 29028625,
+        "display_unix_ns": "1788818310474260542"
+      },
+      {
+        "drawable": 740,
+        "draw_ns": 2349584,
+        "submit_ns": 925417,
+        "gpu_ns": 1114292,
+        "total_frame_work_ns": 4389293,
+        "draw_to_gpu_complete_ns": 4959375,
+        "draw_to_display_ns": 28208417,
+        "display_unix_ns": "1788818310490926833"
+      },
+      {
+        "drawable": 741,
+        "draw_ns": 2293708,
+        "submit_ns": 756916,
+        "gpu_ns": 1069917,
+        "total_frame_work_ns": 4120541,
+        "draw_to_gpu_complete_ns": 4733374,
+        "draw_to_display_ns": 28611874,
+        "display_unix_ns": "1788818310507592833"
+      },
+      {
+        "drawable": 742,
+        "draw_ns": 2008375,
+        "submit_ns": 516250,
+        "gpu_ns": 1073375,
+        "total_frame_work_ns": 3598000,
+        "draw_to_gpu_complete_ns": 4082708,
+        "draw_to_display_ns": 28163542,
+        "display_unix_ns": "1788818310524260000"
+      },
+      {
+        "drawable": 743,
+        "draw_ns": 2434500,
+        "submit_ns": 942375,
+        "gpu_ns": 1074250,
+        "total_frame_work_ns": 4451125,
+        "draw_to_gpu_complete_ns": 5230374,
+        "draw_to_display_ns": 28175791,
+        "display_unix_ns": "1788818310540926541"
+      },
+      {
+        "drawable": 744,
+        "draw_ns": 2079292,
+        "submit_ns": 786417,
+        "gpu_ns": 1068375,
+        "total_frame_work_ns": 3934084,
+        "draw_to_gpu_complete_ns": 4568624,
+        "draw_to_display_ns": 28054624,
+        "display_unix_ns": "1788818310557593041"
+      },
+      {
+        "drawable": 745,
+        "draw_ns": 2740875,
+        "submit_ns": 879542,
+        "gpu_ns": 1073417,
+        "total_frame_work_ns": 4693834,
+        "draw_to_gpu_complete_ns": 5331458,
+        "draw_to_display_ns": 28707541,
+        "display_unix_ns": "1788818310574259249"
+      },
+      {
+        "drawable": 746,
+        "draw_ns": 2571542,
+        "submit_ns": 924708,
+        "gpu_ns": 1070208,
+        "total_frame_work_ns": 4566458,
+        "draw_to_gpu_complete_ns": 5147916,
+        "draw_to_display_ns": 28545333,
+        "display_unix_ns": "1788818310590926208"
+      },
+      {
+        "drawable": 747,
+        "draw_ns": 2885417,
+        "submit_ns": 825041,
+        "gpu_ns": 1071917,
+        "total_frame_work_ns": 4782375,
+        "draw_to_gpu_complete_ns": 5302542,
+        "draw_to_display_ns": 28789001,
+        "display_unix_ns": "1788818310607593167"
+      },
+      {
+        "drawable": 748,
+        "draw_ns": 2199792,
+        "submit_ns": 1172083,
+        "gpu_ns": 1075166,
+        "total_frame_work_ns": 4447041,
+        "draw_to_gpu_complete_ns": 4895249,
+        "draw_to_display_ns": 29027792,
+        "display_unix_ns": "1788818310624259000"
+      },
+      {
+        "drawable": 749,
+        "draw_ns": 2834791,
+        "submit_ns": 967208,
+        "gpu_ns": 1072000,
+        "total_frame_work_ns": 4873999,
+        "draw_to_gpu_complete_ns": 5346499,
+        "draw_to_display_ns": 28681624,
+        "display_unix_ns": "1788818310640926333"
+      },
+      {
+        "drawable": 750,
+        "draw_ns": 2840916,
+        "submit_ns": 709584,
+        "gpu_ns": 1075042,
+        "total_frame_work_ns": 4625542,
+        "draw_to_gpu_complete_ns": 5107500,
+        "draw_to_display_ns": 28103209,
+        "display_unix_ns": "1788818310657592459"
+      },
+      {
+        "drawable": 751,
+        "draw_ns": 2528917,
+        "submit_ns": 806333,
+        "gpu_ns": 1083125,
+        "total_frame_work_ns": 4418375,
+        "draw_to_gpu_complete_ns": 4995708,
+        "draw_to_display_ns": 28694000,
+        "display_unix_ns": "1788818310674258458"
+      },
+      {
+        "drawable": 752,
+        "draw_ns": 2739125,
+        "submit_ns": 965250,
+        "gpu_ns": 1078125,
+        "total_frame_work_ns": 4782500,
+        "draw_to_gpu_complete_ns": 5281874,
+        "draw_to_display_ns": 28574041,
+        "display_unix_ns": "1788818310690925916"
+      },
+      {
+        "drawable": 753,
+        "draw_ns": 2937416,
+        "submit_ns": 1073958,
+        "gpu_ns": 1079875,
+        "total_frame_work_ns": 5091249,
+        "draw_to_gpu_complete_ns": 5581166,
+        "draw_to_display_ns": 28654167,
+        "display_unix_ns": "1788818310707591834"
+      },
+      {
+        "drawable": 754,
+        "draw_ns": 3160292,
+        "submit_ns": 831667,
+        "gpu_ns": 1078250,
+        "total_frame_work_ns": 5070209,
+        "draw_to_gpu_complete_ns": 5572624,
+        "draw_to_display_ns": 28565375,
+        "display_unix_ns": "1788818310724259250"
+      },
+      {
+        "drawable": 755,
+        "draw_ns": 2419125,
+        "submit_ns": 848542,
+        "gpu_ns": 1074833,
+        "total_frame_work_ns": 4342500,
+        "draw_to_gpu_complete_ns": 4839166,
+        "draw_to_display_ns": 28168125,
+        "display_unix_ns": "1788818310740924917"
+      },
+      {
+        "drawable": 756,
+        "draw_ns": 2549542,
+        "submit_ns": 752125,
+        "gpu_ns": 1076000,
+        "total_frame_work_ns": 4377667,
+        "draw_to_gpu_complete_ns": 4819875,
+        "draw_to_display_ns": 28767626,
+        "display_unix_ns": "1788818310757591834"
+      },
+      {
+        "drawable": 757,
+        "draw_ns": 3344959,
+        "submit_ns": 728458,
+        "gpu_ns": 1091375,
+        "total_frame_work_ns": 5164792,
+        "draw_to_gpu_complete_ns": 5640458,
+        "draw_to_display_ns": 28186917,
+        "display_unix_ns": "1788818310774258375"
+      },
+      {
+        "drawable": 758,
+        "draw_ns": 2642875,
+        "submit_ns": 906791,
+        "gpu_ns": 1085125,
+        "total_frame_work_ns": 4634791,
+        "draw_to_gpu_complete_ns": 5198458,
+        "draw_to_display_ns": 28161917,
+        "display_unix_ns": "1788818310790925167"
+      },
+      {
+        "drawable": 759,
+        "draw_ns": 2312750,
+        "submit_ns": 784042,
+        "gpu_ns": 1155875,
+        "total_frame_work_ns": 4252667,
+        "draw_to_gpu_complete_ns": 4572333,
+        "draw_to_display_ns": 28103583,
+        "display_unix_ns": "1788818310807591083"
+      },
+      {
+        "drawable": 760,
+        "draw_ns": 2796083,
+        "submit_ns": 717708,
+        "gpu_ns": 1093083,
+        "total_frame_work_ns": 4606874,
+        "draw_to_gpu_complete_ns": 4827415,
+        "draw_to_display_ns": 29051374,
+        "display_unix_ns": "1788818310824257958"
+      },
+      {
+        "drawable": 761,
+        "draw_ns": 2617459,
+        "submit_ns": 902000,
+        "gpu_ns": 1080625,
+        "total_frame_work_ns": 4600084,
+        "draw_to_gpu_complete_ns": 4757625,
+        "draw_to_display_ns": 28114500,
+        "display_unix_ns": "1788818310840924958"
+      },
+      {
+        "drawable": 762,
+        "draw_ns": 2391375,
+        "submit_ns": 796042,
+        "gpu_ns": 1079458,
+        "total_frame_work_ns": 4266875,
+        "draw_to_gpu_complete_ns": 4540916,
+        "draw_to_display_ns": 28324792,
+        "display_unix_ns": "1788818310857591167"
+      },
+      {
+        "drawable": 763,
+        "draw_ns": 3150209,
+        "submit_ns": 816417,
+        "gpu_ns": 1077750,
+        "total_frame_work_ns": 5044376,
+        "draw_to_gpu_complete_ns": 5503333,
+        "draw_to_display_ns": 28179417,
+        "display_unix_ns": "1788818310874258167"
+      },
+      {
+        "drawable": 764,
+        "draw_ns": 2631000,
+        "submit_ns": 912750,
+        "gpu_ns": 1085000,
+        "total_frame_work_ns": 4628750,
+        "draw_to_gpu_complete_ns": 4801875,
+        "draw_to_display_ns": 28145542,
+        "display_unix_ns": "1788818310890924500"
+      },
+      {
+        "drawable": 765,
+        "draw_ns": 2855583,
+        "submit_ns": 675625,
+        "gpu_ns": 1219000,
+        "total_frame_work_ns": 4750208,
+        "draw_to_gpu_complete_ns": 5261333,
+        "draw_to_display_ns": 28670208,
+        "display_unix_ns": "1788818310907591041"
+      },
+      {
+        "drawable": 766,
+        "draw_ns": 2024958,
+        "submit_ns": 743166,
+        "gpu_ns": 1081125,
+        "total_frame_work_ns": 3849249,
+        "draw_to_gpu_complete_ns": 4330166,
+        "draw_to_display_ns": 28160333,
+        "display_unix_ns": "1788818310924257208"
+      },
+      {
+        "drawable": 767,
+        "draw_ns": 3068709,
+        "submit_ns": 846375,
+        "gpu_ns": 1085875,
+        "total_frame_work_ns": 5000959,
+        "draw_to_gpu_complete_ns": 5165333,
+        "draw_to_display_ns": 28131750,
+        "display_unix_ns": "1788818310940924333"
+      },
+      {
+        "drawable": 768,
+        "draw_ns": 3261916,
+        "submit_ns": 741792,
+        "gpu_ns": 1140834,
+        "total_frame_work_ns": 5144542,
+        "draw_to_gpu_complete_ns": 5306124,
+        "draw_to_display_ns": 28109250,
+        "display_unix_ns": "1788818310957590834"
+      },
+      {
+        "drawable": 769,
+        "draw_ns": 1357458,
+        "submit_ns": 835458,
+        "gpu_ns": 1140000,
+        "total_frame_work_ns": 3332916,
+        "draw_to_gpu_complete_ns": 3494791,
+        "draw_to_display_ns": 20222458,
+        "display_unix_ns": "1788818310965924333"
+      },
+      {
+        "drawable": 770,
+        "draw_ns": 2834708,
+        "submit_ns": 889083,
+        "gpu_ns": 1094459,
+        "total_frame_work_ns": 4818250,
+        "draw_to_gpu_complete_ns": 5113999,
+        "draw_to_display_ns": 29099416,
+        "display_unix_ns": "1788818310990923458"
+      },
+      {
+        "drawable": 771,
+        "draw_ns": 2812542,
+        "submit_ns": 715334,
+        "gpu_ns": 1089000,
+        "total_frame_work_ns": 4616876,
+        "draw_to_gpu_complete_ns": 4798250,
+        "draw_to_display_ns": 28354750,
+        "display_unix_ns": "1788818311007590083"
+      },
+      {
+        "drawable": 772,
+        "draw_ns": 2666875,
+        "submit_ns": 724083,
+        "gpu_ns": 1088125,
+        "total_frame_work_ns": 4479083,
+        "draw_to_gpu_complete_ns": 4941375,
+        "draw_to_display_ns": 29028709,
+        "display_unix_ns": "1788818311024257042"
+      },
+      {
+        "drawable": 773,
+        "draw_ns": 2955667,
+        "submit_ns": 934584,
+        "gpu_ns": 1086875,
+        "total_frame_work_ns": 4977126,
+        "draw_to_gpu_complete_ns": 5440708,
+        "draw_to_display_ns": 28176334,
+        "display_unix_ns": "1788818311040923209"
+      },
+      {
+        "drawable": 774,
+        "draw_ns": 3114916,
+        "submit_ns": 823541,
+        "gpu_ns": 1088250,
+        "total_frame_work_ns": 5026707,
+        "draw_to_gpu_complete_ns": 5542707,
+        "draw_to_display_ns": 28688708,
+        "display_unix_ns": "1788818311057590125"
+      },
+      {
+        "drawable": 775,
+        "draw_ns": 2897542,
+        "submit_ns": 792833,
+        "gpu_ns": 1097500,
+        "total_frame_work_ns": 4787875,
+        "draw_to_gpu_complete_ns": 5428166,
+        "draw_to_display_ns": 28776625,
+        "display_unix_ns": "1788818311074256583"
+      },
+      {
+        "drawable": 776,
+        "draw_ns": 2503125,
+        "submit_ns": 907417,
+        "gpu_ns": 1103250,
+        "total_frame_work_ns": 4513792,
+        "draw_to_gpu_complete_ns": 5015540,
+        "draw_to_display_ns": 28163582,
+        "display_unix_ns": "1788818311090923291"
+      },
+      {
+        "drawable": 777,
+        "draw_ns": 3120208,
+        "submit_ns": 937125,
+        "gpu_ns": 1088042,
+        "total_frame_work_ns": 5145375,
+        "draw_to_gpu_complete_ns": 5676124,
+        "draw_to_display_ns": 28727749,
+        "display_unix_ns": "1788818311107589416"
+      },
+      {
+        "drawable": 778,
+        "draw_ns": 2586417,
+        "submit_ns": 943375,
+        "gpu_ns": 1091667,
+        "total_frame_work_ns": 4621459,
+        "draw_to_gpu_complete_ns": 5183459,
+        "draw_to_display_ns": 28766001,
+        "display_unix_ns": "1788818311124256792"
+      },
+      {
+        "drawable": 779,
+        "draw_ns": 2876083,
+        "submit_ns": 831709,
+        "gpu_ns": 1096500,
+        "total_frame_work_ns": 4804292,
+        "draw_to_gpu_complete_ns": 5311082,
+        "draw_to_display_ns": 28109332,
+        "display_unix_ns": "1788818311140923166"
+      },
+      {
+        "drawable": 780,
+        "draw_ns": 2827583,
+        "submit_ns": 910708,
+        "gpu_ns": 1095375,
+        "total_frame_work_ns": 4833666,
+        "draw_to_gpu_complete_ns": 5329708,
+        "draw_to_display_ns": 28176125,
+        "display_unix_ns": "1788818311157589542"
+      },
+      {
+        "drawable": 781,
+        "draw_ns": 2779625,
+        "submit_ns": 1071083,
+        "gpu_ns": 1099708,
+        "total_frame_work_ns": 4950416,
+        "draw_to_gpu_complete_ns": 5484666,
+        "draw_to_display_ns": 28787792,
+        "display_unix_ns": "1788818311174255667"
+      },
+      {
+        "drawable": 782,
+        "draw_ns": 3095375,
+        "submit_ns": 940000,
+        "gpu_ns": 1096625,
+        "total_frame_work_ns": 5132000,
+        "draw_to_gpu_complete_ns": 5730083,
+        "draw_to_display_ns": 29046959,
+        "display_unix_ns": "1788818311190922542"
+      },
+      {
+        "drawable": 783,
+        "draw_ns": 2976250,
+        "submit_ns": 920750,
+        "gpu_ns": 1102417,
+        "total_frame_work_ns": 4999417,
+        "draw_to_gpu_complete_ns": 5482125,
+        "draw_to_display_ns": 28775542,
+        "display_unix_ns": "1788818311207588917"
+      },
+      {
+        "drawable": 784,
+        "draw_ns": 2829041,
+        "submit_ns": 792000,
+        "gpu_ns": 1103666,
+        "total_frame_work_ns": 4724707,
+        "draw_to_gpu_complete_ns": 5230331,
+        "draw_to_display_ns": 28752082,
+        "display_unix_ns": "1788818311224255666"
+      },
+      {
+        "drawable": 785,
+        "draw_ns": 2829458,
+        "submit_ns": 850875,
+        "gpu_ns": 1106625,
+        "total_frame_work_ns": 4786958,
+        "draw_to_gpu_complete_ns": 5342999,
+        "draw_to_display_ns": 28665124,
+        "display_unix_ns": "1788818311240921874"
+      },
+      {
+        "drawable": 786,
+        "draw_ns": 3160208,
+        "submit_ns": 949708,
+        "gpu_ns": 1100250,
+        "total_frame_work_ns": 5210166,
+        "draw_to_gpu_complete_ns": 5700415,
+        "draw_to_display_ns": 28714874,
+        "display_unix_ns": "1788818311257588708"
+      },
+      {
+        "drawable": 787,
+        "draw_ns": 2796083,
+        "submit_ns": 870125,
+        "gpu_ns": 1099959,
+        "total_frame_work_ns": 4766167,
+        "draw_to_gpu_complete_ns": 5315249,
+        "draw_to_display_ns": 28181541,
+        "display_unix_ns": "1788818311274255208"
+      },
+      {
+        "drawable": 788,
+        "draw_ns": 2964125,
+        "submit_ns": 990500,
+        "gpu_ns": 1101250,
+        "total_frame_work_ns": 5055875,
+        "draw_to_gpu_complete_ns": 5630957,
+        "draw_to_display_ns": 28580583,
+        "display_unix_ns": "1788818311290922500"
+      },
+      {
+        "drawable": 789,
+        "draw_ns": 2919167,
+        "submit_ns": 926125,
+        "gpu_ns": 1179375,
+        "total_frame_work_ns": 5024667,
+        "draw_to_gpu_complete_ns": 5596875,
+        "draw_to_display_ns": 28791584,
+        "display_unix_ns": "1788818311307589042"
+      },
+      {
+        "drawable": 790,
+        "draw_ns": 2794291,
+        "submit_ns": 846334,
+        "gpu_ns": 1194333,
+        "total_frame_work_ns": 4834958,
+        "draw_to_gpu_complete_ns": 5027458,
+        "draw_to_display_ns": 28935750,
+        "display_unix_ns": "1788818311324255625"
+      },
+      {
+        "drawable": 791,
+        "draw_ns": 3926041,
+        "submit_ns": 1019166,
+        "gpu_ns": 1106375,
+        "total_frame_work_ns": 6051582,
+        "draw_to_gpu_complete_ns": 6350707,
+        "draw_to_display_ns": 27876499,
+        "display_unix_ns": "1788818311340922041"
+      },
+      {
+        "drawable": 792,
+        "draw_ns": 2105291,
+        "submit_ns": 767458,
+        "gpu_ns": 1112458,
+        "total_frame_work_ns": 3985207,
+        "draw_to_gpu_complete_ns": 4157457,
+        "draw_to_display_ns": 28088666,
+        "display_unix_ns": "1788818311357588250"
+      },
+      {
+        "drawable": 793,
+        "draw_ns": 2626958,
+        "submit_ns": 431625,
+        "gpu_ns": 1104125,
+        "total_frame_work_ns": 4162708,
+        "draw_to_gpu_complete_ns": 4316541,
+        "draw_to_display_ns": 20669041,
+        "display_unix_ns": "1788818311365921291"
+      },
+      {
+        "drawable": 794,
+        "draw_ns": 3111000,
+        "submit_ns": 739792,
+        "gpu_ns": 1104292,
+        "total_frame_work_ns": 4955084,
+        "draw_to_gpu_complete_ns": 5061833,
+        "draw_to_display_ns": 28523792,
+        "display_unix_ns": "1788818311390921917"
+      },
+      {
+        "drawable": 795,
+        "draw_ns": 2721916,
+        "submit_ns": 804250,
+        "gpu_ns": 1108250,
+        "total_frame_work_ns": 4634416,
+        "draw_to_gpu_complete_ns": 4933707,
+        "draw_to_display_ns": 28647666,
+        "display_unix_ns": "1788818311407587708"
+      },
+      {
+        "drawable": 796,
+        "draw_ns": 2187875,
+        "submit_ns": 971834,
+        "gpu_ns": 1106500,
+        "total_frame_work_ns": 4266209,
+        "draw_to_gpu_complete_ns": 4459833,
+        "draw_to_display_ns": 28526834,
+        "display_unix_ns": "1788818311424254126"
+      },
+      {
+        "drawable": 797,
+        "draw_ns": 2542208,
+        "submit_ns": 1050167,
+        "gpu_ns": 1106500,
+        "total_frame_work_ns": 4698875,
+        "draw_to_gpu_complete_ns": 4917124,
+        "draw_to_display_ns": 28681666,
+        "display_unix_ns": "1788818311440920791"
+      },
+      {
+        "drawable": 798,
+        "draw_ns": 3137750,
+        "submit_ns": 780375,
+        "gpu_ns": 1111125,
+        "total_frame_work_ns": 5029250,
+        "draw_to_gpu_complete_ns": 5235417,
+        "draw_to_display_ns": 28489334,
+        "display_unix_ns": "1788818311457587917"
+      },
+      {
+        "drawable": 799,
+        "draw_ns": 2335917,
+        "submit_ns": 881542,
+        "gpu_ns": 1118250,
+        "total_frame_work_ns": 4335709,
+        "draw_to_gpu_complete_ns": 4519083,
+        "draw_to_display_ns": 28055625,
+        "display_unix_ns": "1788818311474254083"
+      },
+      {
+        "drawable": 800,
+        "draw_ns": 2339833,
+        "submit_ns": 835625,
+        "gpu_ns": 1117208,
+        "total_frame_work_ns": 4292666,
+        "draw_to_gpu_complete_ns": 4449582,
+        "draw_to_display_ns": 27983333,
+        "display_unix_ns": "1788818311490921167"
+      },
+      {
+        "drawable": 801,
+        "draw_ns": 2832208,
+        "submit_ns": 1004500,
+        "gpu_ns": 1107375,
+        "total_frame_work_ns": 4944083,
+        "draw_to_gpu_complete_ns": 5128375,
+        "draw_to_display_ns": 28633209,
+        "display_unix_ns": "1788818311507587292"
+      },
+      {
+        "drawable": 802,
+        "draw_ns": 2694875,
+        "submit_ns": 864625,
+        "gpu_ns": 1117042,
+        "total_frame_work_ns": 4676542,
+        "draw_to_gpu_complete_ns": 4879333,
+        "draw_to_display_ns": 28883208,
+        "display_unix_ns": "1788818311524254083"
+      },
+      {
+        "drawable": 803,
+        "draw_ns": 2380667,
+        "submit_ns": 918875,
+        "gpu_ns": 1113708,
+        "total_frame_work_ns": 4413250,
+        "draw_to_gpu_complete_ns": 4999041,
+        "draw_to_display_ns": 28569208,
+        "display_unix_ns": "1788818311540920750"
+      },
+      {
+        "drawable": 804,
+        "draw_ns": 2400458,
+        "submit_ns": 863000,
+        "gpu_ns": 1112459,
+        "total_frame_work_ns": 4375917,
+        "draw_to_gpu_complete_ns": 5045374,
+        "draw_to_display_ns": 28714583,
+        "display_unix_ns": "1788818311557586958"
+      },
+      {
+        "drawable": 805,
+        "draw_ns": 2952458,
+        "submit_ns": 997708,
+        "gpu_ns": 1109250,
+        "total_frame_work_ns": 5059416,
+        "draw_to_gpu_complete_ns": 5553333,
+        "draw_to_display_ns": 28195625,
+        "display_unix_ns": "1788818311574253500"
+      },
+      {
+        "drawable": 806,
+        "draw_ns": 2479250,
+        "submit_ns": 821250,
+        "gpu_ns": 1115917,
+        "total_frame_work_ns": 4416417,
+        "draw_to_gpu_complete_ns": 4908125,
+        "draw_to_display_ns": 28155375,
+        "display_unix_ns": "1788818311590920125"
+      },
+      {
+        "drawable": 807,
+        "draw_ns": 2487750,
+        "submit_ns": 750416,
+        "gpu_ns": 1169542,
+        "total_frame_work_ns": 4407708,
+        "draw_to_gpu_complete_ns": 4577917,
+        "draw_to_display_ns": 28733834,
+        "display_unix_ns": "1788818311607586500"
+      },
+      {
+        "drawable": 808,
+        "draw_ns": 3026792,
+        "submit_ns": 777500,
+        "gpu_ns": 1120250,
+        "total_frame_work_ns": 4924542,
+        "draw_to_gpu_complete_ns": 5073042,
+        "draw_to_display_ns": 28489626,
+        "display_unix_ns": "1788818311624253959"
+      },
+      {
+        "drawable": 809,
+        "draw_ns": 2912208,
+        "submit_ns": 749000,
+        "gpu_ns": 1118875,
+        "total_frame_work_ns": 4780083,
+        "draw_to_gpu_complete_ns": 5022749,
+        "draw_to_display_ns": 28604250,
+        "display_unix_ns": "1788818311640920125"
+      },
+      {
+        "drawable": 810,
+        "draw_ns": 2329833,
+        "submit_ns": 728834,
+        "gpu_ns": 1377000,
+        "total_frame_work_ns": 4435667,
+        "draw_to_gpu_complete_ns": 4916874,
+        "draw_to_display_ns": 28202000,
+        "display_unix_ns": "1788818311657586292"
+      },
+      {
+        "drawable": 811,
+        "draw_ns": 2490416,
+        "submit_ns": 770083,
+        "gpu_ns": 1116792,
+        "total_frame_work_ns": 4377291,
+        "draw_to_gpu_complete_ns": 4562416,
+        "draw_to_display_ns": 28512999,
+        "display_unix_ns": "1788818311674252791"
+      },
+      {
+        "drawable": 812,
+        "draw_ns": 2403791,
+        "submit_ns": 898333,
+        "gpu_ns": 1115375,
+        "total_frame_work_ns": 4417499,
+        "draw_to_gpu_complete_ns": 4901124,
+        "draw_to_display_ns": 28145500,
+        "display_unix_ns": "1788818311690920042"
+      },
+      {
+        "drawable": 813,
+        "draw_ns": 2240542,
+        "submit_ns": 774459,
+        "gpu_ns": 1120083,
+        "total_frame_work_ns": 4135084,
+        "draw_to_gpu_complete_ns": 4300624,
+        "draw_to_display_ns": 20418875,
+        "display_unix_ns": "1788818311699253000"
+      },
+      {
+        "drawable": 814,
+        "draw_ns": 2887667,
+        "submit_ns": 827959,
+        "gpu_ns": 1120000,
+        "total_frame_work_ns": 4835626,
+        "draw_to_gpu_complete_ns": 5438083,
+        "draw_to_display_ns": 28732584,
+        "display_unix_ns": "1788818311724252667"
+      },
+      {
+        "drawable": 815,
+        "draw_ns": 2360666,
+        "submit_ns": 841541,
+        "gpu_ns": 1125292,
+        "total_frame_work_ns": 4327499,
+        "draw_to_gpu_complete_ns": 4838000,
+        "draw_to_display_ns": 28134667,
+        "display_unix_ns": "1788818311740919042"
+      },
+      {
+        "drawable": 816,
+        "draw_ns": 2443958,
+        "submit_ns": 836625,
+        "gpu_ns": 1126376,
+        "total_frame_work_ns": 4406959,
+        "draw_to_gpu_complete_ns": 4988125,
+        "draw_to_display_ns": 28778625,
+        "display_unix_ns": "1788818311757585750"
+      },
+      {
+        "drawable": 817,
+        "draw_ns": 2696125,
+        "submit_ns": 971458,
+        "gpu_ns": 1124375,
+        "total_frame_work_ns": 4791958,
+        "draw_to_gpu_complete_ns": 5343332,
+        "draw_to_display_ns": 28539332,
+        "display_unix_ns": "1788818311774252249"
+      },
+      {
+        "drawable": 818,
+        "draw_ns": 3589584,
+        "submit_ns": 952375,
+        "gpu_ns": 1128208,
+        "total_frame_work_ns": 5670167,
+        "draw_to_gpu_complete_ns": 6213166,
+        "draw_to_display_ns": 28954792,
+        "display_unix_ns": "1788818311790919417"
+      },
+      {
+        "drawable": 819,
+        "draw_ns": 3599417,
+        "submit_ns": 785833,
+        "gpu_ns": 1495833,
+        "total_frame_work_ns": 5881083,
+        "draw_to_gpu_complete_ns": 6375125,
+        "draw_to_display_ns": 28123167,
+        "display_unix_ns": "1788818311807586042"
+      },
+      {
+        "drawable": 820,
+        "draw_ns": 2759500,
+        "submit_ns": 963417,
+        "gpu_ns": 1130750,
+        "total_frame_work_ns": 4853667,
+        "draw_to_gpu_complete_ns": 5370125,
+        "draw_to_display_ns": 28275376,
+        "display_unix_ns": "1788818311824251876"
+      },
+      {
+        "drawable": 821,
+        "draw_ns": 2601250,
+        "submit_ns": 841833,
+        "gpu_ns": 1408875,
+        "total_frame_work_ns": 4851958,
+        "draw_to_gpu_complete_ns": 5297666,
+        "draw_to_display_ns": 27641875,
+        "display_unix_ns": "1788818311840918625"
+      },
+      {
+        "drawable": 822,
+        "draw_ns": 2616125,
+        "submit_ns": 873042,
+        "gpu_ns": 1131792,
+        "total_frame_work_ns": 4620959,
+        "draw_to_gpu_complete_ns": 5087541,
+        "draw_to_display_ns": 28167791,
+        "display_unix_ns": "1788818311857585583"
+      },
+      {
+        "drawable": 823,
+        "draw_ns": 3065833,
+        "submit_ns": 911375,
+        "gpu_ns": 1582667,
+        "total_frame_work_ns": 5559875,
+        "draw_to_gpu_complete_ns": 6098207,
+        "draw_to_display_ns": 28231291,
+        "display_unix_ns": "1788818311874252375"
+      },
+      {
+        "drawable": 824,
+        "draw_ns": 3398000,
+        "submit_ns": 875750,
+        "gpu_ns": 1138500,
+        "total_frame_work_ns": 5412250,
+        "draw_to_gpu_complete_ns": 5947333,
+        "draw_to_display_ns": 28694750,
+        "display_unix_ns": "1788818311890918375"
+      },
+      {
+        "drawable": 825,
+        "draw_ns": 2411208,
+        "submit_ns": 1070833,
+        "gpu_ns": 1141375,
+        "total_frame_work_ns": 4623416,
+        "draw_to_gpu_complete_ns": 5138166,
+        "draw_to_display_ns": 28059083,
+        "display_unix_ns": "1788818311907584583"
+      },
+      {
+        "drawable": 826,
+        "draw_ns": 2680916,
+        "submit_ns": 867083,
+        "gpu_ns": 1139917,
+        "total_frame_work_ns": 4687916,
+        "draw_to_gpu_complete_ns": 5277125,
+        "draw_to_display_ns": 28209625,
+        "display_unix_ns": "1788818311924251750"
+      },
+      {
+        "drawable": 827,
+        "draw_ns": 2762333,
+        "submit_ns": 839083,
+        "gpu_ns": 1139625,
+        "total_frame_work_ns": 4741041,
+        "draw_to_gpu_complete_ns": 5365666,
+        "draw_to_display_ns": 28121750,
+        "display_unix_ns": "1788818311940918417"
+      },
+      {
+        "drawable": 828,
+        "draw_ns": 2811917,
+        "submit_ns": 909125,
+        "gpu_ns": 1143208,
+        "total_frame_work_ns": 4864250,
+        "draw_to_gpu_complete_ns": 5593541,
+        "draw_to_display_ns": 28962083,
+        "display_unix_ns": "1788818311957584875"
+      },
+      {
+        "drawable": 829,
+        "draw_ns": 2233333,
+        "submit_ns": 857000,
+        "gpu_ns": 1147750,
+        "total_frame_work_ns": 4238083,
+        "draw_to_gpu_complete_ns": 4975124,
+        "draw_to_display_ns": 28581125,
+        "display_unix_ns": "1788818311974251125"
+      },
+      {
+        "drawable": 830,
+        "draw_ns": 3336750,
+        "submit_ns": 977291,
+        "gpu_ns": 1138125,
+        "total_frame_work_ns": 5452166,
+        "draw_to_gpu_complete_ns": 5961624,
+        "draw_to_display_ns": 28656374,
+        "display_unix_ns": "1788818311990917916"
+      },
+      {
+        "drawable": 831,
+        "draw_ns": 2406041,
+        "submit_ns": 768250,
+        "gpu_ns": 1146125,
+        "total_frame_work_ns": 4320416,
+        "draw_to_gpu_complete_ns": 4804333,
+        "draw_to_display_ns": 28197000,
+        "display_unix_ns": "1788818312007584375"
+      },
+      {
+        "drawable": 832,
+        "draw_ns": 2756042,
+        "submit_ns": 865292,
+        "gpu_ns": 1144875,
+        "total_frame_work_ns": 4766209,
+        "draw_to_gpu_complete_ns": 5370916,
+        "draw_to_display_ns": 29076167,
+        "display_unix_ns": "1788818312024251500"
+      },
+      {
+        "drawable": 833,
+        "draw_ns": 3260542,
+        "submit_ns": 787750,
+        "gpu_ns": 1142708,
+        "total_frame_work_ns": 5191000,
+        "draw_to_gpu_complete_ns": 5668083,
+        "draw_to_display_ns": 28172459,
+        "display_unix_ns": "1788818312040917667"
+      },
+      {
+        "drawable": 834,
+        "draw_ns": 3242209,
+        "submit_ns": 899416,
+        "gpu_ns": 1622208,
+        "total_frame_work_ns": 5763833,
+        "draw_to_gpu_complete_ns": 6283666,
+        "draw_to_display_ns": 28186375,
+        "display_unix_ns": "1788818312057584250"
+      },
+      {
+        "drawable": 835,
+        "draw_ns": 1279334,
+        "submit_ns": 467333,
+        "gpu_ns": 1178583,
+        "total_frame_work_ns": 2925250,
+        "draw_to_gpu_complete_ns": 3328166,
+        "draw_to_display_ns": 20393000,
+        "display_unix_ns": "1788818312065917208"
+      },
+      {
+        "drawable": 836,
+        "draw_ns": 1394250,
+        "submit_ns": 488000,
+        "gpu_ns": 1070333,
+        "total_frame_work_ns": 2952583,
+        "draw_to_gpu_complete_ns": 3470584,
+        "draw_to_display_ns": 19844668,
+        "display_unix_ns": "1788818312082583709"
+      },
+      {
+        "drawable": 837,
+        "draw_ns": 3325375,
+        "submit_ns": 938667,
+        "gpu_ns": 1065625,
+        "total_frame_work_ns": 5329667,
+        "draw_to_gpu_complete_ns": 5893541,
+        "draw_to_display_ns": 28480583,
+        "display_unix_ns": "1788818312107584291"
+      },
+      {
+        "drawable": 838,
+        "draw_ns": 2771875,
+        "submit_ns": 888291,
+        "gpu_ns": 1066125,
+        "total_frame_work_ns": 4726291,
+        "draw_to_gpu_complete_ns": 5351249,
+        "draw_to_display_ns": 28920166,
+        "display_unix_ns": "1788818312124250541"
+      },
+      {
+        "drawable": 839,
+        "draw_ns": 2179833,
+        "submit_ns": 767958,
+        "gpu_ns": 1062250,
+        "total_frame_work_ns": 4010041,
+        "draw_to_gpu_complete_ns": 4508249,
+        "draw_to_display_ns": 27266416,
+        "display_unix_ns": "1788818312140916708"
+      },
+      {
+        "drawable": 840,
+        "draw_ns": 2342542,
+        "submit_ns": 1463292,
+        "gpu_ns": 1063834,
+        "total_frame_work_ns": 4869668,
+        "draw_to_gpu_complete_ns": 5392458,
+        "draw_to_display_ns": 28180875,
+        "display_unix_ns": "1788818312157583708"
+      },
+      {
+        "drawable": 841,
+        "draw_ns": 2566750,
+        "submit_ns": 876417,
+        "gpu_ns": 1063750,
+        "total_frame_work_ns": 4506917,
+        "draw_to_gpu_complete_ns": 5193375,
+        "draw_to_display_ns": 28961334,
+        "display_unix_ns": "1788818312174250084"
+      },
+      {
+        "drawable": 842,
+        "draw_ns": 2435875,
+        "submit_ns": 824292,
+        "gpu_ns": 1070917,
+        "total_frame_work_ns": 4331084,
+        "draw_to_gpu_complete_ns": 5052875,
+        "draw_to_display_ns": 28787792,
+        "display_unix_ns": "1788818312190916958"
+      },
+      {
+        "drawable": 843,
+        "draw_ns": 3037417,
+        "submit_ns": 989917,
+        "gpu_ns": 1064333,
+        "total_frame_work_ns": 5091667,
+        "draw_to_gpu_complete_ns": 5590999,
+        "draw_to_display_ns": 28822416,
+        "display_unix_ns": "1788818312207583583"
+      },
+      {
+        "drawable": 844,
+        "draw_ns": 2266625,
+        "submit_ns": 737334,
+        "gpu_ns": 1075208,
+        "total_frame_work_ns": 4079167,
+        "draw_to_gpu_complete_ns": 4679625,
+        "draw_to_display_ns": 28255375,
+        "display_unix_ns": "1788818312224250333"
+      },
+      {
+        "drawable": 845,
+        "draw_ns": 2485708,
+        "submit_ns": 845917,
+        "gpu_ns": 1100875,
+        "total_frame_work_ns": 4432500,
+        "draw_to_gpu_complete_ns": 4979250,
+        "draw_to_display_ns": 27666500,
+        "display_unix_ns": "1788818312240916750"
+      },
+      {
+        "drawable": 846,
+        "draw_ns": 2597792,
+        "submit_ns": 789667,
+        "gpu_ns": 1069501,
+        "total_frame_work_ns": 4456960,
+        "draw_to_gpu_complete_ns": 4943458,
+        "draw_to_display_ns": 28111667,
+        "display_unix_ns": "1788818312257583375"
+      },
+      {
+        "drawable": 847,
+        "draw_ns": 2064584,
+        "submit_ns": 760333,
+        "gpu_ns": 1107750,
+        "total_frame_work_ns": 3932667,
+        "draw_to_gpu_complete_ns": 4076875,
+        "draw_to_display_ns": 28207334,
+        "display_unix_ns": "1788818312274249750"
+      },
+      {
+        "drawable": 848,
+        "draw_ns": 2435458,
+        "submit_ns": 754167,
+        "gpu_ns": 1177875,
+        "total_frame_work_ns": 4367500,
+        "draw_to_gpu_complete_ns": 4593916,
+        "draw_to_display_ns": 28713083,
+        "display_unix_ns": "1788818312290916625"
+      }
+    ],
+    "snapshots": [
+      {
+        "event": "finite-sample",
+        "mode": "million",
+        "tick": 120,
+        "rss_kib": 1666688,
+        "charts": [
+          {
+            "schedule": {
+              "active": 0,
+              "pending": 0,
+              "submitted": "0",
+              "coalesced": "0",
+              "started": "0",
+              "completed": "0",
+              "stale": "0",
+              "failed": "0",
+              "presentations": "0",
+              "committed": null,
+              "presented": null,
+              "lag": null,
+              "disposed": false
+            },
+            "density": {
+              "source_rows": 1000000,
+              "prepared_rows": 1000000,
+              "raw_vertices": 999422,
+              "rendered_vertices": 6799,
+              "represented_samples": 999422,
+              "raw_items": 603,
+              "rendered_items": 603,
+              "line_runs": 579,
+              "line_fallbacks": 0,
+              "candle_buckets": 0,
+              "candle_fallbacks": 0
+            },
+            "layouts": 1,
+            "bounds": {
+              "origin": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "width": 1200.0,
+              "height": 600.0
+            },
+            "index_candidates": 999422
+          }
+        ],
+        "live_entities": 1
+      },
+      {
+        "event": "finite-sample",
+        "mode": "million",
+        "tick": 240,
+        "rss_kib": 1676640,
+        "charts": [
+          {
+            "schedule": {
+              "active": 0,
+              "pending": 0,
+              "submitted": "0",
+              "coalesced": "0",
+              "started": "0",
+              "completed": "0",
+              "stale": "0",
+              "failed": "0",
+              "presentations": "0",
+              "committed": null,
+              "presented": null,
+              "lag": null,
+              "disposed": false
+            },
+            "density": {
+              "source_rows": 1000000,
+              "prepared_rows": 1000000,
+              "raw_vertices": 999422,
+              "rendered_vertices": 6799,
+              "represented_samples": 999422,
+              "raw_items": 603,
+              "rendered_items": 603,
+              "line_runs": 579,
+              "line_fallbacks": 0,
+              "candle_buckets": 0,
+              "candle_fallbacks": 0
+            },
+            "layouts": 1,
+            "bounds": {
+              "origin": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "width": 1200.0,
+              "height": 600.0
+            },
+            "index_candidates": 999422
+          }
+        ],
+        "live_entities": 1
+      },
+      {
+        "event": "finite-sample",
+        "mode": "million",
+        "tick": 360,
+        "rss_kib": 1684272,
+        "charts": [
+          {
+            "schedule": {
+              "active": 0,
+              "pending": 0,
+              "submitted": "0",
+              "coalesced": "0",
+              "started": "0",
+              "completed": "0",
+              "stale": "0",
+              "failed": "0",
+              "presentations": "0",
+              "committed": null,
+              "presented": null,
+              "lag": null,
+              "disposed": false
+            },
+            "density": {
+              "source_rows": 1000000,
+              "prepared_rows": 1000000,
+              "raw_vertices": 999422,
+              "rendered_vertices": 6799,
+              "represented_samples": 999422,
+              "raw_items": 603,
+              "rendered_items": 603,
+              "line_runs": 579,
+              "line_fallbacks": 0,
+              "candle_buckets": 0,
+              "candle_fallbacks": 0
+            },
+            "layouts": 1,
+            "bounds": {
+              "origin": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "width": 1200.0,
+              "height": 600.0
+            },
+            "index_candidates": 999422
+          }
+        ],
+        "live_entities": 1
+      },
+      {
+        "event": "finite-sample",
+        "mode": "million",
+        "tick": 480,
+        "rss_kib": 1691920,
+        "charts": [
+          {
+            "schedule": {
+              "active": 0,
+              "pending": 0,
+              "submitted": "0",
+              "coalesced": "0",
+              "started": "0",
+              "completed": "0",
+              "stale": "0",
+              "failed": "0",
+              "presentations": "0",
+              "committed": null,
+              "presented": null,
+              "lag": null,
+              "disposed": false
+            },
+            "density": {
+              "source_rows": 1000000,
+              "prepared_rows": 1000000,
+              "raw_vertices": 999422,
+              "rendered_vertices": 6799,
+              "represented_samples": 999422,
+              "raw_items": 603,
+              "rendered_items": 603,
+              "line_runs": 579,
+              "line_fallbacks": 0,
+              "candle_buckets": 0,
+              "candle_fallbacks": 0
+            },
+            "layouts": 1,
+            "bounds": {
+              "origin": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "width": 1200.0,
+              "height": 600.0
+            },
+            "index_candidates": 999422
+          }
+        ],
+        "live_entities": 1
+      },
+      {
+        "event": "finite-sample",
+        "mode": "million",
+        "tick": 600,
+        "rss_kib": 1699744,
+        "charts": [
+          {
+            "schedule": {
+              "active": 0,
+              "pending": 0,
+              "submitted": "0",
+              "coalesced": "0",
+              "started": "0",
+              "completed": "0",
+              "stale": "0",
+              "failed": "0",
+              "presentations": "0",
+              "committed": null,
+              "presented": null,
+              "lag": null,
+              "disposed": false
+            },
+            "density": {
+              "source_rows": 1000000,
+              "prepared_rows": 1000000,
+              "raw_vertices": 999422,
+              "rendered_vertices": 6799,
+              "represented_samples": 999422,
+              "raw_items": 603,
+              "rendered_items": 603,
+              "line_runs": 579,
+              "line_fallbacks": 0,
+              "candle_buckets": 0,
+              "candle_fallbacks": 0
+            },
+            "layouts": 1,
+            "bounds": {
+              "origin": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "width": 1200.0,
+              "height": 600.0
+            },
+            "index_candidates": 999422
+          }
+        ],
+        "live_entities": 1
+      },
+      {
+        "event": "finite-sample",
+        "mode": "million",
+        "tick": 720,
+        "rss_kib": 1711200,
+        "charts": [
+          {
+            "schedule": {
+              "active": 0,
+              "pending": 0,
+              "submitted": "0",
+              "coalesced": "0",
+              "started": "0",
+              "completed": "0",
+              "stale": "0",
+              "failed": "0",
+              "presentations": "0",
+              "committed": null,
+              "presented": null,
+              "lag": null,
+              "disposed": false
+            },
+            "density": {
+              "source_rows": 1000000,
+              "prepared_rows": 1000000,
+              "raw_vertices": 999422,
+              "rendered_vertices": 6799,
+              "represented_samples": 999422,
+              "raw_items": 603,
+              "rendered_items": 603,
+              "line_runs": 579,
+              "line_fallbacks": 0,
+              "candle_buckets": 0,
+              "candle_fallbacks": 0
+            },
+            "layouts": 1,
+            "bounds": {
+              "origin": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "width": 1200.0,
+              "height": 600.0
+            },
+            "index_candidates": 999422
+          }
+        ],
+        "live_entities": 1
+      }
+    ],
+    "disposed": {
+      "event": "finite-disposed",
+      "mode": "million",
+      "tick": 840,
+      "rss_kib": 1182688,
+      "charts": [],
+      "live_entities": 0
+    }
+  }
+}
