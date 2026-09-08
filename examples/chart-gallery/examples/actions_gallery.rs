@@ -1,15 +1,13 @@
 //! WP-15 controls exercise the same window-independent reducer as Python and WASM.
+use chart_core::plot::{Data, aes, labels, plot, points};
 use chart_core::{
     composition::{Anchor, Annotation, Collision},
-    portable::Session,
-    services::*,
     state::{FollowMode, *},
     typography::RichText,
     *,
 };
 use gpui::{prelude::*, *};
 use gpui_charts::*;
-use std::sync::Arc;
 
 fn annotation(x: f64) -> Annotation {
     Annotation {
@@ -149,29 +147,29 @@ impl Render for Gallery {
 }
 fn main() {
     gpui_platform::application().run(|cx: &mut App| {
-        let bytes: Arc<[u8]> =
-            include_bytes!("../../../fixtures/capability/fonts/NotoSans-Regular.ttf")
-                .as_slice()
-                .into();
-        let font = NativeFont::load(
-            ResourceDescriptor {
-                id: ResourceId::new(1),
-                revision: Revision::new(1),
-                kind: ResourceKind::Font,
-                byte_len: bytes.len() as u64,
-            },
-            bytes,
+        let font = NativeFont::from_bytes(
+            include_bytes!("../../../fixtures/capability/fonts/NotoSans-Regular.ttf").as_slice(),
             "Noto Sans",
             cx,
         )
-        .expect("font");
-        let session = Session::new(
-            include_str!("../../../fixtures/actions/chart.json"),
-            include_str!("../../../fixtures/bindings/data.json"),
-        )
-        .expect("portable source");
-        let input = ChartInput::new(session.definition().clone(), session.source().clone(), font)
-            .expect("input");
+        .expect("supplied font");
+        let data = Data::columns()
+            .column("x", [0., 1., 2., 3.])
+            .column("y", [1., 3., 2., 4.])
+            .build()
+            .expect("data");
+        let plot = plot(data)
+            .aes(aes().x("x").y("y"))
+            .layer(points())
+            .layer(
+                labels()
+                    .id("threshold")
+                    .figure_at(0.3, 0.1)
+                    .text("Threshold"),
+            )
+            .build()
+            .expect("plot");
+        let input = ChartInput::from_plot(&plot, font).expect("native input");
         cx.open_window(
             WindowOptions {
                 window_bounds: Some(WindowBounds::Windowed(Bounds::centered(

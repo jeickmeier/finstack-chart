@@ -1,8 +1,7 @@
 //! Actual native FIX-14: presented captures export on workers while atomic ingestion continues.
 use chart_core::{
     data::*,
-    portable::{ChartEnvelope, DataEnvelope},
-    services::*,
+    prelude::{Data, Plot, aes, labels, line, plot},
     state::*,
     transaction::*,
     *,
@@ -10,17 +9,17 @@ use chart_core::{
 use chart_export::*;
 use gpui::{prelude::*, *};
 use gpui_charts::*;
-use serde_json::{Value, json};
+use serde_json::json;
 use std::{
     collections::BTreeMap,
     path::PathBuf,
-    sync::Arc,
     time::{Duration, Instant},
 };
 const FONT: &[u8] = include_bytes!("../../../fixtures/capability/fonts/NotoSans-Regular.ttf");
 struct Gallery {
     chart: Entity<ChartView>,
-    store: DataStore,
+    plot: Plot,
+    output: Output,
     queue: ExportQueue,
     tasks: BTreeMap<Revision, Task<()>>,
     latest: Option<ExportCancellation>,
@@ -33,20 +32,12 @@ struct Gallery {
     _timer: Task<()>,
     _observation: Subscription,
 }
-fn annotation(tick: u64) -> chart_core::composition::Annotation {
-    serde_json::from_value(json!({"id":"threshold","anchor":{"Figure":{"x":0.1,"y":0.1}},"text":{"lines":[[{"text":format!("Live annotation {tick}")}]],"line_spacing":1.2,"rotation":0.}})).unwrap()
-}
-fn batch(y: f64, schema: Arc<Schema>) -> NormalizedBatch {
-    NormalizedBatch::new(
-        schema,
-        vec![RowKey::new(9007199254743004)],
-        vec![
-            Column::new(ColumnValues::Float64(vec![3.]), vec![true], None),
-            Column::new(ColumnValues::Float64(vec![y]), vec![true], None),
-        ],
-        DataLimits::default(),
-    )
-    .unwrap()
+fn batch(y: f64) -> ChartResult<Data> {
+    Data::columns()
+        .column("x", [3.])
+        .column("y", [y])
+        .keys([9007199254743004])
+        .build()
 }
 
 impl Gallery {
@@ -54,34 +45,21 @@ impl Gallery {
         let c = self.chart.read(cx);
         println!(
             "{}",
-            json!({"event":event,"tick":self.tick,"elapsed_ms":self.started.elapsed().as_millis().to_string(),"committed":self.store.snapshot().get().unwrap().revision(),"presented":c.inspector().map(|i|i.presented().scene().stamp()),"exports":self.queue.metrics(),"preparation":c.scheduling_metrics(),"error":c.diagnostic(),"status":self.status})
+            json!({"event":event,"tick":self.tick,"elapsed_ms":self.started.elapsed().as_millis().to_string(),"committed":c.chart().source().get().unwrap().revision(),"presented":c.inspector().map(|i|i.presented().scene().stamp()),"exports":self.queue.metrics(),"preparation":c.scheduling_metrics(),"error":c.diagnostic(),"status":self.status})
         );
     }
     fn advance(&mut self, cx: &mut Context<Self>) -> ChartResult<()> {
         self.tick += 1;
-        let source = self.store.snapshot();
-        let source = source.get()?;
-        let result = self.store.apply(Transaction {
-            id: TransactionId::new(format!("native-live-{}", self.tick))?,
-            epoch: source.epoch(),
-            expected: source.datasets().map(|d| d.version()).collect(),
-            operations: vec![
-                Operation {
-                    dataset: DatasetId::new(1),
-                    mutation: Mutation::UpsertByKey(batch(
-                        self.tick as f64,
-                        source.dataset(DatasetId::new(1))?.schema().clone(),
-                    )),
-                },
-                Operation {
-                    dataset: DatasetId::new(2),
-                    mutation: Mutation::UpsertByKey(batch(
-                        -(self.tick as f64),
-                        source.dataset(DatasetId::new(2))?.schema().clone(),
-                    )),
-                },
-            ],
-        });
+        let tx = self
+            .chart
+            .read(cx)
+            .chart()
+            .transaction()?
+            .id(format!("native-live-{}", self.tick))
+            .upsert("positive", batch(self.tick as f64)?)
+            .upsert("negative", batch(-(self.tick as f64))?)
+            .build()?;
+        let result = self.chart.update(cx, |chart, cx| chart.commit(tx, cx))?;
         if !matches!(result, CommitOutcome::Applied(_)) {
             return Err(Diagnostic::error(
                 DiagnosticCode::Validation,
@@ -89,15 +67,21 @@ impl Gallery {
                 "Inspect the atomic live proof.",
             ));
         }
-        self.chart
-            .update(cx, |c, cx| c.queue_data(self.store.snapshot(), cx))?;
         if self.tick.is_multiple_of(10) {
-            self.chart.update(cx, |c, cx| {
-                c.dispatch_chart(
-                    ChartAction::SetAnnotation(Box::new(annotation(self.tick))),
-                    cx,
+            let edited = self
+                .plot
+                .edit()
+                .annotation(
+                    labels()
+                        .id("threshold")
+                        .figure_at(0.1, 0.1)
+                        .text(format!("Live annotation {}", self.tick)),
                 )
-            })?;
+                .build()?;
+            let expected = self.chart.read(cx).chart().definition().revision;
+            self.chart
+                .update(cx, |c, cx| c.apply_plot(&edited, expected, cx))?;
+            self.plot = edited;
         }
         if self.tick == 40 {
             self.chart.update(cx, |c, cx| {
@@ -119,16 +103,27 @@ impl Gallery {
     }
     fn capture(&mut self, format: Format, full: bool, cx: &mut Context<Self>) -> ChartResult<()> {
         let started = Instant::now();
-        let capture = self.chart.read(cx).capture_presented()?;
-        let prepared = capture.chart.prepared();
-        let source = prepared.source().get()?;
-        let values: [f64; 2] = [DatasetId::new(1), DatasetId::new(2)].map(|d| {
+        let chart = self.chart.read(cx).chart();
+        let request = self.output.live_request(
+            chart,
+            export_options(PageSize::points(500., 300.)?)
+                .dpi(144)
+                .view(if full {
+                    ViewMode::FullDomain
+                } else {
+                    ViewMode::VisibleView
+                }),
+        )?;
+        let source = request.source().get()?;
+        let values: [f64; 2] = ["positive", "negative"].map(|name| {
+            let dataset = chart.data(name).unwrap().id();
+            let field = self.plot.data(name).unwrap().field("y").unwrap().id();
             match source
-                .dataset(d)
+                .dataset(dataset)
                 .unwrap()
                 .row(RowKey::new(9007199254743004))
                 .unwrap()
-                .value(FieldId::new(2))
+                .value(field)
                 .unwrap()
             {
                 ValueRef::Float64(v) => v,
@@ -136,34 +131,7 @@ impl Gallery {
             }
         });
         assert_eq!(values[0] + values[1], 0.);
-        let fonts = FontResources::new(
-            capture
-                .fonts
-                .into_iter()
-                .map(|(d, b)| FontResource::new(d, b))
-                .collect::<ChartResult<Vec<_>>>()?,
-        )?;
-        let mut profile =
-            PublicationProfile::new(PageSize::points(500., 300.)?, capture.layout.font)?;
-        profile.dpi = 144;
-        profile.view = if full {
-            ViewMode::FullDomain
-        } else {
-            ViewMode::VisibleView
-        };
-        profile.layout.host_theme = capture.layout.host_theme;
-        profile.layout.output_theme = capture.layout.output_theme;
-        profile.layout.interaction_theme = capture.layout.interaction_theme;
-        let request = FigureRequest::new(
-            prepared.definition().clone(),
-            prepared.source().clone(),
-            capture.state,
-            fonts,
-            profile,
-            InteractionCapture::default(),
-        )?
-        .with_extensions(capture.extensions)
-        .with_origin_scene(capture.chart.scene().stamp())?;
+        let captured_revision = source.revision();
         let manifest = request.manifest()?;
         let job = self.queue.submit(request, format)?;
         let id = job.id();
@@ -179,7 +147,7 @@ impl Gallery {
         self.status = format!(
             "Captured job {} at visible commit {}; worker deliberately pauses twice",
             id.get(),
-            source.revision().get()
+            captured_revision.get()
         );
         cx.notify();
         Ok(())
@@ -294,34 +262,37 @@ fn main() {
         .unwrap_or_else(|| PathBuf::from("artifacts/wp-20/native-ui"));
     std::fs::create_dir_all(&out).unwrap();
     gpui_platform::application().run(move |cx: &mut App| {
-        let fixture: Value =
-            serde_json::from_str(include_str!("../../../fixtures/live-export/replay.json"))
-                .unwrap();
-        let definition: ChartEnvelope = serde_json::from_value(fixture["chart"].clone()).unwrap();
-        let data: DataEnvelope = serde_json::from_value(fixture["data"].clone()).unwrap();
-        let store = DataStore::new(
-            data.epoch,
-            data.datasets
-                .into_iter()
-                .map(|d| Ok((d.id, d.batch.into_batch()?)))
-                .collect::<ChartResult<Vec<_>>>()
-                .unwrap(),
-            DataLimits::default(),
-        )
-        .unwrap();
-        let font = NativeFont::load(
-            ResourceDescriptor {
-                id: ResourceId::new(1),
-                revision: Revision::new(1),
-                kind: ResourceKind::Font,
-                byte_len: FONT.len() as u64,
-            },
-            Arc::from(FONT),
-            "Noto Sans",
-            cx,
-        )
-        .unwrap();
-        let input = ChartInput::new(definition.definition, store.snapshot(), font).unwrap();
+        let data = |name: &str, sign: f64| {
+            Data::columns()
+                .name(name)
+                .column("x", (0..8).map(|i| i as f64).collect::<Vec<_>>())
+                .column(
+                    "y",
+                    (0..8).map(|i| sign * (i * i) as f64).collect::<Vec<_>>(),
+                )
+                .keys(9007199254743001..9007199254743009)
+                .build()
+                .unwrap()
+        };
+        let plot = plot(data("positive", 1.))
+            .aes(aes().x("x").y("y"))
+            .layer(line().color(chart_core::theme::rgb(35, 90, 150)))
+            .layer(
+                line()
+                    .data(data("negative", -1.))
+                    .color(chart_core::theme::rgb(190, 60, 65)),
+            )
+            .layer(
+                labels()
+                    .id("threshold")
+                    .figure_at(0.1, 0.1)
+                    .text("Before capture"),
+            )
+            .build()
+            .unwrap();
+        let output = Output::new(FONT).unwrap();
+        let font = NativeFont::from_bytes(FONT, "Noto Sans", cx).unwrap();
+        let input = ChartInput::from_plot(&plot, font).unwrap();
         cx.open_window(
             WindowOptions {
                 window_bounds: Some(WindowBounds::Windowed(Bounds::centered(
@@ -371,7 +342,8 @@ fn main() {
                     });
                     Gallery {
                         chart,
-                        store,
+                        plot,
+                        output,
                         queue: ExportQueue::new(ExportLimits::default()).unwrap(),
                         tasks: BTreeMap::new(),
                         latest: None,

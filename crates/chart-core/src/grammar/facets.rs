@@ -169,13 +169,12 @@ pub(crate) fn targeted(target: &FacetTarget, scope: Option<&PanelScope>) -> bool
     }
 }
 
-pub(crate) fn prepare_facets(
-    compiler: &mut Compiler,
+pub(super) fn validate_facets(
     definition: &ChartDefinition,
-    source: &SnapshotHandle<StoreSnapshot>,
-    state: &ChartState,
+    snapshot: &StoreSnapshot,
     limits: CompileLimits,
-) -> ChartResult<PreparedChart> {
+    extensions: &ExtensionRegistry,
+) -> ChartResult<(Vec<crate::Diagnostic>, Vec<GroupValue>, Vec<GroupValue>)> {
     let spec = definition
         .facets
         .as_ref()
@@ -230,13 +229,8 @@ pub(crate) fn prepare_facets(
             ));
         }
     }
-    let mut population_diagnostics = validate_population(
-        definition,
-        source.get()?,
-        spec,
-        limits,
-        &compiler.extensions,
-    )?;
+    let population_diagnostics =
+        validate_population(definition, snapshot, spec, limits, extensions)?;
     let mut rows = Vec::new();
     let mut columns = Vec::new();
     if matches!(spec.layout, FacetLayout::Grid) {
@@ -255,6 +249,19 @@ pub(crate) fn prepare_facets(
             ));
         }
     }
+    Ok((population_diagnostics, rows, columns))
+}
+
+pub(crate) fn prepare_facets(
+    compiler: &mut Compiler,
+    definition: &ChartDefinition,
+    source: &SnapshotHandle<StoreSnapshot>,
+    state: &ChartState,
+    limits: CompileLimits,
+) -> ChartResult<PreparedChart> {
+    let (mut population_diagnostics, rows, columns) =
+        validate_facets(definition, source.get()?, limits, &compiler.extensions)?;
+    let spec = definition.facets.as_ref().expect("validated facets");
     let mut child = definition.clone();
     child.facets = None;
     let mut panels = vec![];

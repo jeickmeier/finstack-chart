@@ -9,8 +9,7 @@ use chart_core::inspection::{InputOrigin, InspectionAction, Inspector};
 use chart_core::layout::LayoutRequest;
 use chart_core::services::Units;
 use chart_core::state::{
-    ActionOrigin, ActionReducer, ActionRequest, ChartAction, ChartState, DispatchOutcome,
-    MarkTarget,
+    ActionOrigin, ActionRequest, ChartAction, ChartState, DispatchOutcome, MarkTarget,
 };
 use chart_core::{ChartResult, Diagnostic, Point, Rect, Revision};
 pub use edit::NativeAnnotationTool;
@@ -35,16 +34,22 @@ pub struct NativeMetrics {
 }
 /// Validated, owned input for a native chart mount. Construct before creating the GPUI entity.
 pub struct ChartInput {
-    definition: ChartDefinition,
-    source: SnapshotHandle<StoreSnapshot>,
-    state: ChartState,
-    compiler: Compiler,
+    chart: chart_core::runtime::Chart,
     prepared: Arc<PreparedChart>,
     font: NativeFont,
     painters: Rc<crate::NativePainterRegistry>,
     request: LayoutRequest,
+    tooltip: Option<TooltipBuilder>,
+    host: host::HostState,
+    input: input::InputState,
+    density: chart_core::dense::DensityOptions,
 }
 impl ChartInput {
+    /// Mount the same immutable primary plot used by headless publication.
+    /// Native preparation retains the plot's source and exact extension registrations.
+    pub fn from_plot(plot: &chart_core::plot::Plot, font: NativeFont) -> ChartResult<Self> {
+        Self::from_chart(plot.chart()?, font)
+    }
     /// Compile once with recoverable errors, retaining the supplied immutable data snapshot.
     pub fn new(
         definition: ChartDefinition,
@@ -65,30 +70,84 @@ impl ChartInput {
         font: NativeFont,
         extensions: Arc<chart_core::grammar::ExtensionRegistry>,
     ) -> ChartResult<Self> {
-        let state = ChartState::default();
-        let mut compiler = Compiler::with_extensions(extensions);
-        let prepared =
-            Arc::new(compiler.prepare(&definition, &source, &state, CompileLimits::default())?);
+        Self::from_chart(
+            chart_core::runtime::Chart::from_external(definition, source, extensions)?,
+            font,
+        )
+    }
+    /// Adopt one typed runtime, retaining its ingestion, replay, reducer and compiler ownership.
+    pub fn from_chart(
+        mut chart: chart_core::runtime::Chart,
+        font: NativeFont,
+    ) -> ChartResult<Self> {
+        let prepared = chart.prepare()?;
         let request = LayoutRequest::new(
             Rect::new(0., 0., 400., 240.)?,
             Units::LogicalPixels,
             font.descriptor(),
         );
         Ok(Self {
-            definition,
-            source,
-            state,
-            compiler,
+            chart,
             prepared,
             font,
             painters: Rc::new(crate::NativePainterRegistry::new()),
             request,
+            tooltip: None,
+            host: Default::default(),
+            input: Default::default(),
+            density: Default::default(),
         })
+    }
+    /// Configure shared destination layout before mounting, retaining its supplied font/units.
+    pub fn layout(mut self, options: chart_core::plot::LayoutOptions) -> Self {
+        options.apply(&mut self.request);
+        self
     }
     /// Retain exact host-only painter implementations for this mount and its prepared frames.
     pub fn with_native_painters(mut self, painters: Rc<crate::NativePainterRegistry>) -> Self {
         self.painters = painters;
         self
+    }
+    /// Configure the native inspection body before mounting.
+    pub fn tooltip(mut self, builder: TooltipBuilder) -> Self {
+        self.tooltip = Some(builder);
+        self
+    }
+    /// Configure a replaceable native toolbar, legend control or context menu.
+    pub fn control(mut self, slot: ControlSlot, builder: ControlBuilder) -> Self {
+        self.host.control(slot, Some(builder));
+        self
+    }
+    /// Enable operations handled by the application's ChartHostEvent subscription.
+    pub fn host_commands(mut self, commands: &[HostCommand]) -> Self {
+        self.host.commands(commands);
+        self
+    }
+    /// Supply bounded meaningful accessibility context before the first frame.
+    pub fn accessible_summary(mut self, summary: impl Into<String>) -> ChartResult<Self> {
+        self.host.summary(Some(summary.into()))?;
+        Ok(self)
+    }
+    /// Choose the initial shared navigation/selection drag tool.
+    pub fn drag_tool(mut self, tool: NativeDragTool) -> Self {
+        self.input.tool = tool;
+        self
+    }
+    /// Enable or disable built-in native input bindings for an application-owned adapter.
+    pub fn default_bindings(mut self, enabled: bool) -> Self {
+        self.input.disabled = !enabled;
+        self
+    }
+    /// Install bounded authored annotation edit handles.
+    pub fn annotation_tools(mut self, tools: Vec<NativeAnnotationTool>) -> ChartResult<Self> {
+        edit::validate_tools(&tools)?;
+        self.input.annotation_tools = tools;
+        Ok(self)
+    }
+    /// Configure source-preserving screen reduction before mounting.
+    pub fn render(mut self, options: chart_core::plot::RenderOptions) -> ChartResult<Self> {
+        self.density = options.build(&self.chart)?;
+        Ok(self)
     }
 }
 
@@ -110,10 +169,7 @@ pub struct PresentedCapture {
 /// One retained chart entity with bounded pane/overlay elements and one cached native frame.
 /// Datasets are supplied as immutable snapshots, never recreated inside Render.
 pub struct ChartView {
-    definition: ChartDefinition,
-    source: SnapshotHandle<StoreSnapshot>,
-    reducer: ActionReducer,
-    compiler: Compiler,
+    chart: chart_core::runtime::Chart,
     prepared: Arc<PreparedChart>,
     font: NativeFont,
     painters: Rc<crate::NativePainterRegistry>,
@@ -136,22 +192,20 @@ impl ChartView {
     /// Mount an already validated input; no source preparation or fallible work is hidden here.
     pub fn new(input: ChartInput, cx: &mut Context<Self>) -> Self {
         let ChartInput {
-            definition,
-            source,
-            state,
-            compiler,
+            chart,
             prepared,
             font,
             painters,
             request,
+            tooltip,
+            host,
+            input,
+            density,
         } = input;
-        let scheduling = scheduling::Scheduling::new(compiler.extensions().clone());
+        let scheduling = scheduling::Scheduling::new(chart.extensions().clone());
         Self {
             scheduling,
-            definition,
-            source,
-            reducer: ActionReducer::new(state),
-            compiler,
+            chart,
             prepared,
             font,
             painters,
@@ -162,12 +216,12 @@ impl ChartView {
             cached: None,
             attempted: None,
             inspector: None,
-            tooltip: None,
+            tooltip,
             last_error: None,
             metrics: NativeMetrics::default(),
-            density: chart_core::dense::DensityOptions::default(),
-            input: input::InputState::default(),
-            host: host::HostState::default(),
+            density,
+            input,
+            host,
         }
     }
     /// Explicit destination-only reduction; the current source/inspection values stay exact.
@@ -181,6 +235,14 @@ impl ChartView {
         self.attempted = None;
         cx.notify();
         Ok(())
+    }
+    /// Configure screen-density reduction through the shared typed options.
+    pub fn set_render_options(
+        &mut self,
+        options: chart_core::plot::RenderOptions,
+        cx: &mut Context<Self>,
+    ) -> ChartResult<()> {
+        self.set_density(options.build(&self.chart)?, cx)
     }
     /// Actual last-presented raw/prepared/rendered work counts.
     pub fn density_metrics(&self) -> Option<&chart_core::dense::DensityMetrics> {
@@ -197,37 +259,19 @@ impl ChartView {
         source: SnapshotHandle<StoreSnapshot>,
         cx: &mut Context<Self>,
     ) -> ChartResult<()> {
-        let mut prepared = self
-            .compiler
-            .prepare(
-                &self.definition,
-                &source,
-                self.reducer.state(),
-                CompileLimits::default(),
-            )
-            .inspect_err(|e| {
-                self.last_error = Some(e.clone());
-                cx.notify();
-            })?;
-        let mut next = self.reducer.clone();
-        let reconciliation = next.reconcile_prepared(&prepared)?;
-        if reconciliation.transition.outcome.changed {
-            prepared = self.compiler.prepare(
-                &self.definition,
-                &source,
-                next.state(),
-                CompileLimits::default(),
-            )?;
-        }
+        let prepared = self.chart.accept_source_prepared(source).inspect_err(|e| {
+            self.last_error = Some(e.clone());
+            cx.notify();
+        })?;
         self.reset_preparation(false, cx)?;
-        self.reducer = next;
-        if self.reducer.state().active_gesture().is_none() {
+        if self.state().active_gesture().is_none() {
             self.release_input();
         }
-        self.source = source;
-        self.prepared = Arc::new(prepared);
+        self.prepared = prepared;
         self.last_error = None;
-        cx.emit(ChartHostEvent::DataReconciled(reconciliation));
+        if let Some(reconciliation) = self.chart.reconciliation() {
+            cx.emit(ChartHostEvent::DataReconciled(reconciliation.clone()));
+        }
         cx.notify();
         Ok(())
     }
@@ -237,37 +281,126 @@ impl ChartView {
         definition: ChartDefinition,
         cx: &mut Context<Self>,
     ) -> ChartResult<()> {
-        let mut next = self.reducer.clone();
-        if next.state().active_gesture().is_some() {
-            let request = next.request(
-                &self.definition,
-                ChartAction::CancelGesture(chart_core::state::CancelReason::TargetRemoved),
-                ActionOrigin::Programmatic,
-            );
-            next.dispatch(&self.definition, request)?;
-        }
-        let prepared = self
-            .compiler
-            .prepare(
-                &definition,
-                &self.source,
-                next.state(),
-                CompileLimits::default(),
-            )
+        self.prepared = self
+            .chart
+            .replace_definition_prepared(definition)
             .inspect_err(|e| {
                 self.last_error = Some(e.clone());
                 cx.notify();
             })?;
-        self.reducer = next;
         if self.state().active_gesture().is_none() {
             self.release_input();
         }
-        self.definition = definition;
-        self.prepared = Arc::new(prepared);
         self.reset_preparation(true, cx)?;
         self.last_error = None;
         cx.notify();
         Ok(())
+    }
+    /// Read the same typed runtime used by owned ingestion, capture and host adapters.
+    pub fn chart(&self) -> &chart_core::runtime::Chart {
+        &self.chart
+    }
+    /// Capture a primary linked-view message from this retained chart's acknowledged scene.
+    pub fn capture_link(
+        &mut self,
+        link: &chart_core::plot::LinkBuilder,
+        event: &chart_core::state::StateEvent,
+    ) -> ChartResult<Option<chart_core::linking::LinkMessage>> {
+        link.capture(&mut self.chart, event)
+    }
+    /// Resolve a primary linked-view message; callers dispatch the returned typed action.
+    pub fn resolve_link(
+        &mut self,
+        link: &chart_core::plot::LinkBuilder,
+        message: &chart_core::linking::LinkMessage,
+    ) -> ChartResult<chart_core::linking::LinkedUpdate> {
+        link.resolve(&mut self.chart, message)
+    }
+    /// Apply an immutable definition edit while retaining the latest owned or external data.
+    pub fn apply_plot(
+        &mut self,
+        plot: &chart_core::plot::Plot,
+        expected: Revision,
+        cx: &mut Context<Self>,
+    ) -> ChartResult<bool> {
+        let changed = self.chart.apply_plot(plot, expected)?;
+        if changed {
+            if self.state().active_gesture().is_none() {
+                self.release_input();
+            }
+            if let Err(error) = self
+                .reset_preparation(false, cx)
+                .and_then(|()| self.queue_current(cx))
+            {
+                self.last_error = Some(error);
+            }
+            cx.notify();
+        }
+        Ok(changed)
+    }
+    /// Commit through this mount's owned runtime and enqueue its latest snapshot for preparation.
+    pub fn commit(
+        &mut self,
+        transaction: chart_core::transaction::Transaction,
+        cx: &mut Context<Self>,
+    ) -> ChartResult<chart_core::transaction::CommitOutcome> {
+        let outcome = self.chart.apply_transaction(transaction)?;
+        if matches!(outcome, chart_core::transaction::CommitOutcome::Applied(_)) {
+            self.schedule_committed(cx);
+        }
+        Ok(outcome)
+    }
+    /// Configure the owned queue; acceptance and synchronous commitment remain separate.
+    pub fn stream(&mut self, options: chart_core::plot::StreamOptions) -> ChartResult<()> {
+        self.chart.stream(options)
+    }
+    /// Enqueue a revision-fenced transaction without claiming it has committed or painted.
+    pub fn enqueue(
+        &mut self,
+        transaction: chart_core::transaction::Transaction,
+    ) -> ChartResult<chart_core::ingestion::EnqueueOutcome> {
+        self.chart.enqueue(transaction)
+    }
+    /// Commit one queued transaction and schedule an applied result without changing its receipt.
+    pub fn commit_next(
+        &mut self,
+        cx: &mut Context<Self>,
+    ) -> ChartResult<
+        Option<(
+            chart_core::transaction::TransactionId,
+            chart_core::transaction::CommitOutcome,
+        )>,
+    > {
+        let outcome = self.chart.commit_next()?;
+        if matches!(
+            outcome,
+            Some((_, chart_core::transaction::CommitOutcome::Applied(_)))
+        ) {
+            self.schedule_committed(cx);
+        }
+        Ok(outcome)
+    }
+    /// Advance the owned epoch and retain explicit conflict outcomes for previously queued updates.
+    pub fn reset_epoch(
+        &mut self,
+        cx: &mut Context<Self>,
+    ) -> ChartResult<chart_core::state::Reconciliation> {
+        let reconciliation = self.chart.reset_epoch()?;
+        self.release_input();
+        if let Err(error) = self.reset_preparation(false, cx) {
+            self.last_error = Some(error);
+        }
+        self.schedule_committed(cx);
+        Ok(reconciliation)
+    }
+    fn schedule_committed(&mut self, cx: &mut Context<Self>) {
+        if let Some(reconciliation) = self.chart.reconciliation() {
+            cx.emit(ChartHostEvent::DataReconciled(reconciliation.clone()));
+        }
+        if let Err(error) = self.queue_current(cx) {
+            self.last_error = Some(error);
+            cx.notify();
+        }
     }
     /// Set destination policies. Bounds follow the actual element; owner revision is advanced.
     /// Font/layout failures retain the previously painted frame with an explicit diagnostic.
@@ -293,26 +426,24 @@ impl ChartView {
         action: ChartAction,
         cx: &mut Context<Self>,
     ) -> ChartResult<bool> {
-        let request = self
-            .reducer
-            .request(&self.definition, action, ActionOrigin::Programmatic);
+        let request = self.chart.request(action, ActionOrigin::Programmatic);
         Ok(self.dispatch_action(request, cx)?.outcome.changed)
     }
     /// Current semantic state, including distinct component revisions.
     pub fn state(&self) -> &ChartState {
-        self.reducer.state()
+        self.chart.reducer().state()
     }
     /// Next valid identity shared by native gestures and host editing controls.
     pub fn next_gesture_id(&self) -> ChartResult<Revision> {
-        self.reducer.next_gesture_id()
+        self.chart.reducer().next_gesture_id()
     }
     /// Prepare a control/input request using current state and the presented or pinned basis.
     pub fn action_request(&self, action: ChartAction, origin: ActionOrigin) -> ActionRequest {
-        self.reducer.request(&self.definition, action, origin)
+        self.chart.request(action, origin)
     }
     /// Exact pinned axes/source for host gesture coordinate conversion, never pending geometry.
     pub fn gesture_basis(&self) -> Option<&Arc<chart_core::layout::LaidOutChart>> {
-        self.reducer.gesture_basis()
+        self.chart.reducer().gesture_basis()
     }
     /// Apply a current controlled response atomically with required preparation.
     pub fn accept_controlled(
@@ -321,21 +452,13 @@ impl ChartView {
         state: ChartState,
         cx: &mut Context<Self>,
     ) -> ChartResult<bool> {
-        let mut next = self.reducer.clone();
-        if !next.accept_controlled(&self.definition, expected, state)? {
+        let Some(prepared) = self.chart.accept_controlled_prepared(expected, state)? else {
             return Ok(false);
-        }
-        let prepared = self.compiler.prepare(
-            &self.definition,
-            &self.source,
-            next.state(),
-            CompileLimits::default(),
-        )?;
-        self.reducer = next;
+        };
         if self.state().active_gesture().is_none() {
             self.release_input();
         }
-        self.prepared = Arc::new(prepared);
+        self.prepared = prepared;
         self.reset_preparation(true, cx)?;
         cx.notify();
         Ok(true)
@@ -346,22 +469,10 @@ impl ChartView {
         request: ActionRequest,
         cx: &mut Context<Self>,
     ) -> ChartResult<DispatchOutcome> {
-        let mut next = self.reducer.clone();
-        let result = next.dispatch(&self.definition, request)?;
-        if result
-            .event
-            .as_ref()
-            .is_some_and(|e| e.presentation_changed)
-        {
-            let prepared = self.compiler.prepare(
-                &self.definition,
-                &self.source,
-                next.state(),
-                CompileLimits::default(),
-            )?;
-            self.prepared = Arc::new(prepared);
+        let (result, prepared) = self.chart.dispatch_prepared(request)?;
+        if let Some(prepared) = prepared {
+            self.prepared = prepared;
         }
-        self.reducer = next;
         if result
             .event
             .as_ref()
@@ -410,7 +521,7 @@ impl ChartView {
             InputOrigin::Keyboard => ActionOrigin::Keyboard,
             InputOrigin::Programmatic => ActionOrigin::Programmatic,
         };
-        let mut request = self.reducer.request(&self.definition, semantic, origin);
+        let mut request = self.chart.request(semantic, origin);
         request.scene = Some(stamp);
         let outcome = self.dispatch_action(request, cx)?;
         self.inspector = Some(inspector);
@@ -445,7 +556,7 @@ impl ChartView {
                 .with_painted_inspection(painted),
             layout: frame.request.clone(),
             fonts: frame.fonts.clone(),
-            extensions: self.compiler.extensions().clone(),
+            extensions: self.chart.extensions().clone(),
         })
     }
     /// Last successfully painted inspection snapshot; never a pending preparation.
@@ -461,7 +572,7 @@ impl ChartView {
         self.metrics
     }
     fn prepaint(&mut self, bounds: Bounds<Pixels>, window: &Window) -> Option<Rc<NativeFrame>> {
-        if self.reducer.frozen_scene().is_some() {
+        if self.chart.reducer().frozen_scene().is_some() {
             let frame = self.frame.clone()?;
             if frame.bounds == bounds {
                 return Some(frame);
@@ -556,7 +667,8 @@ impl Render for ChartView {
         }
         self.input.focused = focused;
         let mut tokens = self
-            .definition
+            .chart
+            .definition()
             .theme
             .as_ref()
             .and_then(|t| t.resolve(&self.request.host_theme).ok())
@@ -688,16 +800,18 @@ impl Render for ChartView {
                                 .as_ref()
                                 .is_none_or(|old| !Rc::ptr_eq(old, &frame))
                             {
-                                if this.reducer.frozen_scene().is_some() {
-                                    if let Err(e) = this.reducer.present_frozen(frame.chart.clone())
-                                    {
-                                        this.last_error = Some(e);
-                                        this.inspector = None;
-                                        return;
-                                    }
-                                } else {
+                                if this.chart.reducer().frozen_scene().is_none() {
                                     this.acknowledge_preparation(frame.job);
-                                    this.reducer.present(frame.chart.clone());
+                                }
+                                let painted_state = this.state().clone();
+                                if let Err(e) = this.chart.acknowledge_paint_with_layout(
+                                    frame.chart.clone(),
+                                    &painted_state,
+                                    &frame.request,
+                                ) {
+                                    this.last_error = Some(e);
+                                    this.inspector = None;
+                                    return;
                                 }
                                 let mut inspector =
                                     Inspector::new(frame.chart.clone(), 10., 32).ok();
@@ -743,6 +857,16 @@ impl Render for ChartView {
                             this.painted_state = None;
                         } else if painted {
                             this.painted_state = Some(this.state().clone());
+                            if let Some(frame) = &this.frame {
+                                let painted_state = this.state().clone();
+                                if let Err(e) = this.chart.acknowledge_paint_with_layout(
+                                    frame.chart.clone(),
+                                    &painted_state,
+                                    &frame.request,
+                                ) {
+                                    this.last_error = Some(e);
+                                }
+                            }
                         }
                     });
                     let move_owner = paint.clone();

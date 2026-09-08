@@ -1,13 +1,13 @@
 //! FIX-17 custom stat/geom and explicit host-native painter, using only public APIs.
+use chart_core::plot::{Data, column, x_axis};
 use chart_core::{
     grammar::{OperationRef, SemanticValue},
-    services::*,
     *,
 };
 use chart_extension_example as fixture;
 use gpui::{prelude::*, size, *};
 use gpui_charts::*;
-use std::{rc::Rc, sync::Arc};
+use std::rc::Rc;
 struct NativeBar;
 struct PaintedBar(PaintQuad);
 impl PreparedNativePaint for PaintedBar {
@@ -68,14 +68,28 @@ impl Gallery {
         painters: Rc<NativePainterRegistry>,
         cx: &mut Context<Self>,
     ) -> Entity<ChartView> {
-        let input = ChartInput::with_extensions(
-            fixture::definition(native),
-            fixture::store().expect("data").snapshot(),
-            font.clone(),
-            fixture::registry().expect("registry"),
-        )
-        .expect("validated extension")
-        .with_native_painters(painters);
+        let data = Data::columns()
+            .column(
+                "x",
+                column(vec![0., 0.25, 0.75, 1., 1.5, 2., 999.])
+                    .validity(vec![true, true, true, true, true, true, false]),
+            )
+            .keys(9007199254743001..=9007199254743007)
+            .build()
+            .expect("data");
+        let plot = fixture::authoring::density_plot(data, "x", vec![0., 1., 2.], native)
+            .expect("extension plot")
+            .edit()
+            .x_axis(x_axis().ticks(vec![
+                (0.0.into(), "Lower".into()),
+                (1.0.into(), "Boundary".into()),
+                (2.0.into(), "Upper".into()),
+            ]))
+            .build()
+            .expect("guide");
+        let input = ChartInput::from_plot(&plot, font.clone())
+            .expect("native extension")
+            .with_native_painters(painters);
         cx.new(|cx| {
             let mut chart = ChartView::new(input, cx);
             chart.set_tooltip(
@@ -162,17 +176,12 @@ impl Render for Gallery {
 }
 fn main() {
     gpui_platform::application().run(|cx: &mut App| {
-        let bytes: Arc<[u8]> =
-            include_bytes!("../../../fixtures/capability/fonts/NotoSans-Regular.ttf")
-                .as_slice()
-                .into();
-        let descriptor = ResourceDescriptor {
-            id: ResourceId::new(1),
-            revision: Revision::new(1),
-            kind: ResourceKind::Font,
-            byte_len: bytes.len() as u64,
-        };
-        let font = NativeFont::load(descriptor, bytes, "Noto Sans", cx).expect("explicit font");
+        let font = NativeFont::from_bytes(
+            include_bytes!("../../../fixtures/capability/fonts/NotoSans-Regular.ttf").as_slice(),
+            "Noto Sans",
+            cx,
+        )
+        .expect("supplied font");
         let mut painters = NativePainterRegistry::new();
         painters
             .register(Rc::new(NativeBar))

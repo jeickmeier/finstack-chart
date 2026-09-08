@@ -158,7 +158,7 @@ impl ChartView {
         } else {
             GestureKind::Selection
         };
-        let id = self.reducer.next_gesture_id()?;
+        let id = self.chart.reducer().next_gesture_id()?;
         let change = if event.modifiers.platform || event.modifiers.control {
             SelectionChange::Toggle
         } else if event.modifiers.shift {

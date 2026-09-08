@@ -91,3 +91,46 @@ pub fn store(series: usize, rows: usize) -> ChartResult<DataStore> {
         limits(),
     )
 }
+
+/// The same deterministic workload authored from ordinary typed columns.
+pub fn primary_data(
+    series: usize,
+    rows: usize,
+    phase: usize,
+) -> ChartResult<chart_core::plot::Data> {
+    use chart_core::plot::{ColumnData, Data};
+    let count = series * rows;
+    let mut x = Vec::with_capacity(count);
+    let mut y = Vec::with_capacity(count);
+    let mut groups = Vec::with_capacity(count);
+    let mut validity = Vec::with_capacity(count);
+    for s in 0..series {
+        for i in 0..rows {
+            x.push(i as f64);
+            y.push(if i % 997 == 0 {
+                100. + s as f64
+            } else {
+                ((i * 13 + s * 7 + phase) % 97) as f64
+            });
+            validity.push(i % 1729 != 1728);
+            groups.push(s as u64);
+        }
+    }
+    Data::columns()
+        .column("x", x)
+        .column("y", ColumnData::from(y).validity(validity))
+        .column("series", groups)
+        .keys(1..=count as u64)
+        .limits(limits())
+        .build()
+}
+
+/// Shared primary authoring used by native scheduling and performance consumers.
+pub fn primary_plot(series: usize, rows: usize) -> ChartResult<chart_core::plot::Plot> {
+    use chart_core::plot::{aes, line, plot};
+    plot(primary_data(series, rows, 0)?)
+        .aes(aes().x("x").y("y").group("series"))
+        .layer(line().order(LineOrder::X).connect_gaps(false))
+        .data_limits(limits())
+        .build()
+}

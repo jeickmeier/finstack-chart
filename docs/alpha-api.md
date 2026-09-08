@@ -5,13 +5,13 @@ changes reviewed explicitly. It does not promise production SemVer stability, pu
 packages, completed streaming or release support. [Specification](spec/gpui-charts-specification.md)
 semantics govern names; [status](implementation-status.md) owns the remaining packages.
 
-The [primary authoring plan](impl_plans/primary-authoring-api-plan.md), AUT-01–09 and
-[ADR-013](adr/013-primary-authoring-api.md) now define the successor public surface
-over an assumed completed original WP-01–23 baseline. All features must become
-accessible through the primary builders/runtime; the table below remains the current
-historical alpha API, not the proposed developer entry point. The refactor is planned,
-with migration and G-AUTH evidence still open; no new API is available merely because
-its sketch appears in the plan.
+The [authoring guide](authoring-guide.md) documents the implemented successor surface:
+Data/Plot/components, retained Chart, native ChartInput and headless Output, with Python
+and WASM authoring packages. The table below records the historical expert/compatibility
+API; use the [primary coverage register](primary-authoring-api.md) for current migration
+and qualification status. Existing public paths remain supported through the planned
+0.2.0 migration release, with removal no earlier than 0.3.0. G-AUTH evidence is separate
+from the historical alpha results below.
 
 The scale PASS row below records the original 0.1.0 alpha subset. The required
 0.2.0 [D3 scale parity work](impl_plans/d3-scale-parity-plan.md), SCL-06–08/FIX-20,

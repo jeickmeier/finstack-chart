@@ -1,5 +1,6 @@
 //! FIX-17 external-style implementation using only chart-core's supported public APIs.
 //! This example is shared by proof hosts; production core/export do not depend on it.
+pub mod authoring;
 use chart_core::{data::*, grammar::*, layout::*, provenance::*, state::*, transaction::*, *};
 use std::{collections::BTreeMap, sync::Arc};
 /// Registered density histogram operation version.

@@ -261,38 +261,7 @@ impl PortableChart {
     }
     /// Owned versioned scene DTO; contains validated primitives/targets, no host objects.
     pub fn scene(&self) -> ChartResult<String> {
-        let figure = self.capture()?;
-        // The publication adds a background and optional decorations around core items.
-        // Preserve one target entry per actual publication item, including decorative empties.
-        let targets: Vec<_> = std::iter::once(Vec::new())
-            .chain(figure.layout().targets().iter().cloned())
-            .chain(
-                std::iter::repeat_with(Vec::new).take(figure.metadata().profile.annotations.len()),
-            )
-            .collect();
-        let item_panels: Vec<_> = std::iter::once(None)
-            .chain(figure.layout().item_panels().iter().cloned())
-            .chain(std::iter::repeat_n(
-                None,
-                figure.metadata().profile.annotations.len(),
-            ))
-            .collect();
-        let panels = figure.layout().panels().iter().map(|p|json!({"key":p.key,"row":p.row,"column":p.column,"bounds":p.bounds,"plot":p.chart.plot()})).collect::<Vec<_>>();
-        let insets = figure
-            .layout()
-            .insets()
-            .iter()
-            .map(|i| json!({"id":i.id,"panel":i.panel,"bounds":i.bounds,"plot":i.chart.plot()}))
-            .collect::<Vec<_>>();
-        let interactions: std::collections::BTreeMap<_, _> = figure
-            .layout()
-            .interactions()
-            .iter()
-            .map(|(i, v)| (i + 1, v))
-            .collect();
-        portable::encode(
-            &json!({"interactions":interactions,"insets":insets,"version":portable::VERSION,"stamp":figure.scene().stamp(),"units":figure.scene().units(),"bounds":figure.scene().bounds(),"items":figure.scene().items(),"resources":figure.scene().resources(),"targets":targets,"item_panels":item_panels,"panels":panels,"diagnostics":figure.layout().diagnostics(),"fonts":figure.metadata().fonts.iter().map(|f|json!({"id":f.id,"revision":f.revision,"sha256":f.sha256})).collect::<Vec<_>>() }),
-        )
+        self.capture()?.scene_json()
     }
     /// Return bytes for the explicitly requested format; no host file I/O or silent fallback.
     pub fn export(&self, format: &str) -> ChartResult<Vec<u8>> {
@@ -369,4 +338,42 @@ pub fn diagnostic_json(diagnostic: &Diagnostic) -> String {
     portable::encode(diagnostic).unwrap_or_else(|_| {
         "{\"code\":\"CHART_VALIDATION\",\"message\":\"Diagnostic encoding failed\"}".into()
     })
+}
+
+impl FigureSnapshot {
+    /// Owned versioned scene values with exact targets, font identities and diagnostics.
+    pub fn scene_json(&self) -> ChartResult<String> {
+        let figure = self;
+        // The publication adds a background and optional decorations around core items.
+        // Preserve one target entry per actual publication item, including decorative empties.
+        let targets: Vec<_> = std::iter::once(Vec::new())
+            .chain(figure.layout().targets().iter().cloned())
+            .chain(
+                std::iter::repeat_with(Vec::new).take(figure.metadata().profile.annotations.len()),
+            )
+            .collect();
+        let item_panels: Vec<_> = std::iter::once(None)
+            .chain(figure.layout().item_panels().iter().cloned())
+            .chain(std::iter::repeat_n(
+                None,
+                figure.metadata().profile.annotations.len(),
+            ))
+            .collect();
+        let panels = figure.layout().panels().iter().map(|p|json!({"key":p.key,"row":p.row,"column":p.column,"bounds":p.bounds,"plot":p.chart.plot()})).collect::<Vec<_>>();
+        let insets = figure
+            .layout()
+            .insets()
+            .iter()
+            .map(|i| json!({"id":i.id,"panel":i.panel,"bounds":i.bounds,"plot":i.chart.plot()}))
+            .collect::<Vec<_>>();
+        let interactions: std::collections::BTreeMap<_, _> = figure
+            .layout()
+            .interactions()
+            .iter()
+            .map(|(i, v)| (i + 1, v))
+            .collect();
+        portable::encode(
+            &json!({"interactions":interactions,"insets":insets,"version":portable::VERSION,"stamp":figure.scene().stamp(),"units":figure.scene().units(),"bounds":figure.scene().bounds(),"items":figure.scene().items(),"resources":figure.scene().resources(),"targets":targets,"item_panels":item_panels,"panels":panels,"diagnostics":figure.layout().diagnostics(),"fonts":figure.metadata().fonts.iter().map(|f|json!({"id":f.id,"revision":f.revision,"sha256":f.sha256})).collect::<Vec<_>>() }),
+        )
+    }
 }

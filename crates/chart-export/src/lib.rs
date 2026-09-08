@@ -1,7 +1,10 @@
 //! Synchronous headless publication from immutable shared-core charts.
 //! Fonts and data are supplied as owned snapshots; outputs are bytes plus diagnostics.
-//! No file I/O, system-font scan, GPUI initialization or mandatory workers are used.
+//! Construction/encoding need no I/O, system-font scan, GPUI initialization or mandatory workers.
+//! Saving encoded bytes is an explicit optional host operation.
+mod authoring;
 mod encode;
+pub use authoring::{CaptureBasis, ExportOptions, Output, export_options};
 mod fonts;
 mod jobs;
 mod profile;
@@ -27,6 +30,9 @@ fn error(code: DiagnosticCode, message: impl Into<String>) -> Diagnostic {
     )
 }
 
+/// Shared typed host-language ownership adapters for primary authoring and capture.
+#[doc(hidden)]
+pub mod host;
 /// Owned host-independent session used by the minimal binding proofs.
 pub mod portable;
 

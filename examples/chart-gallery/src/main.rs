@@ -1,11 +1,10 @@
-//! Standalone WP-07 gallery: real core charts, native vector/text paint and inspection.
+//! Primary authoring gallery: retained chart edits, native painting and inspection.
 use chart_core::data::*;
-use chart_core::grammar::*;
+use chart_core::grammar::ValueSpace;
 use chart_core::inspection::Inspector;
+use chart_core::prelude::{Data, LayerBuilder, Plot, aes, histogram, line, plot, points};
 use chart_core::provenance::{ResolvedTarget, Target};
-use chart_core::services::{ResourceDescriptor, ResourceKind};
 use chart_core::state::{ChartAction, Viewport};
-use chart_core::transaction::DataStore;
 use chart_core::*;
 use gpui::{
     App, Bounds, Context, Entity, IntoElement, Render, Role, Window, WindowBounds, WindowOptions,
@@ -13,22 +12,11 @@ use gpui::{
 };
 use gpui_charts::{ChartInput, ChartView, NativeFont};
 use std::{rc::Rc, sync::Arc};
-const DATA: DatasetId = DatasetId::new(1);
-const X: FieldId = FieldId::new(1);
-const Y: FieldId = FieldId::new(2);
-const TIME: FieldId = FieldId::new(3);
 const ORIGIN: i64 = 1_709_164_800_000_000_000;
-fn source() -> ChartResult<SnapshotHandle<StoreSnapshot>> {
-    let rows = TypedRows::snapshot(
-        DATA,
-        Revision::INITIAL,
-        (1..=21).map(RowKey::new).collect(),
-        (0..21).collect::<Vec<u32>>(),
-        100,
-    )?;
-    let batch = TypedDataBuilder::new(rows.get()?, SchemaVersion::new(1))
-        .float(X, "x", |n| Some(f64::from(*n)))
-        .float(Y, "value", |n| {
+fn source() -> ChartResult<Data> {
+    Data::rows(0..21u32)
+        .field("x", |n| f64::from(*n))
+        .field("value", |n| {
             if (8..=10).contains(n) {
                 None
             } else {
@@ -36,56 +24,25 @@ fn source() -> ChartResult<SnapshotHandle<StoreSnapshot>> {
             }
         })
         .timestamp(
-            TIME,
             "time",
-            TimestampType {
-                unit: TimeUnit::Nanoseconds,
-                timezone: "UTC".into(),
-            },
-            |n| Some(ORIGIN + i64::from(*n) * 17),
+            |n| ORIGIN + i64::from(*n) * 17,
+            TimeUnit::Nanoseconds,
+            "UTC",
         )
-        .finish(DataLimits::default())?;
-    Ok(DataStore::new(
-        SourceEpoch::new(1),
-        vec![(DATA, batch)],
-        DataLimits::default(),
-    )?
-    .snapshot())
+        .keys(|n| u64::from(*n) + 1)
+        .build()
 }
-fn definition(mode: usize, revision: Revision) -> ChartDefinition {
-    let layer = match mode {
-        1 => Layer::new(
-            LayerId::new(1),
-            DATA,
-            Geom::Point,
-            SourceAes::new().x(X).y(Y),
-        ),
-        2 => Layer::histogram(
-            LayerId::new(1),
-            DATA,
-            BinSpec::new(X, vec![0., 4., 8., 12., 16., 20.]),
-        ),
-        3 => Layer::new(
-            LayerId::new(1),
-            DATA,
-            Geom::line(),
-            SourceAes::new()
-                .x(Numeric::Timestamp {
-                    field: TIME,
-                    origin: ORIGIN,
-                })
-                .y(Y),
-        ),
-        _ => Layer::new(
-            LayerId::new(1),
-            DATA,
-            Geom::line(),
-            SourceAes::new().x(X).y(Y),
-        ),
-    };
-    ChartDefinition::new(revision).layer(layer)
+fn mark(mode: usize) -> LayerBuilder {
+    match mode {
+        1 => points().aes(aes().x("x").y("value")),
+        2 => histogram()
+            .aes(aes().x("x"))
+            .breaks(vec![0., 4., 8., 12., 16., 20.]),
+        3 => line().aes(aes().x("time").y("value")),
+        _ => line().aes(aes().x("x").y("value")),
+    }
 }
-fn tooltip(i: &Inspector, _: &mut Window, _: &mut App) -> gpui::AnyElement {
+fn tooltip(fields: [FieldId; 3], i: &Inspector, _: &mut Window, _: &mut App) -> gpui::AnyElement {
     let mut labels = vec![];
     for hit in i.hits() {
         let label = match hit.target.resolve(
@@ -96,11 +53,11 @@ fn tooltip(i: &Inspector, _: &mut Window, _: &mut App) -> gpui::AnyElement {
                 .expect("owned snapshot"),
         ) {
             Ok(ResolvedTarget::Source(row)) => {
-                let x = match row.value(X) {
+                let x = match row.value(fields[0]) {
                     Some(ValueRef::Float64(v)) => format!("{v:.0}"),
                     _ => "—".into(),
                 };
-                let y = match row.value(Y) {
+                let y = match row.value(fields[1]) {
                     Some(ValueRef::Float64(v)) => format!("{v:.2}"),
                     _ => "—".into(),
                 };
@@ -110,7 +67,7 @@ fn tooltip(i: &Inspector, _: &mut Window, _: &mut App) -> gpui::AnyElement {
                     .values()
                     .any(|a| matches!(a.space, ValueSpace::Timestamp { .. }))
                 {
-                    match row.value(TIME) {
+                    match row.value(fields[2]) {
                         Some(ValueRef::Timestamp(t)) => chart_core::scales::format_utc(
                             t,
                             TimeUnit::Nanoseconds,
@@ -148,54 +105,62 @@ fn tooltip(i: &Inspector, _: &mut Window, _: &mut App) -> gpui::AnyElement {
 }
 struct Gallery {
     chart: Entity<ChartView>,
-    source: SnapshotHandle<StoreSnapshot>,
+    source: Data,
+    plot: Plot,
     font: NativeFont,
     mode: usize,
-    revision: Revision,
     generation: usize,
     compact: bool,
+    validation: Option<String>,
 }
 impl Gallery {
-    fn new(
-        source: SnapshotHandle<StoreSnapshot>,
-        font: NativeFont,
-        cx: &mut Context<Self>,
-    ) -> ChartResult<Self> {
-        let chart = Self::mount(&source, &font, 0, Revision::new(1), cx)?;
+    fn new(source: Data, font: NativeFont, cx: &mut Context<Self>) -> ChartResult<Self> {
+        let plot = plot(source.clone())
+            .layer(mark(0).name("observations"))
+            .build()?;
+        let chart = Self::mount(&plot, &source, &font, cx)?;
         Ok(Self {
             chart,
             source,
+            plot,
             font,
             mode: 0,
-            revision: Revision::new(1),
             generation: 0,
             compact: false,
+            validation: None,
         })
     }
     fn mount(
-        source: &SnapshotHandle<StoreSnapshot>,
+        plot: &Plot,
+        source: &Data,
         font: &NativeFont,
-        mode: usize,
-        revision: Revision,
         cx: &mut Context<Self>,
     ) -> ChartResult<Entity<ChartView>> {
-        let input = ChartInput::new(definition(mode, revision), source.clone(), font.clone())?;
-        Ok(cx.new(|cx| {
-            let mut view = ChartView::new(input, cx);
-            view.set_tooltip(Rc::new(tooltip), cx);
-            view
-        }))
+        let fields = [
+            source.field("x")?.id(),
+            source.field("value")?.id(),
+            source.field("time")?.id(),
+        ];
+        let input = ChartInput::from_plot(plot, font.clone())?
+            .tooltip(Rc::new(move |i, w, cx| tooltip(fields, i, w, cx)));
+        Ok(cx.new(|cx| ChartView::new(input, cx)))
     }
-
     fn select(&mut self, mode: usize, cx: &mut Context<Self>) {
-        self.mode = mode;
-        self.revision = self.revision.checked_next().expect("fixture revision");
-        self.chart.update(cx, |c, cx| {
-            let _ = c.dispatch_chart(ChartAction::Reset, cx);
-            if let Err(e) = c.set_definition(definition(mode, self.revision), cx) {
-                eprintln!("fixture selection: {e}");
+        let candidate = self.plot.edit().layer("observations", mark(mode)).build();
+        match candidate.and_then(|candidate| {
+            self.chart.update(cx, |chart, cx| {
+                chart.apply_plot(&candidate, chart.chart().definition().revision, cx)?;
+                chart.dispatch_chart(ChartAction::Reset, cx)?;
+                Ok(())
+            })?;
+            Ok(candidate)
+        }) {
+            Ok(plot) => {
+                self.plot = plot;
+                self.mode = mode;
             }
-        });
+            Err(error) => eprintln!("fixture selection: {error}"),
+        }
         cx.notify();
     }
 }
@@ -257,7 +222,7 @@ impl Render for Gallery {
                     r.font = this.font.descriptor();
                     let _ = c.set_layout(r, cx);
                     let _ = c.dispatch_chart(ChartAction::Reset, cx);
-                    let _ = c.set_definition(definition(this.mode, this.revision), cx);
+                    let _ = c.apply_plot(&this.plot, c.chart().definition().revision, cx);
                 });
                 this.compact = false;
                 cx.notify();
@@ -267,12 +232,13 @@ impl Render for Gallery {
             .cursor_pointer()
             .child("Invalid input")
             .on_click(cx.listener(|this, _, _, cx| {
-                this.chart.update(cx, |c, cx| {
-                    let mut d = definition(this.mode, Revision::new(999));
-                    d.layers[0].mappings =
-                        Mappings::Source(SourceAes::new().x(FieldId::new(999)).y(Y));
-                    eprintln!("invalid-input: {:?}", c.set_definition(d, cx));
-                });
+                let invalid = this
+                    .plot
+                    .edit()
+                    .layer("observations", points().aes(aes().x("absent").y("value")))
+                    .build();
+                this.validation = invalid.err().map(|e| e.message);
+                cx.notify();
             }));
         let missing_font = div()
             .id("font-error")
@@ -298,9 +264,8 @@ impl Render for Gallery {
                 let weak = this.chart.downgrade();
                 let snapshot = this.chart.read(cx).inspector().map(|i| Arc::downgrade(i.presented()));
                 this.generation += 1;
-                this.revision = this.revision.checked_next().expect("fixture revision");
                 let generation = this.generation;
-                if let Ok(chart) = Self::mount(&this.source, &this.font, this.mode, this.revision, cx) {
+                if let Ok(chart) = Self::mount(&this.plot,&this.source, &this.font, cx) {
                     this.chart = chart;
                 }
                 window.on_next_frame(move |window, _| {
@@ -349,6 +314,7 @@ impl Render for Gallery {
             ))
             .child(buttons)
             .child(controls)
+            .child(div().child(self.validation.clone().unwrap_or_default()))
             .child(if self.compact {
                 div()
                     .w(px(20.))
@@ -372,13 +338,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let bytes: Arc<[u8]> = Arc::from(
             include_bytes!("../../../fixtures/capability/fonts/NotoSans-Regular.ttf").as_slice(),
         );
-        let descriptor = ResourceDescriptor {
-            id: ResourceId::new(0),
-            revision: Revision::INITIAL,
-            kind: ResourceKind::Font,
-            byte_len: bytes.len() as u64,
-        };
-        let font = match NativeFont::load(descriptor, bytes, "Noto Sans", cx) {
+        let font = match NativeFont::from_bytes(bytes, "Noto Sans", cx) {
             Ok(f) => f,
             Err(e) => {
                 eprintln!("Font setup: {e}");

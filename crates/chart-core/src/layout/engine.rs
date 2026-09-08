@@ -68,34 +68,9 @@ fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
         }
         Ok(())
     };
-    let mut ids = BTreeSet::new();
-    let mut sides = BTreeSet::new();
+    super::axes::validate_specs(&r.axes, r.limits)?;
+    let ids: BTreeSet<_> = r.axes.iter().map(|a| a.id).collect();
     for a in &r.axes {
-        if !a.label_rotation.is_finite() || a.label_rotation.abs() > 360. {
-            return Err(error(
-                DiagnosticCode::Validation,
-                "Axis label rotation must be -360..360 degrees.",
-            ));
-        }
-        if let Some(t) = &a.typography {
-            t.validate(r.limits)?;
-        }
-        if let Some(t) = &a.title {
-            t.validate(r.limits)?;
-        }
-
-        if !ids.insert(a.id) || (a.visible && !sides.insert(a.side)) {
-            return Err(error(
-                DiagnosticCode::SchemaConflict,
-                "Axes need unique IDs and one visible guide per side.",
-            ));
-        }
-        if let Some(v) = a.viewport {
-            v.distinct()?;
-        }
-        if let Some(v) = a.range {
-            v.distinct()?;
-        }
         let explicit_categories = match &a.scale {
             AxisScale::Band(o) => o.domain.as_ref(),
             AxisScale::Point(o) => o.domain.as_ref(),
@@ -536,6 +511,10 @@ pub fn layout(
         effective.bounds = f.content;
         effective.figure_bounds = Some(full_request.bounds);
     }
+    let legend = super::facets::prepare_single_legend(&prepared, &effective, measurer)?;
+    if let Some(legend) = &legend {
+        effective.bounds = legend.content;
+    }
     let request = &effective;
     let stamp = SceneStamp {
         definition: prepared.definition_revision(),
@@ -554,6 +533,9 @@ pub fn layout(
                 chart.scene.resources(),
                 request.limits,
             )?;
+            if let Some(legend) = legend {
+                super::facets::finish_single_legend(&mut chart, &full_request, legend)?;
+            }
             super::theme::apply(&mut chart, &full_request, &theme)?;
             if let Some(furniture) = furniture {
                 super::composition::finish(&mut chart, &full_request, measurer, &theme, furniture)?;

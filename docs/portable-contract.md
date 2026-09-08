@@ -3,8 +3,10 @@
 The implemented Rust, Python and WASM proof surfaces share the normalized core compiler,
 state reducer, inspection, streaming and publication engine. Envelope version **1** is
 independent of the evolving specification-document version. This document describes the
-original implemented scope; expanded D3/ggplot2 parity and the primary-authoring API retain
-their own open gates. [ADR-006](adr/006-portable-specification-and-binding-proofs.md) records
+versioned compatibility scope. New applications use the host-native
+[primary authoring API](authoring-guide.md#python-and-javascript): ordinary data and
+components forward to the same Rust Chart/Output owners. Expanded D3/ggplot2 semantics
+and primary-API qualification retain their own gates. [ADR-006](adr/006-portable-specification-and-binding-proofs.md) records
 dependency identity and wire ownership; [binding instructions](../fixtures/bindings/README.md)
 run the actual adapters and independent comparisons.
 
@@ -60,9 +62,14 @@ supplied compiled registry. Callback code, native pointers, GPUI widgets and fil
 paths are not portable resources. Native-only definitions and unknown registrations return
 structured errors; serialization never installs executable plugins.
 
-## Methods and ownership
+## Compatibility methods and ownership
 
-Both adapters construct `Chart(definition_json, data_json, profile_json, font_bytes)`.
+The low-level proof adapters retain the constructor below. The primary packages expose
+Data/Plot/Chart/Output, structured results and typed component methods; they do not
+require the caller to assemble these JSON envelopes. Session forwards decoding into
+the typed runtime, and wire version 1 remains unchanged.
+
+Both compatibility adapters construct `Chart(definition_json, data_json, profile_json, font_bytes)`.
 The matching Rust object is `chart_export::portable::PortableChart`. JSON inputs/results
 are owned strings. Python byte results and WASM Uint8Array results are owned copies.
 

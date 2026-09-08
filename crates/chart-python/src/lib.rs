@@ -3,6 +3,7 @@
 use chart_core::Diagnostic;
 use chart_export::portable::{PortableChart, diagnostic_json};
 use pyo3::{create_exception, exceptions::PyException, prelude::*};
+mod authoring;
 create_exception!(
     chart_python,
     ChartError,
@@ -10,7 +11,25 @@ create_exception!(
     "Recoverable chart error; args[0] is a structured JSON diagnostic with a stable code."
 );
 fn failure(error: Diagnostic) -> PyErr {
-    ChartError::new_err(diagnostic_json(&error))
+    let encoded = diagnostic_json(&error);
+    let result = ChartError::new_err(encoded.clone());
+    Python::attach(|py| {
+        let value = result.value(py);
+        // Error attributes are additive; args[0] retains the supported wire diagnostic.
+        let _ = value.setattr("code", error.code.as_str());
+        let _ = value.setattr("message", error.message);
+        let _ = value.setattr("correction", error.correction);
+        if let Ok(diagnostic) = py
+            .import("json")
+            .and_then(|m| m.call_method1("loads", (encoded,)))
+        {
+            if let Ok(context) = diagnostic.get_item("context") {
+                let _ = value.setattr("context", context);
+            }
+            let _ = value.setattr("diagnostic", diagnostic);
+        }
+    });
+    result
 }
 /// Owned chart, data and publication resources. Call dispose to release them deterministically.
 #[pyclass(module = "chart_python")]
@@ -127,6 +146,7 @@ impl Chart {
 #[pymodule]
 fn chart_python(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_class::<Chart>()?;
+    authoring::register(module)?;
     module.add("ChartError", module.py().get_type::<ChartError>())?;
     Ok(())
 }

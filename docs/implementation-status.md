@@ -1,11 +1,462 @@
 # Implementation status
 
-Updated: 7 September 2026. Specification version: 0.5.0.
+Updated: 8 September 2026. Specification version: 0.5.0.
 Bootstrap committed at `fbc9782` (starting commit: `19f4a27`); WP-01 committed at `dfe38e8`.
 WP-02 committed at `435e127`; WP-03 at `3a86189`; WP-04 at `d0a6c48`.
 WP-05 is committed at `3cf1b33`; WP-06 at `f8657fb`; WP-07/08 at `fac148a`.
 WP-09/10 are committed at `c5ec829`; WP-11 at `a6fb2ea`; WP-12 at `63dbcc2`.
 Original reports retain the revision context from their evidence runs.
+
+## Primary authoring implemented; final performance qualification pending — 8 September 2026
+
+AP-00–08 are complete for the delivered LibraryV1 baseline. Data/Plot/Chart/Output,
+all current component families, typed live operations, native/Kit/export destinations,
+actual Python/WASM syntax and production-consumer migration are implemented. The
+[completion report](evidence/primary-authoring-completion-2026-09-08.md) maps the
+[35-row register](primary-authoring-api.md) to source, independent fixture and host evidence.
+Revision: `b631f0e6d7e41722b5774433d616f704234157d7` plus this implementation;
+the report's source inventory identifies the tested files. Unrelated Phase 2 edits remain
+separate. All packages stay unpublished 0.1.0 and portable schemas stay version 1.
+
+Final `mise run fmt`, `mise run check` and `mise run test` pass on Darwin arm64;
+252 tests pass. Offline Linux aarch64 core/export/text tests/check/docs pass, 246 tests.
+Actual `primary-authoring-proof` and `bindings-proof` pass. Primary execution covers
+34 full component-family cases and 23 action + 47 input + 70 streaming steps in Rust,
+Python and WASM, exact data, typed transactions, capture/disposal, detachment/memory
+and strict declarations. Linux primary outputs pass the same independent comparison.
+Native primary/streaming/Kit keyboard, selection, exact-value accessibility hooks,
+historical pin/freeze/retention/queue/resume and Kit reset were executed and inspected.
+SVG/PNG and searchable/outlined PDF artifacts were generated and inspected.
+
+The native check exposed and fixed repeated frozen-frame acknowledgement entering the
+resize-only path. The regression verifies repeat painting after live commit and failed
+pending-scene admission without losing the retained source/capture policy. Updated
+native execution passes. Field/identity validation and seeded-jitter fixture identity
+were also corrected without changing existing expected values or tolerances.
+
+AP-09 / G-AUTH remain open pending final native performance qualification. The initial
+five primary workloads passed their applicable baseline protocols. A final-code rerun
+recorded ten-line frame-work p95 21.095374 ms, followed by 20.712834 ms on repetition
+(target 16.7 ms); hover remained below 4 ms. Platform submission dominates the slow
+samples. Both dashboard attempts completed all 120 preparations per chart but stopped
+painting before the drain snapshot; those attempts fail acceptance and are retained.
+The unchanged baseline also failed the matched ten-line comparison at 21.160960 ms;
+the paired primary run had fewer than 30 displayed samples. A refactor-specific
+regression is not established, and a stable visible-window rerun has been requested. The ADR-008 baseline 30-minute
+exception, full-assistive/other-platform limitations, dependency advisories and expanded
+parity/G4 requirements remain explicit. Next action: complete the requested visible
+native measurements, preserve failed traces, then close or explicitly leave G-AUTH open.
+
+## Primary authoring implementation in progress — 7 September 2026
+
+Owner authorized the complete AP-00–09 plan. AP-00's baseline/public contract,
+35 source-owner coverage rows, migration policy and acceptance handoff are recorded in
+[the capability register](primary-authoring-api.md). Baseline remains
+`b631f0e6d7e41722b5774433d616f704234157d7`; earlier owner-authorized planning edits are
+preserved. No publication or parity-kernel implementation is implied.
+
+AP-01 extracted typed Chart store/reducer/compiler/queue/query ownership; legacy JSON
+Session now forwards to it, retaining eager portable preparation. New structural
+validation accepts registered native-only operations without running statistics.
+Owned and external-source routes remain distinct. Four new FIX-AUTH01 runtime tests
+pass, including independent external views, native-only execution counting,
+definition-only data/replay/queue preservation, typed/legacy histogram/replay parity.
+The existing portable/streaming/scheduling/stage-cache selection passes 22 tests.
+
+AP-02 has the first Data columns/rows, owner-scoped field/layer handles, immutable
+Plot and inherited source aes/layer/histogram route. Four FIX-AUTH02 core tests pass:
+independent geometry/bin membership, nullable/exact integer/timestamp preservation,
+foreign-handle and missing-field diagnostics, and independent dataset overlays.
+Native ChartInput::from_plot and the headless Output destination compile. Component
+and publication tests, native lifecycle integration, complete runtime/binding/consumer
+migration and performance acceptance remain in progress. No cumulative gate closes.
+
+Commands on Darwin arm64 with mise Rust 1.97.1: `cargo metadata --no-deps --format-version 1 --locked`;
+`cargo test -p chart-core --test portable --test streaming --test scheduling --test stage_cache --locked`;
+`cargo test -p chart-core --test authoring_runtime --locked`;
+`cargo test -p chart-core --test authoring --locked`;
+`cargo check -p chart-export -p gpui-charts --locked` (all via `mise exec --`).
+Next action: finish real publication proofs and component/runtime coverage, then the
+remaining ordered packages. G-AUTH remains OPEN; the register records partial coverage.
+
+### Continuing authoring implementation evidence
+
+The later primary-authoring slice adds regression coverage for original-Plot edits after
+live append, retry/queue preservation, retention rollback and queued epoch conflicts.
+Automatic timestamp mappings now share an exact integer origin across owned datasets of
+the same representation. Shared automatic color catalogs are trained before per-layer
+color assignment. Facet authoring rejects ambiguous same-ordinal/different-name fields;
+matching datasets must currently align facet-field schema positions or explicitly use
+broadcast/panel targeting. Explicit timestamp origins remain authoritative and incompatible
+origins reject. Shared automatic colors use ordered catalog union per coherent snapshot;
+an explicit color domain fixes category-to-palette assignments across changing catalogs.
+
+`mise exec -- cargo test -p chart-core --locked` passed the entire core suite and doctests
+on this slice. `mise exec -- cargo test -p chart-export --test authoring --locked` passed
+4 tests, including the 8-case Presented/Current × visible/full-domain × interaction matrix,
+with requests executed after runtime disposal. Acknowledged destination layout is retained
+as capture provenance and as the default Presented layout policy, with explicit publication
+size/font/options applied. Native input now has tooltip/control/accessibility/edit/density
+builders, and Kit has a primary plot mount helper. Native committed receipts remain committed
+when later scheduling fails; that separate failure uses the existing diagnostic surface.
+
+`mise exec -- cargo clippy -p chart-core -p chart-export -p gpui-charts -p gpui-charts-kit --all-targets --locked -- -D warnings`
+passed before the subsequent host-binding dispatch additions. The refreshed
+`mise exec -- cargo run -p chart-gallery --example primary_authoring --locked -- --headless`
+produced updated `target/authoring/native-primary.{svg,pdf,png}`; PNG and a Poppler-rendered
+PDF (`/private/tmp/finstack-primary-refreshed.png`) were visually inspected and the Peak
+annotation is inside the plot. These checks do not certify native input/lifecycle or bindings.
+
+AP-07 now has shared Rust host dispatch into actual typed component/draft builders,
+typed host runtime/transaction/capture adapters, and primary Plot version-1 interchange
+with names/profile/exact data. PyO3 and wasm-bindgen owned handles now expose these paths;
+`packages/python/finstack_chart` and `packages/wasm/authoring.cjs` provide ordinary
+column/row/component syntax without a separate grammar compiler. Source arrays cross
+typed native vectors; Python integers and WASM BigInt retain exact 64-bit payloads.
+Output resources, immutable requests/frames and deferred export queue/jobs are separate
+owned handles with explicit disposal. Existing portable Chart APIs remain available.
+
+The first smoke checks have been superseded by committed
+[scripts/run_primary_authoring_proofs.py](../scripts/run_primary_authoring_proofs.py)
+and `mise run primary-authoring-proof`. On Darwin arm64, Rust 1.97.1, Python 3.14.6,
+Node 24.14.0, TypeScript 6.0.2, mypy 2.3.0 and wasm-bindgen 0.2.128, the actual Rust
+executable, PyO3 extension and Node WASM module passed shared primary-author assertions.
+The runner compares initial/final source semantics, scenes, actions, navigation,
+transactions/replay, exact 64-bit timestamp/integer/null/category values, summary means
+and OLS against independent expectations. Scene/navigation tolerances are 1e-9 destination
+units and statistical tolerances 1e-12; opaque allocated identities are normalized only
+after source identity relationships are checked. Actual SVG/PDF/PNG encoders execute.
+
+Owned editor handles, named runtime commands, event-time retention, structured error
+properties and separate public component classes now have Python stubs and TypeScript
+declarations. JavaScript offers camelCase aliases. Positive typing examples pass;
+five negative examples reject misplaced titles/subtitles/annotations/legends and data
+replacement through definition edits. Host proofs also cover input mutation and one-time
+row callbacks, display/boolean/null metadata, invalid/foreign fields, queue acceptance
+versus commit, stale queued bases, update-versus-batch domains, count/event retention,
+stale state commands, eight capture combinations, editor/request survival after disposal,
+export-job limits/cancellation and repeated disposal. Python made 710 independent thread
+steps during one 100,000-row Rust semantic call (0.891 seconds, debug build); this is a
+detachment observation, not a performance claim. WASM memory stayed 6,815,744 bytes across
+six batches of 100 create/dispose cycles with 1,000 rows, explicitly freeing all fluent
+intermediate handles. A prior GC-timing-only run was unstable; garbage collection timing
+is not a deterministic disposal guarantee.
+
+Evidence: `target/authoring/{environment.json,*primary*.log,native,python,wasm,typing}`.
+The Python/WASM PNGs were inspected; a fixture-only label offset was corrected so the
+annotation remains inside the plot, then all three runtime fixtures were rerun.
+Command: `WASM_BINDGEN=/private/tmp/wp09-tools/wasm-bindgen-0.2.128-aarch64-apple-darwin/wasm-bindgen TSC_JS=/Users/jeickmeier/.npm/_npx/e04ecd76da0b5726/node_modules/typescript/lib/tsc.js PYTHONPATH=/Users/jeickmeier/.cache/uv/archive-v0/PKSDgIDzoTfeXd75NY8Rf/lib/python3.14/site-packages mise run primary-authoring-proof`.
+`mise run fmt`, Python/export all-target Clippy and wasm32 all-target Clippy passed.
+Baseline revision remains `b631f0e6d7e41722b5774433d616f704234157d7` plus these uncommitted
+changes. The runner also now exercises the compiled custom density-histogram extension through
+primary components in all three hosts. `custom_stat(...).field_parameter(name, field)`
+resolves owner-checked source mappings only during authoring. The example owns its
+`density_histogram`/`chamfered_bars` helpers and explicit registry installation/loading;
+no parameter payload installs code. Independent counts/members/density and both generated
+consumers match; the headless image was inspected. Native-only variants build as Rust
+plots but reject portable runtime/serialization and headless preparation. Full remaining
+component/standalone coverage, native lifecycle qualification, consumer migration and
+AP-09 performance/platform gates remain open. The existing aggregate compatibility
+runner also passed with
+`WASM_BINDGEN=/private/tmp/wp09-tools/wasm-bindgen-0.2.128-aarch64-apple-darwin/wasm-bindgen mise run bindings-proof`:
+36 stat/position/geometry cases, 23 action transitions, 47 input steps, 70 streaming steps,
+40 held-capture steps, extension/schema/capability failures, rich text/facets/density and
+independent vector/raster assertions across actual Rust/Python/WASM. Evidence is under
+`artifacts/bindings`. This establishes preserved legacy contracts; the remaining delivered
+component families still need primary-builder evidence. This shared host proof does not close every capability row or G-AUTH.
+
+The current working tree adds grammar/stat/position/axis/color/text/theme/facet/figure
+builders, named transforms, generated color mappings, grouping overrides, runtime
+transaction/configuration helpers and immutable component edits. Compiler structural
+validation now covers facets, axes, figure references and color stages without executing
+statistics. Grid builders infer the complete row/column product. Ordinary charts and
+facets reuse the same legend painter. Future GG mapped-symbol/linetype kernels remain
+unimplemented and their coverage stays open.
+
+Native ChartInput/ChartView now adopt the same typed Chart; GPUI retains tasks, a separate
+worker compiler, frame acknowledgements and native resources. Committed source admission
+is separate from worker preparation; an older admitted result cannot replace newer
+committed data. Paint acknowledgement retains actual inspection state for Presented
+capture. Supplied fonts have an automatic native resource constructor. Full native
+lifecycle, sustained workloads and bindings still require requalification.
+
+Additional commands, all in the repository on Darwin arm64 with mise Rust 1.97.1:
+
+- `mise exec -- cargo test -p chart-core --test authoring --test facets --test layout --locked`:
+  36 passed at that slice (7 authoring, 9 facets, 20 layout).
+- `mise exec -- cargo test -p chart-core --test authoring --locked`: subsequently 8 passed,
+  adding independent shared-transform/generated-color/reuse assertions.
+- `mise exec -- cargo test -p chart-core --test authoring_runtime --test portable --test scheduling --test streaming --test stage_cache --locked`:
+  27 passed, including older-worker/newer-commit and disposal checks.
+- `mise exec -- cargo test -p chart-export --test authoring --locked`: 3 passed, including
+  real SVG/PDF/PNG publication and ordinary/faceted legend text. A missing facet selector
+  was corrected in the test and now also rejects during structural build.
+- `mise exec -- cargo run -p chart-gallery --example primary_authoring --locked` and
+  `mise exec -- cargo build -p chart-gallery --example primary_authoring --locked`:
+  built the shared native/publication example. A sandboxed launch could not connect to
+  macOS services; the compiled local example was subsequently launched outside the
+  sandbox and as a temporary local app bundle for visual inspection. The actual native
+  chart displayed both colored series, title/subtitle, axes, legend and caption. Keyboard
+  interaction was not verified by this inspection.
+- Artifacts: `target/authoring/primary-authoring.{svg,pdf,png}` and
+  `target/authoring/native-primary.{svg,pdf,png}`. PNG and Poppler-rendered PDF were inspected.
+  Inspection identified an annotation offset outside the default plot clip; the example
+  now places that label inside the plot and awaits refreshed image inspection.
+- `mise run fmt` passed at the recorded intermediate slice. Focused Clippy identified
+  new clone-on-Copy/large-enum issues; fixes are applied but the final rerun is pending.
+  Latest `mise exec -- cargo check -p chart-core --locked` passes after immutable edit work.
+
+These counts precede the newest edit/configuration changes; they do not certify those
+changes, actual Python/WASM execution, complete native lifecycle or performance gates.
+Next: behavioral coverage for primary edits/transactions/configuration, remaining
+component ownership checks, native/export consolidation, then AP-07–09. G-AUTH stays OPEN.
+
+### Primary component-family qualification
+
+The primary Rust, Python and WASM authors now execute 34 existing independent
+statistic/position/geometry/scale/facet/composition cases through explicit builders.
+The shared Rust fixture checks exact source materialization, full semantic output and
+resolved marks against the original fixture definitions, rebasing only allocated
+layer/dataset/field/scale identities. Python/WASM use ordinary columns and explicit
+components, then compare complete semantics and scenes with Rust at the existing
+1e-12/1e-9 tolerances. No fixture expectations or visual baselines were changed.
+Coverage includes overflow/automatic bins, summary/count/OLS and affine/filter variants,
+stack/normalization/dodge/data/display jitter, log/symlog/point/UTC/session scales,
+area/ribbon/cells/OHLC/volume, group color and affine secondary axes; seven facet cases
+cover catalogued empty grids, free axes, broadcasts/targeted layers and group/facet/chart
+stat populations. Three publication cases cover named themes, gradients/symbols/dashes,
+explicit regular/bold/Arabic fonts, rich titles/axis labels, ordered notes, panel letters,
+callout/coordinate-space labels and insets using existing prepared layers.
+
+This exposed and fixed two missing primary controls (`LayerBuilder::color_group` and
+`LegendBuilder::untitled`) and bar/volume defaults discarded by `.aes(...)`. Bar baselines
+are now recipe options used when y2 is unmapped; explicit y2 mappings retain precedence.
+Python/WASM dispatch and declarations include the added controls. Native editorial
+composition, OHLC/volume and grid artifacts were inspected; the six-panel grid's initial
+400×260-point page correctly reported layout pressure and was enlarged to 600×540 points
+for its proof artifact. Editorial composition uses 180×120 mm at 96 DPI.
+
+Commands: `mise exec -- cargo test -p chart-core --test authoring_families --locked`;
+`mise run primary-authoring-proof` with the task-local tool paths above; after extending
+facets/composition, each actual Rust/Python/WASM producer and
+`mise exec -- python3 scripts/bindings/authoring/compare.py target/authoring` ran again.
+The comparison passed all 34 primary families. Outputs are
+`target/authoring/{native,python,wasm}/{families,family-scenes}.json` and native PNGs.
+The expanded WASM workload plateaued at 19,070,976 bytes in its six explicitly freed
+batches; its higher peak includes the additional families and supplied fonts. The latest
+Python detachment check recorded 627 thread steps over 0.786 seconds (debug build).
+Full native lifecycle/input/Kit qualification, remaining option/runtime coverage,
+consumer migration and AP-09 performance/platform gates remain open.
+
+### Consumer migration in progress
+
+The main native gallery now uses ordinary `Data::rows`, named recipe builders and
+immutable Plot edits, with owner-derived field handles for inspection. Family/facet/
+composition galleries reuse explicit recipes in `examples/common/authoring_fixtures.rs`;
+the independent raw-fixture comparison remains in tests. Kit mounts these primary plots
+through its supplied-theme input helper. Extension, action and interaction galleries now
+use primary construction. The linked host-tools example shares Data between charts,
+builds callouts, derives actual layer identities and uses `link` through native
+`capture_link`/`resolve_link`; captured host-command export still uses its specialist
+snapshot boundary to retain the event's exact scene.
+
+The curated prelude exposes builders and relevant option enums without host dispatch or
+ambiguous profile exports. Root Rustdoc and README now lead with Data/Plot authoring;
+`docs/authoring-guide.md` documents current components, runtime/capture ownership, host
+usage and the 0.2/0.3 additive migration policy. No old public module was removed.
+Migration exposed named-axis insertion discarding prior primary-axis settings and missing
+Rust edit x/y-axis conveniences; both are fixed. The meaningful regression checks
+non-default bar baselines before/after aes, retained primary axes and stable edit handles.
+
+`mise exec -- cargo test -p chart-core --test authoring --test authoring_families --locked`
+passed 12 focused tests plus two corpus tests covering 34 cases. `cargo check` passed
+main/family/Kit/extension/actions/interaction/host-tools consumers via mise. `mise run fmt`, repository graph/link validation and
+`mise exec -- cargo clippy -p chart-core -p chart-export -p gpui-charts -p chart-gallery --all-targets --locked -- -D warnings` passed on the latest slice. Streaming,
+scheduling/live-export/benchmark consumers, native interaction/lifecycle/Kit execution,
+complete option/runtime coverage, docs/type/schema validation and AP-09 measurements
+remain in progress. G-AUTH stays open.
+
+### Primary runtime consumers and documentation
+
+The streaming gallery now owns one Chart and uses named transaction/retention and
+queue builders. The scheduling gallery and finite/sustained native benchmarks author
+ordinary columns and components, commit through the mounted Chart, and keep explicit
+CPU/GPU/presentation instrumentation. The live-export gallery and sustained benchmark
+use Output::live_request; annotation definition edits and later commits cannot alter an
+accepted request. The publication tutorial now uses Data rows, Plot and Output with
+physical dimensions, supplied fonts and text/DPI options. Raw fixtures remain only in
+compatibility/diagnostic proof programs and internal stage benchmarks.
+
+Primary `external_view`/`accept_from` now preserve authored handles and definition edit
+ownership while sharing committed snapshots and keeping independent reducers. Rust
+checks prove pointer-shared snapshots, explicit source admission, rejection of a copied
+writer and continued view preparation after writer disposal. Python/WASM expose the
+same operations with fresh actual-runtime checks included in the primary proof runner.
+
+README, the authoring guide, release guide, portable compatibility contract, historical
+alpha API guide and changelog now lead with the implemented primary surface. The planned
+0.2.0 migration retains old public paths and wire version 1; removal is no earlier than
+0.3.0. Current packages remain 0.1.0 and unpublished. No separate Phase 2 semantic gate
+is advanced. Performance requalification and remaining integrated/native checks follow.
+
+Validation so far: native example compilation and all-example Clippy with
+`--features performance,kit --locked -- -D warnings` pass. The focused core external-view
+suite passes all eight tests. These are intermediate results; final aggregate and actual
+host/native/performance results will be recorded separately below.
+
+## Grouped aesthetic contract recorded in the plan — 7 September 2026
+
+Added section 3.5 to the [primary authoring plan](impl_plans/primary-authoring-api-plan.md)
+with the proposed grouped line/point example and independent group/color/fill/shape/
+linetype/size/linewidth/alpha channels. The contract distinguishes group membership
+from scale-selected appearance, supports same or different mapping fields, preserves
+plot/layer inheritance and overrides, and keeps constants and legends with their
+respective builders. Mapped styles must not require a separate layer per category.
+AP-03 acceptance now covers actual resolved styles, line membership, inference and
+override rules, legend keys, inspected output and AP-07 host proofs. GG-02–05 retain
+semantic ownership; the example is explicitly prospective.
+
+Starting revision `b631f0e6d7e41722b5774433d616f704234157d7`; outcome is uncommitted
+plan/ledger edits preserving earlier work. AP-00–09 remain PLANNED, GG-02–05 remain
+NOT STARTED and G-AUTH remains OPEN. Next action: AP-00's API walkthrough includes
+section 3.5. Validation: `mise exec -- python3 scripts/check_repository.py`, temporary
+`mise exec -- python3 /tmp/check_chart_authoring_plan.py`, and
+`git -c core.whitespace=-blank-at-eol diff --check -- docs/impl_plans/primary-authoring-api-plan.md docs/implementation-status.md`
+passed on Darwin arm64. Documentation-only checks; no proposed API/runtime tests ran.
+
+## Grouped aesthetic API clarification — 7 September 2026
+
+Reviewed AUT-03 / GG2-03 against current `SourceAes`, `ColorEncoding`, `ThemePatch`
+and GG-02/03. The planned primary `aes()` supports independent group, color, shape
+and linetype mappings, inherited or overridden per layer. Group selects connected
+observations/statistical populations; scales choose visual encodings. Current source
+mappings provide explicit group and size; separate color encoding supports source
+categories and prepared groups. Symbols/dashes are currently plot/layer theme values,
+not mapped shape/linetype channels. GG-02/03 remain NOT STARTED; no inferred grouping
+from color or complete mapped symbol/line-style support is certified by this answer.
+
+Revision `b631f0e6d7e41722b5774433d616f704234157d7`, with existing uncommitted planning
+edits preserved. Evidence is source/plan inspection only; no runtime tests ran.
+Validation: `git -c core.whitespace=-blank-at-eol diff --check -- docs/implementation-status.md`
+passed. Next action remains the recorded AP-00 walkthrough; mapped aesthetic semantics
+retain GG-02/03 ownership and primary builder integration in AP-03. G-AUTH remains OPEN.
+
+## Implemented builder inventory and future integration rule — 7 September 2026
+
+Added a source-linked 16-family component inventory to section 3.3 of the
+[primary authoring plan](impl_plans/primary-authoring-api-plan.md): explicit figure
+furniture/callout/inset builders, existing marks/statistics/positions, transforms,
+scales/axes/legends, facets, theme/text/layout, runtime configuration, host hooks,
+publication and registered components. Builder names remain proposed. The inventory
+separates implemented fixed annotations from future mapped labels and other parity
+requirements; the introductory sketch now uses the existing Editorial theme.
+
+Section 3.4, AUT-01 and ADR-013 require every future feature to extend an existing
+typed builder or add a focused component within the primary API. Its own package
+includes primary examples, applicable bindings/serialization updates and behavioral
+evidence. Runtime operations remain Chart/destination methods. AP-00/04/08 acceptance
+now carries inventory expansion, composition evidence and the ongoing integration rule.
+
+Starting revision `b631f0e6d7e41722b5774433d616f704234157d7`; result is uncommitted
+plan/specification/ADR/ledger edits, preserving earlier changes. Source inspection
+covered the linked current core grammar/composition/layout/runtime and native/export
+declarations. No runtime implementation or schema changed; AP-00–09 remain PLANNED
+and G-AUTH remains OPEN. Next action: AP-00's option-level register and API walkthrough.
+
+Validation from `/Users/jeickmeier/Projects/finstack-chart`, Darwin arm64, mise Python
+3.14.6: `mise exec -- python3 scripts/check_repository.py` and temporary
+`mise exec -- python3 /tmp/check_chart_authoring_plan.py` passed documentation links,
+package/fixture/ledger and requirement/dependency consistency.
+`git -c core.whitespace=-blank-at-eol diff --check -- docs/impl_plans/primary-authoring-api-plan.md docs/adr/013-primary-authoring-api.md docs/spec/gpui-charts-specification.md docs/implementation-status.md`
+passed. No runtime test or proposed-builder compilation ran; this is planning evidence.
+
+## Separate annotation and figure builders — 7 September 2026
+
+Updated the [primary authoring plan](impl_plans/primary-authoring-api-plan.md),
+AUT-04 and ADR-013 to the owner's direction: labels are x/y-positioned annotations;
+titles, subtitles, x/y axis labels and legends have separate builders. Section 3.1
+owns the proposed routes and supersedes the older combined-labels sketch. AP-00/03/04
+now require separate component examples, correct annotation identity/provenance,
+automatic legends and shared text/guide implementation. FIX-AUTH04 includes component
+isolation and compile-fail checks against misplaced labels-builder setters.
+
+Starting revision `b631f0e6d7e41722b5774433d616f704234157d7`; result is uncommitted
+planning/specification/ADR/ledger edits, preserving prior review and plan updates.
+No implementation or wire format changed; AP-00–09 remain PLANNED and G-AUTH OPEN.
+Next action remains AP-00, using the revised builder boundaries. Intended acceptance
+has not been executed; this is a documentation-only update.
+
+Validation from `/Users/jeickmeier/Projects/finstack-chart`, Darwin arm64, mise Python
+3.14.6: `mise exec -- python3 scripts/check_repository.py` passed; the temporary
+`mise exec -- python3 /tmp/check_chart_authoring_plan.py` passed the unchanged package,
+requirement and dependency checks. `git -c core.whitespace=-blank-at-eol diff --check -- docs/impl_plans/primary-authoring-api-plan.md docs/adr/013-primary-authoring-api.md docs/spec/gpui-charts-specification.md docs/implementation-status.md`
+passed. No runtime or proposed-builder compilation was run.
+
+## Primary authoring plan review findings incorporated — 7 September 2026
+
+Updated the [plan](impl_plans/primary-authoring-api-plan.md) and
+[ADR-013](adr/013-primary-authoring-api.md) at the owner's request. APR-01–04 are
+addressed in the planning contract: definition-only edits preserve current data;
+owned ingestion and external committed sources retain one commit authority, with
+independent view/worker/export lifetimes; Presented/Current export basis is separate
+from navigation/interaction policy; structural build and native/portable validation
+are separate. AP-00/01/02/05/06 now carry the corresponding handoff and regression
+acceptance. The AP-00–09 sequence and AUT-01–09 remain unchanged.
+
+Starting revision `b631f0e6d7e41722b5774433d616f704234157d7`; result is uncommitted
+planning/ADR/review-follow-up/ledger documentation. Prior review edits were preserved.
+The plan records the reviewed completed original-scope baseline, without reclassifying
+expanded parity or original acceptance. No implementation, dependency, wire schema,
+fixture or release setting changed. Review findings are addressed in the plan only;
+all AP packages remain PLANNED and G-AUTH remains OPEN. No runtime tests or proposed
+API execution ran for this documentation-only update. Next action: AP-00's baseline
+and public-contract handoff, then AP-01 under the clarified ownership map.
+
+Validation in `/Users/jeickmeier/Projects/finstack-chart`, Darwin arm64, mise Python
+3.14.6: `mise exec -- python3 scripts/check_repository.py` passed repository/dependency
+and local-link checks; `mise exec -- python3 /tmp/check_chart_authoring_plan.py` passed
+ten packages/fixtures/ledger rows, nine requirement mappings, fifteen capability
+families and an acyclic sequence. An inline `mise exec -- python3 -` check verified
+the four review findings' representation and updated-document whitespace.
+`git -c core.whitespace=-blank-at-eol diff --check -- docs/impl_plans/primary-authoring-api-plan.md docs/adr/013-primary-authoring-api.md docs/implementation-status.md`
+passed. These are documentation checks, not AP implementation or runtime evidence.
+
+## Primary authoring plan checked against the current library — 7 September 2026
+
+Outcome: reviewed the plan against clean revision
+`c773fcba9a8c846322d08c9c1203fce415e91328`, including the now-completed original
+WP-17–23 source and contracts. The original-WP assumption matches the ledger's
+original-scope completion records; expanded parity and G-AUTH remain open.
+HEAD later advanced to `b631f0e6d7e41722b5774433d616f704234157d7`; its changes were
+unrelated skill additions and did not alter the reviewed library or plan files.
+[Review evidence](evidence/primary-authoring-plan-review-2026-09-07.md) records
+four actionable handoff gaps: APR-01 definition-only edits must preserve live data;
+APR-02 map externally managed sources and worker/view lifetimes before runtime
+consolidation; APR-03 retain Current/Presented export bases; APR-04 separate native
+execution from portable capability validation. AUT-01/02/03/05/06/08/09, DAT, STM,
+ARC, EXP and BND contracts are affected. These are plan gaps, not new demonstrated
+runtime regressions. Overall architecture/reuse direction passes; the specific
+handoff contracts remain Fail or Uncertain as detailed in the report.
+
+Executed in `/Users/jeickmeier/Projects/finstack-chart`, Darwin arm64, Rust 1.97.1:
+
+- `mise exec -- cargo metadata --no-deps --format-version 1 --locked`: succeeded;
+  inspected nine workspace packages and direct dependency ownership.
+- `mise exec -- cargo test -p chart-core --test streaming --test scheduling --test stage_cache --locked`:
+  **16 passed**, zero failed (nine streaming, four scheduling, three cache).
+- `mise exec -- cargo test -p chart-export --test live_export --test extensions --locked`:
+  **9 passed**, zero failed (five live export, four extensions).
+- `mise exec -- python3 scripts/check_repository.py`: passed workspace/dependency
+  isolation and local Markdown links; graph checks do not establish runtime support.
+- `git -c core.whitespace=-blank-at-eol diff --check -- docs/implementation-status.md`:
+  passed. An inline `mise exec -- python3 -` check passed new-report whitespace and
+  the four APR finding identifiers; no feature acceptance was implied.
+
+Result: uncommitted review report and this required ledger entry only. Plan,
+implementation, fixtures, dependencies and prior evidence were preserved. No proposed
+API compilation, actual Python/WASM proof, native/artifact inspection, Linux run or
+sustained benchmark ran. Next action: tighten AP-00/01's ownership/edit/validation
+handoff and AP-06's capture contract using APR-01–04; retain AP-00–09 and all open gates.
 
 ## Primary authoring API planning — 7 September 2026
 
@@ -26,21 +477,21 @@ standalone utilities directly callable, no new façade crate or second compiler.
 Starting revision `127fe2d4853f89b62ba59a17248485e3c378ba60` plus live edits. Result:
 uncommitted plan/ADR and focused authority/traceability/ledger updates. Existing source,
 reviews and parity plans were preserved. No dependencies, implementation, fixtures,
-portable versions or release/publication settings changed. All implementation owners
-are unassigned. State below is planning state; no AP feature evidence has run.
+portable versions or release/publication settings changed. Those planning-only statements retain their original revision context. The current
+package states below are updated by the implementation evidence above.
 
 | Package | State | Prerequisites | Next action / evidence |
 | --- | --- | --- | --- |
-| AP-00 — Public contract and baseline register | PLANNED | Assumed completed original WP-01–23 | Record baseline/capability map and external API examples; FIX-AUTH00. |
-| AP-01 — Shared typed runtime | PLANNED | AP-00 | Reuse existing runtime and forward legacy routes; FIX-AUTH01. |
-| AP-02 — Primary data/plot/layer path | PLANNED | AP-01 | Deliver real static chart/native/export workflow; FIX-AUTH02. |
-| AP-03 — Complete grammar and aesthetics | PLANNED | AP-02, applicable semantic owners | Cover delivered grammar options/extension protocols; FIX-AUTH03. |
-| AP-04 — Design/composition/specialists | PLANNED | AP-03, applicable semantic owners | Cover facets/themes/coordinates/composition and direct helpers; FIX-AUTH04. |
-| AP-05 — Live Chart features | PLANNED | AP-04 | Updates/actions/linking/editing/retention through retained runtime; FIX-AUTH05. |
-| AP-06 — Native/Kit/export integration | PLANNED | AP-05 | Shared capture, supplied resources and actual destinations; FIX-AUTH06. |
-| AP-07 — Host-native Python/WASM authoring | PLANNED | AP-06 | Thin builders/data/error adapters and real runtime parity; FIX-AUTH07. |
-| AP-08 — Consumer/docs/API migration | PLANNED | AP-07 | Migrate all production examples and retain versioned compatibility; FIX-AUTH08. |
-| AP-09 — Full coverage and requalification | PLANNED | AP-08, all target-release capability acceptance | Complete register/runtime/artifact/performance proof; FIX-AUTH09 / G-AUTH. |
+| AP-00 — Public contract and baseline register | COMPLETE | Assumed completed original WP-01–23 | Contract/register and migration policy in primary-authoring-api.md; FIX-AUTH00. |
+| AP-01 — Shared typed runtime | COMPLETE | AP-00 | Typed owned/external Chart, independent worker caches and legacy forwarding qualified; E1/E3/E4. |
+| AP-02 — Primary data/plot/layer path | COMPLETE | AP-01 | Ordinary Data/Plot route, exact ownership/diagnostics and actual native/publication examples qualified; E1/E4. |
+| AP-03 — Complete grammar and aesthetics | COMPLETE | AP-02, applicable semantic owners | All delivered grammar/scale/extension families qualified through primary authors; E2. |
+| AP-04 — Design/composition/specialists | COMPLETE | AP-03, applicable semantic owners | Facets/themes/text/composition and retained standalone helpers qualified; E2/E4. |
+| AP-05 — Live Chart features | COMPLETE | AP-04 | 23 action, 47 input and 70 streaming steps, edits/rollback/replay and native scheduling qualified; E1/E3/E5. |
+| AP-06 — Native/Kit/export integration | COMPLETE | AP-05 | Actual native/Kit input hooks, capture matrix, deferred resources and inspected SVG/PDF/PNG qualified; E4. |
+| AP-07 — Host-native Python/WASM authoring | COMPLETE | AP-06 | Actual Rust/Python/WASM family/runtime proofs, typing, exact values, disposal/detachment/memory and compatibility pass; E2/E3/E5. |
+| AP-08 — Consumer/docs/API migration | COMPLETE | AP-07 | Primary production consumers/docs and version-1 compatibility migration pass; E4/E5. |
+| AP-09 — Full coverage and requalification | IN PROGRESS | AP-08, all target-release capability acceptance | Full register/platform proof complete; final visible native performance rerun pending; E5 / G-AUTH OPEN. |
 
 Planning validation executed in `/Users/jeickmeier/Projects/finstack-chart`,
 7 September 2026, Darwin arm64, mise Python 3.14.6:

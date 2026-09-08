@@ -2,8 +2,9 @@
 
 use crate::{ChartResult, Diagnostic, DiagnosticCode};
 
-/// Per-construction budgets. Callers own input allocation; wire decoding is not implemented.
-#[derive(serde::Serialize, Clone, Copy, Debug)]
+/// Per-construction budgets. Callers own input allocation before passing data to the core.
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug)]
+#[serde(default, deny_unknown_fields)]
 pub struct Limits {
     /// Maximum scene items, including decorative items.
     pub max_items: usize,

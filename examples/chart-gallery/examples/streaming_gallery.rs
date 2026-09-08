@@ -1,90 +1,83 @@
 //! WP-18 native ingestion, retention, follow/freeze and explicitly historical pin proof.
 use chart_core::{
-    portable::Session,
-    services::*,
+    data::{LateDataPolicy, TimeUnit},
+    prelude::{Data, aes, plot, points, stream_options, timestamps},
     state::{FollowMode, *},
     transaction::CommitOutcome,
     *,
 };
 use gpui::{prelude::*, *};
 use gpui_charts::*;
-use serde_json::{Value, json};
-use std::sync::Arc;
 const ORIGIN: i64 = 9007199254741001;
 const FONT: &[u8] = include_bytes!("../../../fixtures/capability/fonts/NotoSans-Regular.ttf");
 struct Gallery {
     chart: Entity<ChartView>,
-    session: Session,
     sequence: u64,
     status: String,
     removed: usize,
     _subscriptions: Vec<Subscription>,
 }
 impl Gallery {
-    fn transaction(&mut self, mutation: Value) -> Value {
-        self.sequence += 1;
-        let source = self.session.source();
-        let source = source.get().unwrap();
-        json!({"version":1,"id":format!("native-stream-{}",self.sequence),"epoch":source.epoch(),"expected":[source.dataset(DatasetId::new(1)).unwrap().version()],"operations":[{"dataset":"1","mutation":mutation}]})
-    }
-    fn refresh(&mut self, cx: &mut Context<Self>) -> ChartResult<()> {
-        self.session.prepare()?;
-        self.chart
-            .update(cx, |chart, cx| chart.set_data(self.session.source(), cx))
-    }
     fn act(&mut self, label: &str, cx: &mut Context<Self>) {
         let result = (|| -> ChartResult<String> {
             match label {
                 "Enqueue" => {
-                    let fixture: Value = serde_json::from_str(include_str!(
-                        "../../../fixtures/streaming/replay.json"
-                    ))
-                    .unwrap();
-                    let mut batch = fixture["data"]["datasets"][0]["batch"].clone();
-                    batch["keys"] = json!([(9007199254743101u64 + self.sequence).to_string()]);
-                    batch["columns"][0]["values"] =
-                        json!({"Timestamp":[(ORIGIN+25+self.sequence as i64*5).to_string()]});
-                    batch["columns"][1]["values"] =
-                        json!({"Float64":[25.+(self.sequence%4) as f64*5.]});
-                    for c in batch["columns"].as_array_mut().unwrap() {
-                        c["validity"] = json!([true]);
-                    }
-                    let tx = self.transaction(json!({"AppendBatch":batch}));
-                    self.session
-                        .stream(&json!({"version":1,"operation":{"Enqueue":tx}}).to_string())
+                    let batch = Data::columns()
+                        .column(
+                            "event_time",
+                            timestamps(
+                                vec![ORIGIN + 25 + self.sequence as i64 * 5],
+                                TimeUnit::Nanoseconds,
+                                "UTC",
+                            )
+                            .nullable(true),
+                        )
+                        .column("value", vec![Some(25. + (self.sequence % 4) as f64 * 5.)])
+                        .keys([9007199254743101 + self.sequence])
+                        .build()?;
+                    self.sequence += 1;
+                    let tx = self
+                        .chart
+                        .read(cx)
+                        .chart()
+                        .transaction()?
+                        .id(format!("native-stream-{}", self.sequence))
+                        .append("data", batch)
+                        .build()?;
+                    self.chart
+                        .update(cx, |chart, _| chart.enqueue(tx))
+                        .map(|outcome| format!("{outcome:?}"))
                 }
                 "Commit" => {
-                    let result = self
-                        .session
-                        .stream(r#"{"version":1,"operation":"CommitNext"}"#)?;
-                    self.refresh(cx)?;
-                    let result: Value = serde_json::from_str(&result).unwrap();
-                    Ok(if result.is_null() {
-                        "Queue is empty".into()
-                    } else {
-                        format!(
-                            "Committed queue result: {}",
-                            result["outcome"]
-                                .as_object()
-                                .unwrap()
-                                .keys()
-                                .next()
-                                .unwrap()
-                        )
+                    let result = self.chart.update(cx, |chart, cx| chart.commit_next(cx))?;
+                    Ok(match result {
+                        None => "Queue is empty".into(),
+                        Some((_, result)) => format!("Committed queue result: {result:?}"),
                     })
                 }
                 "Window" => {
-                    let tx=self.transaction(json!({"SetRetention":{"EventTime":{"field":"1","width":"15","allowed_lateness":"2","watermark":(ORIGIN+30).to_string(),"late":"Reject"}}}));
-                    let result = self.session.apply_transaction(&tx.to_string())?;
-                    let label = match &result {
+                    let tx = self
+                        .chart
+                        .read(cx)
+                        .chart()
+                        .transaction()?
+                        .retain_event_time(
+                            "data",
+                            "event_time",
+                            15,
+                            ORIGIN + 30,
+                            2,
+                            LateDataPolicy::Reject,
+                        )
+                        .build()?;
+                    let result = self.chart.update(cx, |chart, cx| chart.commit(tx, cx))?;
+                    Ok(match &result {
                         CommitOutcome::Applied(r) => format!(
                             "Supplied watermark +30 ns; evicted {} rows",
                             r.operations[0].evicted
                         ),
                         _ => format!("{result:?}"),
-                    };
-                    self.refresh(cx)?;
-                    Ok(label)
+                    })
                 }
                 "Pin first" => {
                     let target = self
@@ -140,26 +133,23 @@ impl Gallery {
 }
 impl Render for Gallery {
     fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
-        let queue: Value = serde_json::from_str(
-            &self
-                .session
-                .stream(r#"{"version":1,"operation":"Status"}"#)
-                .unwrap(),
-        )
-        .unwrap();
-        let source = self.session.source();
-        let source = source.get().unwrap();
         let chart = self.chart.read(cx);
+        let queue = chart.chart().queue_status();
+        let source = chart.chart().source();
+        let source = source.get().unwrap();
         let visible = chart
             .inspector()
             .map(|i| i.presented().scene().stamp().store.get())
             .unwrap_or(0);
         let details = format!(
             "Latest rows {} · Committed {} · Presented {} · Queued {} / 1 · Active selection {} · Removed {} · {:?}",
-            source.dataset(DatasetId::new(1)).unwrap().len(),
+            source
+                .dataset(chart.chart().data("data").unwrap().id())
+                .unwrap()
+                .len(),
             source.revision().get(),
             visible,
-            queue["queue"]["transactions"],
+            queue.transactions,
             chart.state().selection().len(),
             self.removed,
             chart.state().follow()
@@ -238,16 +228,71 @@ impl Render for Gallery {
     }
 }
 fn main() {
-    gpui_platform::application().run(|cx:&mut App|{
-    let font=NativeFont::load(ResourceDescriptor{id:ResourceId::new(1),revision:Revision::new(1),kind:ResourceKind::Font,byte_len:FONT.len() as u64},Arc::from(FONT),"Noto Sans",cx).unwrap();
-    let fixture:Value=serde_json::from_str(include_str!("../../../fixtures/streaming/replay.json")).unwrap();
-    let mut session=Session::new(&fixture["chart"].to_string(),&fixture["data"].to_string()).unwrap();
-    session.stream(r#"{"version":1,"operation":{"ConfigureQueue":{"transactions":1,"rows":4,"bytes":4096,"overload":"Backpressure"}}}"#).unwrap();
-    let input=ChartInput::new(session.definition().clone(),session.source(),font).unwrap();
-    cx.open_window(WindowOptions{window_bounds:Some(WindowBounds::Windowed(Bounds::centered(None,size(px(1140.),px(760.)),cx))),titlebar:Some(TitlebarOptions{title:Some("Finstack Streaming Proof".into()),..Default::default()}),..Default::default()},|_,cx|cx.new(|cx|{
-        let chart=cx.new(|cx|ChartView::new(input,cx));
-        let subscriptions=vec![cx.subscribe(&chart,|this:&mut Gallery,_,event,cx|{if let ChartHostEvent::DataReconciled(r)=event{this.removed+=r.removed_selection.len();}cx.notify();}),cx.observe(&chart,|_,_,cx|cx.notify())];
-        Gallery{chart,session,sequence:0,status:"Ready".into(),removed:0,_subscriptions:subscriptions}
-    })).unwrap();cx.activate(true);
-});
+    gpui_platform::application().run(|cx: &mut App| {
+        let font = NativeFont::from_bytes(FONT, "Noto Sans", cx).unwrap();
+        let data = Data::columns()
+            .column(
+                "event_time",
+                timestamps(
+                    (0..5).map(|i| ORIGIN + i * 5).collect(),
+                    TimeUnit::Nanoseconds,
+                    "UTC",
+                )
+                .nullable(true),
+            )
+            .column(
+                "value",
+                vec![Some(5.), Some(15.), Some(25.), Some(35.), Some(45.)],
+            )
+            .keys(9007199254743001..9007199254743006)
+            .build()
+            .unwrap();
+        let plot = plot(data)
+            .aes(aes().x("event_time").y("value"))
+            .layer(points())
+            .build()
+            .unwrap();
+        let mut chart = plot.chart().unwrap();
+        chart
+            .stream(stream_options().transactions(1).rows(4).bytes(4096))
+            .unwrap();
+        let input = ChartInput::from_chart(chart, font).unwrap();
+        cx.open_window(
+            WindowOptions {
+                window_bounds: Some(WindowBounds::Windowed(Bounds::centered(
+                    None,
+                    size(px(1140.), px(760.)),
+                    cx,
+                ))),
+                titlebar: Some(TitlebarOptions {
+                    title: Some("Finstack Streaming Proof".into()),
+                    ..Default::default()
+                }),
+                ..Default::default()
+            },
+            |_, cx| {
+                cx.new(|cx| {
+                    let chart = cx.new(|cx| ChartView::new(input, cx));
+                    let subscriptions = vec![
+                        cx.subscribe(&chart, |this: &mut Gallery, _, event, cx| {
+                            if let ChartHostEvent::DataReconciled(r) = event {
+                                this.removed += r.removed_selection.len();
+                            }
+                            cx.notify();
+                        }),
+                        cx.observe(&chart, |_, _, cx| cx.notify()),
+                    ];
+                    Gallery {
+                        chart,
+                        sequence: 0,
+                        status: "Ready".into(),
+                        removed: 0,
+                        _subscriptions: subscriptions,
+                    }
+                })
+            },
+        )
+        .unwrap();
+        cx.activate(true);
+    });
 }

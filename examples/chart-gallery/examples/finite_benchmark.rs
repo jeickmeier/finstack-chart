@@ -5,7 +5,10 @@ mod probe;
 #[allow(dead_code)]
 mod workload;
 use chart_core::{
-    data::*, dense::DensityOptions, grammar::*, inspection::*, services::*, transaction::*, *,
+    inspection::*,
+    prelude::{Data, aes, plot, points, render_options},
+    transaction::*,
+    *,
 };
 use gpui::{
     prelude::*,
@@ -14,48 +17,36 @@ use gpui::{
 };
 use gpui_charts::*;
 use serde_json::json;
-use std::{
-    sync::Arc,
-    time::{Duration, Instant, SystemTime, UNIX_EPOCH},
-};
+use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 const FONT: &[u8] = include_bytes!("../../../fixtures/capability/fonts/NotoSans-Regular.ttf");
-fn scatter_batch(rows: usize, phase: usize) -> ChartResult<NormalizedBatch> {
-    let schema = workload::batch(1, 1, 0)?.schema().clone();
-    NormalizedBatch::new(
-        schema,
-        (1..=rows as u64).map(RowKey::new).collect(),
-        vec![
-            Column::new(
-                ColumnValues::Float64(
-                    (0..rows)
-                        .map(|i| ((i as u64 * 1664525 + 0xF157AC03) % 1048576) as f64 / 1024.)
-                        .collect(),
-                ),
-                vec![true; rows],
-                None,
-            ),
-            Column::new(
-                ColumnValues::Float64(
-                    (0..rows)
-                        .map(|i| {
-                            ((i as u64 * 22695477 + 0xF157AC03 + phase as u64 * 7) % 1048576) as f64
-                                / 1024.
-                        })
-                        .collect(),
-                ),
-                vec![true; rows],
-                None,
-            ),
-            Column::new(ColumnValues::UInt64(vec![0; rows]), vec![true; rows], None),
-        ],
-        workload::limits(),
-    )
+fn scatter_batch(rows: usize, phase: usize) -> ChartResult<Data> {
+    Data::columns()
+        .column(
+            "x",
+            (0..rows)
+                .map(|i| ((i as u64 * 1664525 + 0xF157AC03) % 1048576) as f64 / 1024.)
+                .collect::<Vec<_>>(),
+        )
+        .column(
+            "y",
+            (0..rows)
+                .map(|i| {
+                    Some(
+                        ((i as u64 * 22695477 + 0xF157AC03 + phase as u64 * 7) % 1048576) as f64
+                            / 1024.,
+                    )
+                })
+                .collect::<Vec<_>>(),
+        )
+        .column("series", vec![0u64; rows])
+        .keys(1..=rows as u64)
+        .limits(workload::limits())
+        .build()
 }
 struct Benchmark {
     mode: String,
     charts: Vec<Entity<ChartView>>,
     weak: Vec<WeakEntity<ChartView>>,
-    stores: Vec<DataStore>,
     tick: u64,
     update: u64,
     collector: FrameTimingCollector,
@@ -139,26 +130,23 @@ impl Benchmark {
         if self.mode.starts_with("dashboard") && self.tick <= 720 && self.tick.is_multiple_of(6) {
             self.update += 1;
             for (i, chart) in self.charts.iter().enumerate() {
-                let source = self.stores[i].snapshot();
-                let source = source.get().unwrap();
+                let batch = if i == 0 {
+                    scatter_batch(100, self.update as usize).unwrap()
+                } else {
+                    workload::primary_data(1, 100, self.update as usize).unwrap()
+                };
                 let start = Instant::now();
-                let receipt = self.stores[i].apply(Transaction {
-                    id: TransactionId::new(format!("finite-{}-{}", i, self.update)).unwrap(),
-                    epoch: source.epoch(),
-                    expected: vec![source.dataset(workload::DATA).unwrap().version()],
-                    operations: vec![Operation {
-                        dataset: workload::DATA,
-                        mutation: Mutation::UpsertByKey(if i == 0 {
-                            scatter_batch(100, self.update as usize).unwrap()
-                        } else {
-                            workload::batch(1, 100, self.update as usize).unwrap()
-                        }),
-                    }],
-                });
-                assert!(matches!(receipt, CommitOutcome::Applied(_)));
-                chart
-                    .update(cx, |c, cx| c.queue_data(self.stores[i].snapshot(), cx))
+                let transaction = chart
+                    .read(cx)
+                    .chart()
+                    .transaction()
+                    .unwrap()
+                    .id(format!("finite-{i}-{}", self.update))
+                    .upsert("data", batch)
+                    .build()
                     .unwrap();
+                let receipt = chart.update(cx, |c, cx| c.commit(transaction, cx)).unwrap();
+                assert!(matches!(receipt, CommitOutcome::Applied(_)));
                 println!(
                     "{}",
                     json!({"event":"finite-commit","tick":self.tick,"chart":i,"revision":self.update,"commit_ns":start.elapsed().as_nanos().to_string()})
@@ -230,16 +218,25 @@ fn main() {
     assert!(["lines", "million", "dashboard-raw", "dashboard-dense"].contains(&mode.as_str()));
     gpui::profiler::set_trace_enabled(true);
     gpui_platform::application().run(move |cx| {
-        let font=NativeFont::load(ResourceDescriptor{id:ResourceId::new(1),revision:Revision::new(1),kind:ResourceKind::Font,byte_len:FONT.len() as u64},Arc::from(FONT),"Noto Sans",cx).unwrap();
+        let font=NativeFont::from_bytes(FONT,"Noto Sans",cx).unwrap();
         let sizes=if mode.starts_with("dashboard") {let mut s=vec![(1,50_000)];s.extend(std::iter::repeat_n((1,10_000),12));s} else if mode=="million" {vec![(1,1_000_000)]} else {vec![(10,10_000)]};
-        let stores:Vec<_>=sizes.iter().enumerate().map(|(i,(s,n))| if mode.starts_with("dashboard") && i==0 {DataStore::new(SourceEpoch::new(1),vec![(workload::DATA,scatter_batch(*n,0).unwrap())],workload::limits()).unwrap()} else {workload::store(*s,*n).unwrap()}).collect();
-        let inputs:Vec<_>=stores.iter().enumerate().map(|(i,s)|{let mut d=workload::definition();if mode.starts_with("dashboard")&&i==0 {d.layers[0].geom=Geom::Point;}ChartInput::new(d,s.snapshot(),font.clone()).unwrap()}).collect();
+        let authoring_started = Instant::now();
+        let plots: Vec<_> = sizes.iter().enumerate().map(|(i, (series, rows))| {
+            if mode.starts_with("dashboard") && i == 0 {
+                plot(scatter_batch(*rows, 0).unwrap()).aes(aes().x("x").y("y").group("series"))
+                    .layer(points()).data_limits(workload::limits()).build().unwrap()
+            } else { workload::primary_plot(*series, *rows).unwrap() }
+        }).collect();
+        let authoring_ns = authoring_started.elapsed().as_nanos();
+        let mount_started = Instant::now();
+        let inputs: Vec<_> = plots.iter().map(|p| ChartInput::from_plot(p, font.clone()).unwrap()).collect();
+        println!("{}", json!({"event":"primary-cold", "authoring_ns":authoring_ns.to_string(), "mount_ns":mount_started.elapsed().as_nanos().to_string()}));
         let dashboard=mode.starts_with("dashboard");
         cx.open_window(WindowOptions{kind:WindowKind::PopUp,window_bounds:Some(WindowBounds::Windowed(Bounds::centered(None,size(px(1240.),px(if dashboard{920.}else{730.})),cx))),titlebar:Some(TitlebarOptions{title:Some("Finstack Finite Benchmark".into()),..Default::default()}),..Default::default()},move |_,cx|cx.new(|cx|{
-            let charts:Vec<_>=inputs.into_iter().map(|input|cx.new(|cx|{let mut chart=ChartView::new(input,cx);let mut layout=chart.layout_request().clone();layout.limits.max_items=1_100_000;layout.limits.max_path_commands=1_100_000;chart.set_layout(layout,cx).unwrap();if mode=="dashboard-raw" {chart.set_density(DensityOptions{line_bucket_width:None,candle_bucket_width:None,..Default::default()},cx).unwrap();}chart})).collect();
+            let charts:Vec<_>=inputs.into_iter().map(|input|cx.new(|cx|{let mut chart=ChartView::new(input,cx);let mut layout=chart.layout_request().clone();layout.limits.max_items=1_100_000;layout.limits.max_path_commands=1_100_000;chart.set_layout(layout,cx).unwrap();if mode=="dashboard-raw" {chart.set_render_options(render_options().line_bucket_width(None).candle_bucket_width(None),cx).unwrap();}chart})).collect();
             let weak=charts.iter().map(Entity::downgrade).collect();
             println!("{}",json!({"event":"finite-protocol","mode":mode,"warmup_ticks":120,"measured_ticks":600,"period_ms":16,"seed":"0xF157AC03","sizes":sizes,"profiler":"GPUI full Window::draw and platform submission; external MTLDrawable/GPU callbacks"}));
-            let mut this=Benchmark{mode,charts,weak,stores,tick:0,update:0,collector:FrameTimingCollector::new(),task:None};
+            let mut this=Benchmark{mode,charts,weak,tick:0,update:0,collector:FrameTimingCollector::new(),task:None};
             this.task=Some(cx.spawn(async move |entity,cx|{loop {cx.background_executor().timer(Duration::from_millis(16)).await;if entity.update(cx,|this:&mut Benchmark,cx|{this.step(cx);this.tick>=840}).unwrap_or(true){break;}}}));this
         })).unwrap();cx.activate(true);
     });

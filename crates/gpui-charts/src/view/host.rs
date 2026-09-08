@@ -62,14 +62,45 @@ pub(super) struct HostState {
     pub(super) menu_at: Option<Point>,
     summary: Option<String>,
 }
+impl HostState {
+    pub(super) fn commands(&mut self, commands: &[HostCommand]) {
+        self.enabled = commands.iter().copied().collect();
+    }
+    pub(super) fn control(&mut self, slot: ControlSlot, builder: Option<ControlBuilder>) {
+        match slot {
+            ControlSlot::Toolbar => self.toolbar = builder,
+            ControlSlot::Legend => self.legend = builder,
+            ControlSlot::ContextMenu => {
+                if builder.is_some() {
+                    self.enabled.insert(HostCommand::ContextMenu);
+                } else {
+                    self.enabled.remove(&HostCommand::ContextMenu);
+                    self.menu_at = None;
+                }
+                self.menu = builder;
+            }
+        }
+    }
+    pub(super) fn summary(&mut self, summary: Option<String>) -> ChartResult<()> {
+        if summary.as_ref().is_some_and(|s| s.len() > 8192) {
+            return Err(Diagnostic::error(
+                chart_core::DiagnosticCode::ResourceLimit,
+                "Chart summary exceeds its text budget.",
+                "Use a concise summary and the paged data alternative.",
+            ));
+        }
+        self.summary = summary;
+        Ok(())
+    }
+}
 impl ChartView {
     /// Original pinned values/provenance, explicitly labeled when historical after ingestion.
     pub fn pinned_description(&self) -> ChartResult<Option<chart_core::state::PinnedDescription>> {
-        self.reducer.describe_pinned()
+        self.chart.reducer().describe_pinned()
     }
     /// Declare only operations for which the host has installed an event handler.
     pub fn set_host_commands(&mut self, commands: &[HostCommand], cx: &mut Context<Self>) {
-        self.host.enabled = commands.iter().copied().collect();
+        self.host.commands(commands);
         cx.notify();
     }
     /// Runtime capability check; copy/export are never advertised before the host enables them.
@@ -83,19 +114,7 @@ impl ChartView {
         builder: Option<ControlBuilder>,
         cx: &mut Context<Self>,
     ) {
-        match slot {
-            ControlSlot::Toolbar => self.host.toolbar = builder,
-            ControlSlot::Legend => self.host.legend = builder,
-            ControlSlot::ContextMenu => {
-                if builder.is_some() {
-                    self.host.enabled.insert(HostCommand::ContextMenu);
-                } else {
-                    self.host.enabled.remove(&HostCommand::ContextMenu);
-                    self.host.menu_at = None;
-                }
-                self.host.menu = builder;
-            }
-        }
+        self.host.control(slot, builder);
         cx.notify();
     }
     /// Override the automatic chart summary with meaningful application context, bounded to 8192 bytes.
@@ -104,14 +123,7 @@ impl ChartView {
         summary: Option<String>,
         cx: &mut Context<Self>,
     ) -> ChartResult<()> {
-        if summary.as_ref().is_some_and(|s| s.len() > 8192) {
-            return Err(Diagnostic::error(
-                chart_core::DiagnosticCode::ResourceLimit,
-                "Chart summary exceeds its text budget.",
-                "Use a concise summary and the paged data alternative.",
-            ));
-        }
-        self.host.summary = summary;
+        self.host.summary(summary)?;
         cx.notify();
         Ok(())
     }

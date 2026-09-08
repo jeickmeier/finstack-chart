@@ -1,12 +1,14 @@
 //! WP-17 two linked charts, a bounded accessible table, replaceable controls and annotation tools.
-use chart_core::composition::Anchor;
 use chart_core::{
-    composition::*, editing::*, grammar::ScaleBindings, inspection::Inspector, linking::*,
-    portable::Session, services::*, state::*, typography::RichText, *,
+    editing::*, inspection::Inspector, linking::MissingMatch, services::*, state::*, *,
 };
 use chart_export::{
     FigureSnapshot, FontResource, FontResources, Format, PageSize, PublicationProfile,
 };
+#[path = "../../common/input_plots.rs"]
+mod input_plots;
+use chart_core::composition::{Anchor, ConnectorOrigin, ScaleValue};
+use chart_core::plot::{Data, callout, labels, link, x_axis};
 use gpui::{prelude::*, *};
 use gpui_charts::*;
 use std::{rc::Rc, sync::Arc};
@@ -19,42 +21,24 @@ fn font_descriptor() -> ResourceDescriptor {
         byte_len: FONT.len() as u64,
     }
 }
-fn annotation(id: &str, y: f64) -> Annotation {
-    let anchor = |x| Anchor::Data {
-        panel: None,
-        scales: ScaleBindings::default(),
-        x: ScaleValue::Number(x),
-        y: ScaleValue::Number(y),
+fn input(data: Data, font: NativeFont) -> ChartInput {
+    let annotation = |id: &str, y| {
+        callout()
+            .label(labels().id(id).at(0.5, y).text(id).offset(0., -22.))
+            .to_data(3.5, y)
+            .connector_origin(ConnectorOrigin::Anchor)
     };
-    Annotation {
-        id: id.into(),
-        anchor: anchor(0.5),
-        callout: Some(anchor(3.5)),
-        text: RichText::plain(id),
-        offset: [0., -22.],
-        priority: 0,
-        collision: Collision::Keep,
-        connector_origin: ConnectorOrigin::Anchor,
-        overflow: false,
-    }
-}
-fn input(layer: u64, font: NativeFont) -> ChartInput {
-    let cases: serde_json::Value =
-        serde_json::from_str(include_str!("../../../fixtures/interaction/cases.json")).unwrap();
-    let c = &cases[0];
-    let session = Session::new(&c["chart"].to_string(), &c["data"].to_string()).unwrap();
-    let mut definition = session.definition().clone();
-    definition.layers[0].id = LayerId::new(layer);
-    for a in &mut definition.axes {
-        a.visible = true;
-    }
-    definition.figure = Some(FigureComposition {
-        annotations: vec![annotation("Threshold", 3.), annotation("Range", 1.)],
-        ..FigureComposition::default()
-    });
-    ChartInput::new(definition, session.source(), font).unwrap()
+    let plot = input_plots::plot_for(0, data)
+        .expect("plot")
+        .edit()
+        .annotation(annotation("Threshold", 3.))
+        .annotation(annotation("Range", 1.))
+        .build()
+        .expect("annotation plot");
+    ChartInput::from_plot(&plot, font).expect("native input")
 }
 fn host_controls(chart: &Entity<ChartView>, layer: u64, cx: &mut App) {
+    let layer_id = chart.read(cx).chart().definition().layers[0].id;
     chart.update(cx,|chart,cx|{
         chart.set_host_commands(&[HostCommand::Copy,HostCommand::Export,HostCommand::ContextMenu],cx);
         chart.set_accessible_summary(Some(format!("Linked observation chart {}. Five source observations. Arrow keys inspect values; Space selects; the data table provides the same observations.",layer)),cx).unwrap();
@@ -84,7 +68,7 @@ fn host_controls(chart: &Entity<ChartView>, layer: u64, cx: &mut App) {
     });
     let weak = chart.downgrade();
     let legend: ControlBuilder = Rc::new(move |state, _, _, _| {
-        let visible = state.is_visible(LayerId::new(layer));
+        let visible = state.is_visible(layer_id);
         let target = weak.clone();
         div()
             .id("series-toggle")
@@ -103,7 +87,7 @@ fn host_controls(chart: &Entity<ChartView>, layer: u64, cx: &mut App) {
                 let _ = target.update(cx, |chart, cx| {
                     chart.dispatch_chart(
                         ChartAction::SetLayerVisible {
-                            layer: LayerId::new(layer),
+                            layer: layer_id,
                             visible: !visible,
                         },
                         cx,
@@ -256,19 +240,12 @@ impl Gallery {
             let Some(event) = self.pending[index].clone() else {
                 continue;
             };
-            let source = self.charts[index].read(cx);
-            let Some(i) = source.inspector() else {
-                continue;
-            };
-            let result = LinkMessage::from_event(
-                if index == 0 { "left" } else { "right" },
-                &event,
-                i,
-                source.state(),
-                &[ScaleId::new(0)],
-                None,
-                true,
-            );
+            let route = link(if index == 0 { "left" } else { "right" })
+                .axis(x_axis().handle().unwrap(), x_axis().handle().unwrap())
+                .selection(true)
+                .missing(MissingMatch::ReportAndOmit);
+            let result =
+                self.charts[index].update(cx, |chart, _| chart.capture_link(&route, &event));
             let message = match result {
                 Ok(Some(m)) => m,
                 Ok(None) => {
@@ -284,19 +261,8 @@ impl Gallery {
             };
             self.pending[index] = None;
             let other = 1 - index;
-            let target = self.charts[other].read(cx);
-            let Some(i) = target.inspector() else {
-                continue;
-            };
-            let update = message.resolve(
-                i,
-                &[AxisLink {
-                    source: ScaleId::new(0),
-                    destination: ScaleId::new(0),
-                }],
-                None,
-                MissingMatch::ReportAndOmit,
-            );
+            let update =
+                self.charts[other].update(cx, |chart, _| chart.resolve_link(&route, &message));
             match update {
                 Ok(update) => {
                     let r = self.charts[other].update(cx, |chart, cx| {
@@ -533,7 +499,8 @@ impl Render for Gallery {
 }
 fn main() {
     gpui_platform::application().run(|cx: &mut App| {
-        let font = NativeFont::load(font_descriptor(), Arc::from(FONT), "Noto Sans", cx).unwrap();
+        let font = NativeFont::from_bytes(FONT, "Noto Sans", cx).unwrap();
+        let source = input_plots::data(0).expect("shared source");
         cx.open_window(
             WindowOptions {
                 window_bounds: Some(WindowBounds::Windowed(Bounds::centered(
@@ -550,8 +517,8 @@ fn main() {
             |_, cx| {
                 cx.new(|cx| {
                     let charts = [
-                        cx.new(|cx| ChartView::new(input(1, font.clone()), cx)),
-                        cx.new(|cx| ChartView::new(input(99, font.clone()), cx)),
+                        cx.new(|cx| ChartView::new(input(source.clone(), font.clone()), cx)),
+                        cx.new(|cx| ChartView::new(input(source.clone(), font.clone()), cx)),
                     ];
                     for (i, chart) in charts.iter().enumerate() {
                         host_controls(chart, if i == 0 { 1 } else { 99 }, cx);

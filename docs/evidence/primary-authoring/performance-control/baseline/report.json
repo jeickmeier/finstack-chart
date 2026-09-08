@@ -1,0 +1,1456 @@
+{
+  "callbacks": {
+    "displayed": 220,
+    "skipped": 2,
+    "missing_callbacks": 0
+  },
+  "gpu_ns": {
+    "count": 220,
+    "p50": 3048291,
+    "p95": 5933125,
+    "p99": 7048375,
+    "max": 7903250
+  },
+  "scene_begin_to_display_ns": {
+    "count": 220,
+    "p50": 36405250,
+    "p95": 59681250,
+    "p99": 61518584,
+    "max": 69373001
+  },
+  "workload": {
+    "mode": "lines",
+    "hover_cpu_ns": {
+      "count": 600,
+      "p50": 100418,
+      "p95": 145583,
+      "p99": 163459,
+      "max": 213041
+    },
+    "total_frame_work_ns": {
+      "count": 104,
+      "p50": 10377583,
+      "p95": 21160960,
+      "p99": 28959416,
+      "max": 29382708
+    },
+    "frame_work_budget_pass": false,
+    "hover_budget_pass": true,
+    "draw_to_gpu_complete_ns": {
+      "count": 104,
+      "p50": 10933166,
+      "p95": 29766457,
+      "p99": 41185291,
+      "max": 44107083
+    },
+    "draw_to_display_ns": {
+      "count": 104,
+      "p50": 44907958,
+      "p95": 61294375,
+      "p99": 69102625,
+      "max": 69543293
+    },
+    "display_interval_ns": {
+      "count": 103,
+      "p50": 16666625,
+      "p95": 16667541,
+      "p99": 16667875,
+      "max": 25000334
+    },
+    "full_frame_samples": [
+      {
+        "drawable": 117,
+        "draw_ns": 783875,
+        "submit_ns": 5233417,
+        "gpu_ns": 1885750,
+        "total_frame_work_ns": 7903042,
+        "draw_to_gpu_complete_ns": 8534207,
+        "draw_to_display_ns": 36591541,
+        "display_unix_ns": "1788908749794850250"
+      },
+      {
+        "drawable": 118,
+        "draw_ns": 805250,
+        "submit_ns": 4747416,
+        "gpu_ns": 1822000,
+        "total_frame_work_ns": 7374666,
+        "draw_to_gpu_complete_ns": 7508500,
+        "draw_to_display_ns": 36592917,
+        "display_unix_ns": "1788908749811516333"
+      },
+      {
+        "drawable": 119,
+        "draw_ns": 763375,
+        "submit_ns": 5234125,
+        "gpu_ns": 1819792,
+        "total_frame_work_ns": 7817292,
+        "draw_to_gpu_complete_ns": 7952707,
+        "draw_to_display_ns": 28460041,
+        "display_unix_ns": "1788908749828183875"
+      },
+      {
+        "drawable": 120,
+        "draw_ns": 704334,
+        "submit_ns": 4346667,
+        "gpu_ns": 1885291,
+        "total_frame_work_ns": 6936292,
+        "draw_to_gpu_complete_ns": 7327999,
+        "draw_to_display_ns": 36584417,
+        "display_unix_ns": "1788908749844850083"
+      },
+      {
+        "drawable": 121,
+        "draw_ns": 750208,
+        "submit_ns": 4261542,
+        "gpu_ns": 2269583,
+        "total_frame_work_ns": 7281333,
+        "draw_to_gpu_complete_ns": 7792416,
+        "draw_to_display_ns": 36589708,
+        "display_unix_ns": "1788908749861516708"
+      },
+      {
+        "drawable": 122,
+        "draw_ns": 730541,
+        "submit_ns": 4186333,
+        "gpu_ns": 2283125,
+        "total_frame_work_ns": 7199999,
+        "draw_to_gpu_complete_ns": 7724040,
+        "draw_to_display_ns": 36594791,
+        "display_unix_ns": "1788908749878184000"
+      },
+      {
+        "drawable": 123,
+        "draw_ns": 702333,
+        "submit_ns": 4232292,
+        "gpu_ns": 2685000,
+        "total_frame_work_ns": 7619625,
+        "draw_to_gpu_complete_ns": 7975665,
+        "draw_to_display_ns": 36562916,
+        "display_unix_ns": "1788908749894851000"
+      },
+      {
+        "drawable": 124,
+        "draw_ns": 677417,
+        "submit_ns": 4444667,
+        "gpu_ns": 2955625,
+        "total_frame_work_ns": 8077709,
+        "draw_to_gpu_complete_ns": 8768333,
+        "draw_to_display_ns": 36563875,
+        "display_unix_ns": "1788908749911517583"
+      },
+      {
+        "drawable": 125,
+        "draw_ns": 783666,
+        "submit_ns": 4183166,
+        "gpu_ns": 3880583,
+        "total_frame_work_ns": 8847415,
+        "draw_to_gpu_complete_ns": 9233624,
+        "draw_to_display_ns": 36590583,
+        "display_unix_ns": "1788908749928184125"
+      },
+      {
+        "drawable": 126,
+        "draw_ns": 735125,
+        "submit_ns": 4192458,
+        "gpu_ns": 4220250,
+        "total_frame_work_ns": 9147833,
+        "draw_to_gpu_complete_ns": 9548332,
+        "draw_to_display_ns": 36593832,
+        "display_unix_ns": "1788908749944851041"
+      },
+      {
+        "drawable": 127,
+        "draw_ns": 753958,
+        "submit_ns": 4047958,
+        "gpu_ns": 1886125,
+        "total_frame_work_ns": 6688041,
+        "draw_to_gpu_complete_ns": 7028916,
+        "draw_to_display_ns": 36597500,
+        "display_unix_ns": "1788908749961517500"
+      },
+      {
+        "drawable": 128,
+        "draw_ns": 685792,
+        "submit_ns": 4180917,
+        "gpu_ns": 1832917,
+        "total_frame_work_ns": 6699626,
+        "draw_to_gpu_complete_ns": 7261291,
+        "draw_to_display_ns": 36577583,
+        "display_unix_ns": "1788908749978184250"
+      },
+      {
+        "drawable": 129,
+        "draw_ns": 740375,
+        "submit_ns": 4174792,
+        "gpu_ns": 1836042,
+        "total_frame_work_ns": 6751209,
+        "draw_to_gpu_complete_ns": 7255666,
+        "draw_to_display_ns": 36602916,
+        "display_unix_ns": "1788908749994850958"
+      },
+      {
+        "drawable": 130,
+        "draw_ns": 704334,
+        "submit_ns": 4250250,
+        "gpu_ns": 1885125,
+        "total_frame_work_ns": 6839709,
+        "draw_to_gpu_complete_ns": 7209750,
+        "draw_to_display_ns": 36597250,
+        "display_unix_ns": "1788908750011518166"
+      },
+      {
+        "drawable": 131,
+        "draw_ns": 786000,
+        "submit_ns": 4504667,
+        "gpu_ns": 2043500,
+        "total_frame_work_ns": 7334167,
+        "draw_to_gpu_complete_ns": 7879124,
+        "draw_to_display_ns": 36585250,
+        "display_unix_ns": "1788908750028184709"
+      },
+      {
+        "drawable": 132,
+        "draw_ns": 747209,
+        "submit_ns": 4475542,
+        "gpu_ns": 2267125,
+        "total_frame_work_ns": 7489876,
+        "draw_to_gpu_complete_ns": 8074250,
+        "draw_to_display_ns": 36583084,
+        "display_unix_ns": "1788908750044851250"
+      },
+      {
+        "drawable": 133,
+        "draw_ns": 784083,
+        "submit_ns": 5126500,
+        "gpu_ns": 2310250,
+        "total_frame_work_ns": 8220833,
+        "draw_to_gpu_complete_ns": 8400125,
+        "draw_to_display_ns": 28243667,
+        "display_unix_ns": "1788908750061519125"
+      },
+      {
+        "drawable": 134,
+        "draw_ns": 750750,
+        "submit_ns": 4340334,
+        "gpu_ns": 2717750,
+        "total_frame_work_ns": 7808834,
+        "draw_to_gpu_complete_ns": 8385541,
+        "draw_to_display_ns": 36583750,
+        "display_unix_ns": "1788908750078185375"
+      },
+      {
+        "drawable": 135,
+        "draw_ns": 790875,
+        "submit_ns": 5405166,
+        "gpu_ns": 3133042,
+        "total_frame_work_ns": 9329083,
+        "draw_to_gpu_complete_ns": 9437792,
+        "draw_to_display_ns": 28213167,
+        "display_unix_ns": "1788908750094851917"
+      },
+      {
+        "drawable": 136,
+        "draw_ns": 753125,
+        "submit_ns": 5344584,
+        "gpu_ns": 3507875,
+        "total_frame_work_ns": 9605584,
+        "draw_to_gpu_complete_ns": 9674083,
+        "draw_to_display_ns": 28939917,
+        "display_unix_ns": "1788908750111518667"
+      },
+      {
+        "drawable": 137,
+        "draw_ns": 754208,
+        "submit_ns": 4518459,
+        "gpu_ns": 2711625,
+        "total_frame_work_ns": 7984292,
+        "draw_to_gpu_complete_ns": 8373624,
+        "draw_to_display_ns": 36511791,
+        "display_unix_ns": "1788908750128186041"
+      },
+      {
+        "drawable": 138,
+        "draw_ns": 755958,
+        "submit_ns": 4329417,
+        "gpu_ns": 2784000,
+        "total_frame_work_ns": 7869375,
+        "draw_to_gpu_complete_ns": 8201624,
+        "draw_to_display_ns": 36576999,
+        "display_unix_ns": "1788908750144852583"
+      },
+      {
+        "drawable": 139,
+        "draw_ns": 755334,
+        "submit_ns": 4126000,
+        "gpu_ns": 3008042,
+        "total_frame_work_ns": 7889376,
+        "draw_to_gpu_complete_ns": 8260708,
+        "draw_to_display_ns": 36550125,
+        "display_unix_ns": "1788908750161518958"
+      },
+      {
+        "drawable": 140,
+        "draw_ns": 744625,
+        "submit_ns": 5272250,
+        "gpu_ns": 3312375,
+        "total_frame_work_ns": 9329250,
+        "draw_to_gpu_complete_ns": 10043249,
+        "draw_to_display_ns": 28175958,
+        "display_unix_ns": "1788908750178186500"
+      },
+      {
+        "drawable": 141,
+        "draw_ns": 783083,
+        "submit_ns": 6857167,
+        "gpu_ns": 5307625,
+        "total_frame_work_ns": 12947875,
+        "draw_to_gpu_complete_ns": 13774125,
+        "draw_to_display_ns": 36586042,
+        "display_unix_ns": "1788908750194852375"
+      },
+      {
+        "drawable": 142,
+        "draw_ns": 800916,
+        "submit_ns": 4454333,
+        "gpu_ns": 3037750,
+        "total_frame_work_ns": 8292999,
+        "draw_to_gpu_complete_ns": 8747166,
+        "draw_to_display_ns": 36584750,
+        "display_unix_ns": "1788908750211519125"
+      },
+      {
+        "drawable": 143,
+        "draw_ns": 801250,
+        "submit_ns": 4384583,
+        "gpu_ns": 3943083,
+        "total_frame_work_ns": 9128916,
+        "draw_to_gpu_complete_ns": 9578166,
+        "draw_to_display_ns": 36570542,
+        "display_unix_ns": "1788908750228186500"
+      },
+      {
+        "drawable": 144,
+        "draw_ns": 806916,
+        "submit_ns": 4640625,
+        "gpu_ns": 4995000,
+        "total_frame_work_ns": 10442541,
+        "draw_to_gpu_complete_ns": 10844790,
+        "draw_to_display_ns": 36581916,
+        "display_unix_ns": "1788908750244853000"
+      },
+      {
+        "drawable": 145,
+        "draw_ns": 800292,
+        "submit_ns": 5379166,
+        "gpu_ns": 4198125,
+        "total_frame_work_ns": 10377583,
+        "draw_to_gpu_complete_ns": 10465292,
+        "draw_to_display_ns": 28204334,
+        "display_unix_ns": "1788908750261519917"
+      },
+      {
+        "drawable": 146,
+        "draw_ns": 837333,
+        "submit_ns": 4585208,
+        "gpu_ns": 1845083,
+        "total_frame_work_ns": 7267624,
+        "draw_to_gpu_complete_ns": 7818582,
+        "draw_to_display_ns": 36584458,
+        "display_unix_ns": "1788908750278186375"
+      },
+      {
+        "drawable": 147,
+        "draw_ns": 802916,
+        "submit_ns": 4650083,
+        "gpu_ns": 1673250,
+        "total_frame_work_ns": 7126249,
+        "draw_to_gpu_complete_ns": 7735041,
+        "draw_to_display_ns": 36575625,
+        "display_unix_ns": "1788908750294853375"
+      },
+      {
+        "drawable": 148,
+        "draw_ns": 751083,
+        "submit_ns": 5365417,
+        "gpu_ns": 1770625,
+        "total_frame_work_ns": 7887125,
+        "draw_to_gpu_complete_ns": 8016249,
+        "draw_to_display_ns": 28524291,
+        "display_unix_ns": "1788908750311520083"
+      },
+      {
+        "drawable": 149,
+        "draw_ns": 690459,
+        "submit_ns": 4104416,
+        "gpu_ns": 1900458,
+        "total_frame_work_ns": 6695333,
+        "draw_to_gpu_complete_ns": 7076792,
+        "draw_to_display_ns": 36548626,
+        "display_unix_ns": "1788908750328187417"
+      },
+      {
+        "drawable": 150,
+        "draw_ns": 733375,
+        "submit_ns": 4114458,
+        "gpu_ns": 1946750,
+        "total_frame_work_ns": 6794583,
+        "draw_to_gpu_complete_ns": 7142833,
+        "draw_to_display_ns": 36581583,
+        "display_unix_ns": "1788908750344854083"
+      },
+      {
+        "drawable": 151,
+        "draw_ns": 783500,
+        "submit_ns": 5129458,
+        "gpu_ns": 2115875,
+        "total_frame_work_ns": 8028833,
+        "draw_to_gpu_complete_ns": 8477583,
+        "draw_to_display_ns": 28204167,
+        "display_unix_ns": "1788908750361520792"
+      },
+      {
+        "drawable": 152,
+        "draw_ns": 739917,
+        "submit_ns": 5256041,
+        "gpu_ns": 1870458,
+        "total_frame_work_ns": 7866416,
+        "draw_to_gpu_complete_ns": 7967957,
+        "draw_to_display_ns": 28524208,
+        "display_unix_ns": "1788908750378187250"
+      },
+      {
+        "drawable": 153,
+        "draw_ns": 662541,
+        "submit_ns": 3897042,
+        "gpu_ns": 1909542,
+        "total_frame_work_ns": 6469125,
+        "draw_to_gpu_complete_ns": 6847874,
+        "draw_to_display_ns": 36580958,
+        "display_unix_ns": "1788908750394854625"
+      },
+      {
+        "drawable": 154,
+        "draw_ns": 734958,
+        "submit_ns": 4386166,
+        "gpu_ns": 1906958,
+        "total_frame_work_ns": 7028082,
+        "draw_to_gpu_complete_ns": 7406291,
+        "draw_to_display_ns": 36548166,
+        "display_unix_ns": "1788908750411520999"
+      },
+      {
+        "drawable": 155,
+        "draw_ns": 760417,
+        "submit_ns": 4169375,
+        "gpu_ns": 2002625,
+        "total_frame_work_ns": 6932417,
+        "draw_to_gpu_complete_ns": 7313208,
+        "draw_to_display_ns": 36579917,
+        "display_unix_ns": "1788908750428187583"
+      },
+      {
+        "drawable": 156,
+        "draw_ns": 721583,
+        "submit_ns": 4245792,
+        "gpu_ns": 2006375,
+        "total_frame_work_ns": 6973750,
+        "draw_to_gpu_complete_ns": 7519208,
+        "draw_to_display_ns": 36582708,
+        "display_unix_ns": "1788908750444855125"
+      },
+      {
+        "drawable": 157,
+        "draw_ns": 600000,
+        "submit_ns": 5174292,
+        "gpu_ns": 2234500,
+        "total_frame_work_ns": 8008792,
+        "draw_to_gpu_complete_ns": 8423624,
+        "draw_to_display_ns": 44907958,
+        "display_unix_ns": "1788908750461521125"
+      },
+      {
+        "drawable": 158,
+        "draw_ns": 759708,
+        "submit_ns": 7358541,
+        "gpu_ns": 2359417,
+        "total_frame_work_ns": 10477666,
+        "draw_to_gpu_complete_ns": 10859208,
+        "draw_to_display_ns": 53205750,
+        "display_unix_ns": "1788908750478187875"
+      },
+      {
+        "drawable": 159,
+        "draw_ns": 621834,
+        "submit_ns": 16102125,
+        "gpu_ns": 3758250,
+        "total_frame_work_ns": 20482209,
+        "draw_to_gpu_complete_ns": 20907209,
+        "draw_to_display_ns": 61567043,
+        "display_unix_ns": "1788908750494854584"
+      },
+      {
+        "drawable": 160,
+        "draw_ns": 763459,
+        "submit_ns": 15910084,
+        "gpu_ns": 4487417,
+        "total_frame_work_ns": 21160960,
+        "draw_to_gpu_complete_ns": 21586125,
+        "draw_to_display_ns": 61295584,
+        "display_unix_ns": "1788908750511522125"
+      },
+      {
+        "drawable": 161,
+        "draw_ns": 733958,
+        "submit_ns": 15732625,
+        "gpu_ns": 6543250,
+        "total_frame_work_ns": 23009833,
+        "draw_to_gpu_complete_ns": 23641832,
+        "draw_to_display_ns": 61080041,
+        "display_unix_ns": "1788908750528188750"
+      },
+      {
+        "drawable": 162,
+        "draw_ns": 813167,
+        "submit_ns": 7937291,
+        "gpu_ns": 6073125,
+        "total_frame_work_ns": 14823583,
+        "draw_to_gpu_complete_ns": 15294791,
+        "draw_to_display_ns": 53238166,
+        "display_unix_ns": "1788908750544854833"
+      },
+      {
+        "drawable": 163,
+        "draw_ns": 812750,
+        "submit_ns": 8045750,
+        "gpu_ns": 7048375,
+        "total_frame_work_ns": 15906875,
+        "draw_to_gpu_complete_ns": 16420625,
+        "draw_to_display_ns": 53512126,
+        "display_unix_ns": "1788908750561522209"
+      },
+      {
+        "drawable": 164,
+        "draw_ns": 838250,
+        "submit_ns": 7823542,
+        "gpu_ns": 2225000,
+        "total_frame_work_ns": 10886792,
+        "draw_to_gpu_complete_ns": 11458665,
+        "draw_to_display_ns": 53240582,
+        "display_unix_ns": "1788908750578188916"
+      },
+      {
+        "drawable": 165,
+        "draw_ns": 735125,
+        "submit_ns": 8040541,
+        "gpu_ns": 2259584,
+        "total_frame_work_ns": 11035250,
+        "draw_to_gpu_complete_ns": 11408541,
+        "draw_to_display_ns": 53522291,
+        "display_unix_ns": "1788908750594855708"
+      },
+      {
+        "drawable": 166,
+        "draw_ns": 808417,
+        "submit_ns": 7931167,
+        "gpu_ns": 2304250,
+        "total_frame_work_ns": 11043834,
+        "draw_to_gpu_complete_ns": 11405583,
+        "draw_to_display_ns": 53521958,
+        "display_unix_ns": "1788908750611522791"
+      },
+      {
+        "drawable": 167,
+        "draw_ns": 794959,
+        "submit_ns": 7468959,
+        "gpu_ns": 2247583,
+        "total_frame_work_ns": 10511501,
+        "draw_to_gpu_complete_ns": 10842666,
+        "draw_to_display_ns": 53231541,
+        "display_unix_ns": "1788908750628189624"
+      },
+      {
+        "drawable": 168,
+        "draw_ns": 765000,
+        "submit_ns": 7597000,
+        "gpu_ns": 2274667,
+        "total_frame_work_ns": 10636667,
+        "draw_to_gpu_complete_ns": 10968208,
+        "draw_to_display_ns": 53236750,
+        "display_unix_ns": "1788908750644856125"
+      },
+      {
+        "drawable": 169,
+        "draw_ns": 912208,
+        "submit_ns": 7440500,
+        "gpu_ns": 2330124,
+        "total_frame_work_ns": 10682832,
+        "draw_to_gpu_complete_ns": 11048415,
+        "draw_to_display_ns": 53232875,
+        "display_unix_ns": "1788908750661523084"
+      },
+      {
+        "drawable": 170,
+        "draw_ns": 825250,
+        "submit_ns": 7581083,
+        "gpu_ns": 3271666,
+        "total_frame_work_ns": 11677999,
+        "draw_to_gpu_complete_ns": 12191457,
+        "draw_to_display_ns": 53232083,
+        "display_unix_ns": "1788908750678189375"
+      },
+      {
+        "drawable": 171,
+        "draw_ns": 754666,
+        "submit_ns": 7652458,
+        "gpu_ns": 3711125,
+        "total_frame_work_ns": 12118249,
+        "draw_to_gpu_complete_ns": 12462875,
+        "draw_to_display_ns": 53229667,
+        "display_unix_ns": "1788908750694856709"
+      },
+      {
+        "drawable": 172,
+        "draw_ns": 782500,
+        "submit_ns": 7923208,
+        "gpu_ns": 5335375,
+        "total_frame_work_ns": 14041083,
+        "draw_to_gpu_complete_ns": 14430041,
+        "draw_to_display_ns": 53609958,
+        "display_unix_ns": "1788908750711523125"
+      },
+      {
+        "drawable": 173,
+        "draw_ns": 753166,
+        "submit_ns": 8301083,
+        "gpu_ns": 4995667,
+        "total_frame_work_ns": 14049916,
+        "draw_to_gpu_complete_ns": 14530124,
+        "draw_to_display_ns": 53898874,
+        "display_unix_ns": "1788908750728190458"
+      },
+      {
+        "drawable": 174,
+        "draw_ns": 783541,
+        "submit_ns": 7689084,
+        "gpu_ns": 4717917,
+        "total_frame_work_ns": 13190542,
+        "draw_to_gpu_complete_ns": 13617708,
+        "draw_to_display_ns": 53235625,
+        "display_unix_ns": "1788908750744856375"
+      },
+      {
+        "drawable": 175,
+        "draw_ns": 790542,
+        "submit_ns": 7769208,
+        "gpu_ns": 6056542,
+        "total_frame_work_ns": 14616292,
+        "draw_to_gpu_complete_ns": 15072459,
+        "draw_to_display_ns": 53239668,
+        "display_unix_ns": "1788908750761523709"
+      },
+      {
+        "drawable": 176,
+        "draw_ns": 794000,
+        "submit_ns": 7445834,
+        "gpu_ns": 1891666,
+        "total_frame_work_ns": 10131500,
+        "draw_to_gpu_complete_ns": 10493624,
+        "draw_to_display_ns": 53243959,
+        "display_unix_ns": "1788908750778189959"
+      },
+      {
+        "drawable": 177,
+        "draw_ns": 834750,
+        "submit_ns": 7841875,
+        "gpu_ns": 2497833,
+        "total_frame_work_ns": 11174458,
+        "draw_to_gpu_complete_ns": 11601041,
+        "draw_to_display_ns": 53233958,
+        "display_unix_ns": "1788908750794857042"
+      },
+      {
+        "drawable": 178,
+        "draw_ns": 728958,
+        "submit_ns": 7643000,
+        "gpu_ns": 2107167,
+        "total_frame_work_ns": 10479125,
+        "draw_to_gpu_complete_ns": 10849583,
+        "draw_to_display_ns": 53240666,
+        "display_unix_ns": "1788908750811523666"
+      },
+      {
+        "drawable": 179,
+        "draw_ns": 760125,
+        "submit_ns": 7911459,
+        "gpu_ns": 1895500,
+        "total_frame_work_ns": 10567084,
+        "draw_to_gpu_complete_ns": 10708291,
+        "draw_to_display_ns": 44893833,
+        "display_unix_ns": "1788908750819857083"
+      },
+      {
+        "drawable": 180,
+        "draw_ns": 760125,
+        "submit_ns": 7911459,
+        "gpu_ns": 2779541,
+        "total_frame_work_ns": 11451125,
+        "draw_to_gpu_complete_ns": 28094915,
+        "draw_to_display_ns": 53228208,
+        "display_unix_ns": "1788908750828191458"
+      },
+      {
+        "drawable": 181,
+        "draw_ns": 758125,
+        "submit_ns": 7452375,
+        "gpu_ns": 3003875,
+        "total_frame_work_ns": 11214375,
+        "draw_to_gpu_complete_ns": 11760166,
+        "draw_to_display_ns": 44587916,
+        "display_unix_ns": "1788908750844857666"
+      },
+      {
+        "drawable": 182,
+        "draw_ns": 758125,
+        "submit_ns": 7452375,
+        "gpu_ns": 3435792,
+        "total_frame_work_ns": 11646292,
+        "draw_to_gpu_complete_ns": 21423124,
+        "draw_to_display_ns": 52921624,
+        "display_unix_ns": "1788908750853191374"
+      },
+      {
+        "drawable": 183,
+        "draw_ns": 836209,
+        "submit_ns": 14326125,
+        "gpu_ns": 4305625,
+        "total_frame_work_ns": 19467959,
+        "draw_to_gpu_complete_ns": 19855249,
+        "draw_to_display_ns": 51511500,
+        "display_unix_ns": "1788908750869858000"
+      },
+      {
+        "drawable": 184,
+        "draw_ns": 836209,
+        "submit_ns": 14326125,
+        "gpu_ns": 4197334,
+        "total_frame_work_ns": 19359668,
+        "draw_to_gpu_complete_ns": 44107083,
+        "draw_to_display_ns": 59845084,
+        "display_unix_ns": "1788908750878191584"
+      },
+      {
+        "drawable": 185,
+        "draw_ns": 782834,
+        "submit_ns": 5043792,
+        "gpu_ns": 3066375,
+        "total_frame_work_ns": 8893001,
+        "draw_to_gpu_complete_ns": 9452417,
+        "draw_to_display_ns": 36732376,
+        "display_unix_ns": "1788908750894858417"
+      },
+      {
+        "drawable": 186,
+        "draw_ns": 782834,
+        "submit_ns": 5043792,
+        "gpu_ns": 4367625,
+        "total_frame_work_ns": 10194251,
+        "draw_to_gpu_complete_ns": 14545000,
+        "draw_to_display_ns": 45065501,
+        "display_unix_ns": "1788908750903191542"
+      },
+      {
+        "drawable": 187,
+        "draw_ns": 782834,
+        "submit_ns": 5043792,
+        "gpu_ns": 4211250,
+        "total_frame_work_ns": 10037876,
+        "draw_to_gpu_complete_ns": 29720792,
+        "draw_to_display_ns": 53399334,
+        "display_unix_ns": "1788908750911525375"
+      },
+      {
+        "drawable": 188,
+        "draw_ns": 880625,
+        "submit_ns": 5467000,
+        "gpu_ns": 4175834,
+        "total_frame_work_ns": 10523459,
+        "draw_to_gpu_complete_ns": 10933166,
+        "draw_to_display_ns": 42612000,
+        "display_unix_ns": "1788908750928191667"
+      },
+      {
+        "drawable": 189,
+        "draw_ns": 880625,
+        "submit_ns": 5467000,
+        "gpu_ns": 4642125,
+        "total_frame_work_ns": 10989750,
+        "draw_to_gpu_complete_ns": 35544749,
+        "draw_to_display_ns": 59279291,
+        "display_unix_ns": "1788908750944858958"
+      },
+      {
+        "drawable": 190,
+        "draw_ns": 752167,
+        "submit_ns": 4754541,
+        "gpu_ns": 4455500,
+        "total_frame_work_ns": 9962208,
+        "draw_to_gpu_complete_ns": 10041292,
+        "draw_to_display_ns": 36934918,
+        "display_unix_ns": "1788908750953192001"
+      },
+      {
+        "drawable": 191,
+        "draw_ns": 752167,
+        "submit_ns": 4754541,
+        "gpu_ns": 4252917,
+        "total_frame_work_ns": 9759625,
+        "draw_to_gpu_complete_ns": 21750208,
+        "draw_to_display_ns": 45267708,
+        "display_unix_ns": "1788908750961524791"
+      },
+      {
+        "drawable": 192,
+        "draw_ns": 852500,
+        "submit_ns": 7211833,
+        "gpu_ns": 3634083,
+        "total_frame_work_ns": 11698416,
+        "draw_to_gpu_complete_ns": 12349624,
+        "draw_to_display_ns": 36116583,
+        "display_unix_ns": "1788908750969858708"
+      },
+      {
+        "drawable": 193,
+        "draw_ns": 852500,
+        "submit_ns": 7211833,
+        "gpu_ns": 3531583,
+        "total_frame_work_ns": 11595916,
+        "draw_to_gpu_complete_ns": 28448500,
+        "draw_to_display_ns": 61116917,
+        "display_unix_ns": "1788908750994859042"
+      },
+      {
+        "drawable": 194,
+        "draw_ns": 815625,
+        "submit_ns": 5258958,
+        "gpu_ns": 1890625,
+        "total_frame_work_ns": 7965208,
+        "draw_to_gpu_complete_ns": 8549541,
+        "draw_to_display_ns": 44627375,
+        "display_unix_ns": "1788908751003192208"
+      },
+      {
+        "drawable": 195,
+        "draw_ns": 815625,
+        "submit_ns": 5258958,
+        "gpu_ns": 4096875,
+        "total_frame_work_ns": 10171458,
+        "draw_to_gpu_complete_ns": 29404541,
+        "draw_to_display_ns": 61294375,
+        "display_unix_ns": "1788908751019859208"
+      },
+      {
+        "drawable": 196,
+        "draw_ns": 847083,
+        "submit_ns": 7226208,
+        "gpu_ns": 3610250,
+        "total_frame_work_ns": 11683541,
+        "draw_to_gpu_complete_ns": 12323291,
+        "draw_to_display_ns": 44382125,
+        "display_unix_ns": "1788908751028192375"
+      },
+      {
+        "drawable": 197,
+        "draw_ns": 847083,
+        "submit_ns": 7226208,
+        "gpu_ns": 3970583,
+        "total_frame_work_ns": 12043874,
+        "draw_to_gpu_complete_ns": 29029416,
+        "draw_to_display_ns": 61049166,
+        "display_unix_ns": "1788908751044859416"
+      },
+      {
+        "drawable": 198,
+        "draw_ns": 823042,
+        "submit_ns": 7378125,
+        "gpu_ns": 3662375,
+        "total_frame_work_ns": 11863542,
+        "draw_to_gpu_complete_ns": 12498125,
+        "draw_to_display_ns": 52756042,
+        "display_unix_ns": "1788908751061526250"
+      },
+      {
+        "drawable": 199,
+        "draw_ns": 823042,
+        "submit_ns": 7378125,
+        "gpu_ns": 3462041,
+        "total_frame_work_ns": 11663208,
+        "draw_to_gpu_complete_ns": 28602082,
+        "draw_to_display_ns": 61089541,
+        "display_unix_ns": "1788908751069859749"
+      },
+      {
+        "drawable": 200,
+        "draw_ns": 805500,
+        "submit_ns": 15403417,
+        "gpu_ns": 2984458,
+        "total_frame_work_ns": 19193375,
+        "draw_to_gpu_complete_ns": 19449125,
+        "draw_to_display_ns": 44341000,
+        "display_unix_ns": "1788908751078193208"
+      },
+      {
+        "drawable": 201,
+        "draw_ns": 805500,
+        "submit_ns": 15403417,
+        "gpu_ns": 3652500,
+        "total_frame_work_ns": 19861417,
+        "draw_to_gpu_complete_ns": 39304000,
+        "draw_to_display_ns": 61007709,
+        "display_unix_ns": "1788908751094859917"
+      },
+      {
+        "drawable": 202,
+        "draw_ns": 847292,
+        "submit_ns": 4992167,
+        "gpu_ns": 1942375,
+        "total_frame_work_ns": 7781834,
+        "draw_to_gpu_complete_ns": 8119916,
+        "draw_to_display_ns": 33512292,
+        "display_unix_ns": "1788908751103192500"
+      },
+      {
+        "drawable": 203,
+        "draw_ns": 847292,
+        "submit_ns": 4992167,
+        "gpu_ns": 4157500,
+        "total_frame_work_ns": 9996959,
+        "draw_to_gpu_complete_ns": 18524291,
+        "draw_to_display_ns": 50179583,
+        "display_unix_ns": "1788908751119859791"
+      },
+      {
+        "drawable": 204,
+        "draw_ns": 847292,
+        "submit_ns": 4992167,
+        "gpu_ns": 3435708,
+        "total_frame_work_ns": 9275167,
+        "draw_to_gpu_complete_ns": 26903041,
+        "draw_to_display_ns": 58512750,
+        "display_unix_ns": "1788908751128192958"
+      },
+      {
+        "drawable": 205,
+        "draw_ns": 806750,
+        "submit_ns": 14268000,
+        "gpu_ns": 3735375,
+        "total_frame_work_ns": 18810125,
+        "draw_to_gpu_complete_ns": 19382958,
+        "draw_to_display_ns": 51530375,
+        "display_unix_ns": "1788908751144860333"
+      },
+      {
+        "drawable": 206,
+        "draw_ns": 806750,
+        "submit_ns": 14268000,
+        "gpu_ns": 3732083,
+        "total_frame_work_ns": 18806833,
+        "draw_to_gpu_complete_ns": 29434958,
+        "draw_to_display_ns": 59863292,
+        "display_unix_ns": "1788908751153193250"
+      },
+      {
+        "drawable": 207,
+        "draw_ns": 798541,
+        "submit_ns": 13556041,
+        "gpu_ns": 4521667,
+        "total_frame_work_ns": 18876249,
+        "draw_to_gpu_complete_ns": 19305124,
+        "draw_to_display_ns": 50643333,
+        "display_unix_ns": "1788908751169860250"
+      },
+      {
+        "drawable": 208,
+        "draw_ns": 798541,
+        "submit_ns": 13556041,
+        "gpu_ns": 3746125,
+        "total_frame_work_ns": 18100707,
+        "draw_to_gpu_complete_ns": 27784499,
+        "draw_to_display_ns": 58976916,
+        "display_unix_ns": "1788908751178193833"
+      },
+      {
+        "drawable": 209,
+        "draw_ns": 833708,
+        "submit_ns": 14160583,
+        "gpu_ns": 4470167,
+        "total_frame_work_ns": 19464458,
+        "draw_to_gpu_complete_ns": 19931792,
+        "draw_to_display_ns": 43096459,
+        "display_unix_ns": "1788908751186527459"
+      },
+      {
+        "drawable": 210,
+        "draw_ns": 833708,
+        "submit_ns": 14160583,
+        "gpu_ns": 4762750,
+        "total_frame_work_ns": 19757041,
+        "draw_to_gpu_complete_ns": 28536583,
+        "draw_to_display_ns": 59762500,
+        "display_unix_ns": "1788908751203193500"
+      },
+      {
+        "drawable": 211,
+        "draw_ns": 790416,
+        "submit_ns": 23711417,
+        "gpu_ns": 4880875,
+        "total_frame_work_ns": 29382708,
+        "draw_to_gpu_complete_ns": 29766457,
+        "draw_to_display_ns": 53117291,
+        "display_unix_ns": "1788908751219860875"
+      },
+      {
+        "drawable": 212,
+        "draw_ns": 833500,
+        "submit_ns": 5213000,
+        "gpu_ns": 2962625,
+        "total_frame_work_ns": 9009125,
+        "draw_to_gpu_complete_ns": 9671041,
+        "draw_to_display_ns": 45019708,
+        "display_unix_ns": "1788908751236527000"
+      },
+      {
+        "drawable": 213,
+        "draw_ns": 833500,
+        "submit_ns": 5213000,
+        "gpu_ns": 5780292,
+        "total_frame_work_ns": 11826792,
+        "draw_to_gpu_complete_ns": 23439832,
+        "draw_to_display_ns": 61686374,
+        "display_unix_ns": "1788908751253193666"
+      },
+      {
+        "drawable": 214,
+        "draw_ns": 955333,
+        "submit_ns": 15016750,
+        "gpu_ns": 7731375,
+        "total_frame_work_ns": 23703458,
+        "draw_to_gpu_complete_ns": 24166374,
+        "draw_to_display_ns": 52435499,
+        "display_unix_ns": "1788908751261527374"
+      },
+      {
+        "drawable": 215,
+        "draw_ns": 955333,
+        "submit_ns": 15016750,
+        "gpu_ns": 7903250,
+        "total_frame_work_ns": 23875333,
+        "draw_to_gpu_complete_ns": 41185291,
+        "draw_to_display_ns": 69102625,
+        "display_unix_ns": "1788908751278194500"
+      },
+      {
+        "drawable": 216,
+        "draw_ns": 836041,
+        "submit_ns": 23366291,
+        "gpu_ns": 4757084,
+        "total_frame_work_ns": 28959416,
+        "draw_to_gpu_complete_ns": 29380082,
+        "draw_to_display_ns": 52733707,
+        "display_unix_ns": "1788908751294861249"
+      },
+      {
+        "drawable": 217,
+        "draw_ns": 820833,
+        "submit_ns": 5347833,
+        "gpu_ns": 2362750,
+        "total_frame_work_ns": 8531416,
+        "draw_to_gpu_complete_ns": 9111457,
+        "draw_to_display_ns": 44970291,
+        "display_unix_ns": "1788908751311527333"
+      },
+      {
+        "drawable": 218,
+        "draw_ns": 820833,
+        "submit_ns": 5347833,
+        "gpu_ns": 4304417,
+        "total_frame_work_ns": 10473083,
+        "draw_to_gpu_complete_ns": 21841333,
+        "draw_to_display_ns": 53304292,
+        "display_unix_ns": "1788908751319861334"
+      },
+      {
+        "drawable": 219,
+        "draw_ns": 835417,
+        "submit_ns": 15530625,
+        "gpu_ns": 3653500,
+        "total_frame_work_ns": 20019542,
+        "draw_to_gpu_complete_ns": 20402041,
+        "draw_to_display_ns": 52875958,
+        "display_unix_ns": "1788908751336527666"
+      },
+      {
+        "drawable": 220,
+        "draw_ns": 835417,
+        "submit_ns": 15530625,
+        "gpu_ns": 2169750,
+        "total_frame_work_ns": 18535792,
+        "draw_to_gpu_complete_ns": 31605042,
+        "draw_to_display_ns": 69543293,
+        "display_unix_ns": "1788908751353195001"
+      }
+    ],
+    "snapshots": [
+      {
+        "event": "finite-sample",
+        "mode": "lines",
+        "tick": 120,
+        "rss_kib": 1545680,
+        "charts": [
+          {
+            "schedule": {
+              "active": 0,
+              "pending": 0,
+              "submitted": "0",
+              "coalesced": "0",
+              "started": "0",
+              "completed": "0",
+              "stale": "0",
+              "failed": "0",
+              "presentations": "0",
+              "committed": null,
+              "presented": null,
+              "lag": null,
+              "disposed": false
+            },
+            "density": {
+              "source_rows": 100000,
+              "prepared_rows": 100000,
+              "raw_vertices": 99950,
+              "rendered_vertices": 42310,
+              "represented_samples": 99950,
+              "raw_items": 78,
+              "rendered_items": 78,
+              "line_runs": 60,
+              "line_fallbacks": 0,
+              "candle_buckets": 0,
+              "candle_fallbacks": 0
+            },
+            "layouts": 1,
+            "bounds": {
+              "origin": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "width": 1200.0,
+              "height": 600.0
+            },
+            "index_candidates": 99950
+          }
+        ],
+        "live_entities": 1
+      },
+      {
+        "event": "finite-sample",
+        "mode": "lines",
+        "tick": 240,
+        "rss_kib": 1573024,
+        "charts": [
+          {
+            "schedule": {
+              "active": 0,
+              "pending": 0,
+              "submitted": "0",
+              "coalesced": "0",
+              "started": "0",
+              "completed": "0",
+              "stale": "0",
+              "failed": "0",
+              "presentations": "0",
+              "committed": null,
+              "presented": null,
+              "lag": null,
+              "disposed": false
+            },
+            "density": {
+              "source_rows": 100000,
+              "prepared_rows": 100000,
+              "raw_vertices": 99950,
+              "rendered_vertices": 42310,
+              "represented_samples": 99950,
+              "raw_items": 78,
+              "rendered_items": 78,
+              "line_runs": 60,
+              "line_fallbacks": 0,
+              "candle_buckets": 0,
+              "candle_fallbacks": 0
+            },
+            "layouts": 1,
+            "bounds": {
+              "origin": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "width": 1200.0,
+              "height": 600.0
+            },
+            "index_candidates": 99950
+          }
+        ],
+        "live_entities": 1
+      },
+      {
+        "event": "finite-sample",
+        "mode": "lines",
+        "tick": 360,
+        "rss_kib": 1573248,
+        "charts": [
+          {
+            "schedule": {
+              "active": 0,
+              "pending": 0,
+              "submitted": "0",
+              "coalesced": "0",
+              "started": "0",
+              "completed": "0",
+              "stale": "0",
+              "failed": "0",
+              "presentations": "0",
+              "committed": null,
+              "presented": null,
+              "lag": null,
+              "disposed": false
+            },
+            "density": {
+              "source_rows": 100000,
+              "prepared_rows": 100000,
+              "raw_vertices": 99950,
+              "rendered_vertices": 42310,
+              "represented_samples": 99950,
+              "raw_items": 78,
+              "rendered_items": 78,
+              "line_runs": 60,
+              "line_fallbacks": 0,
+              "candle_buckets": 0,
+              "candle_fallbacks": 0
+            },
+            "layouts": 1,
+            "bounds": {
+              "origin": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "width": 1200.0,
+              "height": 600.0
+            },
+            "index_candidates": 99950
+          }
+        ],
+        "live_entities": 1
+      },
+      {
+        "event": "finite-sample",
+        "mode": "lines",
+        "tick": 480,
+        "rss_kib": 1573312,
+        "charts": [
+          {
+            "schedule": {
+              "active": 0,
+              "pending": 0,
+              "submitted": "0",
+              "coalesced": "0",
+              "started": "0",
+              "completed": "0",
+              "stale": "0",
+              "failed": "0",
+              "presentations": "0",
+              "committed": null,
+              "presented": null,
+              "lag": null,
+              "disposed": false
+            },
+            "density": {
+              "source_rows": 100000,
+              "prepared_rows": 100000,
+              "raw_vertices": 99950,
+              "rendered_vertices": 42310,
+              "represented_samples": 99950,
+              "raw_items": 78,
+              "rendered_items": 78,
+              "line_runs": 60,
+              "line_fallbacks": 0,
+              "candle_buckets": 0,
+              "candle_fallbacks": 0
+            },
+            "layouts": 1,
+            "bounds": {
+              "origin": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "width": 1200.0,
+              "height": 600.0
+            },
+            "index_candidates": 99950
+          }
+        ],
+        "live_entities": 1
+      },
+      {
+        "event": "finite-sample",
+        "mode": "lines",
+        "tick": 600,
+        "rss_kib": 1573264,
+        "charts": [
+          {
+            "schedule": {
+              "active": 0,
+              "pending": 0,
+              "submitted": "0",
+              "coalesced": "0",
+              "started": "0",
+              "completed": "0",
+              "stale": "0",
+              "failed": "0",
+              "presentations": "0",
+              "committed": null,
+              "presented": null,
+              "lag": null,
+              "disposed": false
+            },
+            "density": {
+              "source_rows": 100000,
+              "prepared_rows": 100000,
+              "raw_vertices": 99950,
+              "rendered_vertices": 42310,
+              "represented_samples": 99950,
+              "raw_items": 78,
+              "rendered_items": 78,
+              "line_runs": 60,
+              "line_fallbacks": 0,
+              "candle_buckets": 0,
+              "candle_fallbacks": 0
+            },
+            "layouts": 1,
+            "bounds": {
+              "origin": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "width": 1200.0,
+              "height": 600.0
+            },
+            "index_candidates": 99950
+          }
+        ],
+        "live_entities": 1
+      },
+      {
+        "event": "finite-sample",
+        "mode": "lines",
+        "tick": 720,
+        "rss_kib": 1573264,
+        "charts": [
+          {
+            "schedule": {
+              "active": 0,
+              "pending": 0,
+              "submitted": "0",
+              "coalesced": "0",
+              "started": "0",
+              "completed": "0",
+              "stale": "0",
+              "failed": "0",
+              "presentations": "0",
+              "committed": null,
+              "presented": null,
+              "lag": null,
+              "disposed": false
+            },
+            "density": {
+              "source_rows": 100000,
+              "prepared_rows": 100000,
+              "raw_vertices": 99950,
+              "rendered_vertices": 42310,
+              "represented_samples": 99950,
+              "raw_items": 78,
+              "rendered_items": 78,
+              "line_runs": 60,
+              "line_fallbacks": 0,
+              "candle_buckets": 0,
+              "candle_fallbacks": 0
+            },
+            "layouts": 1,
+            "bounds": {
+              "origin": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "width": 1200.0,
+              "height": 600.0
+            },
+            "index_candidates": 99950
+          }
+        ],
+        "live_entities": 1
+      },
+      {
+        "event": "finite-drained",
+        "mode": "lines",
+        "tick": 780,
+        "rss_kib": 1573328,
+        "charts": [
+          {
+            "schedule": {
+              "active": 0,
+              "pending": 0,
+              "submitted": "0",
+              "coalesced": "0",
+              "started": "0",
+              "completed": "0",
+              "stale": "0",
+              "failed": "0",
+              "presentations": "0",
+              "committed": null,
+              "presented": null,
+              "lag": null,
+              "disposed": false
+            },
+            "density": {
+              "source_rows": 100000,
+              "prepared_rows": 100000,
+              "raw_vertices": 99950,
+              "rendered_vertices": 42310,
+              "represented_samples": 99950,
+              "raw_items": 78,
+              "rendered_items": 78,
+              "line_runs": 60,
+              "line_fallbacks": 0,
+              "candle_buckets": 0,
+              "candle_fallbacks": 0
+            },
+            "layouts": 1,
+            "bounds": {
+              "origin": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "width": 1200.0,
+              "height": 600.0
+            },
+            "index_candidates": 99950
+          }
+        ],
+        "live_entities": 1
+      }
+    ],
+    "disposed": {
+      "event": "finite-disposed",
+      "mode": "lines",
+      "tick": 840,
+      "rss_kib": 301376,
+      "charts": [],
+      "live_entities": 0
+    }
+  }
+}

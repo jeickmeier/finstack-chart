@@ -16,3 +16,5 @@ mod types;
 pub use coordinates::*;
 pub use engine::layout;
 pub use types::*;
+
+pub(crate) use axes::validate_definition_axes;

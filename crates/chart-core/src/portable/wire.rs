@@ -45,7 +45,10 @@ pub struct BatchWire {
 impl BatchWire {
     /// Validate budgets, schema, kinds, lengths, dictionaries and identities, then own data.
     pub fn into_batch(self) -> ChartResult<NormalizedBatch> {
-        let limits = DataLimits::default();
+        self.into_batch_with_limits(DataLimits::default())
+    }
+    /// Materialize an already decoded batch under explicit owner-selected data budgets.
+    pub fn into_batch_with_limits(self, limits: DataLimits) -> ChartResult<NormalizedBatch> {
         if self.fields.len() > limits.max_fields || self.keys.len() > limits.max_batch_rows {
             return Err(error(
                 DiagnosticCode::ResourceLimit,
@@ -102,7 +105,8 @@ pub struct DataEnvelope {
     pub datasets: Vec<DatasetWire>,
 }
 impl DataEnvelope {
-    pub(crate) fn into_store(self) -> ChartResult<DataStore> {
+    /// Validate an interchange value and adopt its data in a typed single-writer store.
+    pub fn into_store(self) -> ChartResult<DataStore> {
         version(self.version)?;
         if self.datasets.len() > DataLimits::default().max_datasets {
             return Err(error(
@@ -146,11 +150,7 @@ impl MutationWire {
             Self::UpsertByKey(b) => Mutation::UpsertByKey(b.into_batch()?),
             Self::ReplaceSnapshot(b) => Mutation::ReplaceSnapshot(b.into_batch()?),
             Self::RemoveKeys(keys) => Mutation::RemoveKeys(keys),
-            Self::SetRetention(r) => Mutation::SetRetention(match r {
-                RetentionWire::Unbounded => RetentionPolicy::Unbounded,
-                RetentionWire::Count(rows) => RetentionPolicy::Count(rows as usize),
-                RetentionWire::EventTime(window) => RetentionPolicy::EventTime(window),
-            }),
+            Self::SetRetention(r) => Mutation::SetRetention(r.into()),
             Self::AdvanceWatermark(w) => Mutation::AdvanceWatermark(w),
             Self::ResetCategoryOrder(f) => Mutation::ResetCategoryOrder(f),
         })
@@ -181,7 +181,8 @@ pub struct TransactionEnvelope {
     pub operations: Vec<OperationWire>,
 }
 impl TransactionEnvelope {
-    pub(crate) fn into_transaction(self) -> ChartResult<Transaction> {
+    /// Validate an interchange value and produce the same typed atomic transaction.
+    pub fn into_transaction(self) -> ChartResult<Transaction> {
         version(self.version)?;
         if self.operations.len() > DataLimits::default().max_operations {
             return Err(error(
@@ -289,4 +290,13 @@ pub enum RetentionWire {
     Count(u32),
     /// Inclusive event-time horizon; all integer ticks are canonical decimal strings.
     EventTime(crate::data::EventTimeWindow),
+}
+impl From<RetentionWire> for RetentionPolicy {
+    fn from(value: RetentionWire) -> Self {
+        match value {
+            RetentionWire::Unbounded => Self::Unbounded,
+            RetentionWire::Count(rows) => Self::Count(rows as usize),
+            RetentionWire::EventTime(window) => Self::EventTime(window),
+        }
+    }
 }

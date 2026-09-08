@@ -4,7 +4,14 @@ mod probe;
 #[path = "../../../crates/chart-core/examples/common/dense_workload.rs"]
 #[allow(dead_code)]
 mod workload;
-use chart_core::{data::*, inspection::*, services::*, state::*, transaction::*, *};
+use chart_core::{
+    data::*,
+    inspection::*,
+    prelude::{Data, aes, line, plot},
+    state::*,
+    transaction::*,
+    *,
+};
 use chart_export::*;
 use gpui::{prelude::*, *};
 use gpui_charts::*;
@@ -25,34 +32,22 @@ fn value(k: u64) -> f64 {
         ((k.wrapping_add(0xF157AC03)) % 10_000) as f64 / 100.
     }
 }
-fn batch(
-    schema: Arc<Schema>,
-    keys: Vec<u64>,
-    correction: Option<u64>,
-) -> ChartResult<NormalizedBatch> {
-    let len = keys.len();
-    NormalizedBatch::new(
-        schema,
-        keys.iter().map(|k| RowKey::new(*k)).collect(),
-        vec![
-            Column::new(
-                ColumnValues::Float64(keys.iter().map(|k| *k as f64).collect()),
-                vec![true; len],
-                None,
-            ),
-            Column::new(
-                ColumnValues::Float64(
-                    keys.iter()
-                        .map(|k| value(*k) + if Some(*k) == correction { 0.5 } else { 0. })
-                        .collect(),
-                ),
-                keys.iter().map(|k| k % 1729 != 1728).collect(),
-                None,
-            ),
-            Column::new(ColumnValues::UInt64(vec![0; len]), vec![true; len], None),
-        ],
-        workload::limits(),
-    )
+fn batch(keys: Vec<u64>, correction: Option<u64>) -> ChartResult<Data> {
+    Data::columns()
+        .column("x", keys.iter().map(|k| *k as f64).collect::<Vec<_>>())
+        .column(
+            "y",
+            keys.iter()
+                .map(|k| {
+                    (k % 1729 != 1728)
+                        .then_some(value(*k) + if Some(*k) == correction { 0.5 } else { 0. })
+                })
+                .collect::<Vec<_>>(),
+        )
+        .column("series", vec![0u64; keys.len()])
+        .keys(keys)
+        .limits(workload::limits())
+        .build()
 }
 fn rss() -> Option<u64> {
     String::from_utf8(
@@ -70,7 +65,7 @@ fn rss() -> Option<u64> {
 struct Benchmark {
     chart: Option<Entity<ChartView>>,
     weak_chart: WeakEntity<ChartView>,
-    store: DataStore,
+    output: Output,
     reference: BTreeMap<u64, f64>,
     frontier: u64,
     tick: u64,
@@ -88,28 +83,14 @@ impl Benchmark {
     fn nanos(&self) -> u128 {
         self.started.elapsed().as_nanos()
     }
-    fn apply(&mut self, operations: Vec<Mutation>) -> CommitReceipt {
-        let s = self.store.snapshot();
-        let s = s.get().unwrap();
-        match self.store.apply(Transaction {
-            id: TransactionId::new(format!("stream-{}", self.tick)).unwrap(),
-            epoch: s.epoch(),
-            expected: vec![s.dataset(workload::DATA).unwrap().version()],
-            operations: operations
-                .into_iter()
-                .map(|mutation| Operation {
-                    dataset: workload::DATA,
-                    mutation,
-                })
-                .collect(),
-        }) {
-            CommitOutcome::Applied(r) => r,
-            outcome => panic!("accepted transaction failed: {outcome:?}"),
-        }
-    }
-    fn check(&self) {
-        let source = self.store.snapshot();
-        let data = source.get().unwrap().dataset(workload::DATA).unwrap();
+    fn check(&self, cx: &App) {
+        let chart = self.chart.as_ref().unwrap().read(cx).chart();
+        let source = chart.source();
+        let data = source
+            .get()
+            .unwrap()
+            .dataset(chart.data("data").unwrap().id())
+            .unwrap();
         assert_eq!(data.len(), self.reference.len());
         for row in data.rows() {
             let k = row.key().get();
@@ -136,16 +117,17 @@ impl Benchmark {
         let mut keys: Vec<_> = (self.frontier + 1..self.frontier + BATCH as u64).collect();
         keys.push(correction);
         self.frontier += BATCH as u64 - 1;
-        let source = self.store.snapshot();
-        let schema = source
-            .get()
+        let incoming = batch(keys.clone(), Some(correction)).unwrap();
+        let mut tx = self
+            .chart
+            .as_ref()
             .unwrap()
-            .dataset(workload::DATA)
+            .read(cx)
+            .chart()
+            .transaction()
             .unwrap()
-            .schema()
-            .clone();
-        let b = batch(schema, keys.clone(), Some(correction)).unwrap();
-        let mut ops = vec![Mutation::UpsertByKey(b)];
+            .id(format!("stream-{}", self.tick))
+            .upsert("data", incoming);
         for k in keys {
             self.reference
                 .insert(k, value(k) + if k == correction { 0.5 } else { 0. });
@@ -156,13 +138,23 @@ impl Benchmark {
         let removed = if self.tick.is_multiple_of(10) {
             let k = self.frontier - 10;
             self.reference.remove(&k);
-            ops.push(Mutation::RemoveKeys(vec![RowKey::new(k)]));
+            tx = tx.remove("data", [k]);
             1
         } else {
             0
         };
         let start = Instant::now();
-        let receipt = self.apply(ops);
+        let transaction = tx.build().unwrap();
+        let receipt = match self
+            .chart
+            .as_ref()
+            .unwrap()
+            .update(cx, |c, cx| c.commit(transaction, cx))
+            .unwrap()
+        {
+            CommitOutcome::Applied(r) => r,
+            outcome => panic!("accepted transaction failed: {outcome:?}"),
+        };
         let commit_ns = start.elapsed().as_nanos();
         assert_eq!(receipt.operations[0].inserted, BATCH - 1);
         assert_eq!(receipt.operations[0].updated, 1);
@@ -174,9 +166,6 @@ impl Benchmark {
             "presentation backlog exceeded explicit benchmark bound"
         );
         let chart = self.chart.as_ref().unwrap();
-        chart
-            .update(cx, |c, cx| c.queue_data(self.store.snapshot(), cx))
-            .unwrap();
         if self.tick.is_multiple_of(20) {
             chart
                 .update(cx, |c, cx| {
@@ -198,7 +187,7 @@ impl Benchmark {
             json!({"event":"commit","tick":self.tick,"measured":self.tick>WARMUP,"arrival_ns":arrived.to_string(),"arrival_unix_ns":arrival_unix_ns,"scheduled_ns":(u128::from(self.tick)*100_000_000).to_string(),"commit_ns":commit_ns.to_string(),"observed_ns":self.nanos().to_string(),"revision":revision,"counts":receipt.operations,"retained":self.reference.len(),"pending_ack":self.pending.len()})
         );
         if self.tick.is_multiple_of(100) {
-            self.check();
+            self.check(cx);
             self.sample(cx, "reference-check");
         }
         if self.tick == WARMUP + 50
@@ -262,39 +251,16 @@ impl Benchmark {
         );
     }
     fn export(&mut self, cx: &mut Context<Self>) {
-        let captured = self
-            .chart
-            .as_ref()
-            .unwrap()
-            .read(cx)
-            .capture_presented()
+        let chart = self.chart.as_ref().unwrap().read(cx);
+        self.weak_scenes
+            .push(Arc::downgrade(chart.inspector().unwrap().presented()));
+        let request = self
+            .output
+            .live_request(
+                chart.chart(),
+                export_options(PageSize::points(600., 300.).unwrap()),
+            )
             .unwrap();
-        self.weak_scenes.push(Arc::downgrade(&captured.chart));
-        let prepared = captured.chart.prepared();
-        let fonts = FontResources::new(
-            captured
-                .fonts
-                .into_iter()
-                .map(|(d, b)| FontResource::new(d, b))
-                .collect::<ChartResult<Vec<_>>>()
-                .unwrap(),
-        )
-        .unwrap();
-        let mut profile =
-            PublicationProfile::new(PageSize::points(600., 300.).unwrap(), captured.layout.font)
-                .unwrap();
-        profile.view = ViewMode::VisibleView;
-        let request = FigureRequest::new(
-            prepared.definition().clone(),
-            prepared.source().clone(),
-            captured.state,
-            fonts,
-            profile,
-            InteractionCapture::default(),
-        )
-        .unwrap()
-        .with_origin_scene(captured.chart.scene().stamp())
-        .unwrap();
         let manifest = request.manifest().unwrap();
         let job = self.queue.submit(request, Format::Pdf).unwrap();
         let id = job.id();
@@ -360,17 +326,22 @@ fn main() {
     );
     std::fs::create_dir_all(&out).unwrap();
     gpui_platform::application().run(move |cx| {
-        let descriptor=ResourceDescriptor{id:ResourceId::new(1),revision:Revision::new(1),kind:ResourceKind::Font,byte_len:FONT.len() as u64};
-        let font=NativeFont::load(descriptor,Arc::from(FONT),"Noto Sans",cx).unwrap();
-        let schema=workload::batch(1,1,0).unwrap().schema().clone();
-        let initial=batch(schema,(1..=RETAINED as u64).collect(),None).unwrap();
-        let mut store=DataStore::new(SourceEpoch::new(1),vec![(workload::DATA,initial)],workload::limits()).unwrap();
-        let source=store.snapshot();let source=source.get().unwrap();
-        assert!(matches!(store.apply(Transaction{id:TransactionId::new("retention").unwrap(),epoch:source.epoch(),expected:vec![source.dataset(workload::DATA).unwrap().version()],operations:vec![Operation{dataset:workload::DATA,mutation:Mutation::SetRetention(RetentionPolicy::Count(RETAINED))}]}),CommitOutcome::Applied(_)));
-        let input=ChartInput::new(workload::definition(),store.snapshot(),font).unwrap();
+        let font=NativeFont::from_bytes(FONT,"Noto Sans",cx).unwrap();
+        let output = Output::new(FONT).unwrap();
+        let authoring_started = Instant::now();
+        let initial=batch((1..=RETAINED as u64).collect(),None).unwrap();
+        let plot = plot(initial).aes(aes().x("x").y("y").group("series"))
+            .layer(line()).data_limits(workload::limits()).build().unwrap();
+        let authoring_ns = authoring_started.elapsed().as_nanos();
+        let mount_started = Instant::now();
+        let mut chart = plot.chart().unwrap();
+        let retention = chart.transaction().unwrap().id("retention").retain_count("data", Some(RETAINED)).build().unwrap();
+        assert!(matches!(chart.apply_transaction(retention).unwrap(), CommitOutcome::Applied(_)));
+        let input=ChartInput::from_chart(chart,font).unwrap();
+        println!("{}", json!({"event":"primary-cold", "authoring_ns":authoring_ns.to_string(), "mount_ns":mount_started.elapsed().as_nanos().to_string()}));
         cx.open_window(WindowOptions {kind:WindowKind::PopUp,window_bounds:Some(WindowBounds::Windowed(Bounds::centered(None,size(px(1240.),px(730.)),cx))),titlebar:Some(TitlebarOptions{title:Some("Finstack Sustained Benchmark".into()),..Default::default()}),..Default::default()},move |_,cx|cx.new(|cx| {
             let chart=cx.new(|cx|ChartView::new(input,cx));let weak_chart=chart.downgrade();
-            let mut this=Benchmark{chart:Some(chart),weak_chart,store,reference:(1..=RETAINED as u64).map(|k|(k,value(k))).collect(),frontier:RETAINED as u64,tick:0,total:seconds*10+WARMUP,started:Instant::now(),pending:VecDeque::new(),painted:0,queue:ExportQueue::new(ExportLimits::default()).unwrap(),tasks:vec![],out,weak_scenes:vec![],task:None};
+            let mut this=Benchmark{chart:Some(chart),weak_chart,output,reference:(1..=RETAINED as u64).map(|k|(k,value(k))).collect(),frontier:RETAINED as u64,tick:0,total:seconds*10+WARMUP,started:Instant::now(),pending:VecDeque::new(),painted:0,queue:ExportQueue::new(ExportLimits::default()).unwrap(),tasks:vec![],out,weak_scenes:vec![],task:None};
             println!("{}",json!({"event":"protocol","seed":"0xF157AC03","version":1,"pid":std::process::id(),"unix_ns":SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_nanos().to_string(),"seconds":seconds,"warmup_batches":WARMUP,"batch_rows":BATCH,"period_ms":100,"retained":RETAINED,"presentation_boundary":"CPU paint acknowledgement; external display trace required"}));
             this.task=Some(cx.spawn(async move |entity,cx| {
                 let mut tail=0;
@@ -381,7 +352,7 @@ fn main() {
                         if this.tick<this.total && this.nanos()>=u128::from(this.tick+1)*100_000_000 {this.advance(cx);}
                         if this.tick==this.total {
                             tail+=1;
-                            if tail==250 {this.check();this.sample(cx,"drained");this.chart.as_ref().unwrap().update(cx,|c,cx|c.dispose_preparation(cx));this.chart=None;this.queue.dispose();cx.notify();}
+                            if tail==250 {this.check(cx);this.sample(cx,"drained");this.chart.as_ref().unwrap().update(cx,|c,cx|c.dispose_preparation(cx));this.chart=None;this.queue.dispose();cx.notify();}
                             if tail==300 {this.sample(cx,"disposed");assert!(this.weak_chart.upgrade().is_none());println!("{}",json!({"event":"complete","tick":this.tick,"ns":this.nanos().to_string(),"pending_ack":this.pending.len()}));cx.quit();return true;}
                         }
                         false

@@ -199,6 +199,19 @@ pub struct Statistic {
     pub parameters: StatParameters,
 }
 impl Statistic {
+    /// Declared source population grouping; identity operations preserve their input groups.
+    pub fn grouping(&self) -> Option<&Grouping> {
+        match &self.parameters {
+            StatParameters::Identity => None,
+            StatParameters::Bin(s) => Some(&s.grouping),
+            StatParameters::AutoBin(s) => Some(&s.grouping),
+            StatParameters::Count(s) => Some(&s.grouping),
+            StatParameters::Summary(s) => Some(&s.grouping),
+            StatParameters::Ols(s) => Some(&s.grouping),
+            StatParameters::Custom(s) => Some(&s.grouping),
+        }
+    }
+
     /// Select an explicitly registered extension; no executable code is serialized.
     pub fn custom(operation: OperationRef, parameters: super::ExtensionParameters) -> Self {
         Self {
@@ -369,6 +382,11 @@ pub enum BinNumeric {
     Field(BinField),
     /// Explicit constant coordinate/baseline.
     Literal(f64),
+}
+impl From<f64> for BinNumeric {
+    fn from(value: f64) -> Self {
+        Self::Literal(value)
+    }
 }
 impl From<BinField> for BinNumeric {
     fn from(field: BinField) -> Self {

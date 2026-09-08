@@ -32,6 +32,44 @@ struct FontRegistry(BTreeMap<String, NativeFont>);
 impl gpui::Global for FontRegistry {}
 
 impl NativeFont {
+    /// Load supplied font bytes with an automatically allocated native resource identity.
+    /// Reusing the same bytes/family returns the existing registered face.
+    pub fn from_bytes(
+        bytes: impl Into<Arc<[u8]>>,
+        family: &str,
+        cx: &mut App,
+    ) -> ChartResult<Self> {
+        let bytes = bytes.into();
+        if let Some(existing) = cx.try_global::<FontRegistry>().and_then(|r| {
+            r.0.values()
+                .find(|font| font.bytes == bytes && font.font.family.as_ref() == family)
+        }) {
+            return Ok(existing.clone());
+        }
+        let id = cx
+            .try_global::<FontRegistry>()
+            .and_then(|r| r.0.values().map(|f| f.descriptor.id.get()).max())
+            .unwrap_or(0)
+            .checked_add(1)
+            .ok_or_else(|| {
+                error(
+                    DiagnosticCode::RevisionOverflow,
+                    "Native font resource identity is exhausted.",
+                )
+            })?;
+        Self::load(
+            ResourceDescriptor {
+                id: chart_core::ResourceId::new(id),
+                revision: chart_core::Revision::INITIAL,
+                kind: ResourceKind::Font,
+                byte_len: bytes.len() as u64,
+            },
+            bytes,
+            family,
+            cx,
+        )
+    }
+
     /// Parse/check an explicit face, verify its family, then register these supplied bytes.
     /// Register before the host first resolves this family; GPUI caches resolved font selections.
     /// The host must reserve supplied faces in this family for this adapter. Reloading the

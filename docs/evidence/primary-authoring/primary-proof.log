@@ -1,0 +1,92 @@
+mise WARN  failed to write cache file: /Users/jeickmeier/Library/Caches/mise/protoc/35.1/bin_paths-a7857.msgpack.z Operation not permitted (os error 1)
+mise WARN  failed to write cache file: /Users/jeickmeier/Library/Caches/mise/watchexec/2.5.1/bin_paths-a7857.msgpack.z Operation not permitted (os error 1)
+[primary-authoring-proof] $ python3 scripts/run_primary_authoring_proofs.py
+RUN node /Users/jeickmeier/.npm/_npx/e04ecd76da0b5726/node_modules/typescript/lib/tsc.js --version
+Version 6.0.2
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 -m mypy --version
+mypy 2.3.0 (compiled: yes)
+RUN cargo run -p chart-export --example primary_binding_proof --locked -- /Users/jeickmeier/Projects/finstack-chart/target/authoring/native
+ut "input-host-tools" / "edit-undo"
+primary input "input-host-tools" / "edit-redo"
+primary input "input-host-tools" / "select-source"
+primary input "input-host-tools" / "capture-semantic-selection"
+primary input "input-host-tools" / "resolve-table-selection"
+primary input "input-host-tools" / "repeated-table-selection"
+primary input "input-host-tools" / "linked-echo-suppressed"
+primary input "input-host-tools" / "missing-source-rejected"
+primary input "input-host-tools" / "missing-source-reported"
+primary input "input-host-tools" / "wrong-edit-constraint-type"
+primary input "input-host-tools" / "accessible-page-budget"
+primary input "input-host-tools" / "pan-selected-source-outside"
+primary input "input-host-tools" / "capture-clipped-selection"
+primary input "input-host-category-link" / "select-gamma"
+primary input "input-host-category-link" / "show-alpha-only"
+primary input "input-host-category-link" / "capture-hidden-category-selection"
+primary input "input-host-category-link" / "resolve-hidden-category-selection"
+primary input "input-host-category-link" / "visible-table-remains-alpha-only"
+primary action "configure"
+primary action "configure-noop"
+primary action "hover"
+primary action "hover-noop"
+primary action "focus"
+primary action "pin"
+primary action "select"
+primary action "stale"
+primary action "begin-annotation"
+primary action "preview"
+primary action "cancel"
+primary action "begin-annotation-again"
+primary action "preview-again"
+primary action "commit"
+primary action "undo"
+primary action "redo"
+primary action "viewport"
+primary action "freeze"
+primary action "resume"
+primary action "legend"
+primary action "linked"
+primary action "linked-echo"
+primary action "reset"
+PASS primary Rust source, actions, replay, definition-only edit and detached capture fixture
+RUN cargo build -p chart-python --features extension-module,extension-proof --locked
+   Compiling chart-python v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-python)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.26s
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/python_proof.py /Users/jeickmeier/Projects/finstack-chart/target/authoring/python-module /Users/jeickmeier/Projects/finstack-chart/target/authoring/python
+PASS primary Python 23 action transitions and 47 independent input steps
+PASS primary Python 70-step streaming replay
+PASS primary Python exact data, copy/accessor ownership, actions/queries, stale fences, edits, capture matrix, queues, disposal, retention and interpreter detachment
+RUN cargo build -p chart-wasm --features extension-proof --target wasm32-unknown-unknown --locked
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.19s
+RUN /private/tmp/wp09-tools/wasm-bindgen-0.2.128-aarch64-apple-darwin/wasm-bindgen /Users/jeickmeier/Projects/finstack-chart/target/wasm32-unknown-unknown/debug/chart_wasm.wasm --target nodejs --out-dir /Users/jeickmeier/Projects/finstack-chart/target/authoring/wasm-module
+RUN node --expose-gc /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/wasm_proof.cjs /Users/jeickmeier/Projects/finstack-chart/target/authoring/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/authoring/wasm
+PASS primary WASM 23 action transitions and 47 independent input steps
+PASS primary WASM 70-step streaming replay
+PASS primary WASM exact data, copies/accessors, actions/queries, stale fences, edits, capture matrix, queues, disposal, retention and memory plateau
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/compare.py /Users/jeickmeier/Projects/finstack-chart/target/authoring
+PASS three primary authors: initial
+PASS three primary authors: scene
+PASS three primary authors: action
+PASS three primary authors: zoom
+PASS three primary authors: transaction
+PASS three primary authors: replay
+PASS three primary authors: final
+PASS three primary authors: exact
+PASS three primary authors: statistics
+PASS three primary authors: extension
+PASS three primary authors: extension-scene
+PASS independent domains, means, OLS, exact timestamp/integer/null/category values, source identity relationships, updates, captures and image sizes
+PASS 34 primary statistic/position/geometry/scale/facet/composition families: full semantic and scene parity
+PASS primary runtime replay: runtime-actions 23
+PASS primary runtime replay: runtime-input 47
+PASS primary three-host 70-step streaming receipts, retained rows, exact bins, independent summaries and historical pins
+RUN node /Users/jeickmeier/.npm/_npx/e04ecd76da0b5726/node_modules/typescript/lib/tsc.js --noEmit --strict --target es2022 --lib es2022,esnext.disposable --module nodenext /Users/jeickmeier/Projects/finstack-chart/target/authoring/typing/consumer.cts
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 -m mypy --strict --cache-dir /Users/jeickmeier/Projects/finstack-chart/target/authoring/mypy-cache /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/typing_valid.py
+Success: no issues found in 1 source file
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 -m mypy --strict --cache-dir /Users/jeickmeier/Projects/finstack-chart/target/authoring/mypy-cache /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/typing_invalid.py
+scripts/bindings/authoring/typing_invalid.py:4: error: "Labels" has no attribute "title"  [attr-defined]
+scripts/bindings/authoring/typing_invalid.py:5: error: Argument 1 to "title" of "PlotBuilder" has incompatible type "Labels"; expected "Title"  [arg-type]
+scripts/bindings/authoring/typing_invalid.py:6: error: Argument 1 to "title" of "PlotBuilder" has incompatible type "Subtitle"; expected "Title"  [arg-type]
+scripts/bindings/authoring/typing_invalid.py:7: error: Argument 1 to "layer" of "PlotBuilder" has incompatible type "Legend"; expected "Layer | Labels | Callout"  [arg-type]
+scripts/bindings/authoring/typing_invalid.py:8: error: "PlotEdit" has no attribute "data"  [attr-defined]
+Found 5 errors in 1 file (checked 1 source file)
+PASS FIX-AUTH07 primary runtime and type proofs: /Users/jeickmeier/Projects/finstack-chart/target/authoring. Artifact inspection remains a separate recorded check.

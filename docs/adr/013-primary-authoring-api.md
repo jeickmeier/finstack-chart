@@ -13,10 +13,13 @@ normalized definition/data representation. All built-in controls and registered
 extensions must be available through this surface; editing raw DTOs cannot be the only
 way to use an advanced feature. Keep standalone utility APIs directly callable.
 
-Reuse/refactor the existing typed store/compiler/reducer runtime as the retained Chart
-entry point. JSON sessions become interchange adapters around that runtime. Native,
-export and language adapters consume the same plot/runtime/snapshot contracts; they
-own destination resources and host lifecycle, never an alternate grammar compiler.
+Reuse/refactor the existing typed store/compiler/reducer operations as the retained
+Chart entry point. Default ingestion owns its store; an explicit external-source route
+consumes committed snapshots without creating a second writable authority. Keep
+per-view state and worker-owned compiler caches independent. JSON sessions become
+interchange adapters around typed operations. Native, export and language adapters
+consume the same contracts; host tasks/resources and export request/job lifetimes
+remain with their existing owners, never an alternate grammar compiler.
 The [implementation plan](../impl_plans/primary-authoring-api-plan.md) owns the precise
 sequence, capability register, examples and evidence requirements.
 
@@ -25,6 +28,32 @@ data, atomic transactions and acknowledged-scene semantics. Preserve baseline de
 policies and select reference compatibility profiles explicitly. Builder failures and
 runtime failures keep the prior valid state. Native callbacks may materialize data or
 use extension protocols but cannot become executable serialized code.
+
+Ordinary Plot edits update definition only against the Chart's current source and an
+expected definition revision; embedded historical Plot data cannot replace live data.
+Data replacement remains a separate revision-fenced transaction. Factor structural
+build validation from execution and portable/destination capability checks; valid
+native-only registrations must not be rejected by a reused portable constructor.
+Retain exact registries through Plot/Chart/capture without serializing implementations.
+
+Export preserves Presented and Current capture bases independently of navigation
+projection and interaction inclusion. FigureRequest acquisition remains cheap;
+ExportQueue/ExportJob retain deferred execution and resource bounds. The plan's
+current-library review reconciliation specifies the regression cases and preserves
+legacy capture defaults. These clarify AUT contracts without changing envelope versions.
+
+Reserve the labels builder for x/y-positioned annotations. Plot title, subtitle,
+x/y axis labels and legends have separate builders that share the existing text and
+guide machinery. The plan's section 3.1 owns the proposed component routes; the earlier
+combined labels bag is superseded by this explicit owner direction.
+
+The plan's section 3.3 names builder routes for implemented components, including
+captions/notes/panel letters, callouts, insets, statistics/positions, facets and runtime
+configuration. For every future feature, extend its existing builder or add a focused
+component using the same typed slots and shared engine. Primary usage, applicable
+bindings/serialization updates and behavioral evidence land in the feature's own
+package. Keep runtime actions/queries as Chart/destination methods and ordinary flags
+as options; do not mirror every internal struct with another builder.
 
 Make the primary API the default for all production-facing recipes/docs/examples.
 Retain specialist introspection/extension APIs and staged compatibility forwarding

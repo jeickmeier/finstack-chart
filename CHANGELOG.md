@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+- Add the primary `Data`/`Plot`/component API and retained `Chart` runtime. Typed rows,
+  exact nullable columns, stable handles, definition edits, transactions, retention,
+  actions, navigation, linking and registered operations reuse the shared engine.
+- Add `Output` and export options with independent Presented/Current capture,
+  visible/full projection and interaction policy. Native inputs retain Chart ownership;
+  Python and WASM provide ordinary data/components with checked declarations.
+- Migrate the gallery, live update/export and native performance consumers, README and
+  authoring tutorials. Version 1 wire envelopes and old public expert paths remain
+  supported; their planned removal boundary is no earlier than 0.3.0 after a 0.2.0
+  migration release. Packages remain unpublished at 0.1.0. See the primary coverage
+  register for qualification; this does not add future D3/ggplot2 semantic features.
+
 - Complete original WP-16–23 indexed interaction, exact source lookup, linked host tools,
   annotation editing, atomic retention/streaming, bounded native preparation/density,
   coherent live export and native hardening. Frozen resize keeps the exact captured

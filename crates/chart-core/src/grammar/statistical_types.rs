@@ -228,6 +228,11 @@ pub enum StatNumeric {
     /// Constant encoding.
     Literal(f64),
 }
+impl From<f64> for StatNumeric {
+    fn from(value: f64) -> Self {
+        Self::Literal(value)
+    }
+}
 impl From<StatField> for StatNumeric {
     fn from(v: StatField) -> Self {
         Self::Field(v)

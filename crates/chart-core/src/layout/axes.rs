@@ -4,6 +4,144 @@ use crate::scales::*;
 use crate::state::AxisWindow;
 use crate::{ChartResult, DiagnosticCode, Rect, ScaleId};
 
+pub(super) fn validate_specs(axes: &[AxisSpec], limits: crate::Limits) -> ChartResult<()> {
+    use std::collections::BTreeSet;
+    crate::limits::require_within(axes.len() <= 4, "independent axis count (four)")?;
+    let mut ids = BTreeSet::new();
+    let mut sides = BTreeSet::new();
+    for a in axes {
+        if !a.label_rotation.is_finite() || a.label_rotation.abs() > 360. {
+            return Err(error(
+                DiagnosticCode::Validation,
+                "Axis label rotation must be -360..360 degrees.",
+            ));
+        }
+        if let Some(t) = &a.typography {
+            t.validate(limits)?;
+        }
+        if let Some(t) = &a.title {
+            t.validate(limits)?;
+        }
+
+        if !ids.insert(a.id) || (a.visible && !sides.insert(a.side)) {
+            return Err(error(
+                DiagnosticCode::SchemaConflict,
+                "Axes need unique IDs and one visible guide per side.",
+            ));
+        }
+        if let Some(v) = a.viewport {
+            v.distinct()?;
+        }
+        if let Some(v) = a.range {
+            v.distinct()?;
+        }
+        if let Some(f) = &a.number_format {
+            f.validate()?;
+        }
+        if let Some(ticks) = &a.guide_ticks {
+            if a.number_format.is_some() {
+                return Err(error(
+                    DiagnosticCode::SchemaConflict,
+                    "Explicit custom labels cannot also request a numeric formatter.",
+                ));
+            }
+            if ticks.iter().any(|tick| tick.label.is_empty()) {
+                return Err(error(
+                    DiagnosticCode::Validation,
+                    "Custom guide labels must be nonempty.",
+                ));
+            }
+        }
+        if let AxisScale::Secondary {
+            source,
+            factor,
+            offset,
+        } = a.scale
+        {
+            if !factor.is_finite()
+                || factor == 0.
+                || !offset.is_finite()
+                || a.viewport.is_some()
+                || a.range.is_some()
+                || a.outside != OutsidePolicy::Extend
+            {
+                return Err(error(
+                    DiagnosticCode::Validation,
+                    "Secondary axes need finite nonzero factor/finite offset and inherit viewport/range/outside policies.",
+                ));
+            }
+            let primary = axes
+                .iter()
+                .find(|p| p.id == source && p.side.horizontal() == a.side.horizontal())
+                .ok_or_else(|| {
+                    error(
+                        DiagnosticCode::SchemaConflict,
+                        "Secondary axis requires a source axis in the same orientation.",
+                    )
+                })?;
+            if !matches!(
+                primary.scale,
+                AxisScale::Auto | AxisScale::Linear(_) | AxisScale::Nonlinear { .. }
+            ) {
+                return Err(error(
+                    DiagnosticCode::SchemaConflict,
+                    "Secondary axes require a primary numeric scale directly.",
+                ));
+            }
+        }
+        let range = Bounds::new(0., 1.)?;
+        match &a.scale {
+            AxisScale::Linear(domain) => {
+                domain.resolve(None)?;
+            }
+            AxisScale::Nonlinear { transform, domain } => {
+                NonlinearScale::resolve(None, *domain, *transform, range, a.viewport, a.outside)?;
+            }
+            AxisScale::Band(options) => {
+                BandScale::resolve(&[], options, range)?;
+            }
+            AxisScale::Point(options) => {
+                PointScale::resolve(&[], options, range)?;
+            }
+            AxisScale::Session(calendar) => {
+                SessionScale::new(calendar.clone(), range, None, a.outside)?;
+            }
+            _ => {}
+        }
+    }
+    Ok(())
+}
+
+pub(crate) fn validate_definition_axes(
+    definition: &crate::grammar::ChartDefinition,
+) -> ChartResult<()> {
+    if definition.axes.is_empty() {
+        return Ok(());
+    }
+    validate_specs(&definition.axes, crate::Limits::default())?;
+    for layer in &definition.layers {
+        for (id, horizontal) in [(layer.scales.x, true), (layer.scales.y, false)] {
+            let axis = definition
+                .axes
+                .iter()
+                .find(|a| a.id == id && a.side.horizontal() == horizontal)
+                .ok_or_else(|| {
+                    error(
+                        DiagnosticCode::SchemaConflict,
+                        "Layer scale binding requires an axis in the same orientation.",
+                    )
+                })?;
+            if matches!(axis.scale, AxisScale::Secondary { .. }) {
+                return Err(error(
+                    DiagnosticCode::SchemaConflict,
+                    "Secondary axes are guide-only; bind layers to the primary scale.",
+                ));
+            }
+        }
+    }
+    Ok(())
+}
+
 fn resolve_axis_inner(
     chart: &PreparedChart,
     r: &LayoutRequest,

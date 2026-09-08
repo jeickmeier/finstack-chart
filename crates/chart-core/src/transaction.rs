@@ -269,14 +269,24 @@ impl DataStore {
     /// Explicitly advance the source fence and clear replay history, preserving data/revisions.
     /// Epochs must strictly increase, so an old epoch cannot become valid again.
     pub fn reset_epoch(&mut self, epoch: SourceEpoch) -> ChartResult<()> {
+        self.reset_epoch_checked(epoch, |_| Ok(()))
+    }
+    pub(crate) fn reset_epoch_checked(
+        &mut self,
+        epoch: SourceEpoch,
+        check: impl FnOnce(&SnapshotHandle<StoreSnapshot>) -> ChartResult<()>,
+    ) -> ChartResult<()> {
         if epoch.get() <= self.state.epoch.get() {
             return Err(error(
                 DiagnosticCode::RevisionConflict,
                 "A source epoch reset must strictly increase the epoch.",
             ));
         }
-        let state = Arc::make_mut(&mut self.state);
-        state.epoch = epoch;
+        let mut candidate = self.state.as_ref().clone();
+        candidate.epoch = epoch;
+        let state = Arc::new(candidate);
+        check(&SnapshotHandle::from_arc(state.clone()))?;
+        self.state = state;
         self.replay.clear();
         self.replay_bytes = 0;
         Ok(())

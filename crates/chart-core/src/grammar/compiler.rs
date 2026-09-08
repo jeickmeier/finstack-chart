@@ -49,6 +49,26 @@ impl Compiler {
     pub fn extensions(&self) -> &Arc<ExtensionRegistry> {
         &self.extensions
     }
+    /// Validate definition, source schemas, stages and registered parameters without running
+    /// statistics, geometry generation or layout. Native-only extensions remain valid here;
+    /// serialization and destinations apply their own capability checks.
+    pub fn validate(
+        &self,
+        definition: &ChartDefinition,
+        source: &SnapshotHandle<StoreSnapshot>,
+        limits: CompileLimits,
+    ) -> ChartResult<()> {
+        let snapshot = source.get()?;
+        crate::layout::validate_definition_axes(definition)?;
+        if let Some(figure) = &definition.figure {
+            figure.validate_references(definition)?;
+        }
+        validate_definition(definition, snapshot, limits, &self.extensions)?;
+        if definition.facets.is_some() {
+            facets::validate_facets(definition, snapshot, limits, &self.extensions)?;
+        }
+        Ok(())
+    }
     /// Release cached graph/source ownership; existing prepared charts remain valid.
     pub fn clear_cache(&mut self) {
         self.cache.clear();
@@ -224,6 +244,7 @@ impl Compiler {
             extensions: &self.extensions,
             limits,
             vertices: limits.max_vertices,
+            color_domains: BTreeMap::new(),
         };
         for layer in &definition.layers {
             if !facets::targeted(&layer.facet, scope) {
@@ -285,10 +306,24 @@ impl Compiler {
                 }
             };
             charge(&mut remaining, output.table.work_units(), "prepared value")?;
-            let table = output.table.clone();
-            let data = snapshot.dataset(table.input.dataset)?;
             diagnostics.extend(output.diagnostics.clone());
             cached_layers.insert(layer.id, (layer.clone(), output));
+        }
+        budget.color_domains = super::colors::shared_catalogs(
+            definition,
+            snapshot,
+            &cached_layers
+                .iter()
+                .map(|(id, (_, output))| (*id, output.table.as_ref()))
+                .collect(),
+            limits,
+        )?;
+        for layer in &definition.layers {
+            let Some((_, output)) = cached_layers.get(&layer.id) else {
+                continue;
+            };
+            let table = output.table.clone();
+            let data = snapshot.dataset(table.input.dataset)?;
             let start = diagnostics.len();
             let prepared = prepare_layer(
                 layer,
@@ -865,6 +900,7 @@ struct GeometryBudget<'a> {
     extensions: &'a ExtensionRegistry,
     limits: CompileLimits,
     vertices: usize,
+    color_domains: BTreeMap<crate::ScaleId, Vec<String>>,
 }
 fn prepare_layer(
     layer: &Layer,
@@ -1058,7 +1094,18 @@ fn prepare_layer(
             }
         }
     }
-    let color_legend = super::colors::apply(layer, data, &table, &mut encoded, limits)?;
+    let catalog = layer
+        .color
+        .as_ref()
+        .and_then(|c| budget.color_domains.get(&c.id));
+    let color_legend = super::colors::apply(
+        layer,
+        data,
+        &table,
+        &mut encoded,
+        limits,
+        catalog.map(Vec::as_slice),
+    )?;
     super::positions::apply(layer, &domains, &mut encoded, limits)?;
     super::positions::output_space(layer, &mut domains);
     let mut prepared = PreparedLayer {
@@ -1469,6 +1516,16 @@ fn preflight_schemas(
             )),
         }
         .map_err(|e| context(e, data, Some(layer.id)))?;
+        if let Some(color) = &layer.color {
+            super::colors::preflight(
+                color,
+                data,
+                output.bins.is_none() && output.statistical.is_none(),
+                output.statistical.as_deref(),
+                limits,
+            )
+            .map_err(|e| context(e, data, Some(layer.id)))?;
+        }
         super::positions::validate(layer, &binding, limits)?;
         super::positions::output_space(layer, &mut binding);
         merge_named(&mut domains, layer.scales, &binding)

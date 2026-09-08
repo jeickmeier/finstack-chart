@@ -1,0 +1,90 @@
+{
+  "callbacks": {
+    "displayed": 2188,
+    "skipped": 1,
+    "missing_callbacks": 0
+  },
+  "gpu_ns": {
+    "count": 2188,
+    "p50": 786500,
+    "p95": 1431209,
+    "p99": 1619250,
+    "max": 1743000
+  },
+  "scene_begin_to_display_ns": {
+    "count": 2188,
+    "p50": 28458875,
+    "p95": 77437500,
+    "p99": 79781166,
+    "max": 94118667
+  },
+  "workload": {
+    "seconds": 60,
+    "full_sustained_protocol": false,
+    "owner_stopped_partial": false,
+    "unobserved_tail_commits": 0,
+    "accepted_commits": 700,
+    "observed_seconds_after_warmup": 60.0,
+    "measured_commits": 600,
+    "measured_upsert_rows": 600000,
+    "ingest_to_present_ns": {
+      "count": 600,
+      "p50": 103816916,
+      "p95": 109199750,
+      "p99": 110550666,
+      "max": 147127292
+    },
+    "ingest_to_present_budget_pass": true,
+    "commit_ms": {
+      "count": 600,
+      "p50": 5.502708,
+      "p95": 5.81875,
+      "p99": 5.994417,
+      "max": 11.040417
+    },
+    "hover_cpu_ms": {
+      "count": 1539,
+      "p50": 0.028292,
+      "p95": 0.090043,
+      "p99": 0.122584,
+      "max": 0.18475
+    },
+    "export_count": 1,
+    "export_comparison": {
+      "overlap_ingest_to_present_ns": {
+        "count": 1,
+        "p50": 101246541,
+        "p95": 101246541,
+        "p99": 101246541,
+        "max": 101246541
+      },
+      "other_ingest_to_present_ns": {
+        "count": 599,
+        "p50": 103833666,
+        "p95": 109213625,
+        "p99": 110982167,
+        "max": 147127292
+      },
+      "worker_ns": {
+        "count": 1,
+        "p50": 103478750,
+        "p95": 103478750,
+        "p99": 103478750,
+        "max": 103478750
+      },
+      "interpretation": "Descriptive overlap samples; no causal overhead estimate from a small sample"
+    },
+    "peak_sampled_rss_kib": 775712,
+    "accepted_operations_reconciled": true,
+    "chart_and_export_scenes_released": true,
+    "rss_kib": [
+      733152,
+      775712,
+      653952,
+      715120,
+      715200,
+      672016,
+      676160
+    ]
+  }
+}

@@ -1,0 +1,551 @@
+mise WARN  failed to write cache file: /Users/jeickmeier/Library/Caches/mise/protoc/35.1/bin_paths-a7857.msgpack.z Operation not permitted (os error 1)
+mise WARN  failed to write cache file: /Users/jeickmeier/Library/Caches/mise/watchexec/2.5.1/bin_paths-a7857.msgpack.z Operation not permitted (os error 1)
+[test] $ if [[ "$(uname -s)" == "Darwin" ]]; then
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling pyo3-ffi v0.29.2
+   Compiling pyo3 v0.29.2
+   Compiling chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+   Compiling chart-extension-example v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/custom-extension)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+   Compiling gpui-charts v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts)
+   Compiling gpui-charts-kit v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts-kit)
+   Compiling chart-python v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-python)
+   Compiling chart-wasm v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-wasm)
+   Compiling chart-gallery v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/chart-gallery)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 28.96s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+     Running unittests src/lib.rs (target/debug/deps/chart_core-05ad430274d61de3)
+
+running 9 tests
+test navigation::tests::pointer_anchor_uses_log_and_symlog_coordinates ... ok
+test navigation::tests::sessions_zoom_by_active_time_and_reject_unknown_calendar_extent ... ok
+test navigation::tests::reversed_ranges_domain_clamp_region_and_invalid_inputs ... ok
+test navigation::tests::timestamp_navigation_preserves_large_integer_identity ... ok
+test state::reducer::tests::disposal_is_terminal_even_when_cancellation_cannot_advance_a_revision ... ok
+test state::tests::state_and_viewport_revision_exhaustion_leave_state_unchanged ... ok
+test navigation::tests::category_windows_preserve_catalog_lookup_and_singletons ... ok
+test transaction::tests::exhausted_store_dataset_and_ordinal_counters_roll_back ... ok
+test inspection::index::tests::duplicate_x_signed_zeros_keep_frontmost_128_and_all_keyboard_identities ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/actions.rs (target/debug/deps/actions-59537cb51ed800f6)
+
+running 9 tests
+test controlled_acknowledgements_cannot_overwrite_newer_actions_or_reuse_components ... ok
+test linked_sequences_are_bounded_idempotent_and_preserve_origin_without_feedback_history ... ok
+test legacy_viewports_replace_primary_named_windows_without_losing_other_axes ... ok
+test effective_changes_separate_hover_focus_pin_selection_follow_and_visibility ... ok
+test invalid_previews_and_resource_caps_preserve_valid_state_and_bounded_history ... ok
+test gestures_pin_old_coordinates_cancel_without_committing_and_reject_competing_owners ... ok
+test freeze_resume_and_disposal_release_only_owned_snapshot_resources ... ok
+test frozen_resize_advances_projection_without_admitting_later_semantics ... ok
+test annotation_preview_is_one_undo_command_and_cancellation_never_changes_source_or_history ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/authoring.rs (target/debug/deps/authoring-bd17af62e8256d4e)
+
+running 13 tests
+test component_options_reject_incompatible_owners_without_preparation ... ok
+test facets_reject_same_ordinal_with_different_field_names ... ok
+test exact_nullable_data_and_timestamps_survive_materialization ... ok
+test schema_errors_and_foreign_handles_reject_without_mutating_data ... ok
+test automatic_timestamp_origins_align_independent_datasets_without_narrowing_ticks ... ok
+test columns_and_rows_prepare_identical_values_without_manual_ids ... ok
+test labels_are_single_annotations_and_callout_components_preserve_the_endpoint ... ok
+test histogram_lowers_to_the_existing_bin_kernel_and_source_membership ... ok
+test nondefault_recipe_and_primary_axis_options_survive_later_components ... ok
+test shared_transform_runs_once_and_generated_color_uses_its_own_stage ... ok
+test grid_infers_empty_combinations_and_build_rejects_invalid_catalogs ... ok
+test shared_automatic_color_catalog_is_consistent_across_data_and_updates ... ok
+test imported_identity_preserves_seeded_jitter_and_rejects_ambiguous_data_owners ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/authoring_families.rs (target/debug/deps/authoring_families-df11efa6ee885c7a)
+
+running 2 tests
+test primary_composition_preserves_independent_publication_fixtures ... ok
+test primary_builders_preserve_independent_family_fixtures ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/authoring_host.rs (target/debug/deps/authoring_host-16279f1473b90f4e)
+
+running 2 tests
+test host_composition_matches_independent_bins_and_rejects_misplaced_components ... ok
+test primary_envelope_roundtrip_preserves_exact_data_names_and_rejects_malformed_registry ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/authoring_runtime.rs (target/debug/deps/authoring_runtime-d9e8b73292a1e052)
+
+running 8 tests
+test primary_transaction_rollback_retention_and_epoch_fences_are_atomic ... ok
+test primary_edits_preserve_live_rows_retry_history_and_component_identity ... ok
+test primary_external_views_share_source_and_preserve_names_but_own_state ... ok
+test structural_construction_does_not_execute_or_reject_native_only_stats ... ok
+test definition_only_edits_retain_current_source_replay_and_pending_queue ... ok
+test external_views_share_committed_source_but_keep_independent_state ... ok
+test worker_admission_preserves_newer_committed_source_and_reuses_worker_tables ... ok
+test typed_and_legacy_transactions_match_independent_bin_counts_and_replay ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/contracts.rs (target/debug/deps/contracts-1704f75f9b1a8037)
+
+running 21 tests
+test identities_and_revisions_preserve_all_64_bits ... ok
+test measurement_receives_exact_destination_and_returns_finite_baseline_metrics ... ok
+test host_failures_preserve_codes_and_gain_requested_resource_context ... ok
+test image_resource_cannot_stand_in_for_a_font ... ok
+test invalid_replacement_and_input_mutation_leave_owned_scene_unchanged ... ok
+test missing_font_diagnostic_identifies_resource_layer_and_scene ... ok
+test path_budget_is_aggregate_and_precedes_segment_scanning ... ok
+test measurement_preflight_rejects_invalid_sizes_and_text_before_host_calls ... ok
+test numeric_paths_preserve_segments_and_reject_invalid_subpath_order ... ok
+test resource_budgets_reject_oversized_and_overflowing_totals ... ok
+test points_reject_nonfinite_coordinates_on_both_axes ... ok
+test rectangles_validate_extents_and_arithmetic_not_only_inputs ... ok
+test invalid_sizes_and_overflowing_point_extents_are_rejected ... ok
+test resource_limits_are_checked_before_calling_a_non_send_host ... ok
+test resource_resolution_borrows_exact_bytes_and_checks_length ... ok
+test count_limits_fail_before_primitive_validation ... ok
+test revision_exhaustion_is_an_error_without_wrap_or_mutation ... ok
+test scene_preserves_order_clips_units_and_stamps ... ok
+test scene_rejects_two_revisions_of_one_resource_identity ... ok
+test text_budget_counts_total_utf8_bytes_not_characters_or_per_item_length ... ok
+test text_metric_construction_rejects_nonfinite_negative_and_overflowing_values ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/data_transactions.rs (target/debug/deps/data_transactions-86d7581bbd296866)
+
+running 16 tests
+test fix16_timestamp_origin_validity_and_bounded_diagnostics ... ok
+test schema_migration_is_explicit_and_ordered ... ok
+test expected_bases_epoch_fences_and_empty_commits ... ok
+test all_portable_kinds_preserve_exact_values_and_original_display ... ok
+test replay_eviction_is_fifo_and_old_effective_commit_conflicts ... ok
+test net_noops_keep_revisions_and_nan_payload_replay_is_bit_exact ... ok
+test invalid_last_dataset_rolls_back_everything_and_does_not_remember_id ... ok
+test malformed_schemas_batches_and_null_dictionary_codes_are_checked ... ok
+test fix16_typed_and_normalized_handles_pin_then_release_ownership ... ok
+test category_identity_survives_code_reassignment_removal_and_schema_version ... ok
+test replacement_reorders_without_reassigning_keys_and_retention_uses_ordinals ... ok
+test fix08_ordered_atomic_counts_and_replay ... ok
+test fix09_provenance_resolves_only_declared_scope_and_pinned_history ... ok
+test resource_budgets_reject_before_publication_and_byte_horizon_evicts ... ok
+test deterministic_operation_sequence_matches_independent_batch_model ... ok
+test append_shares_every_retained_chunk_and_upsert_copies_only_affected_chunk ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/dense.rs (target/debug/deps/dense-5ae948ef83b47d23)
+
+running 3 tests
+test envelope_preserves_chronological_endpoints_and_extrema_per_bucket ... ok
+test candle_buckets_use_chronological_first_open_high_low_last_close_and_valid_volume ... ok
+test reduced_scene_preserves_gap_boundaries_and_exact_raw_lookup_for_discarded_vertices ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/facets.rs (target/debug/deps/facets-8ad5f112e3cf1b15)
+
+running 9 tests
+test figure_budgets_invalid_catalog_and_tiny_dense_labels_fail_or_fallback_explicitly ... ok
+test source_filters_precede_catalog_validation_and_empty_panel_drop ... ok
+test shared_log_scale_uses_positive_population_from_all_panels ... ok
+test declared_figure_overflow_and_default_plot_clip_are_preserved_in_facets ... ok
+test fix06_explicit_annotation_policy_shared_domain_and_exact_panel_targets ... ok
+test group_facet_chart_statistics_have_independent_expected_populations_and_cache_keys ... ok
+test explicit_empty_panels_grid_coordinates_and_reordering_preserve_keys ... ok
+test color_guides_collect_only_exact_compatible_id_domain_and_palette ... ok
+test free_scales_intentionally_differ_and_resize_font_changes_keep_aligned_panes ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/full_scales.rs (target/debug/deps/full_scales-a022296860f8574f)
+
+running 4 tests
+test supplied_sessions_compress_gaps_and_retain_exact_large_timestamps ... ok
+test symlog_signed_roundtrip_extreme_ratio ... ok
+test points_and_colors_have_declared_missing_and_domain_policy ... ok
+test logarithmic_policies_roundtrips_and_invalids ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/grammar.rs (target/debug/deps/grammar-99ae2a3ed1c68693)
+
+running 20 tests
+test state_actions_are_atomic_idempotent_and_preserve_prepared_snapshots ... ok
+test heterogeneous_typed_sources_and_shared_histogram_overlay_use_one_engine ... ok
+test fix02_histogram_is_bin_stat_plus_rectangles_with_complete_membership ... ok
+test signed_zero_x_values_use_ordinal_ties_and_rectangles_preserve_exact_endpoints ... ok
+test precise_timestamps_keep_their_origin_and_incompatible_origins_fail ... ok
+test inherited_schema_and_generated_stage_mismatches_fail_with_context ... ok
+test mapped_sizes_are_distinct_from_constant_style_and_all_endpoints_train_domains ... ok
+test transformed_statistics_record_space_once_and_reject_mixed_axes ... ok
+test equal_x_ties_keep_insertion_ordinals_after_replacement_and_authored_order_is_explicit ... ok
+test fix01_null_y_is_two_isolated_runs_with_exact_source_targets ... ok
+test schema_preflight_precedes_population_work_and_null_filters_are_reported ... ok
+test grouped_bins_use_stable_labels_and_lines_never_cross_groups_or_unknown_x ... ok
+test generated_midpoints_avoid_overflow_and_subnormal_loss ... ok
+test budgets_and_invalid_definitions_keep_last_prepared_result_and_cache_valid ... ok
+test edges_outliers_invalid_inputs_and_empty_bins_have_explicit_counts ... ok
+test repeated_invalid_geometry_has_bounded_diagnostics_and_old_handles_remain_valid ... ok
+test graph_cycles_unknown_operations_and_forward_dependencies_are_checked ... ok
+test cache_invalidates_on_correction_parameters_and_snapshot_identity ... ok
+test typed_accessors_run_once_without_send_bounds_and_do_not_escape_to_prepared_scene ... ok
+test viewport_and_visibility_leave_stat_population_domains_and_cache_unchanged ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/host_tools.rs (target/debug/deps/host_tools-a672d33d14a6395d)
+
+running 10 tests
+test time_constraints_roundtrip_as_decimal_strings_without_integer_narrowing ... ok
+test threshold_connector_uses_authored_endpoints_independent_of_label_offset ... ok
+test accessible_page_preserves_exact_keys_values_and_bounded_pagination ... ok
+test range_handles_reject_crossing_and_pinned_edits_ignore_resize_then_cancel ... ok
+test linked_windows_use_semantic_values_and_preserve_unrelated_axes ... ok
+test linked_selection_survives_viewport_clipping_and_hidden_receiving_layers ... ok
+test semantic_links_remap_layer_ids_and_suppress_cycles_without_source_edits ... ok
+test threshold_translation_snaps_both_endpoints_and_commits_one_undo_command ... ok
+test aggregate_links_and_descriptions_preserve_membership_revision ... ok
+test exact_timestamp_and_category_editing_use_presented_typed_coordinates ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/inspection.rs (target/debug/deps/inspection-c601f2871be7b169)
+
+running 10 tests
+test empty_inspection_and_invalid_options_are_recoverable ... ok
+test keyboard_wrap_clear_idempotency_and_stale_stamp_are_atomic ... ok
+test histogram_hit_retains_aggregate_members_and_respects_containment ... ok
+test scatter_nearest_radius_clips_and_equal_distance_z_order ... ok
+test rectangle_selection_intersects_bars_instead_of_testing_centers ... ok
+test brushes_lasso_series_and_limits_preserve_vertex_provenance ... ok
+test nearest_x_groups_preserve_gap_targets_and_never_invent_interpolation ... ok
+test stable_keyboard_identity_survives_rebuild_and_removal_clears_it ... ok
+test candle_wicks_are_contained_and_keyboard_deduplicates_each_candle ... ok
+test dense_spatial_and_sorted_x_match_scan_without_source_work ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+
+     Running tests/layout.rs (target/debug/deps/layout-c22e674ea6bd4ac9)
+
+running 20 tests
+test invalid_scale_options_reject_even_at_tiny_bounds_before_measurement ... ok
+test known_linear_geometry_clips_targets_ranges_and_inverse_share_one_scene ... ok
+test outside_policies_split_lines_and_annotation_overflow_is_explicit ... ok
+test category_catalogs_merge_by_label_across_layers_and_reject_numeric_statistics ... ok
+test wp11_mapped_color_changes_styles_and_metadata_without_numeric_domain_changes ... ok
+test projection_overflow_and_category_or_guide_budgets_fail_without_replacing_a_scene ... ok
+test utc_large_origin_scene_uses_integer_inverse_and_calendar_labels ... ok
+test automatic_category_training_is_eligible_and_keeps_retained_relative_order ... ok
+test representable_narrow_numeric_domains_have_finite_scene_and_distinct_labels ... ok
+test category_label_projection_survives_codes_reordering_removal_and_explicit_domain ... ok
+test wp11_area_and_ribbon_split_missing_and_validate_bounds ... ok
+test wp11_ohlc_validation_and_volume_invalidity_are_independent ... ok
+test independent_named_axes_accept_distinct_calculation_spaces_and_hidden_layers_train ... ok
+test resource_and_work_errors_precede_callbacks_and_preserve_previous_scene ... ok
+test destination_text_changes_margins_without_recomputing_statistics ... ok
+test visibility_has_its_own_scene_stamp_and_does_not_change_trained_domains ... ok
+test tiny_empty_and_empty_histogram_have_controlled_states_and_finite_geometry ... ok
+test crowded_labels_are_thinned_deterministically_with_a_pressure_diagnostic ... ok
+test zoom_keeps_histogram_edges_counts_membership_domains_and_snapshot ... ok
+test wp11_portable_log_axis_and_secondary_units_use_shared_projection ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/portable.rs (target/debug/deps/portable-187f49389204a9e7)
+
+running 6 tests
+test native_accessors_fail_serialization_instead_of_disappearing ... ok
+test fix16_all_64_bits_null_payload_and_formatted_columns_round_trip ... ok
+test strict_versions_required_fields_unknown_operations_and_duplicate_keys_reject ... ok
+test state_restore_cannot_reuse_revision_for_changed_content ... ok
+test fix15_round_trip_correction_viewport_and_aggregate_members ... ok
+test bounded_decoding_and_failed_transactions_leave_data_and_state_unchanged ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/scales.rs (target/debug/deps/scales-09708bea5229e34c)
+
+running 9 tests
+test utc_calendar_matches_independent_unix_date_fixtures_and_rejects_invalid_dates ... ok
+test robust_projection_handles_huge_domains_without_intermediate_overflow ... ok
+test baseline_padding_and_nice_precede_viewport_and_are_independent_of_range ... ok
+test numeric_ticks_are_bounded_ordered_unique_and_locale_independent ... ok
+test decimal_ticks_do_not_accumulate_label_noise_and_time_omission_precedes_precision_conversion ... ok
+test fix07_large_origin_time_projection_keeps_integer_precision_and_labels ... ok
+test fix07_empty_constant_descending_and_explicit_domains_are_locked ... ok
+test utc_ticks_follow_month_year_leap_day_and_monday_boundaries ... ok
+test categorical_explicit_order_centers_extents_gaps_and_lookup_are_distinct_from_inverse ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scheduling.rs (target/debug/deps/scheduling-ccc741a1549533c1)
+
+running 4 tests
+test incompatible_spec_viewport_layout_resource_palette_and_epoch_completions_are_rejected ... ok
+test continuous_arrivals_admit_progress_without_canceling_active_work ... ok
+test failures_late_paints_disposal_and_pending_ownership_are_explicit ... ok
+test independent_dashboard_workers_make_fair_progress_with_one_expensive_chart ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/stage_cache.rs (target/debug/deps/stage_cache-6d00bcdf63432637)
+
+running 3 tests
+test exact_key_indexes_survive_old_snapshots_and_rebuild_after_correction_reorder_and_retention ... ok
+test palette_changes_reuse_statistics_and_navigation_reuses_exact_marks ... ok
+test unrelated_dataset_updates_reuse_exact_named_and_layer_tables_but_capture_new_coherent_store ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/statistics.rs (target/debug/deps/statistics-725997105492bbc9)
+
+running 14 tests
+test stored_d3_r7_reference_examples_match_only_the_agreed_quantile_definition ... ok
+test named_generated_output_is_shared_and_cannot_be_reinterpreted_as_source ... ok
+test stable_accumulation_survives_intermediate_overflow_and_extreme_quantiles ... ok
+test zero_preserving_transformed_stacks_work_and_unused_bad_generated_fields_reject ... ok
+test strict_inputs_budgets_and_incompatible_position_contracts_reject ... ok
+test fix03_mixed_sign_stack_normalize_and_reorder_domains ... ok
+test fix04_quantiles_stable_summary_missing_and_explicit_empty_sum ... ok
+test dodge_uses_band_width_and_preserves_missing_slots ... ok
+test count_requires_all_inputs_and_reports_invalid_strict_and_empty_groups ... ok
+test fix02_explicit_auto_constant_empty_and_overflow_bin_conservation ... ok
+test transformed_stat_fields_are_not_transformed_again_and_mismatch_rejects ... ok
+test fix05_intercept_ols_zoom_filter_degenerate_and_large_origin ... ok
+test seeded_jitter_is_stable_in_data_and_display_units ... ok
+test exact_batch_fallback_after_append_correction_removal_and_reorder ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/streaming.rs (target/debug/deps/streaming-d71122d6a51c274f)
+
+running 9 tests
+test queued_is_not_committed_backpressure_retries_conflicts_and_loss_are_observable ... ok
+test supplied_watermark_exact_boundary_future_and_late_atomicity ... ok
+test explicit_late_drop_accounts_whole_rows_and_count_order_is_ordinal ... ok
+test event_time_arithmetic_schema_and_wire_are_checked_without_float_rounding ... ok
+test incremental_invalid_values_limits_and_failed_preparations_do_not_poison_reuse ... ok
+test follow_preserves_horizontal_span_and_inspect_freeze_keep_view_identity ... ok
+test exact_chunk_updates_preserve_bins_and_members_after_correction_removal_and_retention ... ok
+test legacy_follow_window_is_used_by_prepared_timestamp_axis_after_reconciliation ... ok
+test eviction_removes_active_selection_cancels_preview_and_preserves_labeled_pin_until_unpin ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/chart_export-2e825b8308359408)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/actions.rs (target/debug/deps/actions-a63654b5342cc7d0)
+
+running 5 tests
+test portable_controlled_replacements_check_component_fences_and_keep_hover_ephemeral ... ok
+test full_domain_export_clears_named_numeric_and_category_windows ... ok
+test frozen_exports_keep_the_presented_data_while_ingestion_advances_and_resume_releases_it ... ok
+test shared_trace_executes_real_font_annotation_preview_cancel_commit_and_undo ... ok
+test presented_input_trace_preserves_populations_and_typed_windows ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.08s
+
+     Running tests/authoring.rs (target/debug/deps/authoring-81d95da04b33d2d4)
+
+running 5 tests
+test live_capture_requires_presentation_only_for_presented_basis ... ok
+test repeated_frozen_paints_preserve_scene_and_capture_policy_after_live_commit ... ok
+test ordinary_and_faceted_legends_share_exported_labels_and_source_provenance ... ok
+test presented_current_projection_and_interaction_captures_remain_independent_after_disposal ... ok
+test real_svg_pdf_png_preserve_component_text_geometry_and_physical_size ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.54s
+
+     Running tests/authoring_replay.rs (target/debug/deps/authoring_replay-bf0b2b983a4ae423)
+
+running 1 test
+test primary_runtime_replays_existing_action_and_input_expectations ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.39s
+
+     Running tests/composition.rs (target/debug/deps/composition-07f7581a153f4be6)
+
+running 6 tests
+test invalid_resources_themes_furniture_and_dashes_fail_without_paint ... ok
+test rich_shaping_has_independent_advances_real_weights_and_explicit_fallback ... ok
+test theme_cascade_mapped_colors_symbols_and_full_domain_output_contract ... ok
+test furniture_coordinate_spaces_resize_and_bounded_collision_policies ... ok
+test fix12_three_themes_reuse_stat_tables_and_preserve_numerical_geometry ... ok
+test fix13_exact_faces_rich_rotation_inset_vectors_and_real_raster_dimensions ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.47s
+
+     Running tests/extensions.rs (target/debug/deps/extensions-c660f7923dad6fdc)
+
+running 4 tests
+test custom_native_and_unknown_operation_descriptors_reject_portable_execution ... ok
+test registered_geometry_shares_axes_explicit_guides_hit_values_and_keyboard_order ... ok
+test custom_coordinates_use_resolved_scales_and_reject_wrong_guide_types ... ok
+test portable_vector_output_and_native_only_export_fail_explicitly ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.84s
+
+     Running tests/live_export.rs (target/debug/deps/live_export-5b3a7f771bba6006)
+
+running 5 tests
+test worker_capture_survives_eighty_atomic_commits_annotation_theme_and_quality_edits ... ok
+test out_of_order_exports_keep_their_own_snapshot_and_success_releases_font_ownership ... ok
+test active_cancellation_and_errors_release_at_safe_boundaries_without_returning_partial_bytes ... ok
+test capacity_pending_cancel_drop_and_disposal_release_inputs_even_with_retained_controls ... ok
+test explicit_interaction_and_full_domain_policies_do_not_change_live_state_or_numeric_population ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.32s
+
+     Running tests/portable.rs (target/debug/deps/portable-23017e4263d08b53)
+
+running 3 tests
+test binding_profile_is_explicit_and_never_falls_back_on_native_resources ... ok
+test publication_scene_targets_align_with_background_and_mark_items ... ok
+test captured_output_owns_resources_across_updates_and_disposal ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/publication.rs (target/debug/deps/publication-1c3d52df10c0ab55)
+
+running 10 tests
+test publication_metrics_use_supplied_face_and_real_kerning ... ok
+test png_straight_alpha_is_not_premultiplied_or_double_composited ... ok
+test fix14_capture_survives_concurrent_data_and_annotation_edits_then_releases ... ok
+test restricted_and_preview_print_only_embedding_obey_permissions ... ok
+test font_permissions_missing_glyphs_and_exact_resource_revisions_fail_with_context ... ok
+test invalid_resources_units_precision_and_raster_budgets_reject_recoverably ... ok
+test plain_text_xml_escaping_curves_and_empty_clips_are_supported ... ok
+test deterministic_preview_and_png_share_the_same_publication_geometry ... ok
+test visible_and_full_domain_keep_bins_members_visibility_and_declared_state ... ok
+test fix13_physical_dimensions_density_font_hash_and_vector_modes ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.65s
+
+     Running unittests src/lib.rs (target/debug/deps/chart_extension_example-762dd82bde460438)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/contracts.rs (target/debug/deps/contracts-95818d1dd7599fc0)
+
+running 5 tests
+test schema_spaces_and_parameter_budgets_are_checked_before_evaluation ... ok
+test bounded_custom_paint_and_hit_regions_cannot_exhaust_core_or_invent_targets ... ok
+test custom_histogram_has_own_schema_exact_membership_density_and_shared_domains ... ok
+test registry_schema_and_output_failures_are_typed_and_do_not_replace_valid_results ... ok
+test custom_transform_reuses_exact_tables_and_recomputes_after_corrections_like_fresh_batch ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/chart_gallery-f9dbce9d28868185)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/chart_python-bdb840bb54216a7d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/chart_text-13169a6051dbc962)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/chart_wasm-2893be33ff2a595d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/gpui_charts-dbb94c6ef8e7b41d)
+
+running 1 test
+test native::tests::native_projection_rejects_nonfinite_overflow_and_quarter_pixel_loss ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/gpui_charts_kit-936a3bb6537543cc)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests chart_core
+
+running 2 tests
+test crates/chart-core/src/lib.rs - (line 7) ... ok
+test crates/chart-core/src/grammar/mod.rs - grammar (line 7) ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+running 4 tests
+test crates/chart-core/src/grammar/definition.rs - grammar::definition::SourceAes::x (line 310) - compile fail ... ok
+test crates/chart-core/src/plot/mapping.rs - plot::mapping::aes (line 125) - compile fail ... ok
+test crates/chart-core/src/grammar/statistical_types.rs - grammar::statistical_types::StatAes::new (line 259) - compile fail ... ok
+test crates/chart-core/src/plot/composition.rs - plot::composition::labels (line 41) - compile fail ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.80s
+
+all doctests ran in 2.10s; merged doctests compilation took 1.06s
+   Doc-tests chart_export
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests chart_extension_example
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests chart_python
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests chart_text
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests chart_wasm
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests gpui_charts
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests gpui_charts_kit
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

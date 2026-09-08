@@ -12,6 +12,36 @@ pub struct NativeAnnotationTool {
     /// Typed snapping, movement and range-order policy.
     pub constraints: EditConstraints,
 }
+impl NativeAnnotationTool {
+    /// Begin an explicit native edit handle for one authored annotation.
+    pub fn new(id: impl Into<String>) -> Self {
+        Self {
+            id: id.into(),
+            part: AnnotationPart::Anchor,
+            constraints: EditConstraints::default(),
+        }
+    }
+    /// Choose anchor, callout endpoint or joint threshold movement.
+    pub fn part(mut self, part: AnnotationPart) -> Self {
+        self.part = part;
+        self
+    }
+    /// Apply the shared exact snapping and movement constraints.
+    pub fn constraints(mut self, constraints: EditConstraints) -> Self {
+        self.constraints = constraints;
+        self
+    }
+}
+pub(super) fn validate_tools(tools: &[NativeAnnotationTool]) -> ChartResult<()> {
+    if tools.len() > 256 || tools.iter().any(|t| t.id.is_empty() || t.id.len() > 256) {
+        return Err(Diagnostic::error(
+            chart_core::DiagnosticCode::ResourceLimit,
+            "Annotation tools exceed identity/count bounds.",
+            "Use at most 256 bounded authored annotation handles.",
+        ));
+    }
+    Ok(())
+}
 pub(super) struct EditDrag {
     editor: AnnotationEditor,
     id: Revision,
@@ -26,13 +56,7 @@ impl ChartView {
         tools: Vec<NativeAnnotationTool>,
         cx: &mut Context<Self>,
     ) -> ChartResult<()> {
-        if tools.len() > 256 || tools.iter().any(|t| t.id.is_empty() || t.id.len() > 256) {
-            return Err(Diagnostic::error(
-                chart_core::DiagnosticCode::ResourceLimit,
-                "Annotation tools exceed identity/count bounds.",
-                "Use at most 256 bounded authored annotation handles.",
-            ));
-        }
+        validate_tools(&tools)?;
         self.cancel_input(CancelReason::Explicit, cx)?;
         self.input.annotation_tools = tools;
         self.input.focused_edit = None;

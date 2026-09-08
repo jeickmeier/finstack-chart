@@ -128,13 +128,8 @@ pub(super) fn anchor(
     a: &Anchor,
     figure: Rect,
 ) -> ChartResult<Option<(Point, Rect)>> {
+    a.validate()?;
     let relative = |b: Rect, x: f64, y: f64| -> ChartResult<Option<(Point, Rect)>> {
-        if !x.is_finite() || !y.is_finite() || !(0. ..=1.).contains(&x) || !(0. ..=1.).contains(&y)
-        {
-            return Err(invalid(
-                "Relative furniture coordinates must be finite fractions in [0,1].",
-            ));
-        }
         Ok(Some((
             Point::new(
                 b.origin().x() + b.width() * x,

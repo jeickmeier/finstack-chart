@@ -135,7 +135,8 @@ impl Schema {
 
 /// Explicit data/replay work budgets. Payload byte charges are conservative accounting,
 /// not measured RSS; callers own allocation before passing input to core.
-#[derive(Clone, Copy, Debug)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug)]
+#[serde(default, deny_unknown_fields)]
 pub struct DataLimits {
     /// Maximum datasets in one store.
     pub max_datasets: usize,

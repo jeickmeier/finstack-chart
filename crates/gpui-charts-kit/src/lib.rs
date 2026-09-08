@@ -2,7 +2,7 @@
 use chart_core::scene::Color;
 use chart_core::theme::ThemePatch;
 use chart_core::{ChartResult, Diagnostic, DiagnosticCode};
-use gpui_charts::ChartView;
+use gpui_charts::{ChartInput, ChartView, NativeFont};
 use gpui_kit::component::{Theme, button::Button};
 use gpui_kit::{Context, Entity};
 
@@ -45,6 +45,16 @@ pub fn theme_patch(theme: &Theme) -> ChartResult<ThemePatch> {
     };
     patch.validate()?;
     Ok(patch)
+}
+/// Primary native mount with a captured Kit theme and explicitly supplied font resource.
+/// The returned input keeps the regular native tooltip/control/accessibility builders.
+pub fn chart_input(
+    plot: &chart_core::plot::Plot,
+    font: NativeFont,
+    theme: &Theme,
+) -> ChartResult<ChartInput> {
+    Ok(ChartInput::from_plot(plot, font)?
+        .layout(chart_core::plot::layout_options().host_theme(theme_patch(theme)?)))
 }
 /// Apply a Kit snapshot at the host level; authored named/plot/layer tokens keep their precedence.
 pub fn apply_theme(

@@ -3,13 +3,13 @@ use chart_core::scheduling::{
     CompatibilityStamp, CompletionOutcome, JobToken, PreparationScheduler, SchedulerMetrics,
     SubmitOutcome,
 };
-use chart_core::state::Reconciliation;
 use gpui::Task;
 
 struct Work {
     definition: ChartDefinition,
     source: SnapshotHandle<StoreSnapshot>,
     state: ChartState,
+    limits: CompileLimits,
 }
 pub(super) struct Scheduling {
     queue: PreparationScheduler<Work>,
@@ -45,6 +45,13 @@ impl ChartView {
         source: SnapshotHandle<StoreSnapshot>,
         cx: &mut Context<Self>,
     ) -> ChartResult<SubmitOutcome> {
+        let reconciliation = self.chart.accept_source(source)?;
+        cx.emit(ChartHostEvent::DataReconciled(reconciliation));
+        self.queue_current(cx)
+    }
+    /// Queue the latest committed source of this owned or external chart.
+    pub fn queue_current(&mut self, cx: &mut Context<Self>) -> ChartResult<SubmitOutcome> {
+        let source = self.chart.source();
         let snapshot = source.get()?;
         let generation = self.scheduling.generation;
         let key = CompatibilityStamp {
@@ -59,9 +66,10 @@ impl ChartView {
             key,
             snapshot.revision(),
             Work {
-                definition: self.definition.clone(),
+                definition: self.chart.definition().clone(),
                 source: source.clone(),
-                state: self.reducer.state().clone(),
+                state: self.chart.state().clone(),
+                limits: self.chart.compile_limits(),
             },
         )?;
         self.scheduling.latest = Some(source);
@@ -91,8 +99,8 @@ impl ChartView {
         self.scheduling.queue.invalidate();
         self.scheduling.prepared_token = None;
         if resubmit {
-            if let Some(source) = self.scheduling.latest.clone() {
-                self.queue_data(source, cx)?;
+            if self.scheduling.latest.is_some() {
+                self.queue_current(cx)?;
             }
         } else {
             self.scheduling.latest = None;
@@ -107,13 +115,13 @@ impl ChartView {
             .scheduling
             .compiler
             .take()
-            .unwrap_or_else(|| Compiler::with_extensions(self.compiler.extensions().clone()));
+            .unwrap_or_else(|| Compiler::with_extensions(self.chart.extensions().clone()));
         let task = cx.background_spawn(async move {
             let result = compiler.prepare(
                 &job.input.definition,
                 &job.input.source,
                 &job.input.state,
-                CompileLimits::default(),
+                job.input.limits,
             );
             (job.token, compiler, result)
         });
@@ -177,31 +185,18 @@ impl ChartView {
     }
     fn install_preparation(
         &mut self,
-        mut prepared: PreparedChart,
+        prepared: PreparedChart,
         compiler: &mut Compiler,
         cx: &mut Context<Self>,
     ) -> ChartResult<()> {
-        let mut next = self.reducer.clone();
-        let reconciliation: Reconciliation = next.reconcile_prepared(&prepared)?;
-        let source = prepared.source().clone();
-        // Selection/hover may have changed while numeric work ran. State rebinding reuses
-        // exact tables/marks, and follow reconciliation uses the admitted coherent source.
-        if prepared.state() != next.state() {
-            prepared = compiler.prepare(
-                &self.definition,
-                &source,
-                next.state(),
-                CompileLimits::default(),
-            )?;
-        }
-        self.source = source;
-        self.prepared = Arc::new(prepared);
-        self.reducer = next;
+        self.prepared = self.chart.admit_preparation(prepared, compiler)?;
         if self.state().active_gesture().is_none() {
             self.release_input();
         }
         self.last_error = None;
-        cx.emit(ChartHostEvent::DataReconciled(reconciliation));
+        if let Some(reconciliation) = self.chart.reconciliation() {
+            cx.emit(ChartHostEvent::DataReconciled(reconciliation.clone()));
+        }
         Ok(())
     }
     pub(super) fn acknowledge_preparation(&mut self, token: Option<JobToken>) {

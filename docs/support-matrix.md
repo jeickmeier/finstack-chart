@@ -1,6 +1,6 @@
 # Support and evidence matrix
 
-Updated 7 September 2026. [Release evidence](release-evidence.md), [WP-21 evidence](evidence/wp-21-completion-2026-09-07.md)
+Updated 8 September 2026. [Release evidence](release-evidence.md), [WP-21 evidence](evidence/wp-21-completion-2026-09-07.md)
 and [ADR-009](adr/009-supported-platform-and-accessibility.md) define the original
 implemented scope. Expanded parity and production release gates remain open.
 
@@ -15,7 +15,8 @@ implemented scope. Expanded parity and production release gates remain open.
 | SVG/PDF/PNG | Original primitives, explicit fonts, physical sizes, clips, vector publication, themes/composition and coherent live capture; shared host outputs compared | Supplied fonts required; browser SVG font policy remains consumer-specific |
 | Accessibility | Actual native keyboard inspection/selection/editing, chart summaries, exact data-table alternatives, status/buttons and annotation values; WP-17 tree artifacts | OS inspector reports window focus; VoiceOver speech and full traversal unverified |
 | Streaming and scheduling | Atomic corrections/removals/retention; bounded preparation; exact raw lookup and declared visual reduction; fixed native idle redraw and coherent exports with released resources | Visible short PERF-03 p95 165.759 ms; full duration not claimed, interrupted display failure retained |
-| Additional parity/authoring | Separately planned D3, ggplot2 and primary authoring work | Not certified by original WP-21 |
+| Primary authoring | [AP qualification](evidence/primary-authoring-completion-2026-09-08.md): 252 macOS / 246 Linux tests, 34 three-host component families, 23 action + 47 input + 70 stream steps, actual native/Kit and publication checks | Final native performance qualification pending; existing platform/assistive and distribution limits remain |
+| Additional parity | Separately planned D3 and ggplot2 work | Not certified by original WP-21 or primary authoring |
 
 The [alpha API matrix](alpha-api.md) identifies original supported families and recipes.
 The [portable contract](portable-contract.md), [streaming contract](streaming-contract.md),

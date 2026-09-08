@@ -25,10 +25,14 @@ pub struct FontManifest {
 pub struct Reproducibility {
     /// Complete authored definition captured before any later edits.
     pub definition: ChartDefinition,
+    /// Captured numeric preparation budgets.
+    pub compile_limits: CompileLimits,
     /// Explicit state inclusion policy; legacy direct captures preserve all state.
     pub interaction: chart_core::state::InteractionCapture,
     /// Actual presented scene used by the host, when capture came from presentation.
     pub origin_scene: Option<SceneStamp>,
+    /// Actual original destination policy, independently of publication point dimensions.
+    pub origin_layout: Option<chart_core::layout::LayoutRequest>,
     /// Exact encoding/font engine versions and crate version.
     pub engines: String,
     /// Effective publication scene stamp.
@@ -138,7 +142,7 @@ impl FigureSnapshot {
             &effective_definition,
             &source,
             &effective_state,
-            CompileLimits::default(),
+            request.compile_limits,
         )?);
         let laid_out = Arc::new(layout(prepared, &profile.layout, &fonts)?);
         let result = (|| {
@@ -225,8 +229,10 @@ impl FigureSnapshot {
             let data = source.get()?;
             let metadata = Reproducibility {
                 definition: definition.clone(),
+                compile_limits: request.compile_limits,
                 interaction: request.interaction,
                 origin_scene: request.origin_scene,
+                origin_layout: request.origin_layout.clone(),
                 engines: format!(
                     "chart-export {}; chart-text 0.1.0; usvg/resvg 0.48.1; harfrust 0.12.0; krilla 0.8.2; skrifa 0.44.0/0.42.1; PNG 0.17.16",
                     env!("CARGO_PKG_VERSION")

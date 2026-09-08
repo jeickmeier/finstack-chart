@@ -1,6 +1,7 @@
 //! Single-threaded WASM proof. JSON and font inputs and all outputs are owned copies.
 //! No borrowed WASM memory view is exposed. dispose releases the Rust payload;
 //! generated free releases the wrapper and must be called only after final use.
+mod authoring;
 use chart_core::Diagnostic;
 use chart_export::portable::{PortableChart, diagnostic_json};
 use wasm_bindgen::prelude::*;
@@ -109,4 +110,11 @@ impl Chart {
     pub fn dispose(&mut self) {
         self.inner.dispose();
     }
+}
+
+/// Proof-only allocator high-water observation; not a source/runtime protocol field.
+#[cfg(all(feature = "extension-proof", target_arch = "wasm32"))]
+#[wasm_bindgen]
+pub fn authoring_memory_bytes() -> usize {
+    core::arch::wasm32::memory_size::<0>() * 65536
 }

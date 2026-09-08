@@ -237,7 +237,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     .map(|p| p.join("Resources/publication.svg"))
             });
             bundled.filter(|p| p.is_file()).unwrap_or_else(|| {
-                std::path::PathBuf::from("artifacts/wp-08/publication-preview.svg")
+                std::path::PathBuf::from("target/authoring/publication/publication-preview.svg")
             })
         });
     let data = std::fs::read(file)?;

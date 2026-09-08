@@ -6,6 +6,11 @@ executed proof adapters. All Cargo packages remain `publish = false`. See the
 [release evidence index](release-evidence.md) for acceptance and open gates; a source
 archive is not a production certification.
 
+Author charts with `Data`, `plot`, components and a retained `Chart`; publish with
+`Output`. Start with the [authoring guide](authoring-guide.md) and its executable
+Rust/Python/JavaScript examples. The [coverage register](primary-authoring-api.md)
+records primary-API qualification separately from the original release evidence.
+
 ## Build and run
 
 Install the tools pinned in [mise.toml](../mise.toml), then from the repository root:
@@ -28,11 +33,14 @@ To verify native Kit integration, run the existing `kit` examples using ADR-001.
 For the actual adapters, install Node 24.14.0, Poppler and wasm-bindgen-cli 0.2.128, then:
 
 ```sh
+mise run primary-authoring-proof target/authoring
 mise run bindings-proof artifacts/release-proof
 ```
 
-The runner builds and executes the Rust, Python and Node WASM implementations against
-the same fixtures. [Binding instructions](../fixtures/bindings/README.md) document
+The runners build and execute the Rust, Python and Node WASM implementations against
+the primary components and retained versioned fixtures. The primary runner also needs
+TypeScript and mypy for declaration checks; its script documents `TSC_JS` and Python
+environment overrides. [Binding instructions](../fixtures/bindings/README.md) document
 `WASM_BINDGEN` and the Python environment. Compilation alone is not binding acceptance.
 No wheel, npm package or browser application distribution is promised.
 
@@ -44,9 +52,10 @@ Examples use supplied fixture fonts; installed system fonts are not a core depen
 
 | Goal | Runnable source and contract |
 | --- | --- |
+| First complete native and headless chart | [Primary example](../examples/chart-gallery/examples/primary_authoring.rs), [publication](../crates/chart-export/examples/publication_export.rs), [authoring guide](authoring-guide.md) |
 | Basic recipe and layered grammar | [Gallery](../examples/chart-gallery/src/main.rs), [family gallery](../examples/chart-gallery/examples/family_gallery.rs), [grammar contract](statistics-contract.md) |
-| Facets, themes, rich text and physical layout | [Composition gallery](../examples/chart-gallery/examples/publication_preview.rs), [composition contract](theme-typography-composition-contract.md) |
-| Public custom stat/geom and native painter | [External consumer](../examples/custom-extension/src/lib.rs), [extension contract](extension-contract.md) |
+| Facets, themes, rich text and physical layout | [Family/composition gallery](../examples/chart-gallery/examples/family_gallery.rs), [publication preview](../examples/chart-gallery/examples/publication_preview.rs), [composition contract](theme-typography-composition-contract.md) |
+| Public custom stat/geom and native painter | [Primary external consumer](../examples/custom-extension/src/authoring.rs), [extension contract](extension-contract.md) |
 | Gestures, exact inspection and selected targets | [Interaction gallery](../examples/chart-gallery/examples/interaction_gallery.rs), [interaction contract](interaction-contract.md) |
 | Linked charts, annotations and controls | [Host tools gallery](../examples/chart-gallery/examples/host_tools_gallery.rs), [host tools contract](host-tools-contract.md) |
 | Ordered updates and retention | [Streaming gallery](../examples/chart-gallery/examples/streaming_gallery.rs), [streaming contract](streaming-contract.md) |
@@ -54,27 +63,35 @@ Examples use supplied fixture fonts; installed system fonts are not a core depen
 | Export while data continues | [Live export gallery](../examples/chart-gallery/examples/live_export_gallery.rs), [live export contract](live-export-contract.md) |
 | Freeze, resize, recover and dispose | [Hardening gallery](../examples/chart-gallery/examples/hardening_gallery.rs), [WP-21 evidence](evidence/wp-21-completion-2026-09-07.md) |
 
-Read these examples as consumers of the core compiler and scene; they do not define
-parallel statistics or data semantics. The [alpha API matrix](alpha-api.md) describes
-which Rust and portable surfaces exist. The primary-authoring and Phase 2 plans are
-separate future work and do not retroactively certify missing APIs.
+These examples use primary data/components and retained Chart execution over the shared
+engine. The hardening/capability and legacy binding fixture programs deliberately keep
+low-level inputs to test compatibility and malformed-source behavior; they are diagnostic
+qualification programs. The [historical alpha matrix](alpha-api.md) records the old expert
+surface. Phase 2 semantic additions and mapped shape/linetype remain separately gated.
 
 ## Ownership, interaction and publication
 
-Keep normalized data in `DataStore`. A successful transaction commits all operations
+Build `Data` once and retain `Plot` or `Chart`. A Chart owns ingestion by default; use
+`chart.transaction()` and `ChartView::commit` for native updates. An application with an
+existing `DataStore` can explicitly supply committed snapshots to external-source charts
+without copying store ownership. A successful transaction commits all operations
 atomically; revision fences, stable row keys, replay outcomes and configured retention
 are part of the contract. Keep immutable snapshots as long as readers need them.
 Releasing a view does not revoke a caller-owned snapshot. [Data contracts](adr/004-immutable-data-and-transactions.md)
 and [streaming](streaming-contract.md) explain capacity and failure semantics.
 
 Durable chart state is distinct from transient gesture previews. Dispatch through the
-shared action reducer; use the acknowledged scene for scene-dependent events. Controlled
+retained Chart; use the acknowledged scene for scene-dependent events. Controlled
 state requires the owner's matching replacement. Freeze pins semantic data/state while
 resize can reproject that exact snapshot. Resume explicitly admits the latest state.
 See [actions](state-action-contract.md) and [host tools](host-tools-contract.md).
 
-Publication uses explicit physical dimensions, resources and fonts. Capture a coherent
-export job before later updates, then prepare/encode with the bounded export queue.
+Publication uses `Output` with supplied fonts and `export_options` for physical
+dimensions, DPI, text and background. `Output::live_request` captures the last presented
+frame by default; choose `CaptureBasis::Current` for committed inputs, including before
+first paint. Visible/full-domain projection and interaction inclusion are independent.
+Submit the captured request to `ExportQueue` before later updates and run its job on
+the host executor.
 SVG editable text, outlined text, PDF embedding and PNG density have different output
 contracts. Native custom painters need an explicit export lowering. Unsupported effects
 fail with structured diagnostics; there is no hidden screenshot fallback. See
@@ -88,7 +105,10 @@ Public Rust enum variants and required struct fields can break exhaustive downst
 matches or literals before 1.0. [CHANGELOG](../CHANGELOG.md) records these additions.
 Portable specification/state/action/transaction envelopes have explicit version fences
 and reject unknown fields as documented in the [portable contract](portable-contract.md).
-A crate patch does not silently change a wire version.
+A crate patch does not silently change a wire version. The [migration table](authoring-guide.md#migration)
+replaces old authoring calls while preserving their public paths in the planned 0.2.0
+migration release; removal is no earlier than 0.3.0. No version bump or publication is
+performed by this working-tree migration.
 
 Supplied Noto and Fira fixture fonts retain their license files beside the assets;
 [ADR-003](adr/003-font-and-renderer-capability-route.md) records renderer provenance,

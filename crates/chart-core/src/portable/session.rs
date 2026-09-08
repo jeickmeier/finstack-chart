@@ -1,25 +1,36 @@
 use super::error;
 use super::*;
-use crate::{data::*, grammar::*, state::*, transaction::*, *};
+use crate::{grammar::*, runtime::Chart, state::*, transaction::*, *};
 use serde_json::json;
 use std::sync::Arc;
 
-/// Owned synchronous portable core session. Hosts own its lifetime and interpreter detachment.
+/// Versioned JSON compatibility adapter over the shared typed [`Chart`] runtime.
+/// Construction preserves the legacy eager preparation and portable capability checks.
 pub struct Session {
-    definition: ChartEnvelope,
-    store: DataStore,
-    reducer: ActionReducer,
-    compiler: Compiler,
-    inspectors: Vec<crate::inspection::Inspector>,
-    queue: crate::ingestion::IngestionQueue,
-    reconciliation: Option<Reconciliation>,
+    chart: Chart,
+}
+impl std::ops::Deref for Session {
+    type Target = Chart;
+    fn deref(&self) -> &Chart {
+        &self.chart
+    }
+}
+impl std::ops::DerefMut for Session {
+    fn deref_mut(&mut self) -> &mut Chart {
+        &mut self.chart
+    }
 }
 impl Session {
-    /// Decode and validate versioned chart/data inputs, including builtin operations and schemas.
+    /// Adopt the primary typed runtime without encoding/decoding or rebuilding its source store.
+    pub fn from_runtime(chart: Chart) -> ChartResult<Self> {
+        chart.extensions().validate_portable(chart.definition())?;
+        Ok(Self { chart })
+    }
+    /// Decode and validate versioned portable chart/data inputs.
     pub fn new(chart: &str, data: &str) -> ChartResult<Self> {
         Self::with_extensions(chart, data, Arc::new(ExtensionRegistry::new()))
     }
-    /// Execute only registered portable extensions; arbitrary callbacks are never decoded.
+    /// Execute only explicitly registered portable extensions.
     pub fn with_extensions(
         chart: &str,
         data: &str,
@@ -29,227 +40,105 @@ impl Session {
         extensions.validate_portable(&definition.definition)?;
         definition.validate()?;
         let data: DataEnvelope = decode(data)?;
-        let mut session = Self {
-            definition,
-            store: data.into_store()?,
-            reducer: ActionReducer::default(),
-            compiler: Compiler::with_extensions(extensions),
-            inspectors: vec![],
-            queue: crate::ingestion::IngestionQueue::new(crate::ingestion::QueueLimits::default())?,
-            reconciliation: None,
-        };
-        session.prepare()?;
-        Ok(session)
+        let mut chart = Chart::from_store(definition.definition, data.into_store()?, extensions)?;
+        chart.prepare()?;
+        Ok(Self { chart })
     }
-    /// Validated captured definition, including exact operation IDs and parameters.
-    pub fn definition(&self) -> &ChartDefinition {
-        &self.definition.definition
+    /// Access typed execution without serializing operations.
+    pub fn runtime(&self) -> &Chart {
+        &self.chart
     }
-    /// Owned coherent immutable source handle; later commits do not mutate it.
-    pub fn source(&self) -> SnapshotHandle<StoreSnapshot> {
-        self.store.snapshot()
+    /// Access typed execution without serializing operations.
+    pub fn runtime_mut(&mut self) -> &mut Chart {
+        &mut self.chart
     }
-    /// Current minimal state; mutations use revision-fenced actions.
-    pub fn state(&self) -> &ChartState {
-        self.reducer.state()
-    }
-    /// Immutable registrations retained for coherent publication capture.
-    pub fn extensions(&self) -> &Arc<ExtensionRegistry> {
-        self.compiler.extensions()
-    }
-    /// Serialize the authored definition with its envelope version.
+    /// Serialize the definition, applying the portable capability contract.
     pub fn chart_json(&self) -> ChartResult<String> {
-        self.compiler
-            .extensions()
-            .validate_portable(self.definition())?;
-        encode(&self.definition)
+        self.extensions().validate_portable(self.definition())?;
+        encode(&ChartEnvelope {
+            version: VERSION,
+            definition: self.definition().clone(),
+        })
     }
     /// Serialize exact state/revisions in their separate envelope.
     pub fn state_json(&self) -> ChartResult<String> {
-        encode(&StateEnvelope::capture(
-            self.definition(),
-            self.reducer.state(),
-        ))
+        encode(&StateEnvelope::capture(self.definition(), self.state()))
     }
-    /// Restore an explicit state snapshot, guarded by the current state's expected revision.
+    /// Decode controlled state, then use the typed revision-fenced restore.
     pub fn restore_state(&mut self, input: &str, expected: Revision) -> ChartResult<()> {
-        if expected != self.reducer.state().revision() {
+        if expected != self.state().revision() {
             return Err(error(
                 DiagnosticCode::RevisionConflict,
                 "Stale state restore",
             ));
         }
         let state: StateEnvelope = decode(input)?;
-        let mut next = state.into_state(self.definition())?;
-        next.retain_transient_from(self.reducer.state());
-        if next.revision() < self.reducer.state().revision()
-            || next.viewport_revision() < self.reducer.state().viewport_revision()
-            || (next.revision() == self.reducer.state().revision() && &next != self.reducer.state())
-            || (next.viewport_revision() == self.reducer.state().viewport_revision()
-                && next.viewport() != self.reducer.state().viewport())
-        {
-            return Err(error(
-                DiagnosticCode::RevisionConflict,
-                "State restore would regress or reuse a revision for different content",
-            ));
-        }
-        self.reducer
-            .accept_controlled(&self.definition.definition, expected, next)?;
-        self.prune_inspectors();
-        Ok(())
+        let next = state.into_state(self.definition())?;
+        self.chart.restore_state(next, expected)
     }
-    /// Validate then apply the existing atomic transaction; typed outcomes preserve replay/conflicts.
+    /// Decode an atomic transaction, preserving typed receipts and replay outcomes.
     pub fn apply_transaction(&mut self, input: &str) -> ChartResult<CommitOutcome> {
         let envelope: TransactionEnvelope = decode(input)?;
-        let mut next = self.reducer.clone();
-        let mut reconciliation = None;
-        let definition = &self.definition.definition;
-        let outcome = self
-            .store
-            .apply_checked(envelope.into_transaction()?, |source| {
-                reconciliation = Some(next.reconcile_source(definition, source)?);
-                Ok(())
-            });
-        if matches!(outcome, CommitOutcome::Applied(_)) {
-            self.reducer = next;
-            self.reconciliation = reconciliation;
-            self.prune_inspectors();
-        }
-        Ok(outcome)
+        self.chart.apply_transaction(envelope.into_transaction()?)
     }
-    /// Synchronous bounded queue operations and historical-pin inspection with explicit outcomes.
+    /// Decode bounded queue operations and encode the existing version 1 results.
     pub fn stream(&mut self, input: &str) -> ChartResult<String> {
         let envelope: StreamEnvelope = decode(input)?;
         version(envelope.version)?;
         match envelope.operation {
             StreamOperation::ConfigureQueue(limits) => {
-                if self.queue.status().transactions != 0 {
-                    return Err(error(
-                        DiagnosticCode::Validation,
-                        "Drain accepted transactions before changing queue policy.",
-                    ));
-                }
-                self.queue = crate::ingestion::IngestionQueue::new(limits)?;
-                encode(&self.queue.limits())
+                self.chart.configure_queue(limits)?;
+                encode(&self.queue_limits())
             }
             StreamOperation::Enqueue(transaction) => {
-                encode(&self.queue.enqueue(transaction.into_transaction()?))
+                encode(&self.chart.enqueue(transaction.into_transaction()?)?)
             }
             StreamOperation::CommitNext => {
-                let mut next = self.reducer.clone();
-                let mut reconciliation = None;
-                let definition = &self.definition.definition;
-                let result = self.queue.commit_next_checked(&mut self.store, |source| {
-                    reconciliation = Some(next.reconcile_source(definition, source)?);
-                    Ok(())
-                });
-                if matches!(&result, Some((_, CommitOutcome::Applied(_)))) {
-                    self.reducer = next;
-                    self.reconciliation = reconciliation.clone();
-                    self.prune_inspectors();
-                }
+                let result = self.chart.commit_next()?;
+                let reconciliation = if matches!(&result, Some((_, CommitOutcome::Applied(_)))) {
+                    self.reconciliation().cloned()
+                } else {
+                    None
+                };
                 encode(&result.map(|(id, outcome)| json!({"id":id.as_str(),"outcome":outcome,"reconciliation":reconciliation})))
             }
             StreamOperation::Status => encode(
-                &json!({"limits":self.queue.limits(),"queue":self.queue.status(),"epoch":self.source().get()?.epoch(),"store_revision":self.source().get()?.revision(),"reconciliation":self.reconciliation}),
+                &json!({"limits":self.queue_limits(),"queue":self.queue_status(),"epoch":self.source().get()?.epoch(),"store_revision":self.source().get()?.revision(),"reconciliation":self.reconciliation()}),
             ),
-            StreamOperation::Pinned => encode(&self.reducer.describe_pinned()?),
+            StreamOperation::Pinned => encode(&self.reducer().describe_pinned()?),
         }
     }
-    /// Validate exact definition/state fences, then use the common action reducer.
+    /// Decode exact definition/state fences, then dispatch through the typed reducer.
     pub fn apply_action(&mut self, input: &str) -> ChartResult<ActionOutcome> {
         let envelope: ActionEnvelope = decode(input)?;
         version(envelope.version)?;
         if envelope.definition_revision != self.definition().revision
-            || envelope.expected_state != self.reducer.state().revision()
+            || envelope.expected_state != self.state().revision()
         {
             return Err(error(
                 DiagnosticCode::RevisionConflict,
                 "Action definition/state revision is stale",
             ));
         }
-        let request = self.reducer.request(
-            &self.definition.definition,
-            envelope.action,
-            ActionOrigin::Programmatic,
-        );
-        let result = self
-            .reducer
-            .dispatch(&self.definition.definition, request)?
-            .outcome;
-        self.prune_inspectors();
-        Ok(result)
+        Ok(self.chart.act(envelope.action)?.outcome)
     }
-    /// Acknowledge the caller's actual scene before scene-dependent actions.
-    pub fn present(&mut self, scene: Arc<crate::layout::LaidOutChart>) {
-        self.reducer.present(scene);
-        self.prune_inspectors();
-    }
-    /// Full shared reducer with explicit origin/state/scene fences and effective events.
+    /// Decode a full typed action request with explicit origin/state/scene fences.
     pub fn dispatch(&mut self, input: &str) -> ChartResult<DispatchOutcome> {
-        let request: ActionRequest = decode(input)?;
-        let result = self
-            .reducer
-            .dispatch(&self.definition.definition, request)?;
-        self.prune_inspectors();
-        Ok(result)
+        self.chart.dispatch(decode(input)?)
     }
-    fn prune_inspectors(&mut self) {
-        let reducer = &self.reducer;
-        self.inspectors.retain(|i| {
-            [
-                reducer.presented(),
-                reducer.gesture_basis(),
-                reducer.frozen_scene(),
-                reducer.pinned_scene(),
-            ]
-            .into_iter()
-            .flatten()
-            .any(|s| Arc::ptr_eq(s, i.presented()))
-        });
-    }
-    /// Pure presented-scene query. Geometry indexes are shared across calls and retained only for
-    /// the current, frozen and active-gesture scenes; input never compiles statistics.
+    /// Decode pure presented-scene queries; the runtime owns and reuses their geometry indexes.
     pub fn query(&mut self, input: &str) -> ChartResult<String> {
-        use crate::inspection::Inspector;
-        use crate::navigation::Navigator;
         let request: InputQuery = decode(input)?;
-        self.prune_inspectors();
-        let reducer = &self.reducer;
-        let scene = if request.gesture {
-            reducer.gesture_basis()
-        } else {
-            reducer.presented()
-        }
-        .ok_or_else(|| {
-            error(
-                DiagnosticCode::UnsupportedCapability,
-                "No requested presented/gesture scene.",
-            )
-        })?
-        .clone();
-        if request.scene != scene.scene().stamp() {
-            return Err(error(
-                DiagnosticCode::Superseded,
-                "Query scene differs from its presented/pinned basis.",
-            ));
-        }
-        let index = match self
-            .inspectors
-            .iter()
-            .position(|i| Arc::ptr_eq(i.presented(), &scene))
-        {
-            Some(i) => i,
-            None => {
-                self.inspectors
-                    .push(Inspector::new(scene.clone(), 10., 32)?);
-                self.inspectors.len() - 1
-            }
-        };
-        let inspector = &self.inspectors[index];
+        self.query_input(request)
+    }
+    /// Run a typed query through the same retained presented/gesture inspection path.
+    pub fn query_input(&mut self, request: InputQuery) -> ChartResult<String> {
+        use crate::navigation::Navigator;
+        let inspector = self.chart.inspector(request.scene, request.gesture)?;
+        let scene = inspector.presented().clone();
         match request.query {
             InputOperation::Describe { offset, limit } => {
-                encode(&inspector.accessible_page(self.reducer.state(), offset, limit)?)
+                encode(&inspector.accessible_page(self.state(), offset, limit)?)
             }
             InputOperation::EditAnnotation {
                 id,
@@ -267,7 +156,7 @@ impl Session {
                 panel,
                 selection,
             } => encode(
-                &json!({"message":crate::linking::LinkMessage::from_event(&origin,&event,inspector,self.reducer.state(),&axes,panel.as_ref(),selection)?}),
+                &json!({"message":crate::linking::LinkMessage::from_event(&origin,&event,&inspector,self.state(),&axes,panel.as_ref(),selection)?}),
             ),
             InputOperation::LinkResolve {
                 message,
@@ -275,7 +164,7 @@ impl Session {
                 panel,
                 missing,
             } => {
-                let update = message.resolve(inspector, &mappings, panel.as_ref(), missing)?;
+                let update = message.resolve(&inspector, &mappings, panel.as_ref(), missing)?;
                 encode(
                     &json!({"action":update.action,"origin":update.origin,"unmatched":update.unmatched}),
                 )
@@ -319,35 +208,10 @@ impl Session {
             ),
         }
     }
-    /// Inspect runtime ownership without exposing mutable state.
-    pub fn reducer(&self) -> &ActionReducer {
-        &self.reducer
-    }
-    /// Shared preparation; no binding-specific chart or stat algorithm.
-    pub fn prepare(&mut self) -> ChartResult<Arc<PreparedChart>> {
-        let mut prepared = self.compiler.prepare(
-            &self.definition.definition,
-            &self.store.snapshot(),
-            self.reducer.state(),
-            CompileLimits::default(),
-        )?;
-        let result = self.reducer.reconcile_prepared(&prepared)?;
-        if result.transition.outcome.changed {
-            prepared = self.compiler.prepare(
-                &self.definition.definition,
-                &self.store.snapshot(),
-                self.reducer.state(),
-                CompileLimits::default(),
-            )?;
-            self.reconciliation = Some(result);
-            self.prune_inspectors();
-        }
-        Ok(Arc::new(prepared))
-    }
     /// Semantic result DTO for runtime comparison: domains, generated rows, targets, exact sources.
     pub fn semantics_json(&mut self) -> ChartResult<String> {
         let prepared = self.prepare()?;
-        let source = self.store.snapshot();
+        let source = self.source();
         let data = source.get()?;
         let datasets=data.datasets().map(|d| json!({
             "version":d.version(),"schema":d.schema(),"retention":d.retention(),
@@ -376,7 +240,7 @@ impl Session {
         })).collect::<Vec<_>>();
         let transforms=self.definition().transforms.iter().filter_map(|node|prepared.transform(node.id).map(|table|json!({"id":node.id,"rows":table.rows(),"schema":table.schema(),"operations":table.operations(),"space":table.space()}))).collect::<Vec<_>>();
         encode(
-            &json!({"version":VERSION,"definition_revision":prepared.definition_revision(),"store_revision":data.revision(),"state":StateEnvelope::capture(self.definition(),self.reducer.state()),"datasets":datasets,"layers":layers,"panels":panels,"transforms":transforms}),
+            &json!({"version":VERSION,"definition_revision":prepared.definition_revision(),"store_revision":data.revision(),"state":StateEnvelope::capture(self.definition(),self.state()),"datasets":datasets,"layers":layers,"panels":panels,"transforms":transforms}),
         )
     }
 }

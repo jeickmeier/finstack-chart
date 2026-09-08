@@ -1,29 +1,40 @@
-//! Real headless chart export through the public WP-08 snapshot API.
-#[path = "../../../fixtures/publication/support.rs"]
-mod fixture;
-use chart_core::state::ChartState;
-use chart_export::{FigureSnapshot, Format, TextMode};
+//! Primary headless publication with supplied fonts and explicit physical dimensions.
+use chart_core::prelude::*;
+use chart_export::{Format, Output, PageSize, TextMode, export_options};
 use std::{fs, path::PathBuf};
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let output = PathBuf::from(
         std::env::args()
             .nth(1)
-            .unwrap_or_else(|| "artifacts/wp-08".into()),
+            .unwrap_or_else(|| "target/authoring/publication".into()),
     );
     fs::create_dir_all(&output)?;
-    let source = fixture::store().snapshot();
-    let definition = fixture::definition();
-    let fonts = fixture::fonts();
+    let data = Data::rows([
+        (1u64, 0., Some(1.)),
+        (2, 0.5, Some(3.)),
+        (3, 1., None),
+        (4, 1.5, Some(2.)),
+        (5, 2., Some(4.)),
+    ])
+    .field("x", |row| row.1)
+    .field("value", |row| row.2)
+    .keys(|row| row.0)
+    .build()?;
+    let plot = plot(data)
+        .aes(aes().x("x").y("value"))
+        .layer(line())
+        .layer(points())
+        .title(title("Captured publication — café Ω"))
+        .build()?;
+    let destination = Output::new(
+        include_bytes!("../../../fixtures/capability/fonts/NotoSans-Regular.ttf").as_slice(),
+    )?;
+    let options = export_options(PageSize::millimeters(180., 120.)?)
+        .layout(layout_options().padding(30.).font_size(10.));
     for mode in [TextMode::Preserve, TextMode::Outline] {
-        let mut profile = fixture::profile();
-        profile.text = mode;
-        let snapshot = FigureSnapshot::capture(
-            &definition,
-            source.clone(),
-            &ChartState::default(),
-            fonts.clone(),
-            profile,
-        )?;
+        let snapshot = destination
+            .request(&plot, options.clone().text(mode))?
+            .prepare()?;
         let name = if mode == TextMode::Preserve {
             "text"
         } else {
@@ -62,15 +73,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
     for dpi in [300, 600] {
-        let mut profile = fixture::profile();
-        profile.dpi = dpi;
-        let snapshot = FigureSnapshot::capture(
-            &definition,
-            source.clone(),
-            &ChartState::default(),
-            fonts.clone(),
-            profile,
-        )?;
+        let snapshot = destination
+            .request(&plot, options.clone().dpi(dpi))?
+            .prepare()?;
         let artifact = snapshot.export(Format::Png)?;
         fs::write(
             output.join(format!("publication-{dpi}.png")),

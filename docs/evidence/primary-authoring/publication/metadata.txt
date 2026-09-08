@@ -1,0 +1,532 @@
+Reproducibility {
+    definition: ChartDefinition {
+        figure: Some(
+            FigureComposition {
+                version: 1,
+                title: Some(
+                    RichText {
+                        lines: [
+                            [
+                                RichRun {
+                                    text: "Captured publication — café Ω",
+                                    font: None,
+                                    fallback: [],
+                                    weight: 400,
+                                    size: 1.0,
+                                    color: None,
+                                    language: "und",
+                                    direction: LeftToRight,
+                                    tabular: false,
+                                },
+                            ],
+                        ],
+                        line_spacing: 1.2,
+                        rotation: 0.0,
+                    },
+                ),
+                subtitle: None,
+                caption: None,
+                source_notes: [],
+                footnotes: [],
+                panel_letters: [],
+                annotations: [],
+                insets: [],
+            },
+        ),
+        theme: None,
+        facets: None,
+        revision: Revision(
+            0,
+        ),
+        mappings: SourceAes {
+            x: None,
+            y: None,
+            x2: None,
+            y2: None,
+            low: None,
+            high: None,
+            size: None,
+            group: None,
+        },
+        transforms: [],
+        axes: [],
+        layers: [
+            Layer {
+                geometry_extension: None,
+                candle_colors: None,
+                facet: Match,
+                scope: Group,
+                id: LayerId(
+                    1025,
+                ),
+                scales: ScaleBindings {
+                    x: ScaleId(
+                        0,
+                    ),
+                    y: ScaleId(
+                        1,
+                    ),
+                },
+                clip: Plot,
+                data: Dataset(
+                    DatasetId(
+                        1024,
+                    ),
+                ),
+                filters: [],
+                statistic: Statistic {
+                    operation: OperationRef {
+                        id: "chart.identity",
+                        version: Revision(
+                            1,
+                        ),
+                    },
+                    parameters: Identity,
+                },
+                mappings: Source(
+                    SourceAes {
+                        x: Some(
+                            Field(
+                                FieldId(
+                                    1,
+                                ),
+                            ),
+                        ),
+                        y: Some(
+                            Field(
+                                FieldId(
+                                    2,
+                                ),
+                            ),
+                        ),
+                        x2: None,
+                        y2: None,
+                        low: None,
+                        high: None,
+                        size: None,
+                        group: None,
+                    },
+                ),
+                inherit: false,
+                geom: Line {
+                    order: X,
+                    connect_gaps: false,
+                },
+                position: Identity,
+                style: Style {
+                    color: Color {
+                        red: 35,
+                        green: 90,
+                        blue: 150,
+                        alpha: 255,
+                    },
+                    radius: 3.0,
+                    stroke_width: 1.5,
+                },
+                color: None,
+                invalid: Exclude,
+            },
+            Layer {
+                geometry_extension: None,
+                candle_colors: None,
+                facet: Match,
+                scope: Group,
+                id: LayerId(
+                    1026,
+                ),
+                scales: ScaleBindings {
+                    x: ScaleId(
+                        0,
+                    ),
+                    y: ScaleId(
+                        1,
+                    ),
+                },
+                clip: Plot,
+                data: Dataset(
+                    DatasetId(
+                        1024,
+                    ),
+                ),
+                filters: [],
+                statistic: Statistic {
+                    operation: OperationRef {
+                        id: "chart.identity",
+                        version: Revision(
+                            1,
+                        ),
+                    },
+                    parameters: Identity,
+                },
+                mappings: Source(
+                    SourceAes {
+                        x: Some(
+                            Field(
+                                FieldId(
+                                    1,
+                                ),
+                            ),
+                        ),
+                        y: Some(
+                            Field(
+                                FieldId(
+                                    2,
+                                ),
+                            ),
+                        ),
+                        x2: None,
+                        y2: None,
+                        low: None,
+                        high: None,
+                        size: None,
+                        group: None,
+                    },
+                ),
+                inherit: false,
+                geom: Point,
+                position: Identity,
+                style: Style {
+                    color: Color {
+                        red: 35,
+                        green: 90,
+                        blue: 150,
+                        alpha: 255,
+                    },
+                    radius: 3.0,
+                    stroke_width: 1.5,
+                },
+                color: None,
+                invalid: Exclude,
+            },
+        ],
+    },
+    compile_limits: CompileLimits {
+        max_layers: 256,
+        max_transforms: 256,
+        max_filters: 64,
+        max_groups: 10000,
+        max_edges: 10001,
+        max_prepared_rows: 1000000,
+        max_vertices: 1000000,
+    },
+    interaction: InteractionCapture {
+        selection: false,
+        hover: false,
+        focus: false,
+        preview: false,
+    },
+    origin_scene: None,
+    origin_layout: None,
+    engines: "chart-export 0.1.0; chart-text 0.1.0; usvg/resvg 0.48.1; harfrust 0.12.0; krilla 0.8.2; skrifa 0.44.0/0.42.1; PNG 0.17.16",
+    stamp: SceneStamp {
+        definition: Revision(
+            0,
+        ),
+        store: Revision(
+            0,
+        ),
+        layout: Revision(
+            0,
+        ),
+        state: Revision(
+            0,
+        ),
+        viewport: Revision(
+            0,
+        ),
+    },
+    captured_state: ChartState {
+        revision: Revision(
+            0,
+        ),
+        viewport_revision: Revision(
+            0,
+        ),
+        durable: DurableState {
+            viewport: Viewport {
+                x: None,
+                y: None,
+            },
+            windows: {},
+            follow: FollowLatest,
+            hidden: {},
+            legend_visible: true,
+            selection: {},
+            pinned: None,
+            annotations: {},
+        },
+        hover: {},
+        focus: None,
+        active: None,
+        configuration: InteractionConfig {
+            max_targets: 4096,
+            history_capacity: 64,
+            manual_view_enters_history: true,
+        },
+        revisions: StateRevisions {
+            durable: Revision(
+                0,
+            ),
+            follow: Revision(
+                0,
+            ),
+            hover: Revision(
+                0,
+            ),
+            focus: Revision(
+                0,
+            ),
+            pin: Revision(
+                0,
+            ),
+            selection: Revision(
+                0,
+            ),
+            visibility: Revision(
+                0,
+            ),
+            annotations: Revision(
+                0,
+            ),
+            gesture: Revision(
+                0,
+            ),
+            configuration: Revision(
+                0,
+            ),
+        },
+    },
+    effective_state: ChartState {
+        revision: Revision(
+            0,
+        ),
+        viewport_revision: Revision(
+            0,
+        ),
+        durable: DurableState {
+            viewport: Viewport {
+                x: None,
+                y: None,
+            },
+            windows: {},
+            follow: FollowLatest,
+            hidden: {},
+            legend_visible: true,
+            selection: {},
+            pinned: None,
+            annotations: {},
+        },
+        hover: {},
+        focus: None,
+        active: None,
+        configuration: InteractionConfig {
+            max_targets: 4096,
+            history_capacity: 64,
+            manual_view_enters_history: true,
+        },
+        revisions: StateRevisions {
+            durable: Revision(
+                0,
+            ),
+            follow: Revision(
+                0,
+            ),
+            hover: Revision(
+                0,
+            ),
+            focus: Revision(
+                0,
+            ),
+            pin: Revision(
+                0,
+            ),
+            selection: Revision(
+                0,
+            ),
+            visibility: Revision(
+                0,
+            ),
+            annotations: Revision(
+                0,
+            ),
+            gesture: Revision(
+                0,
+            ),
+            configuration: Revision(
+                0,
+            ),
+        },
+    },
+    source_epoch: SourceEpoch(
+        1027,
+    ),
+    datasets: [
+        (
+            DatasetVersion {
+                dataset: DatasetId(
+                    1024,
+                ),
+                revision: Revision(
+                    0,
+                ),
+                schema_version: SchemaVersion(
+                    1,
+                ),
+            },
+            SchemaVersion(
+                1,
+            ),
+        ),
+    ],
+    fonts: [
+        FontManifest {
+            id: ResourceId(
+                1,
+            ),
+            revision: Revision(
+                0,
+            ),
+            sha256: "2ec33f84606cbaa0a1a944488e14f97faf2f6a25ecdd8354f5358f06da13c7d9",
+        },
+    ],
+    profile: PublicationProfile {
+        page: PageSize {
+            width: 510.236220472441,
+            height: 340.15748031496065,
+        },
+        layout: LayoutRequest {
+            host_theme: ThemePatch {
+                color_mode: None,
+                gradient: None,
+                background: None,
+                panel: None,
+                foreground: None,
+                grid: None,
+                mark: None,
+                annotation: None,
+                focus: None,
+                selection: None,
+                font_size: None,
+                padding: None,
+                gap: None,
+                tick_length: None,
+                stroke_width: None,
+                dashes: None,
+                symbol: None,
+            },
+            interaction_theme: {},
+            output_theme: ThemePatch {
+                color_mode: None,
+                gradient: None,
+                background: None,
+                panel: None,
+                foreground: None,
+                grid: None,
+                mark: None,
+                annotation: None,
+                focus: None,
+                selection: None,
+                font_size: None,
+                padding: None,
+                gap: None,
+                tick_length: None,
+                stroke_width: None,
+                dashes: None,
+                symbol: None,
+            },
+            figure_bounds: None,
+            bounds: Rect {
+                origin: Point {
+                    x: 0.0,
+                    y: 0.0,
+                },
+                width: 510.236220472441,
+                height: 340.15748031496065,
+            },
+            units: Points,
+            revision: Revision(
+                0,
+            ),
+            font: ResourceDescriptor {
+                id: ResourceId(
+                    1,
+                ),
+                revision: Revision(
+                    0,
+                ),
+                kind: Font,
+                byte_len: 556216,
+            },
+            font_size: 10.0,
+            axes: [
+                AxisSpec {
+                    guide_ticks: None,
+                    number_format: None,
+                    title: None,
+                    typography: None,
+                    label_rotation: 0.0,
+                    id: ScaleId(
+                        0,
+                    ),
+                    side: Bottom,
+                    scale: Auto,
+                    viewport: None,
+                    range: None,
+                    outside: Extend,
+                    visible: true,
+                },
+                AxisSpec {
+                    guide_ticks: None,
+                    number_format: None,
+                    title: None,
+                    typography: None,
+                    label_rotation: 0.0,
+                    id: ScaleId(
+                        1,
+                    ),
+                    side: Left,
+                    scale: Auto,
+                    viewport: None,
+                    range: None,
+                    outside: Extend,
+                    visible: true,
+                },
+            ],
+            padding: 30.0,
+            minimum_plot: (
+                24.0,
+                24.0,
+            ),
+            tick_length: 4.0,
+            label_gap: 4.0,
+            target_ticks: 6,
+            max_ticks: 128,
+            max_categories: 10000,
+            max_vertices: 1000000,
+            limits: Limits {
+                max_items: 100000,
+                max_path_commands: 1000000,
+                max_text_bytes: 1048576,
+                max_resources: 256,
+                max_resource_bytes: 67108864,
+                max_total_resource_bytes: 268435456,
+            },
+        },
+        view: VisibleView,
+        text: Preserve,
+        dpi: 300,
+        background: Color {
+            red: 255,
+            green: 255,
+            blue: 255,
+            alpha: 255,
+        },
+        annotation_revision: Revision(
+            0,
+        ),
+        annotations: [],
+        precision: 0.01,
+        max_raster_pixels: 32000000,
+        max_output_bytes: 67108864,
+    },
+}

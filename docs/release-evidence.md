@@ -8,7 +8,9 @@ five performance cases to evidence. It is an index of recorded assessments, not 
 substitute for their assertions, artifacts or limitations.
 
 Current specification text adds requirements and expands several existing IDs.
-**No Phase 2, D3 parity, ggplot2 parity or primary-authoring certification is claimed.**
+**No Phase 2, D3 parity or ggplot2 parity certification is claimed.**
+The later [primary-authoring implementation and qualification](evidence/primary-authoring-completion-2026-09-08.md)
+is recorded separately; its final performance gate remains open.
 The [live specification](spec/gpui-charts-specification.md) and
 [implementation ledger](implementation-status.md) remain authoritative for that work.
 An original-scope result does not certify later clauses carrying the same requirement ID.
@@ -22,7 +24,8 @@ An original-scope result does not certify later clauses carrying the same requir
 | G2 | Original family/statistics/facet/theme/extension alpha matrix complete; WP-10–14. |
 | G3 | Original interaction, streaming, coherent export and native hardening pass; WP-15–21. |
 | G4 | Local source candidate and documentation prepared. Current expanded production acceptance remains OPEN. WP-22 reports measured performance, owner duration waiver and failed/invalidated runs explicitly. |
-| Expanded gates | G-PARITY, D3 lanes, ggplot2 and primary-authoring acceptance remain OPEN and outside this assignment. |
+| Expanded gates | G-PARITY, D3 lanes and ggplot2 remain OPEN and outside the original assignment. |
+| G-AUTH | Later primary implementation/platform/host evidence is recorded separately; final native performance qualification remains OPEN. |
 
 ## Original requirement coverage
 

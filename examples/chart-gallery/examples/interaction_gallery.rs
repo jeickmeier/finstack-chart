@@ -1,8 +1,9 @@
 //! WP-16 actual native pointer/keyboard producers over the shared presented-scene engine.
-use chart_core::{portable::Session, services::*, state::*, *};
+#[path = "../../common/input_plots.rs"]
+mod input_plots;
+use chart_core::{state::*, *};
 use gpui::{prelude::*, *};
 use gpui_charts::*;
-use std::sync::Arc;
 struct Gallery {
     chart: Entity<ChartView>,
     font: NativeFont,
@@ -12,16 +13,8 @@ struct Gallery {
     _observe: Subscription,
 }
 fn input(case: usize, font: NativeFont) -> ChartInput {
-    let cases: serde_json::Value =
-        serde_json::from_str(include_str!("../../../fixtures/interaction/cases.json"))
-            .expect("cases");
-    let c = &cases[case];
-    let session = Session::new(&c["chart"].to_string(), &c["data"].to_string()).expect("session");
-    let mut definition = session.definition().clone();
-    for axis in &mut definition.axes {
-        axis.visible = true;
-    }
-    ChartInput::new(definition, session.source(), font).expect("input")
+    let plot = input_plots::plot_for(case, input_plots::data(case).expect("source")).expect("plot");
+    ChartInput::from_plot(&plot, font).expect("native input")
 }
 impl Render for Gallery {
     fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
@@ -202,22 +195,12 @@ impl Render for Gallery {
 }
 fn main() {
     gpui_platform::application().run(|cx: &mut App| {
-        let bytes: Arc<[u8]> =
-            include_bytes!("../../../fixtures/capability/fonts/NotoSans-Regular.ttf")
-                .as_slice()
-                .into();
-        let font = NativeFont::load(
-            ResourceDescriptor {
-                id: ResourceId::new(1),
-                revision: Revision::new(1),
-                kind: ResourceKind::Font,
-                byte_len: bytes.len() as u64,
-            },
-            bytes,
+        let font = NativeFont::from_bytes(
+            include_bytes!("../../../fixtures/capability/fonts/NotoSans-Regular.ttf").as_slice(),
             "Noto Sans",
             cx,
         )
-        .expect("font");
+        .expect("supplied font");
         cx.open_window(
             WindowOptions {
                 window_bounds: Some(WindowBounds::Windowed(Bounds::centered(

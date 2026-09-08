@@ -2,18 +2,14 @@
 #[path = "../../../crates/chart-core/examples/common/dense_workload.rs"]
 #[allow(dead_code)]
 mod workload;
-use chart_core::{services::*, state::*, transaction::*, *};
+use chart_core::{state::*, transaction::*, *};
 use gpui::{prelude::*, *};
 use gpui_charts::*;
 use serde_json::json;
-use std::{
-    sync::Arc,
-    time::{Duration, Instant},
-};
+use std::time::{Duration, Instant};
 const FONT: &[u8] = include_bytes!("../../../fixtures/capability/fonts/NotoSans-Regular.ttf");
 struct Gallery {
     charts: Vec<Entity<ChartView>>,
-    stores: Vec<DataStore>,
     tick: usize,
     running: bool,
     started: Instant,
@@ -26,18 +22,14 @@ impl Gallery {
     fn advance(&mut self, cx: &mut Context<Self>) -> ChartResult<()> {
         self.tick += 1;
         for i in 0..self.charts.len() {
-            let store = &mut self.stores[i];
-            let source = store.snapshot();
-            let mutation = Mutation::UpsertByKey(workload::batch(1, 100, self.tick)?);
-            let outcome = store.apply(Transaction {
-                id: TransactionId::new(format!("native-{}-{}", i, self.tick))?,
-                epoch: source.get()?.epoch(),
-                expected: vec![source.get()?.dataset(workload::DATA)?.version()],
-                operations: vec![Operation {
-                    dataset: workload::DATA,
-                    mutation,
-                }],
-            });
+            let transaction = self.charts[i]
+                .read(cx)
+                .chart()
+                .transaction()?
+                .id(format!("native-{i}-{}", self.tick))
+                .upsert("data", workload::primary_data(1, 100, self.tick)?)
+                .build()?;
+            let outcome = self.charts[i].update(cx, |chart, cx| chart.commit(transaction, cx))?;
             if !matches!(outcome, CommitOutcome::Applied(_)) {
                 return Err(Diagnostic::error(
                     DiagnosticCode::Validation,
@@ -45,7 +37,6 @@ impl Gallery {
                     "Inspect the proof transaction.",
                 ));
             }
-            self.charts[i].update(cx, |chart, cx| chart.queue_data(store.snapshot(), cx))?;
         }
         if self.tick == 24 {
             self.act("Inspect", cx);
@@ -167,11 +158,11 @@ impl Render for Gallery {
                     .unwrap_or_default();
                 let text = format!(
                     "{} rows · Committed {} · Presented {} · Active {} · Pending {} · Coalesced {} · Stale {}",
-                    self.stores[i]
-                        .snapshot()
+                    c.chart()
+                        .source()
                         .get()
                         .unwrap()
-                        .dataset(workload::DATA)
+                        .dataset(c.chart().data("data").unwrap().id())
                         .unwrap()
                         .len(),
                     m.committed.map(|r| r.get()).unwrap_or(0),
@@ -201,25 +192,12 @@ impl Render for Gallery {
 fn main() {
     let isolated_redraw = std::env::args().any(|a| a == "--isolated-redraw");
     gpui_platform::application().run(move |cx: &mut App| {
-        let font = NativeFont::load(
-            ResourceDescriptor {
-                id: ResourceId::new(1),
-                revision: Revision::new(1),
-                kind: ResourceKind::Font,
-                byte_len: FONT.len() as u64,
-            },
-            Arc::from(FONT),
-            "Noto Sans",
-            cx,
-        )
-        .unwrap();
-        let stores: Vec<_> = [100_000, 2_000, 3_000, 4_000]
+        let font = NativeFont::from_bytes(FONT, "Noto Sans", cx).unwrap();
+        let inputs: Vec<_> = [100_000, 2_000, 3_000, 4_000]
             .into_iter()
-            .map(|n| workload::store(1, n).unwrap())
-            .collect();
-        let inputs: Vec<_> = stores
-            .iter()
-            .map(|s| ChartInput::new(workload::definition(), s.snapshot(), font.clone()).unwrap())
+            .map(|n| {
+                ChartInput::from_plot(&workload::primary_plot(1, n).unwrap(), font.clone()).unwrap()
+            })
             .collect();
         cx.open_window(
             WindowOptions {
@@ -294,7 +272,6 @@ fn main() {
                     });
                     Gallery {
                         charts,
-                        stores,
                         tick: 0,
                         running: false,
                         started: Instant::now(),

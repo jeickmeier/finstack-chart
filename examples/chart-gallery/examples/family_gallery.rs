@@ -1,19 +1,18 @@
-//! Required family gallery consuming the identical portable fixture catalog as host proofs.
-use chart_core::portable::{ChartEnvelope, DataEnvelope, Session, decode, encode};
-use chart_core::services::{ResourceDescriptor, ResourceKind};
-use chart_core::{ResourceId, Revision};
+//! Primary component gallery; shares explicit builder recipes with the host proofs.
+#[path = "../../common/authoring_fixtures.rs"]
+mod authoring_fixtures;
+use chart_core::prelude::Plot;
+#[cfg(feature = "kit")]
+use chart_core::prelude::theme;
 use gpui::{
     Bounds, Context, Entity, IntoElement, Render, Window, WindowBounds, WindowOptions, div,
     prelude::*, px, rgb, size,
 };
 use gpui_charts::{ChartInput, ChartView, NativeFont};
-use std::sync::Arc;
 
-#[derive(serde::Deserialize)]
 struct Case {
     name: String,
-    chart: ChartEnvelope,
-    data: DataEnvelope,
+    plot: Plot,
 }
 struct Gallery {
     cases: Vec<Case>,
@@ -23,23 +22,18 @@ struct Gallery {
 }
 impl Gallery {
     fn mount(case: &Case, font: &NativeFont, cx: &mut Context<Self>) -> Entity<ChartView> {
-        let session = Session::new(
-            &encode(&case.chart).expect("fixture"),
-            &encode(&case.data).expect("fixture"),
-        )
-        .expect("valid family fixture");
-        let input = ChartInput::new(session.definition().clone(), session.source(), font.clone())
-            .expect("native input");
+        #[cfg(feature = "kit")]
+        let input = if case.name == "composition-kit-host" {
+            use gpui_kit::component::ActiveTheme;
+            gpui_charts_kit::chart_input(&case.plot, font.clone(), cx.theme()).expect("Kit input")
+        } else {
+            ChartInput::from_plot(&case.plot, font.clone()).expect("native input")
+        };
+        #[cfg(not(feature = "kit"))]
+        let input = ChartInput::from_plot(&case.plot, font.clone()).expect("native input");
         let chart = cx.new(|cx| ChartView::new(input, cx));
         #[cfg(feature = "kit")]
         if case.name == "composition-kit-host" {
-            use gpui_kit::component::ActiveTheme;
-            let theme = cx.theme().clone();
-            chart
-                .update(cx, |view, cx| {
-                    gpui_charts_kit::apply_theme(view, &theme, cx)
-                })
-                .expect("Kit host tokens");
             // A bounded initial view makes the Kit reset control observable in this example.
             chart
                 .update(cx, |view, cx| {
@@ -154,35 +148,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         || std::env::current_exe()?
             .file_stem()
             .is_some_and(|name| name == "composition_gallery");
-    let cases: Vec<Case> = if composition {
-        decode(include_str!(
-            "../../../fixtures/composition/portable-cases.json"
-        ))?
-    } else if std::env::args().any(|arg| arg == "--facets")
+    let facets = std::env::args().any(|arg| arg == "--facets")
         || std::env::current_exe()?
             .file_stem()
-            .is_some_and(|name| name == "facet_gallery")
-    {
-        decode(include_str!("../../../fixtures/facets/portable-cases.json"))?
-    } else {
-        decode(include_str!(
-            "../../../fixtures/families/portable-cases.json"
-        ))?
-    };
-    #[cfg(feature = "kit")]
-    let cases = {
-        let mut cases = cases;
-        if composition {
-            let mut case: Case = decode(include_str!(
-                "../../../fixtures/composition/portable-cases.json"
-            ))
-            .map(|mut v: Vec<Case>| v.remove(0))?;
-            case.name = "composition-kit-host".into();
-            case.chart.definition.theme.as_mut().expect("theme").named = None;
-            cases.push(case);
-        }
-        cases
-    };
+            .is_some_and(|name| name == "facet_gallery");
     let selected = std::env::args()
         .nth(1)
         .and_then(|v| v.parse().ok())
@@ -190,56 +159,57 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     gpui_platform::application().run(move |cx| {
         #[cfg(feature = "kit")]
         gpui_kit::init(cx);
-        let bytes: Arc<[u8]> = Arc::from(
+        let mut font = NativeFont::from_bytes(
             include_bytes!("../../../fixtures/capability/fonts/NotoSans-Regular.ttf").as_slice(),
-        );
-        let font = NativeFont::load(
-            ResourceDescriptor {
-                id: ResourceId::new(0),
-                revision: Revision::INITIAL,
-                kind: ResourceKind::Font,
-                byte_len: bytes.len() as u64,
-            },
-            bytes,
             "Noto Sans",
             cx,
         )
         .expect("fixture font");
-        let font = if composition {
-            let mut font = font;
-            for (id, bytes, family) in [
-                (
-                    9007199254747002_u64,
-                    include_bytes!("../../../fixtures/composition/fonts/NotoSans-Bold.ttf")
-                        .as_slice(),
-                    "Noto Sans",
-                ),
-                (
-                    9007199254747003_u64,
-                    include_bytes!(
-                        "../../../fixtures/composition/fonts/NotoSansArabic-Regular.ttf"
-                    )
+        let plots = if composition {
+            let bold = NativeFont::from_bytes(
+                include_bytes!("../../../fixtures/composition/fonts/NotoSans-Bold.ttf").as_slice(),
+                "Noto Sans",
+                cx,
+            )
+            .expect("bold face");
+            let arabic = NativeFont::from_bytes(
+                include_bytes!("../../../fixtures/composition/fonts/NotoSansArabic-Regular.ttf")
                     .as_slice(),
-                    "Noto Sans Arabic",
-                ),
-            ] {
-                let face = NativeFont::load(
-                    ResourceDescriptor {
-                        id: ResourceId::new(id),
-                        revision: Revision::new(1),
-                        kind: ResourceKind::Font,
-                        byte_len: bytes.len() as u64,
-                    },
-                    Arc::from(bytes),
-                    family,
-                    cx,
-                )
-                .expect("rich fixture face");
-                font = font.with_face(&face).expect("rich face bank");
-            }
-            font
+                "Noto Sans Arabic",
+                cx,
+            )
+            .expect("Arabic face");
+            font = font
+                .with_face(&bold)
+                .expect("bold bank")
+                .with_face(&arabic)
+                .expect("Arabic bank");
+            authoring_fixtures::composition_cases(bold.descriptor(), arabic.descriptor())
         } else {
-            font
+            authoring_fixtures::cases()
+                .into_iter()
+                .filter(|(name, _)| name.starts_with(if facets { "facet-" } else { "family-" }))
+                .collect()
+        };
+        let cases: Vec<Case> = plots
+            .into_iter()
+            .map(|(name, plot)| Case { name, plot })
+            .collect();
+        #[cfg(feature = "kit")]
+        let cases = {
+            let mut cases = cases;
+            if composition {
+                cases.push(Case {
+                    name: "composition-kit-host".into(),
+                    plot: cases[0]
+                        .plot
+                        .edit()
+                        .theme(theme())
+                        .build()
+                        .expect("inherited Kit theme"),
+                });
+            }
+            cases
         };
         cx.open_window(
             WindowOptions {

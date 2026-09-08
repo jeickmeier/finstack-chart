@@ -1,0 +1,370 @@
+use super::*;
+use crate::grammar::{DataRef, Layer, Numeric, SourceAes};
+
+fn source_mappings(aes: &SourceAes, data: &Data) -> AesBuilder {
+    let mapping = |value: &Numeric| match value {
+        Numeric::Field(id) | Numeric::Category(id) => Mapping::Handle(FieldHandle {
+            dataset: data.id,
+            field: *id,
+        }),
+        Numeric::Timestamp { field, origin } => Mapping::Timestamp {
+            field: data
+                .batch
+                .schema()
+                .field(*field)
+                .map_or(String::new(), |(_, f)| f.name.clone()),
+            origin: *origin,
+        },
+        Numeric::Literal(value) => Mapping::Literal(*value),
+    };
+    AesBuilder {
+        x: aes.x.as_ref().map(mapping),
+        y: aes.y.as_ref().map(mapping),
+        x2: aes.x2.as_ref().map(mapping),
+        y2: aes.y2.as_ref().map(mapping),
+        low: aes.low.as_ref().map(mapping),
+        high: aes.high.as_ref().map(mapping),
+        size: aes.size.as_ref().map(mapping),
+        group: aes.group.map(|field| {
+            Mapping::Handle(FieldHandle {
+                dataset: data.id,
+                field,
+            })
+        }),
+        ..Default::default()
+    }
+}
+impl PlotEditBuilder {
+    fn update(mut self, apply: impl FnOnce(&mut Self) -> ChartResult<()>) -> Self {
+        if self.failure.is_none()
+            && let Err(e) = apply(&mut self)
+        {
+            self.failure = Some(e);
+        }
+        self
+    }
+    fn root_data(&self, mut input: DataRef) -> ChartResult<&Data> {
+        for _ in 0..=self.definition.transforms.len() {
+            match input {
+                DataRef::Dataset(id) => {
+                    return self
+                        .original
+                        .data
+                        .iter()
+                        .find(|data| data.id == id)
+                        .ok_or_else(|| {
+                            error(
+                                DiagnosticCode::MissingResource,
+                                "Definition edit names an unregistered dataset.",
+                            )
+                        });
+                }
+                DataRef::Transform(id) => {
+                    input = self
+                        .definition
+                        .transforms
+                        .iter()
+                        .find(|t| t.id == id)
+                        .ok_or_else(|| {
+                            error(
+                                DiagnosticCode::MissingResource,
+                                "Definition edit names an absent transform.",
+                            )
+                        })?
+                        .input
+                }
+            }
+        }
+        Err(error(
+            DiagnosticCode::Validation,
+            "Transform dependency cycle.",
+        ))
+    }
+    fn color_scales(&self) -> BTreeMap<String, ColorScale> {
+        self.original
+            .colors
+            .iter()
+            .filter_map(|(name, id)| {
+                self.definition
+                    .layers
+                    .iter()
+                    .filter_map(|l| l.color.as_ref())
+                    .find(|c| c.id == *id)
+                    .map(|c| (name.clone(), c.scale.clone()))
+            })
+            .collect()
+    }
+    /// Add or replace a complete layer component, preserving an existing name's identity.
+    /// Omitted source mappings inherit that layer's resolved source mappings. Data must already
+    /// belong to the plot; live data replacement remains a separate transaction.
+    pub fn layer(self, name: impl Into<String>, mut builder: LayerBuilder) -> Self {
+        let name = name.into();
+        self.update(|this| {
+            validate_name(&name)?;
+            let existing = this
+                .original
+                .layers
+                .get(&name)
+                .and_then(|id| this.definition.layers.iter().find(|l| l.id == *id))
+                .cloned();
+            if let Some(old) = &existing {
+                builder.id = Ok(old.id);
+            }
+            let input = if let Some(input) = &builder.input {
+                DataRef::Transform(input.resolve(&this.original.transforms)?)
+            } else if let Some(data) = &builder.data {
+                DataRef::Dataset(data.id)
+            } else {
+                existing
+                    .as_ref()
+                    .map_or(DataRef::Dataset(this.original.data[0].id), |old| old.data)
+            };
+            let data = this.root_data(input)?.clone();
+            let mut inherited = if let Some(Layer {
+                mappings: Mappings::Source(aes),
+                ..
+            }) = &existing
+            {
+                source_mappings(aes, &data)
+            } else {
+                aes()
+            };
+            if let Some(color) = existing.as_ref().and_then(|l| l.color.as_ref()) {
+                inherited.color = match &color.input {
+                    ColorInput::Category(field) => Some(Mapping::Handle(FieldHandle {
+                        dataset: data.id,
+                        field: *field,
+                    })),
+                    ColorInput::Numeric(value) => {
+                        source_mappings(&SourceAes::new().x(value.clone()), &data).x
+                    }
+                    _ => None,
+                };
+                inherited.color_scale = this
+                    .original
+                    .colors
+                    .iter()
+                    .find(|(_, id)| **id == color.id)
+                    .map(|(name, _)| name.clone());
+            }
+            let (mut layer, mapping) = builder.lower(&data, &inherited)?;
+            layer.data = input;
+            if matches!(input, DataRef::Transform(_))
+                && builder.generated.is_none()
+                && builder.stat.is_none()
+                && let Some(old) = &existing
+            {
+                layer.mappings = old.mappings.clone();
+            }
+            if builder.axes.is_none()
+                && let Some(old) = &existing
+            {
+                layer.scales = old.scales;
+            }
+            let color_scales = this.color_scales();
+            if let Some(theme) = &mut this.definition.theme {
+                theme.layers.remove(&layer.id);
+            }
+            resolve::LayerContext {
+                axes: &this.original.axes,
+                color_ids: &mut this.original.colors,
+                color_scales: &color_scales,
+            }
+            .apply(&mut this.definition, &mut layer, &builder, &mapping, &data)?;
+            this.original.layers.insert(name, layer.id);
+            if let Some(index) = this.definition.layers.iter().position(|l| l.id == layer.id) {
+                this.definition.layers[index] = layer;
+            } else {
+                this.definition.layers.push(layer);
+            }
+            Ok(())
+        })
+    }
+    /// Remove one named layer; dangling inset/transform references reject at build.
+    pub fn remove_layer(self, name: &str) -> Self {
+        self.update(|this| {
+            let id = this.original.layers.remove(name).ok_or_else(|| {
+                error(
+                    DiagnosticCode::MissingResource,
+                    format!("No layer named '{name}'."),
+                )
+            })?;
+            this.definition.layers.retain(|l| l.id != id);
+            if let Some(theme) = &mut this.definition.theme {
+                theme.layers.remove(&id);
+            }
+            Ok(())
+        })
+    }
+    /// Configure the horizontal axis, preserving its authored name and identity.
+    pub fn x_axis(self, axis: AxisBuilder) -> Self {
+        self.axis(axis)
+    }
+    /// Configure the vertical axis, preserving its authored name and identity.
+    pub fn y_axis(self, axis: AxisBuilder) -> Self {
+        self.axis(axis)
+    }
+    /// Replace/add a named axis while preserving its existing identity.
+    pub fn axis(self, mut axis: AxisBuilder) -> Self {
+        self.update(|this| {
+            validate_name(&axis.name)?;
+            if let Some(id) = this.original.axes.get(&axis.name) {
+                axis.spec.id = *id;
+            }
+            if this.definition.axes.is_empty() {
+                this.definition.axes = vec![x_axis().spec, y_axis().spec];
+            }
+            this.original
+                .axes
+                .insert(axis.name.clone(), axis.handle()?.id());
+            let axis = axis.lower(&this.original.axes)?;
+            if let Some(index) = this.definition.axes.iter().position(|a| a.id == axis.id) {
+                this.definition.axes[index] = axis;
+            } else {
+                this.definition.axes.push(axis);
+            }
+            Ok(())
+        })
+    }
+    /// Replace wrap/grid policy using the retained default data and exact catalog rules.
+    pub fn facet(self, facet: FacetBuilder) -> Self {
+        self.update(|this| {
+            this.definition.facets = Some(facet.lower(&this.original.data[0])?);
+            Ok(())
+        })
+    }
+    /// Remove facets; data/panel furniture must also be made compatible before build.
+    pub fn clear_facets(mut self) -> Self {
+        self.definition.facets = None;
+        self
+    }
+    /// Replace one named color scale on every mapped layer, preserving shared scale identity.
+    pub fn scale(self, scale: ColorScaleBuilder) -> Self {
+        self.update(|this| {
+            let id = *this.original.colors.get(&scale.name).ok_or_else(|| {
+                error(
+                    DiagnosticCode::MissingResource,
+                    "Color edit names an absent mapped scale.",
+                )
+            })?;
+            let value = scale.scale?;
+            value.validate()?;
+            for color in this
+                .definition
+                .layers
+                .iter_mut()
+                .filter_map(|l| l.color.as_mut())
+                .filter(|c| c.id == id)
+            {
+                color.scale = value.clone();
+            }
+            Ok(())
+        })
+    }
+    /// Override the title of an existing shared legend, independently of annotations.
+    pub fn legend(self, legend: LegendBuilder) -> Self {
+        self.update(|this| {
+            let name = legend.scale.ok_or_else(|| {
+                error(
+                    DiagnosticCode::MissingResource,
+                    "Legend requires a scale name.",
+                )
+            })?;
+            let id = *this.original.colors.get(&name).ok_or_else(|| {
+                error(
+                    DiagnosticCode::MissingResource,
+                    "Legend names an absent scale.",
+                )
+            })?;
+            for color in this
+                .definition
+                .layers
+                .iter_mut()
+                .filter_map(|l| l.color.as_mut())
+                .filter(|c| c.id == id)
+            {
+                if legend.untitled {
+                    color.title = None;
+                }
+                if let Some(title) = &legend.title {
+                    color.title = Some(title.clone());
+                }
+            }
+            Ok(())
+        })
+    }
+    /// Add or replace one stable annotation; use id() to target an existing annotation.
+    pub fn annotation(self, label: impl Into<PlotLayer>) -> Self {
+        self.update(|this| {
+            let PlotLayer::Annotation(label) = label.into() else {
+                return Err(error(
+                    DiagnosticCode::SchemaConflict,
+                    "Annotation edit requires labels or callout.",
+                ));
+            };
+            let label = label.lower(&this.original.axes)?;
+            let figure = this.figure_mut();
+            if let Some(index) = figure.annotations.iter().position(|a| a.id == label.id) {
+                figure.annotations[index] = label;
+            } else {
+                figure.annotations.push(label);
+            }
+            Ok(())
+        })
+    }
+    /// Remove a stable annotation without touching observed data.
+    pub fn remove_annotation(mut self, id: &str) -> Self {
+        self.figure_mut().annotations.retain(|a| a.id != id);
+        self
+    }
+    /// Add or replace a stable inset over existing prepared layer identities.
+    pub fn inset(self, inset: InsetBuilder) -> Self {
+        self.update(|this| {
+            if let Some(e) = inset.failure {
+                return Err(e);
+            }
+            let figure = this.figure_mut();
+            if let Some(index) = figure.insets.iter().position(|i| i.id == inset.value.id) {
+                figure.insets[index] = inset.value;
+            } else {
+                figure.insets.push(inset.value);
+            }
+            Ok(())
+        })
+    }
+    /// Add/replace one complete shared transform, retaining a matching name's identity.
+    pub fn transform(self, mut transform: TransformBuilder) -> Self {
+        self.update(|this| {
+            validate_name(&transform.name)?;
+            let existing = this
+                .original
+                .transforms
+                .get(&transform.name)
+                .and_then(|id| this.definition.transforms.iter().find(|t| t.id == *id));
+            if let Some(old) = existing {
+                transform.id = Ok(old.id);
+            }
+            let input = if let Some(reference) = &transform.input {
+                DataRef::Transform(reference.resolve(&this.original.transforms)?)
+            } else if let Some(data) = &transform.data {
+                DataRef::Dataset(data.id)
+            } else {
+                existing.map_or(DataRef::Dataset(this.original.data[0].id), |old| old.input)
+            };
+            let root = this.root_data(input)?;
+            let node = transform.lower(root, input, &aes())?;
+            this.original.transforms.insert(transform.name, node.id);
+            if let Some(index) = this
+                .definition
+                .transforms
+                .iter()
+                .position(|t| t.id == node.id)
+            {
+                this.definition.transforms[index] = node;
+            } else {
+                this.definition.transforms.push(node);
+            }
+            Ok(())
+        })
+    }
+}

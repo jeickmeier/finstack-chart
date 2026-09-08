@@ -47,3 +47,7 @@ fi
 [tasks.bindings-proof]
 description = "Build and run the actual Rust, Python and WASM portable fixture (Node, matching wasm-bindgen CLI and Poppler required)"
 run = "python3 scripts/run_binding_proofs.py"
+
+[tasks.primary-authoring-proof]
+description = "Build and compare actual Rust/Python/WASM primary authors and checked host declarations (mypy, TypeScript and matching wasm-bindgen required)"
+run = "python3 scripts/run_primary_authoring_proofs.py"

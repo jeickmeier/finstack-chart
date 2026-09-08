@@ -1,0 +1,26 @@
+    Finished `release` profile [optimized] target(s) in 0.25s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+lines: evidence complete
+Traceback (most recent call last):
+  File "/Users/jeickmeier/Projects/finstack-chart/scripts/performance/check_native_performance.py", line 182, in <module>
+    main()
+    ~~~~^^
+  File "/Users/jeickmeier/Projects/finstack-chart/scripts/performance/check_native_performance.py", line 177, in main
+    report = {"callbacks": accounting, "gpu_ns": quantiles([f["gpu_ns"] for f in display]), "scene_begin_to_display_ns": quantiles([f["scene_begin_to_display_ns"] for f in display]), "workload": stream(events, display, args.seconds, args.partial_stream) if args.seconds is not None else finite(events,display)}
+                                                                                                                                                                                                                                                                                               ~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/jeickmeier/Projects/finstack-chart/scripts/performance/check_native_performance.py", line 144, in finite
+    assert len(samples)>=30
+           ^^^^^^^^^^^^^^^^
+AssertionError
+Traceback (most recent call last):
+  File "/Users/jeickmeier/Projects/finstack-chart/scripts/performance/run_native.py", line 50, in <module>
+    main()
+    ~~~~^^
+  File "/Users/jeickmeier/Projects/finstack-chart/scripts/performance/run_native.py", line 45, in main
+    subprocess.run(command, stdout=report, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jeickmeier/.local/share/mise/installs/python/3.14.6/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/jeickmeier/Projects/finstack-chart/scripts/performance/check_native_performance.py', '/Users/jeickmeier/Projects/finstack-chart/target/authoring/performance-repeat/dashboard-raw/events.jsonl', '/Users/jeickmeier/Projects/finstack-chart/target/authoring/performance-repeat/dashboard-raw/metal.jsonl', '--frames', '/Users/jeickmeier/Projects/finstack-chart/target/authoring/performance-repeat/dashboard-raw/frames.jsonl']' returned non-zero exit status 1.

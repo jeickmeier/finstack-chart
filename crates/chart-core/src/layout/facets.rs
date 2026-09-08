@@ -163,6 +163,89 @@ fn paint_legend(
     Ok(())
 }
 
+pub(super) struct SingleLegend {
+    pub content: Rect,
+    bounds: Rect,
+    labels: Vec<Label>,
+}
+
+fn legend_width(labels: &[Label], width: f64, request: &LayoutRequest) -> f64 {
+    if labels.is_empty() {
+        0.
+    } else {
+        (labels
+            .iter()
+            .map(|l| l.metrics.width() + request.font_size + request.label_gap)
+            .fold(0_f64, f64::max)
+            + request.padding)
+            .min(width * 0.3)
+    }
+}
+
+pub(super) fn prepare_single_legend(
+    prepared: &PreparedChart,
+    request: &LayoutRequest,
+    measurer: &dyn TextMeasurer,
+) -> ChartResult<Option<SingleLegend>> {
+    if prepared.definition().facets.is_some() {
+        return Ok(None);
+    }
+    let mut remaining = request.limits.max_text_bytes;
+    let labels = measure_labels(
+        legend_values(&legends(prepared)),
+        request,
+        measurer,
+        &mut remaining,
+    )?;
+    if labels.is_empty() {
+        return Ok(None);
+    }
+    let width = legend_width(&labels, request.bounds.width(), request);
+    let content = Rect::new(
+        request.bounds.origin().x(),
+        request.bounds.origin().y(),
+        request.bounds.width() - width,
+        request.bounds.height(),
+    )?;
+    let bounds = Rect::new(
+        content.max_x(),
+        content.origin().y(),
+        width,
+        content.height(),
+    )?;
+    Ok(Some(SingleLegend {
+        content,
+        bounds,
+        labels,
+    }))
+}
+
+pub(super) fn finish_single_legend(
+    chart: &mut LaidOutChart,
+    request: &LayoutRequest,
+    legend: SingleLegend,
+) -> ChartResult<()> {
+    let mut items = chart.scene.items().to_vec();
+    paint_legend(
+        &mut items,
+        &legend.labels,
+        legend.bounds,
+        request,
+        &mut chart.diagnostics,
+    )?;
+    chart.targets.resize(items.len(), vec![]);
+    chart.item_panels.resize(items.len(), None);
+    chart.scene = Scene::new(
+        chart.scene.stamp(),
+        request.units,
+        chart.scene.bounds(),
+        &items,
+        chart.scene.resources(),
+        request.limits,
+    )?;
+    Ok(())
+}
+
 pub(super) fn layout_facets(
     prepared: Arc<PreparedChart>,
     request: &LayoutRequest,
@@ -227,19 +310,7 @@ pub(super) fn layout_facets(
             )?
         });
     }
-    let legend_width = |labels: &[Label], width: f64| -> f64 {
-        if labels.is_empty() {
-            0.
-        } else {
-            (labels
-                .iter()
-                .map(|l| l.metrics.width() + request.font_size + request.label_gap)
-                .fold(0_f64, f64::max)
-                + request.padding)
-                .min(width * 0.3)
-        }
-    };
-    let shared_width = legend_width(&shared_labels, request.bounds.width());
+    let shared_width = legend_width(&shared_labels, request.bounds.width(), request);
     let total_width = request.bounds.width() - shared_width;
     let cell_width = (total_width - spec.gap * (columns - 1) as f64) / columns as f64;
     let cell_height = (request.bounds.height() - spec.gap * (rows - 1) as f64) / rows as f64;
@@ -264,7 +335,7 @@ pub(super) fn layout_facets(
     }
     let local_width = local_labels
         .iter()
-        .map(|l| legend_width(l, cell_width))
+        .map(|l| legend_width(l, cell_width, request))
         .fold(0_f64, f64::max);
     let mut cells = vec![];
     let mut inputs = vec![];

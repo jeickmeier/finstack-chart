@@ -239,6 +239,11 @@ impl FigureComposition {
                 return Err(invalid());
             }
         }
+        for a in &self.annotations {
+            for anchor in std::iter::once(&a.anchor).chain(&a.callout) {
+                anchor.validate()?;
+            }
+        }
         ids.clear();
         for i in &self.insets {
             if !valid_id(&i.id)
@@ -262,6 +267,105 @@ impl FigureComposition {
             }
             for view in [i.x_view, i.y_view].into_iter().flatten() {
                 view.distinct()?;
+            }
+        }
+        Ok(())
+    }
+}
+impl Anchor {
+    pub(crate) fn validate(&self) -> ChartResult<()> {
+        match self {
+            Self::Panel { x, y, .. } | Self::Figure { x, y } => {
+                if [x, y]
+                    .into_iter()
+                    .any(|v| !v.is_finite() || !(0. ..=1.).contains(v))
+                {
+                    return Err(invalid());
+                }
+            }
+            Self::Output { x, y } => {
+                if !x.is_finite() || !y.is_finite() {
+                    return Err(invalid());
+                }
+            }
+            Self::Data { x, y, .. } => {
+                for value in [x, y] {
+                    if matches!(value, ScaleValue::Number(v) if !v.is_finite()) {
+                        return Err(invalid());
+                    }
+                }
+            }
+        }
+        Ok(())
+    }
+}
+impl FigureComposition {
+    pub(crate) fn validate_references(
+        &self,
+        definition: &crate::grammar::ChartDefinition,
+    ) -> ChartResult<()> {
+        let panel = |key: &Option<PanelKey>| -> ChartResult<()> {
+            match (&definition.facets, key) {
+                (None, None) => Ok(()),
+                (Some(spec), Some(key)) if spec.order.contains(key) => Ok(()),
+                _ => Err(Diagnostic::error(
+                    DiagnosticCode::Validation,
+                    "Data/panel furniture must name an existing facet, or no facet for an ordinary chart.",
+                    "Select a panel from the authored facet catalog.",
+                )),
+            }
+        };
+        let axis = |id, horizontal| {
+            if definition.axes.is_empty() {
+                id == crate::ScaleId::new(if horizontal { 0 } else { 1 })
+            } else {
+                definition
+                    .axes
+                    .iter()
+                    .any(|a| a.id == id && a.side.horizontal() == horizontal)
+            }
+        };
+        for a in &self.annotations {
+            for anchor in std::iter::once(&a.anchor).chain(&a.callout) {
+                match anchor {
+                    Anchor::Data {
+                        panel: p, scales, ..
+                    } => {
+                        panel(p)?;
+                        if !axis(scales.x, true) || !axis(scales.y, false) {
+                            return Err(Diagnostic::error(
+                                DiagnosticCode::MissingResource,
+                                "Annotation names an absent or incorrectly oriented axis.",
+                                "Use existing x/y axis handles.",
+                            ));
+                        }
+                    }
+                    Anchor::Panel { panel: p, .. } => panel(p)?,
+                    _ => {}
+                }
+            }
+        }
+        for letter in &self.panel_letters {
+            panel(&letter.panel)?;
+        }
+        for inset in &self.insets {
+            panel(&inset.panel)?;
+            for id in &inset.layers {
+                if !definition.layers.iter().any(|l| {
+                    l.id == *id
+                        && match (&l.facet, &inset.panel) {
+                            (crate::grammar::FacetTarget::Panels(keys), Some(key)) => {
+                                keys.contains(key)
+                            }
+                            _ => true,
+                        }
+                }) {
+                    return Err(Diagnostic::error(
+                        DiagnosticCode::MissingResource,
+                        "Inset names a layer absent from its parent panel.",
+                        "Use layer handles present in the selected panel.",
+                    ));
+                }
             }
         }
         Ok(())
