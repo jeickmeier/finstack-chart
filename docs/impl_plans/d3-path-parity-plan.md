@@ -221,3 +221,10 @@ Linux execution or performance measurements were produced. Documentation validat
 is recorded in the ledger. All PTH requirements and G-PATH remain open.
 **Next implementation action: WP-P01**, then WP-P02 → WP-P03 → WP-P04; WP-S01 consumes
 the resulting shared foundation.
+
+## Delivered package evidence — 8 September 2026
+
+WP-P01–04 and G-PATH are accepted for the [retained source snapshot](../evidence/phase-2-paths-2026-09-08.md).
+The earlier review above describes the pre-implementation baseline. WP-S01 now consumes
+the delivered builder, formatter and bounded lowering; shape and performance gates
+remain open under their existing packages.

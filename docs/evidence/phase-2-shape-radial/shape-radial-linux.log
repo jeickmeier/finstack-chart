@@ -1,0 +1,22 @@
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.28s
+     Running tests/shape_cartesian.rs (target/debug/deps/shape_cartesian-28013c4732824a6b)
+
+running 6 tests
+test independent_monotone_and_natural_invariants_hold ... ok
+test input_errors_and_resource_bounds_never_return_partial_owned_geometry ... ok
+test ordering_gaps_independent_boundaries_and_helper_inheritance_are_explicit ... ok
+test native_accessors_and_custom_protocol_receive_exact_order_and_area_lifecycle ... ok
+test complete_cartesian_seed_matrix_matches_actual_generators ... ok
+test extended_controls_helpers_and_irregular_matrix_matches_reference ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/shape_radial.rs (target/debug/deps/shape_radial-5af248f24ce5a4d6)
+
+running 2 tests
+test native_accessors_roundtrips_and_bounds_preserve_polar_contract ... ok
+test complete_radial_and_link_corpus_matches_reference ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+

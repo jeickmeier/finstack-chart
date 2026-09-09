@@ -1120,9 +1120,9 @@ fn wp11_mapped_color_changes_styles_and_metadata_without_numeric_domain_changes(
         input: ColorInput::Numeric(Numeric::Field(Y)),
         scale: ColorScale::Continuous {
             domain: Bounds::new(0., 10.).unwrap(),
-            palette: vec![black, white],
+            palette: vec![black.into(), white.into()],
             clamp: true,
-            missing: black,
+            missing: black.into(),
         },
     });
     let after = prepare(&d, &s, &ChartState::default());

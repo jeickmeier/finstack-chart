@@ -1,0 +1,1162 @@
+{
+  "schema_version": 1,
+  "exports": [
+    "scaleBand",
+    "scaleDiverging",
+    "scaleDivergingLog",
+    "scaleDivergingPow",
+    "scaleDivergingSqrt",
+    "scaleDivergingSymlog",
+    "scaleIdentity",
+    "scaleImplicit",
+    "scaleLinear",
+    "scaleLog",
+    "scaleOrdinal",
+    "scalePoint",
+    "scalePow",
+    "scaleQuantile",
+    "scaleQuantize",
+    "scaleRadial",
+    "scaleSequential",
+    "scaleSequentialLog",
+    "scaleSequentialPow",
+    "scaleSequentialQuantile",
+    "scaleSequentialSqrt",
+    "scaleSequentialSymlog",
+    "scaleSqrt",
+    "scaleSymlog",
+    "scaleThreshold",
+    "scaleTime",
+    "scaleUtc",
+    "tickFormat"
+  ],
+  "factories": [
+    {
+      "factory": "scaleBand",
+      "methods": [
+        "align",
+        "bandwidth",
+        "copy",
+        "domain",
+        "padding",
+        "paddingInner",
+        "paddingOuter",
+        "range",
+        "rangeRound",
+        "round",
+        "step"
+      ],
+      "defaults": {
+        "domain": {
+          "value": []
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "round": {
+          "value": false
+        },
+        "padding": {
+          "value": 0
+        },
+        "paddingInner": {
+          "value": 0
+        },
+        "paddingOuter": {
+          "value": 0
+        },
+        "align": {
+          "value": 0.5
+        },
+        "bandwidth": {
+          "value": 1
+        },
+        "step": {
+          "value": 1
+        }
+      },
+      "owner": "SP-03"
+    },
+    {
+      "factory": "scaleDiverging",
+      "methods": [
+        "clamp",
+        "copy",
+        "domain",
+        "interpolator",
+        "nice",
+        "range",
+        "rangeRound",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            0,
+            0.5,
+            1
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            0.5,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "interpolator": {
+          "value": {
+            "kind": "Function",
+            "name": "identity"
+          }
+        }
+      },
+      "owner": "SP-04"
+    },
+    {
+      "factory": "scaleDivergingLog",
+      "methods": [
+        "base",
+        "clamp",
+        "copy",
+        "domain",
+        "interpolator",
+        "nice",
+        "range",
+        "rangeRound",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            0.1,
+            1,
+            10
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            0.5,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "base": {
+          "value": 10
+        },
+        "interpolator": {
+          "value": {
+            "kind": "Function",
+            "name": "identity"
+          }
+        }
+      },
+      "owner": "SP-04"
+    },
+    {
+      "factory": "scaleDivergingPow",
+      "methods": [
+        "clamp",
+        "copy",
+        "domain",
+        "exponent",
+        "interpolator",
+        "nice",
+        "range",
+        "rangeRound",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            0,
+            0.5,
+            1
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            0.5,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "exponent": {
+          "value": 1
+        },
+        "interpolator": {
+          "value": {
+            "kind": "Function",
+            "name": "identity"
+          }
+        }
+      },
+      "owner": "SP-04"
+    },
+    {
+      "factory": "scaleDivergingSqrt",
+      "methods": [
+        "clamp",
+        "copy",
+        "domain",
+        "exponent",
+        "interpolator",
+        "nice",
+        "range",
+        "rangeRound",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            0,
+            0.5,
+            1
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            0.5,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "exponent": {
+          "value": 0.5
+        },
+        "interpolator": {
+          "value": {
+            "kind": "Function",
+            "name": "identity"
+          }
+        }
+      },
+      "owner": "SP-04"
+    },
+    {
+      "factory": "scaleDivergingSymlog",
+      "methods": [
+        "clamp",
+        "constant",
+        "copy",
+        "domain",
+        "interpolator",
+        "nice",
+        "range",
+        "rangeRound",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            0,
+            0.5,
+            1
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            0.5,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "constant": {
+          "value": 1
+        },
+        "interpolator": {
+          "value": {
+            "kind": "Function",
+            "name": "identity"
+          }
+        }
+      },
+      "owner": "SP-04"
+    },
+    {
+      "factory": "scaleIdentity",
+      "methods": [
+        "copy",
+        "domain",
+        "invert",
+        "nice",
+        "range",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        }
+      },
+      "owner": "SP-02"
+    },
+    {
+      "factory": "scaleLinear",
+      "methods": [
+        "clamp",
+        "copy",
+        "domain",
+        "interpolate",
+        "invert",
+        "nice",
+        "range",
+        "rangeRound",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "interpolate": {
+          "value": {
+            "kind": "Function",
+            "name": "interpolate"
+          }
+        }
+      },
+      "owner": "SP-02"
+    },
+    {
+      "factory": "scaleLog",
+      "methods": [
+        "base",
+        "clamp",
+        "copy",
+        "domain",
+        "interpolate",
+        "invert",
+        "nice",
+        "range",
+        "rangeRound",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            1,
+            10
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "base": {
+          "value": 10
+        },
+        "interpolate": {
+          "value": {
+            "kind": "Function",
+            "name": "interpolate"
+          }
+        }
+      },
+      "owner": "SP-02"
+    },
+    {
+      "factory": "scaleOrdinal",
+      "methods": [
+        "copy",
+        "domain",
+        "range",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": []
+        },
+        "range": {
+          "value": []
+        },
+        "unknown": {
+          "value": {
+            "kind": "Implicit"
+          }
+        }
+      },
+      "owner": "SP-03"
+    },
+    {
+      "factory": "scalePoint",
+      "methods": [
+        "align",
+        "bandwidth",
+        "copy",
+        "domain",
+        "padding",
+        "range",
+        "rangeRound",
+        "round",
+        "step"
+      ],
+      "defaults": {
+        "domain": {
+          "value": []
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "round": {
+          "value": false
+        },
+        "padding": {
+          "value": 0
+        },
+        "align": {
+          "value": 0.5
+        },
+        "bandwidth": {
+          "value": 0
+        },
+        "step": {
+          "value": 1
+        }
+      },
+      "owner": "SP-03"
+    },
+    {
+      "factory": "scalePow",
+      "methods": [
+        "clamp",
+        "copy",
+        "domain",
+        "exponent",
+        "interpolate",
+        "invert",
+        "nice",
+        "range",
+        "rangeRound",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "exponent": {
+          "value": 1
+        },
+        "interpolate": {
+          "value": {
+            "kind": "Function",
+            "name": "interpolate"
+          }
+        }
+      },
+      "owner": "SP-02"
+    },
+    {
+      "factory": "scaleQuantile",
+      "methods": [
+        "copy",
+        "domain",
+        "invertExtent",
+        "quantiles",
+        "range",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": []
+        },
+        "range": {
+          "value": []
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        }
+      },
+      "owner": "SP-04"
+    },
+    {
+      "factory": "scaleQuantize",
+      "methods": [
+        "copy",
+        "domain",
+        "invertExtent",
+        "nice",
+        "range",
+        "thresholds",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "unknown": {
+          "value": {
+            "kind": "Function",
+            "name": "scale"
+          }
+        }
+      },
+      "owner": "SP-04"
+    },
+    {
+      "factory": "scaleRadial",
+      "methods": [
+        "clamp",
+        "copy",
+        "domain",
+        "invert",
+        "nice",
+        "range",
+        "rangeRound",
+        "round",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "round": {
+          "value": false
+        }
+      },
+      "owner": "SP-02"
+    },
+    {
+      "factory": "scaleSequential",
+      "methods": [
+        "clamp",
+        "copy",
+        "domain",
+        "interpolator",
+        "nice",
+        "range",
+        "rangeRound",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "interpolator": {
+          "value": {
+            "kind": "Function",
+            "name": "identity"
+          }
+        }
+      },
+      "owner": "SP-04"
+    },
+    {
+      "factory": "scaleSequentialLog",
+      "methods": [
+        "base",
+        "clamp",
+        "copy",
+        "domain",
+        "interpolator",
+        "nice",
+        "range",
+        "rangeRound",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            1,
+            10
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "base": {
+          "value": 10
+        },
+        "interpolator": {
+          "value": {
+            "kind": "Function",
+            "name": "identity"
+          }
+        }
+      },
+      "owner": "SP-04"
+    },
+    {
+      "factory": "scaleSequentialPow",
+      "methods": [
+        "clamp",
+        "copy",
+        "domain",
+        "exponent",
+        "interpolator",
+        "nice",
+        "range",
+        "rangeRound",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "exponent": {
+          "value": 1
+        },
+        "interpolator": {
+          "value": {
+            "kind": "Function",
+            "name": "identity"
+          }
+        }
+      },
+      "owner": "SP-04"
+    },
+    {
+      "factory": "scaleSequentialQuantile",
+      "methods": [
+        "copy",
+        "domain",
+        "interpolator",
+        "quantiles",
+        "range"
+      ],
+      "defaults": {
+        "domain": {
+          "value": []
+        },
+        "range": {
+          "value": []
+        },
+        "interpolator": {
+          "value": {
+            "kind": "Function",
+            "name": "identity"
+          }
+        }
+      },
+      "owner": "SP-04"
+    },
+    {
+      "factory": "scaleSequentialSqrt",
+      "methods": [
+        "clamp",
+        "copy",
+        "domain",
+        "exponent",
+        "interpolator",
+        "nice",
+        "range",
+        "rangeRound",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "exponent": {
+          "value": 0.5
+        },
+        "interpolator": {
+          "value": {
+            "kind": "Function",
+            "name": "identity"
+          }
+        }
+      },
+      "owner": "SP-04"
+    },
+    {
+      "factory": "scaleSequentialSymlog",
+      "methods": [
+        "clamp",
+        "constant",
+        "copy",
+        "domain",
+        "interpolator",
+        "nice",
+        "range",
+        "rangeRound",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "constant": {
+          "value": 1
+        },
+        "interpolator": {
+          "value": {
+            "kind": "Function",
+            "name": "identity"
+          }
+        }
+      },
+      "owner": "SP-04"
+    },
+    {
+      "factory": "scaleSqrt",
+      "methods": [
+        "clamp",
+        "copy",
+        "domain",
+        "exponent",
+        "interpolate",
+        "invert",
+        "nice",
+        "range",
+        "rangeRound",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "exponent": {
+          "value": 0.5
+        },
+        "interpolate": {
+          "value": {
+            "kind": "Function",
+            "name": "interpolate"
+          }
+        }
+      },
+      "owner": "SP-02"
+    },
+    {
+      "factory": "scaleSymlog",
+      "methods": [
+        "clamp",
+        "constant",
+        "copy",
+        "domain",
+        "interpolate",
+        "invert",
+        "nice",
+        "range",
+        "rangeRound",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "constant": {
+          "value": 1
+        },
+        "interpolate": {
+          "value": {
+            "kind": "Function",
+            "name": "interpolate"
+          }
+        }
+      },
+      "owner": "SP-02"
+    },
+    {
+      "factory": "scaleThreshold",
+      "methods": [
+        "copy",
+        "domain",
+        "invertExtent",
+        "range",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            0.5
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        }
+      },
+      "owner": "SP-04"
+    },
+    {
+      "factory": "scaleTime",
+      "methods": [
+        "clamp",
+        "copy",
+        "domain",
+        "interpolate",
+        "invert",
+        "nice",
+        "range",
+        "rangeRound",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            {
+              "date": 946684800000
+            },
+            {
+              "date": 946771200000
+            }
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "interpolate": {
+          "value": {
+            "kind": "Function",
+            "name": "interpolate"
+          }
+        }
+      },
+      "owner": "SP-06"
+    },
+    {
+      "factory": "scaleUtc",
+      "methods": [
+        "clamp",
+        "copy",
+        "domain",
+        "interpolate",
+        "invert",
+        "nice",
+        "range",
+        "rangeRound",
+        "tickFormat",
+        "ticks",
+        "unknown"
+      ],
+      "defaults": {
+        "domain": {
+          "value": [
+            {
+              "date": 946684800000
+            },
+            {
+              "date": 946771200000
+            }
+          ]
+        },
+        "range": {
+          "value": [
+            0,
+            1
+          ]
+        },
+        "clamp": {
+          "value": false
+        },
+        "unknown": {
+          "value": {
+            "kind": "Undefined"
+          }
+        },
+        "interpolate": {
+          "value": {
+            "kind": "Function",
+            "name": "interpolate"
+          }
+        }
+      },
+      "owner": "SP-06"
+    }
+  ],
+  "helperMethods": [
+    "scaleImplicit",
+    "tickFormat"
+  ]
+}

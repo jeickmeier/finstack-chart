@@ -29,10 +29,10 @@ pub struct Color {
 }
 
 /// A solid stroke; native cap/join/dash choices await the capability spike.
-#[derive(serde::Serialize, Clone, Copy, Debug, PartialEq)]
-pub struct Stroke {
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, PartialEq)]
+pub struct Stroke<P = Color> {
     /// Unpremultiplied color.
-    pub color: Color,
+    pub color: P,
     /// Positive width in scene units; validated by scene construction.
     pub width: f64,
 }
@@ -55,6 +55,32 @@ pub enum PathCommand {
 /// Authored minimal primitive, validated and copied into an immutable scene.
 #[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub enum Primitive {
+    /// Generated path with source anchors independent of control/tessellation vertices.
+    ShapePath {
+        /// Shared checked full-precision path geometry.
+        geometry: crate::path::PathGeometry,
+        /// Optional nonzero fill, including implicit subpath closure.
+        fill: Option<Color>,
+        /// Optional explicit stroke.
+        stroke: Option<Stroke>,
+        /// Optional even positive dash pattern in destination units; phase resets per subpath.
+        #[serde(skip_serializing_if = "Vec::is_empty")]
+        dashes: Vec<f64>,
+        /// One destination source anchor for each corresponding external semantic target.
+        anchors: Vec<Point>,
+    },
+    /// Retained version-two path geometry; empty and move-only paths paint nothing.
+    VectorPath {
+        /// Immutable full-precision geometry with analytic circular arcs.
+        geometry: crate::path::PathGeometry,
+        /// Optional nonzero fill; open subpaths are implicitly closed for filling.
+        fill: Option<Color>,
+        /// Optional stroke, preserving explicit close joins and continuation.
+        stroke: Option<Stroke>,
+        /// Optional even positive dash pattern in destination units; phase resets per subpath.
+        #[serde(skip_serializing_if = "Vec::is_empty")]
+        dashes: Vec<f64>,
+    },
     /// Explicit native callback invocation. Headless renderers reject this capability.
     NativePaint {
         /// Finite destination rectangle; the host enforces the scene clip.
@@ -238,6 +264,28 @@ impl Scene {
     pub fn items(&self) -> &[SceneItem] {
         &self.items
     }
+    /// Minimum scene wire version required by the retained primitive capabilities.
+    pub fn wire_version(&self) -> u32 {
+        if self.items.iter().any(|i| matches!(&i.primitive, Primitive::ShapePath { dashes, .. } | Primitive::VectorPath { dashes, .. } if !dashes.is_empty())) {
+            return 4;
+        }
+        if self
+            .items
+            .iter()
+            .any(|i| matches!(i.primitive, Primitive::ShapePath { .. }))
+        {
+            return 3;
+        }
+        if self
+            .items
+            .iter()
+            .any(|i| matches!(i.primitive, Primitive::VectorPath { .. }))
+        {
+            2
+        } else {
+            1
+        }
+    }
     /// Declared immutable resource identities, still requiring host byte resolution.
     pub fn resources(&self) -> &[ResourceDescriptor] {
         &self.resources
@@ -299,6 +347,36 @@ fn validate(
                 path_remaining -= lowered.len();
                 Ok(())
             }
+            Primitive::ShapePath {
+                geometry,
+                anchors,
+                dashes,
+                ..
+            } => {
+                let count = geometry.commands().len().saturating_add(anchors.len());
+                require_within(
+                    count <= path_remaining,
+                    "total path commands and source anchors",
+                )?;
+                path_remaining -= count;
+                if !dashes.is_empty() {
+                    path_remaining -= geometry.dashed(dashes, 0.25, path_remaining)?.len();
+                }
+                Ok(())
+            }
+            Primitive::VectorPath {
+                geometry, dashes, ..
+            } => {
+                require_within(
+                    geometry.commands().len() <= path_remaining,
+                    "total path command",
+                )?;
+                path_remaining -= geometry.commands().len();
+                if !dashes.is_empty() {
+                    path_remaining -= geometry.dashed(dashes, 0.25, path_remaining)?.len();
+                }
+                Ok(())
+            }
             Primitive::Path { commands, .. } | Primitive::FilledPath { commands, .. } => {
                 let result = require_within(commands.len() <= path_remaining, "total path command");
                 if result.is_ok() {
@@ -352,6 +430,17 @@ fn validate_primitive(
     limits: Limits,
 ) -> ChartResult<()> {
     match primitive {
+        Primitive::VectorPath {
+            geometry, stroke, ..
+        }
+        | Primitive::ShapePath {
+            geometry, stroke, ..
+        } => {
+            if let Some(stroke) = stroke {
+                positive(stroke.width, "Stroke width must be finite and positive.")?;
+            }
+            geometry.validate_for_scene()
+        }
         Primitive::NativePaint {
             painter,
             parameters,
@@ -507,13 +596,13 @@ pub enum GradientDirection {
 /// Two explicit sRGB stops; interpolation and alpha are shared by native/SVG/PDF.
 #[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, PartialEq, Eq)]
 #[serde(deny_unknown_fields)]
-pub struct LinearGradient {
+pub struct LinearGradient<P = Color> {
     /// Direction across the full rectangle, with padded endpoints.
     pub direction: GradientDirection,
     /// Color at fraction zero.
-    pub start: Color,
+    pub start: P,
     /// Color at fraction one.
-    pub end: Color,
+    pub end: P,
 }
 /// Lower an explicitly dashed polyline to independent numeric segments for native painting.
 /// Phase resets at MoveTo. Curves require a solid path; budgets stop pathological tiny dashes.
@@ -536,6 +625,7 @@ pub fn dash_polyline(
     let mut left = dashes[0];
     let mut pen_down = false;
     let mut work = 0;
+    let mut subpath_output = 0;
     for command in commands {
         let to = match command {
             PathCommand::MoveTo(p) => {
@@ -544,6 +634,7 @@ pub fn dash_polyline(
                 index = 0;
                 left = dashes[0];
                 pen_down = false;
+                subpath_output = out.len();
                 continue;
             }
             PathCommand::LineTo(p) => *p,
@@ -605,6 +696,23 @@ pub fn dash_polyline(
             }
         }
         previous = if matches!(command, PathCommand::Close) {
+            // A dash crossing the closing seam is one joined stroke, not two butt caps.
+            if pen_down && out.len() > subpath_output {
+                let last_start = out[subpath_output..]
+                    .iter()
+                    .rposition(|c| matches!(c, PathCommand::MoveTo(_)))
+                    .expect("painted dash has a move")
+                    + subpath_output;
+                if last_start == subpath_output {
+                    if let Some(last) = out.last_mut() {
+                        *last = PathCommand::Close;
+                    }
+                } else {
+                    let tail = out.len() - last_start;
+                    out[subpath_output..].rotate_right(tail);
+                    out.remove(subpath_output + tail);
+                }
+            }
             None
         } else {
             Some(to)
@@ -638,4 +746,25 @@ pub fn symbol_path(
     }
     p.push(PathCommand::Close);
     Ok(p)
+}
+
+impl<P> LinearGradient<P> {
+    /// Transform endpoints without altering the gradient direction.
+    pub fn map_colors<Q>(self, mut map: impl FnMut(P) -> Q) -> LinearGradient<Q> {
+        LinearGradient {
+            direction: self.direction,
+            start: map(self.start),
+            end: map(self.end),
+        }
+    }
+}
+
+impl<P> Stroke<P> {
+    /// Transform a stroke's color without changing its width.
+    pub fn map_color<Q>(self, map: impl FnOnce(P) -> Q) -> Stroke<Q> {
+        Stroke {
+            color: map(self.color),
+            width: self.width,
+        }
+    }
 }

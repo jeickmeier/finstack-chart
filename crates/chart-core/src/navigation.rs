@@ -127,8 +127,19 @@ impl Navigator {
             (ResolvedScale::Linear(_), AxisWindow::Numeric(a, b)) => {
                 Bounds::new(*a, *b)?.distinct()?;
             }
+            (ResolvedScale::Numeric(s), AxisWindow::Numeric(a, b)) => {
+                Bounds::new(s.coordinate(*a)?, s.coordinate(*b)?)?.distinct()?;
+            }
             (ResolvedScale::Nonlinear(s), AxisWindow::Numeric(a, b)) => {
                 transformed(s.transform(), Bounds::new(*a, *b)?)?.distinct()?;
+            }
+            (ResolvedScale::Calendar(s), AxisWindow::Timestamp(a, b)) => {
+                crate::scales::TimeAxisScale::resolve(
+                    s.spec().clone(),
+                    s.range(),
+                    Some(crate::scales::TimeBounds { start: *a, end: *b }),
+                    OutsidePolicy::Extend,
+                )?;
             }
             (ResolvedScale::Utc(s), AxisWindow::Timestamp(a, b)) => {
                 crate::scales::UtcScale::new(
@@ -205,12 +216,21 @@ fn navigate_axis(
 ) -> ChartResult<AxisWindow> {
     let horizontal = axis.spec.side.horizontal();
     let (domain, view, range) = match &axis.scale {
+        ResolvedScale::Provider(_) => {
+            return Err(Diagnostic::error(
+                DiagnosticCode::UnsupportedCapability,
+                "Registered providers do not declare a generic pan/zoom coordinate metric.",
+                "Use an explicit provider-supported viewport; an inverse alone does not define navigation.",
+            ));
+        }
         ResolvedScale::Linear(s) => (s.domain(), s.viewport(), s.range()),
+        ResolvedScale::Numeric(s) => (s.coordinate_domain()?, s.coordinate_viewport(), s.range()),
         ResolvedScale::Nonlinear(s) => (
             transformed(s.transform(), s.domain())?,
             transformed(s.transform(), s.viewport())?,
             s.range(),
         ),
+        ResolvedScale::Calendar(s) => (s.coordinate_domain()?, s.coordinate_viewport(), s.range()),
         ResolvedScale::Utc(s) => {
             let convert = |b: crate::scales::TimeBounds| {
                 Bounds::new(relative(b.start, s.origin())?, relative(b.end, s.origin())?)
@@ -248,9 +268,17 @@ fn navigate_axis(
     let next = interval(domain, view, range, horizontal, action, boundary)?;
     match &axis.scale {
         ResolvedScale::Linear(_) => Ok(AxisWindow::Numeric(next.start(), next.end())),
+        ResolvedScale::Numeric(s) => Ok(AxisWindow::Numeric(
+            s.coordinate_inverse(next.start())?,
+            s.coordinate_inverse(next.end())?,
+        )),
         ResolvedScale::Nonlinear(s) => Ok(AxisWindow::Numeric(
             s.transform().inverse(next.start())?,
             s.transform().inverse(next.end())?,
+        )),
+        ResolvedScale::Calendar(s) => Ok(AxisWindow::Timestamp(
+            s.coordinate_inverse(next.start())?,
+            s.coordinate_inverse(next.end())?,
         )),
         ResolvedScale::Utc(s) => Ok(AxisWindow::Timestamp(
             absolute(next.start(), s.origin())?,
@@ -390,6 +418,39 @@ mod tests {
             factor,
         }
     }
+    #[test]
+    fn piecewise_numeric_zoom_retains_knots_and_pointer_anchor() {
+        let original = NumericScale::linear()
+            .with_domain([0., 10., 100.])
+            .unwrap()
+            .with_range([0., 50., 100.])
+            .unwrap();
+        let scale = NumericAxisScale::resolve(
+            original.spec().clone(),
+            b(0., 100.),
+            None,
+            OutsidePolicy::Clamp,
+        )
+        .unwrap();
+        let basis = axis(ResolvedScale::Numeric(scale));
+        let next = navigate_axis(&basis, zoom(50., 2.), NavigationBoundary::Extend).unwrap();
+        numeric(next.clone(), 5., 55.);
+        let AxisWindow::Numeric(start, stop) = next else {
+            panic!("numeric window")
+        };
+        let updated = NumericAxisScale::resolve(
+            original.spec().clone(),
+            b(0., 100.),
+            Some(b(start, stop)),
+            OutsidePolicy::Clamp,
+        )
+        .unwrap();
+        assert_eq!(updated.map(10.).unwrap(), Some(50.));
+        assert_eq!(updated.invert(50.).unwrap(), 10.);
+        assert_eq!(updated.domain(), b(0., 100.));
+        assert_eq!(updated.map(-10.).unwrap(), Some(0.));
+        assert_eq!(updated.invert(-10.).unwrap(), 5.);
+    }
     fn numeric(w: AxisWindow, a: f64, z: f64) {
         let AxisWindow::Numeric(x, y) = w else {
             panic!("numeric")
@@ -517,6 +578,47 @@ mod tests {
         );
         // Sub-tick collapse is rejected by range validation rather than silently accepted.
         assert!(super::absolute(f64::INFINITY, base).is_err());
+    }
+    #[test]
+    fn calendar_navigation_uses_piecewise_mapping_and_exact_timestamps() {
+        use crate::{
+            interpolate::Value,
+            scales::{TimeAxisScale, TimeScaleSpec},
+        };
+        let start = 1_700_000_000_000_000_001;
+        let spec = TimeScaleSpec {
+            unit: TimeUnit::Nanoseconds,
+            domain: vec![start, start + 200, start + 1000],
+            range: vec![Value::number(0.), Value::number(50.), Value::number(100.)],
+            ..Default::default()
+        };
+        let scale =
+            TimeAxisScale::resolve(spec.clone(), b(0., 100.), None, OutsidePolicy::Extend).unwrap();
+        let a = axis(ResolvedScale::Calendar(Box::new(scale)));
+        let result = navigate_axis(&a, zoom(50., 2.), NavigationBoundary::Extend).unwrap();
+        assert_eq!(result, AxisWindow::Timestamp(start + 100, start + 600));
+        let next = TimeAxisScale::resolve(
+            spec,
+            b(0., 100.),
+            Some(TimeBounds {
+                start: start + 100,
+                end: start + 600,
+            }),
+            OutsidePolicy::Extend,
+        )
+        .unwrap();
+        assert_eq!(next.map(start + 200).unwrap(), Some(50.));
+        assert_eq!(next.invert(50.).unwrap(), start + 200);
+        let region = navigate_axis(
+            &a,
+            Navigation::Region {
+                from: Point::new(25., 0.).unwrap(),
+                to: Point::new(75., 0.).unwrap(),
+            },
+            NavigationBoundary::Extend,
+        )
+        .unwrap();
+        assert_eq!(region, result);
     }
     #[test]
     fn sessions_zoom_by_active_time_and_reject_unknown_calendar_extent() {

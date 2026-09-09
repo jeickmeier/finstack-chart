@@ -2,7 +2,7 @@ use super::*;
 pub(super) struct LayerContext<'a> {
     pub axes: &'a BTreeMap<String, ScaleId>,
     pub color_ids: &'a mut BTreeMap<String, ScaleId>,
-    pub color_scales: &'a BTreeMap<String, ColorScale>,
+    pub color_scales: &'a BTreeMap<String, ColorScale<crate::color::Paint>>,
 }
 impl LayerContext<'_> {
     pub fn apply(
@@ -13,6 +13,26 @@ impl LayerContext<'_> {
         mapping: &AesBuilder,
         data: &Data,
     ) -> ChartResult<()> {
+        if definition.profile() == Profile::Ggplot2_4_0_3 {
+            let mut source = mapping.resolve(data)?;
+            if mapping.all_groups {
+                source = source.grouped(crate::grammar::Grouping::All);
+            }
+            if let Mappings::Source(aes) = &mut layer.mappings {
+                *aes = source.clone();
+            }
+            layer.grammar = Some(crate::grammar::LayerGrammar {
+                default_size: !builder.explicit_size,
+                default_color: !builder.explicit_color,
+                source,
+                stat_grouping: builder
+                    .stat
+                    .as_ref()
+                    .map(|s| s.explicit_grouping(data))
+                    .transpose()?
+                    .flatten(),
+            });
+        }
         if let Some((x, y)) = &builder.axes {
             layer.scales = crate::grammar::ScaleBindings {
                 x: *self.axes.get(x).ok_or_else(|| {
@@ -90,11 +110,13 @@ impl LayerContext<'_> {
             };
             let scale = explicit.cloned().unwrap_or_else(default_color_scale);
             let input = if matches!(layer.mappings, Mappings::Source(_)) {
-                if matches!(scale, ColorScale::Continuous { .. }) {
+                if !scale.is_categorical() {
                     ColorInput::Numeric(color.resolve(data)?)
                 } else {
                     ColorInput::Category(field)
                 }
+            } else if definition.profile() == Profile::Ggplot2_4_0_3 {
+                ColorInput::GroupField(field)
             } else if generated_group(definition, layer)
                 == Some(crate::grammar::Grouping::Field(field))
             {

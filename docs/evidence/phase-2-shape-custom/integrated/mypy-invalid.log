@@ -1,0 +1,4 @@
+scripts/bindings/authoring/shape_custom_typing_invalid.py:3: error: Incompatible types (expression has type "Callable[[], int]", TypedDict item "parameters" has type "ShapeJSON")  [typeddict-item]
+scripts/bindings/authoring/shape_custom_typing_invalid.py:5: error: Argument 2 to "selection" of "ShapeRegistry" has incompatible type "Literal['UnknownProtocol']"; expected "Literal['Curve', 'Symbol', 'PieComparator', 'StackOrder', 'StackOffset']"  [arg-type]
+scripts/bindings/authoring/shape_custom_typing_invalid.py:6: error: Argument 2 to "generate_registered" of "ShapeLine" has incompatible type "ShapeLine"; expected "ShapeRegistry"  [arg-type]
+Found 3 errors in 1 file (checked 1 source file)

@@ -2,22 +2,34 @@ use super::*;
 use crate::grammar::{DataRef, Layer, Numeric, SourceAes};
 
 fn source_mappings(aes: &SourceAes, data: &Data) -> AesBuilder {
-    let mapping = |value: &Numeric| match value {
-        Numeric::Field(id) | Numeric::Category(id) => Mapping::Handle(FieldHandle {
-            dataset: data.id,
-            field: *id,
-        }),
-        Numeric::Timestamp { field, origin } => Mapping::Timestamp {
-            field: data
-                .batch
-                .schema()
-                .field(*field)
-                .map_or(String::new(), |(_, f)| f.name.clone()),
-            origin: *origin,
-        },
-        Numeric::Literal(value) => Mapping::Literal(*value),
-    };
+    fn convert(value: &Numeric, data: &Data) -> Mapping {
+        match value {
+            Numeric::Expression(expr) => Mapping::Expression(
+                expr.try_map_reads(|read| Ok(convert(&read.numeric(), data)))
+                    .expect("infallible source read conversion"),
+            ),
+            Numeric::Scaled { input, scale } => Mapping::Scaled {
+                input: Box::new(convert(input, data)),
+                scale: scale.as_ref().clone(),
+            },
+            Numeric::Field(id) | Numeric::Category(id) => Mapping::Handle(FieldHandle {
+                dataset: data.id,
+                field: *id,
+            }),
+            Numeric::Timestamp { field, origin } => Mapping::Timestamp {
+                field: data
+                    .batch
+                    .schema()
+                    .field(*field)
+                    .map_or(String::new(), |(_, f)| f.name.clone()),
+                origin: *origin,
+            },
+            Numeric::Literal(value) => Mapping::Literal(*value),
+        }
+    }
+    let mapping = |value: &Numeric| convert(value, data);
     AesBuilder {
+        grouping: aes.grouping.clone(),
         x: aes.x.as_ref().map(mapping),
         y: aes.y.as_ref().map(mapping),
         x2: aes.x2.as_ref().map(mapping),
@@ -80,7 +92,7 @@ impl PlotEditBuilder {
             "Transform dependency cycle.",
         ))
     }
-    fn color_scales(&self) -> BTreeMap<String, ColorScale> {
+    fn color_scales(&self) -> BTreeMap<String, ColorScale<crate::color::Paint>> {
         self.original
             .colors
             .iter()
@@ -126,15 +138,19 @@ impl PlotEditBuilder {
             }) = &existing
             {
                 source_mappings(aes, &data)
+            } else if let Some(grammar) = existing.as_ref().and_then(|l| l.grammar.as_ref()) {
+                source_mappings(&grammar.source, &data)
             } else {
                 aes()
             };
             if let Some(color) = existing.as_ref().and_then(|l| l.color.as_ref()) {
                 inherited.color = match &color.input {
-                    ColorInput::Category(field) => Some(Mapping::Handle(FieldHandle {
-                        dataset: data.id,
-                        field: *field,
-                    })),
+                    ColorInput::Category(field) | ColorInput::GroupField(field) => {
+                        Some(Mapping::Handle(FieldHandle {
+                            dataset: data.id,
+                            field: *field,
+                        }))
+                    }
                     ColorInput::Numeric(value) => {
                         source_mappings(&SourceAes::new().x(value.clone()), &data).x
                     }
@@ -147,7 +163,8 @@ impl PlotEditBuilder {
                     .find(|(_, id)| **id == color.id)
                     .map(|(name, _)| name.clone());
             }
-            let (mut layer, mapping) = builder.lower(&data, &inherited)?;
+            let (mut layer, mapping) =
+                builder.lower(&data, &inherited, this.definition.profile())?;
             layer.data = input;
             if matches!(input, DataRef::Transform(_))
                 && builder.generated.is_none()
@@ -204,9 +221,40 @@ impl PlotEditBuilder {
     pub fn y_axis(self, axis: AxisBuilder) -> Self {
         self.axis(axis)
     }
+    /// Add or replace an independent guide while retaining its existing named identity.
+    pub fn guide(self, mut guide: GuideBuilder) -> Self {
+        self.update(|this| {
+            super::validate_name(&guide.name)?;
+            if this.original.axes.contains_key(&guide.name) {
+                return Err(super::error(
+                    crate::DiagnosticCode::SchemaConflict,
+                    "An additional guide cannot replace a positional scale name.",
+                ));
+            }
+            if let Some(id) = this.original.guides.get(&guide.name) {
+                guide.spec.id = *id;
+            }
+            this.original
+                .guides
+                .insert(guide.name.clone(), guide.handle()?.id());
+            let guide = guide.lower(&this.original.axes)?;
+            if let Some(index) = this.definition.guides.iter().position(|g| g.id == guide.id) {
+                this.definition.guides[index] = guide;
+            } else {
+                this.definition.guides.push(guide);
+            }
+            Ok(())
+        })
+    }
     /// Replace/add a named axis while preserving its existing identity.
     pub fn axis(self, mut axis: AxisBuilder) -> Self {
         self.update(|this| {
+            if this.original.guides.contains_key(&axis.name) {
+                return Err(super::error(
+                    crate::DiagnosticCode::SchemaConflict,
+                    "A positional scale cannot replace an additional guide name.",
+                ));
+            }
             validate_name(&axis.name)?;
             if let Some(id) = this.original.axes.get(&axis.name) {
                 axis.spec.id = *id;
@@ -283,7 +331,7 @@ impl PlotEditBuilder {
                 .filter_map(|l| l.color.as_mut())
                 .filter(|c| c.id == id)
             {
-                if legend.untitled {
+                if legend.generic {
                     color.title = None;
                 }
                 if let Some(title) = &legend.title {
@@ -296,10 +344,21 @@ impl PlotEditBuilder {
     /// Add or replace one stable annotation; use id() to target an existing annotation.
     pub fn annotation(self, label: impl Into<PlotLayer>) -> Self {
         self.update(|this| {
-            let PlotLayer::Annotation(label) = label.into() else {
+            let layer = label.into();
+            if let PlotLayer::VectorPath(path) = layer {
+                let figure = this.figure_mut();
+                figure.version = 2;
+                if let Some(index) = figure.paths.iter().position(|a| a.id == path.0.id) {
+                    figure.paths[index] = path.0;
+                } else {
+                    figure.paths.push(path.0);
+                }
+                return Ok(());
+            }
+            let PlotLayer::Annotation(label) = layer else {
                 return Err(error(
                     DiagnosticCode::SchemaConflict,
-                    "Annotation edit requires labels or callout.",
+                    "Annotation edit requires labels, callout or a retained path.",
                 ));
             };
             let label = label.lower(&this.original.axes)?;
@@ -315,6 +374,7 @@ impl PlotEditBuilder {
     /// Remove a stable annotation without touching observed data.
     pub fn remove_annotation(mut self, id: &str) -> Self {
         self.figure_mut().annotations.retain(|a| a.id != id);
+        self.figure_mut().paths.retain(|a| a.id != id);
         self
     }
     /// Add or replace a stable inset over existing prepared layer identities.
@@ -352,7 +412,7 @@ impl PlotEditBuilder {
                 existing.map_or(DataRef::Dataset(this.original.data[0].id), |old| old.input)
             };
             let root = this.root_data(input)?;
-            let node = transform.lower(root, input, &aes())?;
+            let node = transform.lower(root, input, &aes(), this.definition.profile())?;
             this.original.transforms.insert(transform.name, node.id);
             if let Some(index) = this
                 .definition

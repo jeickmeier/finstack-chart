@@ -1,0 +1,22 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.69s
+     Running tests/path_lowering.rs (target/debug/deps/path_lowering-0f7c410c971ba811)
+
+running 5 tests
+test every_numeric_argument_rejects_nonfinite_without_changing_the_builder ... ok
+test replay_and_scene_snapshots_preserve_supplied_metadata_without_vertex_targets ... ok
+test circular_lowering_obeys_coordinate_bound_at_multiple_scales_and_directions ... ok
+test transforms_preserve_arcs_or_lower_with_destination_bounds_and_budget ... ok
+test primary_path_snapshot_and_versions_preserve_legacy_contract ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/path_parity.rs (target/debug/deps/path_parity-a4ea046675ad6006)
+
+running 3 tests
+test rejected_arguments_budgets_batches_and_external_sink_errors ... ok
+test independent_tangency_rectangles_and_precision ... ok
+test all_pinned_sequences_match_offline_at_every_operation ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

@@ -1,0 +1,536 @@
+{
+  "bounds": {
+    "height": 280.0,
+    "origin": {
+      "x": 0.0,
+      "y": 0.0
+    },
+    "width": 420.0
+  },
+  "diagnostics": [
+    {
+      "code": "CHART_LAYOUT_PRESSURE",
+      "context": {
+        "affected_rows": "0",
+        "dataset": null,
+        "dataset_revision": null,
+        "field": null,
+        "layer": null,
+        "resource": null,
+        "resource_revision": null,
+        "row_samples": [],
+        "schema_version": null,
+        "stamp": null
+      },
+      "correction": "Correct the domain, range, precision, tick or layout request before resolving the scene again.",
+      "message": "Overlapping, duplicate or out-of-figure tick labels were deterministically thinned.",
+      "severity": "Warning"
+    }
+  ],
+  "fonts": [
+    {
+      "id": "1",
+      "revision": "0",
+      "sha256": "2ec33f84606cbaa0a1a944488e14f97faf2f6a25ecdd8354f5358f06da13c7d9"
+    }
+  ],
+  "insets": [],
+  "interactions": {},
+  "item_panels": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "items": [
+    {
+      "clip": null,
+      "layer": null,
+      "primitive": {
+        "Rectangle": {
+          "bounds": {
+            "height": 280.0,
+            "origin": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "width": 420.0
+          },
+          "fill": {
+            "alpha": 255,
+            "blue": 255,
+            "green": 255,
+            "red": 255
+          }
+        }
+      }
+    },
+    {
+      "clip": {
+        "height": 231.48400020599365,
+        "origin": {
+          "x": 101.58399200439453,
+          "y": 16.17199993133545
+        },
+        "width": 298.51200771331787
+      },
+      "layer": "1130",
+      "primitive": {
+        "Point": {
+          "center": {
+            "x": 250.83999586105347,
+            "y": 97.07218624518663
+          },
+          "fill": {
+            "alpha": 255,
+            "blue": 171,
+            "green": 86,
+            "red": 18
+          },
+          "radius": 2.0
+        }
+      }
+    },
+    {
+      "clip": null,
+      "layer": null,
+      "primitive": {
+        "Rule": {
+          "from": {
+            "x": 101.58399200439453,
+            "y": 247.6560001373291
+          },
+          "stroke": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "width": 1.0
+          },
+          "to": {
+            "x": 400.0959997177124,
+            "y": 247.6560001373291
+          }
+        }
+      }
+    },
+    {
+      "clip": null,
+      "layer": null,
+      "primitive": {
+        "Rule": {
+          "from": {
+            "x": 101.58399200439453,
+            "y": 247.6560001373291
+          },
+          "stroke": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "width": 1.0
+          },
+          "to": {
+            "x": 101.58399200439453,
+            "y": 251.6560001373291
+          }
+        }
+      }
+    },
+    {
+      "clip": null,
+      "layer": null,
+      "primitive": {
+        "Text": {
+          "color": {
+            "alpha": 255,
+            "blue": 65,
+            "green": 60,
+            "red": 55
+          },
+          "font": "1",
+          "font_size": 12.0,
+          "origin": {
+            "x": 89.67999172210693,
+            "y": 268.48400020599365
+          },
+          "text": "0.95"
+        }
+      }
+    },
+    {
+      "clip": null,
+      "layer": null,
+      "primitive": {
+        "Rule": {
+          "from": {
+            "x": 250.83999586105347,
+            "y": 247.6560001373291
+          },
+          "stroke": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "width": 1.0
+          },
+          "to": {
+            "x": 250.83999586105347,
+            "y": 251.6560001373291
+          }
+        }
+      }
+    },
+    {
+      "clip": null,
+      "layer": null,
+      "primitive": {
+        "Text": {
+          "color": {
+            "alpha": 255,
+            "blue": 65,
+            "green": 60,
+            "red": 55
+          },
+          "font": "1",
+          "font_size": 12.0,
+          "origin": {
+            "x": 247.40799593925476,
+            "y": 268.48400020599365
+          },
+          "text": "1"
+        }
+      }
+    },
+    {
+      "clip": null,
+      "layer": null,
+      "primitive": {
+        "Rule": {
+          "from": {
+            "x": 400.0959997177124,
+            "y": 247.6560001373291
+          },
+          "stroke": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "width": 1.0
+          },
+          "to": {
+            "x": 400.0959997177124,
+            "y": 251.6560001373291
+          }
+        }
+      }
+    },
+    {
+      "clip": null,
+      "layer": null,
+      "primitive": {
+        "Text": {
+          "color": {
+            "alpha": 255,
+            "blue": 65,
+            "green": 60,
+            "red": 55
+          },
+          "font": "1",
+          "font_size": 12.0,
+          "origin": {
+            "x": 388.1919994354248,
+            "y": 268.48400020599365
+          },
+          "text": "1.05"
+        }
+      }
+    },
+    {
+      "clip": null,
+      "layer": null,
+      "primitive": {
+        "Rule": {
+          "from": {
+            "x": 101.58399200439453,
+            "y": 16.17199993133545
+          },
+          "stroke": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "width": 1.0
+          },
+          "to": {
+            "x": 101.58399200439453,
+            "y": 247.6560001373291
+          }
+        }
+      }
+    },
+    {
+      "clip": null,
+      "layer": null,
+      "primitive": {
+        "Rule": {
+          "from": {
+            "x": 101.58399200439453,
+            "y": 16.17199993133545
+          },
+          "stroke": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "width": 1.0
+          },
+          "to": {
+            "x": 97.58399200439453,
+            "y": 16.17199993133545
+          }
+        }
+      }
+    },
+    {
+      "clip": null,
+      "layer": null,
+      "primitive": {
+        "Text": {
+          "color": {
+            "alpha": 255,
+            "blue": 65,
+            "green": 60,
+            "red": 55
+          },
+          "font": "1",
+          "font_size": 12.0,
+          "origin": {
+            "x": 72.99199295043945,
+            "y": 20.82800006866455
+          },
+          "text": "100"
+        }
+      }
+    },
+    {
+      "clip": null,
+      "layer": null,
+      "primitive": {
+        "Rule": {
+          "from": {
+            "x": 101.58399200439453,
+            "y": 74.04299998283386
+          },
+          "stroke": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "width": 1.0
+          },
+          "to": {
+            "x": 97.58399200439453,
+            "y": 74.04299998283386
+          }
+        }
+      }
+    },
+    {
+      "clip": null,
+      "layer": null,
+      "primitive": {
+        "Text": {
+          "color": {
+            "alpha": 255,
+            "blue": 65,
+            "green": 60,
+            "red": 55
+          },
+          "font": "1",
+          "font_size": 12.0,
+          "origin": {
+            "x": 8.0,
+            "y": 78.69900012016296
+          },
+          "text": "31.6227766017"
+        }
+      }
+    },
+    {
+      "clip": null,
+      "layer": null,
+      "primitive": {
+        "Rule": {
+          "from": {
+            "x": 101.58399200439453,
+            "y": 131.91400003433228
+          },
+          "stroke": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "width": 1.0
+          },
+          "to": {
+            "x": 97.58399200439453,
+            "y": 131.91400003433228
+          }
+        }
+      }
+    },
+    {
+      "clip": null,
+      "layer": null,
+      "primitive": {
+        "Text": {
+          "color": {
+            "alpha": 255,
+            "blue": 65,
+            "green": 60,
+            "red": 55
+          },
+          "font": "1",
+          "font_size": 12.0,
+          "origin": {
+            "x": 79.8559923171997,
+            "y": 136.57000017166138
+          },
+          "text": "10"
+        }
+      }
+    },
+    {
+      "clip": null,
+      "layer": null,
+      "primitive": {
+        "Rule": {
+          "from": {
+            "x": 101.58399200439453,
+            "y": 189.7850000858307
+          },
+          "stroke": {
+            "color": {
+              "alpha": 255,
+              "blue": 65,
+              "green": 60,
+              "red": 55
+            },
+            "width": 1.0
+          },
+          "to": {
+            "x": 97.58399200439453,
+            "y": 189.7850000858307
+          }
+        }
+      }
+    },
+    {
+      "clip": null,
+      "layer": null,
+      "primitive": {
+        "Text": {
+          "color": {
+            "alpha": 255,
+            "blue": 65,
+            "green": 60,
+            "red": 55
+          },
+          "font": "1",
+          "font_size": 12.0,
+          "origin": {
+            "x": 8.0,
+            "y": 194.4410002231598
+          },
+          "text": "3.16227766017"
+        }
+      }
+    }
+  ],
+  "panels": [],
+  "resources": [
+    {
+      "byte_len": "556216",
+      "id": "1",
+      "kind": "Font",
+      "revision": "0"
+    }
+  ],
+  "stamp": {
+    "definition": "0",
+    "layout": "0",
+    "state": "0",
+    "store": "0",
+    "viewport": "0"
+  },
+  "targets": [
+    [],
+    [
+      {
+        "Aggregate": {
+          "group": "layer:1130/All/chart.summary",
+          "id": "0",
+          "input": {
+            "dataset": "1116",
+            "revision": "0",
+            "schema_version": "1"
+          },
+          "members": [
+            "1117",
+            "1118",
+            "1119"
+          ]
+        }
+      }
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "units": "Points",
+  "version": 1
+}

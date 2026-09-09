@@ -1,0 +1,41 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.31s
+     Running tests/authoring.rs (target/debug/deps/authoring-e72a047800eb2f6b)
+
+running 13 tests
+test facets_reject_same_ordinal_with_different_field_names ... ok
+test component_options_reject_incompatible_owners_without_preparation ... ok
+test schema_errors_and_foreign_handles_reject_without_mutating_data ... ok
+test exact_nullable_data_and_timestamps_survive_materialization ... ok
+test labels_are_single_annotations_and_callout_components_preserve_the_endpoint ... ok
+test histogram_lowers_to_the_existing_bin_kernel_and_source_membership ... ok
+test automatic_timestamp_origins_align_independent_datasets_without_narrowing_ticks ... ok
+test columns_and_rows_prepare_identical_values_without_manual_ids ... ok
+test nondefault_recipe_and_primary_axis_options_survive_later_components ... ok
+test imported_identity_preserves_seeded_jitter_and_rejects_ambiguous_data_owners ... ok
+test shared_transform_runs_once_and_generated_color_uses_its_own_stage ... ok
+test grid_infers_empty_combinations_and_build_rejects_invalid_catalogs ... ok
+test shared_automatic_color_catalog_is_consistent_across_data_and_updates ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/authoring_host.rs (target/debug/deps/authoring_host-496965855666fc05)
+
+running 2 tests
+test host_composition_matches_independent_bins_and_rejects_misplaced_components ... ok
+test primary_envelope_roundtrip_preserves_exact_data_names_and_rejects_malformed_registry ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/portable.rs (target/debug/deps/portable-f732eb6c47af9857)
+
+running 6 tests
+test native_accessors_fail_serialization_instead_of_disappearing ... ok
+test fix16_all_64_bits_null_payload_and_formatted_columns_round_trip ... ok
+test strict_versions_required_fields_unknown_operations_and_duplicate_keys_reject ... ok
+test state_restore_cannot_reuse_revision_for_changed_content ... ok
+test fix15_round_trip_correction_viewport_and_aggregate_members ... ok
+test bounded_decoding_and_failed_transactions_leave_data_and_state_unchanged ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

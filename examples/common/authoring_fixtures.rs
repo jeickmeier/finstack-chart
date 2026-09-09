@@ -180,7 +180,7 @@ fn build_family(name: &str, data: Data) -> Plot {
                         .palette(palette)
                         .missing(missing),
                 );
-            p = p.legend(legend().scale("color").untitled());
+            p = p.legend(legend().scale("color").generic_title());
             points().aes(aes().color("field_1").color_scale("color"))
         }
         "family-area" => area().baseline(0.),
@@ -192,7 +192,7 @@ fn build_family(name: &str, data: Data) -> Plot {
                     .clamp(true)
                     .missing(missing),
             );
-            p = p.legend(legend().scale("color").untitled());
+            p = p.legend(legend().scale("color").generic_title());
             cells().aes(
                 aes()
                     .x2("field_3")
@@ -215,7 +215,7 @@ fn build_family(name: &str, data: Data) -> Plot {
                     .position(stack((0..4).map(GroupValue::Int).collect()))
             };
             return p
-                .legend(legend().scale("color").untitled())
+                .legend(legend().scale("color").generic_title())
                 .layer(layer.color_group("color").color(color()))
                 .build()
                 .unwrap();

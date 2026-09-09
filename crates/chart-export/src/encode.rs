@@ -30,7 +30,7 @@ pub(crate) fn png(tree: &usvg::Tree, p: &PublicationProfile) -> ChartResult<Vec<
     }
     let mut pixels = tiny_skia::Pixmap::new(width, height)
         .ok_or_else(|| error(DiagnosticCode::ResourceLimit, "Raster allocation failed."))?;
-    let c = p.background;
+    let c = p.background.resolve();
     if c.alpha == 255 {
         pixels.fill(tiny_skia::Color::from_rgba8(
             c.red, c.green, c.blue, c.alpha,
@@ -246,6 +246,44 @@ pub(crate) fn pdf(
                 }
                 (primitive, Some(usvg::Node::Path(node))) => {
                     match primitive {
+                        Primitive::VectorPath {
+                            fill: c,
+                            stroke,
+                            dashes,
+                            ..
+                        }
+                        | Primitive::ShapePath {
+                            fill: c,
+                            stroke,
+                            dashes,
+                            ..
+                        } => {
+                            surface.set_fill(c.map(fill));
+                            surface.set_stroke(
+                                stroke
+                                    .map(|s| -> ChartResult<Stroke> {
+                                        Ok(Stroke {
+                                            paint: fill(s.color).paint,
+                                            width: p.f32(s.width)?,
+                                            opacity: opacity(s.color),
+                                            miter_limit: 4.,
+                                            dash: if dashes.is_empty() {
+                                                None
+                                            } else {
+                                                Some(krilla::paint::StrokeDash {
+                                                    array: dashes
+                                                        .iter()
+                                                        .map(|v| p.f32(*v))
+                                                        .collect::<ChartResult<_>>()?,
+                                                    offset: 0.,
+                                                })
+                                            },
+                                            ..Stroke::default()
+                                        })
+                                    })
+                                    .transpose()?,
+                            );
+                        }
                         Primitive::NativePaint { .. } => {
                             return Err(error(
                                 DiagnosticCode::UnsupportedCapability,

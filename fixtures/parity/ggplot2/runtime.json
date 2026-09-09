@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "r": "4.6.1",
+  "ggplot2": "4.0.3",
+  "node": "24.14.0",
+  "timezone": "UTC",
+  "locale": "C",
+  "rng": {
+    "seed": 1729,
+    "kind": [
+      "Mersenne-Twister",
+      "Inversion",
+      "Rejection"
+    ]
+  },
+  "pdf_normalization": "CreationDate only, fixed to D:20000101000000Z; decoded page streams checked unchanged",
+  "font": {
+    "path": "fixtures/capability/fonts/NotoSans-Regular.ttf",
+    "sha256": "2ec33f84606cbaa0a1a944488e14f97faf2f6a25ecdd8354f5358f06da13c7d9"
+  },
+  "reference_libraries": [
+    {
+      "file": "target/reference-downloads/R-4.6.1-arm64.pkg",
+      "sha256": "67f6eea4ced4ce48f0a0d4fa3a1cac43d1859a05a88993ee3dff7c52e7edbc4b",
+      "usage": "R provided by owner; XQuartz libraries extracted locally, no system services installed"
+    },
+    {
+      "file": "target/reference-downloads/XQuartz-2.8.5.pkg",
+      "sha256": "e89538a134738dfa71d5b80f8e4658cb812e0803115a760629380b851b608782",
+      "usage": "R provided by owner; XQuartz libraries extracted locally, no system services installed"
+    }
+  ],
+  "pypdf": "6.10.0"
+}

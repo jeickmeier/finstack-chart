@@ -1,0 +1,1613 @@
+{
+  "schema_version": 1,
+  "exports": [
+    {
+      "name": "arc",
+      "canonical": "arc",
+      "alias_of": null,
+      "owner": "WP-S03",
+      "kind": "generator",
+      "methods": [
+        "centroid",
+        "context",
+        "cornerRadius",
+        "digits",
+        "endAngle",
+        "innerRadius",
+        "outerRadius",
+        "padAngle",
+        "padRadius",
+        "startAngle"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "area",
+      "canonical": "area",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "generator",
+      "methods": [
+        "context",
+        "curve",
+        "defined",
+        "digits",
+        "lineX0",
+        "lineX1",
+        "lineY0",
+        "lineY1",
+        "x",
+        "x0",
+        "x1",
+        "y",
+        "y0",
+        "y1"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "areaRadial",
+      "canonical": "areaRadial",
+      "alias_of": null,
+      "owner": "WP-S04",
+      "kind": "generator",
+      "methods": [
+        "angle",
+        "context",
+        "curve",
+        "defined",
+        "digits",
+        "endAngle",
+        "innerRadius",
+        "lineEndAngle",
+        "lineInnerRadius",
+        "lineOuterRadius",
+        "lineStartAngle",
+        "outerRadius",
+        "radius",
+        "startAngle"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveBasis",
+      "canonical": "curveBasis",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveBasisClosed",
+      "canonical": "curveBasisClosed",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveBasisOpen",
+      "canonical": "curveBasisOpen",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveBumpX",
+      "canonical": "curveBumpX",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveBumpY",
+      "canonical": "curveBumpY",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveBundle",
+      "canonical": "curveBundle",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [
+        "beta"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveCardinal",
+      "canonical": "curveCardinal",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [
+        "tension"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveCardinalClosed",
+      "canonical": "curveCardinalClosed",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [
+        "tension"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveCardinalOpen",
+      "canonical": "curveCardinalOpen",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [
+        "tension"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveCatmullRom",
+      "canonical": "curveCatmullRom",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [
+        "alpha"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveCatmullRomClosed",
+      "canonical": "curveCatmullRomClosed",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [
+        "alpha"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveCatmullRomOpen",
+      "canonical": "curveCatmullRomOpen",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [
+        "alpha"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveLinear",
+      "canonical": "curveLinear",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveLinearClosed",
+      "canonical": "curveLinearClosed",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveMonotoneX",
+      "canonical": "curveMonotoneX",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveMonotoneY",
+      "canonical": "curveMonotoneY",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveNatural",
+      "canonical": "curveNatural",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveStep",
+      "canonical": "curveStep",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveStepAfter",
+      "canonical": "curveStepAfter",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "curveStepBefore",
+      "canonical": "curveStepBefore",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "curve",
+      "methods": [
+        "areaEnd",
+        "areaStart",
+        "lineEnd",
+        "lineStart",
+        "point"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "line",
+      "canonical": "line",
+      "alias_of": null,
+      "owner": "WP-S02",
+      "kind": "generator",
+      "methods": [
+        "context",
+        "curve",
+        "defined",
+        "digits",
+        "x",
+        "y"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "lineRadial",
+      "canonical": "lineRadial",
+      "alias_of": null,
+      "owner": "WP-S04",
+      "kind": "generator",
+      "methods": [
+        "angle",
+        "context",
+        "curve",
+        "defined",
+        "digits",
+        "radius"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "link",
+      "canonical": "link",
+      "alias_of": null,
+      "owner": "WP-S04",
+      "kind": "generator",
+      "methods": [
+        "context",
+        "digits",
+        "source",
+        "target",
+        "x",
+        "y"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "linkHorizontal",
+      "canonical": "linkHorizontal",
+      "alias_of": null,
+      "owner": "WP-S04",
+      "kind": "generator",
+      "methods": [
+        "context",
+        "digits",
+        "source",
+        "target",
+        "x",
+        "y"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "linkRadial",
+      "canonical": "linkRadial",
+      "alias_of": null,
+      "owner": "WP-S04",
+      "kind": "generator",
+      "methods": [
+        "angle",
+        "context",
+        "digits",
+        "radius",
+        "source",
+        "target"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "linkVertical",
+      "canonical": "linkVertical",
+      "alias_of": null,
+      "owner": "WP-S04",
+      "kind": "generator",
+      "methods": [
+        "context",
+        "digits",
+        "source",
+        "target",
+        "x",
+        "y"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "pie",
+      "canonical": "pie",
+      "alias_of": null,
+      "owner": "WP-S03",
+      "kind": "generator",
+      "methods": [
+        "endAngle",
+        "padAngle",
+        "sort",
+        "sortValues",
+        "startAngle",
+        "value"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "pointRadial",
+      "canonical": "pointRadial",
+      "alias_of": null,
+      "owner": "WP-S04",
+      "kind": "point",
+      "methods": [],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "radialArea",
+      "canonical": "areaRadial",
+      "alias_of": "areaRadial",
+      "owner": "WP-S04",
+      "kind": "generator",
+      "methods": [
+        "angle",
+        "context",
+        "curve",
+        "defined",
+        "digits",
+        "endAngle",
+        "innerRadius",
+        "lineEndAngle",
+        "lineInnerRadius",
+        "lineOuterRadius",
+        "lineStartAngle",
+        "outerRadius",
+        "radius",
+        "startAngle"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "radialLine",
+      "canonical": "lineRadial",
+      "alias_of": "lineRadial",
+      "owner": "WP-S04",
+      "kind": "generator",
+      "methods": [
+        "angle",
+        "context",
+        "curve",
+        "defined",
+        "digits",
+        "radius"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "stack",
+      "canonical": "stack",
+      "alias_of": null,
+      "owner": "WP-S06",
+      "kind": "generator",
+      "methods": [
+        "keys",
+        "offset",
+        "order",
+        "value"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "stackOffsetDiverging",
+      "canonical": "stackOffsetDiverging",
+      "alias_of": null,
+      "owner": "WP-S06",
+      "kind": "offset",
+      "methods": [],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "stackOffsetExpand",
+      "canonical": "stackOffsetExpand",
+      "alias_of": null,
+      "owner": "WP-S06",
+      "kind": "offset",
+      "methods": [],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "stackOffsetNone",
+      "canonical": "stackOffsetNone",
+      "alias_of": null,
+      "owner": "WP-S06",
+      "kind": "offset",
+      "methods": [],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "stackOffsetSilhouette",
+      "canonical": "stackOffsetSilhouette",
+      "alias_of": null,
+      "owner": "WP-S06",
+      "kind": "offset",
+      "methods": [],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "stackOffsetWiggle",
+      "canonical": "stackOffsetWiggle",
+      "alias_of": null,
+      "owner": "WP-S06",
+      "kind": "offset",
+      "methods": [],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "stackOrderAppearance",
+      "canonical": "stackOrderAppearance",
+      "alias_of": null,
+      "owner": "WP-S06",
+      "kind": "order",
+      "methods": [],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "stackOrderAscending",
+      "canonical": "stackOrderAscending",
+      "alias_of": null,
+      "owner": "WP-S06",
+      "kind": "order",
+      "methods": [],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "stackOrderDescending",
+      "canonical": "stackOrderDescending",
+      "alias_of": null,
+      "owner": "WP-S06",
+      "kind": "order",
+      "methods": [],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "stackOrderInsideOut",
+      "canonical": "stackOrderInsideOut",
+      "alias_of": null,
+      "owner": "WP-S06",
+      "kind": "order",
+      "methods": [],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "stackOrderNone",
+      "canonical": "stackOrderNone",
+      "alias_of": null,
+      "owner": "WP-S06",
+      "kind": "order",
+      "methods": [],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "stackOrderReverse",
+      "canonical": "stackOrderReverse",
+      "alias_of": null,
+      "owner": "WP-S06",
+      "kind": "order",
+      "methods": [],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbol",
+      "canonical": "symbol",
+      "alias_of": null,
+      "owner": "WP-S05",
+      "kind": "generator",
+      "methods": [
+        "context",
+        "digits",
+        "size",
+        "type"
+      ],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbolAsterisk",
+      "canonical": "symbolAsterisk",
+      "alias_of": null,
+      "owner": "WP-S05",
+      "kind": "symbol",
+      "methods": [
+        "draw"
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbolCircle",
+      "canonical": "symbolCircle",
+      "alias_of": null,
+      "owner": "WP-S05",
+      "kind": "symbol",
+      "methods": [
+        "draw"
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbolCross",
+      "canonical": "symbolCross",
+      "alias_of": null,
+      "owner": "WP-S05",
+      "kind": "symbol",
+      "methods": [
+        "draw"
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbolDiamond",
+      "canonical": "symbolDiamond",
+      "alias_of": null,
+      "owner": "WP-S05",
+      "kind": "symbol",
+      "methods": [
+        "draw"
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbolDiamond2",
+      "canonical": "symbolDiamond2",
+      "alias_of": null,
+      "owner": "WP-S05",
+      "kind": "symbol",
+      "methods": [
+        "draw"
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbolPlus",
+      "canonical": "symbolPlus",
+      "alias_of": null,
+      "owner": "WP-S05",
+      "kind": "symbol",
+      "methods": [
+        "draw"
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbolSquare",
+      "canonical": "symbolSquare",
+      "alias_of": null,
+      "owner": "WP-S05",
+      "kind": "symbol",
+      "methods": [
+        "draw"
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbolSquare2",
+      "canonical": "symbolSquare2",
+      "alias_of": null,
+      "owner": "WP-S05",
+      "kind": "symbol",
+      "methods": [
+        "draw"
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbolStar",
+      "canonical": "symbolStar",
+      "alias_of": null,
+      "owner": "WP-S05",
+      "kind": "symbol",
+      "methods": [
+        "draw"
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbolTimes",
+      "canonical": "symbolTimes",
+      "alias_of": null,
+      "owner": "WP-S05",
+      "kind": "symbol",
+      "methods": [
+        "draw"
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbolTriangle",
+      "canonical": "symbolTriangle",
+      "alias_of": null,
+      "owner": "WP-S05",
+      "kind": "symbol",
+      "methods": [
+        "draw"
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbolTriangle2",
+      "canonical": "symbolTriangle2",
+      "alias_of": null,
+      "owner": "WP-S05",
+      "kind": "symbol",
+      "methods": [
+        "draw"
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbolWye",
+      "canonical": "symbolWye",
+      "alias_of": null,
+      "owner": "WP-S05",
+      "kind": "symbol",
+      "methods": [
+        "draw"
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbolX",
+      "canonical": "symbolTimes",
+      "alias_of": "symbolTimes",
+      "owner": "WP-S05",
+      "kind": "symbol",
+      "methods": [
+        "draw"
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbols",
+      "canonical": "symbolsFill",
+      "alias_of": "symbolsFill",
+      "owner": "WP-S05",
+      "kind": "palette",
+      "methods": [],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbolsFill",
+      "canonical": "symbolsFill",
+      "alias_of": null,
+      "owner": "WP-S05",
+      "kind": "palette",
+      "methods": [],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    },
+    {
+      "name": "symbolsStroke",
+      "canonical": "symbolsStroke",
+      "alias_of": null,
+      "owner": "WP-S05",
+      "kind": "palette",
+      "methods": [],
+      "factory_controls": [],
+      "status": "open",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization."
+    }
+  ],
+  "generators": [
+    {
+      "name": "arc",
+      "methods": [
+        "centroid",
+        "context",
+        "cornerRadius",
+        "digits",
+        "endAngle",
+        "innerRadius",
+        "outerRadius",
+        "padAngle",
+        "padRadius",
+        "startAngle"
+      ],
+      "boundary_methods": [],
+      "defaults": {
+        "context": null,
+        "cornerRadius": {
+          "kind": "function",
+          "export": null,
+          "source": "function constant() {\n    return x;\n  }"
+        },
+        "digits": 3,
+        "endAngle": {
+          "kind": "function",
+          "export": null,
+          "source": "function arcEndAngle(d) {\n  return d.endAngle;\n}"
+        },
+        "innerRadius": {
+          "kind": "function",
+          "export": null,
+          "source": "function arcInnerRadius(d) {\n  return d.innerRadius;\n}"
+        },
+        "outerRadius": {
+          "kind": "function",
+          "export": null,
+          "source": "function arcOuterRadius(d) {\n  return d.outerRadius;\n}"
+        },
+        "padAngle": {
+          "kind": "function",
+          "export": null,
+          "source": "function arcPadAngle(d) {\n  return d && d.padAngle; // Note: optional!\n}"
+        },
+        "padRadius": null,
+        "startAngle": {
+          "kind": "function",
+          "export": null,
+          "source": "function arcStartAngle(d) {\n  return d.startAngle;\n}"
+        }
+      }
+    },
+    {
+      "name": "area",
+      "methods": [
+        "context",
+        "curve",
+        "defined",
+        "digits",
+        "lineX0",
+        "lineX1",
+        "lineY0",
+        "lineY1",
+        "x",
+        "x0",
+        "x1",
+        "y",
+        "y0",
+        "y1"
+      ],
+      "boundary_methods": [
+        "lineX0",
+        "lineX1",
+        "lineY0",
+        "lineY1"
+      ],
+      "defaults": {
+        "context": null,
+        "curve": {
+          "kind": "function",
+          "export": "curveLinear",
+          "source": "function(context) {\n  return new Linear(context);\n}"
+        },
+        "defined": {
+          "kind": "function",
+          "export": null,
+          "source": "function constant() {\n    return x;\n  }"
+        },
+        "digits": 3,
+        "x": {
+          "kind": "function",
+          "export": null,
+          "source": "function x(p) {\n  return p[0];\n}"
+        },
+        "x0": {
+          "kind": "function",
+          "export": null,
+          "source": "function x(p) {\n  return p[0];\n}"
+        },
+        "x1": null,
+        "y": {
+          "kind": "function",
+          "export": null,
+          "source": "function constant() {\n    return x;\n  }"
+        },
+        "y0": {
+          "kind": "function",
+          "export": null,
+          "source": "function constant() {\n    return x;\n  }"
+        },
+        "y1": {
+          "kind": "function",
+          "export": null,
+          "source": "function y(p) {\n  return p[1];\n}"
+        }
+      }
+    },
+    {
+      "name": "areaRadial",
+      "methods": [
+        "angle",
+        "context",
+        "curve",
+        "defined",
+        "digits",
+        "endAngle",
+        "innerRadius",
+        "lineEndAngle",
+        "lineInnerRadius",
+        "lineOuterRadius",
+        "lineStartAngle",
+        "outerRadius",
+        "radius",
+        "startAngle"
+      ],
+      "boundary_methods": [
+        "lineEndAngle",
+        "lineInnerRadius",
+        "lineOuterRadius",
+        "lineStartAngle"
+      ],
+      "defaults": {
+        "angle": {
+          "kind": "function",
+          "export": null,
+          "source": "function x(p) {\n  return p[0];\n}"
+        },
+        "context": null,
+        "curve": {
+          "kind": "function",
+          "export": "curveLinear",
+          "source": "function(context) {\n  return new Linear(context);\n}"
+        },
+        "defined": {
+          "kind": "function",
+          "export": null,
+          "source": "function constant() {\n    return x;\n  }"
+        },
+        "digits": 3,
+        "endAngle": null,
+        "innerRadius": {
+          "kind": "function",
+          "export": null,
+          "source": "function constant() {\n    return x;\n  }"
+        },
+        "outerRadius": {
+          "kind": "function",
+          "export": null,
+          "source": "function y(p) {\n  return p[1];\n}"
+        },
+        "radius": {
+          "kind": "function",
+          "export": null,
+          "source": "function constant() {\n    return x;\n  }"
+        },
+        "startAngle": {
+          "kind": "function",
+          "export": null,
+          "source": "function x(p) {\n  return p[0];\n}"
+        }
+      }
+    },
+    {
+      "name": "line",
+      "methods": [
+        "context",
+        "curve",
+        "defined",
+        "digits",
+        "x",
+        "y"
+      ],
+      "boundary_methods": [],
+      "defaults": {
+        "context": null,
+        "curve": {
+          "kind": "function",
+          "export": "curveLinear",
+          "source": "function(context) {\n  return new Linear(context);\n}"
+        },
+        "defined": {
+          "kind": "function",
+          "export": null,
+          "source": "function constant() {\n    return x;\n  }"
+        },
+        "digits": 3,
+        "x": {
+          "kind": "function",
+          "export": null,
+          "source": "function x(p) {\n  return p[0];\n}"
+        },
+        "y": {
+          "kind": "function",
+          "export": null,
+          "source": "function y(p) {\n  return p[1];\n}"
+        }
+      }
+    },
+    {
+      "name": "lineRadial",
+      "methods": [
+        "angle",
+        "context",
+        "curve",
+        "defined",
+        "digits",
+        "radius"
+      ],
+      "boundary_methods": [],
+      "defaults": {
+        "angle": {
+          "kind": "function",
+          "export": null,
+          "source": "function x(p) {\n  return p[0];\n}"
+        },
+        "context": null,
+        "curve": {
+          "kind": "function",
+          "export": "curveLinear",
+          "source": "function(context) {\n  return new Linear(context);\n}"
+        },
+        "defined": {
+          "kind": "function",
+          "export": null,
+          "source": "function constant() {\n    return x;\n  }"
+        },
+        "digits": 3,
+        "radius": {
+          "kind": "function",
+          "export": null,
+          "source": "function y(p) {\n  return p[1];\n}"
+        }
+      }
+    },
+    {
+      "name": "link",
+      "methods": [
+        "context",
+        "digits",
+        "source",
+        "target",
+        "x",
+        "y"
+      ],
+      "boundary_methods": [],
+      "defaults": {
+        "context": null,
+        "digits": 3,
+        "source": {
+          "kind": "function",
+          "export": null,
+          "source": "function linkSource(d) {\n  return d.source;\n}"
+        },
+        "target": {
+          "kind": "function",
+          "export": null,
+          "source": "function linkTarget(d) {\n  return d.target;\n}"
+        },
+        "x": {
+          "kind": "function",
+          "export": null,
+          "source": "function x(p) {\n  return p[0];\n}"
+        },
+        "y": {
+          "kind": "function",
+          "export": null,
+          "source": "function y(p) {\n  return p[1];\n}"
+        }
+      }
+    },
+    {
+      "name": "linkHorizontal",
+      "methods": [
+        "context",
+        "digits",
+        "source",
+        "target",
+        "x",
+        "y"
+      ],
+      "boundary_methods": [],
+      "defaults": {
+        "context": null,
+        "digits": 3,
+        "source": {
+          "kind": "function",
+          "export": null,
+          "source": "function linkSource(d) {\n  return d.source;\n}"
+        },
+        "target": {
+          "kind": "function",
+          "export": null,
+          "source": "function linkTarget(d) {\n  return d.target;\n}"
+        },
+        "x": {
+          "kind": "function",
+          "export": null,
+          "source": "function x(p) {\n  return p[0];\n}"
+        },
+        "y": {
+          "kind": "function",
+          "export": null,
+          "source": "function y(p) {\n  return p[1];\n}"
+        }
+      }
+    },
+    {
+      "name": "linkVertical",
+      "methods": [
+        "context",
+        "digits",
+        "source",
+        "target",
+        "x",
+        "y"
+      ],
+      "boundary_methods": [],
+      "defaults": {
+        "context": null,
+        "digits": 3,
+        "source": {
+          "kind": "function",
+          "export": null,
+          "source": "function linkSource(d) {\n  return d.source;\n}"
+        },
+        "target": {
+          "kind": "function",
+          "export": null,
+          "source": "function linkTarget(d) {\n  return d.target;\n}"
+        },
+        "x": {
+          "kind": "function",
+          "export": null,
+          "source": "function x(p) {\n  return p[0];\n}"
+        },
+        "y": {
+          "kind": "function",
+          "export": null,
+          "source": "function y(p) {\n  return p[1];\n}"
+        }
+      }
+    },
+    {
+      "name": "linkRadial",
+      "methods": [
+        "angle",
+        "context",
+        "digits",
+        "radius",
+        "source",
+        "target"
+      ],
+      "boundary_methods": [],
+      "defaults": {
+        "angle": {
+          "kind": "function",
+          "export": null,
+          "source": "function x(p) {\n  return p[0];\n}"
+        },
+        "context": null,
+        "digits": 3,
+        "radius": {
+          "kind": "function",
+          "export": null,
+          "source": "function y(p) {\n  return p[1];\n}"
+        },
+        "source": {
+          "kind": "function",
+          "export": null,
+          "source": "function linkSource(d) {\n  return d.source;\n}"
+        },
+        "target": {
+          "kind": "function",
+          "export": null,
+          "source": "function linkTarget(d) {\n  return d.target;\n}"
+        }
+      }
+    },
+    {
+      "name": "pie",
+      "methods": [
+        "endAngle",
+        "padAngle",
+        "sort",
+        "sortValues",
+        "startAngle",
+        "value"
+      ],
+      "boundary_methods": [],
+      "defaults": {
+        "endAngle": {
+          "kind": "function",
+          "export": null,
+          "source": "function constant() {\n    return x;\n  }"
+        },
+        "padAngle": {
+          "kind": "function",
+          "export": null,
+          "source": "function constant() {\n    return x;\n  }"
+        },
+        "sort": null,
+        "sortValues": {
+          "kind": "function",
+          "export": null,
+          "source": "function(a, b) {\n  return b < a ? -1 : b > a ? 1 : b >= a ? 0 : NaN;\n}"
+        },
+        "startAngle": {
+          "kind": "function",
+          "export": null,
+          "source": "function constant() {\n    return x;\n  }"
+        },
+        "value": {
+          "kind": "function",
+          "export": null,
+          "source": "function(d) {\n  return d;\n}"
+        }
+      }
+    },
+    {
+      "name": "stack",
+      "methods": [
+        "keys",
+        "offset",
+        "order",
+        "value"
+      ],
+      "boundary_methods": [],
+      "defaults": {
+        "keys": {
+          "kind": "function",
+          "export": null,
+          "source": "function constant() {\n    return x;\n  }"
+        },
+        "offset": {
+          "kind": "function",
+          "export": "stackOffsetNone",
+          "source": "function(series, order) {\n  if (!((n = series.length) > 1)) return;\n  for (var i = 1, j, s0, s1 = series[order[0]], n, m = s1.length; i < n; ++i) {\n    s0 = s1, s1 = series[order[i]];\n    for (j = 0; j < m; ++j) {\n      s1[j][1] += s1[j][0] = isNaN(s0[j][1]) ? s0[j][0] : s0[j][1];\n    }\n  }\n}"
+        },
+        "order": {
+          "kind": "function",
+          "export": "stackOrderNone",
+          "source": "function(series) {\n  var n = series.length, o = new Array(n);\n  while (--n >= 0) o[n] = n;\n  return o;\n}"
+        },
+        "value": {
+          "kind": "function",
+          "export": null,
+          "source": "function stackValue(d, key) {\n  return d[key];\n}"
+        }
+      }
+    },
+    {
+      "name": "symbol",
+      "methods": [
+        "context",
+        "digits",
+        "size",
+        "type"
+      ],
+      "boundary_methods": [],
+      "defaults": {
+        "context": null,
+        "digits": 3,
+        "size": {
+          "kind": "function",
+          "export": null,
+          "source": "function constant() {\n    return x;\n  }"
+        },
+        "type": {
+          "kind": "function",
+          "export": null,
+          "source": "function constant() {\n    return x;\n  }"
+        }
+      }
+    }
+  ],
+  "boundaries": [
+    {
+      "family": "area",
+      "method": "lineY0",
+      "inheritance": {
+        "digits": 3,
+        "curve": true,
+        "defined": true,
+        "context": true
+      },
+      "source": "function() {\n    return arealine().x(x0).y(y0);\n  }"
+    },
+    {
+      "family": "area",
+      "method": "lineX0",
+      "inheritance": {
+        "digits": 3,
+        "curve": true,
+        "defined": true,
+        "context": true
+      },
+      "source": "function() {\n    return arealine().x(x0).y(y0);\n  }"
+    },
+    {
+      "family": "area",
+      "method": "lineY1",
+      "inheritance": {
+        "digits": 3,
+        "curve": true,
+        "defined": true,
+        "context": true
+      },
+      "source": "function() {\n    return arealine().x(x0).y(y1);\n  }"
+    },
+    {
+      "family": "area",
+      "method": "lineX1",
+      "inheritance": {
+        "digits": 3,
+        "curve": true,
+        "defined": true,
+        "context": true
+      },
+      "source": "function() {\n    return arealine().x(x1).y(y0);\n  }"
+    },
+    {
+      "family": "areaRadial",
+      "method": "lineStartAngle",
+      "inheritance": {
+        "digits": 3,
+        "curve": true,
+        "defined": true,
+        "context": true
+      },
+      "source": "function() { return lineRadial(x0()); }"
+    },
+    {
+      "family": "areaRadial",
+      "method": "lineEndAngle",
+      "inheritance": {
+        "digits": 3,
+        "curve": true,
+        "defined": true,
+        "context": true
+      },
+      "source": "function() { return lineRadial(x1()); }"
+    },
+    {
+      "family": "areaRadial",
+      "method": "lineInnerRadius",
+      "inheritance": {
+        "digits": 3,
+        "curve": true,
+        "defined": true,
+        "context": true
+      },
+      "source": "function() { return lineRadial(y0()); }"
+    },
+    {
+      "family": "areaRadial",
+      "method": "lineOuterRadius",
+      "inheritance": {
+        "digits": 3,
+        "curve": true,
+        "defined": true,
+        "context": true
+      },
+      "source": "function() { return lineRadial(y1()); }"
+    }
+  ],
+  "palettes": {
+    "symbolsFill": [
+      "symbolCircle",
+      "symbolCross",
+      "symbolDiamond",
+      "symbolSquare",
+      "symbolStar",
+      "symbolTriangle",
+      "symbolWye"
+    ],
+    "symbolsStroke": [
+      "symbolCircle",
+      "symbolPlus",
+      "symbolTimes",
+      "symbolTriangle2",
+      "symbolAsterisk",
+      "symbolSquare2",
+      "symbolDiamond2"
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.47s
+     Running tests/facets.rs (target/debug/deps/facets-170d5af10e1c2319)
+
+running 9 tests
+test source_filters_precede_catalog_validation_and_empty_panel_drop ... ok
+test shared_log_scale_uses_positive_population_from_all_panels ... ok
+test figure_budgets_invalid_catalog_and_tiny_dense_labels_fail_or_fallback_explicitly ... ok
+test declared_figure_overflow_and_default_plot_clip_are_preserved_in_facets ... ok
+test group_facet_chart_statistics_have_independent_expected_populations_and_cache_keys ... ok
+test fix06_explicit_annotation_policy_shared_domain_and_exact_panel_targets ... ok
+test explicit_empty_panels_grid_coordinates_and_reordering_preserve_keys ... ok
+test free_scales_intentionally_differ_and_resize_font_changes_keep_aligned_panes ... ok
+test color_guides_collect_only_exact_compatible_id_domain_and_palette ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/shape_integration.rs (target/debug/deps/shape_integration-480edffbfbc7c496)
+
+running 6 tests
+test nonzero_holes_curved_strokes_caps_and_subdivision_limits_are_explicit ... ok
+test clipped_area_interiors_keep_source_focus_without_inventing_brush_vertices ... ok
+test general_area_has_independent_boundaries_and_no_lower_upper_order_constraint ... ok
+test missing_secondary_coordinate_splits_the_paired_run_and_retains_source_keys ... ok
+test singleton_curve_policy_remains_distinct_from_legacy_line_points ... ok
+test curves_project_before_generation_and_controls_are_never_source_targets ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/shape_stack.rs (target/debug/deps/shape_stack-489962806f07ca68)
+
+running 3 tests
+test signed_endpoints_keep_expand_diverging_and_legacy_distinct ... ok
+test native_protocols_accessors_errors_and_budgets_are_checked ... ok
+test every_order_offset_and_missing_policy_matches_independent_reference ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/shape_stack_integration.rs (target/debug/deps/shape_stack_integration-abb35bc3fba33839)
+
+running 3 tests
+test duplicate_cells_baselines_catalogs_and_missing_payloads_are_explicit ... ok
+test sparse_zero_boundaries_have_no_synthetic_observation_and_gaps_do_not_bridge ... ok
+test all_reference_layouts_flow_through_tidy_bars_and_areas_in_either_row_order ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests/statistics.rs (target/debug/deps/statistics-401710c7bb773624)
+
+running 14 tests
+test strict_inputs_budgets_and_incompatible_position_contracts_reject ... ok
+test named_generated_output_is_shared_and_cannot_be_reinterpreted_as_source ... ok
+test stored_d3_r7_reference_examples_match_only_the_agreed_quantile_definition ... ok
+test stable_accumulation_survives_intermediate_overflow_and_extreme_quantiles ... ok
+test dodge_uses_band_width_and_preserves_missing_slots ... ok
+test fix03_mixed_sign_stack_normalize_and_reorder_domains ... ok
+test count_requires_all_inputs_and_reports_invalid_strict_and_empty_groups ... ok
+test fix04_quantiles_stable_summary_missing_and_explicit_empty_sum ... ok
+test fix02_explicit_auto_constant_empty_and_overflow_bin_conservation ... ok
+test zero_preserving_transformed_stacks_work_and_unused_bad_generated_fields_reject ... ok
+test fix05_intercept_ols_zoom_filter_degenerate_and_large_origin ... ok
+test transformed_stat_fields_are_not_transformed_again_and_mismatch_rejects ... ok
+test seeded_jitter_is_stable_in_data_and_display_units ... ok
+test exact_batch_fallback_after_append_correction_removal_and_reorder ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

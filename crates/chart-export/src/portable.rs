@@ -45,11 +45,14 @@ pub struct ProfileEnvelope {
     pub additional_fonts: Vec<EmbeddedFont>,
     /// Host cascade tokens, preceding the authored named theme.
     #[serde(default)]
-    pub host_theme: chart_core::theme::ThemePatch,
+    pub host_theme: chart_core::theme::ThemePatch<chart_core::color::Paint>,
     /// Output-only styling, applied after the authored theme and interaction styling.
     #[serde(default)]
-    pub output_theme: chart_core::theme::ThemePatch,
-    /// Supported envelope version 1.
+    pub output_theme: chart_core::theme::ThemePatch<chart_core::color::Paint>,
+    /// Optional authored page background; requires profile envelope version two.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub background: Option<chart_core::color::Paint>,
+    /// Version one for legacy profiles, version two for authored floating paint/background.
     pub version: u32,
     /// Positive physical width in points.
     pub width_pt: f64,
@@ -70,7 +73,16 @@ pub struct ProfileEnvelope {
 }
 impl ProfileEnvelope {
     fn build(self, bytes: Vec<u8>) -> ChartResult<(PublicationProfile, FontResources)> {
-        if self.version != portable::VERSION {
+        if self.version
+            != if self.background.is_some()
+                || self.host_theme.has_floating()
+                || self.output_theme.has_floating()
+            {
+                2
+            } else {
+                1
+            }
+        {
             return Err(error(
                 DiagnosticCode::UnsupportedCapability,
                 "Unsupported publication profile version",
@@ -131,6 +143,9 @@ impl ProfileEnvelope {
         let mut profile =
             PublicationProfile::new(PageSize::points(self.width_pt, self.height_pt)?, descriptor)?;
         profile.dpi = self.dpi;
+        if let Some(background) = self.background {
+            profile.background = background;
+        }
         profile.layout.host_theme = self.host_theme;
         profile.layout.output_theme = self.output_theme;
         profile.layout.font_size = self.font_size;
@@ -252,7 +267,7 @@ impl PortableChart {
             i.profile.layout.limits,
         )?;
         portable::encode(
-            &json!({"version":portable::VERSION,"stamp":dense.scene().stamp(),"metrics":dense.metrics(),"candles":dense.candles(),"items":dense.scene().items(),"svg":crate::svg::build(dense.scene(),&i.fonts,&i.profile,true)?}),
+            &json!({"version":dense.scene().wire_version(),"stamp":dense.scene().stamp(),"metrics":dense.metrics(),"candles":dense.candles(),"items":dense.scene().items(),"svg":crate::svg::build(dense.scene(),&i.fonts,&i.profile,true)?}),
         )
     }
     /// Owned semantic JSON with generated values, domains, exact source payloads and targets.
@@ -373,7 +388,7 @@ impl FigureSnapshot {
             .map(|(i, v)| (i + 1, v))
             .collect();
         portable::encode(
-            &json!({"interactions":interactions,"insets":insets,"version":portable::VERSION,"stamp":figure.scene().stamp(),"units":figure.scene().units(),"bounds":figure.scene().bounds(),"items":figure.scene().items(),"resources":figure.scene().resources(),"targets":targets,"item_panels":item_panels,"panels":panels,"diagnostics":figure.layout().diagnostics(),"fonts":figure.metadata().fonts.iter().map(|f|json!({"id":f.id,"revision":f.revision,"sha256":f.sha256})).collect::<Vec<_>>() }),
+            &json!({"interactions":interactions,"insets":insets,"version":figure.scene().wire_version(),"stamp":figure.scene().stamp(),"units":figure.scene().units(),"bounds":figure.scene().bounds(),"items":figure.scene().items(),"resources":figure.scene().resources(),"targets":targets,"item_panels":item_panels,"panels":panels,"diagnostics":figure.layout().diagnostics(),"fonts":figure.metadata().fonts.iter().map(|f|json!({"id":f.id,"revision":f.revision,"sha256":f.sha256})).collect::<Vec<_>>() }),
         )
     }
 }

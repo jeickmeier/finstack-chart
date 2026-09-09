@@ -42,6 +42,15 @@ pub enum AxisScale {
     Auto,
     /// Linear domain precedence/baseline/padding/nice policy.
     Linear(ContinuousDomain),
+    /// D3-compatible authored numeric knots and range, projected into destination units.
+    Numeric(crate::scales::NumericScaleSpec),
+    /// Explicitly registered numeric-output provider; never implies inversion.
+    Registered {
+        /// Exact installed provider identity and version.
+        operation: crate::grammar::OperationRef,
+        /// Bounded declarative provider inputs.
+        parameters: serde_json::Value,
+    },
     /// Invertible nonlinear numeric mapping with data-space domain policies.
     Nonlinear {
         /// Coordinate transformation.
@@ -51,6 +60,8 @@ pub enum AxisScale {
     },
     /// Categorical centers without band extents.
     Point(PointOptions),
+    /// D3 point spacing with explicit alignment and rounding.
+    D3Point(crate::scales::PointSpec),
     /// Supplied active sessions compressed into contiguous time.
     Session(SessionCalendar),
     /// Alternate-unit guide over another numeric axis; cannot bind layer coordinates.
@@ -64,6 +75,15 @@ pub enum AxisScale {
     },
     /// Stable labels with optional exact explicit domain/order.
     Band(BandOptions),
+    /// D3 band spacing with explicit alignment, rounding and zero-width support.
+    D3Band(crate::scales::BandSpec),
+    /// Integer-origin time knots with a supplied UTC/local calendar.
+    Calendar {
+        /// Authored timestamp knots and numerical outputs.
+        spec: crate::scales::TimeScaleSpec,
+        /// Explicit calendar interval, or automatic density selection.
+        interval: Option<crate::scales::CalendarInterval>,
+    },
     /// UTC integer domain and optional calendar tick interval.
     Utc {
         /// Exact source-unit endpoints; absent derives post-stat endpoints.
@@ -72,16 +92,21 @@ pub enum AxisScale {
         interval: Option<UtcInterval>,
     },
 }
-/// One named positional scale and optional plain guide.
+/// Presentation shared by default and independently identified positional guides.
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
-#[serde(deny_unknown_fields)]
-pub struct AxisSpec {
+pub struct GuideStyle {
     /// Explicit bounded semantic tick positions/labels, replacing automatic guide candidates.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub guide_ticks: Option<Vec<CustomGuideTick>>,
     /// Optional portable numeric formatting; incompatible category/time guides reject it.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub number_format: Option<crate::typography::NumberFormat>,
+    /// D3 numeric specifier with inferred tick precision and an explicit locale (wire v5).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub numeric_format: Option<crate::typography::NumericFormat>,
+    /// Conditional or custom time labels using the axis calendar (wire v5).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub time_format: Option<crate::scales::TimeFormat>,
     /// Optional explicit rich axis title, measured with this destination's text service.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub title: Option<crate::typography::RichText>,
@@ -91,6 +116,87 @@ pub struct AxisSpec {
     /// Clockwise tick-label rotation in degrees; uses exact shaped outlines when nonzero.
     #[serde(default)]
     pub label_rotation: f64,
+    /// Whether to paint and reserve margin for this guide.
+    pub visible: bool,
+}
+impl Default for GuideStyle {
+    fn default() -> Self {
+        Self {
+            guide_ticks: None,
+            number_format: None,
+            numeric_format: None,
+            time_format: None,
+            title: None,
+            typography: None,
+            label_rotation: 0.,
+            visible: true,
+        }
+    }
+}
+/// One independently identified guide over an already declared positional scale.
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
+pub struct GuideSpec {
+    /// Stable guide identity, independent of the referenced scale identity.
+    pub id: crate::GuideId,
+    /// Existing scale to reuse without retraining or altering mark coordinates.
+    pub scale: ScaleId,
+    /// Guide side; orientation must match the referenced positional scale.
+    pub side: AxisSide,
+    /// Explicit finite translation in destination units, applied only to this guide.
+    #[serde(default)]
+    pub translation: [f64; 2],
+    /// Shared presentation configuration.
+    #[serde(flatten)]
+    pub style: GuideStyle,
+}
+impl GuideSpec {
+    /// A visible guide at its side's plot edge with legacy presentation defaults.
+    pub fn new(id: crate::GuideId, scale: ScaleId, side: AxisSide) -> Self {
+        Self {
+            id,
+            scale,
+            side,
+            translation: [0., 0.],
+            style: GuideStyle::default(),
+        }
+    }
+}
+impl std::ops::Deref for GuideSpec {
+    type Target = GuideStyle;
+    fn deref(&self) -> &Self::Target {
+        &self.style
+    }
+}
+impl std::ops::DerefMut for GuideSpec {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.style
+    }
+}
+impl std::ops::Deref for AxisSpec {
+    type Target = GuideStyle;
+    fn deref(&self) -> &Self::Target {
+        &self.guide
+    }
+}
+impl std::ops::DerefMut for AxisSpec {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.guide
+    }
+}
+/// One named positional scale and its default guide.
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
+pub struct AxisSpec {
+    /// Explicit coordinate-only transform override; absence follows the canonical profile.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub scale_stage: Option<crate::grammar::ScaleStage>,
+    /// Population handling under pre-stat scale semantics, separate from viewport clipping.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub population_oob: Option<crate::grammar::ScaleOob>,
+    /// Presentation of the default guide; the scale has independent ownership.
+    #[serde(flatten)]
+    pub guide: GuideStyle,
     /// Must match a layer scale binding (or an empty primary guide).
     pub id: ScaleId,
     /// Guide side and scale orientation.
@@ -104,25 +210,30 @@ pub struct AxisSpec {
     pub range: Option<Bounds>,
     /// Outside visible-domain treatment, independent of plot clipping.
     pub outside: OutsidePolicy,
-    /// Whether to paint and reserve margin for this guide.
-    pub visible: bool,
 }
 impl AxisSpec {
+    /// Default guide identity and presentation, preserving historical scale identity values.
+    pub fn default_guide(&self) -> GuideSpec {
+        GuideSpec {
+            id: crate::GuideId::new(self.id.get()),
+            scale: self.id,
+            side: self.side,
+            translation: [0., 0.],
+            style: self.guide.clone(),
+        }
+    }
     /// Automatic family, plot range, visible guide and finite extrapolation for clipping.
     pub fn new(id: ScaleId, side: AxisSide) -> Self {
         Self {
             id,
-            guide_ticks: None,
+            population_oob: None,
+            scale_stage: None,
             side,
-            typography: None,
-            number_format: None,
-            title: None,
-            label_rotation: 0.,
+            guide: GuideStyle::default(),
             scale: AxisScale::Auto,
             viewport: None,
             range: None,
             outside: OutsidePolicy::Extend,
-            visible: true,
         }
     }
 }
@@ -130,11 +241,11 @@ impl AxisSpec {
 #[derive(serde::Serialize, Clone, Debug)]
 pub struct LayoutRequest {
     /// Host tokens, preceding named theme and plot overrides.
-    pub host_theme: crate::theme::ThemePatch,
+    pub host_theme: crate::theme::ThemePatch<crate::color::Paint>,
     /// Explicit applicable interaction styling by layer.
-    pub interaction_theme: BTreeMap<crate::LayerId, crate::theme::ThemePatch>,
+    pub interaction_theme: BTreeMap<crate::LayerId, crate::theme::ThemePatch<crate::color::Paint>>,
     /// Destination output overrides, separate from the authored theme.
-    pub output_theme: crate::theme::ThemePatch,
+    pub output_theme: crate::theme::ThemePatch<crate::color::Paint>,
     /// Optional enclosing figure clip for layers explicitly allowing figure overflow.
     /// Facet layout supplies the outer figure; plot clips remain panel-local.
     pub figure_bounds: Option<Rect>,
@@ -148,8 +259,11 @@ pub struct LayoutRequest {
     pub font: ResourceDescriptor,
     /// Positive plain-label size in destination units.
     pub font_size: f64,
-    /// At most four independent named axes; at most one visible guide on each side.
+    /// At most four independent named positional scales and their default guides.
     pub axes: Vec<AxisSpec>,
+    /// Additional independent guides over existing positional scales.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub guides: Vec<GuideSpec>,
     /// Nonnegative figure inset.
     pub padding: f64,
     /// Minimum useful plot width and height, both positive.
@@ -183,6 +297,7 @@ impl LayoutRequest {
             font,
             revision: Revision::INITIAL,
             font_size: 12.,
+            guides: vec![],
             axes: vec![
                 AxisSpec::new(ScaleId::new(0), AxisSide::Bottom),
                 AxisSpec::new(ScaleId::new(1), AxisSide::Left),
@@ -202,8 +317,12 @@ impl LayoutRequest {
 /// Concrete scale exposes only its valid inversion/category capabilities.
 #[derive(Clone, Debug)]
 pub enum ResolvedScale {
+    /// One checked immutable provider shared by all guides on this scale.
+    Provider(crate::scales::CheckedPositionalScale),
     /// Numeric mapping/inversion in calculation space.
     Linear(LinearScale),
+    /// Retained piecewise and transformed numeric domain.
+    Numeric(crate::scales::NumericAxisScale),
     /// Numeric nonlinear mapping/inversion.
     Nonlinear(NonlinearScale),
     /// Category centers without band widths.
@@ -221,10 +340,14 @@ pub enum ResolvedScale {
     Band(BandScale),
     /// Exact source timestamp mapping/inversion.
     Utc(UtcScale),
+    /// Shared calendar and retained numeric timestamp mapping.
+    Calendar(Box<crate::scales::TimeAxisScale>),
 }
 /// Logical label and final destination coordinate retained for host inspection.
 #[derive(Clone, Debug, PartialEq)]
 pub struct GuideTick {
+    /// Original typed semantic value, retained without inverse reconstruction.
+    pub value: crate::composition::ScaleValue,
     /// Destination coordinate along the axis.
     pub position: f64,
     /// Preserved logical label; deterministic thinning can omit other candidates.
@@ -239,7 +362,15 @@ pub struct ResolvedAxis {
     pub space: ValueSpace,
     /// Concrete checked transform and capabilities.
     pub scale: ResolvedScale,
-    /// Final visible labels after deterministic thinning.
+    /// Retained ticks after label thinning; suppressed log minor labels are empty.
+    pub ticks: Vec<GuideTick>,
+}
+/// One retained guide referencing an independently owned positional scale.
+#[derive(Clone, Debug)]
+pub struct ResolvedGuide {
+    /// Stable identity, shared scale, placement and presentation.
+    pub spec: GuideSpec,
+    /// Original semantic values and final destination positions/labels.
     pub ticks: Vec<GuideTick>,
 }
 /// Explicit compact outcomes; no zero-width scale or invalid geometry is fabricated.
@@ -264,6 +395,7 @@ pub struct LaidOutChart {
     pub(crate) scene: Scene,
     pub(crate) plot: Option<Rect>,
     pub(crate) axes: BTreeMap<ScaleId, ResolvedAxis>,
+    pub(crate) guides: BTreeMap<crate::GuideId, ResolvedGuide>,
     pub(crate) targets: Vec<Vec<Target>>,
     pub(crate) diagnostics: Vec<Diagnostic>,
     pub(crate) status: LayoutStatus,
@@ -296,6 +428,10 @@ pub struct LaidOutInset {
     pub chart: Arc<LaidOutChart>,
 }
 impl LaidOutChart {
+    /// Independently identified default and additional guides over retained scales.
+    pub fn guides(&self) -> &BTreeMap<crate::GuideId, ResolvedGuide> {
+        &self.guides
+    }
     /// Resolved per-layer paint cascade captured with this immutable destination.
     pub fn paint_theme(&self, layer: crate::LayerId) -> Option<&crate::theme::ThemePatch> {
         self.paint_themes.get(&layer)
@@ -372,7 +508,9 @@ impl ResolvedAxis {
     /// Map a semantic value through its actual numeric/category/time capability.
     pub fn map_value(&self, v: &crate::composition::ScaleValue) -> crate::ChartResult<Option<f64>> {
         match (&self.scale, v) {
+            (ResolvedScale::Provider(s), value) => s.map(value),
             (ResolvedScale::Linear(s), crate::composition::ScaleValue::Number(v)) => s.map(*v),
+            (ResolvedScale::Numeric(s), crate::composition::ScaleValue::Number(v)) => s.map(*v),
             (ResolvedScale::Nonlinear(s), crate::composition::ScaleValue::Number(v)) => s.map(*v),
             (ResolvedScale::Band(s), crate::composition::ScaleValue::Category(v)) => s.center(v),
             (ResolvedScale::Point(s), crate::composition::ScaleValue::Category(v)) => s.center(v),
@@ -381,6 +519,10 @@ impl ResolvedAxis {
             {
                 s.map(*value)
             }
+            (
+                ResolvedScale::Calendar(s),
+                crate::composition::ScaleValue::Timestamp { value, unit },
+            ) if s.unit() == *unit => s.map(*value),
             (
                 ResolvedScale::Session(s),
                 crate::composition::ScaleValue::Timestamp { value, unit },

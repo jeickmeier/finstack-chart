@@ -1,0 +1,5798 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Blues",
+      "reverse": false,
+      "reference_css": "rgb(247, 251, 255)",
+      "expected": [
+        247,
+        251,
+        255,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Blues",
+      "reverse": false,
+      "reference_css": "rgb(8, 48, 107)",
+      "expected": [
+        8,
+        48,
+        107,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Blues",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Blues",
+      "reverse": false,
+      "reference_css": "rgb(8, 48, 107)",
+      "expected": [
+        8,
+        48,
+        107,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Blues",
+      "reverse": true,
+      "reference_css": "rgb(8, 48, 107)",
+      "expected": [
+        8,
+        48,
+        107,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Blues",
+      "reverse": true,
+      "reference_css": "rgb(247, 251, 255)",
+      "expected": [
+        247,
+        251,
+        255,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Blues",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Blues",
+      "reverse": true,
+      "reference_css": "rgb(247, 251, 255)",
+      "expected": [
+        247,
+        251,
+        255,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "BrBG",
+      "reverse": false,
+      "reference_css": "rgb(84, 48, 5)",
+      "expected": [
+        84,
+        48,
+        5,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "BrBG",
+      "reverse": false,
+      "reference_css": "rgb(0, 60, 48)",
+      "expected": [
+        0,
+        60,
+        48,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "BrBG",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "BrBG",
+      "reverse": false,
+      "reference_css": "rgb(0, 60, 48)",
+      "expected": [
+        0,
+        60,
+        48,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "BrBG",
+      "reverse": true,
+      "reference_css": "rgb(0, 60, 48)",
+      "expected": [
+        0,
+        60,
+        48,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "BrBG",
+      "reverse": true,
+      "reference_css": "rgb(84, 48, 5)",
+      "expected": [
+        84,
+        48,
+        5,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "BrBG",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "BrBG",
+      "reverse": true,
+      "reference_css": "rgb(84, 48, 5)",
+      "expected": [
+        84,
+        48,
+        5,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "BuGn",
+      "reverse": false,
+      "reference_css": "rgb(247, 252, 253)",
+      "expected": [
+        247,
+        252,
+        253,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "BuGn",
+      "reverse": false,
+      "reference_css": "rgb(0, 68, 27)",
+      "expected": [
+        0,
+        68,
+        27,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "BuGn",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "BuGn",
+      "reverse": false,
+      "reference_css": "rgb(0, 68, 27)",
+      "expected": [
+        0,
+        68,
+        27,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "BuGn",
+      "reverse": true,
+      "reference_css": "rgb(0, 68, 27)",
+      "expected": [
+        0,
+        68,
+        27,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "BuGn",
+      "reverse": true,
+      "reference_css": "rgb(247, 252, 253)",
+      "expected": [
+        247,
+        252,
+        253,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "BuGn",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "BuGn",
+      "reverse": true,
+      "reference_css": "rgb(247, 252, 253)",
+      "expected": [
+        247,
+        252,
+        253,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "BuPu",
+      "reverse": false,
+      "reference_css": "rgb(247, 252, 253)",
+      "expected": [
+        247,
+        252,
+        253,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "BuPu",
+      "reverse": false,
+      "reference_css": "rgb(77, 0, 75)",
+      "expected": [
+        77,
+        0,
+        75,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "BuPu",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "BuPu",
+      "reverse": false,
+      "reference_css": "rgb(77, 0, 75)",
+      "expected": [
+        77,
+        0,
+        75,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "BuPu",
+      "reverse": true,
+      "reference_css": "rgb(77, 0, 75)",
+      "expected": [
+        77,
+        0,
+        75,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "BuPu",
+      "reverse": true,
+      "reference_css": "rgb(247, 252, 253)",
+      "expected": [
+        247,
+        252,
+        253,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "BuPu",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "BuPu",
+      "reverse": true,
+      "reference_css": "rgb(247, 252, 253)",
+      "expected": [
+        247,
+        252,
+        253,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Cividis",
+      "reverse": false,
+      "reference_css": "rgb(0, 32, 81)",
+      "expected": [
+        0,
+        32,
+        81,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Cividis",
+      "reverse": false,
+      "reference_css": "rgb(253, 234, 69)",
+      "expected": [
+        253,
+        234,
+        69,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Cividis",
+      "reverse": false,
+      "reference_css": "rgb(NaN, NaN, NaN)",
+      "expected": null
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Cividis",
+      "reverse": false,
+      "reference_css": "rgb(253, 234, 69)",
+      "expected": [
+        253,
+        234,
+        69,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Cividis",
+      "reverse": true,
+      "reference_css": "rgb(253, 234, 69)",
+      "expected": [
+        253,
+        234,
+        69,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Cividis",
+      "reverse": true,
+      "reference_css": "rgb(0, 32, 81)",
+      "expected": [
+        0,
+        32,
+        81,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Cividis",
+      "reverse": true,
+      "reference_css": "rgb(NaN, NaN, NaN)",
+      "expected": null
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Cividis",
+      "reverse": true,
+      "reference_css": "rgb(0, 32, 81)",
+      "expected": [
+        0,
+        32,
+        81,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Cool",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Cool",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Cool",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Cool",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Cool",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Cool",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Cool",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Cool",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "CubehelixDefault",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "CubehelixDefault",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "CubehelixDefault",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "CubehelixDefault",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "CubehelixDefault",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "CubehelixDefault",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "CubehelixDefault",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "CubehelixDefault",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "GnBu",
+      "reverse": false,
+      "reference_css": "rgb(247, 252, 240)",
+      "expected": [
+        247,
+        252,
+        240,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "GnBu",
+      "reverse": false,
+      "reference_css": "rgb(8, 64, 129)",
+      "expected": [
+        8,
+        64,
+        129,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "GnBu",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "GnBu",
+      "reverse": false,
+      "reference_css": "rgb(8, 64, 129)",
+      "expected": [
+        8,
+        64,
+        129,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "GnBu",
+      "reverse": true,
+      "reference_css": "rgb(8, 64, 129)",
+      "expected": [
+        8,
+        64,
+        129,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "GnBu",
+      "reverse": true,
+      "reference_css": "rgb(247, 252, 240)",
+      "expected": [
+        247,
+        252,
+        240,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "GnBu",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "GnBu",
+      "reverse": true,
+      "reference_css": "rgb(247, 252, 240)",
+      "expected": [
+        247,
+        252,
+        240,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Greens",
+      "reverse": false,
+      "reference_css": "rgb(247, 252, 245)",
+      "expected": [
+        247,
+        252,
+        245,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Greens",
+      "reverse": false,
+      "reference_css": "rgb(0, 68, 27)",
+      "expected": [
+        0,
+        68,
+        27,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Greens",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Greens",
+      "reverse": false,
+      "reference_css": "rgb(0, 68, 27)",
+      "expected": [
+        0,
+        68,
+        27,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Greens",
+      "reverse": true,
+      "reference_css": "rgb(0, 68, 27)",
+      "expected": [
+        0,
+        68,
+        27,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Greens",
+      "reverse": true,
+      "reference_css": "rgb(247, 252, 245)",
+      "expected": [
+        247,
+        252,
+        245,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Greens",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Greens",
+      "reverse": true,
+      "reference_css": "rgb(247, 252, 245)",
+      "expected": [
+        247,
+        252,
+        245,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Greys",
+      "reverse": false,
+      "reference_css": "rgb(255, 255, 255)",
+      "expected": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Greys",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Greys",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Greys",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Greys",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Greys",
+      "reverse": true,
+      "reference_css": "rgb(255, 255, 255)",
+      "expected": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Greys",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Greys",
+      "reverse": true,
+      "reference_css": "rgb(255, 255, 255)",
+      "expected": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Inferno",
+      "reverse": false,
+      "reference_css": "#000004",
+      "expected": [
+        0,
+        0,
+        4,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Inferno",
+      "reverse": false,
+      "reference_css": "#fcffa4",
+      "expected": [
+        252,
+        255,
+        164,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Inferno",
+      "reverse": false,
+      "reference_css": null,
+      "expected": null
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Inferno",
+      "reverse": false,
+      "reference_css": "#fcffa4",
+      "expected": [
+        252,
+        255,
+        164,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Inferno",
+      "reverse": true,
+      "reference_css": "#fcffa4",
+      "expected": [
+        252,
+        255,
+        164,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Inferno",
+      "reverse": true,
+      "reference_css": "#000004",
+      "expected": [
+        0,
+        0,
+        4,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Inferno",
+      "reverse": true,
+      "reference_css": null,
+      "expected": null
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Inferno",
+      "reverse": true,
+      "reference_css": "#000004",
+      "expected": [
+        0,
+        0,
+        4,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Magma",
+      "reverse": false,
+      "reference_css": "#000004",
+      "expected": [
+        0,
+        0,
+        4,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Magma",
+      "reverse": false,
+      "reference_css": "#fcfdbf",
+      "expected": [
+        252,
+        253,
+        191,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Magma",
+      "reverse": false,
+      "reference_css": null,
+      "expected": null
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Magma",
+      "reverse": false,
+      "reference_css": "#fcfdbf",
+      "expected": [
+        252,
+        253,
+        191,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Magma",
+      "reverse": true,
+      "reference_css": "#fcfdbf",
+      "expected": [
+        252,
+        253,
+        191,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Magma",
+      "reverse": true,
+      "reference_css": "#000004",
+      "expected": [
+        0,
+        0,
+        4,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Magma",
+      "reverse": true,
+      "reference_css": null,
+      "expected": null
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Magma",
+      "reverse": true,
+      "reference_css": "#000004",
+      "expected": [
+        0,
+        0,
+        4,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "OrRd",
+      "reverse": false,
+      "reference_css": "rgb(255, 247, 236)",
+      "expected": [
+        255,
+        247,
+        236,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "OrRd",
+      "reverse": false,
+      "reference_css": "rgb(127, 0, 0)",
+      "expected": [
+        127,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "OrRd",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "OrRd",
+      "reverse": false,
+      "reference_css": "rgb(127, 0, 0)",
+      "expected": [
+        127,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "OrRd",
+      "reverse": true,
+      "reference_css": "rgb(127, 0, 0)",
+      "expected": [
+        127,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "OrRd",
+      "reverse": true,
+      "reference_css": "rgb(255, 247, 236)",
+      "expected": [
+        255,
+        247,
+        236,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "OrRd",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "OrRd",
+      "reverse": true,
+      "reference_css": "rgb(255, 247, 236)",
+      "expected": [
+        255,
+        247,
+        236,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Oranges",
+      "reverse": false,
+      "reference_css": "rgb(255, 245, 235)",
+      "expected": [
+        255,
+        245,
+        235,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Oranges",
+      "reverse": false,
+      "reference_css": "rgb(127, 39, 4)",
+      "expected": [
+        127,
+        39,
+        4,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Oranges",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Oranges",
+      "reverse": false,
+      "reference_css": "rgb(127, 39, 4)",
+      "expected": [
+        127,
+        39,
+        4,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Oranges",
+      "reverse": true,
+      "reference_css": "rgb(127, 39, 4)",
+      "expected": [
+        127,
+        39,
+        4,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Oranges",
+      "reverse": true,
+      "reference_css": "rgb(255, 245, 235)",
+      "expected": [
+        255,
+        245,
+        235,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Oranges",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Oranges",
+      "reverse": true,
+      "reference_css": "rgb(255, 245, 235)",
+      "expected": [
+        255,
+        245,
+        235,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "PRGn",
+      "reverse": false,
+      "reference_css": "rgb(64, 0, 75)",
+      "expected": [
+        64,
+        0,
+        75,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "PRGn",
+      "reverse": false,
+      "reference_css": "rgb(0, 68, 27)",
+      "expected": [
+        0,
+        68,
+        27,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "PRGn",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "PRGn",
+      "reverse": false,
+      "reference_css": "rgb(0, 68, 27)",
+      "expected": [
+        0,
+        68,
+        27,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "PRGn",
+      "reverse": true,
+      "reference_css": "rgb(0, 68, 27)",
+      "expected": [
+        0,
+        68,
+        27,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "PRGn",
+      "reverse": true,
+      "reference_css": "rgb(64, 0, 75)",
+      "expected": [
+        64,
+        0,
+        75,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "PRGn",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "PRGn",
+      "reverse": true,
+      "reference_css": "rgb(64, 0, 75)",
+      "expected": [
+        64,
+        0,
+        75,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "PiYG",
+      "reverse": false,
+      "reference_css": "rgb(142, 1, 82)",
+      "expected": [
+        142,
+        1,
+        82,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "PiYG",
+      "reverse": false,
+      "reference_css": "rgb(39, 100, 25)",
+      "expected": [
+        39,
+        100,
+        25,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "PiYG",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "PiYG",
+      "reverse": false,
+      "reference_css": "rgb(39, 100, 25)",
+      "expected": [
+        39,
+        100,
+        25,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "PiYG",
+      "reverse": true,
+      "reference_css": "rgb(39, 100, 25)",
+      "expected": [
+        39,
+        100,
+        25,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "PiYG",
+      "reverse": true,
+      "reference_css": "rgb(142, 1, 82)",
+      "expected": [
+        142,
+        1,
+        82,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "PiYG",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "PiYG",
+      "reverse": true,
+      "reference_css": "rgb(142, 1, 82)",
+      "expected": [
+        142,
+        1,
+        82,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Plasma",
+      "reverse": false,
+      "reference_css": "#0d0887",
+      "expected": [
+        13,
+        8,
+        135,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Plasma",
+      "reverse": false,
+      "reference_css": "#f0f921",
+      "expected": [
+        240,
+        249,
+        33,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Plasma",
+      "reverse": false,
+      "reference_css": null,
+      "expected": null
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Plasma",
+      "reverse": false,
+      "reference_css": "#f0f921",
+      "expected": [
+        240,
+        249,
+        33,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Plasma",
+      "reverse": true,
+      "reference_css": "#f0f921",
+      "expected": [
+        240,
+        249,
+        33,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Plasma",
+      "reverse": true,
+      "reference_css": "#0d0887",
+      "expected": [
+        13,
+        8,
+        135,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Plasma",
+      "reverse": true,
+      "reference_css": null,
+      "expected": null
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Plasma",
+      "reverse": true,
+      "reference_css": "#0d0887",
+      "expected": [
+        13,
+        8,
+        135,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "PuBu",
+      "reverse": false,
+      "reference_css": "rgb(255, 247, 251)",
+      "expected": [
+        255,
+        247,
+        251,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "PuBu",
+      "reverse": false,
+      "reference_css": "rgb(2, 56, 88)",
+      "expected": [
+        2,
+        56,
+        88,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "PuBu",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "PuBu",
+      "reverse": false,
+      "reference_css": "rgb(2, 56, 88)",
+      "expected": [
+        2,
+        56,
+        88,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "PuBu",
+      "reverse": true,
+      "reference_css": "rgb(2, 56, 88)",
+      "expected": [
+        2,
+        56,
+        88,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "PuBu",
+      "reverse": true,
+      "reference_css": "rgb(255, 247, 251)",
+      "expected": [
+        255,
+        247,
+        251,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "PuBu",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "PuBu",
+      "reverse": true,
+      "reference_css": "rgb(255, 247, 251)",
+      "expected": [
+        255,
+        247,
+        251,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "PuBuGn",
+      "reverse": false,
+      "reference_css": "rgb(255, 247, 251)",
+      "expected": [
+        255,
+        247,
+        251,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "PuBuGn",
+      "reverse": false,
+      "reference_css": "rgb(1, 70, 54)",
+      "expected": [
+        1,
+        70,
+        54,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "PuBuGn",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "PuBuGn",
+      "reverse": false,
+      "reference_css": "rgb(1, 70, 54)",
+      "expected": [
+        1,
+        70,
+        54,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "PuBuGn",
+      "reverse": true,
+      "reference_css": "rgb(1, 70, 54)",
+      "expected": [
+        1,
+        70,
+        54,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "PuBuGn",
+      "reverse": true,
+      "reference_css": "rgb(255, 247, 251)",
+      "expected": [
+        255,
+        247,
+        251,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "PuBuGn",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "PuBuGn",
+      "reverse": true,
+      "reference_css": "rgb(255, 247, 251)",
+      "expected": [
+        255,
+        247,
+        251,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "PuOr",
+      "reverse": false,
+      "reference_css": "rgb(45, 0, 75)",
+      "expected": [
+        45,
+        0,
+        75,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "PuOr",
+      "reverse": false,
+      "reference_css": "rgb(127, 59, 8)",
+      "expected": [
+        127,
+        59,
+        8,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "PuOr",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "PuOr",
+      "reverse": false,
+      "reference_css": "rgb(127, 59, 8)",
+      "expected": [
+        127,
+        59,
+        8,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "PuOr",
+      "reverse": true,
+      "reference_css": "rgb(127, 59, 8)",
+      "expected": [
+        127,
+        59,
+        8,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "PuOr",
+      "reverse": true,
+      "reference_css": "rgb(45, 0, 75)",
+      "expected": [
+        45,
+        0,
+        75,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "PuOr",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "PuOr",
+      "reverse": true,
+      "reference_css": "rgb(45, 0, 75)",
+      "expected": [
+        45,
+        0,
+        75,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "PuRd",
+      "reverse": false,
+      "reference_css": "rgb(247, 244, 249)",
+      "expected": [
+        247,
+        244,
+        249,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "PuRd",
+      "reverse": false,
+      "reference_css": "rgb(103, 0, 31)",
+      "expected": [
+        103,
+        0,
+        31,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "PuRd",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "PuRd",
+      "reverse": false,
+      "reference_css": "rgb(103, 0, 31)",
+      "expected": [
+        103,
+        0,
+        31,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "PuRd",
+      "reverse": true,
+      "reference_css": "rgb(103, 0, 31)",
+      "expected": [
+        103,
+        0,
+        31,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "PuRd",
+      "reverse": true,
+      "reference_css": "rgb(247, 244, 249)",
+      "expected": [
+        247,
+        244,
+        249,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "PuRd",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "PuRd",
+      "reverse": true,
+      "reference_css": "rgb(247, 244, 249)",
+      "expected": [
+        247,
+        244,
+        249,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Purples",
+      "reverse": false,
+      "reference_css": "rgb(252, 251, 253)",
+      "expected": [
+        252,
+        251,
+        253,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Purples",
+      "reverse": false,
+      "reference_css": "rgb(63, 0, 125)",
+      "expected": [
+        63,
+        0,
+        125,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Purples",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Purples",
+      "reverse": false,
+      "reference_css": "rgb(63, 0, 125)",
+      "expected": [
+        63,
+        0,
+        125,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Purples",
+      "reverse": true,
+      "reference_css": "rgb(63, 0, 125)",
+      "expected": [
+        63,
+        0,
+        125,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Purples",
+      "reverse": true,
+      "reference_css": "rgb(252, 251, 253)",
+      "expected": [
+        252,
+        251,
+        253,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Purples",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Purples",
+      "reverse": true,
+      "reference_css": "rgb(252, 251, 253)",
+      "expected": [
+        252,
+        251,
+        253,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Rainbow",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Rainbow",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Rainbow",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Rainbow",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Rainbow",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Rainbow",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Rainbow",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Rainbow",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "RdBu",
+      "reverse": false,
+      "reference_css": "rgb(103, 0, 31)",
+      "expected": [
+        103,
+        0,
+        31,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "RdBu",
+      "reverse": false,
+      "reference_css": "rgb(5, 48, 97)",
+      "expected": [
+        5,
+        48,
+        97,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "RdBu",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "RdBu",
+      "reverse": false,
+      "reference_css": "rgb(5, 48, 97)",
+      "expected": [
+        5,
+        48,
+        97,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "RdBu",
+      "reverse": true,
+      "reference_css": "rgb(5, 48, 97)",
+      "expected": [
+        5,
+        48,
+        97,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "RdBu",
+      "reverse": true,
+      "reference_css": "rgb(103, 0, 31)",
+      "expected": [
+        103,
+        0,
+        31,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "RdBu",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "RdBu",
+      "reverse": true,
+      "reference_css": "rgb(103, 0, 31)",
+      "expected": [
+        103,
+        0,
+        31,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "RdGy",
+      "reverse": false,
+      "reference_css": "rgb(103, 0, 31)",
+      "expected": [
+        103,
+        0,
+        31,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "RdGy",
+      "reverse": false,
+      "reference_css": "rgb(26, 26, 26)",
+      "expected": [
+        26,
+        26,
+        26,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "RdGy",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "RdGy",
+      "reverse": false,
+      "reference_css": "rgb(26, 26, 26)",
+      "expected": [
+        26,
+        26,
+        26,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "RdGy",
+      "reverse": true,
+      "reference_css": "rgb(26, 26, 26)",
+      "expected": [
+        26,
+        26,
+        26,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "RdGy",
+      "reverse": true,
+      "reference_css": "rgb(103, 0, 31)",
+      "expected": [
+        103,
+        0,
+        31,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "RdGy",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "RdGy",
+      "reverse": true,
+      "reference_css": "rgb(103, 0, 31)",
+      "expected": [
+        103,
+        0,
+        31,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "RdPu",
+      "reverse": false,
+      "reference_css": "rgb(255, 247, 243)",
+      "expected": [
+        255,
+        247,
+        243,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "RdPu",
+      "reverse": false,
+      "reference_css": "rgb(73, 0, 106)",
+      "expected": [
+        73,
+        0,
+        106,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "RdPu",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "RdPu",
+      "reverse": false,
+      "reference_css": "rgb(73, 0, 106)",
+      "expected": [
+        73,
+        0,
+        106,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "RdPu",
+      "reverse": true,
+      "reference_css": "rgb(73, 0, 106)",
+      "expected": [
+        73,
+        0,
+        106,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "RdPu",
+      "reverse": true,
+      "reference_css": "rgb(255, 247, 243)",
+      "expected": [
+        255,
+        247,
+        243,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "RdPu",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "RdPu",
+      "reverse": true,
+      "reference_css": "rgb(255, 247, 243)",
+      "expected": [
+        255,
+        247,
+        243,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "RdYlBu",
+      "reverse": false,
+      "reference_css": "rgb(165, 0, 38)",
+      "expected": [
+        165,
+        0,
+        38,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "RdYlBu",
+      "reverse": false,
+      "reference_css": "rgb(49, 54, 149)",
+      "expected": [
+        49,
+        54,
+        149,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "RdYlBu",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "RdYlBu",
+      "reverse": false,
+      "reference_css": "rgb(49, 54, 149)",
+      "expected": [
+        49,
+        54,
+        149,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "RdYlBu",
+      "reverse": true,
+      "reference_css": "rgb(49, 54, 149)",
+      "expected": [
+        49,
+        54,
+        149,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "RdYlBu",
+      "reverse": true,
+      "reference_css": "rgb(165, 0, 38)",
+      "expected": [
+        165,
+        0,
+        38,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "RdYlBu",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "RdYlBu",
+      "reverse": true,
+      "reference_css": "rgb(165, 0, 38)",
+      "expected": [
+        165,
+        0,
+        38,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "RdYlGn",
+      "reverse": false,
+      "reference_css": "rgb(165, 0, 38)",
+      "expected": [
+        165,
+        0,
+        38,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "RdYlGn",
+      "reverse": false,
+      "reference_css": "rgb(0, 104, 55)",
+      "expected": [
+        0,
+        104,
+        55,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "RdYlGn",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "RdYlGn",
+      "reverse": false,
+      "reference_css": "rgb(0, 104, 55)",
+      "expected": [
+        0,
+        104,
+        55,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "RdYlGn",
+      "reverse": true,
+      "reference_css": "rgb(0, 104, 55)",
+      "expected": [
+        0,
+        104,
+        55,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "RdYlGn",
+      "reverse": true,
+      "reference_css": "rgb(165, 0, 38)",
+      "expected": [
+        165,
+        0,
+        38,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "RdYlGn",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "RdYlGn",
+      "reverse": true,
+      "reference_css": "rgb(165, 0, 38)",
+      "expected": [
+        165,
+        0,
+        38,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Reds",
+      "reverse": false,
+      "reference_css": "rgb(255, 245, 240)",
+      "expected": [
+        255,
+        245,
+        240,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Reds",
+      "reverse": false,
+      "reference_css": "rgb(103, 0, 13)",
+      "expected": [
+        103,
+        0,
+        13,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Reds",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Reds",
+      "reverse": false,
+      "reference_css": "rgb(103, 0, 13)",
+      "expected": [
+        103,
+        0,
+        13,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Reds",
+      "reverse": true,
+      "reference_css": "rgb(103, 0, 13)",
+      "expected": [
+        103,
+        0,
+        13,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Reds",
+      "reverse": true,
+      "reference_css": "rgb(255, 245, 240)",
+      "expected": [
+        255,
+        245,
+        240,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Reds",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Reds",
+      "reverse": true,
+      "reference_css": "rgb(255, 245, 240)",
+      "expected": [
+        255,
+        245,
+        240,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Sinebow",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Sinebow",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Sinebow",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Sinebow",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Sinebow",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Sinebow",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Sinebow",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Sinebow",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Spectral",
+      "reverse": false,
+      "reference_css": "rgb(158, 1, 66)",
+      "expected": [
+        158,
+        1,
+        66,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Spectral",
+      "reverse": false,
+      "reference_css": "rgb(94, 79, 162)",
+      "expected": [
+        94,
+        79,
+        162,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Spectral",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Spectral",
+      "reverse": false,
+      "reference_css": "rgb(94, 79, 162)",
+      "expected": [
+        94,
+        79,
+        162,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Spectral",
+      "reverse": true,
+      "reference_css": "rgb(94, 79, 162)",
+      "expected": [
+        94,
+        79,
+        162,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Spectral",
+      "reverse": true,
+      "reference_css": "rgb(158, 1, 66)",
+      "expected": [
+        158,
+        1,
+        66,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Spectral",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Spectral",
+      "reverse": true,
+      "reference_css": "rgb(158, 1, 66)",
+      "expected": [
+        158,
+        1,
+        66,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Turbo",
+      "reverse": false,
+      "reference_css": "rgb(35, 23, 27)",
+      "expected": [
+        35,
+        23,
+        27,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Turbo",
+      "reverse": false,
+      "reference_css": "rgb(144, 12, 0)",
+      "expected": [
+        144,
+        12,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Turbo",
+      "reverse": false,
+      "reference_css": "rgb(NaN, NaN, NaN)",
+      "expected": null
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Turbo",
+      "reverse": false,
+      "reference_css": "rgb(144, 12, 0)",
+      "expected": [
+        144,
+        12,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Turbo",
+      "reverse": true,
+      "reference_css": "rgb(144, 12, 0)",
+      "expected": [
+        144,
+        12,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Turbo",
+      "reverse": true,
+      "reference_css": "rgb(35, 23, 27)",
+      "expected": [
+        35,
+        23,
+        27,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Turbo",
+      "reverse": true,
+      "reference_css": "rgb(NaN, NaN, NaN)",
+      "expected": null
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Turbo",
+      "reverse": true,
+      "reference_css": "rgb(35, 23, 27)",
+      "expected": [
+        35,
+        23,
+        27,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Viridis",
+      "reverse": false,
+      "reference_css": "#440154",
+      "expected": [
+        68,
+        1,
+        84,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Viridis",
+      "reverse": false,
+      "reference_css": "#fde725",
+      "expected": [
+        253,
+        231,
+        37,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Viridis",
+      "reverse": false,
+      "reference_css": null,
+      "expected": null
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Viridis",
+      "reverse": false,
+      "reference_css": "#fde725",
+      "expected": [
+        253,
+        231,
+        37,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Viridis",
+      "reverse": true,
+      "reference_css": "#fde725",
+      "expected": [
+        253,
+        231,
+        37,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Viridis",
+      "reverse": true,
+      "reference_css": "#440154",
+      "expected": [
+        68,
+        1,
+        84,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Viridis",
+      "reverse": true,
+      "reference_css": null,
+      "expected": null
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Viridis",
+      "reverse": true,
+      "reference_css": "#440154",
+      "expected": [
+        68,
+        1,
+        84,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Warm",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Warm",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Warm",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Warm",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "Warm",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "Warm",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "Warm",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "Warm",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "YlGn",
+      "reverse": false,
+      "reference_css": "rgb(255, 255, 229)",
+      "expected": [
+        255,
+        255,
+        229,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "YlGn",
+      "reverse": false,
+      "reference_css": "rgb(0, 69, 41)",
+      "expected": [
+        0,
+        69,
+        41,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "YlGn",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "YlGn",
+      "reverse": false,
+      "reference_css": "rgb(0, 69, 41)",
+      "expected": [
+        0,
+        69,
+        41,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "YlGn",
+      "reverse": true,
+      "reference_css": "rgb(0, 69, 41)",
+      "expected": [
+        0,
+        69,
+        41,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "YlGn",
+      "reverse": true,
+      "reference_css": "rgb(255, 255, 229)",
+      "expected": [
+        255,
+        255,
+        229,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "YlGn",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "YlGn",
+      "reverse": true,
+      "reference_css": "rgb(255, 255, 229)",
+      "expected": [
+        255,
+        255,
+        229,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "YlGnBu",
+      "reverse": false,
+      "reference_css": "rgb(255, 255, 217)",
+      "expected": [
+        255,
+        255,
+        217,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "YlGnBu",
+      "reverse": false,
+      "reference_css": "rgb(8, 29, 88)",
+      "expected": [
+        8,
+        29,
+        88,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "YlGnBu",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "YlGnBu",
+      "reverse": false,
+      "reference_css": "rgb(8, 29, 88)",
+      "expected": [
+        8,
+        29,
+        88,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "YlGnBu",
+      "reverse": true,
+      "reference_css": "rgb(8, 29, 88)",
+      "expected": [
+        8,
+        29,
+        88,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "YlGnBu",
+      "reverse": true,
+      "reference_css": "rgb(255, 255, 217)",
+      "expected": [
+        255,
+        255,
+        217,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "YlGnBu",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "YlGnBu",
+      "reverse": true,
+      "reference_css": "rgb(255, 255, 217)",
+      "expected": [
+        255,
+        255,
+        217,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "YlOrBr",
+      "reverse": false,
+      "reference_css": "rgb(255, 255, 229)",
+      "expected": [
+        255,
+        255,
+        229,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "YlOrBr",
+      "reverse": false,
+      "reference_css": "rgb(102, 37, 6)",
+      "expected": [
+        102,
+        37,
+        6,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "YlOrBr",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "YlOrBr",
+      "reverse": false,
+      "reference_css": "rgb(102, 37, 6)",
+      "expected": [
+        102,
+        37,
+        6,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "YlOrBr",
+      "reverse": true,
+      "reference_css": "rgb(102, 37, 6)",
+      "expected": [
+        102,
+        37,
+        6,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "YlOrBr",
+      "reverse": true,
+      "reference_css": "rgb(255, 255, 229)",
+      "expected": [
+        255,
+        255,
+        229,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "YlOrBr",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "YlOrBr",
+      "reverse": true,
+      "reference_css": "rgb(255, 255, 229)",
+      "expected": [
+        255,
+        255,
+        229,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "YlOrRd",
+      "reverse": false,
+      "reference_css": "rgb(255, 255, 204)",
+      "expected": [
+        255,
+        255,
+        204,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "YlOrRd",
+      "reverse": false,
+      "reference_css": "rgb(128, 0, 38)",
+      "expected": [
+        128,
+        0,
+        38,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "YlOrRd",
+      "reverse": false,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "YlOrRd",
+      "reverse": false,
+      "reference_css": "rgb(128, 0, 38)",
+      "expected": [
+        128,
+        0,
+        38,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": 0,
+      "ramp": "YlOrRd",
+      "reverse": true,
+      "reference_css": "rgb(128, 0, 38)",
+      "expected": [
+        128,
+        0,
+        38,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          100,
+          1
+        ]
+      },
+      "input": 0,
+      "ramp": "YlOrRd",
+      "reverse": true,
+      "reference_css": "rgb(255, 255, 204)",
+      "expected": [
+        255,
+        255,
+        204,
+        255
+      ]
+    },
+    {
+      "family": "sequential_log",
+      "options": {
+        "domain": [
+          1,
+          100
+        ]
+      },
+      "input": -1,
+      "ramp": "YlOrRd",
+      "reverse": true,
+      "reference_css": "rgb(0, 0, 0)",
+      "expected": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "family": "sequential_pow",
+      "options": {
+        "domain": [
+          1,
+          100
+        ],
+        "exponent": 2
+      },
+      "input": 1e+300,
+      "ramp": "YlOrRd",
+      "reverse": true,
+      "reference_css": "rgb(255, 255, 204)",
+      "expected": [
+        255,
+        255,
+        204,
+        255
+      ]
+    }
+  ],
+  "policy": "Finite source values preserve valid reference colors after exceptional normalization; invalid reference outputs diagnose. Direct non-finite ramp input still rejects; non-finite chart observations still use missing paint."
+}

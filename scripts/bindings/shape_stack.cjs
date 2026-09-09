@@ -1,0 +1,12 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),root=path.resolve(__dirname,'../..'),c=require(path.join(path.resolve(process.argv[2]),'authoring.cjs')),corpus=JSON.parse(fs.readFileSync(path.join(root,'fixtures/shapes/stack.json')));
+const number=v=>typeof v==='object'?({'NaN':NaN,'-0':-0,Infinity:Infinity,'-Infinity':-Infinity})[v.number]:v;assert.equal(corpus.cases.length,435);
+for(const test of corpus.cases){
+ const config=Object.fromEntries(['keys','order','offset','missing'].map(k=>[k,test[k]])),generator=new c.ShapeStack(config),copy=generator.copy();generator.free();const data=test.matrix.map((values,i)=>({id:String(9007199254741001n+2n*BigInt(i)),values})),actual=copy.layout(data,test.matrix),again=copy.layout(data,test.matrix);copy.free();
+ for(const result of [actual,again]){assert.equal(result.length,test.series.length);for(const [i,got]of result.entries()){const expected=test.series[i];assert.equal(got.key,expected.key);assert.equal(got.index,expected.index);assert.equal(got.points.length,expected.points.length);for(const [j,point]of got.points.entries()){const want=expected.points[j];assert.deepEqual(point.data,want.data);for(const name of ['y0','y1']){const a=point[name],b=number(want[name]);assert.ok((Number.isNaN(a)&&Number.isNaN(b))||(Math.abs(a-b)<=2e-12*Math.max(1,Math.abs(b))&&(a!==0||Object.is(a,b))),`${test.id}/${name}/${a}/${b}`);}}}}
+ if(data.length){data[0].id='changed';assert.ok(actual.every(s=>!s.points.length||s.points[0].data.id==='9007199254741001'));}assert.throws(()=>copy.layout(test.matrix));
+}
+for(const config of [{keys:['a','b'],order:{Explicit:[0,0]}},{keys:['a'],value:Infinity},{keys:['a'],limits:{max_series:0}}])assert.throws(()=>new c.ShapeStack(config));
+for(const [config,values]of [[{keys:['a'],missing:'Error'},[[null]]],[{keys:['a']},[[1,2]]],[{keys:['a','b'],offset:'Expand'},[[Number.MAX_VALUE,Number.MAX_VALUE]]],[{keys:['a','b'],offset:'Wiggle',limits:{max_work:3}},[[1,1]]]]){const g=new c.ShapeStack(config);assert.throws(()=>g.layout(values));g.free();}
+const g=new c.ShapeStack({keys:['a'],value:7}),result=g.layout([{id:9007199254741001n,number:'NaN'}],[[null]]);g.free();assert.deepEqual(result[0].points[0].data,{id:'9007199254741001',number:'NaN'});assert.equal(result[0].points[0].y1,7);
+console.log('PASS WASM stack: 435 independent order/offset/missing cases, exact keys/ranks/source metadata, signed zero/NaN, copies/repeated/disposal independence and bounded diagnostics.');

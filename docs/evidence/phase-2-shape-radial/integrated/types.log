@@ -1,0 +1,11 @@
+
+Success: no issues found in 1 source file
+
+scripts/bindings/authoring/shape_radial_typing_invalid.py:2: error: Argument 1 to "ShapeLineRadial" has incompatible type "dict[str, dict[str, int]]"; expected "ShapeLineRadialConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_radial_typing_invalid.py:3: error: Argument 1 to "boundary" of "ShapeAreaRadial" has incompatible type "Literal['X1']"; expected "Literal['StartAngle', 'EndAngle', 'InnerRadius', 'OuterRadius']"  [arg-type]
+scripts/bindings/authoring/shape_radial_typing_invalid.py:4: error: Argument 1 to "ShapeLinkRadial" has incompatible type "dict[str, dict[str, str]]"; expected "ShapeLinkRadialConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_radial_typing_invalid.py:5: error: Argument 1 to "generate" of "ShapeLink" has incompatible type "list[list[int]]"; expected "LinkDatum"  [arg-type]
+scripts/bindings/authoring/shape_radial_typing_invalid.py:6: error: Argument 1 to "ShapeLink" has incompatible type "dict[str, str]"; expected "ShapeLinkConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_radial_typing_invalid.py:7: error: Argument 1 to "point_radial" has incompatible type "str"; expected "float"  [arg-type]
+Found 6 errors in 1 file (checked 1 source file)
+

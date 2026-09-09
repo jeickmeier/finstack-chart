@@ -1,0 +1,398 @@
+{
+  "version": 1,
+  "width": 450,
+  "height": 300,
+  "cases": [
+    {
+      "id": "circle-hole",
+      "anchor": {
+        "Output": {
+          "x": 80,
+          "y": 85
+        }
+      },
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 0,
+            "y": 0,
+            "r": 30,
+            "a0": 0,
+            "a1": 6.283185307179586,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "moveTo",
+          "args": [
+            14,
+            0
+          ]
+        },
+        {
+          "op": "arc",
+          "args": {
+            "x": 0,
+            "y": 0,
+            "r": 14,
+            "a0": 0,
+            "a1": -6.283185307179586,
+            "anticlockwise": true
+          }
+        },
+        {
+          "op": "closePath"
+        }
+      ],
+      "fill": {
+        "red": 20,
+        "green": 100,
+        "blue": 170,
+        "alpha": 220
+      },
+      "stroke": {
+        "color": {
+          "red": 30,
+          "green": 35,
+          "blue": 40,
+          "alpha": 255
+        },
+        "width": 2
+      },
+      "overflow": false
+    },
+    {
+      "id": "signed-rectangle-hole",
+      "anchor": {
+        "Output": {
+          "x": 215,
+          "y": 85
+        }
+      },
+      "operations": [
+        {
+          "op": "rect",
+          "args": [
+            -30,
+            -30,
+            60,
+            60
+          ]
+        },
+        {
+          "op": "rect",
+          "args": [
+            -15,
+            15,
+            30,
+            -30
+          ]
+        }
+      ],
+      "fill": {
+        "red": 180,
+        "green": 40,
+        "blue": 65,
+        "alpha": 255
+      },
+      "stroke": {
+        "color": {
+          "red": 30,
+          "green": 35,
+          "blue": 40,
+          "alpha": 255
+        },
+        "width": 2
+      },
+      "overflow": false
+    },
+    {
+      "id": "tangent-corner",
+      "anchor": {
+        "Output": {
+          "x": 350,
+          "y": 85
+        }
+      },
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            -30,
+            25
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            -30,
+            -25
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            30,
+            -25,
+            30,
+            25,
+            25
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            30,
+            25
+          ]
+        }
+      ],
+      "fill": null,
+      "stroke": {
+        "color": {
+          "red": 20,
+          "green": 100,
+          "blue": 170,
+          "alpha": 220
+        },
+        "width": 4
+      },
+      "overflow": false
+    },
+    {
+      "id": "closed-then-continue",
+      "anchor": {
+        "Output": {
+          "x": 80,
+          "y": 205
+        }
+      },
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            -30,
+            20
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            0,
+            -30
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            30,
+            20
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            -42,
+            -20
+          ]
+        }
+      ],
+      "fill": null,
+      "stroke": {
+        "color": {
+          "red": 180,
+          "green": 40,
+          "blue": 65,
+          "alpha": 255
+        },
+        "width": 4
+      },
+      "overflow": false
+    },
+    {
+      "id": "quadratic-and-cubic",
+      "anchor": {
+        "Output": {
+          "x": 215,
+          "y": 205
+        }
+      },
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            -40,
+            20
+          ]
+        },
+        {
+          "op": "quadraticCurveTo",
+          "args": [
+            -40,
+            -50,
+            0,
+            0
+          ]
+        },
+        {
+          "op": "bezierCurveTo",
+          "args": [
+            10,
+            40,
+            40,
+            -50,
+            40,
+            20
+          ]
+        }
+      ],
+      "fill": null,
+      "stroke": {
+        "color": {
+          "red": 20,
+          "green": 100,
+          "blue": 170,
+          "alpha": 220
+        },
+        "width": 3
+      },
+      "overflow": false
+    },
+    {
+      "id": "affine-half-sweeps",
+      "anchor": {
+        "Output": {
+          "x": 350,
+          "y": 205
+        }
+      },
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 0,
+            "y": 0,
+            "r": 30,
+            "a0": 0,
+            "a1": 3.141592653589793,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "moveTo",
+          "args": [
+            30,
+            0
+          ]
+        },
+        {
+          "op": "arc",
+          "args": {
+            "x": 0,
+            "y": 0,
+            "r": 30,
+            "a0": 0,
+            "a1": -3.141592653589793,
+            "anticlockwise": true
+          }
+        }
+      ],
+      "fill": null,
+      "stroke": {
+        "color": {
+          "red": 180,
+          "green": 40,
+          "blue": 65,
+          "alpha": 255
+        },
+        "width": 3
+      },
+      "overflow": false,
+      "transform": [
+        1,
+        0.3,
+        0.4,
+        0.8,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "empty-path",
+      "anchor": {
+        "Output": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "operations": [],
+      "fill": null,
+      "stroke": null,
+      "overflow": false
+    },
+    {
+      "id": "move-only",
+      "anchor": {
+        "Output": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            1,
+            1
+          ]
+        }
+      ],
+      "fill": null,
+      "stroke": null,
+      "overflow": false
+    },
+    {
+      "id": "clipped-circle",
+      "anchor": {
+        "Output": {
+          "x": 445,
+          "y": 290
+        }
+      },
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 0,
+            "y": 0,
+            "r": 25,
+            "a0": 0,
+            "a1": 6.283185307179586,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "closePath"
+        }
+      ],
+      "fill": {
+        "red": 20,
+        "green": 100,
+        "blue": 170,
+        "alpha": 220
+      },
+      "stroke": null,
+      "overflow": false
+    }
+  ]
+}

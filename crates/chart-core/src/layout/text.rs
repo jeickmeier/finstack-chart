@@ -67,7 +67,10 @@ pub(super) fn measure(
                 d.context.resource_revision = Some(result.font.revision);
                 diagnostics.push(d);
             }
-            runs.push((result, run.color.unwrap_or(color)));
+            runs.push((
+                result,
+                run.color.map(crate::color::Paint::resolve).unwrap_or(color),
+            ));
         }
         shaped.push(runs);
     }

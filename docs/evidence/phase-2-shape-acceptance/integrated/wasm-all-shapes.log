@@ -1,0 +1,43 @@
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_foundation.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/proofs/foundation
+PASS shape_foundation
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_cartesian.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module
+PASS shape_cartesian
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_arc_pie.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module
+PASS shape_arc_pie
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_symbol.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module
+PASS shape_symbol
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_stack.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module
+PASS shape_stack
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_radial.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module
+PASS shape_radial
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_custom.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module
+PASS shape_custom
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_dashes.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module
+PASS shape_dashes
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_projection_budget.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module
+PASS shape_projection_budget
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_cartesian_interaction.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module
+PASS shape_cartesian_interaction
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_cartesian_updates.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/proofs/cartesian-updates.json
+PASS shape_cartesian_updates
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_arc_interaction.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module
+PASS shape_arc_interaction
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_arc_updates.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/proofs/arc-updates.json
+PASS shape_arc_updates
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_symbol_interaction.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module
+PASS shape_symbol_interaction
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_symbol_updates.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/proofs/symbol-updates.json
+PASS shape_symbol_updates
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_stack_interaction.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module
+PASS shape_stack_interaction
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_stack_updates.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/proofs/stack-updates.json
+PASS shape_stack_updates
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_radial_interaction.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module
+PASS shape_radial_interaction
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_radial_updates.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/proofs/radial-updates.json
+PASS shape_radial_updates
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_custom_updates.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/proofs/custom-updates.json
+PASS shape_custom_updates
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_dashes_gallery.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/dashes/rust /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/wasm/proofs/dashes
+PASS shape_dashes_gallery
+PASS FIX-S01-09 actual wasm shape corpus, interactions, updates and retained ownership; visual/native qualification is separate.

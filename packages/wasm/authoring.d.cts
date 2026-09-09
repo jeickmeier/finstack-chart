@@ -1,7 +1,9 @@
 // Primary CommonJS proof adapter. Source identities and revisions remain exact strings in core result records.
+import type {StandaloneScale,CalendarInterval,NumericLocale,TimeLocale} from './scales.cjs';
+export * from './interpolation.cjs';
 export type JSONValue = null | boolean | number | bigint | string | ReadonlyArray<JSONValue> | {readonly [key: string]: JSONValue};
 export type Options = Readonly<Record<string, unknown>>;
-export type Color = string | Options;
+export type Color = string | Options | ColorValue;
 export type Panel = ReadonlyArray<string | number | boolean | Options> | Options;
 export type ScaleValue = number | string | Options;
 export type MappingValue = string | number | Field | Options;
@@ -13,6 +15,44 @@ export interface WindowResult { windows: Record<string, unknown>; }
 export interface Revisions { definition: bigint; state: bigint; epoch: bigint; store: bigint; }
 export class ChartError extends Error {code: string; correction: string; context: Record<string, unknown>; diagnostic: Record<string, unknown>;}
 export class Owned {protected constructor(); dispose(): void; free(): void;}
+export type ColorSpace = 'Rgb' | 'Hsl' | 'Lab' | 'Hcl' | 'Cubehelix' | 'rgb' | 'hsl' | 'lab' | 'hcl' | 'lch' | 'cubehelix';
+export class ColorValue extends Owned {
+  static from_json(value: string): ColorValue;
+  static fromJson(value: string): ColorValue;
+  to_json(): string; toJson(): string;
+  value(): Record<string, unknown>;
+  space(): string;
+  channels(): Record<string, number>;
+  channel(name: string): number;
+  with_channel(name: string, value: number): ColorValue;
+  withChannel(name: string, value: number): ColorValue;
+  copy(channels?: Readonly<Record<string, number>>): ColorValue;
+  convert(space: ColorSpace): ColorValue;
+  rgb(): ColorValue;
+  brighter(k?: number): ColorValue;
+  darker(k?: number): ColorValue;
+  displayable(): boolean;
+  clamp(): ColorValue;
+  format_hex(): string; formatHex(): string;
+  format_hex8(): string; formatHex8(): string;
+  format_rgb(): string; formatRgb(): string;
+  format_hsl(): string; formatHsl(): string;
+  hex(): string; toString(): string;
+}
+export function color(css: string): ColorValue | null;
+export function rgb(value: string | ColorValue): ColorValue;
+export function rgb(r: number, g: number, b: number, opacity?: number): ColorValue;
+export function hsl(value: string | ColorValue): ColorValue;
+export function hsl(h: number, s: number, l: number, opacity?: number): ColorValue;
+export function lab(value: string | ColorValue): ColorValue;
+export function lab(l: number, a: number, b: number, opacity?: number): ColorValue;
+export function hcl(value: string | ColorValue): ColorValue;
+export function hcl(h: number, c: number, l: number, opacity?: number): ColorValue;
+export function lch(value: string | ColorValue): ColorValue;
+export function lch(l: number, c: number, h: number, opacity?: number): ColorValue;
+export function cubehelix(value: string | ColorValue): ColorValue;
+export function cubehelix(h: number, s: number, l: number, opacity?: number): ColorValue;
+export function gray(l: number, opacity?: number): ColorValue;
 export class Field extends Owned {private readonly _field: "Field";}
 export class Column extends Owned {
   nullable(value?: boolean): Column;
@@ -32,15 +72,66 @@ export class Data extends Owned {
 }
 export class Component extends Owned {}
 
+declare class ExpressionComponent extends Component {
+  add(value: this | number): this;
+  sub(value: this | number): this;
+  mul(value: this | number): this;
+  div(value: this | number): this;
+  pow(value: this | number): this;
+  less(value: this | number): this;
+  equal(value: this | number): this;
+  and(value: this | number): this;
+  or(value: this | number): this;
+  coalesce(value: this | number): this;
+  concat(value: this | number): this;
+  negate(): this;
+  abs(): this;
+  sqrt(): this;
+  log(): this;
+  log10(): this;
+  exp(): this;
+  floor(): this;
+  ceil(): this;
+  not(): this;
+  is_missing(): this;
+  isMissing(): this;
+  sum(removeMissing?: boolean): this;
+  mean(removeMissing?: boolean): this;
+  min(removeMissing?: boolean): this;
+  max(removeMissing?: boolean): this;
+  count(removeMissing?: boolean): this;
+}
+export class SourceExpression extends ExpressionComponent {private readonly _expressionStage: "Source";}
+export class StatExpression extends ExpressionComponent {private readonly _expressionStage: "Stat";}
+export class BinExpression extends ExpressionComponent {private readonly _expressionStage: "Bin";}
+export class ScaleExpression extends ExpressionComponent {private readonly _expressionStage: "Scale";}
+export class ScaleAes extends Component {
+ private readonly _family: "ScaleAes";
+ size(value: ScaleExpression): this;
+ color(value: ScaleExpression): this;
+}
+export function source_expr(field: string | Field | Options): SourceExpression;
+export function sourceExpr(field: string | Field | Options): SourceExpression;
+export function stat_expr(field: string | Options): StatExpression;
+export function statExpr(field: string | Options): StatExpression;
+export function bin_expr(field: string): BinExpression;
+export function binExpr(field: string): BinExpression;
+export function after_scale_expr(aesthetic: 'Size' | 'Color'): ScaleExpression;
+export function afterScaleExpr(aesthetic: 'Size' | 'Color'): ScaleExpression;
+export function from_theme(token: 'Ink' | 'Paper' | 'Accent' | 'PointSize' | 'LineWidth'): ScaleExpression;
+export function fromTheme(token: 'Ink' | 'Paper' | 'Accent' | 'PointSize' | 'LineWidth'): ScaleExpression;
+export function scale_aes(): ScaleAes;
+export function scaleAes(): ScaleAes;
+
 export class Aes extends Component {
   private readonly _family: "Aes";
-  x(value: MappingValue): this;
-  y(value: MappingValue): this;
-  x2(value: MappingValue): this;
-  y2(value: MappingValue): this;
-  low(value: MappingValue): this;
-  high(value: MappingValue): this;
-  size(value: MappingValue): this;
+  x(value: MappingValue | SourceExpression): this;
+  y(value: MappingValue | SourceExpression): this;
+  x2(value: MappingValue | SourceExpression): this;
+  y2(value: MappingValue | SourceExpression): this;
+  low(value: MappingValue | SourceExpression): this;
+  high(value: MappingValue | SourceExpression): this;
+  size(value: MappingValue | SourceExpression): this;
   group(value: MappingValue): this;
   color(value: MappingValue): this;
   group_all(): this;
@@ -49,7 +140,22 @@ export class Aes extends Component {
   colorScale(name: string): this;
 }
 
+export type NumericAesthetic = 'Size'|'Opacity'|'StrokeWidth'|'AreaSize'|'Angle'|'Radius'|'InnerRadius'|'OuterRadius'|'StartAngle'|'EndAngle'|'PadAngle'|'PadRadius'|'CornerRadius'|'PieValue';
+export type ShapeChannel = 'AreaSize'|'Angle'|'Radius'|'InnerRadius'|'OuterRadius'|'StartAngle'|'EndAngle'|'PadAngle'|'PadRadius'|'CornerRadius'|'PieValue';
 export class Layer extends Component {
+  shape_protocol(family:ShapeFamily,selection:ShapeOperation):this;
+  shapeProtocol(family:ShapeFamily,selection:ShapeOperation):this;
+ shape_value(target:ShapeChannel,source:string|number|Field|SourceExpression|Options):this;
+ shapeValue(target:ShapeChannel,source:string|number|Field|SourceExpression|Options):this;
+ arc_parameters(parameters:ArcParameters):this; arcParameters(parameters:ArcParameters):this;
+ radial_parameters(parameters:RadialParameters):this; radialParameters(parameters:RadialParameters):this;
+ pie_angles(angles:PieAngles):this; pieAngles(angles:PieAngles):this;
+ pie_grouped(grouped:boolean):this; pieGrouped(grouped:boolean):this;
+ pie_order(order:'ValuesDescending'|'ValuesAscending'|'Input'):this; pieOrder(order:'ValuesDescending'|'ValuesAscending'|'Input'):this;
+ curve(value: CurveSpec): this;
+ numeric_scale(target:NumericAesthetic,source:string|number|Field|SourceExpression|Options,scale:StandaloneScale|Options):this;
+ numericScale(target:NumericAesthetic,source:string|number|Field|SourceExpression|Options,scale:StandaloneScale|Options):this;
+  orientation(value: 'Vertical' | 'Horizontal'): this;
   color_group(scale: string): this;
   colorGroup(scale: string): this;
   private readonly _family: "Layer";
@@ -61,6 +167,8 @@ export class Layer extends Component {
   afterStat(mapping: StatAes): this;
   after_bin(mapping: BinAes): this;
   afterBin(mapping: BinAes): this;
+  after_scale(mapping: ScaleAes): this;
+  afterScale(mapping: ScaleAes): this;
   filter(value: Filter): this;
   position(value: Position): this;
   style(value: Style): this;
@@ -85,14 +193,23 @@ export class Layer extends Component {
   bins(count: number): this;
   breaks(values: ReadonlyArray<number>): this;
   geometry(name: string, version: number | bigint, parameters: JSONValue): this;
+  symbolKind(kind:SymbolKind):Layer;
+  symbolSize(size:number):Layer;
+  symbolPaint(paint:'Auto'|'Fill'|'Stroke'):Layer;
+  symbolTypes(field:string|Field,domain:readonly string[],palette:readonly SymbolKind[]):Layer;
+  symbolGroups(domain:readonly string[],palette:readonly SymbolKind[]):Layer;
+  symbolMissing(kind:SymbolKind|null):Layer;
+  symbolTitle(title:string):Layer;
+  symbolSizeGuide(title:string,values:readonly number[]):Layer;
+
 }
 
 export class Stat extends Component {
   field_parameter(name: string, value: MappingValue): this;
   fieldParameter(name: string, value: MappingValue): this;
   private readonly _family: "Stat";
-  x(value: MappingValue): this;
-  y(value: MappingValue): this;
+  x(value: MappingValue | SourceExpression): this;
+  y(value: MappingValue | SourceExpression): this;
   group(value: MappingValue): this;
   group_all(): this;
   groupAll(): this;
@@ -110,11 +227,11 @@ export class Stat extends Component {
 
 export class StatAes extends Component {
   private readonly _family: "StatAes";
-  x(value: string | number | Options): this;
-  y(value: string | number | Options): this;
-  x2(value: string | number | Options): this;
-  y2(value: string | number | Options): this;
-  size(value: string | number | Options): this;
+  x(value: string | number | Options | StatExpression): this;
+  y(value: string | number | Options | StatExpression): this;
+  x2(value: string | number | Options | StatExpression): this;
+  y2(value: string | number | Options | StatExpression): this;
+  size(value: string | number | Options | StatExpression): this;
   color(value: string | Options): this;
   color_scale(name: string): this;
   colorScale(name: string): this;
@@ -124,16 +241,22 @@ export class StatAes extends Component {
 
 export class BinAes extends Component {
   private readonly _family: "BinAes";
-  x(value: string | number | Options): this;
-  y(value: string | number | Options): this;
-  x2(value: string | number | Options): this;
-  y2(value: string | number | Options): this;
+  x(value: string | number | Options | BinExpression): this;
+  y(value: string | number | Options | BinExpression): this;
+  x2(value: string | number | Options | BinExpression): this;
+  y2(value: string | number | Options | BinExpression): this;
   color_group(name: string): this;
   colorGroup(name: string): this;
-  size(value: string | number | Options): this;
+  size(value: string | number | Options | BinExpression): this;
 }
 
 export class Position extends Component {
+  stack_order(value: StackOrder): this;
+  stackOrder(value: StackOrder): this;
+  stack_offset(value: StackOffset): this;
+  stackOffset(value: StackOffset): this;
+  stack_missing(value: StackMissing): this;
+  stackMissing(value: StackMissing): this;
   private readonly _family: "Position";
   normalize(value: boolean): this;
   width(value: number): this;
@@ -161,6 +284,7 @@ export class Transform extends Component {
 }
 
 export class Scale extends Component {
+ calendar_interval(value:CalendarInterval):this;calendarInterval(value:CalendarInterval):this;
   private readonly _family: "Scale";
   domain(start: number, end: number): this;
   band_padding(start: number, end: number): this;
@@ -179,6 +303,8 @@ export class Scale extends Component {
 }
 
 export class Axis extends Component {
+ numeric_format(value:{specifier:string;locale?:NumericLocale}):this;numericFormat(value:{specifier:string;locale?:NumericLocale}):this;
+ time_format(value:{pattern?:string|null;locale?:TimeLocale}):this;timeFormat(value:{pattern?:string|null;locale?:TimeLocale}):this;
   private readonly _family: "Axis";
   name(value: string): this;
   label(value: string): this;
@@ -189,6 +315,9 @@ export class Axis extends Component {
   viewport(start: number, end: number): this;
   range(start: number, end: number): this;
   scale(value: Scale): this;
+  coordinate_scale(value: Scale): this;
+  coordinateScale(value: Scale): this;
+  oob(value: 'Censor' | 'Squish' | 'Keep'): this;
   text_style(value: TextStyle): this;
   textStyle(value: TextStyle): this;
   rich_label(value: RichText): this;
@@ -199,6 +328,8 @@ export class Axis extends Component {
 }
 
 export class ColorScale extends Component {
+  palette_scheme(spec:import('./interpolation.cjs').SchemeSpec):this;
+  paletteScheme(spec:import('./interpolation.cjs').SchemeSpec):this;
   private readonly _family: "ColorScale";
   palette(values: ReadonlyArray<Color>): this;
   domain(values: ReadonlyArray<string>): this;
@@ -208,6 +339,8 @@ export class ColorScale extends Component {
 
 export class Legend extends Component {
   untitled(): this;
+  generic_title(): this;
+  genericTitle(): this;
   private readonly _family: "Legend";
   scale(value: string): this;
   title(value: string): this;
@@ -253,6 +386,7 @@ export class Style extends Component {
 }
 
 export class Theme extends Component {
+  geometry(value: {ink?: Color; paper?: Color; accent?: Color; point_size?: number; line_width?: number}): this;
   private readonly _family: "Theme";
   preset(value: string): this;
   style(value: Style): this;
@@ -495,10 +629,12 @@ export function stat_aes(): StatAes;
 export function statAes(): StatAes;
 export function bin_aes(): BinAes;
 export function binAes(): BinAes;
+export function shape_stack(groups: ReadonlyArray<string | number | boolean | Options>): Position;
+export function shapeStack(groups: ReadonlyArray<string | number | boolean | Options>): Position;
 export function stack(order: ReadonlyArray<string | number | boolean | Options>): Position;
 export function dodge(order: ReadonlyArray<string | number | boolean | Options>): Position;
 export function jitter(seed: number | bigint): Position;
-export function filter(field: string | number | Options): Filter;
+export function filter(field: string | number | Field | SourceExpression | Options): Filter;
 export function transform(name: string, stat: Stat): Transform;
 export function scale_linear(): Scale;
 export function scaleLinear(): Scale;
@@ -514,6 +650,27 @@ export function scale_utc(): Scale;
 export function scaleUtc(): Scale;
 export function scale_session(calendar: Options): Scale;
 export function scaleSession(calendar: Options): Scale;
+export class Guide extends Component {
+ private readonly _family: "Guide";
+ scale(name: string): this;
+ side(side: string): this;
+ translate(x: number, y: number): this;
+ label(label: string): this;
+ rich_label(text: RichText): this;
+ richLabel(text: RichText): this;
+ text_style(style: TextStyle): this;
+ textStyle(style: TextStyle): this;
+ rotation(degrees: number): this;
+ visible(visible: boolean): this;
+ ticks(ticks: ReadonlyArray<readonly [ScaleValue,string]>): this;
+ format(format: NumberFormat): this;
+ numeric_format(format: {specifier:string;locale?:NumericLocale}): this;
+ numericFormat(format: {specifier:string;locale?:NumericLocale}): this;
+ time_format(format: {pattern?:string|null;locale?:TimeLocale}): this;
+ timeFormat(format: {pattern?:string|null;locale?:TimeLocale}): this;
+}
+export function axis_guide(name: string, scale: string): Guide;
+export const axisGuide: typeof axis_guide;
 export function x_axis(): Axis;
 export function xAxis(): Axis;
 export function y_axis(): Axis;
@@ -558,15 +715,20 @@ export function annotation_edit(id: string): AnnotationEdit;
 export function annotationEdit(id: string): AnnotationEdit;
 export function link(origin: string): Link;
 export class PlotBuilder extends Owned {
+ with_shape_registry(registry:ShapeRegistry):this;
+ with_registry(registry:ShapeRegistry):this;
+ withRegistry(registry:ShapeRegistry):this;
+ withShapeRegistry(registry:ShapeRegistry):this;
  data(value: Data): this;
  aes(value: Aes): this;
- layer(value: Layer | Labels | Callout): this;
+ layer(value: Layer | Labels | Callout | VectorPath): this;
  title(value: Title): this;
  subtitle(value: Subtitle): this;
  caption(value: Caption): this;
  source_note(value: SourceNote): this;
  sourceNote(value: SourceNote): this;
  footnote(value: Footnote): this;
+ guide(value: Guide): this;
  x_axis(value: Axis): this;
  xAxis(value: Axis): this;
  y_axis(value: Axis): this;
@@ -580,7 +742,7 @@ export class PlotBuilder extends Owned {
  panelLetter(value: PanelLetter): this;
  inset(value: Inset): this;
  transform(value: Transform): this;
- profile(value: string): this;
+ profile(value: 'LibraryV1' | 'Ggplot2_4_0_3'): this;
  compile_limits(value: Options): this;
  compileLimits(value: Options): this;
  data_limits(value: Options): this;
@@ -588,8 +750,9 @@ export class PlotBuilder extends Owned {
  build(): Plot;
 }
 export class PlotEdit extends Owned {
+ profile(value: 'LibraryV1' | 'Ggplot2_4_0_3'): this;
  layer(name: string, value: Layer): this;
- annotation(value: Labels | Callout): this;
+ annotation(value: Labels | Callout | VectorPath): this;
  remove_layer(name: string): this;
  removeLayer(name: string): this;
  remove_annotation(id: string): this;
@@ -602,6 +765,7 @@ export class PlotEdit extends Owned {
  source_note(value: SourceNote): this;
  sourceNote(value: SourceNote): this;
  footnote(value: Footnote): this;
+ guide(value: Guide): this;
  x_axis(value: Axis): this;
  xAxis(value: Axis): this;
  y_axis(value: Axis): this;
@@ -623,8 +787,8 @@ export class Plot extends Owned {
  chart(): Chart;
  to_json(): string;
  toJson(): string;
- static from_json(value: string): Plot;
- static fromJson(value: string): Plot;
+ static from_json(value: string, registry?: ShapeRegistry): Plot;
+ static fromJson(value: string, registry?: ShapeRegistry): Plot;
 }
 export class ExportOptions extends Owned {
  dpi(value: number): this;
@@ -762,3 +926,204 @@ export class Chart extends Owned {
  linkResolve(component: Link, message: Options): Record<string, unknown>;
 }
 export { Chart as LegacyChart } from './chart_wasm.js';
+
+export class Path extends Owned {
+ constructor(digits?: number | null, options?: {limits?: Options});
+ static from_json(request: string): Path;
+ static fromJson(request: string): Path;
+ copy(): Path;
+ move_to(x: number, y: number): this;
+ moveTo(x: number, y: number): this;
+ line_to(x: number, y: number): this;
+ lineTo(x: number, y: number): this;
+ quadratic_curve_to(cx: number, cy: number, x: number, y: number): this;
+ quadraticCurveTo(cx: number, cy: number, x: number, y: number): this;
+ bezier_curve_to(cx1: number, cy1: number, cx2: number, cy2: number, x: number, y: number): this;
+ bezierCurveTo(cx1: number, cy1: number, cx2: number, cy2: number, x: number, y: number): this;
+ arc_to(x1: number, y1: number, x2: number, y2: number, r: number): this;
+ arcTo(x1: number, y1: number, x2: number, y2: number, r: number): this;
+ arc(x: number, y: number, r: number, a0: number, a1: number, anticlockwise?: boolean): this;
+ rect(x: number, y: number, w: number, h: number): this;
+ close_path(): this;
+ closePath(): this;
+ apply_batch(operations: ReadonlyArray<Options>): this;
+ applyBatch(operations: ReadonlyArray<Options>): this;
+ to_svg(): string;
+ toSvg(): string;
+ toString(): string;
+ result(): Record<string, JSONValue>;
+ replay(sink: (command: JSONValue) => unknown): void;
+}
+export function path(): Path;
+export function path_round(digits?: number): Path;
+export const pathRound: typeof path_round;
+export class VectorPath extends Component {
+ transform(matrix: Iterable<number>, maxError?: number, maxCommands?: number): this;
+ private readonly _pathFamily: 'VectorPath';
+ anchor(value: Options): this;
+ fill(value: Options | null): this;
+ stroke(value: Options | null): this;
+ overflow(value: boolean): this;
+}
+export function vector_path(id: string, path: Path): VectorPath;
+export const vectorPath: typeof vector_path;
+export * from './scales.cjs';
+export interface BandAxisOptions {domain?:readonly string[]|null;padding_inner?:number;padding_outer?:number;align?:number;round?:boolean;}
+export interface PointAxisOptions {domain?:readonly string[]|null;padding?:number;align?:number;round?:boolean;}
+export function scale_numeric(spec:StandaloneScale|Options):Scale;
+export const scaleNumeric:typeof scale_numeric;
+export function scale_registered(name:string,version:bigint|number|string,parameters:JSONValue):Scale;
+export const scaleRegistered:typeof scale_registered;
+export function scale_calendar(spec:StandaloneScale|Options):Scale;
+export const scaleCalendar:typeof scale_calendar;
+export function scale_band_d3(spec:BandAxisOptions):Scale;
+export const scaleBandD3:typeof scale_band_d3;
+export function scale_point_d3(spec:PointAxisOptions):Scale;
+export const scalePointD3:typeof scale_point_d3;
+export function color_mapped(name:string,scale:StandaloneScale|Options,training?:'Authored'|'Eligible'):ColorScale;
+export const colorMapped:typeof color_mapped;
+
+export type ShapeCoordinate = {Column: number} | {Constant: number};
+export type CurveSpec = {kind: 'Linear' | 'LinearClosed' | 'Basis' | 'BasisOpen' | 'BasisClosed' | 'BumpX' | 'BumpY' | 'MonotoneX' | 'MonotoneY' | 'Natural' | 'Step' | 'StepBefore' | 'StepAfter'}
+ | {kind: 'Bundle'; beta?: number}
+ | {kind: 'Cardinal' | 'CardinalOpen' | 'CardinalClosed'; tension?: number}
+ | {kind: 'CatmullRom' | 'CatmullRomOpen' | 'CatmullRomClosed'; alpha?: number};
+export interface ShapeLimits {max_points?: number; path?: Options;}
+export interface ShapeCommon {curve?: CurveSpec; defined?: boolean | readonly boolean[]; digits?: number | null; limits?: ShapeLimits;}
+export interface ShapeLineConfig extends ShapeCommon {x?: ShapeCoordinate; y?: ShapeCoordinate;}
+export interface ShapeAreaConfig extends ShapeCommon {x0?: ShapeCoordinate; y0?: ShapeCoordinate; x1?: ShapeCoordinate | null; y1?: ShapeCoordinate | null;}
+export interface ShapeOperation {operation:{id:string;version:string|number|bigint};parameters:JSONValue}
+export type ShapeFamily='Curve'|'Symbol'|'PieComparator'|'StackOrder'|'StackOffset';
+export class ShapeRegistry extends Owned {
+ private readonly __shapeRegistry: void;
+ constructor();static example():ShapeRegistry;copy():ShapeRegistry;
+ selection(selection:ShapeOperation,family:ShapeFamily):ShapeOperation;
+}
+export class ShapeLine extends Owned {
+ generateRegistered(data:readonly (readonly number[])[],registry:ShapeRegistry,selection:ShapeOperation):Path;
+ constructor(config?: ShapeLineConfig);
+ copy(): ShapeLine;
+ config(): ShapeLineConfig;
+ generate(rows: ReadonlyArray<ReadonlyArray<number>>): Path;
+}
+export class ShapeArea extends Owned {
+ generateRegistered(data:readonly (readonly number[])[],registry:ShapeRegistry,selection:ShapeOperation):Path;
+ constructor(config?: ShapeAreaConfig);
+ copy(): ShapeArea;
+ config(): ShapeAreaConfig;
+ generate(rows: ReadonlyArray<ReadonlyArray<number>>): Path;
+ boundary(which: 'X0' | 'X1' | 'Y0' | 'Y1'): ShapeLine;
+}
+export function shape_line(): Layer;
+export function shape_area(): Layer;
+export const shapeLine: typeof shape_line;
+export const shapeArea: typeof shape_area;
+
+export interface ArcDatum { inner_radius?:number; outer_radius?:number; start_angle?:number; end_angle?:number; pad_angle?:number }
+export interface ShapeArcConfig { inner_radius?:number|null; outer_radius?:number|null; start_angle?:number|null; end_angle?:number|null; pad_angle?:number|null; corner_radius?:number; pad_radius?:number|null; digits?:number|null; limits?:ShapeLimits }
+export interface PieAngles { start_angle?:number; end_angle?:number; pad_angle?:number }
+export interface ShapePieConfig { value?:number|null; order?:'ValuesDescending'|'ValuesAscending'|'Input'; angles?:PieAngles; limits?:ShapeLimits }
+export interface PieSlice<T=unknown> { data:T; index:number; value:number; start_angle:number; end_angle:number; pad_angle:number }
+export class ShapeArc extends Owned {
+ constructor(config?:ShapeArcConfig); copy():ShapeArc; config():ShapeArcConfig;
+ generate(datum?:ArcDatum):Path; centroid(datum?:ArcDatum):[number,number];
+}
+export class ShapePie extends Owned {
+ layoutRegistered<T extends ShapeDatumInput>(data:readonly T[],values:readonly number[]|Float64Array,registry:ShapeRegistry,selection:ShapeOperation):PieSlice<ShapeDatumOutput<T>>[];
+ constructor(config?:ShapePieConfig); copy():ShapePie; config():ShapePieConfig;
+ layout(data:readonly number[]):PieSlice<number>[];
+ layout<T extends ShapeDatumInput>(data:readonly T[],values:readonly number[]|Float64Array):PieSlice<ShapeDatumOutput<T>>[];
+}
+
+export type ShapeDatumValue = null|boolean|string|number|readonly ShapeDatumValue[]|{readonly [key:string]:ShapeDatumValue};
+/** Materialized input accepts exact BigInts, which the portable wire retains as decimal strings. */
+export type ShapeDatumInput = null|boolean|string|number|bigint|readonly ShapeDatumInput[]|{readonly [key:string]:ShapeDatumInput};
+export type ShapeDatumOutput<T> = T extends bigint ? string : T extends readonly (infer V)[] ? ShapeDatumOutput<V>[] : T extends object ? {[K in keyof T]:ShapeDatumOutput<T[K]>} : T;
+export interface ArcParameters {datum:ArcDatum; corner_radius:number; pad_radius:number|null}
+export function shape_arc():Layer;
+export function shape_pie():Layer;
+export const shapeArc:typeof shape_arc;
+export const shapePie:typeof shape_pie;
+
+export type SymbolKind='Circle'|'Cross'|'Diamond'|'Square'|'Star'|'Triangle'|'Wye'|'Plus'|'Times'|'X'|'Asterisk'|'Diamond2'|'Square2'|'Triangle2';
+export interface ShapeSymbolConfig {kind?:SymbolKind;size?:number;digits?:number|null;limits?:ShapeLimits;}
+export class ShapeSymbol extends Owned {
+ generateRegistered(registry:ShapeRegistry,selection:ShapeOperation):Path;
+  constructor(config?:ShapeSymbolConfig);
+  copy():ShapeSymbol;
+  config():ShapeSymbolConfig;
+  generate():Path;
+  static palettes():readonly [readonly SymbolKind[], readonly SymbolKind[]];
+}
+
+export function shape_symbol():Layer;
+export const shapeSymbol:typeof shape_symbol;
+
+export type StackOrder = 'None'|'Reverse'|'Ascending'|'Descending'|'Appearance'|'InsideOut'|{Explicit:readonly number[]};
+export type StackOffset = 'None'|'Expand'|'Diverging'|'Silhouette'|'Wiggle';
+export type StackMissing = 'Gap'|'Zero'|'Error';
+export interface StackLimits {max_series?:number;max_cells?:number;max_work?:number}
+export interface ShapeStackConfig {keys?:readonly string[];order?:StackOrder;offset?:StackOffset;missing?:StackMissing;value?:number|null;limits?:StackLimits}
+export interface StackPoint<T=unknown> {data:T;y0:number;y1:number}
+export interface StackSeries<T=unknown> {key:string;index:number;points:StackPoint<T>[]}
+export class ShapeStack extends Owned {
+ layoutRegistered<T extends ShapeDatumInput>(data:readonly T[],values:readonly (readonly (number|null)[]|Float64Array)[],registry:ShapeRegistry,order?:ShapeOperation|null,offset?:ShapeOperation|null):StackSeries<ShapeDatumOutput<T>>[];
+ constructor(config?:ShapeStackConfig);copy():ShapeStack;config():ShapeStackConfig;
+ layout(data:readonly (readonly (number|null)[])[]):StackSeries<readonly (number|null)[]>[];
+ layout<T extends ShapeDatumInput>(data:readonly T[],values:readonly (readonly (number|null)[]|Float64Array)[]):StackSeries<ShapeDatumOutput<T>>[];
+}
+
+export interface ShapeLineRadialConfig extends ShapeCommon {angle?: ShapeCoordinate; radius?: ShapeCoordinate;}
+export interface ShapeAreaRadialConfig extends ShapeCommon {angle?: ShapeCoordinate; radius?: ShapeCoordinate; start_angle?: ShapeCoordinate; end_angle?: ShapeCoordinate | null; inner_radius?: ShapeCoordinate; outer_radius?: ShapeCoordinate | null;}
+export type RadialBoundary = 'StartAngle' | 'EndAngle' | 'InnerRadius' | 'OuterRadius';
+export type LinkEndpoint = 'Source' | 'Target' | {Constant: readonly number[]};
+export interface LinkDatum {source: readonly number[]; target: readonly number[];}
+interface ShapeLinkCommon {source?: LinkEndpoint; target?: LinkEndpoint; digits?: number | null; limits?: ShapeLimits;}
+export interface ShapeLinkConfig extends ShapeLinkCommon {x?: ShapeCoordinate; y?: ShapeCoordinate; curve?: CurveSpec;}
+export interface ShapeLinkRadialConfig extends ShapeLinkCommon {angle?: ShapeCoordinate; radius?: ShapeCoordinate;}
+export class ShapeLineRadial extends Owned {
+ generateRegistered(data:readonly (readonly number[])[],registry:ShapeRegistry,selection:ShapeOperation):Path;
+ constructor(config?: ShapeLineRadialConfig);
+ copy(): ShapeLineRadial;
+ config(): ShapeLineRadialConfig;
+ generate(data: readonly (readonly number[])[]): Path;
+}
+export class ShapeAreaRadial extends Owned {
+ generateRegistered(data:readonly (readonly number[])[],registry:ShapeRegistry,selection:ShapeOperation):Path;
+ constructor(config?: ShapeAreaRadialConfig);
+ copy(): ShapeAreaRadial;
+ config(): ShapeAreaRadialConfig;
+ generate(data: readonly (readonly number[])[]): Path;
+ boundary(which: RadialBoundary): ShapeLineRadial;
+}
+export class ShapeLink extends Owned {
+ generateRegistered(data:LinkDatum,registry:ShapeRegistry,selection:ShapeOperation):Path;
+ constructor(config?: ShapeLinkConfig);
+ copy(): ShapeLink;
+ config(): ShapeLinkConfig;
+ generate(data: LinkDatum): Path;
+}
+export class ShapeLinkRadial extends Owned {
+ constructor(config?: ShapeLinkRadialConfig);
+ copy(): ShapeLinkRadial;
+ config(): ShapeLinkRadialConfig;
+ generate(data: LinkDatum): Path;
+}
+export function point_radial(angle: number, radius: number): [number,number];
+export const pointRadial: typeof point_radial;
+
+export interface RadialParameters {start_angle?: number; end_angle?: number | null; inner_radius?: number; outer_radius?: number | null;}
+export function shape_line_radial(): Layer;
+export const shapeLineRadial: typeof shape_line_radial;
+export function shape_area_radial(): Layer;
+export const shapeAreaRadial: typeof shape_area_radial;
+export function shape_link_horizontal(): Layer;
+export const shapeLinkHorizontal: typeof shape_link_horizontal;
+export function shape_link_vertical(): Layer;
+export const shapeLinkVertical: typeof shape_link_vertical;
+export function shape_link_radial(): Layer;
+export const shapeLinkRadial: typeof shape_link_radial;
+export function shape_link(curve: CurveSpec): Layer;
+export const shapeLink: typeof shape_link;
+
+export {ShapeRegistry as ExtensionRegistry};

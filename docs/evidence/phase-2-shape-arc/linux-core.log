@@ -1,0 +1,34 @@
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.51s
+     Running tests/shape_arc_integration.rs (target/debug/deps/shape_arc_integration-6b1ce027ce2131b5)
+
+running 5 tests
+test named_shape_statistical_inputs_reject_unexpected_fields ... ok
+test generated_counts_feed_one_pie_without_losing_aggregate_membership ... ok
+test grouped_pies_ignore_slice_color_for_automatic_population_and_validate_channels ... ok
+test pie_layout_preserves_input_targets_and_open_donut_holes ... ok
+test arc_radii_are_display_units_and_centers_use_named_projection ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/shape_arc_pie.rs (target/debug/deps/shape_arc_pie-9d92b8cfa9a2e520)
+
+running 3 tests
+test native_accessors_analytics_invalid_inputs_and_limits ... ok
+test full_pie_values_order_and_angle_matrix_retains_owned_data ... ok
+test full_arc_geometry_padding_corner_and_centroid_matrix ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/shape_integration.rs (target/debug/deps/shape_integration-480edffbfbc7c496)
+
+running 6 tests
+test nonzero_holes_curved_strokes_caps_and_subdivision_limits_are_explicit ... ok
+test missing_secondary_coordinate_splits_the_paired_run_and_retains_source_keys ... ok
+test clipped_area_interiors_keep_source_focus_without_inventing_brush_vertices ... ok
+test general_area_has_independent_boundaries_and_no_lower_upper_order_constraint ... ok
+test singleton_curve_policy_remains_distinct_from_legacy_line_points ... ok
+test curves_project_before_generation_and_controls_are_never_source_targets ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

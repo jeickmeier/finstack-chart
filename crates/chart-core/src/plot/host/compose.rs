@@ -4,6 +4,61 @@ impl Component {
     /// Compose typed components directly; misplaced figure/stage/style components reject.
     pub fn with(&self, method: &str, other: &Self) -> ChartResult<Self> {
         Ok(Self(match (&self.0, method, &other.0) {
+            (Kind::Expression(a), method, Kind::Expression(b)) => {
+                Kind::Expression(a.with(method, b)?)
+            }
+            (Kind::Aes(a), method, Kind::Expression(Expr::Source(expr))) => {
+                Kind::Aes(match method {
+                    "x" => a.clone().x(expr.clone()),
+                    "y" => a.clone().y(expr.clone()),
+                    "x2" => a.clone().x2(expr.clone()),
+                    "y2" => a.clone().y2(expr.clone()),
+                    "low" => a.clone().low(expr.clone()),
+                    "high" => a.clone().high(expr.clone()),
+                    "size" => a.clone().size(expr.clone()),
+                    _ => return Err(unsupported(method)),
+                })
+            }
+            (Kind::Filter(a), "expression", Kind::Expression(Expr::Source(expr))) => {
+                Kind::Filter(a.clone().expression(expr.clone()))
+            }
+            (Kind::Stat(a), method, Kind::Expression(Expr::Source(expr))) => {
+                Kind::Stat(match method {
+                    "x" => a.clone().x(expr.clone()),
+                    "y" => a.clone().y(expr.clone()),
+                    _ => return Err(unsupported(method)),
+                })
+            }
+            (Kind::StatAes(a), method, Kind::Expression(Expr::Stat(expr))) => {
+                Kind::StatAes(match method {
+                    "x" => a.clone().x(expr.clone()),
+                    "y" => a.clone().y(expr.clone()),
+                    "x2" => a.clone().x2(expr.clone()),
+                    "y2" => a.clone().y2(expr.clone()),
+                    "size" => a.clone().size(expr.clone()),
+                    _ => return Err(unsupported(method)),
+                })
+            }
+            (Kind::BinAes(a), method, Kind::Expression(Expr::Bin(expr))) => {
+                Kind::BinAes(match method {
+                    "x" => a.clone().x(expr.clone()),
+                    "y" => a.clone().y(expr.clone()),
+                    "x2" => a.clone().x2(expr.clone()),
+                    "y2" => a.clone().y2(expr.clone()),
+                    "size" => a.clone().size(expr.clone()),
+                    _ => return Err(unsupported(method)),
+                })
+            }
+            (Kind::ScaleAes(a), method, Kind::Expression(Expr::Scale(expr))) => {
+                Kind::ScaleAes(match method {
+                    "size" => a.clone().size(expr.clone()),
+                    "color" => a.clone().color(expr.clone()),
+                    _ => return Err(unsupported(method)),
+                })
+            }
+            (Kind::Layer(a), "after_scale", Kind::ScaleAes(b)) => {
+                Kind::Layer(a.clone().after_scale(b.clone()))
+            }
             (Kind::Layer(b), "aes", Kind::Aes(v)) => Kind::Layer(b.clone().aes(v.clone())),
             (Kind::Layer(b), "stat", Kind::Stat(v)) => Kind::Layer(b.clone().stat(v.clone())),
             (Kind::Layer(b), "after_stat", Kind::StatAes(v)) => {
@@ -27,7 +82,17 @@ impl Component {
             (Kind::Transform(b), "from_transform", Kind::Transform(v)) => {
                 Kind::Transform(b.clone().from_transform(v.handle()?))
             }
+            (Kind::Guide(b), "text_style", Kind::TextStyle(v)) => {
+                Kind::Guide(b.clone().text_style(v.clone()))
+            }
+            (Kind::Guide(b), "rich_label", Kind::Rich(v)) => {
+                Kind::Guide(b.clone().rich_label(v.clone()))
+            }
+            (Kind::Guide(b), "format", Kind::Format(v)) => Kind::Guide(b.clone().format(v.clone())),
             (Kind::Axis(b), "scale", Kind::Scale(v)) => Kind::Axis(b.clone().scale(v.clone())),
+            (Kind::Axis(b), "coordinate_scale", Kind::Scale(v)) => {
+                Kind::Axis(b.clone().coordinate_scale(v.clone()))
+            }
             (Kind::Axis(b), "text_style", Kind::TextStyle(v)) => {
                 Kind::Axis(b.clone().text_style(v.clone()))
             }
@@ -117,6 +182,7 @@ impl Component {
             ("aes", Kind::Aes(v)) => plot.aes(v.clone()),
             ("layer", Kind::Layer(v)) => plot.layer(v.clone()),
             ("layer", Kind::Labels(v)) => plot.layer(v.clone()),
+            ("layer", Kind::VectorPath(v)) => plot.layer(v.clone()),
             ("layer", Kind::Callout(v)) => plot.layer(v.clone()),
             ("title", Kind::Title(v)) => plot.title(v.clone()),
             ("subtitle", Kind::Subtitle(v)) => plot.subtitle(v.clone()),
@@ -124,6 +190,7 @@ impl Component {
             ("source_note", Kind::Note(v)) => plot.source_note(v.clone()),
             ("footnote", Kind::Footnote(v)) => plot.footnote(v.clone()),
             ("theme", Kind::Theme(v)) => plot.theme(v.clone()),
+            ("guide", Kind::Guide(v)) => plot.guide(v.clone()),
             ("axis", Kind::Axis(v)) => plot.axis(v.clone()),
             ("x_axis", Kind::Axis(v)) => plot.x_axis(v.clone()),
             ("y_axis", Kind::Axis(v)) => plot.y_axis(v.clone()),
@@ -145,6 +212,7 @@ impl Component {
             ("source_note", Kind::Note(v)) => edit.source_note(v.clone()),
             ("footnote", Kind::Footnote(v)) => edit.footnote(v.clone()),
             ("theme", Kind::Theme(v)) => edit.theme(v.clone()),
+            ("guide", Kind::Guide(v)) => edit.guide(v.clone()),
             ("axis" | "x_axis" | "y_axis", Kind::Axis(v)) => edit.axis(v.clone()),
             ("scale", Kind::Color(v)) => edit.scale(v.clone()),
             ("legend", Kind::Legend(v)) => edit.legend(v.clone()),
@@ -153,6 +221,7 @@ impl Component {
             ("inset", Kind::Inset(v)) => edit.inset(v.clone()),
             ("transform", Kind::Transform(v)) => edit.transform(v.clone()),
             ("annotation", Kind::Labels(v)) => edit.annotation(v.clone()),
+            ("annotation", Kind::VectorPath(v)) => edit.annotation(v.clone()),
             ("annotation", Kind::Callout(v)) => edit.annotation(v.clone()),
             _ => return Err(unsupported(slot)),
         })

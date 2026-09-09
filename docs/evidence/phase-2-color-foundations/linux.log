@@ -1,0 +1,21 @@
+   Compiling pxfm v0.1.30
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 19.98s
+     Running tests/color_parity.rs (target/debug/deps/color_parity-eb7b828b7de6c2c2)
+
+running 3 tests
+test color_descriptors_parser_budgets_and_channel_names_reject_malformed_inputs ... ok
+test independent_color_math_and_quantization_preserve_floating_information ... ok
+test complete_color_oracle_covers_all_constructors_and_inherited_operations ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+
+     Running tests/path_parity.rs (target/debug/deps/path_parity-57c5b703bc242e7d)
+
+running 3 tests
+test rejected_arguments_budgets_batches_and_external_sink_errors ... ok
+test independent_tangency_rectangles_and_precision ... ok
+test all_pinned_sequences_match_offline_at_every_operation ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

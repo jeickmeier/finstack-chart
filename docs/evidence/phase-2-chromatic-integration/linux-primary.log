@@ -1,0 +1,186 @@
+RUN python-build
+   Compiling target-lexicon v0.13.5
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+   Compiling pyo3-build-config v0.29.2
+   Compiling pyo3-ffi v0.29.2
+   Compiling pyo3 v0.29.2
+   Compiling chart-python v0.1.0 (/workspace/crates/chart-python)
+   Compiling chart-text v0.1.0 (/workspace/crates/chart-text)
+   Compiling chart-extension-example v0.1.0 (/workspace/examples/custom-extension)
+   Compiling chart-export v0.1.0 (/workspace/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 21.04s
+
+RUN color
+PASS FIX-C01 Python: 351 cases, every constructor/method, exceptional tags, copies, strict descriptors and disposal.
+
+RUN interpolate
+PASS FIX-I01 Python: 370 value/configuration cases, 36 browser transform cases, owned samples, descriptors and disposal.
+
+RUN chromatic
+PASS CP-04 Python: 218 exact scheme arrays and 160666 ramp rows, catalog metadata, reversal, invalid inputs, copies and disposal.
+
+RUN chromatic_composition
+PASS FIX-21 Python: 90 composed mappings / 1268 exact scene colors across all sequential/diverging/rank/classifier families.
+PASS FIX-21 Python: editorial/terminal/grayscale preserve canonical evaluation and convert both marks and guide swatches.
+
+RUN chromatic_gallery
+PASS FIX-21 Python: five independently authored v6 catalog figures, retained SVG/PDF/PNG.
+PASS CP-04 Python: non-finite numeric categories retain missing paint and do not shift named palette training.
+
+RUN chromatic_updates
+PASS CP-05 Python: twenty-four append/upsert/remove/retention steps match fresh batch PNG; exact uint64 categories and old captures survive.
+
+RUN export
+   Compiling chart-text v0.1.0 (/workspace/crates/chart-text)
+   Compiling chart-export v0.1.0 (/workspace/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 12.49s
+     Running `target/debug/examples/chromatic_proof /workspace/target/chromatic-linux-primary/rust`
+PASS FIX-21: five v6 chromatic figures and immutable SVG/PDF/PNG publication.
+
+RUN wasm-build
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling num-traits v0.2.19
+   Compiling crc32fast v1.5.1
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling generic-array v0.14.7
+   Compiling serde_json v1.0.151
+   Compiling libm v0.2.16
+   Compiling serde v1.0.229
+   Compiling rustversion v1.0.23
+   Compiling flate2 v1.1.10
+   Compiling crypto-common v0.1.7
+   Compiling block-buffer v0.10.4
+   Compiling syn v3.0.5
+   Compiling syn v2.0.119
+   Compiling png v0.18.1
+   Compiling png v0.17.16
+   Compiling digest v0.10.7
+   Compiling float-cmp v0.9.0
+   Compiling strict-num v0.1.1
+   Compiling sha2 v0.10.9
+   Compiling wasm-bindgen v0.2.128
+   Compiling synstructure v0.13.2
+   Compiling zerofrom-derive v0.1.7
+   Compiling yoke-derive v0.8.2
+   Compiling wasm-bindgen-macro-support v0.2.128
+   Compiling bytemuck_derive v1.12.0
+   Compiling serde_derive v1.0.229
+   Compiling zerofrom v0.1.8
+   Compiling yoke v0.8.3
+   Compiling bytemuck v1.25.2
+   Compiling font-types v0.12.4
+   Compiling font-types v0.11.3
+   Compiling tiny-skia-path v0.12.0
+   Compiling rgb v0.8.53
+   Compiling read-fonts v0.39.2
+   Compiling read-fonts v0.41.0
+   Compiling tiny-skia v0.12.0
+   Compiling wasm-bindgen-macro v0.2.128
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+   Compiling write-fonts v0.48.1
+   Compiling skrifa v0.42.1
+   Compiling harfrust v0.12.0
+   Compiling skrifa v0.44.0
+   Compiling usvg v0.48.1
+   Compiling chart-text v0.1.0 (/workspace/crates/chart-text)
+   Compiling chart-extension-example v0.1.0 (/workspace/examples/custom-extension)
+   Compiling resvg v0.48.1
+   Compiling subsetter v0.2.6
+   Compiling krilla v0.8.2
+   Compiling chart-export v0.1.0 (/workspace/crates/chart-export)
+   Compiling chart-wasm v0.1.0 (/workspace/crates/chart-wasm)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 24.58s
+
+RUN benchmark
+min": 33.7325,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Rainbow",
+      "kernel": "prepare",
+      "timing": {
+        "ns_max": 14.60416,
+        "ns_median": 13.08834,
+        "ns_min": 10.2525,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Rainbow",
+      "kernel": "evaluate",
+      "timing": {
+        "ns_max": 36.77584,
+        "ns_median": 33.24834,
+        "ns_min": 31.22832,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Sinebow",
+      "kernel": "prepare",
+      "timing": {
+        "ns_max": 15.78584,
+        "ns_median": 13.62832,
+        "ns_min": 13.09584,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Sinebow",
+      "kernel": "evaluate",
+      "timing": {
+        "ns_max": 31.86666,
+        "ns_median": 28.94666,
+        "ns_min": 26.625,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "palette_only_prepare",
+      "rows": 1000,
+      "statistics_reused": true,
+      "timing": {
+        "ns_max": 384487.5,
+        "ns_median": 346820.8,
+        "ns_min": 298400.0,
+        "operations_per_sample": 10,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "palette_only_prepare",
+      "rows": 10000,
+      "statistics_reused": true,
+      "timing": {
+        "ns_max": 3680795.9,
+        "ns_median": 3401608.3,
+        "ns_min": 3217387.5,
+        "operations_per_sample": 10,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "palette_only_prepare",
+      "rows": 100000,
+      "statistics_reused": true,
+      "timing": {
+        "ns_max": 43022279.1,
+        "ns_median": 39935337.5,
+        "ns_min": 35707870.9,
+        "operations_per_sample": 10,
+        "samples": 7
+      }
+    }
+  ],
+  "method": "one warmup and seven samples; precompiled output sampling; inputs excluded",
+  "profile": "release"
+}
+

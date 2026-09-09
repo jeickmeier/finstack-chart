@@ -2,6 +2,60 @@
 
 ## Unreleased
 
+- Add shared UTC and explicitly supplied local calendars, filtered intervals, automatic
+  ticks/nice and full locale time formatting. Exact time scales retain integer origins,
+  piecewise ranges and finer timestamp units. Calendar axes and time formatting use
+  v5; actual Python/WASM proofs preserve timezone revisions across DST publication.
+
+- Add raw D3 numeric tick candidates, log minor-label suppression and inferred numeric
+  formatting with complete specifier types and explicit locales. Fixed and significant
+  formatting share exact decimal rounding. Axis formatting uses v5 descriptors;
+  layout thinning leaves standalone candidates unchanged. Sequential/diverging nice
+  preserves the midpoint; quantize nice rebuilds its thresholds.
+
+- Add shared typed continuous, sequential/diverging and distribution scales, with
+  quantile/quantize/threshold intervals and native custom sampling. Chart color and
+  numeric size/opacity/stroke mappings use the same engine and v5 descriptors;
+  quantiles train on eligible post-stat populations independently of viewport.
+  Floating alpha now survives after-scale expressions and opacity until final paint.
+
+- Add typed immutable ordinal catalogs and shared D3 band/point spacing with alignment,
+  rounding, step/bandwidth, deduplication and exact integer keys. New categorical axes
+  use definition v5 while existing recipe spacing remains explicit and unchanged.
+
+
+- Add compatible Rust numeric scales with piecewise knots, signed power/sqrt,
+  negative-domain logarithms, identity, radial mapping, rounding, unknown values and
+  explicit nice edits. Named axes and navigation share the numeric mapping;
+  definitions carrying these axes use version five. Existing recipe policies remain
+  explicit. Full scale ticks/formatting and host qualification remain in progress.
+
+- Add shared floating color values and standalone interpolation across Rust/Python/WASM.
+  Authored paint retains color descriptors through layers, palettes, themes, text,
+  candles, gradients and publication backgrounds; preparation lowers to existing
+  scene bytes. Floating paint first uses version four, preserving byte-only legacy
+  versions and palette semantics. Shared numeric transport retains signed zero.
+
+- Add canonical ggplot2 4.0.3 stage/profile provenance, inferred discrete groups,
+  horizontal recipes and typed source/stat/bin/post-scale/theme expressions.
+  Positional limits/transforms precede statistics under the profile; coordinate
+  controls preserve the population. Shared transforms reject conflicting scale
+  contexts. Primary Rust/Python/WASM authors share the evaluator and immutable
+  capture semantics; new definition capabilities use version three.
+
+- Add checked standalone path authoring and numeric replay, analytic arcs, signed
+  rectangles, configurable SVG digits and atomic resource-bounded operations.
+  Primary path annotations, native/export rendering and actual Python/WASM adapters
+  share the core geometry. Retained path definitions/compositions and scene output
+  use explicit version-two capabilities; legacy envelopes remain supported.
+- Pin the development-only D3/R reference workspace, complete ggplot2 public inventory
+  and reproducible offline seed artifacts for subsequent Phase 2 packages.
+
+- Suppress empty color-guide furniture and honor `legend().untitled()` on primary
+  builds and edits in ordinary and faceted charts. Existing absent titles retain
+  their generic fallback through `generic_title()`; empty strings explicitly omit
+  the title. Python/WASM dispatch and declarations expose both choices.
+
 - Add the primary `Data`/`Plot`/component API and retained `Chart` runtime. Typed rows,
   exact nullable columns, stable handles, definition edits, transactions, retention,
   actions, navigation, linking and registered operations reuse the shared engine.

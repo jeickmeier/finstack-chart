@@ -1,0 +1,6 @@
+scripts/bindings/authoring/shape_symbol_typing_invalid.py:2: error: Argument 1 to "ShapeSymbol" has incompatible type "dict[str, str]"; expected "ShapeSymbolConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_symbol_typing_invalid.py:3: error: Argument 1 to "ShapeSymbol" has incompatible type "dict[str, str]"; expected "ShapeSymbolConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_symbol_typing_invalid.py:4: error: Argument 1 to "symbol_paint" of "Layer" has incompatible type "Literal['Closed']"; expected "Literal['Auto', 'Fill', 'Stroke']"  [arg-type]
+scripts/bindings/authoring/shape_symbol_typing_invalid.py:5: error: List item 0 has incompatible type "int"; expected "str"  [list-item]
+scripts/bindings/authoring/shape_symbol_typing_invalid.py:6: error: Argument 1 to "shape_value" of "Layer" has incompatible type "Literal['Radius']"; expected "Literal['AreaSize', 'InnerRadius', 'OuterRadius', 'StartAngle', 'EndAngle', 'PadAngle', 'PadRadius', 'CornerRadius', 'PieValue']"  [arg-type]
+Found 5 errors in 1 file (checked 1 source file)

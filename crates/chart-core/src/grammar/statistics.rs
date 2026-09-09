@@ -197,16 +197,10 @@ pub(super) fn schema(
     Ok(fields)
 }
 pub(super) fn group_label(group: &GroupValue) -> String {
-    match group {
-        GroupValue::All => "All".into(),
-        GroupValue::Text(v) => v.clone(),
-        GroupValue::Int(v) => v.to_string(),
-        GroupValue::UInt(v) => v.to_string(),
-        GroupValue::Boolean(v) => v.to_string(),
-    }
+    group.label()
 }
 /// Sorted-key compensated summation gives stable input reorder behavior.
-fn sum<I>(values: I) -> ChartResult<f64>
+pub(super) fn sum<I>(values: I) -> ChartResult<f64>
 where
     I: IntoIterator<Item = f64>,
     I::IntoIter: Clone,
@@ -237,6 +231,27 @@ where
     )
 }
 
+pub(super) fn mean<I>(values: I, count: usize) -> ChartResult<f64>
+where
+    I: IntoIterator<Item = f64>,
+    I::IntoIter: Clone,
+{
+    if count == 0 {
+        return Err(error(
+            DiagnosticCode::NumericalDomain,
+            "Mean requires at least one value.",
+        ));
+    }
+    let values = values.into_iter();
+    if let Ok(total) = sum(values.clone()) {
+        return Ok(total / count as f64);
+    }
+    let scale = values.clone().map(f64::abs).fold(0_f64, f64::max);
+    finite(
+        (sum(values.map(|v| v / scale))? / count as f64) * scale,
+        "Statistic mean is not representable.",
+    )
+}
 fn finite(v: f64, message: &str) -> ChartResult<f64> {
     if v.is_finite() {
         Ok(v)
@@ -382,7 +397,7 @@ pub(super) fn run(
                 let mean = if rows.is_empty() {
                     None
                 } else {
-                    Some(sum(rows.iter().map(|r| r.x / rows.len() as f64))?)
+                    Some(mean(rows.iter().map(|r| r.x), rows.len())?)
                 };
                 push(StatField::Min, sorted.first().copied());
                 push(StatField::Max, sorted.last().copied());

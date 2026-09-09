@@ -8,7 +8,9 @@ use crate::limits::require_within;
 use crate::scales::*;
 use crate::scene::{Color, Primitive, Scene, SceneItem, Stroke};
 use crate::services::{TextMeasurer, TextMetrics, TextRequest, measure_text, validate_text};
-use crate::{ChartResult, Diagnostic, DiagnosticCode, Point, Rect, ScaleId, SceneStamp, Severity};
+use crate::{
+    ChartResult, Diagnostic, DiagnosticCode, GuideId, Point, Rect, ScaleId, SceneStamp, Severity,
+};
 use std::{
     collections::{BTreeMap, BTreeSet},
     sync::Arc,
@@ -69,11 +71,14 @@ fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
         Ok(())
     };
     super::axes::validate_specs(&r.axes, r.limits)?;
+    super::axes::validate_guides(&r.axes, &r.guides, r.limits)?;
     let ids: BTreeSet<_> = r.axes.iter().map(|a| a.id).collect();
     for a in &r.axes {
         let explicit_categories = match &a.scale {
             AxisScale::Band(o) => o.domain.as_ref(),
             AxisScale::Point(o) => o.domain.as_ref(),
+            AxisScale::D3Band(o) => o.domain.as_ref(),
+            AxisScale::D3Point(o) => o.domain.as_ref(),
             _ => None,
         };
         if let Some(d) = explicit_categories {
@@ -101,23 +106,17 @@ fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
             "Every layer scale binding requires an AxisSpec, including hidden guides.",
         ));
     }
-    let mut vertices = r.max_vertices;
     let mut paths = r.limits.max_path_commands;
     let mut items = r.limits.max_items;
     for l in chart.layers().iter().filter(|l| l.visible()) {
         for m in l.marks() {
-            let n = match &m.geometry {
-                PreparedGeometry::Point(_) => 1,
-                PreparedGeometry::LineRun(p) => p.len(),
-                PreparedGeometry::BandRun { lower, upper } => lower.len() + upper.len(),
-                _ => 2,
-            };
-            require_within(n <= vertices, "layout vertex")?;
-            vertices -= n;
+            let n = super::work::vertices(&m.geometry);
             // Omission can split a line into at most one singleton per input vertex.
             let count = if matches!(
                 m.geometry,
-                PreparedGeometry::LineRun(_) | PreparedGeometry::BandRun { .. }
+                PreparedGeometry::LineRun(_)
+                    | PreparedGeometry::BandRun { .. }
+                    | PreparedGeometry::StackBandRun { .. }
             ) {
                 n
             } else {
@@ -127,9 +126,14 @@ fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
             items -= count;
             if matches!(
                 m.geometry,
-                PreparedGeometry::LineRun(_) | PreparedGeometry::BandRun { .. }
+                PreparedGeometry::LineRun(_)
+                    | PreparedGeometry::BandRun { .. }
+                    | PreparedGeometry::StackBandRun { .. }
             ) {
-                let n = if matches!(m.geometry, PreparedGeometry::BandRun { .. }) {
+                let n = if matches!(
+                    m.geometry,
+                    PreparedGeometry::BandRun { .. } | PreparedGeometry::StackBandRun { .. }
+                ) {
                     n.saturating_mul(2)
                 } else {
                     n
@@ -158,11 +162,20 @@ fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
             )
         })?;
     }
-    for spec in &r.axes {
-        let axis = resolve_axis(chart, r, spec, Rect::new(0., 0., 1., 1.)?)?;
-        if spec.visible {
+    let scales = r
+        .axes
+        .iter()
+        .map(|spec| {
+            Ok((
+                spec.id,
+                resolve_axis(chart, r, spec, Rect::new(0., 0., 1., 1.)?)?,
+            ))
+        })
+        .collect::<ChartResult<BTreeMap<_, _>>>()?;
+    for guide in resolve_guides(&scales, r)?.values() {
+        if guide.spec.visible {
             potential_items = potential_items
-                .checked_add(1 + axis.ticks.len() * 2)
+                .checked_add(1 + guide.ticks.len() * 2)
                 .ok_or_else(|| {
                     error(
                         DiagnosticCode::ResourceLimit,
@@ -184,11 +197,11 @@ struct Label {
     metrics: TextMetrics,
     rich: Option<super::text::Block>,
 }
-fn measure_axes(
-    axes: &BTreeMap<ScaleId, ResolvedAxis>,
+fn measure_guides(
+    axes: &BTreeMap<GuideId, ResolvedGuide>,
     r: &LayoutRequest,
     measurer: &dyn TextMeasurer,
-) -> ChartResult<BTreeMap<ScaleId, Vec<Label>>> {
+) -> ChartResult<BTreeMap<GuideId, Vec<Label>>> {
     // Aggregate per-pass text budget is checked for all candidates before host callbacks.
     let mut remaining = r.limits.max_text_bytes;
     for a in axes.values() {
@@ -201,6 +214,14 @@ fn measure_axes(
     for (id, a) in axes {
         let mut measured = vec![];
         for t in &a.ticks {
+            if t.label.is_empty() {
+                measured.push(Label {
+                    tick: t.clone(),
+                    metrics: TextMetrics::new(0., 0., 0.)?,
+                    rich: None,
+                });
+                continue;
+            }
             let rich = if a.spec.typography.is_some() || a.spec.label_rotation != 0. {
                 let mut run = a
                     .spec
@@ -216,7 +237,10 @@ fn measure_axes(
                     },
                     r,
                     measurer,
-                    r.host_theme.foreground.unwrap_or(INK),
+                    r.host_theme
+                        .foreground
+                        .map(crate::color::Paint::resolve)
+                        .unwrap_or(INK),
                 )?)
             } else {
                 None
@@ -238,9 +262,9 @@ fn measure_axes(
 }
 // [left, right, top, bottom]. Monotonic margins avoid tick-count oscillation.
 fn margins(
-    axes: &BTreeMap<ScaleId, ResolvedAxis>,
-    labels: &BTreeMap<ScaleId, Vec<Label>>,
-    titles: &BTreeMap<ScaleId, super::text::Block>,
+    axes: &BTreeMap<GuideId, ResolvedGuide>,
+    labels: &BTreeMap<GuideId, Vec<Label>>,
+    titles: &BTreeMap<GuideId, super::text::Block>,
     r: &LayoutRequest,
     mut m: [f64; 4],
 ) -> [f64; 4] {
@@ -265,7 +289,14 @@ fn margins(
                         t.bounds.width()
                     }
             });
-            m[side] = m[side].max(r.padding + r.tick_length + r.label_gap + size + title);
+            let outward = match a.spec.side {
+                AxisSide::Left => -a.spec.translation[0],
+                AxisSide::Right => a.spec.translation[0],
+                AxisSide::Top => -a.spec.translation[1],
+                AxisSide::Bottom => a.spec.translation[1],
+            };
+            m[side] = m[side]
+                .max(r.padding + r.tick_length + r.label_gap + size + title + outward.max(0.));
             if a.spec.side.horizontal() {
                 m[0] = m[0].max(r.padding + w / 2.);
                 m[1] = m[1].max(r.padding + w / 2.);
@@ -346,8 +377,9 @@ fn overlaps(a: Rect, b: Rect, gap: f64) -> bool {
         && b.origin().y() < a.max_y() + gap
 }
 fn guides(
-    axes: &mut BTreeMap<ScaleId, ResolvedAxis>,
-    labels: &BTreeMap<ScaleId, Vec<Label>>,
+    scales: &BTreeMap<ScaleId, ResolvedAxis>,
+    axes: &mut BTreeMap<GuideId, ResolvedGuide>,
+    labels: &BTreeMap<GuideId, Vec<Label>>,
     p: Rect,
     r: &LayoutRequest,
     out: &mut Output,
@@ -358,6 +390,12 @@ fn guides(
         if !a.spec.visible {
             continue;
         }
+        let p = Rect::new(
+            p.origin().x() + a.spec.translation[0],
+            p.origin().y() + a.spec.translation[1],
+            p.width(),
+            p.height(),
+        )?;
         let (from, to) = match a.spec.side {
             AxisSide::Bottom => (
                 Point::new(p.origin().x(), p.max_y())?,
@@ -378,7 +416,11 @@ fn guides(
                     from,
                     to,
                     stroke: Stroke {
-                        color: r.host_theme.foreground.unwrap_or(INK),
+                        color: r
+                            .host_theme
+                            .foreground
+                            .map(crate::color::Paint::resolve)
+                            .unwrap_or(INK),
                         width: 1.,
                     },
                 },
@@ -396,14 +438,17 @@ fn guides(
                 l.tick.position >= p.origin().y() && l.tick.position <= p.max_y()
             };
             if !along
-                || !inside(bounds, r.bounds)
-                || placed.iter().any(|b| overlaps(bounds, *b, r.label_gap))
-                || !seen.insert(l.tick.label.clone())
+                || !l.tick.label.is_empty()
+                    && (!inside(bounds, r.bounds)
+                        || placed.iter().any(|b| overlaps(bounds, *b, r.label_gap))
+                        || !seen.insert(l.tick.label.clone()))
             {
                 pressure = true;
                 continue;
             }
-            placed.push(bounds);
+            if !l.tick.label.is_empty() {
+                placed.push(bounds);
+            }
             a.ticks.push(l.tick.clone());
             out.push(
                 SceneItem {
@@ -413,7 +458,11 @@ fn guides(
                         from,
                         to,
                         stroke: Stroke {
-                            color: r.host_theme.foreground.unwrap_or(INK),
+                            color: r
+                                .host_theme
+                                .foreground
+                                .map(crate::color::Paint::resolve)
+                                .unwrap_or(INK),
                             width: 1.,
                         },
                     },
@@ -421,6 +470,9 @@ fn guides(
                 vec![],
                 r,
             )?;
+            if l.tick.label.is_empty() {
+                continue;
+            }
             if let Some(block) = &l.rich {
                 for item in block.items_at(bounds.origin().x(), bounds.origin().y(), r.bounds)? {
                     out.push(item, vec![], r)?;
@@ -435,7 +487,11 @@ fn guides(
                             text: l.tick.label.clone(),
                             font: r.font.id,
                             font_size: r.font_size,
-                            color: r.host_theme.foreground.unwrap_or(INK),
+                            color: r
+                                .host_theme
+                                .foreground
+                                .map(crate::color::Paint::resolve)
+                                .unwrap_or(INK),
                         },
                     },
                     vec![],
@@ -443,7 +499,8 @@ fn guides(
                 )?;
             }
         }
-        if matches!(&a.scale,ResolvedScale::Band(s) if s.domain().len()>labels[id].len()) {
+        if matches!(&scales[&a.spec.scale].scale,ResolvedScale::Band(s) if s.domain().len()>labels[id].len())
+        {
             pressure = true;
         }
     }
@@ -469,7 +526,11 @@ fn compact(
                     text: text.into(),
                     font: r.font.id,
                     font_size: r.font_size,
-                    color: r.host_theme.foreground.unwrap_or(INK),
+                    color: r
+                        .host_theme
+                        .foreground
+                        .map(crate::color::Paint::resolve)
+                        .unwrap_or(INK),
                 },
             },
             vec![],
@@ -486,11 +547,15 @@ pub fn layout(
     request: &LayoutRequest,
     measurer: &dyn TextMeasurer,
 ) -> ChartResult<LaidOutChart> {
+    super::work::preflight(&prepared, request)?;
     let bounded = super::text::BoundedMeasurer::new(measurer, request.limits)?;
     let measurer = &bounded as &dyn TextMeasurer;
     let mut effective = request.clone();
     if !prepared.definition().axes.is_empty() {
         effective.axes.clone_from(&prepared.definition().axes);
+    }
+    if !prepared.definition().guides.is_empty() {
+        effective.guides.clone_from(&prepared.definition().guides);
     }
     if prepared
         .state()
@@ -562,6 +627,54 @@ fn layout_inner(
         .ok_or_else(|| error(DiagnosticCode::Validation, "No layout panel."))
 }
 
+fn guide_specs(r: &LayoutRequest) -> Vec<GuideSpec> {
+    r.axes
+        .iter()
+        .map(AxisSpec::default_guide)
+        .chain(r.guides.iter().cloned())
+        .collect()
+}
+fn resolve_guides(
+    axes: &BTreeMap<ScaleId, ResolvedAxis>,
+    r: &LayoutRequest,
+) -> ChartResult<BTreeMap<GuideId, ResolvedGuide>> {
+    let mut guides = BTreeMap::new();
+    for axis in axes.values() {
+        let spec = axis.spec.default_guide();
+        guides.insert(
+            spec.id,
+            ResolvedGuide {
+                spec,
+                ticks: axis.ticks.clone(),
+            },
+        );
+    }
+    for spec in &r.guides {
+        let axis = axes
+            .get(&spec.scale)
+            .ok_or_else(|| error(DiagnosticCode::MissingResource, "Guide scale is absent."))?;
+        let mut ticks = super::guide_ticks::resolve(axis, &spec.style, r)?;
+        let offset = spec.translation[usize::from(!spec.side.horizontal())];
+        for tick in &mut ticks {
+            tick.position += offset;
+            if !tick.position.is_finite() {
+                return Err(error(
+                    DiagnosticCode::PrecisionLoss,
+                    "Guide translation exceeds finite positions.",
+                ));
+            }
+        }
+        guides.insert(
+            spec.id,
+            ResolvedGuide {
+                spec: spec.clone(),
+                ticks,
+            },
+        );
+    }
+    Ok(guides)
+}
+
 /// One synchronized four-pass solve. All panels use the maximum required side margins.
 pub(super) fn solve_panels(
     inputs: Vec<(Arc<PreparedChart>, LayoutRequest)>,
@@ -572,8 +685,9 @@ pub(super) fn solve_panels(
         prepared: Arc<PreparedChart>,
         request: LayoutRequest,
         axes: BTreeMap<ScaleId, ResolvedAxis>,
-        labels: BTreeMap<ScaleId, Vec<Label>>,
-        titles: BTreeMap<ScaleId, super::text::Block>,
+        guides: BTreeMap<GuideId, ResolvedGuide>,
+        labels: BTreeMap<GuideId, Vec<Label>>,
+        titles: BTreeMap<GuideId, super::text::Block>,
         plot: Option<Rect>,
         diagnostics: Vec<Diagnostic>,
         passes: usize,
@@ -585,8 +699,8 @@ pub(super) fn solve_panels(
         for side in &mut m {
             *side = side.max(request.padding);
         }
-        let titles = request
-            .axes
+        let specs = guide_specs(&request);
+        let titles = specs
             .iter()
             .filter(|a| a.visible)
             .filter_map(|a| a.title.as_ref().map(|t| (a.id, t)))
@@ -597,7 +711,11 @@ pub(super) fn solve_panels(
                         t,
                         &request,
                         measurer,
-                        request.host_theme.foreground.unwrap_or(INK),
+                        request
+                            .host_theme
+                            .foreground
+                            .map(crate::color::Paint::resolve)
+                            .unwrap_or(INK),
                     )?,
                 ))
             })
@@ -608,6 +726,7 @@ pub(super) fn solve_panels(
             prepared,
             request,
             axes: BTreeMap::new(),
+            guides: BTreeMap::new(),
             labels: BTreeMap::new(),
             plot: None,
             passes: 0,
@@ -619,6 +738,7 @@ pub(super) fn solve_panels(
             w.plot = plot(&w.request, m)?;
             let Some(p) = w.plot else {
                 w.axes.clear();
+                w.guides.clear();
                 continue;
             };
             w.axes = w
@@ -627,9 +747,10 @@ pub(super) fn solve_panels(
                 .iter()
                 .map(|s| Ok((s.id, resolve_axis(&w.prepared, &w.request, s, p)?)))
                 .collect::<ChartResult<_>>()?;
-            w.labels = measure_axes(&w.axes, &w.request, measurer)?;
+            w.guides = resolve_guides(&w.axes, &w.request)?;
+            w.labels = measure_guides(&w.guides, &w.request, measurer)?;
             w.passes = pass + 1;
-            next = margins(&w.axes, &w.labels, &w.titles, &w.request, next);
+            next = margins(&w.guides, &w.labels, &w.titles, &w.request, next);
         }
         if next == m {
             break;
@@ -651,17 +772,18 @@ pub(super) fn solve_panels(
                 crate::grammar::PreparedRows::Source(_) | crate::grammar::PreparedRows::Statistical(_) => !l.marks().is_empty(),
             });
             let status = if output.items.is_empty() || !has_population { LayoutStatus::NoData } else { LayoutStatus::Ready };
-            if guides(&mut w.axes, &w.labels, p, request, &mut output)? {
+            if guides(&w.axes, &mut w.guides, &w.labels, p, request, &mut output)? {
                 w.diagnostics.push(pressure("Overlapping, duplicate or out-of-figure tick labels were deterministically thinned."));
             }
             for (id,title) in &w.titles {
-                let axis=&w.axes[id];
+                let axis=&w.guides[id];
                 let (x,y)=match axis.spec.side {
                     AxisSide::Bottom=>(p.origin().x()+(p.width()-title.bounds.width())/2.,request.bounds.max_y()-request.padding-title.bounds.height()),
                     AxisSide::Top=>(p.origin().x()+(p.width()-title.bounds.width())/2.,request.bounds.origin().y()+request.padding),
                     AxisSide::Left=>(request.bounds.origin().x()+request.padding,p.origin().y()+(p.height()-title.bounds.height())/2.),
                     AxisSide::Right=>(request.bounds.max_x()-request.padding-title.bounds.width(),p.origin().y()+(p.height()-title.bounds.height())/2.),
                 };
+                let (x,y)=(x+axis.spec.translation[0],y+axis.spec.translation[1]);
                 if !inside(Rect::new(x,y,title.bounds.width(),title.bounds.height())?,request.bounds){w.diagnostics.push(pressure("Axis title exceeds its panel and is clipped; logical text is retained."));}
                 for item in title.items_at(x,y,request.bounds)? {output.push(item,vec![],request)?;}
                 w.diagnostics.extend_from_slice(&title.diagnostics);
@@ -669,6 +791,7 @@ pub(super) fn solve_panels(
             (output,status)
         } else {
             w.axes.clear();
+            w.guides.clear();
             let mut output = Output {items: vec![],targets:vec![],omitted:0,interactions:Default::default()};
             compact("Not enough space",request,measurer,&mut output)?;
             w.diagnostics.push(pressure("Bounds and destination text metrics cannot accommodate the minimum useful plot."));
@@ -679,7 +802,10 @@ pub(super) fn solve_panels(
         for label in w.labels.values().flatten(){if let Some(block)=&label.rich {for d in &block.diagnostics {if !w.diagnostics.contains(d){w.diagnostics.push(d.clone());}}}}
         let resources=super::text::resources(&output.items,request)?;
         let scene = Scene::new(stamp,request.units,request.bounds,&output.items,&resources,request.limits)?;
-        Ok(LaidOutChart {paint_themes:BTreeMap::new(),interactions:output.interactions,insets:vec![],prepared:w.prepared,scene,plot:w.plot,axes:w.axes,
+        for (id, axis) in &mut w.axes {
+            if let Some(guide)=w.guides.get(&GuideId::new(id.get())) {axis.ticks.clone_from(&guide.ticks);}
+        }
+        Ok(LaidOutChart {guides:w.guides,paint_themes:BTreeMap::new(),interactions:output.interactions,insets:vec![],prepared:w.prepared,scene,plot:w.plot,axes:w.axes,
             item_panels: vec![None; output.targets.len()], panels: vec![],
             targets:output.targets,diagnostics:w.diagnostics,status,passes:w.passes})
     }).collect()

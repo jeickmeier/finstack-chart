@@ -1,0 +1,159 @@
+   Compiling chart-text v0.1.0 (/workspace/crates/chart-text)
+   Compiling chart-export v0.1.0 (/workspace/crates/chart-export)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2m 08s
+     Running unittests src/lib.rs (target/debug/deps/chart_export-7f9e47aa478ece2e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/actions.rs (target/debug/deps/actions-38cef6628e181798)
+
+running 5 tests
+test portable_controlled_replacements_check_component_fences_and_keep_hover_ephemeral ... ok
+test full_domain_export_clears_named_numeric_and_category_windows ... ok
+test frozen_exports_keep_the_presented_data_while_ingestion_advances_and_resume_releases_it ... ok
+test shared_trace_executes_real_font_annotation_preview_cancel_commit_and_undo ... ok
+test presented_input_trace_preserves_populations_and_typed_windows ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.60s
+
+     Running tests/authoring.rs (target/debug/deps/authoring-c64b719dc2aee4e8)
+
+running 5 tests
+test live_capture_requires_presentation_only_for_presented_basis ... ok
+test repeated_frozen_paints_preserve_scene_and_capture_policy_after_live_commit ... ok
+test ordinary_and_faceted_legends_share_exported_labels_and_source_provenance ... ok
+test presented_current_projection_and_interaction_captures_remain_independent_after_disposal ... ok
+test real_svg_pdf_png_preserve_component_text_geometry_and_physical_size ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.20s
+
+     Running tests/authoring_replay.rs (target/debug/deps/authoring_replay-5fecf591458d455c)
+
+running 1 test
+test primary_runtime_replays_existing_action_and_input_expectations ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.50s
+
+     Running tests/composition.rs (target/debug/deps/composition-e7d0ebca41c9087d)
+
+running 6 tests
+test invalid_resources_themes_furniture_and_dashes_fail_without_paint ... ok
+test rich_shaping_has_independent_advances_real_weights_and_explicit_fallback ... ok
+test theme_cascade_mapped_colors_symbols_and_full_domain_output_contract ... ok
+test furniture_coordinate_spaces_resize_and_bounded_collision_policies ... ok
+test fix12_three_themes_reuse_stat_tables_and_preserve_numerical_geometry ... ok
+test fix13_exact_faces_rich_rotation_inset_vectors_and_real_raster_dimensions ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.06s
+
+     Running tests/extensions.rs (target/debug/deps/extensions-d3c57e4fa0beb863)
+
+running 4 tests
+test custom_native_and_unknown_operation_descriptors_reject_portable_execution ... ok
+test registered_geometry_shares_axes_explicit_guides_hit_values_and_keyboard_order ... ok
+test custom_coordinates_use_resolved_scales_and_reject_wrong_guide_types ... ok
+test portable_vector_output_and_native_only_export_fail_explicitly ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.99s
+
+     Running tests/ggplot_legends.rs (target/debug/deps/ggplot_legends-b05fd6b0ef2f650f)
+
+running 1 test
+test fix_gg01_primary_legend_matrix ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.12s
+
+     Running tests/live_export.rs (target/debug/deps/live_export-f2ac39d3a403eaab)
+
+running 5 tests
+test worker_capture_survives_eighty_atomic_commits_annotation_theme_and_quality_edits ... ok
+test out_of_order_exports_keep_their_own_snapshot_and_success_releases_font_ownership ... ok
+test active_cancellation_and_errors_release_at_safe_boundaries_without_returning_partial_bytes ... ok
+test capacity_pending_cancel_drop_and_disposal_release_inputs_even_with_retained_controls ... ok
+test explicit_interaction_and_full_domain_policies_do_not_change_live_state_or_numeric_population ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.39s
+
+     Running tests/paint.rs (target/debug/deps/paint-e90adf2901a2c70d)
+
+running 2 tests
+test portable_profile_and_live_override_versions_reject_hidden_floating_capabilities ... ok
+test retained_request_metadata_and_publication_keep_authored_space_after_disposal ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.99s
+
+     Running tests/portable.rs (target/debug/deps/portable-ddad7409f5af7996)
+
+running 3 tests
+test binding_profile_is_explicit_and_never_falls_back_on_native_resources ... ok
+test publication_scene_targets_align_with_background_and_mark_items ... ok
+test captured_output_owns_resources_across_updates_and_disposal ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/publication.rs (target/debug/deps/publication-316418abc7fc8f1b)
+
+running 10 tests
+test publication_metrics_use_supplied_face_and_real_kerning ... ok
+test png_straight_alpha_is_not_premultiplied_or_double_composited ... ok
+test fix14_capture_survives_concurrent_data_and_annotation_edits_then_releases ... ok
+test restricted_and_preview_print_only_embedding_obey_permissions ... ok
+test font_permissions_missing_glyphs_and_exact_resource_revisions_fail_with_context ... ok
+test invalid_resources_units_precision_and_raster_budgets_reject_recoverably ... ok
+test plain_text_xml_escaping_curves_and_empty_clips_are_supported ... ok
+test deterministic_preview_and_png_share_the_same_publication_geometry ... ok
+test visible_and_full_domain_keep_bins_members_visibility_and_declared_state ... ok
+test fix13_physical_dimensions_density_font_hash_and_vector_modes ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.67s
+
+     Running tests/scale_calendar.rs (target/debug/deps/scale_calendar-d385bc889116fa02)
+
+running 2 tests
+test calendar_axis_preserves_piecewise_knots_units_and_visible_windows ... ok
+test fold_gap_labels_and_geometry_share_revision_in_v5_publication ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/scale_categorical.rs (target/debug/deps/scale_categorical-b6021ce00b4b9f21)
+
+running 2 tests
+test category_append_matches_fresh_batch_and_retains_prior_export ... ok
+test named_category_axes_preserve_dodge_slots_and_descriptor_versions ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+     Running tests/scale_distributions.rs (target/debug/deps/scale_distributions-4a3c579db896608a)
+
+running 4 tests
+test named_mappings_use_independent_midpoint_radius_opacity_and_width ... ok
+test post_stat_training_and_exact_integer_threshold_keys_reach_the_chart ... ok
+test corrected_shared_quantile_population_matches_fresh_batch_and_ignores_zoom ... ok
+test opacity_multiplies_floating_alpha_before_the_single_paint_boundary ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests/scale_numeric.rs (target/debug/deps/scale_numeric-bcf2d5e341b9db5f)
+
+running 1 test
+test each_numeric_family_executes_through_named_axes_and_retained_publication ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.32s
+
+     Running tests/scale_ticks_format.rs (target/debug/deps/scale_ticks_format-4dd74da98db06238)
+
+running 3 tests
+test invalid_formatter_rejected_before_empty_axis_or_category_publication ... ok
+test raw_log_candidates_survive_label_suppression_and_layout_thinning ... ok
+test inferred_numeric_locale_survives_wire_and_retained_publication ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.88s
+
+   Doc-tests chart_export
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

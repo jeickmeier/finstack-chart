@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "reference": {
+    "name": "d3-path",
+    "version": "3.1.0",
+    "license": "ISC",
+    "source": "https://github.com/d3/d3-path/tree/v3.1.0",
+    "lock_sha256": "bcaf52b90527128695304aabf5a959f0b19445715d4d6ca465a0ea6de8b3187e",
+    "source_files": {
+      "src/index.js": "c8823092b0d809ccc9e931a4de4375c19c5aa24a9c167aef650b94edab50b62d",
+      "src/path.js": "2c2d30e2c5279c8f6f42edc6731a4af029949ec83f47ffb48c3e35d21f877800"
+    },
+    "node": "24.14.0",
+    "timezone": "UTC",
+    "locale": "en-US"
+  },
+  "generator": "tools/reference/node/path.mjs",
+  "generator_sha256": "3b953d8e0f3fcdbdd9e71783f928d12eeb553911eaef42666305ec130c11a497",
+  "case_count": 86,
+  "cases_sha256": "29653538c8310fa276db7b0ebaafb150d1f53ece1f1fb41d7ee28eb282bcabd7",
+  "parity": "OPEN: stored reference inputs; implementation packages own comparisons."
+}

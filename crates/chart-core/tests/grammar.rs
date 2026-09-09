@@ -725,7 +725,8 @@ fn cache_invalidates_on_correction_parameters_and_snapshot_identity() {
         green: 0,
         blue: 0,
         alpha: 255,
-    };
+    }
+    .into();
     assert_eq!(
         compiler
             .prepare(&def, &store.snapshot(), &state, CompileLimits::default())

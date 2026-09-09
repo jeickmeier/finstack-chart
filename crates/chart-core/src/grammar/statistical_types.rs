@@ -223,10 +223,17 @@ impl StatisticalRow {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub enum StatNumeric {
+    /// Expression over generated fields after scale back-transformation.
+    Expression(super::Expression<StatField>),
     /// Typed generated field.
     Field(StatField),
     /// Constant encoding.
     Literal(f64),
+}
+impl From<super::Expression<StatField>> for StatNumeric {
+    fn from(value: super::Expression<StatField>) -> Self {
+        Self::Expression(value)
+    }
 }
 impl From<f64> for StatNumeric {
     fn from(value: f64) -> Self {
@@ -305,6 +312,19 @@ pub struct StackSpec {
     pub order: Vec<GroupValue>,
     /// Normalize each present sign side to unit magnitude.
     pub normalize: bool,
+}
+/// Reference stack position over a tidy group-by-sample table.
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
+pub struct ShapeStackSpec {
+    /// Stable series catalog, including groups absent from an individual sample.
+    pub groups: Vec<GroupValue>,
+    /// Rank policy; explicit permutations address the group catalog.
+    pub order: crate::shape::StackOrder,
+    /// Reference baseline and normalization policy.
+    pub offset: crate::shape::StackOffset,
+    /// Missing-cell treatment, without inventing source targets.
+    pub missing: crate::shape::StackMissing,
 }
 /// Horizontal categorical band-relative slot positioning.
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]

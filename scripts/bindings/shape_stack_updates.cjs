@@ -1,0 +1,18 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),root=path.resolve(__dirname,'../..'),c=require(path.resolve(process.argv[2],'authoring.cjs')),out=path.resolve(process.argv[3]);fs.mkdirSync(path.dirname(out),{recursive:true});
+const records=[],output=new c.Output(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))),options=c.exportOptions(480,260).dpi(72).basis('current'),base=9007199254741000n,orders=['None','Reverse','Ascending','Descending','Appearance','InsideOut'],offsets=['None','Expand','Diverging','Silhouette','Wiggle'];
+function data(rows){return c.Data.columns({x:new Float64Array(rows.map(r=>r[1])),y:new Float64Array(rows.map(r=>r[2])),panel:c.categorical(rows.map(r=>r[3])),group:c.categorical(rows.map(r=>r[4]))},{keys:rows.map(r=>r[0]),name:'live'});}
+function author(rows,order,offset,area,facets,missing){const layer=(area?c.shapeArea():c.bars()).position(c.shapeStack(['a','b','c']).stackOrder(order).stackOffset(offset).stackMissing(missing));let p=c.plot(data(rows)).aes(c.aes().x('x').x2('x').y('y').y2(0).group('group').color('group')).layer(layer).scale(c.colorDiscrete('group').domain(['a','b','c'])).xAxis(c.xAxis().scale(c.scaleLinear().domain(-1,7))).yAxis(c.yAxis().scale(c.scaleLinear().domain(-8,14)));if(facets)p=p.facet(c.facetWrap('panel').order([['A'],['B']]).columns(2));return p.build();}
+for(const [oi,order]of orders.entries())for(const offset of offsets)for(const area of [false,true])for(const facets of [false,true]){
+ const missing=oi%2?'Zero':'Gap';let rows=Array.from({length:6},(_,i)=>['a','b','c'].map((g,j)=>[base+BigInt(i*3+j+1),i,(i+j)%4+1,i<3?'A':'B',g])).flat();const p=author(rows,order,offset,area,facets,missing),chart=p.chart();chart.present(output,options).free();p.free();const old=chart.request(output,options.basis('presented'));let f=old.prepare();const png=f.export('png');f.free();
+ for(let step=0;step<4;step++){
+  let tx=chart.transaction().id(`stack-${step}`);
+  if(step===0){const row=[base+19n,6,4,'B','b'];rows.push(row);const batch=data([row]);tx=tx.append('live',batch);batch.free();}
+  else if(step===1){const row=[base+2n,0,-6,'A','b'];rows[1]=row;const batch=data([row]);tx=tx.upsert('live',batch);batch.free();}
+  else if(step===2){rows.shift();tx=tx.remove('live',[base+1n]);}
+  else{rows=rows.slice(-11);tx=tx.retainCount('live',11);}
+  tx=tx.build();assert.ok('Applied'in chart.commit(tx));tx.free();const saved=old.prepare();assert.deepEqual(saved.export('png'),png);saved.free();const current=chart.request(output,options),freshPlot=author(rows,order,offset,area,facets,missing),fresh=output.request(freshPlot,options);freshPlot.free();const a=current.prepare(),b=fresh.prepare();if(!Buffer.from(a.export('png')).equals(Buffer.from(b.export('png')))){fs.writeFileSync(out+'.actual-scene.json',JSON.stringify(a.scene()));fs.writeFileSync(out+'.fresh-scene.json',JSON.stringify(b.scene()));throw new Error(JSON.stringify([order,offset,area,facets,step]));}for(const targets of a.scene().targets)for(const t of targets)if(t.Source)assert.ok(rows.some(r=>r[0]===BigInt(t.Source.key)));a.free();b.free();current.free();fresh.free();
+ }
+ chart.free();f=old.prepare();assert.deepEqual(f.export('png'),png);f.free();old.free();records.push({order,offset,area,facets,missing,updates:4,batch_png_equal:true,exact_keys:true,old_snapshot_retained:true});
+}
+fs.writeFileSync(out,JSON.stringify(records,null,2)+'\n');console.log('PASS WASM stacks: 480 append/upsert/remove/retention comparisons across all 30 policies, bars/areas, sparse facets, exact keys and retained exports.');

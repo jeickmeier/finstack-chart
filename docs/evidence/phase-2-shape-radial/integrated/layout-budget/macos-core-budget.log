@@ -1,0 +1,14 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 28.77s
+     Running tests/shape_radial_integration.rs (target/shape-native-target/debug/deps/shape_radial_integration-f93f2ee9ce33fcd1)
+
+running 6 tests
+test facet_vertex_budget_counts_shape_commands_and_source_anchors_across_panels ... ok
+test link_endpoint_anchors_retain_one_edge_identity_and_never_create_control_targets ... ok
+test radial_holes_gaps_centers_and_real_source_anchors_are_preserved ... ok
+test generated_radial_edges_accept_literals_and_train_literal_scales_per_prepared_row ... ok
+test projected_shape_budget_is_shared_by_panels_and_insets_before_callbacks ... ok
+test pinned_radial_and_link_paths_flow_through_named_chart_channels ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.48s
+

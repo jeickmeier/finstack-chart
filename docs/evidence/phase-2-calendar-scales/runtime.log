@@ -1,0 +1,57 @@
+RUN core
+aiting for file lock on build directory
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 02s
+     Running tests/scale_calendar.rs (target/debug/deps/scale_calendar-f772cd49125d85ae)
+
+running 8 tests
+test timestamp_clamp_and_omit_precede_integer_precision_conversion ... ok
+test exact_time_units_integer_limits_and_typed_ranges ... ok
+test resource_coverage_wall_resolution_and_invalid_requests_are_explicit ... ok
+test every_fixed_zone_interval_matches_floor_ceil_offset_and_ticks ... ok
+test automatic_fixed_zone_ticks_and_nice_match_all_reference_counts ... ok
+test fixed_zone_time_mapping_and_inverse_match_reference ... ok
+test original_time_scale_inventory_matches_declared_integer_date_overlap ... ok
+test expanded_filtered_intervals_custom_formats_and_utc_day_selection_match ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+
+
+RUN export
+    Blocking waiting for file lock on build directory
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+   Compiling chart-extension-example v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/custom-extension)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 23.78s
+     Running tests/scale_calendar.rs (target/debug/deps/scale_calendar-4b308155db3b3bf4)
+
+running 2 tests
+test calendar_axis_preserves_piecewise_knots_units_and_visible_windows ... ok
+test fold_gap_labels_and_geometry_share_revision_in_v5_publication ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.32s
+
+
+RUN python-build
+   Compiling chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+   Compiling chart-python v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-python)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.20s
+
+RUN python
+PASS SP-06 Python {'intervals': 2750, 'formats': 990, 'automatic': 240, 'mapping': 160} two retained publication fixtures and exact integer lifecycle
+
+RUN wasm-build
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+   Compiling chart-wasm v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-wasm)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.02s
+
+RUN wasm-generate
+
+RUN wasm
+PASS SP-06 WASM { intervals: 2750, formats: 990, automatic: 240, mapping: 160 } two retained publication fixtures and exact bigint lifecycle
+
+PASS SP-06 retained calendar runtime proof /Users/jeickmeier/Projects/finstack-chart/target/scale-time-proof

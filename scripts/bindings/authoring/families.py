@@ -47,15 +47,15 @@ def run(c, root, output, options, write):
                 if name=='family-log-gaps':p=p.y_axis(c.y_axis().scale(c.scale_log(10.)));layer=c.line()
                 elif name=='family-symlog':p=p.y_axis(c.y_axis().scale(c.scale_symlog(2.)));layer=c.points()
                 elif name=='family-point-color':
-                    p=p.x_axis(c.x_axis().scale(c.scale_point().categories(['Alpha','Beta','Gamma']).point_padding(.5))).scale(c.color_discrete('color').domain(['Alpha','Beta','Gamma']).palette([blue,red,missing]).missing(missing)).legend(c.legend().scale('color').untitled())
+                    p=p.x_axis(c.x_axis().scale(c.scale_point().categories(['Alpha','Beta','Gamma']).point_padding(.5))).scale(c.color_discrete('color').domain(['Alpha','Beta','Gamma']).palette([blue,red,missing]).missing(missing)).legend(c.legend().scale('color').generic_title())
                     layer=c.points().aes(c.aes().color('field_1').color_scale('color'))
                 elif name=='family-area':layer=c.area().baseline(0.)
                 elif name=='family-ribbon':layer=c.ribbon().aes(c.aes().y2('field_3'))
                 elif name=='family-heatmap':
-                    p=p.scale(c.color_continuous('color',0.,5.).palette([blue,red]).clamp(True).missing(missing)).legend(c.legend().scale('color').untitled())
+                    p=p.scale(c.color_continuous('color',0.,5.).palette([blue,red]).clamp(True).missing(missing)).legend(c.legend().scale('color').generic_title())
                     layer=c.cells().aes(c.aes().x2('field_3').y2('field_4').color('field_5').color_scale('color'))
                 elif name in ('family-grouped-bars','family-stacked-bars'):
-                    p=p.aes(c.aes().y('y').y2(0.).group('group')).scale(c.color_discrete('color').palette([blue,red,missing]).missing(missing)).legend(c.legend().scale('color').untitled())
+                    p=p.aes(c.aes().y('y').y2(0.).group('group')).scale(c.color_discrete('color').palette([blue,red,missing]).missing(missing)).legend(c.legend().scale('color').generic_title())
                     layer=(c.rectangle().aes(c.aes().x('category').x2('category')).position(c.dodge([0,1,2]).width(.9)) if name=='family-grouped-bars' else c.rectangle().aes(c.aes().x(0.).x2(1.)).position(c.stack([0,1,2,3])))
                     layer=layer.color_group('color').color(gray)
                 elif name=='family-ohlc-volume':

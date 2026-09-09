@@ -1,0 +1,122 @@
+mise WARN  failed to write cache file: /Users/jeickmeier/Library/Caches/mise/protoc/35.1/bin_paths-a7857.msgpack.z Operation not permitted (os error 1)
+mise WARN  failed to write cache file: /Users/jeickmeier/Library/Caches/mise/watchexec/2.5.1/bin_paths-a7857.msgpack.z Operation not permitted (os error 1)
+[check] $ python3 scripts/check_repository.py
+PASS: workspace edges, host isolation, single pinned GPUI identity, optional Kit and local Markdown file links.
+Core/export isolation targets: aarch64-apple-darwin, x86_64-unknown-linux-gnu, wasm32-unknown-unknown
+Scope: default resolved features; graph checks are not target execution. External links/anchors and unlisted host packages need review.
+licenses ok, sources ok
+   Compiling serde_json v1.0.151
+   Compiling schemars v1.2.2
+   Compiling gpui-pre-http-client v0.3.3
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling gpui-pre-shared-string v0.3.3
+   Compiling gpui-pre v0.3.3
+   Compiling chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+   Compiling chart-extension-example v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/custom-extension)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+   Compiling gpui-pre-apple v0.3.3
+   Compiling gpui-charts v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts)
+   Compiling gpui-pre-macos v0.3.3
+   Compiling gpui-pre-platform v0.3.3
+   Compiling chart-gallery v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/chart-gallery)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 11.51s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+   Compiling schemars v1.2.2
+   Compiling gpui-pre-http-client v0.3.3
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling lsp-types v0.97.0
+   Compiling gpui-pre-reqwest-client v0.3.3
+   Compiling gpui-pre-shared-string v0.3.3
+   Compiling gpui-pre v0.3.3
+   Compiling chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+   Compiling chart-extension-example v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/custom-extension)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+   Compiling gpui-pre-apple v0.3.3
+   Compiling gpui-kit-assets v0.6.0
+   Compiling gpui-charts v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts)
+   Compiling gpui-pre-macos v0.3.3
+   Compiling gpui-pre-platform v0.3.3
+   Compiling gpui-base v0.6.0
+   Compiling gpui-component v0.6.0
+   Compiling gpui-kit v0.6.0
+   Compiling gpui-charts-kit v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts-kit)
+   Compiling chart-gallery v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/chart-gallery)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 27.84s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+    Blocking waiting for file lock on build directory
+   Compiling chart-gallery v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/chart-gallery)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 50.92s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+    Checking gpui-pre-http-client v0.3.3
+    Checking schemars v1.2.2
+    Checking chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Checking lsp-types v0.97.0
+    Checking gpui-pre-reqwest-client v0.3.3
+    Checking gpui-pre-shared-string v0.3.3
+    Checking gpui-pre v0.3.3
+    Checking chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+    Checking chart-extension-example v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/custom-extension)
+    Checking chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Checking gpui-pre-apple v0.3.3
+    Checking gpui-kit-assets v0.6.0
+    Checking gpui-charts v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts)
+    Checking gpui-pre-macos v0.3.3
+    Checking gpui-pre-platform v0.3.3
+    Checking gpui-base v0.6.0
+    Checking gpui-component v0.6.0
+    Checking gpui-kit v0.6.0
+    Checking gpui-charts-kit v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts-kit)
+    Checking chart-gallery v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/chart-gallery)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 24.75s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+    Blocking waiting for file lock on build directory
+    Checking pyo3-ffi v0.29.2
+    Checking chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Checking pyo3 v0.29.2
+    Checking chart-python v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-python)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 7.00s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+    Blocking waiting for file lock on build directory
+    Checking chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling chart-python v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-python)
+    Checking chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+    Checking chart-extension-example v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/custom-extension)
+    Checking chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Checking gpui-charts v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts)
+    Checking gpui-charts-kit v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts-kit)
+    Checking chart-gallery v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/chart-gallery)
+    Checking chart-wasm v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-wasm)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 31.49s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+    Checking gpui-pre v0.3.3
+ Documenting chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+ Documenting chart-extension-example v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/custom-extension)
+ Documenting chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+ Documenting chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+ Documenting chart-python v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-python)
+ Documenting chart-wasm v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-wasm)
+    Checking gpui-pre-apple v0.3.3
+    Checking gpui-kit-assets v0.6.0
+    Checking gpui-charts v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts)
+ Documenting gpui-charts v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts)
+    Checking gpui-pre-macos v0.3.3
+    Checking gpui-pre-platform v0.3.3
+    Checking gpui-base v0.6.0
+ Documenting chart-gallery v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/chart-gallery)
+    Checking gpui-component v0.6.0
+    Checking gpui-kit v0.6.0
+ Documenting gpui-charts-kit v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts-kit)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 18.53s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+   Generated /Users/jeickmeier/Projects/finstack-chart/target/doc/chart_core/index.html and 8 other files
+    Blocking waiting for file lock on build directory
+    Checking serde_json v1.0.151
+    Checking chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.86s

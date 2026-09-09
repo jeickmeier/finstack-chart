@@ -200,11 +200,11 @@ impl LinearScale {
             OutsidePolicy::Clamp => value.clamp(self.view.minimum(), self.view.maximum()),
             _ => value,
         };
-        Ok(Some(interpolate(self.range, fraction(self.view, value)?)?))
+        super::numeric::legacy_map(self.view, self.range, value).map(Some)
     }
     /// Invert a finite destination coordinate; extrapolation is explicit and unclamped.
     pub fn invert(&self, position: f64) -> ChartResult<f64> {
-        interpolate(self.view, fraction(self.range, position)?)
+        super::numeric::legacy_map(self.range, self.view, position)
     }
     /// Bounded 1/2/5 ticks in visible-domain order, with unique round-trip-safe labels.
     pub fn ticks(&self, target: usize, max_ticks: usize) -> ChartResult<Vec<NumericTick>> {
@@ -301,7 +301,11 @@ pub(crate) fn tick_step(bounds: Bounds, target: usize) -> ChartResult<f64> {
         ))
     }
 }
-fn numeric_ticks(bounds: Bounds, target: usize, max_ticks: usize) -> ChartResult<Vec<NumericTick>> {
+pub(super) fn numeric_ticks(
+    bounds: Bounds,
+    target: usize,
+    max_ticks: usize,
+) -> ChartResult<Vec<NumericTick>> {
     if max_ticks == 0 || max_ticks > 4096 {
         return Err(error(
             DiagnosticCode::ResourceLimit,

@@ -1,0 +1,32 @@
+Analysis of sampling build-script-build (pid 85048) every 1 millisecond
+Process:         build-script-build [85048]
+Path:            /Users/USER/*/build-script-build
+Load Address:    0x100654000
+Identifier:      build-script-build
+Version:         ???
+Code Type:       ARM64
+Parent Process:  cargo [85009]
+Target Type:     live task
+
+Date/Time:       2026-09-09 01:27:03.743 -0400
+Launch Time:     2026-09-09 01:23:21.706 -0400
+OS Version:      macOS 26.5.2 (25F84)
+Report Version:  7
+Analysis Tool:   /usr/bin/sample
+
+Physical footprint:         96K
+Physical footprint (peak):  96K
+Idle exit:                  untracked
+----
+
+Call graph:
+    805 Thread_260279165: Main Thread   DispatchQueue_<multiple>
+      805 _dyld_start  (in dyld) + 0  [0x100ae09c0]
+
+Total number in stack (recursive counted multiple, when >=5):
+
+Sort by top of stack, same collapsed (when >= 5):
+        _dyld_start  (in dyld)        805
+
+Binary images description not available
+

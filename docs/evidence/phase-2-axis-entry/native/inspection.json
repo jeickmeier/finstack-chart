@@ -1,0 +1,11 @@
+{
+  "accepted": true,
+  "scope": "AXIS-01 independent guides on the existing legacy profile; provider and complete D3 profile remain open",
+  "observations": "Three source points and line align with top/lower guide values 2,5,8. The third guide is visibly translated right by 15 logical pixels and down by 32; all labels and rules fit without collisions or clipping. Actual AppPaint recorded three paints and one layout.",
+  "sha256": {
+    "examples/common/axis_guide_fixtures.rs": "05db58394978f40a9fd20af7e7e11ea347ac58b41a7e0dfd09c49f9d4a4a043b",
+    "examples/chart-gallery/examples/axis_guides.rs": "9787daab8d6cfd9a6b280d3e1887e9f872386732154a794ff98bd80f7519f6a4",
+    "target/shape-native-target/AxisGuidesProof.app/Contents/MacOS/axis_guides": "20f3282e38af093dd9e6ab7065393dc203eaf9ed11ee275695cf77016b334f83"
+  },
+  "engine_source_snapshot": "docs/evidence/phase-2-shape-acceptance/integrated/source-sha256.json"
+}

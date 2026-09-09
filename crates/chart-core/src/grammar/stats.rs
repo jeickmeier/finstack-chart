@@ -81,7 +81,48 @@ pub(crate) fn validate_filters(filters: &[SourceFilter], limits: CompileLimits) 
     Ok(())
 }
 pub(crate) fn numeric_space(data: &DatasetSnapshot, value: &Numeric) -> ChartResult<ValueSpace> {
+    if let Numeric::Scaled { input, scale } = value {
+        let mut cursor = value;
+        let mut depth = 0;
+        while let Numeric::Scaled { input, .. } = cursor {
+            depth += 1;
+            cursor = input;
+        }
+        if depth > 64 {
+            return Err(error(
+                DiagnosticCode::ResourceLimit,
+                "Numeric scale-stage nesting exceeds 64 operations.",
+            ));
+        }
+        scale.validate()?;
+        return Ok(scale.space(numeric_space(data, input)?));
+    }
     let (id, timestamp) = match value {
+        Numeric::Expression(expr) => {
+            if expr
+                .nodes
+                .len()
+                .checked_mul(data.len().max(1))
+                .is_none_or(|n| n > ExpressionLimits::default().max_cells)
+            {
+                return Err(error(
+                    DiagnosticCode::ResourceLimit,
+                    "Source expression population budget exceeded.",
+                ));
+            }
+            if expr.validate(ExpressionLimits::default(), |r| {
+                numeric_space(data, &r.numeric())?;
+                Ok(ExpressionType::Number)
+            })? != ExpressionType::Number
+            {
+                return Err(error(
+                    DiagnosticCode::SchemaConflict,
+                    "Source numeric mapping requires a numeric expression.",
+                ));
+            }
+            return Ok(ValueSpace::Data);
+        }
+        Numeric::Scaled { .. } => unreachable!("handled above"),
         Numeric::Literal(v) => {
             return if v.is_finite() {
                 Ok(ValueSpace::Data)
@@ -120,6 +161,30 @@ pub(crate) fn numeric_space(data: &DatasetSnapshot, value: &Numeric) -> ChartRes
     }
 }
 pub(crate) fn validate_group(data: &DatasetSnapshot, group: &Grouping) -> ChartResult<()> {
+    if let Grouping::Interaction(fields) = group {
+        if fields.is_empty()
+            || fields.len() > 64
+            || fields
+                .iter()
+                .collect::<std::collections::BTreeSet<_>>()
+                .len()
+                != fields.len()
+        {
+            return Err(error(
+                DiagnosticCode::ResourceLimit,
+                "Group interactions require 1–64 distinct source fields.",
+            ));
+        }
+        for field in fields {
+            let (_, schema) = data
+                .schema()
+                .field(*field)
+                .ok_or_else(|| field_error(*field, "Grouping field is absent."))?;
+            if !matches!(schema.kind, FieldKind::Float64 | FieldKind::Timestamp(_)) {
+                validate_group(data, &Grouping::Field(*field))?;
+            }
+        }
+    }
     if let Grouping::Field(id) = group {
         let (_, field) = data
             .schema()
@@ -148,6 +213,21 @@ fn field_error(id: FieldId, message: &str) -> Diagnostic {
 }
 pub(crate) fn number(row: RowView<'_>, value: &Numeric) -> Option<f64> {
     let value = match value {
+        Numeric::Expression(expr) => expr
+            .evaluate(
+                1,
+                ExpressionLimits::default(),
+                |_| Ok(ExpressionType::Number),
+                |r, _| {
+                    number(row, &r.numeric()).map_or(
+                        ExpressionValue::Missing(ExpressionType::Number),
+                        ExpressionValue::Number,
+                    )
+                },
+            )
+            .ok()
+            .and_then(|v| v[0].number()),
+        Numeric::Scaled { input, scale } => number(row, input).and_then(|v| scale.project(v)),
         Numeric::Category(_) => None,
         Numeric::Literal(v) => Some(*v),
         Numeric::Field(id) => match row.value(*id)? {
@@ -173,6 +253,24 @@ pub(crate) fn filter_matches(row: RowView<'_>, filter: &SourceFilter) -> Option<
 }
 pub(crate) fn group_value(row: RowView<'_>, group: &Grouping) -> Option<GroupValue> {
     match group {
+        Grouping::Interaction(fields) => Some(GroupValue::Interaction(
+            fields
+                .iter()
+                .map(|field| {
+                    (
+                        *field,
+                        match row.value(*field) {
+                            Some(ValueRef::Float64(v)) => {
+                                GroupNumber::try_from(v).ok().map(GroupValue::Number)
+                            }
+                            Some(ValueRef::Timestamp(v)) => Some(GroupValue::Int(v)),
+                            _ => group_value(row, &Grouping::Field(*field)),
+                        }
+                        .unwrap_or(GroupValue::Missing),
+                    )
+                })
+                .collect(),
+        )),
         Grouping::All => Some(GroupValue::All),
         Grouping::Field(id) => match row.value(*id)? {
             ValueRef::Category(v) | ValueRef::Utf8(v) => Some(GroupValue::Text(v.into())),

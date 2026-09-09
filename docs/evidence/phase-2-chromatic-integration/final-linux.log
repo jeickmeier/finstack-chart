@@ -1,0 +1,188 @@
+RUN core
+ ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.33s
+
+     Running tests/chromatic_integration.rs (target/debug/deps/chromatic_integration-08b83e935b7118bf)
+
+running 7 tests
+test equal_endpoint_swatches_do_not_erase_reversed_ramp_identity ... ok
+test asymmetric_normalization_reversal_missing_and_guide_identity ... ok
+test nonfinite_named_ordinal_keys_are_missing_and_do_not_shift_training ... ok
+test palette_reconfiguration_reuses_tables_and_matches_fresh_preparation ... ok
+test palette_metadata_checked_and_v1_v6_ingestion_is_strict ... ok
+test every_named_scale_composition_matches_pinned_reference ... ok
+test exceptional_normalized_parameters_preserve_valid_reference_colors ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/color_parity.rs (target/debug/deps/color_parity-eb7b828b7de6c2c2)
+
+running 3 tests
+test independent_color_math_and_quantization_preserve_floating_information ... ok
+test color_descriptors_parser_budgets_and_channel_names_reject_malformed_inputs ... ok
+test complete_color_oracle_covers_all_constructors_and_inherited_operations ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests/interpolate_color.rs (target/debug/deps/interpolate_color-7b4857376314861f)
+
+running 2 tests
+test floating_channels_opacity_hue_and_splines_keep_their_contracts ... ok
+test every_color_export_gamma_and_hue_matches_offline_reference ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/reference_inventory.rs (target/debug/deps/reference_inventory-d01b49fab52b5066)
+
+running 2 tests
+test complete_reference_inventory_retains_owners_and_independent_seed_expectations ... ok
+test chromatic_reference_inventory_retains_every_export_size_and_sample ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+
+
+RUN python-build
+   Compiling target-lexicon v0.13.5
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+   Compiling pyo3-build-config v0.29.2
+   Compiling pyo3-ffi v0.29.2
+   Compiling pyo3 v0.29.2
+   Compiling chart-python v0.1.0 (/workspace/crates/chart-python)
+   Compiling chart-text v0.1.0 (/workspace/crates/chart-text)
+   Compiling chart-extension-example v0.1.0 (/workspace/examples/custom-extension)
+   Compiling chart-export v0.1.0 (/workspace/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 15.99s
+
+RUN color
+PASS FIX-C01 Python: 351 cases, every constructor/method, exceptional tags, copies, strict descriptors and disposal.
+
+RUN interpolate
+PASS FIX-I01 Python: 370 value/configuration cases, 36 browser transform cases, owned samples, descriptors and disposal.
+
+RUN chromatic
+PASS CP-04 Python: 218 exact scheme arrays and 160666 ramp rows, catalog metadata, reversal, invalid inputs, copies and disposal.
+
+RUN chromatic_composition
+PASS FIX-21 Python: 90 composed mappings / 1268 exact scene colors across all sequential/diverging/rank/classifier families.
+PASS FIX-21 Python: editorial/terminal/grayscale preserve canonical evaluation and convert both marks and guide swatches.
+
+RUN chromatic_transformed
+PASS FIX-21 Python: 304 exceptional normalization cases; valid reference colors and twelve explicit undefined-color diagnostics.
+
+RUN chromatic_gallery
+PASS FIX-21 Python: five independently authored v6 catalog figures, retained SVG/PDF/PNG.
+PASS CP-04 Python: non-finite numeric categories retain missing paint and do not shift named palette training.
+
+RUN chromatic_updates
+PASS CP-05 Python: twenty-four append/upsert/remove/retention steps match fresh batch PNG; exact uint64 categories and old captures survive.
+
+RUN export
+   Compiling chart-text v0.1.0 (/workspace/crates/chart-text)
+   Compiling chart-export v0.1.0 (/workspace/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.97s
+     Running `target/debug/examples/chromatic_proof /workspace/target/chromatic-linux-primary/rust`
+PASS FIX-21: five v6 chromatic figures and immutable SVG/PDF/PNG publication.
+
+RUN wasm-build
+   Compiling serde_core v1.0.229
+   Compiling rustversion v1.0.23
+   Compiling wasm-bindgen v0.2.128
+   Compiling serde_json v1.0.151
+   Compiling serde v1.0.229
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+   Compiling chart-text v0.1.0 (/workspace/crates/chart-text)
+   Compiling chart-extension-example v0.1.0 (/workspace/examples/custom-extension)
+   Compiling chart-export v0.1.0 (/workspace/crates/chart-export)
+   Compiling chart-wasm v0.1.0 (/workspace/crates/chart-wasm)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 11.06s
+
+RUN benchmark
+ "ns_min": 21.66916,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Rainbow",
+      "kernel": "prepare",
+      "timing": {
+        "ns_max": 8.885,
+        "ns_median": 8.7175,
+        "ns_min": 8.37584,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Rainbow",
+      "kernel": "evaluate",
+      "timing": {
+        "ns_max": 15.98416,
+        "ns_median": 15.79084,
+        "ns_min": 15.60418,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Sinebow",
+      "kernel": "prepare",
+      "timing": {
+        "ns_max": 8.73918,
+        "ns_median": 8.55416,
+        "ns_min": 8.34916,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Sinebow",
+      "kernel": "evaluate",
+      "timing": {
+        "ns_max": 16.31334,
+        "ns_median": 15.83668,
+        "ns_min": 15.58332,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "palette_only_prepare",
+      "rows": 1000,
+      "statistics_reused": true,
+      "timing": {
+        "ns_max": 176454.1,
+        "ns_median": 165441.7,
+        "ns_min": 163866.7,
+        "operations_per_sample": 10,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "palette_only_prepare",
+      "rows": 10000,
+      "statistics_reused": true,
+      "timing": {
+        "ns_max": 1704741.6,
+        "ns_median": 1612225.0,
+        "ns_min": 1575595.9,
+        "operations_per_sample": 10,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "palette_only_prepare",
+      "rows": 100000,
+      "statistics_reused": true,
+      "timing": {
+        "ns_max": 25209620.8,
+        "ns_median": 24870004.2,
+        "ns_min": 23488375.0,
+        "operations_per_sample": 10,
+        "samples": 7
+      }
+    }
+  ],
+  "method": "one warmup and seven samples; precompiled output sampling; inputs excluded",
+  "profile": "release"
+}
+

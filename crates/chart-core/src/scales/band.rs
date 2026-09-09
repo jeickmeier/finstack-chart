@@ -29,10 +29,7 @@ pub struct BandScale {
     labels: Vec<String>,
     window: std::ops::Range<usize>,
     index: BTreeMap<String, usize>,
-    range: Bounds,
-    inner: f64,
-    outer: f64,
-    denominator: f64,
+    spacing: super::spacing::Spacing,
 }
 impl BandScale {
     /// Resolve explicit order or stable first-seen order; unknown explicit-domain labels do
@@ -60,14 +57,19 @@ impl BandScale {
                 "Band domain labels must be unique.",
             ));
         }
-        let denominator =
-            (labels.len() as f64 - options.inner_padding + 2. * options.outer_padding).max(1.);
-        if !denominator.is_finite() {
-            return Err(error(
-                DiagnosticCode::PrecisionLoss,
-                "Band padding cannot preserve finite extents.",
-            ));
-        }
+        let spacing = super::spacing::Spacing::new(
+            labels.len(),
+            range,
+            &super::BandSpec::<String> {
+                domain: None,
+                padding_inner: options.inner_padding,
+                padding_outer: options.outer_padding,
+                align: 0.5,
+                round: false,
+            },
+            super::ScaleCompatibility::Legacy,
+            false,
+        )?;
         Ok(Self {
             labels: labels.to_vec(),
             window: 0..labels.len(),
@@ -76,11 +78,51 @@ impl BandScale {
                 .enumerate()
                 .map(|(i, s)| (s.clone(), i))
                 .collect(),
-            range,
-            inner: options.inner_padding,
-            outer: options.outer_padding,
-            denominator,
+            spacing,
         })
+    }
+    /// Resolve D3 spacing while preserving the chart's stable source-category catalog.
+    pub fn resolve_d3(
+        first_seen: &[String],
+        options: &super::BandSpec,
+        range: Bounds,
+    ) -> ChartResult<Self> {
+        let prepared = super::CategoryScale::band(
+            super::BandSpec {
+                domain: Some(options.domain.as_deref().unwrap_or(first_seen).to_vec()),
+                ..options.clone()
+            },
+            range,
+        )?;
+        let labels = prepared.domain().to_vec();
+        Ok(Self {
+            index: labels
+                .iter()
+                .enumerate()
+                .map(|(i, k)| (k.clone(), i))
+                .collect(),
+            window: 0..labels.len(),
+            spacing: super::spacing::Spacing::new(
+                labels.len(),
+                range,
+                prepared.spec(),
+                super::ScaleCompatibility::D3,
+                false,
+            )?,
+            labels,
+        })
+    }
+    /// Nonnegative interval between neighboring band starts.
+    pub fn step(&self) -> f64 {
+        self.spacing.step()
+    }
+    /// Nonnegative band width, including zero-width D3 bands.
+    pub fn bandwidth(&self) -> f64 {
+        self.spacing.bandwidth()
+    }
+    /// Lower band start, independent of range orientation.
+    pub fn start(&self, label: &str) -> ChartResult<Option<f64>> {
+        self.extent(label).map(|e| e.map(Bounds::minimum))
     }
     /// Explicit resolved category order, including absent labels retained in the domain.
     pub fn domain(&self) -> &[String] {
@@ -93,12 +135,12 @@ impl BandScale {
     /// Restrict presentation to an inclusive stable-label window without changing training.
     pub fn with_window(mut self, first: &str, last: &str) -> ChartResult<Self> {
         self.window = super::category_window(&self.labels, first, last)?;
-        self.denominator = (self.window.len() as f64 - self.inner + 2. * self.outer).max(1.);
+        self.spacing = self.spacing.resize(self.window.len())?;
         Ok(self)
     }
     /// Authored destination range, including descending direction.
     pub fn range(&self) -> Bounds {
-        self.range
+        self.spacing.range
     }
     /// Categorical lookup is available; a continuous numeric inverse is not.
     pub fn capabilities(&self) -> ScaleCapabilities {
@@ -116,10 +158,7 @@ impl BandScale {
             return Ok(None);
         }
         let i = i - self.window.start;
-        Ok(Some(super::linear::interpolate(
-            self.range,
-            (self.outer + i as f64 + (1. - self.inner) * 0.5) / self.denominator,
-        )?))
+        self.spacing.center(i).map(Some)
     }
     /// Oriented destination edges of a band; widths are not fabricated for absent labels.
     pub fn extent(&self, label: &str) -> ChartResult<Option<Bounds>> {
@@ -130,43 +169,13 @@ impl BandScale {
             return Ok(None);
         }
         let i = i - self.window.start;
-        let a = (self.outer + i as f64) / self.denominator;
-        let b = (self.outer + i as f64 + 1. - self.inner) / self.denominator;
-        Ok(Some(Bounds::new(
-            super::linear::interpolate(self.range, a)?,
-            super::linear::interpolate(self.range, b)?,
-        )?))
+        self.spacing.extent(i).map(Some)
     }
     /// Locate a band containing a destination position; gaps/outside positions yield `None`.
     pub fn category_at(&self, position: f64) -> ChartResult<Option<&str>> {
-        if !position.is_finite() {
-            return Err(error(
-                DiagnosticCode::NumericalDomain,
-                "Category lookup needs a finite position.",
-            ));
-        }
-        if !self.range.contains(position) {
-            return Ok(None);
-        }
-        let slot = super::linear::fraction(self.range, position)? * self.denominator - self.outer;
-        if slot < 0. {
-            return Ok(None);
-        }
-        let i = slot.floor() as usize;
-        if i >= self.window.len() {
-            // Include the last band's closed far edge, including a descending range.
-            if let Some(last) = self.visible_domain().last()
-                && self
-                    .extent(last)?
-                    .is_some_and(|extent| position == extent.end())
-            {
-                return Ok(Some(last));
-            }
-            return Ok(None);
-        }
-        if slot - i as f64 > 1. - self.inner {
-            return Ok(None);
-        }
-        Ok(Some(&self.labels[self.window.start + i]))
+        Ok(self
+            .spacing
+            .band_at(position)?
+            .map(|i| self.labels[self.window.start + i].as_str()))
     }
 }

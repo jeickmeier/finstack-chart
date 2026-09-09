@@ -1,0 +1,41 @@
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_foundation.py /workspace/target/shape-acceptance/python-module /workspace/target/shape-acceptance/proofs/foundation
+PASS shape_foundation
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_cartesian.py /workspace/target/shape-acceptance/python-module
+PASS shape_cartesian
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_arc_pie.py /workspace/target/shape-acceptance/python-module
+PASS shape_arc_pie
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_symbol.py /workspace/target/shape-acceptance/python-module
+PASS shape_symbol
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_stack.py /workspace/target/shape-acceptance/python-module
+PASS shape_stack
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_radial.py /workspace/target/shape-acceptance/python-module
+PASS shape_radial
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_custom.py /workspace/target/shape-acceptance/python-module
+PASS shape_custom
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_dashes.py /workspace/target/shape-acceptance/python-module
+PASS shape_dashes
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_projection_budget.py /workspace/target/shape-acceptance/python-module
+PASS shape_projection_budget
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_cartesian_interaction.py /workspace/target/shape-acceptance/python-module
+PASS shape_cartesian_interaction
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_cartesian_updates.py /workspace/target/shape-acceptance/python-module /workspace/target/shape-acceptance/proofs/cartesian-updates.json
+PASS shape_cartesian_updates
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_arc_interaction.py /workspace/target/shape-acceptance/python-module
+PASS shape_arc_interaction
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_arc_updates.py /workspace/target/shape-acceptance/python-module /workspace/target/shape-acceptance/proofs/arc-updates.json
+PASS shape_arc_updates
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_symbol_interaction.py /workspace/target/shape-acceptance/python-module
+PASS shape_symbol_interaction
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_symbol_updates.py /workspace/target/shape-acceptance/python-module /workspace/target/shape-acceptance/proofs/symbol-updates.json
+PASS shape_symbol_updates
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_stack_interaction.py /workspace/target/shape-acceptance/python-module
+PASS shape_stack_interaction
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_stack_updates.py /workspace/target/shape-acceptance/python-module /workspace/target/shape-acceptance/proofs/stack-updates.json
+PASS shape_stack_updates
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_radial_interaction.py /workspace/target/shape-acceptance/python-module
+PASS shape_radial_interaction
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_radial_updates.py /workspace/target/shape-acceptance/python-module /workspace/target/shape-acceptance/proofs/radial-updates.json
+PASS shape_radial_updates
+RUN /usr/bin/python3 /workspace/scripts/bindings/shape_custom_updates.py /workspace/target/shape-acceptance/python-module /workspace/target/shape-acceptance/proofs/custom-updates.json
+PASS shape_custom_updates
+PASS FIX-S01-09 actual python shape corpus, interactions, updates and retained ownership; visual/native qualification is separate.

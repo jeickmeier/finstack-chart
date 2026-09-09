@@ -7,7 +7,7 @@ use std::sync::Arc;
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ChartEnvelope {
-    /// Supported schema version (1).
+    /// Minimum retained capability version: legacy 1, paths 2, stages 3, floating paint 4, scales 5, chromatic 6, shapes 7.
     pub version: u32,
     /// Existing normalized built-ins; operation IDs and versions are validated by Compiler.
     pub definition: ChartDefinition,
@@ -15,7 +15,13 @@ pub struct ChartEnvelope {
 impl ChartEnvelope {
     /// Check envelope version; preparation additionally validates all operation/data contracts.
     pub fn validate(&self) -> ChartResult<()> {
-        version(self.version)
+        if !matches!(self.version, 1..=10) || self.version != self.definition.wire_version() {
+            return Err(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Definition envelope version does not match its capabilities.",
+            ));
+        }
+        Ok(())
     }
 }
 /// Owned column input; validity is independent of the retained payload.

@@ -4,6 +4,11 @@ Phase 2 coordination: [combined implementation plan](phase-2-parity-implementati
 This document retains its detailed inventory and package ownership; the combined plan
 owns cross-lane scheduling and ggplot2 integration.
 
+Delivery update, 9 September 2026: CLR-01–05 are COMPLETE and G-COLOR passes for
+the declared d3-color 3.1.0 contract. [Integrated evidence](../evidence/phase-2-color-acceptance-2026-09-09.md)
+records the source snapshot and limits. The gap analysis below is historical; named
+palettes and WP-21/22 release gates remain separate.
+
 Date: 7 September 2026. Assignment: compare plans and implementation with d3-color
 and plan delivery. Documentation only; baseline `1cb9557` plus existing uncommitted
 action/state/binding and shape/axis/scale planning changes.

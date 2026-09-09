@@ -19,6 +19,8 @@ struct Envelope {
     data: Vec<Dataset>,
     layers: BTreeMap<String, LayerId>,
     axes: BTreeMap<String, ScaleId>,
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    guides: BTreeMap<String, crate::GuideId>,
     transforms: BTreeMap<String, crate::TransformId>,
     colors: BTreeMap<String, ScaleId>,
     data_limits: DataLimits,
@@ -48,13 +50,13 @@ fn names<T: Copy + Ord>(
     Ok(())
 }
 impl Plot {
-    /// Serialize the primary version-1 interchange, retaining names, profile, exact values and IDs.
+    /// Serialize primary interchange, using version two when retained paths are present.
     /// Native-only extensions reject; registrations are supplied separately when loading.
     pub fn to_json(&self) -> ChartResult<String> {
         self.extensions.validate_portable(&self.definition)?;
         crate::portable::encode(&Envelope {
-            version: 1,
-            profile: self.profile,
+            version: self.definition.wire_version(),
+            profile: self.profile(),
             definition: self.definition.clone(),
             epoch: self.source.get()?.epoch(),
             data: self
@@ -68,6 +70,7 @@ impl Plot {
                 .collect(),
             layers: self.layers.clone(),
             axes: self.axes.clone(),
+            guides: self.guides.clone(),
             transforms: self.transforms.clone(),
             colors: self.colors.clone(),
             data_limits: self.data_limits,
@@ -84,10 +87,16 @@ impl Plot {
         extensions: Arc<ExtensionRegistry>,
     ) -> ChartResult<Self> {
         let value: Envelope = crate::portable::decode(input)?;
-        if value.version != 1 {
+        if !matches!(value.version, 1..=10) || value.version != value.definition.wire_version() {
             return Err(error(
                 DiagnosticCode::UnsupportedCapability,
                 "Unsupported primary authoring envelope version.",
+            ));
+        }
+        if value.profile != value.definition.profile() {
+            return Err(error(
+                DiagnosticCode::SchemaConflict,
+                "Primary envelope profile differs from canonical definition provenance.",
             ));
         }
         extensions.validate_portable(&value.definition)?;
@@ -129,6 +138,17 @@ impl Plot {
             value.definition.axes.iter().map(|a| a.id).collect()
         };
         names(&value.axes, axis_ids)?;
+        names(&value.guides, value.definition.guides.iter().map(|g| g.id))?;
+        if value
+            .guides
+            .keys()
+            .any(|name| value.axes.contains_key(name))
+        {
+            return Err(error(
+                DiagnosticCode::SchemaConflict,
+                "Default and additional guide names must be distinct.",
+            ));
+        }
         names(
             &value.colors,
             value
@@ -158,9 +178,9 @@ impl Plot {
             data,
             layers: value.layers,
             axes: value.axes,
+            guides: value.guides,
             transforms: value.transforms,
             colors: value.colors,
-            profile: value.profile,
             data_limits: value.data_limits,
             compile_limits: value.compile_limits,
             extensions,

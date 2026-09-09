@@ -1,0 +1,32 @@
+Analysis of sampling primary_binding_proof (pid 89080) every 1 millisecond
+Process:         primary_binding_proof [89080]
+Path:            /Users/USER/*/primary_binding_proof
+Load Address:    0x102298000
+Identifier:      primary_binding_proof
+Version:         ???
+Code Type:       ARM64
+Parent Process:  python3.14 [89046]
+Target Type:     live task
+
+Date/Time:       2026-09-09 06:46:52.767 -0400
+Launch Time:     2026-09-09 06:44:28.699 -0400
+OS Version:      macOS 26.5.2 (25F84)
+Report Version:  7
+Analysis Tool:   /usr/bin/sample
+
+Physical footprint:         112K
+Physical footprint (peak):  112K
+Idle exit:                  untracked
+----
+
+Call graph:
+    806 Thread_262859654: Main Thread   DispatchQueue_<multiple>
+      806 _dyld_start  (in dyld) + 0  [0x106bb09c0]
+
+Total number in stack (recursive counted multiple, when >=5):
+
+Sort by top of stack, same collapsed (when >= 5):
+        _dyld_start  (in dyld)        806
+
+Binary images description not available
+

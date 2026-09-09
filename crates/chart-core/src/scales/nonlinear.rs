@@ -221,6 +221,10 @@ impl NonlinearScale {
             None => Ok(None),
         }
     }
+    /// Map a coordinate already transformed by the same checked positional scale stage.
+    pub fn map_transformed(&self, value: f64) -> ChartResult<Option<f64>> {
+        self.inner.map(value)
+    }
     /// Invert destination coordinates to source units.
     pub fn invert(&self, p: f64) -> ChartResult<f64> {
         self.transform.inverse(self.inner.invert(p)?)

@@ -40,15 +40,15 @@ exports.run=(c,root,output,options,write)=>{
    if(name==='family-log-gaps'){p=p.yAxis(c.yAxis().scale(c.scaleLog(10)));layer=c.line();}
    else if(name==='family-symlog'){p=p.yAxis(c.yAxis().scale(c.scaleSymlog(2)));layer=c.points();}
    else if(name==='family-point-color'){
-    p=p.xAxis(c.xAxis().scale(c.scalePoint().categories(['Alpha','Beta','Gamma']).pointPadding(.5))).scale(c.colorDiscrete('color').domain(['Alpha','Beta','Gamma']).palette([blue,red,missing]).missing(missing)).legend(c.legend().scale('color').untitled());
+    p=p.xAxis(c.xAxis().scale(c.scalePoint().categories(['Alpha','Beta','Gamma']).pointPadding(.5))).scale(c.colorDiscrete('color').domain(['Alpha','Beta','Gamma']).palette([blue,red,missing]).missing(missing)).legend(c.legend().scale('color').generic_title());
     layer=c.points().aes(c.aes().color('field_1').colorScale('color'));
    }else if(name==='family-area')layer=c.area().baseline(0);
    else if(name==='family-ribbon')layer=c.ribbon().aes(c.aes().y2('field_3'));
    else if(name==='family-heatmap'){
-    p=p.scale(c.colorContinuous('color',0,5).palette([blue,red]).clamp(true).missing(missing)).legend(c.legend().scale('color').untitled());
+    p=p.scale(c.colorContinuous('color',0,5).palette([blue,red]).clamp(true).missing(missing)).legend(c.legend().scale('color').generic_title());
     layer=c.cells().aes(c.aes().x2('field_3').y2('field_4').color('field_5').colorScale('color'));
    }else if(['family-grouped-bars','family-stacked-bars'].includes(name)){
-    p=p.aes(c.aes().y('y').y2(0).group('group')).scale(c.colorDiscrete('color').palette([blue,red,missing]).missing(missing)).legend(c.legend().scale('color').untitled());
+    p=p.aes(c.aes().y('y').y2(0).group('group')).scale(c.colorDiscrete('color').palette([blue,red,missing]).missing(missing)).legend(c.legend().scale('color').generic_title());
     layer=name==='family-grouped-bars'?c.rectangle().aes(c.aes().x('category').x2('category')).position(c.dodge([0,1,2]).width(.9)):c.rectangle().aes(c.aes().x(0).x2(1)).position(c.stack([0,1,2,3]));
     layer=layer.colorGroup('color').color(gray);
    }else if(name==='family-ohlc-volume'){

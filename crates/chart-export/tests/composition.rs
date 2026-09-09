@@ -380,18 +380,18 @@ fn theme_cascade_mapped_colors_symbols_and_full_domain_output_contract() {
     let mut d = s.definition().clone();
     d.figure = None;
     let theme = d.theme.as_mut().unwrap();
-    theme.plot.mark = Some(rgb(20, 30, 40));
-    theme.layers.get_mut(&LayerId::new(3)).unwrap().mark = Some(rgb(50, 60, 70));
+    theme.plot.mark = Some(rgb(20, 30, 40).into());
+    theme.layers.get_mut(&LayerId::new(3)).unwrap().mark = Some(rgb(50, 60, 70).into());
     let mut r = request();
-    r.host_theme.mark = Some(rgb(1, 2, 3));
+    r.host_theme.mark = Some(rgb(1, 2, 3).into());
     r.interaction_theme.insert(
         LayerId::new(3),
         ThemePatch {
-            mark: Some(rgb(80, 90, 100)),
+            mark: Some(rgb(80, 90, 100).into()),
             ..Default::default()
         },
     );
-    r.output_theme.mark = Some(rgb(110, 120, 130));
+    r.output_theme.mark = Some(rgb(110, 120, 130).into());
     let laid = Arc::new(layout(prepare(&s, &d), &r, &fonts()).unwrap());
     assert!(laid.scene().items().iter().filter(|i|i.layer==Some(LayerId::new(3))).all(|i|matches!(&i.primitive,Primitive::Path{stroke,..} if stroke.color==rgb(110,120,130))));
     let center = laid

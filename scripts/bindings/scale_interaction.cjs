@@ -1,0 +1,30 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'../..'),c=require(path.join(path.resolve(process.argv[2]),'authoring.cjs'));
+const out=path.resolve(process.argv[3]);fs.mkdirSync(path.dirname(out),{recursive:true});
+const output=new c.Output(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf')));
+const options=c.export_options(600,300).layout(c.layout_options().padding(0)),records=[];
+for(const time of [false,true]){
+ const base=1700000000000000001n;
+ const xs=time?c.timestamps([base,base+100n,base+200n,base+550n,base+1000n],'ns','UTC'):[0,5,10,55,100];
+ const scale=time?new c.StandaloneScale('utc',{domain:[base,base+200n,base+1000n],range:[0,50,100],unit:'Nanoseconds'}):new c.StandaloneScale('linear',{domain:[0,10,100],range:[0,50,100]});
+ const axis=time?c.scale_calendar(scale):c.scale_numeric(scale);
+ const data=c.Data.columns({x:xs,y:[1,2,3,4,5]},{keys:Array.from({length:5},(_,i)=>9007199254741001n+BigInt(i))});
+ const p=c.plot(data).aes(c.aes().x('x').y('y')).layer(c.points()).x_axis(c.x_axis().scale(axis).visible(false)).y_axis(c.y_axis().visible(false)).build();
+ const wire=p.to_json(),chart=p.chart(),receiver=c.Plot.from_json(wire).chart();p.dispose();
+ const frame=chart.present(output,options);receiver.present(output,options).dispose();const before=frame.scene(),old=chart.request(output,options.basis('presented'));
+ const point=before.items.filter(i=>'Point'in i.primitive).map(i=>i.primitive.Point.center)[2];
+ const hit=chart.inspect(point.x,point.y,{radius:1,mode:'NearestPoint'}).targets;assert.equal(hit[0].identity.Source.key,'9007199254741003');
+ const selected=chart.select_region({Rectangle:[point.x-.5,point.y-.5,1,1]}).targets;assert.deepEqual(selected,hit);
+ const zoom=chart.zoom(point.x,point.y,2,{axes:['x']}).windows,expected=time?{Timestamp:[String(base+100n),String(base+600n)]}:{Numeric:[5,55]};assert.deepEqual(zoom['0'],expected);
+ const region=chart.navigate({Region:{from:[150,0],to:[450,300]}},{axes:['x']}).windows;assert.deepEqual(region['0'],expected);
+ const event=chart.set_windows(zoom).event;assert(event);const changed=chart.present(output,options);
+ const message=chart.query({LinkCapture:{origin:'scale-source',event,axes:['0'],panel:null,selection:false}}).message;
+ const resolved=receiver.query({LinkResolve:{message,mappings:[{source:'0',destination:'0'}],panel:null,missing:'Reject'}});
+ receiver.act(resolved.action,{origin:resolved.origin});assert.deepEqual(receiver.state().interaction.windows,chart.state().interaction.windows);
+ assert.deepEqual(chart.inspect(point.x,point.y,{radius:1,mode:'NearestPoint'}).targets,hit);
+ const fresh=old.prepare();assert.deepEqual(fresh.scene(),before);
+ for(const v of [fresh,old,frame,changed,chart,receiver,data,scale])v.dispose();
+ records.push({case:time?'nanosecond_piecewise':'numeric_piecewise',windows:expected,exact_key:hit[0].identity.Source.key,brush_and_link:true,old_export_retained:true});
+}
+fs.writeFileSync(out,JSON.stringify(records,null,2)+'\n');console.log('PASS SP-07 WASM piecewise numeric/time navigation, inspection, brushing, linking and retained exports.');

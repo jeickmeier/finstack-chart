@@ -1,0 +1,30 @@
+'use strict';
+const path=require('node:path'),assert=require('node:assert/strict'),c=require(path.resolve(process.argv[2],'authoring.cjs'));
+const op=(name,parameters)=>({operation:{id:'example.'+name,version:'1'},parameters});
+function reject(fn,code){assert.throws(fn,error=>!code||error.code===code);}
+const registry=c.ShapeRegistry.example(),shift=op('shift_curve',{amount:2});
+assert.deepEqual(registry.selection(shift,'Curve'),shift);
+const rows=[[0,1],[2,3],[9,9],[4,2],[5,1]],config={defined:[true,true,false,true,true]},line=new c.ShapeLine(config),retained=line.generateRegistered(rows,registry,shift);
+assert.equal(retained.to_svg(),'M0,3L2,5M4,4L5,3');
+for(let i=0;i<3;i++){const area=new c.ShapeArea(config).generateRegistered(rows,registry,shift);assert.equal(area.to_svg(),'M0,3L2,5L2,2L0,2ZM4,4L5,3L5,2L4,2Z');area.free();}
+assert.deepEqual(line.copy().config(),line.config());
+assert.equal(new c.ShapeLineRadial().generateRegistered([[0,2],[Math.PI/2,2]],registry,shift).to_svg(),'M0,0L2,2');
+const radial=new c.ShapeAreaRadial(config);assert.equal(radial.generateRegistered(rows,registry,op('shift_curve',{amount:0})).to_svg(),radial.generate(rows).to_svg());
+assert.equal(new c.ShapeLink().generateRegistered({source:[0,1],target:[2,3]},registry,shift).to_svg(),'M0,3L2,5');
+assert.equal(new c.ShapeSymbol({size:16}).generateRegistered(registry,op('rectangle_symbol',{amount:4})).to_svg(),'M-4,-1h8v2h-8Z');
+const data=[{rank:9007199254740993n,label:'a'},{rank:9007199254740992n,label:'b'},{rank:9007199254740993n,label:'c'}],expected=data.map(d=>({...d,rank:d.rank.toString()})),comparator=op('field_comparator',{field:'rank'}),pie=new c.ShapePie({angles:{end_angle:6}}).layoutRegistered(data,new Float64Array([1,2,3]),registry,comparator);
+assert.deepEqual(pie.map(p=>p.index),[1,0,2]);assert.deepEqual(pie.map(p=>[p.start_angle,p.end_angle]),[[2,3],[0,2],[3,6]]);assert.deepEqual(pie.map(p=>p.data),expected);assert.equal(typeof data[0].rank,'bigint');
+const order=op('first_value_order',{}),offset=op('shift_offset',{amount:10}),stack=new c.ShapeStack({keys:['a','b']}),values=[[3,1],[4,2]],result=stack.layoutRegistered(data.slice(0,2),values,registry,order,offset);
+assert.deepEqual(result.map(s=>s.index),[1,0]);assert.deepEqual(result.map(s=>s.points.map(p=>[p.y0,p.y1])),[[[11,14],[12,16]],[[10,11],[10,12]]]);assert.deepEqual(stack.layoutRegistered(data.slice(0,2),values,registry),stack.layout(data.slice(0,2),values));
+reject(()=>registry.selection(op('native_curve',{amount:2}),'Curve'),'CHART_UNSUPPORTED_CAPABILITY');
+reject(()=>registry.selection({...shift,operation:{...shift.operation,version:'2'}},'Curve'),'CHART_UNSUPPORTED_CAPABILITY');
+reject(()=>line.generateRegistered(rows,new c.ShapeRegistry(),shift),'CHART_UNSUPPORTED_CAPABILITY');
+reject(()=>registry.selection(shift,'Symbol'),'CHART_VALIDATION');reject(()=>registry.selection(op('shift_curve',{amount:2,extra:1}),'Curve'),'CHART_VALIDATION');
+reject(()=>registry.selection(op('shift_curve',{amount:'x'.repeat(65537)}),'Curve'),'CHART_RESOURCE_LIMIT');
+reject(()=>registry.selection(op('shift_curve',{amount:()=>2}),'Curve'));
+reject(()=>registry.selection(op('shift_curve',{amount:2,callback:()=>2}),'Curve'));
+reject(()=>new c.ShapeArea({...config,limits:{path:{...line.config().limits.path,max_commands:2}}}).generateRegistered(rows,registry,shift),'CHART_RESOURCE_LIMIT');
+reject(()=>new c.ShapePie().layoutRegistered([{},{}],[1,1],registry,comparator),'CHART_VALIDATION');
+reject(()=>new c.ShapeStack({keys:['a','b'],limits:{max_work:7}}).layoutRegistered(data.slice(0,2),values,registry,order,offset),'CHART_RESOURCE_LIMIT');
+const copy=registry.copy();registry.dispose();reject(()=>line.generateRegistered(rows,registry,shift),'CHART_DISPOSED_HANDLE');assert.equal(line.generateRegistered(rows,copy,shift).to_svg(),retained.to_svg());copy.dispose();assert.equal(retained.to_svg(),'M0,3L2,5M4,4L5,3');
+console.log('PASS WASM registered shapes: all five protocols; gaps, radial/links, exact source data, stack endpoints, deterministic reuse, explicit registration, portability, errors and budgets.');

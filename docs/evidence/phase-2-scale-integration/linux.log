@@ -1,0 +1,84 @@
+   Compiling chart-core v0.1.0 (/repo/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.13s
+     Running unittests src/lib.rs (/target/debug/deps/chart_core-a27a11c556a0c361)
+
+running 11 tests
+test navigation::tests::sessions_zoom_by_active_time_and_reject_unknown_calendar_extent ... ok
+test navigation::tests::reversed_ranges_domain_clamp_region_and_invalid_inputs ... ok
+test navigation::tests::calendar_navigation_uses_piecewise_mapping_and_exact_timestamps ... ok
+test navigation::tests::timestamp_navigation_preserves_large_integer_identity ... ok
+test navigation::tests::piecewise_numeric_zoom_retains_knots_and_pointer_anchor ... ok
+test navigation::tests::category_windows_preserve_catalog_lookup_and_singletons ... ok
+test state::tests::state_and_viewport_revision_exhaustion_leave_state_unchanged ... ok
+test navigation::tests::pointer_anchor_uses_log_and_symlog_coordinates ... ok
+test state::reducer::tests::disposal_is_terminal_even_when_cancellation_cannot_advance_a_revision ... ok
+test transaction::tests::exhausted_store_dataset_and_ordinal_counters_roll_back ... ok
+test inspection::index::tests::duplicate_x_signed_zeros_keep_frontmost_128_and_all_keyboard_identities ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/facets.rs (/target/debug/deps/facets-170d5af10e1c2319)
+
+running 9 tests
+test source_filters_precede_catalog_validation_and_empty_panel_drop ... ok
+test figure_budgets_invalid_catalog_and_tiny_dense_labels_fail_or_fallback_explicitly ... ok
+test declared_figure_overflow_and_default_plot_clip_are_preserved_in_facets ... ok
+test fix06_explicit_annotation_policy_shared_domain_and_exact_panel_targets ... ok
+test shared_log_scale_uses_positive_population_from_all_panels ... ok
+test group_facet_chart_statistics_have_independent_expected_populations_and_cache_keys ... ok
+test color_guides_collect_only_exact_compatible_id_domain_and_palette ... ok
+test free_scales_intentionally_differ_and_resize_font_changes_keep_aligned_panes ... ok
+test explicit_empty_panels_grid_coordinates_and_reordering_preserve_keys ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/scale_calendar.rs (/target/debug/deps/scale_calendar-796e21d16f1c6897)
+
+running 8 tests
+test timestamp_clamp_and_omit_precede_integer_precision_conversion ... ok
+test exact_time_units_integer_limits_and_typed_ranges ... ok
+test resource_coverage_wall_resolution_and_invalid_requests_are_explicit ... ok
+test every_fixed_zone_interval_matches_floor_ceil_offset_and_ticks ... ok
+test automatic_fixed_zone_ticks_and_nice_match_all_reference_counts ... ok
+test fixed_zone_time_mapping_and_inverse_match_reference ... ok
+test original_time_scale_inventory_matches_declared_integer_date_overlap ... ok
+test expanded_filtered_intervals_custom_formats_and_utc_day_selection_match ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.49s
+
+     Running tests/scale_numeric.rs (/target/debug/deps/scale_numeric-c22a985d3ddc329b)
+
+running 3 tests
+test independent_piecewise_radial_clamp_and_copy_contracts ... ok
+test chart_clamp_uses_effective_mapping_domain ... ok
+test pinned_numeric_mapping_and_inverse_families_match ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/scale_operations.rs (/target/debug/deps/scale_operations-ae4a09097241f586)
+
+running 2 tests
+test standalone_named_options_are_atomic_and_capabilities_are_checked ... ok
+test every_pinned_operation_and_declared_adaptation_is_observable ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.79s
+
+     Running tests/scale_population.rs (/target/debug/deps/scale_population-b4d4ce922c68b5fb)
+
+running 4 tests
+test classifier_labels_are_compact_without_merging_distinct_cutpoints ... ok
+test numeric_thresholds_read_integer_columns_numerically_and_explicit_keys_stay_exact ... ok
+test faceted_quantiles_count_duplicate_observations_and_broadcast_population_once ... ok
+test ordinal_and_quantile_updates_match_independent_retained_batches_and_keep_old_owners ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/stage_cache.rs (/target/debug/deps/stage_cache-34385101b4310da5)
+
+running 3 tests
+test exact_key_indexes_survive_old_snapshots_and_rebuild_after_correction_reorder_and_retention ... ok
+test palette_changes_reuse_statistics_and_navigation_reuses_exact_marks ... ok
+test unrelated_dataset_updates_reuse_exact_named_and_layer_tables_but_capture_new_coherent_store ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

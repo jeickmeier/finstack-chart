@@ -61,9 +61,12 @@ impl ResolvedAxis {
     pub fn capabilities(&self) -> crate::scales::ScaleCapabilities {
         use crate::scales::ScaleCapabilities;
         match &self.scale {
+            ResolvedScale::Provider(s) => s.capabilities(),
             ResolvedScale::Linear(_)
+            | ResolvedScale::Numeric(_)
             | ResolvedScale::Nonlinear(_)
             | ResolvedScale::Utc(_)
+            | ResolvedScale::Calendar(_)
             | ResolvedScale::Session(_) => ScaleCapabilities {
                 numeric_inverse: true,
                 category_lookup: false,
@@ -81,9 +84,15 @@ impl ResolvedAxis {
     /// Invert a destination position with the resolved numeric/time policy.
     pub fn invert_value(&self, p: f64) -> ChartResult<ScaleValue> {
         match &self.scale {
+            ResolvedScale::Provider(s) => s.invert(p),
             ResolvedScale::Linear(s) => s.invert(p).map(ScaleValue::Number),
+            ResolvedScale::Numeric(s) => s.invert(p).map(ScaleValue::Number),
             ResolvedScale::Nonlinear(s) => s.invert(p).map(ScaleValue::Number),
             ResolvedScale::Utc(s) => Ok(ScaleValue::Timestamp {
+                value: s.invert(p)?,
+                unit: s.unit(),
+            }),
+            ResolvedScale::Calendar(s) => Ok(ScaleValue::Timestamp {
                 value: s.invert(p)?,
                 unit: s.unit(),
             }),

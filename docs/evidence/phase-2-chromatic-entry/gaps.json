@@ -1,0 +1,619 @@
+{
+  "schema_version": 1,
+  "stage": "CP-01",
+  "exports": [
+    {
+      "export": "interpolateBlues",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateBrBG",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateBuGn",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateBuPu",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateCividis",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateCool",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateCubehelixDefault",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateGnBu",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateGreens",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateGreys",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateInferno",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateMagma",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateOrRd",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateOranges",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolatePRGn",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolatePiYG",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolatePlasma",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolatePuBu",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolatePuBuGn",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolatePuOr",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolatePuRd",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolatePurples",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateRainbow",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateRdBu",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateRdGy",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateRdPu",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateRdYlBu",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateRdYlGn",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateReds",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateSinebow",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateSpectral",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateTurbo",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateViridis",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateWarm",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateYlGn",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateYlGnBu",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateYlOrBr",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "interpolateYlOrRd",
+      "owner": "CP-03",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeAccent",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeBlues",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeBrBG",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeBuGn",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeBuPu",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeCategory10",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeDark2",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeGnBu",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeGreens",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeGreys",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeObservable10",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeOrRd",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeOranges",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemePRGn",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemePaired",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemePastel1",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemePastel2",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemePiYG",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemePuBu",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemePuBuGn",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemePuOr",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemePuRd",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemePurples",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeRdBu",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeRdGy",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeRdPu",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeRdYlBu",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeRdYlGn",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeReds",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeSet1",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeSet2",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeSet3",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeSpectral",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeTableau10",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeYlGn",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeYlGnBu",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeYlOrBr",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    },
+    {
+      "export": "schemeYlOrRd",
+      "owner": "CP-02",
+      "core": "Open",
+      "python": "Open",
+      "wasm": "Open",
+      "integration": "CP-04/05 open"
+    }
+  ],
+  "known_exports": 76,
+  "discrete_arrays": 218,
+  "interpolators": 38,
+  "samples": 160666,
+  "gate": "G-CHROMATIC open"
+}

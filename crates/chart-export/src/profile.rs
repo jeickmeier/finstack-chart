@@ -114,7 +114,7 @@ pub struct PublicationProfile {
     /// Raster dots per inch; uniform scaling, nearest integer dimensions.
     pub dpi: u32,
     /// Figure background; PNG correctly encodes straight alpha, including transparency.
-    pub background: Color,
+    pub background: chart_core::color::Paint,
     /// Revision of the supplied point-space decoration/annotation items.
     pub annotation_revision: Revision,
     /// Initial portable decorations in figure point coordinates; full figure furniture is WP-13.
@@ -145,7 +145,8 @@ impl PublicationProfile {
                 green: 255,
                 blue: 255,
                 alpha: 255,
-            },
+            }
+            .into(),
             annotation_revision: Revision::INITIAL,
             annotations: vec![],
             precision: 0.01,

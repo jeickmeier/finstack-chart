@@ -42,6 +42,32 @@ pub(crate) fn build(
     embed: bool,
 ) -> ChartResult<String> {
     scene.require_portable_paint()?;
+    let mut remaining_path_bytes = p.max_output_bytes;
+    // The parsed tree uses bounded shared lowering. Standalone SVG retains analytic arcs.
+    let vector_paths = scene
+        .items()
+        .iter()
+        .map(|item| {
+            if let Primitive::VectorPath { geometry, .. } | Primitive::ShapePath { geometry, .. } =
+                &item.primitive
+            {
+                let lowered;
+                let geometry = if embed {
+                    geometry
+                } else {
+                    lowered =
+                        chart_core::path::PathGeometry::from_beziers(&lower_path(geometry, p)?)?;
+                    &lowered
+                };
+                let text = geometry
+                    .to_svg(chart_core::path::Precision::Unrounded, remaining_path_bytes)?;
+                remaining_path_bytes -= text.len();
+                Ok(Some(text))
+            } else {
+                Ok(None)
+            }
+        })
+        .collect::<ChartResult<Vec<_>>>()?;
     let mut out = Writer {
         text: String::new(),
         limit: p.max_output_bytes,
@@ -94,6 +120,54 @@ pub(crate) fn build(
                 clip.height()
             )?;
             match &item.primitive {
+                Primitive::VectorPath {
+                    fill,
+                    stroke,
+                    dashes,
+                    ..
+                }
+                | Primitive::ShapePath {
+                    fill,
+                    stroke,
+                    dashes,
+                    ..
+                } => {
+                    write!(
+                        out,
+                        "<path id=\"item-{index}\" d=\"{}\" fill-rule=\"nonzero\"",
+                        vector_paths[index].as_deref().unwrap_or_default()
+                    )?;
+                    if let Some(c) = fill {
+                        write!(
+                            out,
+                            " fill=\"{}\" fill-opacity=\"{}\"",
+                            color(*c),
+                            alpha(*c)
+                        )?;
+                    } else {
+                        out.write_str(" fill=\"none\"")?;
+                    }
+                    if let Some(s) = stroke {
+                        write!(
+                            out,
+                            " stroke=\"{}\" stroke-width=\"{}\" stroke-opacity=\"{}\"",
+                            color(s.color),
+                            s.width,
+                            alpha(s.color)
+                        )?;
+                    }
+                    if stroke.is_some() && !dashes.is_empty() {
+                        out.write_str(" stroke-dasharray=\"")?;
+                        for (i, dash) in dashes.iter().enumerate() {
+                            if i > 0 {
+                                out.write_str(",")?;
+                            }
+                            write!(out, "{dash}")?;
+                        }
+                        out.write_str("\"")?;
+                    }
+                    out.write_str("/>")?;
+                }
                 Primitive::NativePaint { .. } => {
                     unreachable!("portable paint checked before encoding")
                 }
@@ -262,6 +336,42 @@ pub(crate) fn build(
         )
     })?;
     Ok(out.text)
+}
+/// Reserve half a quarter-pixel budget for lowering and half for binary32 projection.
+pub(crate) fn lower_path(
+    geometry: &chart_core::path::PathGeometry,
+    p: &PublicationProfile,
+) -> ChartResult<Vec<PathCommand>> {
+    let error = (0.125 * 72. / f64::from(p.dpi)).min(p.precision);
+    let commands = geometry.lower(error, p.layout.limits.max_path_commands)?;
+    let check = |point: chart_core::Point| -> ChartResult<()> {
+        for value in [point.x(), point.y()] {
+            let rounded = p.f32(value)?;
+            if (value - f64::from(rounded)).abs() > error / std::f64::consts::SQRT_2 {
+                return Err(crate::error(
+                    DiagnosticCode::PrecisionLoss,
+                    "Retained path exceeds its destination pixel precision.",
+                ));
+            }
+        }
+        Ok(())
+    };
+    for command in &commands {
+        match *command {
+            PathCommand::MoveTo(a) | PathCommand::LineTo(a) => check(a)?,
+            PathCommand::QuadraticTo(a, b) => {
+                check(a)?;
+                check(b)?;
+            }
+            PathCommand::CubicTo(a, b, c) => {
+                check(a)?;
+                check(b)?;
+                check(c)?;
+            }
+            PathCommand::Close => (),
+        }
+    }
+    Ok(commands)
 }
 /// Outline serialization keeps the exact point viewBox despite SVG's default CSS DPI.
 pub(crate) fn outline(tree: &usvg::Tree, p: &PublicationProfile) -> ChartResult<Vec<u8>> {

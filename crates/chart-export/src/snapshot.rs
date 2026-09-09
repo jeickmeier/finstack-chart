@@ -166,7 +166,7 @@ impl FigureSnapshot {
                 clip: None,
                 primitive: Primitive::Rectangle {
                     bounds: profile.layout.bounds,
-                    fill: profile.background,
+                    fill: profile.background.resolve(),
                 },
             });
             items.extend_from_slice(laid_out.scene().items());
@@ -352,6 +352,17 @@ fn preflight(
         let result = (|| {
             rect(item.clip.unwrap_or(scene.bounds()))?;
             match &item.primitive {
+                Primitive::VectorPath {
+                    geometry, stroke, ..
+                }
+                | Primitive::ShapePath {
+                    geometry, stroke, ..
+                } => {
+                    crate::svg::lower_path(geometry, profile)?;
+                    if let Some(stroke) = stroke {
+                        profile.f32(stroke.width)?;
+                    }
+                }
                 Primitive::NativePaint { painter, .. } => {
                     return Err(error(
                         DiagnosticCode::UnsupportedCapability,

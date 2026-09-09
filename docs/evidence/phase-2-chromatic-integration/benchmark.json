@@ -1,0 +1,161 @@
+{
+  "catalog": {
+    "discrete_arrays": 218,
+    "discrete_rgb_colors": 1427,
+    "discrete_rgb_payload_bytes": 5708,
+    "lookup_rgb_payload_bytes": 4096,
+    "ramps": 38,
+    "schemes": 38,
+    "scope": "literal u32 payload only; excludes metadata, instructions and allocator overhead"
+  },
+  "measurements": [
+    {
+      "id": "Viridis",
+      "kernel": "prepare",
+      "timing": {
+        "ns_max": 8.73918,
+        "ns_median": 8.59668,
+        "ns_min": 8.39332,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Viridis",
+      "kernel": "evaluate",
+      "timing": {
+        "ns_max": 4.6,
+        "ns_median": 4.40916,
+        "ns_min": 4.37084,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Blues",
+      "kernel": "prepare",
+      "timing": {
+        "ns_max": 160.5425,
+        "ns_median": 157.97418,
+        "ns_min": 144.5975,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Blues",
+      "kernel": "evaluate",
+      "timing": {
+        "ns_max": 22.92,
+        "ns_median": 21.91584,
+        "ns_min": 21.20582,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "RdBu",
+      "kernel": "prepare",
+      "timing": {
+        "ns_max": 194.04416,
+        "ns_median": 191.31166,
+        "ns_min": 179.03166,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "RdBu",
+      "kernel": "evaluate",
+      "timing": {
+        "ns_max": 22.16332,
+        "ns_median": 21.94832,
+        "ns_min": 21.66916,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Rainbow",
+      "kernel": "prepare",
+      "timing": {
+        "ns_max": 8.885,
+        "ns_median": 8.7175,
+        "ns_min": 8.37584,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Rainbow",
+      "kernel": "evaluate",
+      "timing": {
+        "ns_max": 15.98416,
+        "ns_median": 15.79084,
+        "ns_min": 15.60418,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Sinebow",
+      "kernel": "prepare",
+      "timing": {
+        "ns_max": 8.73918,
+        "ns_median": 8.55416,
+        "ns_min": 8.34916,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Sinebow",
+      "kernel": "evaluate",
+      "timing": {
+        "ns_max": 16.31334,
+        "ns_median": 15.83668,
+        "ns_min": 15.58332,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "palette_only_prepare",
+      "rows": 1000,
+      "statistics_reused": true,
+      "timing": {
+        "ns_max": 176454.1,
+        "ns_median": 165441.7,
+        "ns_min": 163866.7,
+        "operations_per_sample": 10,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "palette_only_prepare",
+      "rows": 10000,
+      "statistics_reused": true,
+      "timing": {
+        "ns_max": 1704741.6,
+        "ns_median": 1612225.0,
+        "ns_min": 1575595.9,
+        "operations_per_sample": 10,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "palette_only_prepare",
+      "rows": 100000,
+      "statistics_reused": true,
+      "timing": {
+        "ns_max": 25209620.8,
+        "ns_median": 24870004.2,
+        "ns_min": 23488375.0,
+        "operations_per_sample": 10,
+        "samples": 7
+      }
+    }
+  ],
+  "method": "one warmup and seven samples; precompiled output sampling; inputs excluded",
+  "profile": "release"
+}

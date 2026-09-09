@@ -117,7 +117,11 @@ impl Index {
     pub fn new(candidates: Vec<Candidate>) -> Self {
         // Panel/layer groups retain first appearance order, matching layout/definition order.
         let mut groups: Vec<Vec<usize>> = vec![];
-        for (i, c) in candidates.iter().enumerate() {
+        for (i, c) in candidates
+            .iter()
+            .enumerate()
+            .filter(|(_, c)| c.shape.is_none())
+        {
             if let Some(g) = groups.iter_mut().find(|g| {
                 let first = &candidates[g[0]];
                 first.hit.panel == c.hit.panel && first.hit.layer == c.hit.layer
@@ -151,7 +155,7 @@ impl Index {
                 }
             }
         }
-        for c in &candidates {
+        for c in candidates.iter().filter(|c| c.shape.is_none()) {
             let key = (
                 c.hit.panel.clone(),
                 c.hit.layer,
@@ -288,15 +292,24 @@ impl Index {
             let mut consider = |i: usize| {
                 let c = &self.candidates[i];
                 result.examined += 1;
-                let shape = c.custom.is_some() || c.rectangle.is_some() || c.segment.is_some();
+                let shape = c.shape.is_some()
+                    || c.custom.is_some()
+                    || c.rectangle.is_some()
+                    || c.segment.is_some();
                 if c.line
+                    || c.source_only
                     || !contains(c.clip, p)
                     || (mode == InspectionMode::NearestPoint && shape)
                     || (mode == InspectionMode::Containment && !shape)
                 {
                     return;
                 }
-                let distance = if let Some(custom) = &c.custom {
+                let distance = if let Some(shape) = &c.shape {
+                    if !shape.contains(p) {
+                        return;
+                    }
+                    0.
+                } else if let Some(custom) = &c.custom {
                     if !custom.hit.contains(p) {
                         return;
                     }
@@ -341,7 +354,23 @@ impl Index {
             }
         }
         if let Some((i, _)) = best {
-            result.hits.push(self.candidates[i].hit.clone());
+            let candidate = &self.candidates[i];
+            let mut hit = candidate
+                .shape
+                .as_ref()
+                .map_or_else(|| candidate.hit.clone(), |s| s.nearest(p));
+            if candidate.shape.is_some() {
+                hit.position = Point::new(
+                    hit.position
+                        .x()
+                        .clamp(candidate.clip.origin().x(), candidate.clip.max_x()),
+                    hit.position
+                        .y()
+                        .clamp(candidate.clip.origin().y(), candidate.clip.max_y()),
+                )
+                .expect("finite clipped anchor");
+            }
+            result.hits.push(hit);
             return result;
         }
         if !matches!(mode, InspectionMode::Auto | InspectionMode::NearestX) {
@@ -454,6 +483,9 @@ mod tests {
             .map(|i| {
                 let position = Point::new(if i.is_multiple_of(2) { -0. } else { 0. }, 0.).unwrap();
                 Candidate {
+                    clamped_anchor: false,
+                    shape: None,
+                    source_only: false,
                     custom: None,
                     hit: InspectedTarget {
                         values: vec![],

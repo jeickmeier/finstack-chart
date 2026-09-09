@@ -9,7 +9,7 @@ pub struct TimeBounds {
     /// First endpoint; descending order is allowed.
     #[serde(with = "crate::portable::signed")]
     pub start: i64,
-    /// Second endpoint; constant domains expand by one source second where representable.
+    /// Second endpoint; each scale family declares its constant-domain policy.
     #[serde(with = "crate::portable::signed")]
     pub end: i64,
 }
@@ -357,42 +357,14 @@ impl UtcDateTime {
         civil_at(seconds, TimeUnit::Seconds)
     }
 }
-fn leap(year: i32) -> bool {
-    year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)
-}
-fn month_days(year: i32, month: u32) -> u32 {
-    match month {
-        2 => {
-            if leap(year) {
-                29
-            } else {
-                28
-            }
-        }
-        4 | 6 | 9 | 11 => 30,
-        _ => 31,
-    }
-}
-fn days_before_year(year: i32) -> i64 {
-    let previous = i64::from(year) - 1;
-    365 * previous + previous.div_euclid(4) - previous.div_euclid(100) + previous.div_euclid(400)
-}
 fn days_from_civil(year: i32, month: u32, day: u32) -> ChartResult<i64> {
-    if !(1..=9999).contains(&year)
-        || !(1..=12).contains(&month)
-        || day == 0
-        || day > month_days(year, month)
-    {
+    if !(1..=9999).contains(&year) {
         return Err(error(
             DiagnosticCode::NumericalDomain,
             "UTC calendar date must be valid in years 0001–9999.",
         ));
     }
-    let mut days = days_before_year(year) - days_before_year(1970);
-    for m in 1..month {
-        days += i64::from(month_days(year, m));
-    }
-    Ok(days + i64::from(day) - 1)
+    super::civil::days_from_civil(year, month, day)
 }
 fn civil_at(value: i64, unit: TimeUnit) -> ChartResult<UtcDateTime> {
     let seconds = i128::from(value).div_euclid(ticks_per_second(unit));
@@ -406,28 +378,11 @@ fn civil_at(value: i64, unit: TimeUnit) -> ChartResult<UtcDateTime> {
             "UTC calendar formatting supports years 0001–9999.",
         ));
     }
-    // Gregorian years repeat every 146097 days. At most 399 year and 11 month steps.
-    let from_2000 = day - 10957;
-    let era = from_2000.div_euclid(146097);
-    let mut year = 2000 + 400 * era as i32;
-    let mut remaining = from_2000.rem_euclid(146097) as i64;
-    loop {
-        let days = if leap(year) { 366 } else { 365 };
-        if remaining < days {
-            break;
-        }
-        remaining -= days;
-        year += 1;
-    }
-    let mut month = 1;
-    while remaining >= i64::from(month_days(year, month)) {
-        remaining -= i64::from(month_days(year, month));
-        month += 1;
-    }
+    let (year, month, date) = super::civil::civil_from_days(day as i64)?;
     Ok(UtcDateTime {
         year,
         month,
-        day: remaining as u32 + 1,
+        day: date,
         hour: (within / 3600) as u32,
         minute: ((within % 3600) / 60) as u32,
         second: (within % 60) as u32,

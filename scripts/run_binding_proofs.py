@@ -45,4 +45,11 @@ run("wasm-build", ["cargo","build","-p","chart-wasm","--features","extension-pro
 run("wasm-generate", [cli,ROOT / "target/wasm32-unknown-unknown/debug/chart_wasm.wasm","--target","nodejs","--out-dir",output / "wasm-module"])
 run("wasm", [node,ROOT / "scripts/bindings/wasm_proof.cjs",output / "wasm-module",output / "wasm"])
 run("compare", [sys.executable,ROOT / "scripts/bindings/compare.py",output])
+paths=output/'paths'
+run("path-rust", ["cargo","run","-p","chart-export","--example","path_binding_proof","--locked","--",paths/'rust'])
+run("path-python", [sys.executable,ROOT/'scripts/bindings/path.py',module,paths/'rust',paths/'python'])
+for name in ('authoring.cjs','authoring.d.cts','interpolation.cjs','interpolation.d.cts','scales.cjs','scales.d.cts'):
+    shutil.copy2(ROOT/'packages/wasm'/name,output/'wasm-module'/name)
+run("path-wasm", [node,ROOT/'scripts/bindings/path.cjs',output/'wasm-module',paths/'rust',paths/'wasm'])
+run("path-compare", [sys.executable,ROOT/'scripts/bindings/path_compare.py',paths])
 print(f"PASS WP-09/10/11/12/13/14/15/16/17/18/19/20 runtime proof. Results: {output}")

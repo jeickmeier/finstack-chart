@@ -254,6 +254,9 @@ pub(super) fn prepare(
         let mut items = vec![];
         let mut layer_buckets = vec![];
         let paint = chart.paint_theme(layer.id()).cloned().unwrap_or_default();
+        let candle_colors = authored
+            .candle_colors
+            .map(|c| c.map_colors(crate::color::Paint::resolve));
         for (group, (style, samples)) in groups {
             for mut b in candle_buckets(&samples, plot, width, options.max_columns)? {
                 let (Some(low), Some(high), Some(open), Some(close)) = (
@@ -264,11 +267,12 @@ pub(super) fn prepare(
                 ) else {
                     continue;
                 };
-                let color = paint.mark.unwrap_or_else(|| {
-                    authored.candle_colors.map_or(style.color, |c| {
-                        if b.close >= b.open { c.up } else { c.down }
-                    })
-                });
+                let color =
+                    paint.mark.unwrap_or_else(|| {
+                        candle_colors.map_or(style.color, |c| {
+                            if b.close >= b.open { c.up } else { c.down }
+                        })
+                    });
                 let color = crate::theme::paint_color(color, paint.color_mode);
                 let stroke_width = paint.stroke_width.unwrap_or(style.stroke_width);
                 let clip = Some(if layer.clip() == ClipPolicy::Plot {

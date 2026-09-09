@@ -32,6 +32,10 @@ identity!(
     "Identity of a definition layer, independent of paint order."
 );
 identity!(ScaleId, "Identity of a named positional scale.");
+identity!(
+    GuideId,
+    "Identity of a positional guide, independent of its shared scale."
+);
 identity!(FieldId, "Identity of a field within its dataset schema.");
 identity!(
     ResourceId,

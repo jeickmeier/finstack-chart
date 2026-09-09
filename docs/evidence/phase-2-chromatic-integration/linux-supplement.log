@@ -1,0 +1,14 @@
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.19s
+     Running tests/chromatic_integration.rs (target/debug/deps/chromatic_integration-08b83e935b7118bf)
+
+running 6 tests
+test asymmetric_normalization_reversal_missing_and_guide_identity ... ok
+test equal_endpoint_swatches_do_not_erase_reversed_ramp_identity ... ok
+test nonfinite_named_ordinal_keys_are_missing_and_do_not_shift_training ... ok
+test palette_reconfiguration_reuses_tables_and_matches_fresh_preparation ... ok
+test palette_metadata_checked_and_v1_v6_ingestion_is_strict ... ok
+test every_named_scale_composition_matches_pinned_reference ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

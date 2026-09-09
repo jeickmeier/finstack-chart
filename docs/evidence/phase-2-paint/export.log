@@ -1,0 +1,38 @@
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.96s
+     Running tests/composition.rs (target/debug/deps/composition-0ece51fe6a50c70c)
+
+running 6 tests
+test invalid_resources_themes_furniture_and_dashes_fail_without_paint ... ok
+test rich_shaping_has_independent_advances_real_weights_and_explicit_fallback ... ok
+test theme_cascade_mapped_colors_symbols_and_full_domain_output_contract ... ok
+test furniture_coordinate_spaces_resize_and_bounded_collision_policies ... ok
+test fix12_three_themes_reuse_stat_tables_and_preserve_numerical_geometry ... ok
+test fix13_exact_faces_rich_rotation_inset_vectors_and_real_raster_dimensions ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 23.04s
+
+     Running tests/paint.rs (target/debug/deps/paint-5cc81fd4f211c186)
+
+running 2 tests
+test portable_profile_and_live_override_versions_reject_hidden_floating_capabilities ... ok
+test retained_request_metadata_and_publication_keep_authored_space_after_disposal ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.93s
+
+     Running tests/publication.rs (target/debug/deps/publication-03f1611a5d59cc8f)
+
+running 10 tests
+test publication_metrics_use_supplied_face_and_real_kerning ... ok
+test png_straight_alpha_is_not_premultiplied_or_double_composited ... ok
+test fix14_capture_survives_concurrent_data_and_annotation_edits_then_releases ... ok
+test restricted_and_preview_print_only_embedding_obey_permissions ... ok
+test font_permissions_missing_glyphs_and_exact_resource_revisions_fail_with_context ... ok
+test invalid_resources_units_precision_and_raster_budgets_reject_recoverably ... ok
+test deterministic_preview_and_png_share_the_same_publication_geometry ... ok
+test plain_text_xml_escaping_curves_and_empty_clips_are_supported ... ok
+test visible_and_full_domain_keep_bins_members_visibility_and_declared_state ... ok
+test fix13_physical_dimensions_density_font_hash_and_vector_modes ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.53s
+

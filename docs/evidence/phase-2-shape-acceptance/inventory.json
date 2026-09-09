@@ -1,0 +1,2498 @@
+{
+  "reference": "d3-shape 3.2.0",
+  "oracle_inventory_sha256": "3ab1f2273eedfa27ceb7241c2027c4556608b61cb2a47157ed45136c5a98c534",
+  "scope": "Finite typed data, exact IDs, explicit masks and materialized/native/registered accessors; JavaScript coercion and function-object identity are not portable contracts.",
+  "gate": "PASSED for the finite typed d3-shape 3.2.0 profile",
+  "entries": [
+    {
+      "name": "arc",
+      "canonical": "arc",
+      "alias_of": null,
+      "kind": "generator",
+      "owner": "WP-S03",
+      "rust": "chart_core::shape::Arc",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "centroid",
+          "implementation_verdict": "Pass",
+          "mapping": "Arc.centroid, ShapeArc.centroid; radial/angular midpoint rather than area centroid",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "context",
+          "implementation_verdict": "Pass",
+          "mapping": "generated Path.replay to native PathSink or a host command consumer; no serialized context object",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "cornerRadius",
+          "implementation_verdict": "Pass",
+          "mapping": "corner_radius constant or native ArcParameters accessor",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "digits",
+          "implementation_verdict": "Pass",
+          "mapping": "owned generator digits option; defaults to 3, null retains full precision without rounding geometry",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "endAngle",
+          "implementation_verdict": "Pass",
+          "mapping": "end_angle selector/datum field; PieAngles end_angle",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "innerRadius",
+          "implementation_verdict": "Pass",
+          "mapping": "inner_radius selector/datum field/native accessor",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "outerRadius",
+          "implementation_verdict": "Pass",
+          "mapping": "outer_radius selector/datum field/native accessor",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "padAngle",
+          "implementation_verdict": "Pass",
+          "mapping": "pad_angle datum/constant; PieAngles pad_angle",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "padRadius",
+          "implementation_verdict": "Pass",
+          "mapping": "pad_radius optional constant or native ArcParameters accessor",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "startAngle",
+          "implementation_verdict": "Pass",
+          "mapping": "start_angle selector/datum field; PieAngles start_angle",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-arc-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "area",
+      "canonical": "area",
+      "alias_of": null,
+      "kind": "generator",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::Area",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "context",
+          "implementation_verdict": "Pass",
+          "mapping": "generated Path.replay to native PathSink or a host command consumer; no serialized context object",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "curve",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveSpec and registered Curve protocol, resolved by the common core generator",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "defined",
+          "implementation_verdict": "Pass",
+          "mapping": "boolean or exact-length validity mask; native predicate receives datum/index/input",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "digits",
+          "implementation_verdict": "Pass",
+          "mapping": "owned generator digits option; defaults to 3, null retains full precision without rounding geometry",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineX0",
+          "implementation_verdict": "Pass",
+          "mapping": "Area.boundary(X0)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineX1",
+          "implementation_verdict": "Pass",
+          "mapping": "Area.boundary(X1)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineY0",
+          "implementation_verdict": "Pass",
+          "mapping": "Area.boundary(Y0)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineY1",
+          "implementation_verdict": "Pass",
+          "mapping": "Area.boundary(Y1)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "x",
+          "implementation_verdict": "Pass",
+          "mapping": "Line/Link x selector; Area x0 with x1 absent (native Area.x clears x1)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "x0",
+          "implementation_verdict": "Pass",
+          "mapping": "lower x selector",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "x1",
+          "implementation_verdict": "Pass",
+          "mapping": "optional upper x selector",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "y",
+          "implementation_verdict": "Pass",
+          "mapping": "Line/Link y selector; Area y0 with y1 absent (native Area.y clears y1)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "y0",
+          "implementation_verdict": "Pass",
+          "mapping": "lower y selector",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "y1",
+          "implementation_verdict": "Pass",
+          "mapping": "optional upper y selector",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "areaRadial",
+      "canonical": "areaRadial",
+      "alias_of": null,
+      "kind": "generator",
+      "owner": "WP-S04",
+      "rust": "chart_core::shape::AreaRadial",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "angle",
+          "implementation_verdict": "Pass",
+          "mapping": "angle selector; radial area lower angle and absent upper angle",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "context",
+          "implementation_verdict": "Pass",
+          "mapping": "generated Path.replay to native PathSink or a host command consumer; no serialized context object",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "curve",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveSpec and registered Curve protocol, resolved by the common core generator",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "defined",
+          "implementation_verdict": "Pass",
+          "mapping": "boolean or exact-length validity mask; native predicate receives datum/index/input",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "digits",
+          "implementation_verdict": "Pass",
+          "mapping": "owned generator digits option; defaults to 3, null retains full precision without rounding geometry",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "endAngle",
+          "implementation_verdict": "Pass",
+          "mapping": "end_angle selector/datum field; PieAngles end_angle",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "innerRadius",
+          "implementation_verdict": "Pass",
+          "mapping": "inner_radius selector/datum field/native accessor",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEndAngle",
+          "implementation_verdict": "Pass",
+          "mapping": "AreaRadial.boundary(EndAngle)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineInnerRadius",
+          "implementation_verdict": "Pass",
+          "mapping": "AreaRadial.boundary(InnerRadius)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineOuterRadius",
+          "implementation_verdict": "Pass",
+          "mapping": "AreaRadial.boundary(OuterRadius)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStartAngle",
+          "implementation_verdict": "Pass",
+          "mapping": "AreaRadial.boundary(StartAngle)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "outerRadius",
+          "implementation_verdict": "Pass",
+          "mapping": "outer_radius selector/datum field/native accessor",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "radius",
+          "implementation_verdict": "Pass",
+          "mapping": "radius selector; radial area lower radius and absent upper radius",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "startAngle",
+          "implementation_verdict": "Pass",
+          "mapping": "start_angle selector/datum field; PieAngles start_angle",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-radial-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveBasis",
+      "canonical": "curveBasis",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::Basis",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveBasisClosed",
+      "canonical": "curveBasisClosed",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::BasisClosed",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveBasisOpen",
+      "canonical": "curveBasisOpen",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::BasisOpen",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveBumpX",
+      "canonical": "curveBumpX",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::BumpX",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveBumpY",
+      "canonical": "curveBumpY",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::BumpY",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveBundle",
+      "canonical": "curveBundle",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::Bundle",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "beta"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveCardinal",
+      "canonical": "curveCardinal",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::Cardinal",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "tension"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveCardinalClosed",
+      "canonical": "curveCardinalClosed",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::CardinalClosed",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "tension"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveCardinalOpen",
+      "canonical": "curveCardinalOpen",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::CardinalOpen",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "tension"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveCatmullRom",
+      "canonical": "curveCatmullRom",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::CatmullRom",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "alpha"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveCatmullRomClosed",
+      "canonical": "curveCatmullRomClosed",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::CatmullRomClosed",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "alpha"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveCatmullRomOpen",
+      "canonical": "curveCatmullRomOpen",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::CatmullRomOpen",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "alpha"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveLinear",
+      "canonical": "curveLinear",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::Linear",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveLinearClosed",
+      "canonical": "curveLinearClosed",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::LinearClosed",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveMonotoneX",
+      "canonical": "curveMonotoneX",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::MonotoneX",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveMonotoneY",
+      "canonical": "curveMonotoneY",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::MonotoneY",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveNatural",
+      "canonical": "curveNatural",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::Natural",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveStep",
+      "canonical": "curveStep",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::Step",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveStepAfter",
+      "canonical": "curveStepAfter",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::StepAfter",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "curveStepBefore",
+      "canonical": "curveStepBefore",
+      "alias_of": null,
+      "kind": "curve",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::CurveSpec::StepBefore",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "areaEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "areaStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.area_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEnd",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_end",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStart",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.line_start",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "point",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveProtocol.point",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "line",
+      "canonical": "line",
+      "alias_of": null,
+      "kind": "generator",
+      "owner": "WP-S02",
+      "rust": "chart_core::shape::Line",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "context",
+          "implementation_verdict": "Pass",
+          "mapping": "generated Path.replay to native PathSink or a host command consumer; no serialized context object",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "curve",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveSpec and registered Curve protocol, resolved by the common core generator",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "defined",
+          "implementation_verdict": "Pass",
+          "mapping": "boolean or exact-length validity mask; native predicate receives datum/index/input",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "digits",
+          "implementation_verdict": "Pass",
+          "mapping": "owned generator digits option; defaults to 3, null retains full precision without rounding geometry",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "x",
+          "implementation_verdict": "Pass",
+          "mapping": "Line/Link x selector; Area x0 with x1 absent (native Area.x clears x1)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "y",
+          "implementation_verdict": "Pass",
+          "mapping": "Line/Link y selector; Area y0 with y1 absent (native Area.y clears y1)",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-cartesian-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "lineRadial",
+      "canonical": "lineRadial",
+      "alias_of": null,
+      "kind": "generator",
+      "owner": "WP-S04",
+      "rust": "chart_core::shape::LineRadial",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "angle",
+          "implementation_verdict": "Pass",
+          "mapping": "angle selector; radial area lower angle and absent upper angle",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "context",
+          "implementation_verdict": "Pass",
+          "mapping": "generated Path.replay to native PathSink or a host command consumer; no serialized context object",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "curve",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveSpec and registered Curve protocol, resolved by the common core generator",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "defined",
+          "implementation_verdict": "Pass",
+          "mapping": "boolean or exact-length validity mask; native predicate receives datum/index/input",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "digits",
+          "implementation_verdict": "Pass",
+          "mapping": "owned generator digits option; defaults to 3, null retains full precision without rounding geometry",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "radius",
+          "implementation_verdict": "Pass",
+          "mapping": "radius selector; radial area lower radius and absent upper radius",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-radial-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "link",
+      "canonical": "link",
+      "alias_of": null,
+      "kind": "generator",
+      "owner": "WP-S04",
+      "rust": "chart_core::shape::Link",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "context",
+          "implementation_verdict": "Pass",
+          "mapping": "generated Path.replay to native PathSink or a host command consumer; no serialized context object",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "digits",
+          "implementation_verdict": "Pass",
+          "mapping": "owned generator digits option; defaults to 3, null retains full precision without rounding geometry",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "source",
+          "implementation_verdict": "Pass",
+          "mapping": "LinkEndpoint Source/Target/Constant or native accessor",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "target",
+          "implementation_verdict": "Pass",
+          "mapping": "LinkEndpoint Source/Target/Constant or native accessor",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "x",
+          "implementation_verdict": "Pass",
+          "mapping": "Line/Link x selector; Area x0 with x1 absent (native Area.x clears x1)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "y",
+          "implementation_verdict": "Pass",
+          "mapping": "Line/Link y selector; Area y0 with y1 absent (native Area.y clears y1)",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-radial-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "linkHorizontal",
+      "canonical": "linkHorizontal",
+      "alias_of": null,
+      "kind": "generator",
+      "owner": "WP-S04",
+      "rust": "chart_core::shape::Link::horizontal",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "context",
+          "implementation_verdict": "Pass",
+          "mapping": "generated Path.replay to native PathSink or a host command consumer; no serialized context object",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "digits",
+          "implementation_verdict": "Pass",
+          "mapping": "owned generator digits option; defaults to 3, null retains full precision without rounding geometry",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "source",
+          "implementation_verdict": "Pass",
+          "mapping": "LinkEndpoint Source/Target/Constant or native accessor",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "target",
+          "implementation_verdict": "Pass",
+          "mapping": "LinkEndpoint Source/Target/Constant or native accessor",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "x",
+          "implementation_verdict": "Pass",
+          "mapping": "Line/Link x selector; Area x0 with x1 absent (native Area.x clears x1)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "y",
+          "implementation_verdict": "Pass",
+          "mapping": "Line/Link y selector; Area y0 with y1 absent (native Area.y clears y1)",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-radial-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "linkRadial",
+      "canonical": "linkRadial",
+      "alias_of": null,
+      "kind": "generator",
+      "owner": "WP-S04",
+      "rust": "chart_core::shape::LinkRadial",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "angle",
+          "implementation_verdict": "Pass",
+          "mapping": "angle selector; radial area lower angle and absent upper angle",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "context",
+          "implementation_verdict": "Pass",
+          "mapping": "generated Path.replay to native PathSink or a host command consumer; no serialized context object",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "digits",
+          "implementation_verdict": "Pass",
+          "mapping": "owned generator digits option; defaults to 3, null retains full precision without rounding geometry",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "radius",
+          "implementation_verdict": "Pass",
+          "mapping": "radius selector; radial area lower radius and absent upper radius",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "source",
+          "implementation_verdict": "Pass",
+          "mapping": "LinkEndpoint Source/Target/Constant or native accessor",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "target",
+          "implementation_verdict": "Pass",
+          "mapping": "LinkEndpoint Source/Target/Constant or native accessor",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-radial-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "linkVertical",
+      "canonical": "linkVertical",
+      "alias_of": null,
+      "kind": "generator",
+      "owner": "WP-S04",
+      "rust": "chart_core::shape::Link::vertical",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "context",
+          "implementation_verdict": "Pass",
+          "mapping": "generated Path.replay to native PathSink or a host command consumer; no serialized context object",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "digits",
+          "implementation_verdict": "Pass",
+          "mapping": "owned generator digits option; defaults to 3, null retains full precision without rounding geometry",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "source",
+          "implementation_verdict": "Pass",
+          "mapping": "LinkEndpoint Source/Target/Constant or native accessor",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "target",
+          "implementation_verdict": "Pass",
+          "mapping": "LinkEndpoint Source/Target/Constant or native accessor",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "x",
+          "implementation_verdict": "Pass",
+          "mapping": "Line/Link x selector; Area x0 with x1 absent (native Area.x clears x1)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "y",
+          "implementation_verdict": "Pass",
+          "mapping": "Line/Link y selector; Area y0 with y1 absent (native Area.y clears y1)",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-radial-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "pie",
+      "canonical": "pie",
+      "alias_of": null,
+      "kind": "generator",
+      "owner": "WP-S03",
+      "rust": "chart_core::shape::Pie",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "endAngle",
+          "implementation_verdict": "Pass",
+          "mapping": "end_angle selector/datum field; PieAngles end_angle",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "padAngle",
+          "implementation_verdict": "Pass",
+          "mapping": "pad_angle datum/constant; PieAngles pad_angle",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "sort",
+          "implementation_verdict": "Pass",
+          "mapping": "Pie native datum comparator or registered PieComparator, with full datum and resolved value",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "sortValues",
+          "implementation_verdict": "Pass",
+          "mapping": "Pie native value comparator, built-in value orders or registered PieComparator resolved-value argument; one selected ordering policy",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "startAngle",
+          "implementation_verdict": "Pass",
+          "mapping": "start_angle selector/datum field; PieAngles start_angle",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "value",
+          "implementation_verdict": "Pass",
+          "mapping": "materialized values or constant selector; native datum/index/input accessors",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-arc-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "pointRadial",
+      "canonical": "pointRadial",
+      "alias_of": null,
+      "kind": "point",
+      "owner": "WP-S04",
+      "rust": "chart_core::shape::point_radial",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-radial-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "radialArea",
+      "canonical": "areaRadial",
+      "alias_of": "areaRadial",
+      "kind": "generator",
+      "owner": "WP-S04",
+      "rust": "chart_core::shape::AreaRadial",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "angle",
+          "implementation_verdict": "Pass",
+          "mapping": "angle selector; radial area lower angle and absent upper angle",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "context",
+          "implementation_verdict": "Pass",
+          "mapping": "generated Path.replay to native PathSink or a host command consumer; no serialized context object",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "curve",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveSpec and registered Curve protocol, resolved by the common core generator",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "defined",
+          "implementation_verdict": "Pass",
+          "mapping": "boolean or exact-length validity mask; native predicate receives datum/index/input",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "digits",
+          "implementation_verdict": "Pass",
+          "mapping": "owned generator digits option; defaults to 3, null retains full precision without rounding geometry",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "endAngle",
+          "implementation_verdict": "Pass",
+          "mapping": "end_angle selector/datum field; PieAngles end_angle",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "innerRadius",
+          "implementation_verdict": "Pass",
+          "mapping": "inner_radius selector/datum field/native accessor",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineEndAngle",
+          "implementation_verdict": "Pass",
+          "mapping": "AreaRadial.boundary(EndAngle)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineInnerRadius",
+          "implementation_verdict": "Pass",
+          "mapping": "AreaRadial.boundary(InnerRadius)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineOuterRadius",
+          "implementation_verdict": "Pass",
+          "mapping": "AreaRadial.boundary(OuterRadius)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "lineStartAngle",
+          "implementation_verdict": "Pass",
+          "mapping": "AreaRadial.boundary(StartAngle)",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "outerRadius",
+          "implementation_verdict": "Pass",
+          "mapping": "outer_radius selector/datum field/native accessor",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "radius",
+          "implementation_verdict": "Pass",
+          "mapping": "radius selector; radial area lower radius and absent upper radius",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "startAngle",
+          "implementation_verdict": "Pass",
+          "mapping": "start_angle selector/datum field; PieAngles start_angle",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-radial-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "radialLine",
+      "canonical": "lineRadial",
+      "alias_of": "lineRadial",
+      "kind": "generator",
+      "owner": "WP-S04",
+      "rust": "chart_core::shape::LineRadial",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "angle",
+          "implementation_verdict": "Pass",
+          "mapping": "angle selector; radial area lower angle and absent upper angle",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "context",
+          "implementation_verdict": "Pass",
+          "mapping": "generated Path.replay to native PathSink or a host command consumer; no serialized context object",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "curve",
+          "implementation_verdict": "Pass",
+          "mapping": "CurveSpec and registered Curve protocol, resolved by the common core generator",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "defined",
+          "implementation_verdict": "Pass",
+          "mapping": "boolean or exact-length validity mask; native predicate receives datum/index/input",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "digits",
+          "implementation_verdict": "Pass",
+          "mapping": "owned generator digits option; defaults to 3, null retains full precision without rounding geometry",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "radius",
+          "implementation_verdict": "Pass",
+          "mapping": "radius selector; radial area lower radius and absent upper radius",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-radial-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "stack",
+      "canonical": "stack",
+      "alias_of": null,
+      "kind": "generator",
+      "owner": "WP-S06",
+      "rust": "chart_core::shape::Stack",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "keys",
+          "implementation_verdict": "Pass",
+          "mapping": "owned stack series keys in authored result order",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "offset",
+          "implementation_verdict": "Pass",
+          "mapping": "StackOffset enum or registered StackOffsetting",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "order",
+          "implementation_verdict": "Pass",
+          "mapping": "StackOrder enum/permutation or registered StackOrdering",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "value",
+          "implementation_verdict": "Pass",
+          "mapping": "materialized values or constant selector; native datum/index/input accessors",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-stack-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "stackOffsetDiverging",
+      "canonical": "stackOffsetDiverging",
+      "alias_of": null,
+      "kind": "offset",
+      "owner": "WP-S06",
+      "rust": "chart_core::shape::StackOffset::Diverging",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-stack-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "stackOffsetExpand",
+      "canonical": "stackOffsetExpand",
+      "alias_of": null,
+      "kind": "offset",
+      "owner": "WP-S06",
+      "rust": "chart_core::shape::StackOffset::Expand",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-stack-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "stackOffsetNone",
+      "canonical": "stackOffsetNone",
+      "alias_of": null,
+      "kind": "offset",
+      "owner": "WP-S06",
+      "rust": "chart_core::shape::StackOffset::None",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-stack-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "stackOffsetSilhouette",
+      "canonical": "stackOffsetSilhouette",
+      "alias_of": null,
+      "kind": "offset",
+      "owner": "WP-S06",
+      "rust": "chart_core::shape::StackOffset::Silhouette",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-stack-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "stackOffsetWiggle",
+      "canonical": "stackOffsetWiggle",
+      "alias_of": null,
+      "kind": "offset",
+      "owner": "WP-S06",
+      "rust": "chart_core::shape::StackOffset::Wiggle",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-stack-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "stackOrderAppearance",
+      "canonical": "stackOrderAppearance",
+      "alias_of": null,
+      "kind": "order",
+      "owner": "WP-S06",
+      "rust": "chart_core::shape::StackOrder::Appearance",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-stack-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "stackOrderAscending",
+      "canonical": "stackOrderAscending",
+      "alias_of": null,
+      "kind": "order",
+      "owner": "WP-S06",
+      "rust": "chart_core::shape::StackOrder::Ascending",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-stack-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "stackOrderDescending",
+      "canonical": "stackOrderDescending",
+      "alias_of": null,
+      "kind": "order",
+      "owner": "WP-S06",
+      "rust": "chart_core::shape::StackOrder::Descending",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-stack-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "stackOrderInsideOut",
+      "canonical": "stackOrderInsideOut",
+      "alias_of": null,
+      "kind": "order",
+      "owner": "WP-S06",
+      "rust": "chart_core::shape::StackOrder::InsideOut",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-stack-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "stackOrderNone",
+      "canonical": "stackOrderNone",
+      "alias_of": null,
+      "kind": "order",
+      "owner": "WP-S06",
+      "rust": "chart_core::shape::StackOrder::None",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-stack-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "stackOrderReverse",
+      "canonical": "stackOrderReverse",
+      "alias_of": null,
+      "kind": "order",
+      "owner": "WP-S06",
+      "rust": "chart_core::shape::StackOrder::Reverse",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-stack-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbol",
+      "canonical": "symbol",
+      "alias_of": null,
+      "kind": "generator",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::Symbol",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "context",
+          "implementation_verdict": "Pass",
+          "mapping": "generated Path.replay to native PathSink or a host command consumer; no serialized context object",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "digits",
+          "implementation_verdict": "Pass",
+          "mapping": "owned generator digits option; defaults to 3, null retains full precision without rounding geometry",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "size",
+          "implementation_verdict": "Pass",
+          "mapping": "symbol area/stroke-size scalar or native accessor",
+          "integrated_acceptance_verdict": "Pass"
+        },
+        {
+          "name": "type",
+          "implementation_verdict": "Pass",
+          "mapping": "SymbolKind or registered SymbolDraw",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbolAsterisk",
+      "canonical": "symbolAsterisk",
+      "alias_of": null,
+      "kind": "symbol",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::SymbolKind::Asterisk",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "draw",
+          "implementation_verdict": "Pass",
+          "mapping": "SymbolDraw.draw through the checked path sink",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbolCircle",
+      "canonical": "symbolCircle",
+      "alias_of": null,
+      "kind": "symbol",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::SymbolKind::Circle",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "draw",
+          "implementation_verdict": "Pass",
+          "mapping": "SymbolDraw.draw through the checked path sink",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbolCross",
+      "canonical": "symbolCross",
+      "alias_of": null,
+      "kind": "symbol",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::SymbolKind::Cross",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "draw",
+          "implementation_verdict": "Pass",
+          "mapping": "SymbolDraw.draw through the checked path sink",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbolDiamond",
+      "canonical": "symbolDiamond",
+      "alias_of": null,
+      "kind": "symbol",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::SymbolKind::Diamond",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "draw",
+          "implementation_verdict": "Pass",
+          "mapping": "SymbolDraw.draw through the checked path sink",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbolDiamond2",
+      "canonical": "symbolDiamond2",
+      "alias_of": null,
+      "kind": "symbol",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::SymbolKind::Diamond2",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "draw",
+          "implementation_verdict": "Pass",
+          "mapping": "SymbolDraw.draw through the checked path sink",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbolPlus",
+      "canonical": "symbolPlus",
+      "alias_of": null,
+      "kind": "symbol",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::SymbolKind::Plus",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "draw",
+          "implementation_verdict": "Pass",
+          "mapping": "SymbolDraw.draw through the checked path sink",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbolSquare",
+      "canonical": "symbolSquare",
+      "alias_of": null,
+      "kind": "symbol",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::SymbolKind::Square",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "draw",
+          "implementation_verdict": "Pass",
+          "mapping": "SymbolDraw.draw through the checked path sink",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbolSquare2",
+      "canonical": "symbolSquare2",
+      "alias_of": null,
+      "kind": "symbol",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::SymbolKind::Square2",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "draw",
+          "implementation_verdict": "Pass",
+          "mapping": "SymbolDraw.draw through the checked path sink",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbolStar",
+      "canonical": "symbolStar",
+      "alias_of": null,
+      "kind": "symbol",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::SymbolKind::Star",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "draw",
+          "implementation_verdict": "Pass",
+          "mapping": "SymbolDraw.draw through the checked path sink",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbolTimes",
+      "canonical": "symbolTimes",
+      "alias_of": null,
+      "kind": "symbol",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::SymbolKind::Times",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "draw",
+          "implementation_verdict": "Pass",
+          "mapping": "SymbolDraw.draw through the checked path sink",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbolTriangle",
+      "canonical": "symbolTriangle",
+      "alias_of": null,
+      "kind": "symbol",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::SymbolKind::Triangle",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "draw",
+          "implementation_verdict": "Pass",
+          "mapping": "SymbolDraw.draw through the checked path sink",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbolTriangle2",
+      "canonical": "symbolTriangle2",
+      "alias_of": null,
+      "kind": "symbol",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::SymbolKind::Triangle2",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "draw",
+          "implementation_verdict": "Pass",
+          "mapping": "SymbolDraw.draw through the checked path sink",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbolWye",
+      "canonical": "symbolWye",
+      "alias_of": null,
+      "kind": "symbol",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::SymbolKind::Wye",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "draw",
+          "implementation_verdict": "Pass",
+          "mapping": "SymbolDraw.draw through the checked path sink",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbolX",
+      "canonical": "symbolTimes",
+      "alias_of": "symbolTimes",
+      "kind": "symbol",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::SymbolKind::Times",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [
+        {
+          "name": "draw",
+          "implementation_verdict": "Pass",
+          "mapping": "SymbolDraw.draw through the checked path sink",
+          "integrated_acceptance_verdict": "Pass"
+        }
+      ],
+      "factory_controls": [
+        "draw"
+      ],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbols",
+      "canonical": "symbolsFill",
+      "alias_of": "symbolsFill",
+      "kind": "palette",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::SYMBOLS",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbolsFill",
+      "canonical": "symbolsFill",
+      "alias_of": null,
+      "kind": "palette",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::SYMBOLS_FILL",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    },
+    {
+      "name": "symbolsStroke",
+      "canonical": "symbolsStroke",
+      "alias_of": null,
+      "kind": "palette",
+      "owner": "WP-S05",
+      "rust": "chart_core::shape::SYMBOLS_STROKE",
+      "implementation_verdict": "Pass",
+      "integrated_acceptance_verdict": "Pass",
+      "acceptance_limit": "Finite typed profile and explicit checked diagnostics; actual macOS/Linux Python and Node WASM, accepted family native/publication evidence, and final curved-dash qualification. Expanded WP-21/22/23 remain open.",
+      "methods": [],
+      "factory_controls": [],
+      "family_evidence": "docs/evidence/phase-2-shape-symbol-2026-09-09.md",
+      "custom_evidence": "docs/evidence/phase-2-shape-custom-2026-09-09.md",
+      "adaptation": "Typed finite inputs, materialized columns or native/registered accessors; no JavaScript coercion or callback serialization.",
+      "integrated_evidence": "docs/evidence/phase-2-shape-acceptance-2026-09-09.md"
+    }
+  ],
+  "defaults_and_boundary_inheritance": "fixtures/shapes/inventory.json; default getters and inherited helper settings are covered by each retained family corpus",
+  "custom_protocols": [
+    "Curve",
+    "Symbol",
+    "PieComparator",
+    "StackOrder",
+    "StackOffset"
+  ],
+  "platform_performance_release": "Expanded WP-21/22/23 remain separate acceptance owners."
+}

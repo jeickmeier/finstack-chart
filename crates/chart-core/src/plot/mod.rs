@@ -76,13 +76,7 @@ pub(super) fn validate_name(name: &str) -> ChartResult<()> {
         Ok(())
     }
 }
-/// Explicit primary API semantics. Additional compatibility profiles require their own kernels.
-#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, serde::Serialize, serde::Deserialize)]
-pub enum Profile {
-    /// Existing defaults: explicit grouping, radius/stroke units and current bin/stat ordering.
-    #[default]
-    LibraryV1,
-}
+pub use crate::grammar::Profile;
 /// Immutable authored chart. Cloning retains identities/data without running the engine.
 #[derive(Clone)]
 pub struct Plot {
@@ -92,10 +86,10 @@ pub struct Plot {
     pub(super) data: Vec<Data>,
     pub(super) layers: BTreeMap<String, LayerId>,
     pub(super) extensions: Arc<ExtensionRegistry>,
-    pub(super) profile: Profile,
     pub(super) data_limits: DataLimits,
     pub(super) compile_limits: CompileLimits,
     pub(super) axes: BTreeMap<String, ScaleId>,
+    pub(super) guides: BTreeMap<String, crate::GuideId>,
     pub(super) transforms: BTreeMap<String, crate::TransformId>,
     pub(super) colors: BTreeMap<String, ScaleId>,
 }
@@ -103,11 +97,50 @@ impl std::fmt::Debug for Plot {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("Plot")
             .field("definition", &self.definition)
-            .field("profile", &self.profile)
+            .field("profile", &self.profile())
             .finish_non_exhaustive()
     }
 }
 impl Plot {
+    /// Resolve a default or additional guide by its authored name.
+    pub fn guide(&self, name: &str) -> ChartResult<GuideHandle> {
+        self.guides
+            .get(name)
+            .copied()
+            .map(GuideHandle)
+            .or_else(|| self.axes.get(name).map(|id| AxisHandle(*id).guide()))
+            .ok_or_else(|| {
+                error(
+                    DiagnosticCode::MissingResource,
+                    format!("No guide named '{name}'."),
+                )
+            })
+    }
+    /// Resolve the positional scale used by a default or additional named guide.
+    pub fn guide_axis(&self, name: &str) -> ChartResult<AxisHandle> {
+        if let Some(id) = self.guides.get(name) {
+            return self
+                .definition
+                .guides
+                .iter()
+                .find(|g| g.id == *id)
+                .map(|g| AxisHandle(g.scale))
+                .ok_or_else(|| error(DiagnosticCode::MissingResource, "Named guide is absent."));
+        }
+        self.axis(name)
+    }
+    /// Default and additional guide names with independent stable identities.
+    pub fn named_guides(&self) -> impl Iterator<Item = (&str, GuideHandle)> {
+        self.axes
+            .iter()
+            .map(|(name, id)| (name.as_str(), AxisHandle(*id).guide()))
+            .chain(
+                self.guides
+                    .iter()
+                    .map(|(name, id)| (name.as_str(), GuideHandle(*id))),
+            )
+    }
+
     /// Authored layer names with stable handles, without exposing mutable grammar ownership.
     pub fn named_layers(&self) -> impl ExactSizeIterator<Item = (&str, LayerHandle)> {
         self.layers
@@ -134,7 +167,7 @@ impl Plot {
     }
     /// Explicit default semantic profile.
     pub fn profile(&self) -> Profile {
-        self.profile
+        self.definition.profile()
     }
     /// Exact immutable registry used by native/export destinations.
     pub fn extensions(&self) -> &Arc<ExtensionRegistry> {
@@ -230,6 +263,7 @@ pub struct PlotBuilder {
     figure: crate::composition::FigureComposition,
     theme: Option<ThemeBuilder>,
     axes: Vec<AxisBuilder>,
+    guides: Vec<GuideBuilder>,
     colors: Vec<ColorScaleBuilder>,
     legends: Vec<LegendBuilder>,
     annotations: Vec<LabelsBuilder>,
@@ -251,6 +285,7 @@ pub fn plot(data: Data) -> PlotBuilder {
         figure: Default::default(),
         theme: None,
         axes: vec![],
+        guides: vec![],
         colors: vec![],
         legends: vec![],
         annotations: vec![],
@@ -265,6 +300,13 @@ pub enum PlotLayer {
     Marks(Box<LayerBuilder>),
     /// One fixed annotation with annotation identity, not repeated per source row.
     Annotation(Box<LabelsBuilder>),
+    /// Fixed retained path with stable annotation identity.
+    VectorPath(Box<VectorPathBuilder>),
+}
+impl From<VectorPathBuilder> for PlotLayer {
+    fn from(path: VectorPathBuilder) -> Self {
+        Self::VectorPath(Box::new(path))
+    }
 }
 impl From<LayerBuilder> for PlotLayer {
     fn from(layer: LayerBuilder) -> Self {
@@ -337,6 +379,11 @@ impl PlotBuilder {
         self.axes.push(axis);
         self
     }
+    /// Add an independent guide over an existing positional scale.
+    pub fn guide(mut self, guide: GuideBuilder) -> Self {
+        self.guides.push(guide);
+        self
+    }
     /// Add a named independent or secondary axis.
     pub fn axis(mut self, axis: AxisBuilder) -> Self {
         self.axes.push(axis);
@@ -362,6 +409,10 @@ impl PlotBuilder {
         match layer.into() {
             PlotLayer::Marks(layer) => self.layers.push(*layer),
             PlotLayer::Annotation(label) => self.annotations.push(*label),
+            PlotLayer::VectorPath(path) => {
+                self.figure.version = 2;
+                self.figure.paths.push(path.0);
+            }
         };
         self
     }
@@ -441,7 +492,7 @@ impl PlotBuilder {
                 .position(|d| d.id == data.id)
                 .expect("registered authoring data")]
         };
-        let mut definition = ChartDefinition::new(Revision::INITIAL);
+        let mut definition = ChartDefinition::new(Revision::INITIAL).with_profile(self.profile);
         definition.facets = self
             .facet
             .as_ref()
@@ -476,6 +527,22 @@ impl PlotBuilder {
         for axis in axis_builders {
             definition.axes.push(axis.lower(&axes)?);
         }
+        let mut guide_names = BTreeMap::new();
+        for guide in self.guides {
+            validate_name(&guide.name)?;
+            if axes.contains_key(&guide.name)
+                || guide_names
+                    .insert(guide.name.clone(), guide.handle()?.id())
+                    .is_some()
+            {
+                return Err(error(
+                    DiagnosticCode::SchemaConflict,
+                    format!("Duplicate guide name '{}'.", guide.name),
+                ));
+            }
+            definition.guides.push(guide.lower(&axes)?);
+        }
+
         for annotation in self.annotations {
             definition
                 .figure
@@ -533,7 +600,7 @@ impl PlotBuilder {
                     crate::grammar::DataRef::Dataset(root.id),
                     crate::grammar::DataRef::Transform,
                 );
-                let node = t.lower(root, input, &self.mappings)?;
+                let node = t.lower(root, input, &self.mappings, self.profile)?;
                 let default = if matches!(
                     node.statistic.parameters,
                     crate::grammar::StatParameters::Custom(_)
@@ -588,10 +655,14 @@ impl PlotBuilder {
                 .clone()
                 .unwrap_or_else(|| format!("layer_{}", index + 1));
             validate_name(&name)?;
-            let (mut layer, mapping) = builder.lower(data, &self.mappings).map_err(|mut e| {
-                e.message = format!("Dataset '{}', layer '{name}': {}", data.name, e.message);
-                e
-            })?;
+            let (mut layer, mapping) =
+                builder
+                    .lower(data, &self.mappings, self.profile)
+                    .map_err(|mut e| {
+                        e.message =
+                            format!("Dataset '{}', layer '{name}': {}", data.name, e.message);
+                        e
+                    })?;
             if let Some(id) = dependency {
                 layer.data = crate::grammar::DataRef::Transform(id);
                 if builder.generated.is_none()
@@ -599,10 +670,17 @@ impl PlotBuilder {
                     && let Some(mappings) = &transform_defaults[&id]
                 {
                     layer.mappings = mappings.clone();
+                    if layer.orientation == crate::grammar::Orientation::Horizontal {
+                        crate::grammar::orientation::transpose_mappings(&mut layer.mappings);
+                    }
                     if matches!(layer.geom, crate::grammar::Geom::Bar { .. })
                         && let Mappings::Statistical(aes) = &mut layer.mappings
                     {
-                        aes.y2 = Some(crate::grammar::StatNumeric::Literal(0.));
+                        if layer.orientation == crate::grammar::Orientation::Horizontal {
+                            aes.x2 = Some(crate::grammar::StatNumeric::Literal(0.));
+                        } else {
+                            aes.y2 = Some(crate::grammar::StatNumeric::Literal(0.));
+                        }
                     }
                 }
             }
@@ -649,7 +727,7 @@ impl PlotBuilder {
                 .filter_map(|l| l.color.as_mut())
                 .filter(|c| &c.id == id)
             {
-                if legend.untitled {
+                if legend.generic {
                     color.title = None;
                 }
                 if let Some(title) = &legend.title {
@@ -691,10 +769,10 @@ impl PlotBuilder {
             data: datasets,
             layers: names,
             extensions: self.extensions,
-            profile: self.profile,
             data_limits: self.data_limits,
             compile_limits: self.compile_limits,
             axes,
+            guides: guide_names,
             transforms: transform_names,
             colors: color_ids,
         })
@@ -708,6 +786,11 @@ pub struct PlotEditBuilder {
     failure: Option<Diagnostic>,
 }
 impl PlotEditBuilder {
+    /// Change canonical execution semantics while retaining data and immutable old snapshots.
+    pub fn profile(mut self, profile: Profile) -> Self {
+        self.definition = self.definition.with_profile(profile);
+        self
+    }
     fn figure_mut(&mut self) -> &mut crate::composition::FigureComposition {
         self.definition.figure.get_or_insert_with(Default::default)
     }
@@ -742,18 +825,18 @@ impl PlotEditBuilder {
         Ok(self.original)
     }
 }
-fn default_color_scale() -> ColorScale {
+fn default_color_scale() -> ColorScale<crate::color::Paint> {
     ColorScale::Discrete {
         domain: None,
         palette: vec![
-            crate::theme::rgb(31, 119, 180),
-            crate::theme::rgb(255, 127, 14),
-            crate::theme::rgb(44, 160, 44),
-            crate::theme::rgb(214, 39, 40),
-            crate::theme::rgb(148, 103, 189),
-            crate::theme::rgb(140, 86, 75),
+            crate::theme::rgb(31, 119, 180).into(),
+            crate::theme::rgb(255, 127, 14).into(),
+            crate::theme::rgb(44, 160, 44).into(),
+            crate::theme::rgb(214, 39, 40).into(),
+            crate::theme::rgb(148, 103, 189).into(),
+            crate::theme::rgb(140, 86, 75).into(),
         ],
-        missing: crate::theme::rgb(128, 128, 128),
+        missing: crate::theme::rgb(128, 128, 128).into(),
     }
 }
 

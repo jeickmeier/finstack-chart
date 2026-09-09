@@ -1,0 +1,82 @@
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 29.71s
+     Running unittests src/lib.rs (target/debug/deps/chart_core-a27a11c556a0c361)
+
+running 11 tests
+test navigation::tests::piecewise_numeric_zoom_retains_knots_and_pointer_anchor ... ok
+test navigation::tests::pointer_anchor_uses_log_and_symlog_coordinates ... ok
+test navigation::tests::reversed_ranges_domain_clamp_region_and_invalid_inputs ... ok
+test state::reducer::tests::disposal_is_terminal_even_when_cancellation_cannot_advance_a_revision ... ok
+test navigation::tests::calendar_navigation_uses_piecewise_mapping_and_exact_timestamps ... ok
+test navigation::tests::timestamp_navigation_preserves_large_integer_identity ... ok
+test state::tests::state_and_viewport_revision_exhaustion_leave_state_unchanged ... ok
+test navigation::tests::sessions_zoom_by_active_time_and_reject_unknown_calendar_extent ... ok
+test navigation::tests::category_windows_preserve_catalog_lookup_and_singletons ... ok
+test transaction::tests::exhausted_store_dataset_and_ordinal_counters_roll_back ... ok
+test inspection::index::tests::duplicate_x_signed_zeros_keep_frontmost_128_and_all_keyboard_identities ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/layout.rs (target/debug/deps/layout-e1a273a2c1bc9a52)
+
+running 20 tests
+test invalid_scale_options_reject_even_at_tiny_bounds_before_measurement ... ok
+test category_catalogs_merge_by_label_across_layers_and_reject_numeric_statistics ... ok
+test known_linear_geometry_clips_targets_ranges_and_inverse_share_one_scene ... ok
+test outside_policies_split_lines_and_annotation_overflow_is_explicit ... ok
+test representable_narrow_numeric_domains_have_finite_scene_and_distinct_labels ... ok
+test category_label_projection_survives_codes_reordering_removal_and_explicit_domain ... ok
+test resource_and_work_errors_precede_callbacks_and_preserve_previous_scene ... ok
+test projection_overflow_and_category_or_guide_budgets_fail_without_replacing_a_scene ... ok
+test independent_named_axes_accept_distinct_calculation_spaces_and_hidden_layers_train ... ok
+test utc_large_origin_scene_uses_integer_inverse_and_calendar_labels ... ok
+test tiny_empty_and_empty_histogram_have_controlled_states_and_finite_geometry ... ok
+test crowded_labels_are_thinned_deterministically_with_a_pressure_diagnostic ... ok
+test wp11_mapped_color_changes_styles_and_metadata_without_numeric_domain_changes ... ok
+test destination_text_changes_margins_without_recomputing_statistics ... ok
+test automatic_category_training_is_eligible_and_keeps_retained_relative_order ... ok
+test wp11_area_and_ribbon_split_missing_and_validate_bounds ... ok
+test visibility_has_its_own_scene_stamp_and_does_not_change_trained_domains ... ok
+test wp11_ohlc_validation_and_volume_invalidity_are_independent ... ok
+test zoom_keeps_histogram_edges_counts_membership_domains_and_snapshot ... ok
+test wp11_portable_log_axis_and_secondary_units_use_shared_projection ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/scale_calendar.rs (target/debug/deps/scale_calendar-796e21d16f1c6897)
+
+running 8 tests
+test timestamp_clamp_and_omit_precede_integer_precision_conversion ... ok
+test exact_time_units_integer_limits_and_typed_ranges ... ok
+test resource_coverage_wall_resolution_and_invalid_requests_are_explicit ... ok
+test every_fixed_zone_interval_matches_floor_ceil_offset_and_ticks ... ok
+test automatic_fixed_zone_ticks_and_nice_match_all_reference_counts ... ok
+test fixed_zone_time_mapping_and_inverse_match_reference ... ok
+test original_time_scale_inventory_matches_declared_integer_date_overlap ... ok
+test expanded_filtered_intervals_custom_formats_and_utc_day_selection_match ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.50s
+
+     Running tests/scale_numeric.rs (target/debug/deps/scale_numeric-c22a985d3ddc329b)
+
+running 2 tests
+test independent_piecewise_radial_clamp_and_copy_contracts ... ok
+test pinned_numeric_mapping_and_inverse_families_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/scales.rs (target/debug/deps/scales-5a3836ca6eafdbf1)
+
+running 9 tests
+test decimal_ticks_do_not_accumulate_label_noise_and_time_omission_precedes_precision_conversion ... ok
+test categorical_explicit_order_centers_extents_gaps_and_lookup_are_distinct_from_inverse ... ok
+test numeric_ticks_are_bounded_ordered_unique_and_locale_independent ... ok
+test fix07_large_origin_time_projection_keeps_integer_precision_and_labels ... ok
+test baseline_padding_and_nice_precede_viewport_and_are_independent_of_range ... ok
+test utc_calendar_matches_independent_unix_date_fixtures_and_rejects_invalid_dates ... ok
+test fix07_empty_constant_descending_and_explicit_domains_are_locked ... ok
+test robust_projection_handles_huge_domains_without_intermediate_overflow ... ok
+test utc_ticks_follow_month_year_leap_day_and_monday_boundaries ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

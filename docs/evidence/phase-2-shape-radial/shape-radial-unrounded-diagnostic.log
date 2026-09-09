@@ -1,0 +1,37 @@
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.78s
+     Running tests/shape_cartesian.rs (target/debug/deps/shape_cartesian-28013c4732824a6b)
+
+running 6 tests
+test input_errors_and_resource_bounds_never_return_partial_owned_geometry ... ok
+test independent_monotone_and_natural_invariants_hold ... ok
+test ordering_gaps_independent_boundaries_and_helper_inheritance_are_explicit ... ok
+test native_accessors_and_custom_protocol_receive_exact_order_and_area_lifecycle ... ok
+test complete_cartesian_seed_matrix_matches_actual_generators ... ok
+test extended_controls_helpers_and_irregular_matrix_matches_reference ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/shape_radial.rs (target/debug/deps/shape_radial-5af248f24ce5a4d6)
+
+running 2 tests
+test native_accessors_roundtrips_and_bounds_preserve_polar_contract ... ok
+test complete_radial_and_link_corpus_matches_reference ... FAILED
+
+failures:
+
+---- complete_radial_and_link_corpus_matches_reference stdout ----
+
+thread 'complete_radial_and_link_corpus_matches_reference' (449) panicked at crates/chart-core/tests/shape_radial.rs:99:9:
+assertion `left == right` failed: line-constants-null
+  left: "M1.4779274061605931,-12.256887791402L7.408366574385316,-9.875812495609178L11.35373990176977,-4.848521217016687L12.256887791402,1.4779274061605936L9.87581249560918,7.408366574385314L4.848521217016683,11.35373990176977L-1.477927406160593,12.256887791402L-7.408366574385314,9.87581249560918L-11.353739901769769,4.848521217016689L-12.256887791402,-1.477927406160592L-9.875812495609177,-7.408366574385319L-4.848521217016689,-11.353739901769769L1.4779274061605914,-12.256887791402"
+ right: "M1.4779274061605931,-12.256887791402L7.408366574385316,-9.875812495609178L11.35373990176977,-4.848521217016687L12.256887791402,1.4779274061605936L9.875812495609178,7.408366574385314L4.848521217016683,11.35373990176977L-1.477927406160593,12.256887791402L-7.408366574385314,9.87581249560918L-11.353739901769769,4.848521217016689L-12.256887791402,-1.477927406160592L-9.875812495609177,-7.408366574385319L-4.848521217016689,-11.353739901769769L1.4779274061605914,-12.256887791402"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    complete_radial_and_link_corpus_matches_reference
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+error: test failed, to rerun pass `-p chart-core --test shape_radial`

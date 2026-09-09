@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "exports": [
+    "axisBottom",
+    "axisLeft",
+    "axisRight",
+    "axisTop"
+  ],
+  "methods": [
+    "offset",
+    "scale",
+    "tickArguments",
+    "tickFormat",
+    "tickPadding",
+    "tickSize",
+    "tickSizeInner",
+    "tickSizeOuter",
+    "tickValues",
+    "ticks"
+  ],
+  "defaults": [
+    {
+      "device_scale": 1,
+      "tickArguments": [],
+      "tickValues": null,
+      "tickFormat": null,
+      "tickSize": 6,
+      "tickSizeInner": 6,
+      "tickSizeOuter": 6,
+      "tickPadding": 3,
+      "offset": 0.5
+    },
+    {
+      "device_scale": 2,
+      "tickArguments": [],
+      "tickValues": null,
+      "tickFormat": null,
+      "tickSize": 6,
+      "tickSizeInner": 6,
+      "tickSizeOuter": 6,
+      "tickPadding": 3,
+      "offset": 0
+    }
+  ],
+  "ownership": {
+    "scale": "Shared scale lane owns domain/map/ticks/format/band metrics.",
+    "guide": "Axis lane owns identity, placement, candidate precedence, component presentation and lifecycle."
+  },
+  "open": [
+    "timed transitions FIX-19-H",
+    "local zone DST FIX-19-E",
+    "registered provider descriptors",
+    "full native and cross-host acceptance"
+  ]
+}

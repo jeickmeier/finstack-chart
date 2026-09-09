@@ -56,7 +56,7 @@ impl Session {
     pub fn chart_json(&self) -> ChartResult<String> {
         self.extensions().validate_portable(self.definition())?;
         encode(&ChartEnvelope {
-            version: VERSION,
+            version: self.definition().wire_version(),
             definition: self.definition().clone(),
         })
     }

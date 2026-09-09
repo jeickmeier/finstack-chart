@@ -62,6 +62,8 @@ impl Component {
     pub fn set(&self, method: &str, arguments: &str) -> ChartResult<Self> {
         let a = Args::parse(arguments)?;
         Ok(Self(match &self.0 {
+            Kind::Expression(expr) => Kind::Expression(expr.set(method, &a)?),
+            Kind::ScaleAes(_) => return Err(unsupported(method)),
             Kind::Aes(b) => Kind::Aes(match method {
                 "x" => b.clone().x(a.mapping()?),
                 "y" => b.clone().y(a.mapping()?),
@@ -77,6 +79,45 @@ impl Component {
                 _ => return Err(unsupported(method)),
             }),
             Kind::Layer(b) => Kind::Layer(match method {
+                "symbol_kind" => scalar!(a, b, symbol_kind),
+                "symbol_size" => scalar!(a, b, symbol_size),
+                "symbol_paint" => scalar!(a, b, symbol_paint),
+                "symbol_missing" => scalar!(a, b, symbol_missing),
+                "symbol_title" => string!(a, b, symbol_title),
+                "symbol_types" => {
+                    a.count(3)?;
+                    b.clone()
+                        .symbol_types(a.at::<String>(0)?, a.at(1)?, a.at(2)?)
+                }
+                "symbol_groups" => {
+                    a.count(2)?;
+                    b.clone().symbol_groups(a.at(0)?, a.at(1)?)
+                }
+                "symbol_size_guide" => {
+                    a.count(2)?;
+                    b.clone().symbol_size_guide(a.at::<String>(0)?, a.at(1)?)
+                }
+                "shape_protocol" => {
+                    a.count(2)?;
+                    b.clone().shape_protocol(a.at(0)?, a.at(1)?)
+                }
+                "curve" => scalar!(a, b, curve),
+                "arc_parameters" => scalar!(a, b, arc_parameters),
+                "radial_parameters" => scalar!(a, b, radial_parameters),
+                "pie_angles" => scalar!(a, b, pie_angles),
+                "pie_order" => scalar!(a, b, pie_order),
+                "pie_grouped" => scalar!(a, b, pie_grouped),
+                "shape_value" => {
+                    a.count(2)?;
+                    let input = numeric_input(&a.0[1])?;
+                    b.clone().shape_value(a.at(0)?, input)
+                }
+                "numeric_scale" => {
+                    a.count(3)?;
+                    let input = numeric_input(&a.0[1])?;
+                    b.clone().numeric_scale(a.at(0)?, input, a.at(2)?)
+                }
+                "orientation" => scalar!(a, b, orientation),
                 "name" => string!(a, b, name),
                 "from_transform" => string!(a, b, from_transform),
                 "independent" => empty!(a, b, independent),
@@ -91,7 +132,9 @@ impl Component {
                 "facet_target" => scalar!(a, b, facet_target),
                 "clip" => scalar!(a, b, clip),
                 "invalid" => scalar!(a, b, invalid),
-                "candle_colors" => scalar!(a, b, candle_colors),
+                "candle_colors" => b
+                    .clone()
+                    .candle_colors(a.one::<crate::grammar::CandleColors<crate::color::Paint>>()?),
                 "width" => scalar!(a, b, width),
                 "order" => scalar!(a, b, order),
                 "connect_gaps" => scalar!(a, b, connect_gaps),
@@ -167,6 +210,9 @@ impl Component {
             }),
             Kind::Position(b) => Kind::Position(match method {
                 "normalize" => scalar!(a, b, normalize),
+                "stack_order" => scalar!(a, b, stack_order),
+                "stack_offset" => scalar!(a, b, stack_offset),
+                "stack_missing" => scalar!(a, b, stack_missing),
                 "width" => scalar!(a, b, width),
                 "displacement" => pair!(a, b, displacement),
                 "units" => scalar!(a, b, units),
@@ -199,9 +245,13 @@ impl Component {
                         .time_domain(exact_i64(&a.0[0])?, exact_i64(&a.0[1])?)
                 }
                 "interval" => scalar!(a, b, interval),
+                "calendar_interval" => scalar!(a, b, calendar_interval),
                 _ => return Err(unsupported(method)),
             }),
             Kind::Axis(b) => Kind::Axis(match method {
+                "numeric_format" => scalar!(a, b, numeric_format),
+                "time_format" => scalar!(a, b, time_format),
+                "oob" => scalar!(a, b, oob),
                 "name" => string!(a, b, name),
                 "side" => scalar!(a, b, side),
                 "label" => string!(a, b, label),
@@ -222,7 +272,27 @@ impl Component {
                 }
                 _ => return Err(unsupported(method)),
             }),
+            Kind::Guide(b) => Kind::Guide(match method {
+                "scale" => string!(a, b, scale),
+                "side" => scalar!(a, b, side),
+                "translate" => pair!(a, b, translate),
+                "label" => string!(a, b, label),
+                "rotation" => scalar!(a, b, rotation),
+                "visible" => scalar!(a, b, visible),
+                "numeric_format" => scalar!(a, b, numeric_format),
+                "time_format" => scalar!(a, b, time_format),
+                "ticks" => b.clone().ticks(
+                    a.one::<Vec<(Value, String)>>()?
+                        .into_iter()
+                        .map(|(v, s)| scale_value(&v).map(|v| (v, s)))
+                        .collect::<ChartResult<Vec<_>>>()?,
+                ),
+                _ => return Err(unsupported(method)),
+            }),
             Kind::Color(b) => Kind::Color(match method {
+                "palette_scheme" => b
+                    .clone()
+                    .palette_scheme(a.one::<crate::scales::chromatic::SchemeSpec>()?),
                 "palette" => b.clone().palette(
                     a.one::<Vec<Value>>()?
                         .iter()
@@ -236,6 +306,7 @@ impl Component {
             }),
             Kind::Legend(b) => Kind::Legend(match method {
                 "untitled" => empty!(a, b, untitled),
+                "generic_title" => empty!(a, b, generic_title),
                 "scale" => string!(a, b, scale),
                 "title" => string!(a, b, title),
                 _ => return Err(unsupported(method)),
@@ -257,7 +328,9 @@ impl Component {
             }),
             Kind::Style(b) => Kind::Style(match method {
                 "color_mode" => scalar!(a, b, color_mode),
-                "gradient" => scalar!(a, b, gradient),
+                "gradient" => b
+                    .clone()
+                    .gradient(a.one::<crate::scene::LinearGradient<crate::color::Paint>>()?),
                 "background" => b.clone().background(a.color()?),
                 "panel" => b.clone().panel(a.color()?),
                 "foreground" => b.clone().foreground(a.color()?),
@@ -276,6 +349,22 @@ impl Component {
                 _ => return Err(unsupported(method)),
             }),
             Kind::Theme(b) => Kind::Theme(match method {
+                "geometry" => {
+                    let mut value: Value = a.one()?;
+                    if let Some(object) = value.as_object_mut() {
+                        for name in ["ink", "paper", "accent"] {
+                            if let Some(v) = object.get_mut(name) {
+                                *v = serde_json::to_value(color(v)?).map_err(|e| {
+                                    error(DiagnosticCode::Validation, e.to_string())
+                                })?;
+                            }
+                        }
+                    }
+                    b.clone()
+                        .geometry(options::<crate::theme::GeometryTheme<crate::color::Paint>>(
+                            value,
+                        )?)
+                }
                 "preset" => scalar!(a, b, preset),
                 _ => return Err(unsupported(method)),
             }),
@@ -318,6 +407,20 @@ impl Component {
             Kind::Footnote(b) => Kind::Footnote(match method {
                 "line_spacing" => scalar!(a, b, line_spacing),
                 "rotation" => scalar!(a, b, rotation),
+                _ => return Err(unsupported(method)),
+            }),
+            Kind::VectorPath(b) => Kind::VectorPath(match method {
+                "transform" => {
+                    a.count(3)?;
+                    b.clone()
+                        .transform(crate::path::Affine::new(a.at(0)?)?, a.at(1)?, a.at(2)?)?
+                }
+                "anchor" => b.clone().anchor(a.one()?),
+                "fill" => b.clone().fill(a.one::<Option<crate::color::Paint>>()?),
+                "stroke" => b
+                    .clone()
+                    .stroke(a.one::<Option<crate::scene::Stroke<crate::color::Paint>>>()?),
+                "overflow" => b.clone().overflow(a.one()?),
                 _ => return Err(unsupported(method)),
             }),
             Kind::Labels(b) => Kind::Labels(match method {

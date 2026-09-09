@@ -34,7 +34,7 @@ enum Operation {
         #[serde(default)]
         outline: Option<bool>,
         #[serde(default)]
-        output_theme: Option<Box<chart_core::theme::ThemePatch>>,
+        output_theme: Option<Box<chart_core::theme::ThemePatch<chart_core::color::Paint>>>,
     },
     Cancel {
         job: Revision,
@@ -46,7 +46,8 @@ impl PortableChart {
     /// call export_job later. Default captures the presented source with clean committed state.
     pub fn export_control(&mut self, input: &str) -> ChartResult<String> {
         let envelope: Envelope = portable::decode(input)?;
-        if envelope.version != portable::VERSION {
+        let floating = matches!(&envelope.operation, Operation::Begin { output_theme: Some(theme), .. } if theme.has_floating());
+        if envelope.version != if floating { 2 } else { portable::VERSION } {
             return Err(error(
                 DiagnosticCode::UnsupportedCapability,
                 "Unsupported live-export envelope version.",

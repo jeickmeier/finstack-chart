@@ -1,0 +1,6 @@
+scripts/bindings/authoring/shape_arc_typing_invalid.py:2: error: Argument 1 to "ShapeArc" has incompatible type "dict[str, str]"; expected "ShapeArcConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_arc_typing_invalid.py:3: error: Argument 1 to "ShapePie" has incompatible type "dict[str, str]"; expected "ShapePieConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_arc_typing_invalid.py:4: error: List item 0 has incompatible type "str"; expected "float"  [list-item]
+scripts/bindings/authoring/shape_arc_typing_invalid.py:5: error: Argument 1 to "shape_value" of "Layer" has incompatible type "Literal['Radius']"; expected "Literal['InnerRadius', 'OuterRadius', 'StartAngle', 'EndAngle', 'PadAngle', 'PadRadius', 'CornerRadius', 'PieValue']"  [arg-type]
+scripts/bindings/authoring/shape_arc_typing_invalid.py:6: error: Argument 1 to "centroid" of "ShapeArc" has incompatible type "dict[str, None]"; expected "ArcDatum | None"  [arg-type]
+Found 5 errors in 1 file (checked 1 source file)

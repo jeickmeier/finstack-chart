@@ -1,0 +1,76 @@
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 22.19s
+     Running tests/authoring.rs (target/debug/deps/authoring-69e6e088372539ee)
+
+running 13 tests
+test exact_nullable_data_and_timestamps_survive_materialization ... ok
+test labels_are_single_annotations_and_callout_components_preserve_the_endpoint ... ok
+test histogram_lowers_to_the_existing_bin_kernel_and_source_membership ... ok
+test automatic_timestamp_origins_align_independent_datasets_without_narrowing_ticks ... ok
+test columns_and_rows_prepare_identical_values_without_manual_ids ... ok
+test component_options_reject_incompatible_owners_without_preparation ... ok
+test facets_reject_same_ordinal_with_different_field_names ... ok
+test schema_errors_and_foreign_handles_reject_without_mutating_data ... ok
+test imported_identity_preserves_seeded_jitter_and_rejects_ambiguous_data_owners ... ok
+test shared_automatic_color_catalog_is_consistent_across_data_and_updates ... ok
+test nondefault_recipe_and_primary_axis_options_survive_later_components ... ok
+test grid_infers_empty_combinations_and_build_rejects_invalid_catalogs ... ok
+test shared_transform_runs_once_and_generated_color_uses_its_own_stage ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/authoring_host.rs (target/debug/deps/authoring_host-ec81c0d75ec1a64c)
+
+running 2 tests
+test host_composition_matches_independent_bins_and_rejects_misplaced_components ... ok
+test primary_envelope_roundtrip_preserves_exact_data_names_and_rejects_malformed_registry ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/axis_guides.rs (target/debug/deps/axis_guides-7fbcd04664aec86b)
+
+running 5 tests
+test legacy_axis_wire_fields_round_trip_and_unknown_fields_still_reject ... ok
+test one_scale_drives_top_bottom_and_two_translated_same_side_guides ... ok
+test invalid_guide_identity_orientation_reference_and_work_reject_before_measurement ... ok
+test replacing_one_guide_scale_preserves_its_identity_and_other_guides ... ok
+test primary_builders_names_edits_and_version_eight_round_trips_retain_ownership ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/full_scales.rs (target/debug/deps/full_scales-91157937eac2655d)
+
+running 4 tests
+test symlog_signed_roundtrip_extreme_ratio ... ok
+test supplied_sessions_compress_gaps_and_retain_exact_large_timestamps ... ok
+test logarithmic_policies_roundtrips_and_invalids ... ok
+test points_and_colors_have_declared_missing_and_domain_policy ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/layout.rs (target/debug/deps/layout-e1a273a2c1bc9a52)
+
+running 20 tests
+test category_catalogs_merge_by_label_across_layers_and_reject_numeric_statistics ... ok
+test invalid_scale_options_reject_even_at_tiny_bounds_before_measurement ... ok
+test representable_narrow_numeric_domains_have_finite_scene_and_distinct_labels ... ok
+test known_linear_geometry_clips_targets_ranges_and_inverse_share_one_scene ... ok
+test outside_policies_split_lines_and_annotation_overflow_is_explicit ... ok
+test resource_and_work_errors_precede_callbacks_and_preserve_previous_scene ... ok
+test independent_named_axes_accept_distinct_calculation_spaces_and_hidden_layers_train ... ok
+test projection_overflow_and_category_or_guide_budgets_fail_without_replacing_a_scene ... ok
+test destination_text_changes_margins_without_recomputing_statistics ... ok
+test utc_large_origin_scene_uses_integer_inverse_and_calendar_labels ... ok
+test automatic_category_training_is_eligible_and_keeps_retained_relative_order ... ok
+test wp11_ohlc_validation_and_volume_invalidity_are_independent ... ok
+test visibility_has_its_own_scene_stamp_and_does_not_change_trained_domains ... ok
+test wp11_mapped_color_changes_styles_and_metadata_without_numeric_domain_changes ... ok
+test crowded_labels_are_thinned_deterministically_with_a_pressure_diagnostic ... ok
+test tiny_empty_and_empty_histogram_have_controlled_states_and_finite_geometry ... ok
+test category_label_projection_survives_codes_reordering_removal_and_explicit_domain ... ok
+test wp11_area_and_ribbon_split_missing_and_validate_bounds ... ok
+test zoom_keeps_histogram_edges_counts_membership_domains_and_snapshot ... ok
+test wp11_portable_log_axis_and_secondary_units_use_shared_projection ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

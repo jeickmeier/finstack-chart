@@ -1,0 +1,14 @@
+    Blocking waiting for file lock on build directory
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+   Compiling chart-extension-example v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/custom-extension)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 23.78s
+     Running tests/scale_calendar.rs (target/debug/deps/scale_calendar-4b308155db3b3bf4)
+
+running 2 tests
+test calendar_axis_preserves_piecewise_knots_units_and_visible_windows ... ok
+test fold_gap_labels_and_geometry_share_revision_in_v5_publication ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.32s
+

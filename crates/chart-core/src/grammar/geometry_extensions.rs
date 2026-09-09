@@ -253,11 +253,11 @@ pub trait CustomGeom: Send + Sync {
 /// Separate upward/downward candle paint; equal open/close follows `up`.
 #[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, PartialEq, Eq)]
 #[serde(deny_unknown_fields)]
-pub struct CandleColors {
+pub struct CandleColors<P = crate::scene::Color> {
     /// Close greater than or equal to open.
-    pub up: crate::scene::Color,
+    pub up: P,
     /// Close less than open.
-    pub down: crate::scene::Color,
+    pub down: P,
 }
 impl Layer {
     /// Extend checked base geometry with a registered implementation and declarative parameters.
@@ -266,8 +266,11 @@ impl Layer {
         self
     }
     /// Explicit candle direction colors; mapped colors retain priority.
-    pub fn with_candle_colors(mut self, colors: CandleColors) -> Self {
-        self.candle_colors = Some(colors);
+    pub fn with_candle_colors<P: Into<crate::color::Paint>>(
+        mut self,
+        colors: CandleColors<P>,
+    ) -> Self {
+        self.candle_colors = Some(colors.map_colors(Into::into));
         self
     }
 }
@@ -290,4 +293,14 @@ pub fn validate_native_paint(
 /// Validated parameter size charged to the shared scene payload budget.
 pub(crate) fn native_parameter_size(parameters: &serde_json::Value) -> ChartResult<usize> {
     super::extensions::parameter_size(parameters)
+}
+
+impl<P> CandleColors<P> {
+    /// Transform directional colors without touching supplied OHLC values.
+    pub fn map_colors<Q>(self, mut map: impl FnMut(P) -> Q) -> CandleColors<Q> {
+        CandleColors {
+            up: map(self.up),
+            down: map(self.down),
+        }
+    }
 }

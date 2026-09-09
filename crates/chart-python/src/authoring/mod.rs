@@ -1,7 +1,18 @@
 //! Thin owned primary handles; all grammar and runtime behavior remains in shared Rust.
+mod color;
 mod data;
+mod interpolate;
 mod output;
+mod path;
 mod runtime;
+mod scale;
+mod shape;
+mod shape_arc_pie;
+mod shape_radial;
+mod shape_registry;
+mod shape_stack;
+mod shape_symbol;
+mod time;
 use super::failure;
 use chart_core::{
     plot::{
@@ -64,6 +75,63 @@ impl ComponentHandle {
             .map(Self::wrap)
             .map_err(failure)
     }
+    fn numeric_scale_field(
+        &self,
+        target: &str,
+        field: &FieldHandle,
+        scale: &str,
+    ) -> PyResult<Self> {
+        self.get()?
+            .numeric_scale_field(
+                portable::decode(target).map_err(failure)?,
+                *field.get()?,
+                portable::decode(scale).map_err(failure)?,
+            )
+            .map(Self::wrap)
+            .map_err(failure)
+    }
+    fn numeric_scale_expression(
+        &self,
+        target: &str,
+        input: &ComponentHandle,
+        scale: &str,
+    ) -> PyResult<Self> {
+        self.get()?
+            .numeric_scale_expression(
+                portable::decode(target).map_err(failure)?,
+                input.get()?,
+                portable::decode(scale).map_err(failure)?,
+            )
+            .map(Self::wrap)
+            .map_err(failure)
+    }
+    fn symbol_types_field(
+        &self,
+        field: &FieldHandle,
+        domain: &str,
+        palette: &str,
+    ) -> PyResult<Self> {
+        self.get()?
+            .symbol_types_field(
+                *field.get()?,
+                portable::decode(domain).map_err(failure)?,
+                portable::decode(palette).map_err(failure)?,
+            )
+            .map(Self::wrap)
+            .map_err(failure)
+    }
+    fn shape_value_field(&self, target: &str, field: &FieldHandle) -> PyResult<Self> {
+        self.get()?
+            .shape_value_field(portable::decode(target).map_err(failure)?, *field.get()?)
+            .map(Self::wrap)
+            .map_err(failure)
+    }
+    fn shape_value_expression(&self, target: &str, input: &ComponentHandle) -> PyResult<Self> {
+        self.get()?
+            .shape_value_expression(portable::decode(target).map_err(failure)?, input.get()?)
+            .map(Self::wrap)
+            .map_err(failure)
+    }
     fn field_parameter(&self, name: &str, field: &FieldHandle) -> PyResult<Self> {
         self.get()?
             .field_parameter(name, *field.get()?)
@@ -75,6 +143,10 @@ impl ComponentHandle {
             .data(data.get()?)
             .map(Self::wrap)
             .map_err(failure)
+    }
+    #[staticmethod]
+    fn source_expression(field: &FieldHandle) -> PyResult<Self> {
+        Ok(Self::wrap(Component::source_expression(*field.get()?)))
     }
     #[staticmethod]
     fn transform(name: &str, stat: &Self) -> PyResult<Self> {
@@ -107,6 +179,15 @@ impl ComponentHandle {
 handle!(DraftHandle, "_Draft", Draft);
 #[pymethods]
 impl DraftHandle {
+    fn with_shape_registry(
+        &self,
+        registry: &shape_registry::ShapeRegistryHandle,
+    ) -> PyResult<Self> {
+        self.get()?
+            .extensions(registry.get()?.clone())
+            .map(Self::wrap)
+            .map_err(failure)
+    }
     #[cfg(feature = "extension-proof")]
     fn with_example_extensions(&self) -> PyResult<Self> {
         self.get()?
@@ -155,6 +236,15 @@ impl DraftHandle {
 handle!(PlotHandle, "_Plot", plot::Plot);
 #[pymethods]
 impl PlotHandle {
+    #[staticmethod]
+    fn from_json_with_registry(
+        input: &str,
+        registry: &shape_registry::ShapeRegistryHandle,
+    ) -> PyResult<Self> {
+        plot::Plot::from_json_with_extensions(input, registry.get()?.clone())
+            .map(Self::wrap)
+            .map_err(failure)
+    }
     fn edit(&self) -> PyResult<DraftHandle> {
         Ok(DraftHandle::wrap(Draft::edit(self.get()?)))
     }
@@ -187,6 +277,17 @@ pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_class::<DraftHandle>()?;
     module.add_class::<PlotHandle>()?;
     data::register(module)?;
+    path::register(module)?;
+    shape_registry::register(module)?;
+    shape::register(module)?;
+    shape_radial::register(module)?;
+    shape_arc_pie::register(module)?;
+    shape_symbol::register(module)?;
+    shape_stack::register(module)?;
+    color::register(module)?;
+    interpolate::register(module)?;
+    time::register(module)?;
+    scale::register(module)?;
     runtime::register(module)?;
     output::register(module)
 }

@@ -24,8 +24,46 @@ impl ResolvedAxis {
     /// Map a prepared layer coordinate using that layer's exact value-space metadata.
     /// Category ordinals never become identities; UTC adds the checked integer origin first.
     pub fn map(&self, value: f64, layer_space: &ValueSpace) -> ChartResult<Option<f64>> {
+        if let ResolvedScale::Provider(scale) = &self.scale {
+            let semantic = match layer_space {
+                ValueSpace::Categorical { categories } => {
+                    if !value.is_finite()
+                        || value < 0.
+                        || value.fract() != 0.
+                        || value >= categories.len() as f64
+                    {
+                        return Err(error(
+                            DiagnosticCode::PrecisionLoss,
+                            "Category ordinal does not address its provider catalog.",
+                        ));
+                    }
+                    crate::composition::ScaleValue::Category(categories[value as usize].clone())
+                }
+                ValueSpace::Timestamp {
+                    representation,
+                    origin,
+                } => crate::composition::ScaleValue::Timestamp {
+                    value: timestamp(value, *origin)?,
+                    unit: representation.unit,
+                },
+                space if space == &self.space => crate::composition::ScaleValue::Number(value),
+                _ => {
+                    return Err(error(
+                        DiagnosticCode::SchemaConflict,
+                        "Prepared coordinate space differs from its positional provider.",
+                    ));
+                }
+            };
+            return scale.map(&semantic);
+        }
         match (&self.scale, layer_space) {
+            (ResolvedScale::Nonlinear(scale), ValueSpace::Scaled { scale: stage, .. })
+                if layer_space == &self.space && stage.transform == Some(scale.transform()) =>
+            {
+                scale.map_transformed(value)
+            }
             (ResolvedScale::Linear(scale), space) if space == &self.space => scale.map(value),
+            (ResolvedScale::Numeric(scale), space) if space == &self.space => scale.map(value),
             (ResolvedScale::Nonlinear(scale), space) if space == &self.space => scale.map(value),
             (
                 ResolvedScale::Session(scale),
@@ -38,6 +76,13 @@ impl ResolvedAxis {
             }
             (
                 ResolvedScale::Utc(scale),
+                ValueSpace::Timestamp {
+                    representation,
+                    origin,
+                },
+            ) if representation.unit == scale.unit() => scale.map(timestamp(value, *origin)?),
+            (
+                ResolvedScale::Calendar(scale),
                 ValueSpace::Timestamp {
                     representation,
                     origin,
@@ -106,6 +151,20 @@ pub(super) fn project(
         omitted: 0,
     };
     for layer in chart.layers().iter().filter(|l| l.visible()) {
+        let definition = chart
+            .definition()
+            .layers
+            .iter()
+            .find(|l| l.id == layer.id());
+        let shape = definition.and_then(|l| match l.geom {
+            crate::grammar::Geom::ShapeLine { curve, .. } => Some((curve, false)),
+            crate::grammar::Geom::ShapeArea { curve, .. } => Some((curve, true)),
+            _ => None,
+        });
+        let link = definition.and_then(|l| match l.geom {
+            crate::grammar::Geom::ShapeLink { curve } => Some(curve),
+            _ => None,
+        });
         let x = &axes[&layer.scales().x];
         let y = &axes[&layer.scales().y];
         let xspace = layer.domains().x_space.as_ref().unwrap_or(&x.space);
@@ -133,15 +192,22 @@ pub(super) fn project(
                         b += dy;
                     }
                     Position::Dodge(spec) => {
+                        let horizontal =
+                            layer.orientation() == crate::grammar::Orientation::Horizontal;
+                        let (axis, space, value) = if horizontal {
+                            (&y.scale, yspace, p.y())
+                        } else {
+                            (&x.scale, xspace, p.x())
+                        };
                         let (ResolvedScale::Band(scale), ValueSpace::Categorical { categories }) =
-                            (&x.scale, xspace)
+                            (axis, space)
                         else {
                             return Err(error(
                                 DiagnosticCode::SchemaConflict,
                                 "Dodge requires resolved categorical bands.",
                             ));
                         };
-                        let Some(bounds) = scale.extent(&categories[p.x() as usize])? else {
+                        let Some(bounds) = scale.extent(&categories[value as usize])? else {
                             return Ok(None);
                         };
                         let slot = spec
@@ -155,7 +221,13 @@ pub(super) fn project(
                                 )
                             })?;
                         let width = (bounds.end() - bounds.start()) * spec.width;
-                        a += width * ((slot as f64 + 0.5 + edge) / spec.order.len() as f64 - 0.5);
+                        let offset =
+                            width * ((slot as f64 + 0.5 + edge) / spec.order.len() as f64 - 0.5);
+                        if horizontal {
+                            b += offset;
+                        } else {
+                            a += offset;
+                        }
                     }
                     _ => {}
                 }
@@ -172,6 +244,59 @@ pub(super) fn project(
                 primitive,
             };
             match &mark.geometry {
+                PreparedGeometry::ShapePath {
+                    paint,
+                    center,
+                    geometry,
+                    ..
+                }
+                | PreparedGeometry::ShapePathRun {
+                    paint,
+                    center,
+                    geometry,
+                    ..
+                } => {
+                    let (local_anchors, run): (&[Point], bool) = match &mark.geometry {
+                        PreparedGeometry::ShapePath { anchor, .. } => {
+                            (std::slice::from_ref(anchor), false)
+                        }
+                        PreparedGeometry::ShapePathRun { anchors, .. } => (anchors, true),
+                        _ => unreachable!("shape path"),
+                    };
+                    if let Some(center) = point(*center, &mark.targets[0], 0.)? {
+                        let map =
+                            crate::path::Affine::new([1., 0., 0., 1., center.x(), center.y()])?;
+                        let geometry =
+                            geometry.transformed(map, 0.01, request.limits.max_path_commands)?;
+                        let anchors = local_anchors
+                            .iter()
+                            .map(|a| {
+                                let p = map.point([a.x(), a.y()])?;
+                                Point::new(p[0], p[1])
+                            })
+                            .collect::<ChartResult<Vec<_>>>()?;
+                        if geometry.has_segments() || (run && !geometry.commands().is_empty()) {
+                            out.push(
+                                item(Primitive::ShapePath {
+                                    dashes: vec![],
+                                    geometry,
+                                    fill: (*paint == crate::shape::SymbolPaint::Fill)
+                                        .then_some(mark.style.color),
+                                    stroke: (*paint == crate::shape::SymbolPaint::Stroke)
+                                        .then_some(Stroke {
+                                            width: mark.style.stroke_width,
+                                            color: mark.style.color,
+                                        }),
+                                    anchors,
+                                }),
+                                mark.targets.clone(),
+                                request,
+                            )?;
+                        }
+                    } else {
+                        out.omitted += 1;
+                    }
+                }
                 PreparedGeometry::Polygon(points) => {
                     let projected = points
                         .iter()
@@ -232,16 +357,65 @@ pub(super) fn project(
                     }
                 }
 
-                PreparedGeometry::BandRun { lower, upper } => {
+                PreparedGeometry::BandRun { lower, upper }
+                | PreparedGeometry::StackBandRun { lower, upper, .. } => {
+                    let sources =
+                        if let PreparedGeometry::StackBandRun { sources, .. } = &mark.geometry {
+                            Some(sources)
+                        } else {
+                            None
+                        };
+                    let mut anchors = vec![];
                     let mut lo = vec![];
                     let mut hi = vec![];
                     let mut targets = vec![];
                     let flush = |out: &mut Output,
                                  lo: &mut Vec<Point>,
                                  hi: &mut Vec<Point>,
-                                 targets: &mut Vec<Target>|
+                                 targets: &mut Vec<Target>,
+                                 anchors: &mut Vec<Point>|
                      -> ChartResult<()> {
                         if lo.is_empty() {
+                            return Ok(());
+                        }
+                        if let Some((curve, true)) = shape {
+                            let data: Vec<_> = lo
+                                .iter()
+                                .zip(hi.iter())
+                                .map(|(a, b)| crate::shape::AreaPoint {
+                                    lower: [a.x(), a.y()],
+                                    upper: [b.x(), b.y()],
+                                })
+                                .collect();
+                            let geometry = crate::shape::Area::new()
+                                .curve(curve)?
+                                .generate_with(
+                                    &data,
+                                    layer
+                                        .shape_protocols
+                                        .curve()
+                                        .map_or(&curve as &dyn crate::shape::CurveFactory, |p| p),
+                                    |p, _, _| Ok(Some(*p)),
+                                )?
+                                .geometry();
+                            if !geometry.commands().is_empty() {
+                                out.push(
+                                    item(Primitive::ShapePath {
+                                        dashes: vec![],
+                                        geometry,
+                                        fill: Some(mark.style.color),
+                                        stroke: None,
+                                        anchors: std::mem::take(anchors),
+                                    }),
+                                    std::mem::take(targets),
+                                    request,
+                                )?;
+                            } else {
+                                targets.clear();
+                            }
+                            anchors.clear();
+                            lo.clear();
+                            hi.clear();
                             return Ok(());
                         }
                         if lo.len() == 1 {
@@ -254,6 +428,7 @@ pub(super) fn project(
                                 std::mem::take(targets),
                                 request,
                             )?;
+                            anchors.clear();
                             lo.clear();
                             hi.clear();
                             return Ok(());
@@ -285,18 +460,27 @@ pub(super) fn project(
                         hi.clear();
                         Ok(())
                     };
-                    for ((a, b), target) in lower.iter().zip(upper).zip(&mark.targets) {
-                        if let (Some(a), Some(b)) = (point(*a, target, 0.)?, point(*b, target, 0.)?)
-                        {
+                    for (index, (a, b)) in lower.iter().zip(upper).enumerate() {
+                        let source = sources.map_or(Some(index), |s| s[index]);
+                        // Virtual cells only occur with ShapeStack, which has no target-based display displacement.
+                        let target = source.map(|i| &mark.targets[i]);
+                        let projection_target = target.unwrap_or(&mark.targets[0]);
+                        if let (Some(a), Some(b)) = (
+                            point(*a, projection_target, 0.)?,
+                            point(*b, projection_target, 0.)?,
+                        ) {
                             lo.push(a);
                             hi.push(b);
-                            targets.push(target.clone());
+                            if let Some(target) = target {
+                                anchors.push(b);
+                                targets.push(target.clone());
+                            }
                         } else {
                             out.omitted += 1;
-                            flush(&mut out, &mut lo, &mut hi, &mut targets)?;
+                            flush(&mut out, &mut lo, &mut hi, &mut targets, &mut anchors)?;
                         }
                     }
-                    flush(&mut out, &mut lo, &mut hi, &mut targets)?;
+                    flush(&mut out, &mut lo, &mut hi, &mut targets, &mut anchors)?;
                 }
                 PreparedGeometry::LineRun(points) => {
                     let mut run = Vec::new();
@@ -306,6 +490,37 @@ pub(super) fn project(
                                  targets: &mut Vec<Target>|
                      -> ChartResult<()> {
                         if run.is_empty() {
+                            return Ok(());
+                        }
+                        if let Some((curve, false)) = shape {
+                            let data: Vec<_> = run.iter().map(|p| [p.x(), p.y()]).collect();
+                            let geometry = crate::shape::Line::new()
+                                .curve(curve)?
+                                .generate_with(
+                                    &data,
+                                    layer
+                                        .shape_protocols
+                                        .curve()
+                                        .map_or(&curve as &dyn crate::shape::CurveFactory, |p| p),
+                                    |p, _, _| Ok(Some(*p)),
+                                )?
+                                .geometry();
+                            if !geometry.commands().is_empty() {
+                                out.push(
+                                    item(Primitive::ShapePath {
+                                        dashes: vec![],
+                                        geometry,
+                                        fill: None,
+                                        stroke: Some(stroke),
+                                        anchors: run.clone(),
+                                    }),
+                                    std::mem::take(targets),
+                                    request,
+                                )?;
+                            } else {
+                                targets.clear();
+                            }
+                            run.clear();
                             return Ok(());
                         }
                         let primitive = if run.len() == 1 {
@@ -350,23 +565,42 @@ pub(super) fn project(
                         point(*from, &mark.targets[0], 0.)?,
                         point(*to, &mark.targets[0], 0.)?,
                     ) {
-                        let primitive = if a.y() == b.y() {
-                            Primitive::Rule {
-                                from: Point::new(a.x() - width / 2., a.y())?,
-                                to: Point::new(a.x() + width / 2., a.y())?,
-                                stroke,
-                            }
-                        } else {
-                            Primitive::Rectangle {
-                                bounds: Rect::new(
-                                    a.x() - width / 2.,
-                                    a.y().min(b.y()),
-                                    *width,
-                                    (b.y() - a.y()).abs(),
-                                )?,
-                                fill: mark.style.color,
-                            }
-                        };
+                        let primitive =
+                            if layer.orientation() == crate::grammar::Orientation::Horizontal {
+                                if a.x() == b.x() {
+                                    Primitive::Rule {
+                                        from: Point::new(a.x(), a.y() - width / 2.)?,
+                                        to: Point::new(a.x(), a.y() + width / 2.)?,
+                                        stroke,
+                                    }
+                                } else {
+                                    Primitive::Rectangle {
+                                        bounds: Rect::new(
+                                            a.x().min(b.x()),
+                                            a.y() - width / 2.,
+                                            (b.x() - a.x()).abs(),
+                                            *width,
+                                        )?,
+                                        fill: mark.style.color,
+                                    }
+                                }
+                            } else if a.y() == b.y() {
+                                Primitive::Rule {
+                                    from: Point::new(a.x() - width / 2., a.y())?,
+                                    to: Point::new(a.x() + width / 2., a.y())?,
+                                    stroke,
+                                }
+                            } else {
+                                Primitive::Rectangle {
+                                    bounds: Rect::new(
+                                        a.x() - width / 2.,
+                                        a.y().min(b.y()),
+                                        *width,
+                                        (b.y() - a.y()).abs(),
+                                    )?,
+                                    fill: mark.style.color,
+                                }
+                            };
                         out.push(item(primitive), mark.targets.clone(), request)?;
                     } else {
                         out.omitted += 1;
@@ -397,6 +631,32 @@ pub(super) fn project(
                         point(*from, &mark.targets[0], -edge)?,
                         point(*to, &mark.targets[0], edge)?,
                     ) {
+                        if let Some(curve) = link {
+                            let geometry = crate::shape::Link::new(curve)?
+                                .generate_with(
+                                    &(),
+                                    layer
+                                        .shape_protocols
+                                        .curve()
+                                        .map_or(&curve as &dyn crate::shape::CurveFactory, |p| p),
+                                    |_| Ok([[from.x(), from.y()], [to.x(), to.y()]]),
+                                )?
+                                .geometry();
+                            if !geometry.commands().is_empty() {
+                                out.push(
+                                    item(Primitive::ShapePath {
+                                        dashes: vec![],
+                                        geometry,
+                                        fill: None,
+                                        stroke: Some(stroke),
+                                        anchors: vec![from, to],
+                                    }),
+                                    vec![mark.targets[0].clone(), mark.targets[0].clone()],
+                                    request,
+                                )?;
+                            }
+                            continue;
+                        }
                         let primitive = if matches!(mark.geometry, PreparedGeometry::Rule { .. }) {
                             Primitive::Rule { from, to, stroke }
                         } else {

@@ -1,4 +1,4 @@
-# Portable contract v1 and proof adapters
+# Portable contracts and proof adapters
 
 The implemented Rust, Python and WASM proof surfaces share the normalized core compiler,
 state reducer, inspection, streaming and publication engine. Envelope version **1** is
@@ -26,13 +26,77 @@ Python/JavaScript chart schema or evaluator.
 | Point dimensions, font resources and publication policy | [Profile DTO](../crates/chart-export/src/portable.rs), [typography/composition](theme-typography-composition-contract.md) |
 | Deferred coherent export jobs | [Live-export contract](live-export-contract.md), [checked operations](../crates/chart-export/src/portable/live_export.rs) |
 
-Versioned envelopes require numeric `version: 1`. Unknown fields, duplicate fields,
+Legacy definitions require numeric `version: 1`. Retained path composition uses version
+two in the primary/normalized definition and composition envelopes, and scene results
+containing `VectorPath` report version two. A version-one definition cannot carry
+version-two composition; mismatched capabilities reject. Data, state, transaction and
+publication-profile envelopes retain independent version contracts.
+Standalone `PathRequest`/path results also start at version one; they do not require a
+chart, font or publication profile. [ADR-015](adr/015-path-authoring-and-replay.md)
+records this migration. Unknown fields, duplicate fields,
 unknown variants/operations and missing required fields reject. Optional fields may be
 omitted only where the DTO declares a default; object field order does not change meaning.
 Inputs are size-bounded before parsing and checked again before preparation/allocation.
 Operation IDs and positive versions resolve exactly, for example
 `{"id":"chart.bin","version":"1"}`. Changing wire spellings requires compatibility
 review even when the Rust type retains its name.
+
+Definitions with compatibility semantics, staged expressions, inferred interaction
+groups, horizontal orientation or geometry-theme context require version **3** in both
+primary and normalized definition envelopes. Version 1/2 cannot carry those capabilities.
+Theme objects with geometry tokens use theme version 2; scene version continues to depend
+on its own primitives. `ExecutionSemantics` retains the exact profile, policy version,
+source SHA-256, grouping rule and scale stage; unsupported or contradictory policy fields
+reject. The primary envelope's profile must agree with the canonical definition.
+LibraryV1 omits the optional semantics object and retains existing legacy defaults.
+
+Definitions with floating authored paint require at least version **4**. Every paint input
+accepts either legacy `{red,green,blue,alpha}` bytes or a version-one color descriptor
+with retained space/channels. CSS strings are parsed once at ingestion. Numeric
+channels explicitly tag NaN, positive/negative infinity and negative zero; raw JSON
+null is invalid. Primary owned host colors use the same descriptor. A v1–3 definition
+cannot conceal a floating input in a palette, theme, rich text, path or expression.
+Authored `AxisScale::Numeric` knots/parameters and `D3Band`/`D3Point` spacing require
+definition version **5**, as do `ColorScale::Mapped`, a layer's `numeric_scales`, and
+an axis's `numeric_format` descriptor. Numeric formatting retains its full specifier
+and explicit locale values; it cannot coexist with legacy `number_format` or custom
+tick labels and rejects nonnumeric guides. Formatting changes labels without rounding
+mapped coordinates. Missing precision is inferred from the visible data-space tick step.
+Mapped descriptors preserve typed inputs/outputs, interpolation, unknown policy and
+quantile training source. Guide metadata includes real intervals, midpoint and the
+prepared mapping contract. Floating paint survives style opacity until final scene lowering.
+Old envelopes retain their prior meanings and cannot carry this variant. Standalone
+numeric scales use a strict version-one `NumericScaleSpec` envelope with explicit
+Legacy/D3 policy; unknown result values use the shared interpolation value codec.
+The current primary host wire readers recognize definition versions 1–6 and require
+the version appropriate for the contained capabilities. Standalone scale host
+constructors and method qualification are recorded under SP-07.
+Scene versions still describe resolved primitive capabilities; final colors are bytes.
+
+Publication-profile envelope version **2** is required when its host/output theme has
+floating paint or its optional `background` field is present. Version one retains the
+old fields and byte tokens. Live-export Begin uses version two for a floating output
+theme; Cancel/Status and byte-only Begin retain version one. Profile/capture metadata
+preserves the authored descriptors independently of the resolved publication scene.
+See [ADR-016](adr/016-color-values-and-paint-boundary.md) for exact lowering and the
+legacy/floating palette distinction.
+
+Layer/transform grammar retains source aesthetics and explicit statistic grouping before
+generated fields replace visible mappings. Expressions contain typed read/constant,
+unary/binary, selection and reduction nodes with a checked result index and operation
+budgets. Cross-stage host composition rejects before serialization. Post-scale reads use
+the pre-modifier snapshot, avoiding output-order dependence. Profile changes participate
+in definition revisions, workers/cache equality and captured export provenance. See the
+[stage authoring contract](authoring-guide.md#compatibility-stages) for population rules
+and the supported aesthetic boundary.
+
+Color-guide `title: null` (or an absent defaulted title) retains the generic fallback,
+explicitly available through primary `legend().generic_title()`.
+`title: ""` explicitly omits its title row, as emitted by primary `legend().untitled()`.
+A guide with zero entries contributes no furniture; its prepared metadata remains
+available. These fixes keep the existing version-1 representation and nonempty-title
+behavior. [FIX-GG01](../crates/chart-export/tests/ggplot_legends.rs) covers primary
+interchange, edits, visibility, compatible/incompatible guides and tight layout.
 
 Batches contain `schema_version`, ordered `fields`, durable `keys` and matching `columns`.
 Each column has tagged `values`, independent boolean `validity`, and optional exact
@@ -130,3 +194,32 @@ and struct-field changes can break exhaustive consumers before 1.0 and belong in
 [change log](../CHANGELOG.md). Optional v1 fields must preserve their documented defaults;
 incompatible required fields or semantics need a version/migration decision. The planned
 primary-authoring API is not an implicit migration of these interchange contracts.
+
+### Calendar resources and time operations (definition v5)
+
+A `Calendar` positional scale retains `TimeScaleSpec` and an optional
+`CalendarInterval`. Domains use canonical integer strings with an explicit source
+unit. `CalendarZone::Utc` requires no external resource; `Local` carries version-one
+`TimeZoneRules` with zone, revision, tzdata identity, inclusive covered UTC millisecond
+bounds, initial offset seconds and ordered transitions. All calendar arithmetic and
+formatting uses those immutable rules. Uncovered operations report `MissingResource`.
+
+Axis `time_format` stores an optional custom pattern and explicit `TimeLocale`; absent
+patterns use conditional formatting. It cannot coexist with numeric formatting or
+custom tick labels. Both calendar scales and time-format-only axes require v5.
+Standalone time envelopes independently use `{version: 1, spec: ...}`. Actual Python
+and WASM handle proofs preserve the same resource revisions and exact integer values;
+no host timezone arithmetic is part of the contract. Invalid reference Dates are
+reported as numerical-domain diagnostics at integer timestamp result boundaries.
+
+### Named chromatic identities (definition v6)
+
+A mapped scale containing a `catalog` selection or an interpolator with the
+`Chromatic` variant requires definition version **6**. The strict catalog selection
+contains version one, scheme ID, exact optional size and reversal; its retained range
+must equal that named array. The strict ramp payload retains interpolator ID and
+reversal within the version-one interpolation descriptor. Catalog revision one is
+pinned to d3-scale-chromatic 3.1.0. Existing v1–v5 definitions preserve their meanings;
+an envelope cannot claim an older version while carrying named chromatic capabilities.
+Guide metadata retains the complete mapping and participates in equality and caching.
+The public catalog, scheme and owned interpolator APIs use this same core owner.

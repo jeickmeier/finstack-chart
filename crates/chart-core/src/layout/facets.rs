@@ -20,7 +20,30 @@ const INK: Color = Color {
 struct Label {
     text: String,
     metrics: TextMetrics,
-    color: Option<Color>,
+    glyph: Option<LegendGlyph>,
+}
+
+#[derive(Clone, PartialEq)]
+enum Legend<'a> {
+    Color(&'a ColorLegend),
+    Symbol(&'a crate::grammar::SymbolLegend),
+}
+enum LegendGlyph {
+    Color(Color),
+    Symbol {
+        geometry: crate::path::PathGeometry,
+        bounds: Rect,
+        fill: Option<Color>,
+        stroke: Option<crate::scene::Stroke>,
+    },
+}
+impl LegendGlyph {
+    fn dimensions(&self, r: &LayoutRequest) -> (f64, f64) {
+        match self {
+            Self::Color(_) => (r.font_size, r.font_size),
+            Self::Symbol { bounds, .. } => (bounds.width(), bounds.height()),
+        }
+    }
 }
 
 fn panel_label(key: &crate::grammar::PanelKey) -> String {
@@ -32,27 +55,40 @@ fn panel_label(key: &crate::grammar::PanelKey) -> String {
             GroupValue::Int(v) => v.to_string(),
             GroupValue::UInt(v) => v.to_string(),
             GroupValue::Boolean(v) => v.to_string(),
+            GroupValue::Missing | GroupValue::Interaction(_) | GroupValue::Number(_) => v.label(),
         })
         .collect::<Vec<_>>()
         .join(" / ")
 }
 
-fn legends(chart: &PreparedChart) -> Vec<ColorLegend> {
+fn legends(chart: &PreparedChart) -> Vec<Legend<'_>> {
     if !chart.state().legend_visible() {
         return vec![];
     }
     let mut legends = vec![];
-    for legend in chart.layers().iter().filter_map(|l| l.color_legend()) {
-        // Identity, full domain/palette, continuous/discrete semantics and missing policy agree.
-        if !legends.contains(legend) {
-            legends.push(legend.clone());
+    for layer in chart.layers() {
+        if let Some(legend) = layer.color_legend().filter(|l| !l.entries.is_empty()) {
+            let legend = Legend::Color(legend);
+            if !legends.contains(&legend) {
+                legends.push(legend);
+            }
+        }
+        for legend in layer
+            .symbol_legends()
+            .iter()
+            .filter(|l| !l.entries.is_empty())
+        {
+            let legend = Legend::Symbol(legend);
+            if !legends.contains(&legend) {
+                legends.push(legend);
+            }
         }
     }
     legends
 }
 
 fn measure_labels(
-    values: Vec<(String, Option<Color>)>,
+    values: Vec<(String, Option<LegendGlyph>)>,
     request: &LayoutRequest,
     measurer: &dyn TextMeasurer,
     remaining: &mut usize,
@@ -63,38 +99,90 @@ fn measure_labels(
     }
     values
         .into_iter()
-        .map(|(text, color)| {
+        .map(|(text, glyph)| {
             let metrics = measure_text(measurer, text_request(request, &text), request.limits)?;
             Ok(Label {
                 text,
                 metrics,
-                color,
+                glyph,
             })
         })
         .collect()
 }
 
-fn legend_values(legends: &[ColorLegend]) -> Vec<(String, Option<Color>)> {
-    legends
-        .iter()
-        .flat_map(|l| {
-            std::iter::once((
-                l.title.clone().unwrap_or_else(|| {
+fn legend_values(
+    legends: &[Legend<'_>],
+    r: &LayoutRequest,
+) -> ChartResult<Vec<(String, Option<LegendGlyph>)>> {
+    let mut result = vec![];
+    for legend in legends {
+        match legend {
+            Legend::Color(l) => {
+                let title = l.title.clone().unwrap_or_else(|| {
                     if l.continuous {
                         "Value".into()
                     } else {
                         "Color".into()
                     }
-                }),
-                None,
-            ))
-            .chain(
-                l.entries
-                    .iter()
-                    .map(|(label, color)| (label.clone(), Some(*color))),
-            )
-        })
-        .collect()
+                });
+                if !title.is_empty() {
+                    result.push((title, None));
+                }
+                result.extend(
+                    l.entries
+                        .iter()
+                        .map(|(label, color)| (label.clone(), Some(LegendGlyph::Color(*color)))),
+                );
+            }
+            Legend::Symbol(l) => {
+                if !l.title.is_empty() {
+                    result.push((l.title.clone(), None));
+                }
+                for entry in &l.entries {
+                    let geometry = match &entry.geometry {
+                        Some(geometry) => geometry.clone(),
+                        None => crate::shape::Symbol::new()
+                            .kind(entry.kind)
+                            .size(entry.size)
+                            .generate()?
+                            .geometry(),
+                    };
+                    let color = r
+                        .host_theme
+                        .mark
+                        .map(crate::color::Paint::resolve)
+                        .unwrap_or(l.color);
+                    let fill = (entry.paint == crate::shape::SymbolPaint::Fill).then_some(color);
+                    let stroke = (entry.paint == crate::shape::SymbolPaint::Stroke).then_some(
+                        crate::scene::Stroke {
+                            color,
+                            width: l.stroke_width,
+                        },
+                    );
+                    let base = geometry
+                        .bounds(0.01, r.limits.max_path_commands)?
+                        .unwrap_or(Rect::new(0., 0., 0., 0.)?);
+                    let half = stroke.map_or(0., |s| s.width / 2.);
+                    let bounds = Rect::new(
+                        base.origin().x() - half,
+                        base.origin().y() - half,
+                        base.width() + 2. * half,
+                        base.height() + 2. * half,
+                    )?;
+                    result.push((
+                        entry.label.clone(),
+                        Some(LegendGlyph::Symbol {
+                            geometry,
+                            bounds,
+                            fill,
+                            stroke,
+                        }),
+                    ));
+                }
+            }
+        }
+    }
+    Ok(result)
 }
 
 fn push_text(
@@ -114,7 +202,11 @@ fn push_text(
             text: label.text.clone(),
             font: r.font.id,
             font_size: r.font_size,
-            color: r.host_theme.foreground.unwrap_or(INK),
+            color: r
+                .host_theme
+                .foreground
+                .map(crate::color::Paint::resolve)
+                .unwrap_or(INK),
         },
     });
     Ok(())
@@ -130,25 +222,66 @@ fn paint_legend(
     let mut y = bounds.origin().y() + r.padding;
     let mut constrained = false;
     for label in labels {
-        let height = label.metrics.height().max(r.font_size);
+        let height = label
+            .metrics
+            .height()
+            .max(label.glyph.as_ref().map_or(0., |g| g.dimensions(r).1))
+            .max(r.font_size);
         if y + height > bounds.max_y() - r.padding {
             constrained = true;
             break;
         }
-        let swatch = if let Some(color) = label.color {
+        let swatch = if let Some(glyph) = &label.glyph {
             require_within(items.len() < r.limits.max_items, "legend swatch item")?;
-            let size = r.font_size.min(bounds.width() / 3.);
-            if size > 0. {
-                items.push(SceneItem {
-                    layer: None,
-                    clip: Some(bounds),
-                    primitive: Primitive::Rectangle {
-                        bounds: Rect::new(bounds.origin().x(), y, size, size)?,
-                        fill: color,
-                    },
-                });
+            let (width, glyph_height) = glyph.dimensions(r);
+            match glyph {
+                LegendGlyph::Color(color) => {
+                    let size = r.font_size.min(bounds.width() / 3.);
+                    if size > 0. {
+                        items.push(SceneItem {
+                            layer: None,
+                            clip: Some(bounds),
+                            primitive: Primitive::Rectangle {
+                                bounds: Rect::new(bounds.origin().x(), y, size, size)?,
+                                fill: *color,
+                            },
+                        });
+                    }
+                }
+                LegendGlyph::Symbol {
+                    geometry,
+                    bounds: local,
+                    fill,
+                    stroke,
+                } => {
+                    let map = crate::path::Affine::new([
+                        1.,
+                        0.,
+                        0.,
+                        1.,
+                        bounds.origin().x() - local.origin().x(),
+                        y + (height - glyph_height) / 2. - local.origin().y(),
+                    ])?;
+                    if geometry.has_segments() {
+                        items.push(SceneItem {
+                            layer: None,
+                            clip: Some(bounds),
+                            primitive: Primitive::VectorPath {
+                                dashes: vec![],
+                                geometry: geometry.transformed(
+                                    map,
+                                    0.01,
+                                    r.limits.max_path_commands,
+                                )?,
+                                fill: *fill,
+                                stroke: *stroke,
+                            },
+                        });
+                    }
+                    constrained |= width > bounds.width();
+                }
             }
-            r.font_size + r.label_gap
+            width + r.label_gap
         } else {
             0.
         };
@@ -175,7 +308,14 @@ fn legend_width(labels: &[Label], width: f64, request: &LayoutRequest) -> f64 {
     } else {
         (labels
             .iter()
-            .map(|l| l.metrics.width() + request.font_size + request.label_gap)
+            .map(|l| {
+                l.metrics.width()
+                    + l.glyph
+                        .as_ref()
+                        .map_or(request.font_size + request.label_gap, |g| {
+                            g.dimensions(request).0.max(request.font_size) + request.label_gap
+                        })
+            })
             .fold(0_f64, f64::max)
             + request.padding)
             .min(width * 0.3)
@@ -192,7 +332,7 @@ pub(super) fn prepare_single_legend(
     }
     let mut remaining = request.limits.max_text_bytes;
     let labels = measure_labels(
-        legend_values(&legends(prepared)),
+        legend_values(&legends(prepared), request)?,
         request,
         measurer,
         &mut remaining,
@@ -292,7 +432,7 @@ pub(super) fn layout_facets(
         vec![]
     };
     let shared_labels = measure_labels(
-        legend_values(&shared_legends),
+        legend_values(&shared_legends, request)?,
         request,
         measurer,
         &mut remaining,
@@ -303,7 +443,7 @@ pub(super) fn layout_facets(
             vec![]
         } else {
             measure_labels(
-                legend_values(&legends(&panel.chart)),
+                legend_values(&legends(&panel.chart), request)?,
                 request,
                 measurer,
                 &mut remaining,
@@ -463,6 +603,7 @@ pub(super) fn layout_facets(
         request.limits,
     )?;
     Ok(LaidOutChart {
+        guides: Default::default(),
         paint_themes: std::collections::BTreeMap::new(),
         interactions,
         insets: vec![],

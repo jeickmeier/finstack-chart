@@ -131,8 +131,10 @@ pub fn extension_input_space(
 /// portable JSON can only select an existing entry and never supplies executable code.
 #[derive(Clone, Default)]
 pub struct ExtensionRegistry {
+    pub(crate) scales: Arc<super::scale_extensions::ScaleRegistrations>,
     stats: BTreeMap<(String, u64), Arc<dyn CustomStat>>,
     geoms: BTreeMap<(String, u64), Arc<dyn CustomGeom>>,
+    pub(crate) shapes: super::shape_extensions::ShapeRegistrations,
 }
 impl ExtensionRegistry {
     /// Empty registry; builtins continue to use the common compiler without registration.
@@ -206,7 +208,11 @@ impl ExtensionRegistry {
         self.stats.get(&(operation.id.clone(),operation.version.get())).map(Arc::as_ref).ok_or_else(||error(DiagnosticCode::UnsupportedCapability,format!("Extension {} version {} is not registered; install a known implementation or use a builtin.",operation.id,operation.version.get())))
     }
     pub(crate) fn validate_portable(&self, definition: &ChartDefinition) -> ChartResult<()> {
+        self.validate_scale_selections(definition, true)?;
         for layer in &definition.layers {
+            for (family, selection) in &layer.shape_protocols {
+                self.resolve_portable_shape(selection, *family)?;
+            }
             if let Some(g) = &layer.geometry_extension
                 && !self.geometry_descriptor(&g.operation)?.portable
             {
@@ -234,7 +240,7 @@ impl ExtensionRegistry {
         Ok(())
     }
 }
-fn validate_descriptor(d: &ExtensionDescriptor) -> ChartResult<()> {
+pub(super) fn validate_descriptor(d: &ExtensionDescriptor) -> ChartResult<()> {
     validate_name(&d.operation.id)?;
     if !d.operation.id.contains('.')
         || d.operation.id.starts_with("chart.")
@@ -394,6 +400,17 @@ fn validate_custom_space(space: &ValueSpace, kind: GeneratedKind) -> ChartResult
     let mut depth = 0;
     loop {
         match current {
+            ValueSpace::Scaled { input, scale } => {
+                depth += 1;
+                if depth > 24 {
+                    return Err(error(
+                        DiagnosticCode::ResourceLimit,
+                        "Custom scale space exceeds its depth budget.",
+                    ));
+                }
+                scale.validate()?;
+                current = input;
+            }
             ValueSpace::Data => return Ok(()),
             ValueSpace::Timestamp { representation, .. } => {
                 if representation.timezone.trim().is_empty() || representation.timezone.len() > 1024

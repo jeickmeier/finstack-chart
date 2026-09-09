@@ -87,8 +87,8 @@ impl Gallery {
             self.chart.update(cx, |c, cx| {
                 let mut layout = c.layout_request().clone();
                 layout.output_theme = chart_core::theme::ThemePatch {
-                    background: Some(chart_core::theme::rgb(245, 225, 215)),
-                    panel: Some(chart_core::theme::rgb(250, 240, 230)),
+                    background: Some(chart_core::theme::rgb(245, 225, 215).into()),
+                    panel: Some(chart_core::theme::rgb(250, 240, 230).into()),
                     ..Default::default()
                 };
                 c.set_layout(layout, cx)

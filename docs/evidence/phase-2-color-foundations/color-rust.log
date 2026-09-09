@@ -1,0 +1,11 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.64s
+     Running tests/color_parity.rs (target/debug/deps/color_parity-e69fbf2042409b1c)
+
+running 3 tests
+test independent_color_math_and_quantization_preserve_floating_information ... ok
+test color_descriptors_parser_budgets_and_channel_names_reject_malformed_inputs ... ok
+test complete_color_oracle_covers_all_constructors_and_inherited_operations ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+

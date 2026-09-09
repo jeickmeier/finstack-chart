@@ -1,0 +1,85 @@
+{
+  "measurements": [
+    {
+      "kernel": "piecewise_forward",
+      "knots": 2,
+      "timing": {
+        "ns_per_operation_max": 13.239375,
+        "ns_per_operation_median": 8.062915,
+        "ns_per_operation_min": 7.73604,
+        "operations_per_sample": 200000,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "piecewise_forward",
+      "knots": 128,
+      "timing": {
+        "ns_per_operation_max": 18.641875,
+        "ns_per_operation_median": 14.602705,
+        "ns_per_operation_min": 12.991875,
+        "operations_per_sample": 200000,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "piecewise_forward",
+      "knots": 4096,
+      "timing": {
+        "ns_per_operation_max": 81.866875,
+        "ns_per_operation_median": 27.763125,
+        "ns_per_operation_min": 21.213335,
+        "operations_per_sample": 200000,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "typed_ordinal_lookup",
+      "keys": 1000,
+      "timing": {
+        "ns_per_operation_max": 66.01271,
+        "ns_per_operation_median": 29.60354,
+        "ns_per_operation_min": 26.01646,
+        "operations_per_sample": 200000,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "typed_ordinal_lookup",
+      "keys": 100000,
+      "timing": {
+        "ns_per_operation_max": 88.24167,
+        "ns_per_operation_median": 68.004375,
+        "ns_per_operation_min": 46.509375,
+        "operations_per_sample": 200000,
+        "samples": 7
+      }
+    },
+    {
+      "buckets": 7,
+      "kernel": "eligible_quantile_retrain_prepare",
+      "samples": 1000,
+      "timing": {
+        "ns_per_operation_max": 10095.85,
+        "ns_per_operation_median": 9447.95,
+        "ns_per_operation_min": 8945.8,
+        "operations_per_sample": 20,
+        "samples": 7
+      }
+    },
+    {
+      "buckets": 7,
+      "kernel": "eligible_quantile_retrain_prepare",
+      "samples": 100000,
+      "timing": {
+        "ns_per_operation_max": 2383718.75,
+        "ns_per_operation_median": 2143483.35,
+        "ns_per_operation_min": 1292250.0,
+        "operations_per_sample": 20,
+        "samples": 7
+      }
+    }
+  ],
+  "method": "one warmup; seven samples; allocation included in retraining, inputs prepared outside timing",
+  "profile": "release"
+}

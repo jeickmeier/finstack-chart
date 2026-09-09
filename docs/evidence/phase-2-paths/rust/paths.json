@@ -1,0 +1,9185 @@
+[
+  {
+    "id": "empty",
+    "observations": []
+  },
+  {
+    "id": "basic-controls",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            2.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            7.0,
+            8.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              },
+              {
+                "QuadraticTo": [
+                  5.0,
+                  6.0,
+                  7.0,
+                  8.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4Q5,6,7,8",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            13.0,
+            14.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              },
+              {
+                "QuadraticTo": [
+                  5.0,
+                  6.0,
+                  7.0,
+                  8.0
+                ]
+              },
+              {
+                "CubicTo": [
+                  9.0,
+                  10.0,
+                  11.0,
+                  12.0,
+                  13.0,
+                  14.0
+                ]
+              }
+            ]
+          },
+          "operations": 4,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4Q5,6,7,8C9,10,11,12,13,14",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "multiple-moves",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            2.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "MoveTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            3.0,
+            4.0
+          ],
+          "svg": "M1,2M3,4",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            5.0,
+            6.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "MoveTo": [
+                  3.0,
+                  4.0
+                ]
+              },
+              {
+                "LineTo": [
+                  5.0,
+                  6.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": [
+            3.0,
+            4.0
+          ],
+          "svg": "M1,2M3,4L5,6",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            7.0,
+            8.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "MoveTo": [
+                  3.0,
+                  4.0
+                ]
+              },
+              {
+                "LineTo": [
+                  5.0,
+                  6.0
+                ]
+              },
+              {
+                "MoveTo": [
+                  7.0,
+                  8.0
+                ]
+              }
+            ]
+          },
+          "operations": 4,
+          "start": [
+            7.0,
+            8.0
+          ],
+          "svg": "M1,2M3,4L5,6M7,8",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "empty-close",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": []
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": []
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "repeat-close-and-continue",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            2.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            2.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            2.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              },
+              "Close",
+              "Close"
+            ]
+          },
+          "operations": 4,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4ZZ",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            5.0,
+            6.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              },
+              "Close",
+              "Close",
+              {
+                "LineTo": [
+                  5.0,
+                  6.0
+                ]
+              }
+            ]
+          },
+          "operations": 5,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4ZZL5,6",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            2.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              },
+              "Close",
+              "Close",
+              {
+                "LineTo": [
+                  5.0,
+                  6.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 6,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4ZZL5,6Z",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "bare-lineTo",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            2.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "LineTo": [
+                  1.0,
+                  2.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "L1,2",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "LineTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "L1,2Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            7.0,
+            8.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "LineTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              "Close",
+              {
+                "LineTo": [
+                  7.0,
+                  8.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "L1,2ZL7,8",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "post-close-lineTo",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            2.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            2.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            2.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              },
+              "Close",
+              {
+                "LineTo": [
+                  1.0,
+                  2.0
+                ]
+              }
+            ]
+          },
+          "operations": 4,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4ZL1,2",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            2.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              },
+              "Close",
+              {
+                "LineTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 5,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4ZL1,2Z",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "bare-quadraticCurveTo",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "QuadraticTo": [
+                  1.0,
+                  2.0,
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "Q1,2,3,4",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "QuadraticTo": [
+                  1.0,
+                  2.0,
+                  3.0,
+                  4.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "Q1,2,3,4Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            7.0,
+            8.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "QuadraticTo": [
+                  1.0,
+                  2.0,
+                  3.0,
+                  4.0
+                ]
+              },
+              "Close",
+              {
+                "LineTo": [
+                  7.0,
+                  8.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "Q1,2,3,4ZL7,8",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "post-close-quadraticCurveTo",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            2.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            2.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              },
+              "Close",
+              {
+                "QuadraticTo": [
+                  1.0,
+                  2.0,
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 4,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4ZQ1,2,3,4",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            2.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              },
+              "Close",
+              {
+                "QuadraticTo": [
+                  1.0,
+                  2.0,
+                  3.0,
+                  4.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 5,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4ZQ1,2,3,4Z",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "bare-bezierCurveTo",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            5.0,
+            6.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "CubicTo": [
+                  1.0,
+                  2.0,
+                  3.0,
+                  4.0,
+                  5.0,
+                  6.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "C1,2,3,4,5,6",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "CubicTo": [
+                  1.0,
+                  2.0,
+                  3.0,
+                  4.0,
+                  5.0,
+                  6.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "C1,2,3,4,5,6Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            7.0,
+            8.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "CubicTo": [
+                  1.0,
+                  2.0,
+                  3.0,
+                  4.0,
+                  5.0,
+                  6.0
+                ]
+              },
+              "Close",
+              {
+                "LineTo": [
+                  7.0,
+                  8.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "C1,2,3,4,5,6ZL7,8",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "post-close-bezierCurveTo",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            2.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            2.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            5.0,
+            6.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              },
+              "Close",
+              {
+                "CubicTo": [
+                  1.0,
+                  2.0,
+                  3.0,
+                  4.0,
+                  5.0,
+                  6.0
+                ]
+              }
+            ]
+          },
+          "operations": 4,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4ZC1,2,3,4,5,6",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            2.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              },
+              "Close",
+              {
+                "CubicTo": [
+                  1.0,
+                  2.0,
+                  3.0,
+                  4.0,
+                  5.0,
+                  6.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 5,
+          "start": [
+            1.0,
+            2.0
+          ],
+          "svg": "M1,2L3,4ZC1,2,3,4,5,6Z",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "rect--5--4",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": -5.0
+              },
+              {
+                "Vertical": -4.0
+              },
+              {
+                "Horizontal": 5.0
+              },
+              "Close"
+            ]
+          },
+          "operations": 1,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h-5v-4h5Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            17.0,
+            23.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": -5.0
+              },
+              {
+                "Vertical": -4.0
+              },
+              {
+                "Horizontal": 5.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h-5v-4h5ZL17,23",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": -5.0
+              },
+              {
+                "Vertical": -4.0
+              },
+              {
+                "Horizontal": 5.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h-5v-4h5ZL17,23Z",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "rect--5-0",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": -5.0
+              },
+              {
+                "Vertical": 0.0
+              },
+              {
+                "Horizontal": 5.0
+              },
+              "Close"
+            ]
+          },
+          "operations": 1,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h-5v0h5Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            17.0,
+            23.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": -5.0
+              },
+              {
+                "Vertical": 0.0
+              },
+              {
+                "Horizontal": 5.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h-5v0h5ZL17,23",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": -5.0
+              },
+              {
+                "Vertical": 0.0
+              },
+              {
+                "Horizontal": 5.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h-5v0h5ZL17,23Z",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "rect--5-4",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": -5.0
+              },
+              {
+                "Vertical": 4.0
+              },
+              {
+                "Horizontal": 5.0
+              },
+              "Close"
+            ]
+          },
+          "operations": 1,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h-5v4h5Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            17.0,
+            23.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": -5.0
+              },
+              {
+                "Vertical": 4.0
+              },
+              {
+                "Horizontal": 5.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h-5v4h5ZL17,23",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": -5.0
+              },
+              {
+                "Vertical": 4.0
+              },
+              {
+                "Horizontal": 5.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h-5v4h5ZL17,23Z",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "rect-0--4",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 0.0
+              },
+              {
+                "Vertical": -4.0
+              },
+              {
+                "Horizontal": -0.0
+              },
+              "Close"
+            ]
+          },
+          "operations": 1,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h0v-4h0Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            17.0,
+            23.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 0.0
+              },
+              {
+                "Vertical": -4.0
+              },
+              {
+                "Horizontal": -0.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h0v-4h0ZL17,23",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 0.0
+              },
+              {
+                "Vertical": -4.0
+              },
+              {
+                "Horizontal": -0.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h0v-4h0ZL17,23Z",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "rect-0-0",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 0.0
+              },
+              {
+                "Vertical": 0.0
+              },
+              {
+                "Horizontal": -0.0
+              },
+              "Close"
+            ]
+          },
+          "operations": 1,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h0v0h0Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            17.0,
+            23.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 0.0
+              },
+              {
+                "Vertical": 0.0
+              },
+              {
+                "Horizontal": -0.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h0v0h0ZL17,23",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 0.0
+              },
+              {
+                "Vertical": 0.0
+              },
+              {
+                "Horizontal": -0.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h0v0h0ZL17,23Z",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "rect-0-4",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 0.0
+              },
+              {
+                "Vertical": 4.0
+              },
+              {
+                "Horizontal": -0.0
+              },
+              "Close"
+            ]
+          },
+          "operations": 1,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h0v4h0Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            17.0,
+            23.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 0.0
+              },
+              {
+                "Vertical": 4.0
+              },
+              {
+                "Horizontal": -0.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h0v4h0ZL17,23",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 0.0
+              },
+              {
+                "Vertical": 4.0
+              },
+              {
+                "Horizontal": -0.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h0v4h0ZL17,23Z",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "rect-5--4",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 5.0
+              },
+              {
+                "Vertical": -4.0
+              },
+              {
+                "Horizontal": -5.0
+              },
+              "Close"
+            ]
+          },
+          "operations": 1,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h5v-4h-5Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            17.0,
+            23.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 5.0
+              },
+              {
+                "Vertical": -4.0
+              },
+              {
+                "Horizontal": -5.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h5v-4h-5ZL17,23",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 5.0
+              },
+              {
+                "Vertical": -4.0
+              },
+              {
+                "Horizontal": -5.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h5v-4h-5ZL17,23Z",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "rect-5-0",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 5.0
+              },
+              {
+                "Vertical": 0.0
+              },
+              {
+                "Horizontal": -5.0
+              },
+              "Close"
+            ]
+          },
+          "operations": 1,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h5v0h-5Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            17.0,
+            23.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 5.0
+              },
+              {
+                "Vertical": 0.0
+              },
+              {
+                "Horizontal": -5.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h5v0h-5ZL17,23",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 5.0
+              },
+              {
+                "Vertical": 0.0
+              },
+              {
+                "Horizontal": -5.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h5v0h-5ZL17,23Z",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "rect-5-4",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 5.0
+              },
+              {
+                "Vertical": 4.0
+              },
+              {
+                "Horizontal": -5.0
+              },
+              "Close"
+            ]
+          },
+          "operations": 1,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h5v4h-5Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            17.0,
+            23.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 5.0
+              },
+              {
+                "Vertical": 4.0
+              },
+              {
+                "Horizontal": -5.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h5v4h-5ZL17,23",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            20.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  20.0
+                ]
+              },
+              {
+                "Horizontal": 5.0
+              },
+              {
+                "Vertical": 4.0
+              },
+              {
+                "Horizontal": -5.0
+              },
+              "Close",
+              {
+                "LineTo": [
+                  17.0,
+                  23.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            10.0,
+            20.0
+          ],
+          "svg": "M10,20h5v4h-5ZL17,23Z",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "opposite-winding-holes",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "Horizontal": 20.0
+              },
+              {
+                "Vertical": 20.0
+              },
+              {
+                "Horizontal": -20.0
+              },
+              "Close"
+            ]
+          },
+          "operations": 1,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0h20v20h-20Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            5.0,
+            5.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "Horizontal": 20.0
+              },
+              {
+                "Vertical": 20.0
+              },
+              {
+                "Horizontal": -20.0
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  5.0,
+                  5.0
+                ]
+              },
+              {
+                "Horizontal": -10.0
+              },
+              {
+                "Vertical": 10.0
+              },
+              {
+                "Horizontal": 10.0
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": [
+            5.0,
+            5.0
+          ],
+          "svg": "M0,0h20v20h-20ZM5,5h-10v10h10Z",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-false-0",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3M10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-false-9.99999e-7",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3M10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-false-0.000001",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3M10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-false-0.000001000001",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            6.9999999999975,
+            3.000005000005
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    3.000005000005
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,0,1,7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    3.000005000005
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,0,1,7,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    3.000005000005
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,0,1,7,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-false-3.141592653589793",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            -3.0,
+            3.0000000000000004
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0000000000000004
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0000000000000004
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0000000000000004
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-false-6.283184307178586",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            6.9999999999975,
+            2.9999949999949975
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    2.9999949999949975
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    2.9999949999949975
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,7,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    2.9999949999949975
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,7,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-false-6.283184307179586",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            6.9999999999975,
+            2.999994999999998
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    2.999994999999998
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    2.999994999999998
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,7,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    2.999994999999998
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,7,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-false-6.283184307180586",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            7.0,
+            3.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-false-6.283185307179586",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            7.0,
+            3.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-false-9.42477796076938",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            7.0,
+            3.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-false--3.141592653589793",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            -3.0,
+            2.9999999999999996
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    2.9999999999999996
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    2.9999999999999996
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    2.9999999999999996
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-false--6.283185307179586",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            7.0,
+            3.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-true-0",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3M10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-true-9.99999e-7",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            7.0,
+            3.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-true-0.000001",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            6.9999999999975,
+            3.000005
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    3.000005
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    3.000005
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,7,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    3.000005
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,7,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-true-0.000001000001",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            6.9999999999975,
+            3.000005000005
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    3.000005000005
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    3.000005000005
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,7,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    3.000005000005
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,7,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-true-3.141592653589793",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            -3.0,
+            3.0000000000000004
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0000000000000004
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0000000000000004
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0000000000000004
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-true-6.283184307178586",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            6.9999999999975,
+            2.9999949999949975
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": false,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    2.9999949999949975
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,0,0,7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": false,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    2.9999949999949975
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,0,0,7,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": false,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    2.9999949999949975
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,0,0,7,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-true-6.283184307179586",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            6.9999999999975,
+            2.999994999999998
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": false,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    2.999994999999998
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,0,0,7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": false,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    2.999994999999998
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,0,0,7,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": false,
+                  "radius": 5.0,
+                  "to": [
+                    6.9999999999975,
+                    2.999994999999998
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,0,0,7,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-true-6.283184307180586",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3M10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-true-6.283185307179586",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            7.0,
+            3.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-true-9.42477796076938",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            -3.0,
+            3.0000000000000018
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0000000000000018
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0000000000000018
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0000000000000018
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-true--3.141592653589793",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            -3.0,
+            2.9999999999999996
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    2.9999999999999996
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    2.9999999999999996
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    2.9999999999999996
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-true--6.283185307179586",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            7.0,
+            3.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  7.0,
+                  3.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -3.0,
+                    3.0
+                  ]
+                }
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    7.0,
+                    3.0
+                  ]
+                }
+              },
+              "Close",
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3ZM10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "zero-radius-empty-state",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M1,2",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M1,2",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.0,
+                  2.0
+                ]
+              },
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M1,2L3,4",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "zero-sweep-empty-state",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  6.0,
+                  2.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M6,2",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  6.0,
+                  2.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M6,2",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            8.0,
+            8.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  6.0,
+                  2.0
+                ]
+              },
+              {
+                "MoveTo": [
+                  8.0,
+                  8.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M6,2M8,8",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "connecting-arc",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            7.919265817264288,
+            24.54648713412841
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  12.7015115293407,
+                  15.792645075960518
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 5.0,
+                  "to": [
+                    7.919265817264288,
+                    24.54648713412841
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0L12.702,15.793A5,5,0,0,1,7.919,24.546",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            4.0,
+            5.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  12.7015115293407,
+                  15.792645075960518
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 5.0,
+                  "to": [
+                    7.919265817264288,
+                    24.54648713412841
+                  ]
+                }
+              },
+              {
+                "LineTo": [
+                  4.0,
+                  5.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0L12.702,15.793A5,5,0,0,1,7.919,24.546L4,5",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-connection-9.99999e-7",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            5.000000999999,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  5.000000999999,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            5.000000999999,
+            0.0
+          ],
+          "svg": "M5,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            -5.0,
+            6.123233995736766e-16
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  5.000000999999,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -5.0,
+                    6.123233995736766e-16
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            5.000000999999,
+            0.0
+          ],
+          "svg": "M5,0A5,5,0,1,1,-5,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-connection-0.000001",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            5.000001,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  5.000001,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            5.000001,
+            0.0
+          ],
+          "svg": "M5,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            -5.0,
+            6.123233995736766e-16
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  5.000001,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  5.0,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -5.0,
+                    6.123233995736766e-16
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            5.000001,
+            0.0
+          ],
+          "svg": "M5,0L5,0A5,5,0,1,1,-5,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arc-connection-0.000001000001",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            5.000001000001,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  5.000001000001,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            5.000001000001,
+            0.0
+          ],
+          "svg": "M5,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            -5.0,
+            6.123233995736766e-16
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  5.000001000001,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  5.0,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": true,
+                  "radius": 5.0,
+                  "to": [
+                    -5.0,
+                    6.123233995736766e-16
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            5.000001000001,
+            0.0
+          ],
+          "svg": "M5,0L5,0A5,5,0,1,1,-5,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "negative-radius-atomic",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            2.0,
+            3.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  2.0,
+                  3.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            2.0,
+            3.0
+          ],
+          "svg": "M2,3",
+          "version": 1
+        }
+      },
+      {
+        "error": "CHART_NUMERICAL_DOMAIN",
+        "result": {
+          "current": [
+            2.0,
+            3.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  2.0,
+                  3.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            2.0,
+            3.0
+          ],
+          "svg": "M2,3",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            4.0,
+            5.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  2.0,
+                  3.0
+                ]
+              },
+              {
+                "LineTo": [
+                  4.0,
+                  5.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            2.0,
+            3.0
+          ],
+          "svg": "M2,3L4,5",
+          "version": 1
+        }
+      },
+      {
+        "error": "CHART_NUMERICAL_DOMAIN",
+        "result": {
+          "current": [
+            4.0,
+            5.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  2.0,
+                  3.0
+                ]
+              },
+              {
+                "LineTo": [
+                  4.0,
+                  5.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            2.0,
+            3.0
+          ],
+          "svg": "M2,3L4,5",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            9.0,
+            10.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  2.0,
+                  3.0
+                ]
+              },
+              {
+                "LineTo": [
+                  4.0,
+                  5.0
+                ]
+              },
+              {
+                "LineTo": [
+                  9.0,
+                  10.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": [
+            2.0,
+            3.0
+          ],
+          "svg": "M2,3L4,5L9,10",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-empty-0",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M10,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M10,0Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              },
+              "Close",
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M10,0ZL3,4",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-empty-2",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M10,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M10,0Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              },
+              "Close",
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M10,0ZL3,4",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-empty-20",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M10,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": null,
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M10,0Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              },
+              "Close",
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": null,
+          "svg": "M10,0ZL3,4",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-0-0-0",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0L10,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  10.0,
+                  0.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0L10,0Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  10.0,
+                  0.0
+                ]
+              },
+              "Close",
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 4,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0L10,0ZL3,4",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-0-0-2",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            1.9999999999999998
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  8.0,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 2.0,
+                  "to": [
+                    10.0,
+                    1.9999999999999998
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0L8,0A2,2,0,0,1,10,2",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  8.0,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 2.0,
+                  "to": [
+                    10.0,
+                    1.9999999999999998
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0L8,0A2,2,0,0,1,10,2Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  8.0,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 2.0,
+                  "to": [
+                    10.0,
+                    1.9999999999999998
+                  ]
+                }
+              },
+              "Close",
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 4,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0L8,0A2,2,0,0,1,10,2ZL3,4",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-0-0-20",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            19.999999999999996
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  -9.999999999999996,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 20.0,
+                  "to": [
+                    10.0,
+                    19.999999999999996
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0L-10,0A20,20,0,0,1,10,20",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  -9.999999999999996,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 20.0,
+                  "to": [
+                    10.0,
+                    19.999999999999996
+                  ]
+                }
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0L-10,0A20,20,0,0,1,10,20Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  -9.999999999999996,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 20.0,
+                  "to": [
+                    10.0,
+                    19.999999999999996
+                  ]
+                }
+              },
+              "Close",
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 4,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0L-10,0A20,20,0,0,1,10,20ZL3,4",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-10-0-0",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            10.0,
+            0.0
+          ],
+          "svg": "M10,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            10.0,
+            0.0
+          ],
+          "svg": "M10,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            10.0,
+            0.0
+          ],
+          "svg": "M10,0Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              },
+              "Close",
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 4,
+          "start": [
+            10.0,
+            0.0
+          ],
+          "svg": "M10,0ZL3,4",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-10-0-2",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            10.0,
+            0.0
+          ],
+          "svg": "M10,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            10.0,
+            0.0
+          ],
+          "svg": "M10,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            10.0,
+            0.0
+          ],
+          "svg": "M10,0Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              },
+              "Close",
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 4,
+          "start": [
+            10.0,
+            0.0
+          ],
+          "svg": "M10,0ZL3,4",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-10-0-20",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            10.0,
+            0.0
+          ],
+          "svg": "M10,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            10.0,
+            0.0
+          ],
+          "svg": "M10,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            10.0,
+            0.0
+          ],
+          "svg": "M10,0Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  10.0,
+                  0.0
+                ]
+              },
+              "Close",
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 4,
+          "start": [
+            10.0,
+            0.0
+          ],
+          "svg": "M10,0ZL3,4",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-9.999-0-0",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            9.999,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.999,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            9.999,
+            0.0
+          ],
+          "svg": "M9.999,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            9.999,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.999,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            9.999,
+            0.0
+          ],
+          "svg": "M9.999,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            9.999,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.999,
+                  0.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            9.999,
+            0.0
+          ],
+          "svg": "M9.999,0Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.999,
+                  0.0
+                ]
+              },
+              "Close",
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 4,
+          "start": [
+            9.999,
+            0.0
+          ],
+          "svg": "M9.999,0ZL3,4",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-9.999-0-2",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            9.999,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.999,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            9.999,
+            0.0
+          ],
+          "svg": "M9.999,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            9.999,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.999,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            9.999,
+            0.0
+          ],
+          "svg": "M9.999,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            9.999,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.999,
+                  0.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            9.999,
+            0.0
+          ],
+          "svg": "M9.999,0Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.999,
+                  0.0
+                ]
+              },
+              "Close",
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 4,
+          "start": [
+            9.999,
+            0.0
+          ],
+          "svg": "M9.999,0ZL3,4",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-9.999-0-20",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            9.999,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.999,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            9.999,
+            0.0
+          ],
+          "svg": "M9.999,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            9.999,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.999,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            9.999,
+            0.0
+          ],
+          "svg": "M9.999,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            9.999,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.999,
+                  0.0
+                ]
+              },
+              "Close"
+            ]
+          },
+          "operations": 3,
+          "start": [
+            9.999,
+            0.0
+          ],
+          "svg": "M9.999,0Z",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            3.0,
+            4.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.999,
+                  0.0
+                ]
+              },
+              "Close",
+              {
+                "LineTo": [
+                  3.0,
+                  4.0
+                ]
+              }
+            ]
+          },
+          "operations": 4,
+          "start": [
+            9.999,
+            0.0
+          ],
+          "svg": "M9.999,0ZL3,4",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-reverse",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            -1.9999999999999998
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  8.0,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": false,
+                  "radius": 2.0,
+                  "to": [
+                    10.0,
+                    -1.9999999999999998
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0L8,0A2,2,0,0,0,10,-2",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-collinear",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0L10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-coincident-end",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  10.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0L10,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-distance-9.99999e-7",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            9.9990000005,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.9990000005,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            9.9990000005,
+            0.0
+          ],
+          "svg": "M9.999,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            9.9990000005,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.9990000005,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            9.9990000005,
+            0.0
+          ],
+          "svg": "M9.999,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-cross-9.99999e-7",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  1.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0L1,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-distance-0.000001",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            9.999,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.999,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            9.999,
+            0.0
+          ],
+          "svg": "M9.999,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            9.999,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.999,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            9.999,
+            0.0
+          ],
+          "svg": "M9.999,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-cross-0.000001",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  1.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0L1,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-distance-0.000001000001",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            9.9989999995,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.9989999995,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            9.9989999995,
+            0.0
+          ],
+          "svg": "M9.999,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            10.0,
+            1.9999999999999998
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  9.9989999995,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  8.0,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 2.0,
+                  "to": [
+                    10.0,
+                    1.9999999999999998
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            9.9989999995,
+            0.0
+          ],
+          "svg": "M9.999,0L8,0A2,2,0,0,1,10,2",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "arcTo-cross-0.000001000001",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.000001000044449,
+            1.0000454490728242e-12
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "LineTo": [
+                  0.999998999955551,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 2.0,
+                  "to": [
+                    1.000001000044449,
+                    1.0000454490728242e-12
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            0.0,
+            0.0
+          ],
+          "svg": "M0,0L1,0A2,2,0,0,1,1,0",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "round-0",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.5,
+            -1.5
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M2,-1",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            1.23456789
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              },
+              {
+                "LineTo": [
+                  0.0,
+                  1.23456789
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M2,-1L0,1",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1e-9,
+            1e+22
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              },
+              {
+                "LineTo": [
+                  0.0,
+                  1.23456789
+                ]
+              },
+              {
+                "LineTo": [
+                  1e-9,
+                  1e+22
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M2,-1L0,1L0,1e+22",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "round-small-arc-0",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            6.123233995736766e-22,
+            0.00001
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.00001,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 0.00001,
+                  "to": [
+                    6.123233995736766e-22,
+                    0.00001
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M0,0A0,0,0,0,1,0,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.3535516228219013,
+            0.6464483771780987
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.00001,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 0.00001,
+                  "to": [
+                    6.123233995736766e-22,
+                    0.00001
+                  ]
+                }
+              },
+              {
+                "LineTo": [
+                  0.6464466094155652,
+                  0.6464501449494711
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": false,
+                  "radius": 0.5,
+                  "to": [
+                    1.3535516228219013,
+                    0.6464483771780987
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M0,0A0,0,0,0,1,0,0L1,1A1,1,0,0,0,1,1",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "round-1",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.5,
+            -1.5
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M1.5,-1.5",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            1.23456789
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              },
+              {
+                "LineTo": [
+                  0.0,
+                  1.23456789
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M1.5,-1.5L0,1.2",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1e-9,
+            1e+22
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              },
+              {
+                "LineTo": [
+                  0.0,
+                  1.23456789
+                ]
+              },
+              {
+                "LineTo": [
+                  1e-9,
+                  1e+22
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M1.5,-1.5L0,1.2L0,1e+22",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "round-small-arc-1",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            6.123233995736766e-22,
+            0.00001
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.00001,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 0.00001,
+                  "to": [
+                    6.123233995736766e-22,
+                    0.00001
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M0,0A0,0,0,0,1,0,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.3535516228219013,
+            0.6464483771780987
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.00001,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 0.00001,
+                  "to": [
+                    6.123233995736766e-22,
+                    0.00001
+                  ]
+                }
+              },
+              {
+                "LineTo": [
+                  0.6464466094155652,
+                  0.6464501449494711
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": false,
+                  "radius": 0.5,
+                  "to": [
+                    1.3535516228219013,
+                    0.6464483771780987
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M0,0A0,0,0,0,1,0,0L0.6,0.6A0.5,0.5,0,0,0,1.4,0.6",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "round-3",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.5,
+            -1.5
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M1.5,-1.5",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            1.23456789
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              },
+              {
+                "LineTo": [
+                  0.0,
+                  1.23456789
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M1.5,-1.5L0,1.235",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1e-9,
+            1e+22
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              },
+              {
+                "LineTo": [
+                  0.0,
+                  1.23456789
+                ]
+              },
+              {
+                "LineTo": [
+                  1e-9,
+                  1e+22
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M1.5,-1.5L0,1.235L0,1e+22",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "round-small-arc-3",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            6.123233995736766e-22,
+            0.00001
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.00001,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 0.00001,
+                  "to": [
+                    6.123233995736766e-22,
+                    0.00001
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M0,0A0,0,0,0,1,0,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.3535516228219013,
+            0.6464483771780987
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.00001,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 0.00001,
+                  "to": [
+                    6.123233995736766e-22,
+                    0.00001
+                  ]
+                }
+              },
+              {
+                "LineTo": [
+                  0.6464466094155652,
+                  0.6464501449494711
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": false,
+                  "radius": 0.5,
+                  "to": [
+                    1.3535516228219013,
+                    0.6464483771780987
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M0,0A0,0,0,0,1,0,0L0.646,0.646A0.5,0.5,0,0,0,1.354,0.646",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "round-15",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.5,
+            -1.5
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M1.5,-1.5",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            1.23456789
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              },
+              {
+                "LineTo": [
+                  0.0,
+                  1.23456789
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M1.5,-1.5L0,1.23456789",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1e-9,
+            1e+22
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              },
+              {
+                "LineTo": [
+                  0.0,
+                  1.23456789
+                ]
+              },
+              {
+                "LineTo": [
+                  1e-9,
+                  1e+22
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M1.5,-1.5L0,1.23456789L1e-9,1e+22",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "round-small-arc-15",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            6.123233995736766e-22,
+            0.00001
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.00001,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 0.00001,
+                  "to": [
+                    6.123233995736766e-22,
+                    0.00001
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M0.00001,0A0.00001,0.00001,0,0,1,0,0.00001",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.3535516228219013,
+            0.6464483771780987
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.00001,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 0.00001,
+                  "to": [
+                    6.123233995736766e-22,
+                    0.00001
+                  ]
+                }
+              },
+              {
+                "LineTo": [
+                  0.6464466094155652,
+                  0.6464501449494711
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": false,
+                  "radius": 0.5,
+                  "to": [
+                    1.3535516228219013,
+                    0.6464483771780987
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M0.00001,0A0.00001,0.00001,0,0,1,0,0.00001L0.646446609415565,0.646450144949471A0.5,0.5,0,0,0,1.353551622821901,0.646448377178099",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "round-16",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.5,
+            -1.5
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M1.5,-1.5",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            1.23456789
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              },
+              {
+                "LineTo": [
+                  0.0,
+                  1.23456789
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M1.5,-1.5L0,1.23456789",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1e-9,
+            1e+22
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              },
+              {
+                "LineTo": [
+                  0.0,
+                  1.23456789
+                ]
+              },
+              {
+                "LineTo": [
+                  1e-9,
+                  1e+22
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M1.5,-1.5L0,1.23456789L1e-9,1e+22",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "round-small-arc-16",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            6.123233995736766e-22,
+            0.00001
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.00001,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 0.00001,
+                  "to": [
+                    6.123233995736766e-22,
+                    0.00001
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M0.00001,0A0.00001,0.00001,0,0,1,6.123233995736766e-22,0.00001",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.3535516228219013,
+            0.6464483771780987
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.00001,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 0.00001,
+                  "to": [
+                    6.123233995736766e-22,
+                    0.00001
+                  ]
+                }
+              },
+              {
+                "LineTo": [
+                  0.6464466094155652,
+                  0.6464501449494711
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": false,
+                  "radius": 0.5,
+                  "to": [
+                    1.3535516228219013,
+                    0.6464483771780987
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M0.00001,0A0.00001,0.00001,0,0,1,6.123233995736766e-22,0.00001L0.6464466094155652,0.6464501449494711A0.5,0.5,0,0,0,1.3535516228219013,0.6464483771780987",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "round-2.9",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.5,
+            -1.5
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M1.5,-1.5",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            1.23456789
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              },
+              {
+                "LineTo": [
+                  0.0,
+                  1.23456789
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M1.5,-1.5L0,1.23",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1e-9,
+            1e+22
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  1.5,
+                  -1.5
+                ]
+              },
+              {
+                "LineTo": [
+                  0.0,
+                  1.23456789
+                ]
+              },
+              {
+                "LineTo": [
+                  1e-9,
+                  1e+22
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "svg": "M1.5,-1.5L0,1.23L0,1e+22",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "round-small-arc-2.9",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            6.123233995736766e-22,
+            0.00001
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.00001,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 0.00001,
+                  "to": [
+                    6.123233995736766e-22,
+                    0.00001
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 1,
+          "start": null,
+          "svg": "M0,0A0,0,0,0,1,0,0",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1.3535516228219013,
+            0.6464483771780987
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.00001,
+                  0.0
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": true,
+                  "large": false,
+                  "radius": 0.00001,
+                  "to": [
+                    6.123233995736766e-22,
+                    0.00001
+                  ]
+                }
+              },
+              {
+                "LineTo": [
+                  0.6464466094155652,
+                  0.6464501449494711
+                ]
+              },
+              {
+                "Arc": {
+                  "clockwise": false,
+                  "large": false,
+                  "radius": 0.5,
+                  "to": [
+                    1.3535516228219013,
+                    0.6464483771780987
+                  ]
+                }
+              }
+            ]
+          },
+          "operations": 2,
+          "start": null,
+          "svg": "M0,0A0,0,0,0,1,0,0L0.65,0.65A0.5,0.5,0,0,0,1.35,0.65",
+          "version": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "unrounded-magnitudes",
+    "observations": [
+      {
+        "error": null,
+        "result": {
+          "current": [
+            0.0,
+            1e-9
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  1e-9
+                ]
+              }
+            ]
+          },
+          "operations": 1,
+          "start": [
+            0.0,
+            1e-9
+          ],
+          "svg": "M0,1e-9",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1e+22,
+            1e-7
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  1e-9
+                ]
+              },
+              {
+                "LineTo": [
+                  1e+22,
+                  1e-7
+                ]
+              }
+            ]
+          },
+          "operations": 2,
+          "start": [
+            0.0,
+            1e-9
+          ],
+          "svg": "M0,1e-9L1e+22,1e-7",
+          "version": 1
+        }
+      },
+      {
+        "error": null,
+        "result": {
+          "current": [
+            1e-6,
+            1e+21
+          ],
+          "geometry": {
+            "commands": [
+              {
+                "MoveTo": [
+                  0.0,
+                  1e-9
+                ]
+              },
+              {
+                "LineTo": [
+                  1e+22,
+                  1e-7
+                ]
+              },
+              {
+                "LineTo": [
+                  1e-6,
+                  1e+21
+                ]
+              }
+            ]
+          },
+          "operations": 3,
+          "start": [
+            0.0,
+            1e-9
+          ],
+          "svg": "M0,1e-9L1e+22,1e-7L0.000001,1e+21",
+          "version": 1
+        }
+      }
+    ]
+  }
+]

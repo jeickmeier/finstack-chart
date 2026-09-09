@@ -1,0 +1,20 @@
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.51s
+     Running tests/authoring.rs (target/debug/deps/authoring-23f8deafde1255a4)
+
+running 5 tests
+test live_capture_requires_presentation_only_for_presented_basis ... ok
+test repeated_frozen_paints_preserve_scene_and_capture_policy_after_live_commit ... ok
+test ordinary_and_faceted_legends_share_exported_labels_and_source_provenance ... ok
+test presented_current_projection_and_interaction_captures_remain_independent_after_disposal ... ok
+test real_svg_pdf_png_preserve_component_text_geometry_and_physical_size ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.63s
+
+     Running tests/ggplot_legends.rs (target/debug/deps/ggplot_legends-aa1d3b7c50d98b0c)
+
+running 1 test
+test fix_gg01_primary_legend_matrix ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.90s
+

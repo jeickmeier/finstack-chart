@@ -164,7 +164,8 @@ fn palette_changes_reuse_statistics_and_navigation_reuses_exact_marks() {
         green: 0,
         blue: 0,
         alpha: 255,
-    };
+    }
+    .into();
     let recolored = c
         .prepare(
             &d,

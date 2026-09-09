@@ -268,44 +268,69 @@ pub(crate) fn prepare_facets(
     let mut metrics = PreparationMetrics::default();
     let mut remaining = limits.max_prepared_rows;
     let mut vertices = limits.max_vertices;
+    let mut populations = vec![];
     for key in &spec.order {
         let scope = PanelScope {
             fields: spec.fields.clone(),
             key: key.clone(),
         };
-        let chart = compiler.prepare_scoped(
+        let population = compiler.prepare_scope(
             &child,
             source,
-            state,
             CompileLimits {
                 max_prepared_rows: remaining,
-                max_vertices: vertices,
                 ..limits
             },
             Some(&scope),
         )?;
+        remaining = remaining
+            .checked_sub(population.work_units())
+            .ok_or_else(|| {
+                error(
+                    DiagnosticCode::ResourceLimit,
+                    "Figure prepared-row budget exceeded.",
+                )
+            })?;
+        populations.push((key, population));
+    }
+    let samples = super::colors::shared_samples(
+        &child,
+        source.get()?,
+        populations.iter().flat_map(|(_, p)| p.layer_tables()),
+        limits,
+    )?;
+    for (key, population) in populations {
+        let chart = compiler.finish_scope(
+            &child,
+            source,
+            state,
+            CompileLimits {
+                max_vertices: vertices,
+                ..limits
+            },
+            population,
+            &samples,
+        )?;
         metrics.evaluated_transforms += chart.metrics.evaluated_transforms;
         metrics.reused_transforms += chart.metrics.reused_transforms;
-        let used = chart
-            .layers
-            .iter()
-            .map(|l| l.table.work_units())
-            .chain(chart.transforms.values().map(|t| t.work_units()))
-            .sum::<usize>();
-        remaining = remaining.checked_sub(used).ok_or_else(|| {
-            error(
-                DiagnosticCode::ResourceLimit,
-                "Figure prepared-row budget exceeded.",
-            )
-        })?;
+        metrics.evaluated_layers += chart.metrics.evaluated_layers;
+        metrics.reused_layers += chart.metrics.reused_layers;
         let used_vertices = chart
             .layers
             .iter()
             .flat_map(|l| l.marks.iter())
             .map(|m| match &m.geometry {
                 PreparedGeometry::Point(_) => 1,
-                PreparedGeometry::LineRun(v) => v.len(),
-                PreparedGeometry::BandRun { lower, upper } => lower.len() + upper.len(),
+                PreparedGeometry::ShapePath { geometry, .. } => {
+                    geometry.commands().len().saturating_add(1)
+                }
+                PreparedGeometry::ShapePathRun {
+                    geometry, anchors, ..
+                } => geometry.commands().len().saturating_add(anchors.len()),
+                PreparedGeometry::Rectangle { .. } | PreparedGeometry::Bar { .. } => 4,
+                PreparedGeometry::LineRun(v) | PreparedGeometry::Polygon(v) => v.len(),
+                PreparedGeometry::BandRun { lower, upper }
+                | PreparedGeometry::StackBandRun { lower, upper, .. } => lower.len() + upper.len(),
                 _ => 2,
             })
             .sum::<usize>();
@@ -357,6 +382,7 @@ pub(crate) fn prepare_facets(
         });
     }
     let mut result = PreparedChart {
+        scale_registrations: compiler.extensions.scales.clone(),
         definition: Arc::new(definition.clone()),
         source: source.clone(),
         state: state.clone(),

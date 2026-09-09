@@ -1,0 +1,497 @@
+{
+  "schemes": 218,
+  "samples": 160666,
+  "catalog": {
+    "interpolators": [
+      "Blues",
+      "BrBG",
+      "BuGn",
+      "BuPu",
+      "Cividis",
+      "Cool",
+      "CubehelixDefault",
+      "GnBu",
+      "Greens",
+      "Greys",
+      "Inferno",
+      "Magma",
+      "OrRd",
+      "Oranges",
+      "PRGn",
+      "PiYG",
+      "Plasma",
+      "PuBu",
+      "PuBuGn",
+      "PuOr",
+      "PuRd",
+      "Purples",
+      "Rainbow",
+      "RdBu",
+      "RdGy",
+      "RdPu",
+      "RdYlBu",
+      "RdYlGn",
+      "Reds",
+      "Sinebow",
+      "Spectral",
+      "Turbo",
+      "Viridis",
+      "Warm",
+      "YlGn",
+      "YlGnBu",
+      "YlOrBr",
+      "YlOrRd"
+    ],
+    "schemes": [
+      {
+        "family": "Categorical",
+        "id": "Accent",
+        "sizes": [
+          8
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "Blues",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "family": "Diverging",
+        "id": "BrBG",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "BuGn",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "BuPu",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "family": "Categorical",
+        "id": "Category10",
+        "sizes": [
+          10
+        ]
+      },
+      {
+        "family": "Categorical",
+        "id": "Dark2",
+        "sizes": [
+          8
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "GnBu",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "Greens",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "Greys",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "family": "Categorical",
+        "id": "Observable10",
+        "sizes": [
+          10
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "OrRd",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "Oranges",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "family": "Diverging",
+        "id": "PRGn",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "family": "Categorical",
+        "id": "Paired",
+        "sizes": [
+          12
+        ]
+      },
+      {
+        "family": "Categorical",
+        "id": "Pastel1",
+        "sizes": [
+          9
+        ]
+      },
+      {
+        "family": "Categorical",
+        "id": "Pastel2",
+        "sizes": [
+          8
+        ]
+      },
+      {
+        "family": "Diverging",
+        "id": "PiYG",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "PuBu",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "PuBuGn",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "family": "Diverging",
+        "id": "PuOr",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "PuRd",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "Purples",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "family": "Diverging",
+        "id": "RdBu",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "family": "Diverging",
+        "id": "RdGy",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "RdPu",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "family": "Diverging",
+        "id": "RdYlBu",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "family": "Diverging",
+        "id": "RdYlGn",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "Reds",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "family": "Categorical",
+        "id": "Set1",
+        "sizes": [
+          9
+        ]
+      },
+      {
+        "family": "Categorical",
+        "id": "Set2",
+        "sizes": [
+          8
+        ]
+      },
+      {
+        "family": "Categorical",
+        "id": "Set3",
+        "sizes": [
+          12
+        ]
+      },
+      {
+        "family": "Diverging",
+        "id": "Spectral",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "family": "Categorical",
+        "id": "Tableau10",
+        "sizes": [
+          10
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "YlGn",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "YlGnBu",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "YlOrBr",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "family": "Sequential",
+        "id": "YlOrRd",
+        "sizes": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      }
+    ],
+    "version": 1
+  },
+  "exact": "sRGB8 RGBA",
+  "ownership": "copies, disposal, reversal and isolated results"
+}

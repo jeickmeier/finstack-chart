@@ -1,0 +1,25 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling chart-extension-example v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/custom-extension)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.57s
+     Running tests/shape_charts.rs (target/debug/deps/shape_charts-b1a051e0c3059d18)
+
+running 5 tests
+test registered_curve_budget_rejects_before_text_callbacks ... ok
+test builtin_setters_replace_registered_protocols_without_stale_selection ... ok
+test registered_pie_order_and_stack_offset_keep_source_identity_and_domains ... ok
+test custom_symbol_size_guides_use_the_same_draw_protocol ... ok
+test custom_curve_survives_registry_drop_wire_roundtrip_and_projected_layout ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/shapes.rs (target/debug/deps/shapes-64023e90b4d9fdff)
+
+running 5 tests
+test shape_catalog_has_exact_version_and_registration_bounds ... ok
+test registered_invalid_outputs_cannot_escape_native_shape_checks ... ok
+test registered_symbol_pie_and_stack_have_independent_expected_values ... ok
+test registered_curve_lifecycle_gaps_radial_links_and_owned_reuse ... ok
+test registry_versions_families_parameters_and_native_only_boundaries ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

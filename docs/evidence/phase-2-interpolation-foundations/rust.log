@@ -1,0 +1,55 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.39s
+     Running tests/color_parity.rs (target/debug/deps/color_parity-e69fbf2042409b1c)
+
+running 3 tests
+test independent_color_math_and_quantization_preserve_floating_information ... ok
+test color_descriptors_parser_budgets_and_channel_names_reject_malformed_inputs ... ok
+test complete_color_oracle_covers_all_constructors_and_inherited_operations ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/interpolate_color.rs (target/debug/deps/interpolate_color-3e2507b2c8696e08)
+
+running 2 tests
+test floating_channels_opacity_hue_and_splines_keep_their_contracts ... ok
+test every_color_export_gamma_and_hue_matches_offline_reference ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/interpolate_motion.rs (target/debug/deps/interpolate_motion-3ecfe3480e95c5c5)
+
+running 3 tests
+test independent_transform_order_reflection_and_zoom_invariants ... ok
+test pinned_real_browser_transforms_match_decomposition_and_geometry ... ok
+test all_zoom_rho_duration_cases_match_reference ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/interpolate_scalar.rs (target/debug/deps/interpolate_scalar-817ad7592387e3cb)
+
+running 3 tests
+test independent_rounding_composition_and_owned_sampling_contracts ... ok
+test parameter_controls_and_output_counts_are_bounded ... ok
+test every_scalar_and_composition_case_matches_the_offline_oracle ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/interpolate_values.rs (target/debug/deps/interpolate_values-474bbffd7d8a560b)
+
+running 3 tests
+test independent_target_shapes_dates_casts_and_reuse ... ok
+test every_structured_value_case_matches_offline_reference_and_adaptations ... ok
+test strict_value_decoding_and_aggregate_limits_reject_invalid_inputs ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/path_parity.rs (target/debug/deps/path_parity-675663d7a48b798a)
+
+running 3 tests
+test rejected_arguments_budgets_batches_and_external_sink_errors ... ok
+test independent_tangency_rectangles_and_precision ... ok
+test all_pinned_sequences_match_offline_at_every_operation ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

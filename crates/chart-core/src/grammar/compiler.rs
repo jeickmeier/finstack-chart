@@ -15,12 +15,41 @@ struct CachedOutput {
     diagnostics: Vec<Diagnostic>,
 }
 struct CachedGraph {
+    semantics: Option<ExecutionSemantics>,
+    population_axes: Vec<crate::layout::AxisSpec>,
     scope: Option<facets::PanelScope>,
     source: SnapshotHandle<StoreSnapshot>,
     definitions: Vec<TransformDefinition>,
     limits: CompileLimits,
     outputs: BTreeMap<TransformId, CachedOutput>,
     layers: BTreeMap<LayerId, (Layer, CachedOutput)>,
+}
+
+pub(crate) struct PreparedScope {
+    graph: CachedGraph,
+    tables: BTreeMap<TransformId, Arc<PreparedTable>>,
+    diagnostics: Vec<Diagnostic>,
+    metrics: PreparationMetrics,
+}
+impl PreparedScope {
+    pub(crate) fn work_units(&self) -> usize {
+        self.tables
+            .values()
+            .map(|t| t.work_units())
+            .chain(
+                self.graph
+                    .layers
+                    .values()
+                    .map(|(_, o)| o.table.work_units()),
+            )
+            .sum()
+    }
+    pub(crate) fn layer_tables(&self) -> impl Iterator<Item = (&Layer, &PreparedTable)> {
+        self.graph
+            .layers
+            .values()
+            .map(|(l, o)| (l, o.table.as_ref()))
+    }
 }
 
 /// One synchronous preparation route for typed-normalized authoring, recipes and layers.
@@ -58,6 +87,12 @@ impl Compiler {
         source: &SnapshotHandle<StoreSnapshot>,
         limits: CompileLimits,
     ) -> ChartResult<()> {
+        let oriented = super::orientation::resolve(definition)?;
+        let resolved = semantics::resolve(oriented.as_ref(), source.get()?, limits)?;
+        let definition = resolved.as_ref();
+        if let Some(semantics) = &definition.semantics {
+            semantics.validate()?;
+        }
         let snapshot = source.get()?;
         crate::layout::validate_definition_axes(definition)?;
         if let Some(figure) = &definition.figure {
@@ -88,6 +123,28 @@ impl Compiler {
         state: &ChartState,
         limits: CompileLimits,
     ) -> ChartResult<PreparedChart> {
+        let staged = if super::expression_stage::has_expressions(definition) {
+            self.validate(definition, source, limits)?;
+            super::expression_stage::specialize(definition, source.get()?)?
+        } else {
+            std::borrow::Cow::Borrowed(definition)
+        };
+        let oriented = super::orientation::resolve(staged.as_ref())?;
+        let resolved = semantics::resolve(oriented.as_ref(), source.get()?, limits)?;
+        let mut result = self.prepare_resolved(resolved.as_ref(), source, state, limits)?;
+        result.definition = Arc::new(definition.clone());
+        Ok(result)
+    }
+    fn prepare_resolved(
+        &mut self,
+        definition: &ChartDefinition,
+        source: &SnapshotHandle<StoreSnapshot>,
+        state: &ChartState,
+        limits: CompileLimits,
+    ) -> ChartResult<PreparedChart> {
+        if let Some(semantics) = &definition.semantics {
+            semantics.validate()?;
+        }
         let snapshot = source.get()?;
         self.bin_cache.begin(limits.max_prepared_rows);
         if let Some((previous, old_limits)) = &self.presentation {
@@ -112,6 +169,8 @@ impl Compiler {
         self.presentation = None;
         if self.cache.values().any(|c| {
             c.definitions != definition.transforms
+                || c.semantics != definition.semantics
+                || c.population_axes != population_axes(definition)
                 || !c
                     .source
                     .get()
@@ -152,11 +211,32 @@ impl Compiler {
         limits: CompileLimits,
         scope: Option<&facets::PanelScope>,
     ) -> ChartResult<PreparedChart> {
+        let population = self.prepare_scope(definition, source, limits, scope)?;
+        let samples = super::colors::shared_samples(
+            definition,
+            source.get()?,
+            population.layer_tables(),
+            limits,
+        )?;
+        self.finish_scope(definition, source, state, limits, population, &samples)
+    }
+    pub(crate) fn prepare_scope(
+        &mut self,
+        definition: &ChartDefinition,
+        source: &SnapshotHandle<StoreSnapshot>,
+        limits: CompileLimits,
+        scope: Option<&facets::PanelScope>,
+    ) -> ChartResult<PreparedScope> {
+        if let Some(semantics) = &definition.semantics {
+            semantics.validate()?;
+        }
         let snapshot = source.get()?;
         let order = validate_definition(definition, snapshot, limits, &self.extensions)?;
         let cache_key = scope.map(|s| s.key.clone());
         let cached = self.cache.get(&cache_key).filter(|c| {
             c.scope.as_ref() == scope
+                && c.semantics == definition.semantics
+                && c.population_axes == population_axes(definition)
                 && c.definitions == definition.transforms
                 && c.limits == limits
         });
@@ -237,15 +317,6 @@ impl Compiler {
             outputs.insert(node.id, output);
         }
         let mut cached_layers = BTreeMap::new();
-        let mut layers = vec![];
-        let mut colors = BTreeMap::new();
-        let mut scale_domains = BTreeMap::new();
-        let mut budget = GeometryBudget {
-            extensions: &self.extensions,
-            limits,
-            vertices: limits.max_vertices,
-            color_domains: BTreeMap::new(),
-        };
         for layer in &definition.layers {
             if !facets::targeted(&layer.facet, scope) {
                 continue;
@@ -309,17 +380,58 @@ impl Compiler {
             diagnostics.extend(output.diagnostics.clone());
             cached_layers.insert(layer.id, (layer.clone(), output));
         }
+        Ok(PreparedScope {
+            graph: CachedGraph {
+                semantics: definition.semantics.clone(),
+                population_axes: population_axes(definition).to_vec(),
+                scope: scope.cloned(),
+                source: source.clone(),
+                definitions: definition.transforms.clone(),
+                limits,
+                outputs,
+                layers: cached_layers,
+            },
+            tables,
+            diagnostics,
+            metrics,
+        })
+    }
+    pub(crate) fn finish_scope(
+        &mut self,
+        definition: &ChartDefinition,
+        source: &SnapshotHandle<StoreSnapshot>,
+        state: &ChartState,
+        limits: CompileLimits,
+        population: PreparedScope,
+        samples: &BTreeMap<crate::ScaleId, crate::scales::ScalePopulation>,
+    ) -> ChartResult<PreparedChart> {
+        let snapshot = source.get()?;
+        let mut diagnostics = population.diagnostics;
+        let mut layers = vec![];
+        let mut colors = BTreeMap::new();
+        let mut scale_domains = BTreeMap::new();
+        let mut budget = GeometryBudget {
+            geometry_theme: definition.theme.as_ref().and_then(|t| t.geometry.as_ref()),
+            population_axes: population_axes(definition),
+            extensions: &self.extensions,
+            limits,
+            vertices: limits.max_vertices,
+            color_domains: BTreeMap::new(),
+            color_samples: samples,
+        };
         budget.color_domains = super::colors::shared_catalogs(
             definition,
             snapshot,
-            &cached_layers
+            &population
+                .graph
+                .layers
                 .iter()
                 .map(|(id, (_, output))| (*id, output.table.as_ref()))
                 .collect(),
             limits,
         )?;
         for layer in &definition.layers {
-            let Some((_, output)) = cached_layers.get(&layer.id) else {
+            let Some((_, output)) = population.graph.layers.get(&layer.id) else {
                 continue;
             };
             let table = output.table.clone();
@@ -365,30 +477,35 @@ impl Compiler {
             domains.y_space = d.y_space.clone();
         }
         let result = PreparedChart {
+            scale_registrations: self.extensions.scales.clone(),
             panels: vec![],
             shared_training: None,
             definition: Arc::new(definition.clone()),
             source: source.clone(),
             state: state.clone(),
             layers,
-            transforms: tables.clone(),
+            transforms: population.tables,
             domains,
             scale_domains,
             diagnostics,
-            metrics,
+            metrics: population.metrics,
         };
         self.cache.insert(
-            cache_key,
-            CachedGraph {
-                scope: scope.cloned(),
-                source: source.clone(),
-                definitions: definition.transforms.clone(),
-                limits,
-                outputs,
-                layers: cached_layers,
-            },
+            population.graph.scope.as_ref().map(|s| s.key.clone()),
+            population.graph,
         );
         Ok(result)
+    }
+}
+fn population_axes(definition: &ChartDefinition) -> &[crate::layout::AxisSpec] {
+    if definition
+        .semantics
+        .as_ref()
+        .is_some_and(|s| s.scale_stage == ScaleStage::BeforeStatistics)
+    {
+        &definition.axes
+    } else {
+        &[]
     }
 }
 fn context(mut e: Diagnostic, data: &DatasetSnapshot, layer: Option<LayerId>) -> Diagnostic {
@@ -398,7 +515,7 @@ fn context(mut e: Diagnostic, data: &DatasetSnapshot, layer: Option<LayerId>) ->
     e.context.layer = layer;
     e
 }
-fn charge(remaining: &mut usize, count: usize, kind: &str) -> ChartResult<()> {
+pub(super) fn charge(remaining: &mut usize, count: usize, kind: &str) -> ChartResult<()> {
     *remaining = remaining.checked_sub(count).ok_or_else(|| {
         error(
             DiagnosticCode::ResourceLimit,
@@ -434,8 +551,9 @@ pub(super) fn validate_definition(
     limits: CompileLimits,
     extensions: &ExtensionRegistry,
 ) -> ChartResult<Vec<usize>> {
+    extensions.validate_scale_selections(definition, false)?;
     if let Some(theme) = &definition.theme {
-        theme.resolve(&crate::theme::ThemePatch::default())?;
+        theme.resolve(&crate::theme::ThemePatch::<crate::scene::Color>::default())?;
         if theme
             .layers
             .keys()
@@ -474,12 +592,23 @@ pub(super) fn validate_definition(
         stats::validate_filters(&node.filters, limits)?;
     }
     for layer in &definition.layers {
+        super::shape_encoding::validate(layer)?;
+        match layer.geom {
+            Geom::ShapeLine { curve, .. }
+            | Geom::ShapeLineRadial { curve, .. }
+            | Geom::ShapeLink { curve } => curve.validate()?,
+            Geom::ShapeArea { curve, .. } | Geom::ShapeAreaRadial { curve, .. } => {
+                crate::shape::Area::new().curve(curve)?;
+            }
+            _ => {}
+        }
         if layer.candle_colors.is_some() && !matches!(layer.geom, Geom::Ohlc { .. }) {
             return Err(error(
                 DiagnosticCode::SchemaConflict,
                 "Candle colors require supplied OHLC geometry.",
             ));
         }
+        super::shape_extensions::resolve_layer(layer, extensions)?;
         if let Some(g) = &layer.geometry_extension {
             extensions::parameter_size(&g.parameters)?;
             extensions
@@ -563,11 +692,14 @@ pub(super) fn validate_definition(
 }
 
 pub(super) struct EncodedRow {
+    pub(super) shape: Option<Box<super::shape_encoding::ShapeRow>>,
     pub(super) x: Option<f64>,
     pub(super) y: Option<f64>,
     pub(super) x2: Option<f64>,
     pub(super) y2: Option<f64>,
-    pub(super) color: Option<crate::scene::Color>,
+    pub(super) color: Option<crate::color::Paint>,
+    pub(super) opacity: Option<f64>,
+    pub(super) stroke_width: Option<f64>,
     pub(super) low: Option<f64>,
     pub(super) high: Option<f64>,
     pub(super) size: Option<f64>,
@@ -602,6 +734,10 @@ fn source_space(data: &DatasetSnapshot, value: &Numeric) -> ChartResult<Option<V
 }
 fn bin_space(space: &ValueSpace, value: &BinNumeric) -> ChartResult<Option<ValueSpace>> {
     match value {
+        BinNumeric::Expression(expr) => {
+            numeric_expression_type(expr, |_| Ok(ExpressionType::Number))?;
+            Ok(Some(ValueSpace::Data))
+        }
         BinNumeric::Literal(v) if !v.is_finite() => Err(error(
             DiagnosticCode::NumericalDomain,
             "Generated literal mappings must be finite.",
@@ -651,8 +787,11 @@ pub(super) fn eligible_domains(layer: &PreparedLayer) -> DomainContributions {
             };
             for mark in layer.marks.iter() {
                 match &mark.geometry {
-                    PreparedGeometry::Point(p) => include(*p),
-                    PreparedGeometry::BandRun { lower, upper } => {
+                    PreparedGeometry::Point(p)
+                    | PreparedGeometry::ShapePath { center: p, .. }
+                    | PreparedGeometry::ShapePathRun { center: p, .. } => include(*p),
+                    PreparedGeometry::BandRun { lower, upper }
+                    | PreparedGeometry::StackBandRun { lower, upper, .. } => {
                         for p in lower.iter().chain(upper) {
                             include(*p);
                         }
@@ -760,7 +899,10 @@ fn source_binding(
     inherited: &SourceAes,
     data: &DatasetSnapshot,
 ) -> ChartResult<(SourceAes, DomainContributions)> {
-    let endpoints = matches!(layer.geom, Geom::Rule | Geom::Rectangle);
+    let endpoints = matches!(
+        layer.geom,
+        Geom::Rule | Geom::ShapeLink { .. } | Geom::Rectangle | Geom::ShapeArea { .. }
+    );
     let mut domains = DomainContributions::default();
     let aes = if layer.inherit {
         authored.inherit(inherited)
@@ -801,7 +943,10 @@ fn source_binding(
     if let Some(size) = &aes.size {
         numeric_space(data, size)?;
     }
-    let grouping = aes.group.map_or(Grouping::All, Grouping::Field);
+    let grouping = aes
+        .grouping
+        .clone()
+        .unwrap_or_else(|| aes.group.map_or(Grouping::All, Grouping::Field));
     validate_group(data, &grouping)?;
     domains.x_space = source_space(data, x)?;
     domains.y_space = source_space(data, y)?;
@@ -853,7 +998,10 @@ fn bin_binding(
             "OHLC requires source open/close/low/high mappings.",
         ));
     }
-    let endpoints = matches!(layer.geom, Geom::Rule | Geom::Rectangle);
+    let endpoints = matches!(
+        layer.geom,
+        Geom::Rule | Geom::ShapeLink { .. } | Geom::Rectangle | Geom::ShapeArea { .. }
+    );
     let mut domains = DomainContributions::default();
     if endpoints && (aes.x2.is_none() || aes.y2.is_none()) {
         return Err(error(
@@ -887,6 +1035,7 @@ fn bin_binding(
     Ok(domains)
 }
 fn validate_line_size(layer: &Layer, mapped: bool) -> ChartResult<()> {
+    super::after_scale::validate(layer)?;
     if (layer.geom.run().is_some() || matches!(layer.geom, Geom::Rectangle)) && mapped {
         return Err(error(
             DiagnosticCode::UnsupportedCapability,
@@ -897,10 +1046,13 @@ fn validate_line_size(layer: &Layer, mapped: bool) -> ChartResult<()> {
 }
 
 struct GeometryBudget<'a> {
+    geometry_theme: Option<&'a crate::theme::GeometryTheme<crate::color::Paint>>,
+    population_axes: &'a [crate::layout::AxisSpec],
     extensions: &'a ExtensionRegistry,
     limits: CompileLimits,
     vertices: usize,
     color_domains: BTreeMap<crate::ScaleId, Vec<String>>,
+    color_samples: &'a BTreeMap<crate::ScaleId, crate::scales::ScalePopulation>,
 }
 fn prepare_layer(
     layer: &Layer,
@@ -912,6 +1064,7 @@ fn prepare_layer(
     diagnostics: &mut Vec<Diagnostic>,
 ) -> ChartResult<PreparedLayer> {
     let extensions = budget.extensions;
+    let shape_protocols = super::shape_extensions::resolve_layer(layer, extensions)?;
     let limits = budget.limits;
     let vertices = &mut budget.vertices;
     let mut domains;
@@ -925,7 +1078,10 @@ fn prepare_layer(
                     "Missing checked source mappings.",
                 ));
             };
-            let grouping = aes.group.map_or(Grouping::All, Grouping::Field);
+            let grouping = aes
+                .grouping
+                .clone()
+                .unwrap_or_else(|| aes.group.map_or(Grouping::All, Grouping::Field));
             let index: BTreeMap<_, _> = data.rows().map(|r| (r.key(), r)).collect();
             let catalogs: BTreeMap<_, BTreeMap<&str, f64>> = [&aes.x, &aes.y, &aes.x2, &aes.y2]
                 .into_iter()
@@ -967,6 +1123,9 @@ fn prepare_layer(
                         x2: aes.x2.as_ref().and_then(|v| coordinate(row, v)),
                         y2: aes.y2.as_ref().and_then(|v| coordinate(row, v)),
                         color: None,
+                        shape: None,
+                        opacity: None,
+                        stroke_width: None,
                         low: aes.low.as_ref().and_then(|v| coordinate(row, v)),
                         high: aes.high.as_ref().and_then(|v| coordinate(row, v)),
                         size: aes.size.as_ref().and_then(|v| coordinate(row, v)),
@@ -989,7 +1148,33 @@ fn prepare_layer(
                 unreachable!()
             };
             domains = statistical_binding(layer, aes, fields)?;
-            let value = |r: &StatisticalRow, n: &StatNumeric| match n {
+            let expressions = [&aes.x, &aes.y]
+                .into_iter()
+                .map(Some)
+                .chain([aes.x2.as_ref(), aes.y2.as_ref(), aes.size.as_ref()])
+                .map(|mapping| match mapping {
+                    Some(StatNumeric::Expression(expr)) => expr
+                        .evaluate(
+                            rows.len(),
+                            ExpressionLimits::default(),
+                            |field| stat_expression_type(fields, field),
+                            |field, i| {
+                                expression_number(rows[i].value(field).and_then(|v| {
+                                    backtransform(
+                                        v,
+                                        &fields.iter().find(|c| &c.field == field)?.space,
+                                    )
+                                }))
+                            },
+                        )
+                        .map(Some),
+                    _ => Ok(None),
+                })
+                .collect::<ChartResult<Vec<_>>>()?;
+            let value = |i: usize, r: &StatisticalRow, n: &StatNumeric, slot: usize| match n {
+                StatNumeric::Expression(_) => {
+                    expressions[slot].as_ref().and_then(|v| v[i].number())
+                }
                 StatNumeric::Literal(v) => Some(*v),
                 StatNumeric::Field(StatField::Group) => fields
                     .iter()
@@ -1010,14 +1195,17 @@ fn prepare_layer(
                 rows.iter()
                     .enumerate()
                     .map(|(i, r)| EncodedRow {
-                        x: value(r, &aes.x),
-                        y: value(r, &aes.y),
-                        x2: aes.x2.as_ref().and_then(|v| value(r, v)),
-                        y2: aes.y2.as_ref().and_then(|v| value(r, v)),
+                        x: value(i, r, &aes.x, 0),
+                        y: value(i, r, &aes.y, 1),
+                        x2: aes.x2.as_ref().and_then(|v| value(i, r, v, 2)),
+                        y2: aes.y2.as_ref().and_then(|v| value(i, r, v, 3)),
                         color: None,
+                        shape: None,
+                        opacity: None,
+                        stroke_width: None,
                         low: None,
                         high: None,
-                        size: aes.size.as_ref().and_then(|v| value(r, v)),
+                        size: aes.size.as_ref().and_then(|v| value(i, r, v, 4)),
                         group: Some(r.group.clone()),
                         ordinal: i as u64,
                         target: r.target.clone(),
@@ -1029,18 +1217,56 @@ fn prepare_layer(
         }
         (PreparedRows::Binned(rows), Mappings::Binned(aes)) => {
             domains = bin_binding(layer, aes, &table.space)?;
+            let expressions = [&aes.x, &aes.y]
+                .into_iter()
+                .map(Some)
+                .chain([aes.x2.as_ref(), aes.y2.as_ref(), aes.size.as_ref()])
+                .map(|mapping| match mapping {
+                    Some(BinNumeric::Expression(expr)) => expr
+                        .evaluate(
+                            rows.len(),
+                            ExpressionLimits::default(),
+                            |_| Ok(ExpressionType::Number),
+                            |field, i| {
+                                expression_number(
+                                    bin_number(&rows[i], &BinNumeric::Field(*field)).and_then(
+                                        |v| {
+                                            if *field == BinField::Count {
+                                                Some(v)
+                                            } else {
+                                                backtransform(v, &table.space)
+                                            }
+                                        },
+                                    ),
+                                )
+                            },
+                        )
+                        .map(Some),
+                    _ => Ok(None),
+                })
+                .collect::<ChartResult<Vec<_>>>()?;
+            let value = |i: usize, r: &BinnedRow, n: &BinNumeric, slot: usize| {
+                if matches!(n, BinNumeric::Expression(_)) {
+                    expressions[slot].as_ref().and_then(|v| v[i].number())
+                } else {
+                    bin_number(r, n)
+                }
+            };
             let encoded = rows
                 .iter()
                 .enumerate()
                 .map(|(i, r)| EncodedRow {
-                    x: bin_number(r, &aes.x),
-                    y: bin_number(r, &aes.y),
-                    x2: aes.x2.as_ref().and_then(|v| bin_number(r, v)),
-                    y2: aes.y2.as_ref().and_then(|v| bin_number(r, v)),
+                    x: value(i, r, &aes.x, 0),
+                    y: value(i, r, &aes.y, 1),
+                    x2: aes.x2.as_ref().and_then(|v| value(i, r, v, 2)),
+                    y2: aes.y2.as_ref().and_then(|v| value(i, r, v, 3)),
                     color: None,
+                    shape: None,
+                    opacity: None,
+                    stroke_width: None,
                     low: None,
                     high: None,
-                    size: aes.size.as_ref().and_then(|v| bin_number(r, v)),
+                    size: aes.size.as_ref().and_then(|v| value(i, r, v, 4)),
                     group: Some(r.group.clone()),
                     ordinal: i as u64,
                     target: r.target.clone(),
@@ -1094,6 +1320,7 @@ fn prepare_layer(
             }
         }
     }
+    super::scale_stage::generated_rows(layer, budget.population_axes, &mut domains, &mut encoded);
     let catalog = layer
         .color
         .as_ref()
@@ -1105,12 +1332,50 @@ fn prepare_layer(
         &mut encoded,
         limits,
         catalog.map(Vec::as_slice),
+        layer
+            .color
+            .as_ref()
+            .and_then(|c| budget.color_samples.get(&c.id)),
     )?;
-    super::positions::apply(layer, &domains, &mut encoded, limits)?;
+    super::numeric_aesthetics::apply(
+        layer,
+        data,
+        &table,
+        &mut encoded,
+        limits,
+        budget.color_samples,
+    )?;
+    let mut symbol_legends = super::symbols::apply(
+        layer,
+        data,
+        &table,
+        &mut encoded,
+        limits,
+        budget.color_samples,
+    )?;
+    if let Some(symbol) = shape_protocols.symbol() {
+        super::symbols::custom_glyphs(&mut symbol_legends, symbol, limits, vertices)?;
+    }
+    let mapped_size = mapped_size || layer.numeric_scales.contains_key(&NumericAesthetic::Size);
+    let stack = super::positions::apply(layer, &domains, &mut encoded, limits, &shape_protocols)?;
     super::positions::output_space(layer, &mut domains);
+    super::after_scale::apply(layer, budget.geometry_theme, mapped_size, &mut encoded)?;
+    let mapped_size = mapped_size || layer.after_scale.contains_key(&AfterScaleAesthetic::Size);
+    super::shape_encoding::allocate(layer, &mut encoded, limits, &shape_protocols)?;
+    if matches!(layer.geom, Geom::ShapeArea { .. }) {
+        for row in &mut encoded {
+            if row.x2.is_none() || row.y2.is_none() {
+                row.x = None;
+                row.y = None;
+            }
+        }
+    }
     let mut prepared = PreparedLayer {
+        shape_protocols,
+        orientation: layer.orientation,
         interactions: BTreeMap::new(),
         color_legend,
+        symbol_legends,
         position: layer.position.clone(),
         id: layer.id,
         scales: layer.scales,
@@ -1122,7 +1387,9 @@ fn prepare_layer(
         visible: state.is_visible(layer.id),
     };
     let mut samples = vec![];
-    if let Some((_, connect_gaps)) = layer.geom.run() {
+    if let Some(stack) = stack.filter(|_| matches!(layer.geom, Geom::ShapeArea { .. })) {
+        super::stack_position::emit(&mut prepared, layer, &encoded, stack, vertices)?;
+    } else if let Some((_, connect_gaps)) = layer.geom.run() {
         let mut groups: Vec<(GroupValue, Vec<EncodedRow>)> = vec![];
         let mut indexes = BTreeMap::new();
         let mut boundary = 0;
@@ -1160,22 +1427,7 @@ fn prepare_layer(
             groups[i].1.push(row);
         }
         for (group, rows) in groups {
-            let mut style = layer.style;
-            let mut color = None;
-            for row in rows.iter().filter(|r| r.x.is_some() && r.y.is_some()) {
-                if let Some(c) = row.color {
-                    if color.is_some_and(|old| old != c) {
-                        return Err(error(
-                            DiagnosticCode::UnsupportedCapability,
-                            "Filled/line runs require color constant within each group; use a group color mapping.",
-                        ));
-                    }
-                    color = Some(c);
-                }
-            }
-            if let Some(c) = color {
-                style.color = c;
-            }
+            let style = run_style(layer, rows.iter())?;
 
             // Missing x has no sortable position. It separates authored blocks before x ordering.
             let mut block = vec![];
@@ -1189,6 +1441,7 @@ fn prepare_layer(
                             style,
                             layer.geom,
                             vertices,
+                            limits,
                         )?;
                     }
                 } else {
@@ -1202,18 +1455,25 @@ fn prepare_layer(
                 style,
                 layer.geom,
                 vertices,
+                limits,
             )?;
         }
     } else {
+        let resolved_style = layer.style.resolve();
+        let candle_colors = layer.candle_colors;
         for row in encoded {
             let base_style = Style {
-                color: row.color.unwrap_or(layer.style.color),
-                ..layer.style
+                color: super::numeric_aesthetics::apply_opacity(
+                    row.color.unwrap_or(layer.style.color),
+                    row.opacity,
+                ),
+                stroke_width: row.stroke_width.unwrap_or(resolved_style.stroke_width),
+                ..resolved_style
             };
             let style = if mapped_size {
                 row.size.filter(|v| *v > 0.).map(|size| Style {
                     radius: size,
-                    stroke_width: size,
+                    stroke_width: row.stroke_width.unwrap_or(size),
                     ..base_style
                 })
             } else {
@@ -1243,8 +1503,11 @@ fn prepare_layer(
                 && close <= high
             {
                 let style = if row.color.is_none() {
-                    layer.candle_colors.map_or(style, |c| Style {
-                        color: if close >= open { c.up } else { c.down },
+                    candle_colors.map_or(style, |c| Style {
+                        color: super::numeric_aesthetics::apply_opacity(
+                            if close >= open { c.up } else { c.down },
+                            row.opacity,
+                        ),
                         ..style
                     })
                 } else {
@@ -1274,6 +1537,21 @@ fn prepare_layer(
             }
             let geometry = match (row.x, row.y) {
                 (Some(x), Some(y)) => match layer.geom {
+                    Geom::ShapeArc { .. } | Geom::ShapePie { .. } | Geom::ShapeSymbol { .. } => {
+                        Some(super::shape_encoding::geometry(
+                            layer.geom,
+                            &row,
+                            Point::new(x, y)?,
+                            limits,
+                            prepared.shape_protocols.symbol(),
+                        )?)
+                    }
+                    Geom::ShapeLinkRadial { .. } => Some(super::radial_shapes::link_geometry(
+                        layer.geom,
+                        &row,
+                        Point::new(x, y)?,
+                        limits,
+                    )?),
                     Geom::Point => Some(PreparedGeometry::Point(Point::new(x, y)?)),
                     Geom::Bar { width, .. } => row
                         .y2
@@ -1286,7 +1564,7 @@ fn prepare_layer(
                         })
                         .transpose()?,
                     Geom::Ohlc { .. } => None,
-                    Geom::Rule => match (row.x2, row.y2) {
+                    Geom::Rule | Geom::ShapeLink { .. } => match (row.x2, row.y2) {
                         (Some(x2), Some(y2)) => Some(PreparedGeometry::Rule {
                             from: Point::new(x, y)?,
                             to: Point::new(x2, y2)?,
@@ -1300,16 +1578,31 @@ fn prepare_layer(
                         }),
                         _ => None,
                     },
-                    Geom::Line { .. } | Geom::Area { .. } | Geom::Ribbon { .. } => None,
+                    Geom::Line { .. }
+                    | Geom::ShapeLineRadial { .. }
+                    | Geom::ShapeAreaRadial { .. }
+                    | Geom::ShapeLine { .. }
+                    | Geom::ShapeArea { .. }
+                    | Geom::Area { .. }
+                    | Geom::Ribbon { .. } => None,
                 },
                 _ => None,
             };
             if let (Some(geometry), Some(style), Some(group)) = (geometry, style, row.group) {
                 let n = match geometry {
+                    PreparedGeometry::ShapePathRun {
+                        ref geometry,
+                        ref anchors,
+                        ..
+                    } => geometry.commands().len().saturating_add(anchors.len()),
+                    PreparedGeometry::ShapePath { ref geometry, .. } => {
+                        geometry.commands().len() + 1
+                    }
                     PreparedGeometry::Point(_) => 1,
                     PreparedGeometry::Rule { .. } => 2,
                     PreparedGeometry::Rectangle { .. } | PreparedGeometry::Bar { .. } => 4,
                     PreparedGeometry::LineRun(_)
+                    | PreparedGeometry::StackBandRun { .. }
                     | PreparedGeometry::BandRun { .. }
                     | PreparedGeometry::Polygon(_)
                     | PreparedGeometry::NativePaint { .. } => 0,
@@ -1318,7 +1611,11 @@ fn prepare_layer(
                 include_geometry(&mut prepared.domains, &geometry);
                 Arc::make_mut(&mut prepared.marks).push(PreparedMark {
                     geometry,
-                    targets: vec![row.target],
+                    targets: if matches!(layer.geom, Geom::ShapeLinkRadial { .. }) {
+                        vec![row.target.clone(), row.target]
+                    } else {
+                        vec![row.target]
+                    },
                     group,
                     style,
                 });
@@ -1345,7 +1642,48 @@ fn prepare_layer(
     if let Some(extension) = &layer.geometry_extension {
         apply_custom_geometry(extensions, extension, layer, &mut prepared, vertices)?;
     }
+    super::orientation::output(&mut prepared)?;
     Ok(prepared)
+}
+pub(super) fn run_style<'a>(
+    layer: &Layer,
+    rows: impl Iterator<Item = &'a EncodedRow>,
+) -> ChartResult<Style> {
+    let mut style = layer.style.resolve();
+    let mut color = None;
+    let mut width = None;
+    for row in rows.filter(|r| r.x.is_some() && r.y.is_some()) {
+        if let Some(w) = row.stroke_width {
+            if width.is_some_and(|old| old != w) {
+                return Err(error(
+                    DiagnosticCode::UnsupportedCapability,
+                    "Stroke width must be constant within each line/filled group.",
+                ));
+            }
+            width = Some(w);
+        }
+        if let Some(c) = row
+            .color
+            .or_else(|| row.opacity.map(|_| layer.style.color))
+            .map(|c| super::numeric_aesthetics::apply_opacity(c, row.opacity))
+        {
+            if color.is_some_and(|old| old != c) {
+                return Err(error(
+                    DiagnosticCode::UnsupportedCapability,
+                    "Filled/line runs require color constant within each group; use a group color mapping.",
+                ));
+            }
+            color = Some(c);
+        }
+    }
+    if let Some(c) = color {
+        style.color = c;
+    }
+    if let Some(w) = width {
+        style.stroke_width = w;
+    }
+
+    Ok(style)
 }
 fn emit_line_block(
     prepared: &mut PreparedLayer,
@@ -1354,7 +1692,16 @@ fn emit_line_block(
     style: Style,
     geom: Geom,
     vertices: &mut usize,
+    limits: CompileLimits,
 ) -> ChartResult<()> {
+    if matches!(
+        geom,
+        Geom::ShapeLineRadial { .. } | Geom::ShapeAreaRadial { .. }
+    ) {
+        return super::radial_shapes::emit_block(
+            prepared, rows, group, style, geom, vertices, limits,
+        );
+    }
     let (order, connect) = geom.run().expect("run geometry");
     if order == LineOrder::X {
         rows.sort_by(|a, b| {
@@ -1371,7 +1718,7 @@ fn emit_line_block(
         if let (Some(x), Some(y)) = (row.x, row.y) {
             charge(
                 vertices,
-                if matches!(geom, Geom::Line { .. }) {
+                if matches!(geom, Geom::Line { .. } | Geom::ShapeLine { .. }) {
                     1
                 } else {
                     2
@@ -1379,8 +1726,15 @@ fn emit_line_block(
                 "vertex",
             )?;
             points.push(Point::new(x, y)?);
-            if !matches!(geom, Geom::Line { .. }) {
-                upper.push(Point::new(x, row.y2.expect("validated boundary"))?);
+            if !matches!(geom, Geom::Line { .. } | Geom::ShapeLine { .. }) {
+                upper.push(Point::new(
+                    if matches!(geom, Geom::ShapeArea { .. }) {
+                        row.x2.expect("validated paired coordinate")
+                    } else {
+                        x
+                    },
+                    row.y2.expect("validated boundary"),
+                )?);
             }
             targets.push(row.target);
         } else if !connect {
@@ -1430,14 +1784,17 @@ fn push_run(
         });
     }
 }
-fn include_geometry(domains: &mut DomainContributions, geometry: &PreparedGeometry) {
+pub(super) fn include_geometry(domains: &mut DomainContributions, geometry: &PreparedGeometry) {
     let mut include = |p: Point| {
         Extent::include(&mut domains.x, p.x());
         Extent::include(&mut domains.y, p.y());
     };
     match geometry {
-        PreparedGeometry::Point(p) => include(*p),
-        PreparedGeometry::BandRun { lower, upper } => {
+        PreparedGeometry::Point(p)
+        | PreparedGeometry::ShapePath { center: p, .. }
+        | PreparedGeometry::ShapePathRun { center: p, .. } => include(*p),
+        PreparedGeometry::BandRun { lower, upper }
+        | PreparedGeometry::StackBandRun { lower, upper, .. } => {
             for p in lower.iter().chain(upper) {
                 include(*p);
             }
@@ -1526,8 +1883,12 @@ fn preflight_schemas(
             )
             .map_err(|e| context(e, data, Some(layer.id)))?;
         }
+        super::scale_stage::generated_spaces(layer, population_axes(definition), &mut binding);
         super::positions::validate(layer, &binding, limits)?;
         super::positions::output_space(layer, &mut binding);
+        if layer.orientation == Orientation::Horizontal {
+            super::orientation::domains(&mut binding);
+        }
         merge_named(&mut domains, layer.scales, &binding)
             .map_err(|e| context(e, data, Some(layer.id)))?;
     }
@@ -1635,6 +1996,10 @@ fn statistical_binding(
     }
     let space = |value: &StatNumeric| -> ChartResult<Option<ValueSpace>> {
         match value {
+            StatNumeric::Expression(expr) => {
+                numeric_expression_type(expr, |field| stat_expression_type(fields, field))?;
+                Ok(Some(ValueSpace::Data))
+            }
             StatNumeric::Literal(v) if v.is_finite() => Ok(None),
             StatNumeric::Literal(_) => Err(error(
                 DiagnosticCode::NumericalDomain,
@@ -1669,7 +2034,10 @@ fn statistical_binding(
             "Mapped generated size requires a numeric field.",
         ));
     }
-    if matches!(layer.geom, Geom::Rule | Geom::Rectangle) {
+    if matches!(
+        layer.geom,
+        Geom::Rule | Geom::ShapeLink { .. } | Geom::Rectangle | Geom::ShapeArea { .. }
+    ) {
         let (Some(x2), Some(y2)) = (&aes.x2, &aes.y2) else {
             return Err(error(
                 DiagnosticCode::SchemaConflict,
@@ -1820,4 +2188,44 @@ fn same_population(a: &Layer, b: &Layer) -> bool {
         && a.facet == b.facet
         && a.scope == b.scope
         && a.invalid == b.invalid
+}
+
+fn expression_number(value: Option<f64>) -> ExpressionValue {
+    value.map_or(
+        ExpressionValue::Missing(ExpressionType::Number),
+        ExpressionValue::Number,
+    )
+}
+fn numeric_expression_type<R>(
+    expr: &Expression<R>,
+    read: impl FnMut(&R) -> ChartResult<ExpressionType>,
+) -> ChartResult<()> {
+    if expr.validate(ExpressionLimits::default(), read)? != ExpressionType::Number {
+        return Err(error(
+            DiagnosticCode::SchemaConflict,
+            "Numeric mappings require a numeric expression result.",
+        ));
+    }
+    Ok(())
+}
+fn stat_expression_type(fields: &[StatColumn], field: &StatField) -> ChartResult<ExpressionType> {
+    if !fields
+        .iter()
+        .any(|c| &c.field == field && !matches!(c.space, ValueSpace::Categorical { .. }))
+    {
+        return Err(error(
+            DiagnosticCode::SchemaConflict,
+            "Expression requires a numeric field in this statistic's generated schema.",
+        ));
+    }
+    Ok(ExpressionType::Number)
+}
+fn backtransform(value: f64, space: &ValueSpace) -> Option<f64> {
+    match space {
+        ValueSpace::Scaled { scale, .. } => scale
+            .transform
+            .map_or(Some(value), |t| t.inverse(value).ok()),
+        _ => Some(value),
+    }
+    .filter(|v| v.is_finite())
 }

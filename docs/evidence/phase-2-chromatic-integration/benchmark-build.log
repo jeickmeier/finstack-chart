@@ -1,0 +1,173 @@
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling serde v1.0.229
+   Compiling libm v0.2.16
+   Compiling serde_json v1.0.151
+   Compiling syn v3.0.5
+   Compiling serde_derive v1.0.229
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+    Finished `release` profile [optimized] target(s) in 35.21s
+     Running `target/release/examples/chromatic_benchmark`
+{
+  "catalog": {
+    "discrete_arrays": 218,
+    "discrete_rgb_colors": 1427,
+    "discrete_rgb_payload_bytes": 5708,
+    "lookup_rgb_payload_bytes": 4096,
+    "ramps": 38,
+    "schemes": 38,
+    "scope": "literal u32 payload only; excludes metadata, instructions and allocator overhead"
+  },
+  "measurements": [
+    {
+      "id": "Viridis",
+      "kernel": "prepare",
+      "timing": {
+        "ns_max": 15.95334,
+        "ns_median": 13.95084,
+        "ns_min": 12.29334,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Viridis",
+      "kernel": "evaluate",
+      "timing": {
+        "ns_max": 9.40916,
+        "ns_median": 5.79418,
+        "ns_min": 4.47,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Blues",
+      "kernel": "prepare",
+      "timing": {
+        "ns_max": 266.3375,
+        "ns_median": 247.8725,
+        "ns_min": 237.7075,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Blues",
+      "kernel": "evaluate",
+      "timing": {
+        "ns_max": 44.07834,
+        "ns_median": 38.535,
+        "ns_min": 33.26918,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "RdBu",
+      "kernel": "prepare",
+      "timing": {
+        "ns_max": 314.07918,
+        "ns_median": 305.69916,
+        "ns_min": 289.13,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "RdBu",
+      "kernel": "evaluate",
+      "timing": {
+        "ns_max": 42.02916,
+        "ns_median": 37.22916,
+        "ns_min": 33.7325,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Rainbow",
+      "kernel": "prepare",
+      "timing": {
+        "ns_max": 14.60416,
+        "ns_median": 13.08834,
+        "ns_min": 10.2525,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Rainbow",
+      "kernel": "evaluate",
+      "timing": {
+        "ns_max": 36.77584,
+        "ns_median": 33.24834,
+        "ns_min": 31.22832,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Sinebow",
+      "kernel": "prepare",
+      "timing": {
+        "ns_max": 15.78584,
+        "ns_median": 13.62832,
+        "ns_min": 13.09584,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "id": "Sinebow",
+      "kernel": "evaluate",
+      "timing": {
+        "ns_max": 31.86666,
+        "ns_median": 28.94666,
+        "ns_min": 26.625,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "palette_only_prepare",
+      "rows": 1000,
+      "statistics_reused": true,
+      "timing": {
+        "ns_max": 384487.5,
+        "ns_median": 346820.8,
+        "ns_min": 298400.0,
+        "operations_per_sample": 10,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "palette_only_prepare",
+      "rows": 10000,
+      "statistics_reused": true,
+      "timing": {
+        "ns_max": 3680795.9,
+        "ns_median": 3401608.3,
+        "ns_min": 3217387.5,
+        "operations_per_sample": 10,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "palette_only_prepare",
+      "rows": 100000,
+      "statistics_reused": true,
+      "timing": {
+        "ns_max": 43022279.1,
+        "ns_median": 39935337.5,
+        "ns_min": 35707870.9,
+        "operations_per_sample": 10,
+        "samples": 7
+      }
+    }
+  ],
+  "method": "one warmup and seven samples; precompiled output sampling; inputs excluded",
+  "profile": "release"
+}

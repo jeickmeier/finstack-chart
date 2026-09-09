@@ -180,3 +180,189 @@ encode source IDs. The compiled example provides `density_histogram` and
 `chamfered_bars` in Rust and the proof-host `examples` modules. Registry installation
 and registry-aware loading remain explicit host operations; native-only geometry is
 valid for native authoring and rejects at portable/headless execution boundaries.
+
+## Checked Cartesian shape generators
+
+Rust `chart_core::shape::{Line, Area, CurveSpec}` and Python/WASM `ShapeLine` and
+`ShapeArea` expose all 20 pinned D3 curve factories. Materialized controls use
+`{"Column": 0}` or `{"Constant": 1.0}`, a boolean `defined` value or an exact-length
+boolean mask, and `{"kind": "CatmullRom", "alpha": 0.5}` style curve descriptors.
+Area controls are `x0`, `y0`, optional `x1` and optional `y1`. `generate(rows)` returns
+an independently owned `Path`; `boundary("X0" | "X1" | "Y0" | "Y1")` derives an
+independent line generator. Three SVG digits are the default; `None`/`null` retains
+unrounded text without changing numeric geometry. Bundle is line-only.
+
+Use `shape_line().curve(...)` or `shape_area().curve(...)` for source-aware charts.
+Both retain authored order by default. General areas require explicit x/y lower
+and x2/y2 upper mappings and permit crossed boundaries. Curves act after scale
+projection, with source anchors retained separately from Bézier controls. Existing
+`line`, `area` and `ribbon` defaults keep their established meanings. Native Rust
+accessors and curve protocols are available directly; portable custom registrations
+use the registered protocols described below. See [ADR-020](adr/020-shape-generators-and-curve-protocols.md)
+for finite-input, clipping, precision, resource and compatibility boundaries.
+
+### Arcs and pie layouts
+
+`shape::Arc` and the owned `ShapeArc` host class generate circular/annular sectors
+with datum radii, clockwise-from-twelve angles, optional constants, corners, padding,
+centroids and shared numeric paths. Missing required datum fields diagnose unless
+constants replace them. The centroid is the midpoint of the center line, not the
+area centroid. Native `generate_by`/`centroid_by` resolve an `ArcParameters` value;
+materialized hosts use `ArcDatum` fields and a checked `ShapeArcConfig`.
+
+`shape::Pie` and `ShapePie.layout(data, values)` retain owned source data, original
+value and sorted index while returning slices in input order. Nonpositive values
+receive zero angular weight. The default order is descending value; `Input` and
+`ValuesAscending` are portable alternatives. Native datum/value comparators and
+whole-input angle accessors use the same layout. Registered portable custom
+comparators use the same core layout through `ShapeRegistry`. Use strings for exact large identifiers in arbitrary
+WASM JSON metadata; finite numeric weights remain binary64.
+
+`shape_arc()` and `shape_pie()` are chart layers with centers mapped through x/y
+(default zero) and radii in destination units (default outer radius 40, inner zero).
+`shape_value(channel, source)` supplies an unnormalized named parameter; it accepts
+constants, field names/handles, source expressions and explicit statistical fields.
+`numeric_scale` supplies the same parameter through a chosen scale. Channels are
+`InnerRadius`, `OuterRadius`, `CornerRadius`, `PadRadius`, and, for standalone arc
+marks, `StartAngle`, `EndAngle`, `PadAngle`. Pie layers require `PieValue`; their
+`pie_angles` configuration owns start/end/padding for the whole layout. `arc_parameters`
+sets constant defaults, and pie layout replaces its datum angles.
+
+Slice color does not implicitly split pie populations. Explicit row groups normally
+produce separate pies; `pie_grouped(false)` combines the current layer/panel. This
+allows a count statistic grouped by category to feed one pie without collapsing its
+aggregate targets. Facets still partition the panel population. Source/aggregate
+identity belongs to each wedge; the center-line centroid supplies a focus location,
+and the actual filled path supplies containment, including annular holes and clips.
+Display radii do not train data-axis domains. The layers use definition version seven
+and the existing scene version-three shape path.
+
+For example, `shape_pie().shape_value(PieValue, "weight")` authors weighted source
+slices. `shape_pie().stat(count().group("category")).after_stat(stat_aes().x(0.).y(0.))
+.pie_grouped(false).shape_value(PieValue, StatField::Count)` feeds generated counts
+through the same engine; callers import the corresponding enum variants in Rust.
+
+### Area-sized symbols
+
+Use `shape_symbol()` (Python/Rust) or `shapeSymbol()` (JavaScript) for D3-compatible
+area and stroke sizes. `points()` retains its legacy radius behavior. The new layer
+supports `symbol_kind`, `symbol_size` and `symbol_paint` (`Auto`, `Fill`, `Stroke`),
+with camelCase JavaScript equivalents. All thirteen built-in kinds and the `X`
+alias are available. `Auto` fills the seven filled types and strokes the six
+additional stroke-oriented types; explicit `Stroke` supports a stroked circle.
+
+```python
+data = Data.columns({"type": ["a", "b", "c"], "area": [0., 1., 2.]})
+layer = (shape_symbol()
+    .symbol_types(data.field("type"), ["a", "b", "c"], ["Circle", "Square", "Plus"])
+    .numeric_scale("AreaSize", data.field("area"),
+                   StandaloneScale("linear", domain=[0., 2.], range=[16., 256.]))
+    .symbol_title("Type")
+    .symbol_size_guide("Input", [0., 1., 2.]))
+```
+
+Size guide values are input-domain samples: the example produces areas 16, 136 and
+256 for both marks and guide glyphs. `shape_value("AreaSize", field_or_expression)`
+uses the identity numeric mapping; generated statistics can use the statistical
+input descriptor. `symbol_groups(domain, palette)` maps prepared group labels.
+Unknown type labels omit marks unless `symbol_missing(kind)` supplies a fallback.
+Zero size produces no chart ink or target; invalid sizes and filled open symbols
+raise diagnostics. Coordinates position the center through the selected axes;
+sizes remain in destination units.
+
+`ShapeSymbol({"kind": "Star", "size": 64.})` is the reusable standalone generator.
+Its `generate()` result owns an independent shared `Path`; `palettes()` exposes
+the ordered fill and stroke palettes. Custom native `SymbolDraw` uses the Rust
+checked path protocol; portable custom registration uses `ShapeRegistry` below.
+
+### Reference stack orders and offsets
+
+`ShapeStack` is the reusable layout owner. `layout(values)` accepts a rectangular
+sample-by-series matrix; `layout(data, values)` retains separate original metadata.
+Keys determine output series order, while each series `index` records its stacking
+rank. Points retain `data`, `y0` and `y1`. Missing values are `None`/`null`, with an
+explicit `Gap`, `Zero` or `Error` policy. The six orders are `None`, `Reverse`,
+`Ascending`, `Descending`, `Appearance` and `InsideOut`; an `Explicit` permutation
+addresses configured key indexes. Offsets are `None`, `Expand`, `Diverging`,
+`Silhouette` and `Wiggle`. `Expand` divides by the signed column sum: heights 2 and
+-1 yield intervals [0,2] and [2,1]. Legacy `stack(...).normalize(...)` continues to
+normalize positive and negative sides separately.
+
+```python
+layout = ShapeStack({"keys": ["a", "b"], "order": "InsideOut", "offset": "Wiggle"})
+series = layout.layout([[1., 2.], [3., None], [2., 4.]])
+
+position = (shape_stack(["a", "b"])
+    .stack_order("InsideOut").stack_offset("Wiggle").stack_missing("Zero"))
+chart = (plot(data)
+    .aes(aes().x("sample").x2("sample").y("height").y2(0.).group("series"))
+    .layer(shape_area().position(position)).build())
+```
+
+The chart adapter accepts tidy bars, rectangles and shape areas. Declare every
+possible group, an explicit zero baseline, and one row per group/sample; use a
+statistic to aggregate duplicates. Samples sort by x (then x2 for intervals),
+independently of source insertion order. Area boundaries address the same x sample.
+`Gap` splits runs; `Zero` inserts boundary geometry without fabricating a source or
+focus target. Null and absent cells never become observations. A `connect_gaps`
+override conflicts with the explicit stack missing policy and diagnoses.
+
+Use a declared color domain when group colors must remain stable across deletion
+and fresh-batch reconstruction. Facets independently stack their scoped populations.
+The position allows zero-preserving numeric scale-stage heights, and Expand produces
+dimensionless output. Publication keeps its existing point-precision limits; a
+huge off-scale value can fail publication even when its stack arithmetic is valid.
+
+Rust uses `shape::Stack` plus `shape_stack(...).stack_order(...).stack_offset(...)`;
+JavaScript uses `ShapeStack` plus `shapeStack(...).stackOrder(...).stackOffset(...)`.
+JavaScript BigInt metadata becomes exact decimal strings on the portable wire,
+including nested values; Python integer metadata stays exact. Native `StackOrdering`
+and `StackOffsetting` protocols execute within explicit series, cell and work limits.
+Registered portable custom operations use `ShapeRegistry` below.
+
+### Registered shape protocols
+
+`ShapeOperation` carries `operation: {id, version}` and bounded JSON `parameters`.
+`ExtensionRegistry::register_shape` installs trusted `CustomShape` implementations;
+its five protocol families reuse the native curve, symbol, pie-comparison and stack
+interfaces. See [ADR-020](adr/020-shape-generators-and-curve-protocols.md) for bounds,
+chart comparator records, native-only behavior and the wire-v9 migration.
+
+Python `ShapeRegistry.example()` and JavaScript `ShapeRegistry.example()` install
+the external example protocols in proof builds. `ShapeRegistry()` constructs an empty
+registry. `registry.selection(operation, family)` validates and returns a portable
+selection. Registries and generated paths have independent copy/disposal lifetimes.
+
+```python
+registry = ShapeRegistry.example()
+shift = {"operation": {"id": "example.shift_curve", "version": "1"},
+         "parameters": {"amount": 5}}
+path = ShapeLine().generate_registered([[0., 1.], [2., 3.]], registry, shift)
+layer = shape_line().shape_protocol("Curve", shift)
+p = plot(data).with_shape_registry(registry).aes(aes().x("x").y("y")).layer(layer).build()
+restored = Plot.from_json(p.to_json(), registry)
+```
+
+JavaScript uses `generateRegistered`, `shapeProtocol`, `withShapeRegistry` and
+`Plot.fromJson`. Symbols take `(registry, selection)`; pie layout takes
+`(data, values, registry, selection)`; stack layout takes
+`(data, values, registry, order=None, offset=None)` with independent optional selections
+(`null` in JavaScript). Cartesian/radial lines and areas and generic Cartesian links
+accept registered curves. Radial-tangent links and arcs retain their fixed geometry
+algorithms. Choosing a builtin layer curve/symbol/pie order replaces the corresponding
+custom selection. Unknown versions, incompatible families, invalid outputs and
+native-only portable operations fail explicitly. Actual consumers are in
+`scripts/bindings/shape_custom.*` and `shape_custom_updates.*`.
+
+Generated curve strokes now honor ordinary theme/layer `dashes` tokens. Patterns
+contain an even number of positive on/off lengths in destination units. SVG/PDF
+retain vector dash styling; native lowering is bounded at its display tolerance.
+Filled areas and source anchors remain intact. Containment follows dashed ink,
+including gap misses, while keyboard targets retain the original observations.
+Nonempty retained path dashes require scene wire version four; solid path scenes
+retain their previous versions. Definition capability versions are unchanged.
+
+The complete shape surface is qualified under the finite typed d3-shape 3.2.0 profile;
+see [the per-item acceptance evidence](evidence/phase-2-shape-acceptance-2026-09-09.md)
+for exact supported contracts, destination tolerances and remaining release/performance
+work. Native callbacks require explicit portable registrations for wire transport.

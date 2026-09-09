@@ -22,6 +22,25 @@ pub fn scale_linear() -> ScaleBuilder {
         value: Ok(AxisScale::Linear(ContinuousDomain::default())),
     }
 }
+/// Authored D3-compatible numerical knots and outputs on a named positional axis.
+pub fn scale_numeric(spec: NumericScaleSpec) -> ScaleBuilder {
+    ScaleBuilder {
+        value: NumericScale::new(spec.clone()).map(|_| AxisScale::Numeric(spec)),
+    }
+}
+/// Select a versioned positional provider installed in the plot's extension registry.
+pub fn scale_registered(
+    id: impl Into<String>,
+    version: crate::Revision,
+    parameters: serde_json::Value,
+) -> ScaleBuilder {
+    ScaleBuilder {
+        value: Ok(AxisScale::Registered {
+            operation: crate::grammar::OperationRef::new(id, version),
+            parameters,
+        }),
+    }
+}
 /// Logarithmic numeric scale with explicit base.
 pub fn scale_log(base: f64) -> ScaleBuilder {
     ScaleBuilder {
@@ -52,11 +71,40 @@ pub fn scale_point() -> ScaleBuilder {
         value: Ok(AxisScale::Point(PointOptions::default())),
     }
 }
+/// D3-compatible categorical bands, using the stable trained chart catalog by default.
+pub fn scale_band_d3(spec: BandSpec) -> ScaleBuilder {
+    ScaleBuilder {
+        value: BandScale::resolve_d3(&[], &spec, Bounds::new(0., 1.).expect("finite"))
+            .map(|_| AxisScale::D3Band(spec)),
+    }
+}
+/// D3-compatible points with zero default padding, alignment and integer rounding.
+pub fn scale_point_d3(spec: PointSpec) -> ScaleBuilder {
+    ScaleBuilder {
+        value: PointScale::resolve_d3(&[], &spec, Bounds::new(0., 1.).expect("finite"))
+            .map(|_| AxisScale::D3Point(spec)),
+    }
+}
 /// Integer-origin UTC scale with automatic calendar ticks.
 pub fn scale_utc() -> ScaleBuilder {
     ScaleBuilder {
         value: Ok(AxisScale::Utc {
             domain: None,
+            interval: None,
+        }),
+    }
+}
+/// D3-compatible exact timestamp knots with an explicit UTC or local calendar.
+pub fn scale_calendar(spec: TimeScaleSpec) -> ScaleBuilder {
+    ScaleBuilder {
+        value: TimeAxisScale::resolve(
+            spec.clone(),
+            Bounds::new(0., 1.).expect("finite"),
+            None,
+            OutsidePolicy::Extend,
+        )
+        .map(|_| AxisScale::Calendar {
+            spec,
             interval: None,
         }),
     }
@@ -68,6 +116,25 @@ pub fn scale_session(calendar: SessionCalendar) -> ScaleBuilder {
     }
 }
 impl ScaleBuilder {
+    /// Explicit calendar interval for an authored calendar time scale.
+    pub fn calendar_interval(mut self, interval: CalendarInterval) -> Self {
+        self.value = self.value.and_then(|mut scale| {
+            interval.validate()?;
+            let AxisScale::Calendar {
+                interval: target, ..
+            } = &mut scale
+            else {
+                return Err(error(
+                    DiagnosticCode::SchemaConflict,
+                    "Calendar intervals require a calendar scale.",
+                ));
+            };
+            *target = Some(interval);
+            Ok(scale)
+        });
+        self
+    }
+
     fn numeric(mut self, change: impl FnOnce(&mut ContinuousDomain) -> ChartResult<()>) -> Self {
         self.value = self.value.and_then(|mut scale| {
             match &mut scale {
@@ -105,6 +172,11 @@ impl ScaleBuilder {
                     d.padding = padding
                 }
                 AxisScale::Point(d) => d.padding = padding,
+                AxisScale::D3Point(d) => d.padding = padding,
+                AxisScale::D3Band(d) => {
+                    d.padding_inner = padding;
+                    d.padding_outer = padding;
+                }
                 _ => {
                     return Err(error(
                         DiagnosticCode::UnsupportedCapability,
@@ -137,6 +209,8 @@ impl ScaleBuilder {
             match &mut scale {
                 AxisScale::Band(d) => d.domain = Some(values),
                 AxisScale::Point(d) => d.domain = Some(values),
+                AxisScale::D3Point(d) => d.domain = Some(values),
+                AxisScale::D3Band(d) => d.domain = Some(values),
                 _ => {
                     return Err(error(
                         DiagnosticCode::UnsupportedCapability,
@@ -151,14 +225,22 @@ impl ScaleBuilder {
     /// Set band inner and outer step padding.
     pub fn band_padding(mut self, inner: f64, outer: f64) -> Self {
         self.value = self.value.and_then(|mut scale| {
-            let AxisScale::Band(d) = &mut scale else {
-                return Err(error(
-                    DiagnosticCode::UnsupportedCapability,
-                    "Band padding requires a band scale.",
-                ));
-            };
-            d.inner_padding = inner;
-            d.outer_padding = outer;
+            match &mut scale {
+                AxisScale::Band(d) => {
+                    d.inner_padding = inner;
+                    d.outer_padding = outer;
+                }
+                AxisScale::D3Band(d) => {
+                    d.padding_inner = inner;
+                    d.padding_outer = outer;
+                }
+                _ => {
+                    return Err(error(
+                        DiagnosticCode::UnsupportedCapability,
+                        "Band padding requires a band scale.",
+                    ));
+                }
+            }
             Ok(scale)
         });
         self
@@ -166,13 +248,16 @@ impl ScaleBuilder {
     /// Set outer step padding for a point scale.
     pub fn point_padding(mut self, padding: f64) -> Self {
         self.value = self.value.and_then(|mut scale| {
-            let AxisScale::Point(options) = &mut scale else {
-                return Err(error(
-                    DiagnosticCode::UnsupportedCapability,
-                    "Point padding requires a point scale.",
-                ));
-            };
-            options.padding = padding;
+            match &mut scale {
+                AxisScale::Point(d) => d.padding = padding,
+                AxisScale::D3Point(d) => d.padding = padding,
+                _ => {
+                    return Err(error(
+                        DiagnosticCode::UnsupportedCapability,
+                        "Point padding requires a point scale.",
+                    ));
+                }
+            }
             Ok(scale)
         });
         self
@@ -242,6 +327,16 @@ pub fn y_axis() -> AxisBuilder {
     }
 }
 impl AxisBuilder {
+    /// Apply this transform only at coordinate projection, after statistics.
+    pub fn coordinate_scale(mut self, scale: ScaleBuilder) -> Self {
+        self.spec.scale_stage = Some(crate::grammar::ScaleStage::AfterStatistics);
+        self.scale(scale)
+    }
+    /// Explicit population handling outside scale limits; viewport clipping is separate.
+    pub fn oob(mut self, policy: crate::grammar::ScaleOob) -> Self {
+        self.spec.population_oob = Some(policy);
+        self
+    }
     /// Name an independent axis with a fresh stable identity, retained by clones.
     pub fn name(mut self, name: impl Into<String>) -> Self {
         let name = name.into();
@@ -334,6 +429,16 @@ impl AxisBuilder {
         self.spec.number_format = Some(format.value);
         self
     }
+    /// Conditional or custom time labels using the axis calendar resource.
+    pub fn time_format(mut self, format: TimeFormat) -> Self {
+        self.spec.time_format = Some(format);
+        self
+    }
+    /// Apply a D3 numeric specifier; missing precision is inferred from the visible tick step.
+    pub fn numeric_format(mut self, format: crate::typography::NumericFormat) -> Self {
+        self.spec.numeric_format = Some(format);
+        self
+    }
     /// Show an affine alternate-unit guide over a named primary numeric scale.
     pub fn secondary(mut self, source: impl Into<String>, factor: f64, offset: f64) -> Self {
         self.secondary = Some((source.into(), factor, offset));
@@ -406,5 +511,131 @@ impl NumberFormatBuilder {
     pub fn suffix(mut self, suffix: impl Into<String>) -> Self {
         self.value.suffix = suffix.into();
         self
+    }
+}
+
+/// Independent guide identity; layer bindings and navigation retain positional `AxisHandle`s.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct GuideHandle(pub(super) crate::GuideId);
+impl GuideHandle {
+    /// Exact retained guide identity.
+    pub fn id(self) -> crate::GuideId {
+        self.0
+    }
+}
+impl AxisHandle {
+    /// Stable identity of this positional scale's default guide.
+    pub fn guide(self) -> GuideHandle {
+        GuideHandle(crate::GuideId::new(self.0.get()))
+    }
+}
+/// An independently placed guide over an existing named positional scale.
+#[derive(Clone, Debug)]
+pub struct GuideBuilder {
+    pub(super) name: String,
+    pub(super) spec: crate::layout::GuideSpec,
+    pub(super) failure: Option<crate::Diagnostic>,
+    source: String,
+}
+/// Add a guide by name over an existing scale; its default placement is the bottom edge.
+pub fn axis_guide(name: impl Into<String>, source: impl Into<String>) -> GuideBuilder {
+    let id = fresh_id();
+    GuideBuilder {
+        name: name.into(),
+        source: source.into(),
+        spec: crate::layout::GuideSpec::new(
+            crate::GuideId::new(id.clone().unwrap_or(0)),
+            ScaleId::new(0),
+            AxisSide::Bottom,
+        ),
+        failure: id.err(),
+    }
+}
+impl GuideBuilder {
+    /// Resolve this builder's independent identity without resolving its named scale.
+    pub fn handle(&self) -> ChartResult<GuideHandle> {
+        self.failure
+            .clone()
+            .map_or(Ok(GuideHandle(self.spec.id)), Err)
+    }
+    /// Replace the referenced scale without changing this guide's identity or presentation.
+    pub fn scale(mut self, name: impl Into<String>) -> Self {
+        self.source = name.into();
+        self
+    }
+    /// Set the edge; its orientation must agree with the referenced positional scale.
+    pub fn side(mut self, side: AxisSide) -> Self {
+        self.spec.side = side;
+        self
+    }
+    /// Translate only this guide in explicit destination units.
+    pub fn translate(mut self, x: f64, y: f64) -> Self {
+        self.spec.translation = [x, y];
+        self
+    }
+    /// Set a plain guide title.
+    pub fn label(mut self, label: impl Into<String>) -> Self {
+        self.spec.title = Some(plain(label));
+        self
+    }
+    /// Set a rich guide title.
+    pub fn rich_label(mut self, text: impl Into<RichText>) -> Self {
+        self.spec.title = Some(text.into());
+        self
+    }
+    /// Set tick-label typography.
+    pub fn text_style(mut self, style: TextStyle) -> Self {
+        self.spec.typography = Some(style.run);
+        self
+    }
+    /// Set clockwise tick-label rotation in degrees.
+    pub fn rotation(mut self, degrees: f64) -> Self {
+        self.spec.label_rotation = degrees;
+        self
+    }
+    /// Show or hide this guide independently of its scale and the other guides.
+    pub fn visible(mut self, visible: bool) -> Self {
+        self.spec.visible = visible;
+        self
+    }
+    /// Supply typed semantic tick values and labels.
+    pub fn ticks(mut self, ticks: impl IntoIterator<Item = (ScaleValue, String)>) -> Self {
+        self.spec.guide_ticks = Some(
+            ticks
+                .into_iter()
+                .map(|(value, label)| CustomGuideTick { value, label })
+                .collect(),
+        );
+        self
+    }
+    /// Set a portable numeric formatter.
+    pub fn format(mut self, format: NumberFormatBuilder) -> Self {
+        self.spec.number_format = Some(format.value);
+        self
+    }
+    /// Use a shared numeric specifier with inferred precision.
+    pub fn numeric_format(mut self, format: crate::typography::NumericFormat) -> Self {
+        self.spec.numeric_format = Some(format);
+        self
+    }
+    /// Format exact timestamp values using the referenced scale's explicit calendar.
+    pub fn time_format(mut self, format: TimeFormat) -> Self {
+        self.spec.time_format = Some(format);
+        self
+    }
+    pub(super) fn lower(
+        mut self,
+        axes: &BTreeMap<String, ScaleId>,
+    ) -> ChartResult<crate::layout::GuideSpec> {
+        if let Some(e) = self.failure {
+            return Err(e);
+        }
+        self.spec.scale = *axes.get(&self.source).ok_or_else(|| {
+            error(
+                DiagnosticCode::MissingResource,
+                format!("No positional scale named '{}'.", self.source),
+            )
+        })?;
+        Ok(self.spec)
     }
 }

@@ -1,11 +1,206 @@
 # Implementation status
 
-Updated: 8 September 2026. Specification version: 0.5.0.
+Updated: 9 September 2026. Specification version: 0.5.0.
 Bootstrap committed at `fbc9782` (starting commit: `19f4a27`); WP-01 committed at `dfe38e8`.
 WP-02 committed at `435e127`; WP-03 at `3a86189`; WP-04 at `d0a6c48`.
 WP-05 is committed at `3cf1b33`; WP-06 at `f8657fb`; WP-07/08 at `fac148a`.
 WP-09/10 are committed at `c5ec829`; WP-11 at `a6fb2ea`; WP-12 at `63dbcc2`.
 Original reports retain the revision context from their evidence runs.
+
+## Phase 2 continuation through all packages — 8 September 2026
+
+Owner authorized continuation through all steps of the Phase 2 plans. WP-S01–08 are now accepted and G-SHAPE passes for the retained typed profile. WP-AX01 provider integration is next. The active
+task is proceeding sequentially through prerequisites, preserving the earlier
+P2-00/GG-01 implementation. GG-00 and WP-P01–04 are COMPLETE for their package scope;
+G-PATH passes for the retained source snapshot. GG-02 is COMPLETE for its stage scope;
+CLR-01–03 are COMPLETE for reference and standalone color math. WP-IP01 is COMPLETE
+for the pinned contract/reference harness; WP-IP02–05 are COMPLETE for core and standalone host scope; repository and combined primary proofs pass.
+The [oracle entry report](evidence/phase-2-oracles-2026-09-08.md) records 643 ggplot2
+exports, 57 locked R sources, 32 reproducible records and 96 inspected artifacts.
+The [path acceptance report](evidence/phase-2-paths-2026-09-08.md) records 86 reference
+sequences, eight focused tests, actual three-host proofs, inspected native/publication
+output, 261 macOS tests and 255 Linux core/export tests. Final repository, primary API
+and aggregate binding proofs pass. These results do not close other D3, ggplot2 or
+performance gates. GG-02 and color foundation results are recorded below.
+SP-04 is COMPLETE for shared typed interpolation/distribution mapping, numeric aesthetics and guide metadata.
+SP-05 is COMPLETE for exact numeric ticks/labels, locale specifiers, nice and publication integration.
+SP-06 is COMPLETE for shared calendars/time axes and actual same-revision host proofs.
+SP-07 is COMPLETE and G-SCALE passes for the declared typed FIX-20 scope.
+[Integrated evidence](evidence/phase-2-scale-integration-2026-09-09.md) records 661
+cases / 19,562 operations per surface, complete public calendar replay, actual keyed
+updates and interactions, five inspected native/publication figures, exact three-host
+RGBA output, 343 macOS tests, 40 focused Linux tests and passing repository/type checks.
+Piecewise/category/quantile timings and a stable WASM memory plateau feed WP-22;
+no sustained-load or aggregate platform release gate is closed.
+CLR-05 is COMPLETE and G-COLOR passes for COL-01–06 / FIX-C01.
+[Integrated color evidence](evidence/phase-2-color-acceptance-2026-09-09.md) records
+all 351 reference cases, actual host methods and paint inputs, three independently
+authored perceptual/alpha/grayscale figures, mapped palette cache/target invariants,
+11 passing macOS/Linux tests, inspected native/SVG/PDF/PNG and measured component/update
+costs. CP-01 is COMPLETE: the [entry report](evidence/phase-2-chromatic-entry-2026-09-09.md) records the complete 76-export / 218-array / 38-interpolator oracle with 160,666 samples, byte-identical regeneration and the Rust reader. CP-02/03 are COMPLETE for core scope: [foundation evidence](evidence/phase-2-chromatic-foundations-2026-09-09.md) records exact tables, all 160,666 sampled rows, 27,434 exact V8 trigonometric anchors, 19 macOS / 21 Linux tests and passing repository checks. Fixed fused trigonometry resolved reproduced byte-rounding differences. Integrated certification is recorded immediately below.
+CP-04/05 are COMPLETE and G-CHROMATIC passes for CHR-01–06 / FIX-21. The final 304-case exceptional-normalization matrix passes on Rust and actual macOS/Linux Python and Node WASM.
+[Integrated chromatic evidence](evidence/phase-2-chromatic-integration-2026-09-09.md)
+records 218 exact arrays and 160,666 ramp rows in actual Rust/Python/WASM, 90 composed
+scale cases / 1,268 exact scene colors, v6 migration and checked guide identity,
+24 update steps per host, 352 macOS suite tests plus focused macOS/Linux supplements,
+five inspected native/SVG/PDF/PNG figures, cross-platform exact publication, a stable
+18,000-owner WASM plateau and measured catalog/evaluation/update costs. A reproduced
+non-finite ordinal-key training shift was fixed without changing legacy typed keys.
+Final fresh primary runtime/type proofs, rebuilt native inspection and repository checks pass. No global release or
+sustained-load gate is inferred from these measurements.
+WP-S01 is COMPLETE for entry/foundation scope. Its [acceptance report](evidence/phase-2-shape-foundation-2026-09-09.md)
+records all 63 exports/methods/defaults, 333 exact numeric contexts, 42 layout records,
+actual macOS/Linux Python and Node WASM, identical 300/600 DPI scenes/PNG output,
+and inspected native/SVG/PDF/PNG sector, hole and external-sink geometry. This consumes
+G-PATH. WP-S02 is COMPLETE: [829 Cartesian cases](evidence/phase-2-shape-cartesian-2026-09-09.md),
+all 20 curves, general areas, actual hosts and inspected output; the full macOS suite
+passes 369 tests. WP-S03 is IN PROGRESS: [arc/pie implementation and qualification](evidence/phase-2-shape-arc-2026-09-09.md)
+passes Linux core/Python and final WASM oracle, interaction, updates and publication;
+macOS build/launch qualification is pending. While those loader waits persist, the independent
+Earlier shape-stage progress (superseded by WP-S08 acceptance below): WP-S05 symbol implementation is IN PROGRESS on its accepted WP-S01 prerequisite: [156 fixtures per host, actual area/type guides, 104 updates per host and exact inspected publication](evidence/phase-2-shape-symbol-2026-09-09.md) pass. WP-S06 is IN PROGRESS: [complete stack kernels and tidy bars/areas](evidence/phase-2-shape-stack-2026-09-09.md) pass 435 numerical cases per host, 1,620 core tidy comparisons, 480 updates per host, exact inspected three-host publication and 385 Linux tests/doctests. Native/macOS qualification continues for these families before the remaining ordered shape gates. G-SHAPE remains open. GG-03 retains its WP-S05 prerequisite. All authorized Phase 2 work continues.
+
+
+## CLR-01 reference and CLR-02/03 color math — 8 September 2026
+
+[ADR-016](adr/016-color-values-and-paint-boundary.md) defines floating values, explicit
+exceptional tags, parser/formatter behavior and the authored-value/byte-paint boundary.
+The d3-color 3.1.0 oracle has 351 cases: all 148 names, eight constructors, every
+inherited method, RGB/HSL clamps and exceptional channels. Separate regeneration
+matches the corpus and manifest byte for byte. CLR-01 is COMPLETE for entry scope;
+G-COLOR remains open.
+
+CLR-02/03 are COMPLETE. The new core color module implements bounded CSS parsing,
+RGB/HSL/D50 Lab/HCL/LCh/Cubehelix, copy/brightness, conversions, predicates, formatters
+and explicit descriptor round trips. All 351 cases pass in actual Rust/Python/WASM,
+including exact strings/bytes. Shared atan2, power and ECMAScript formatter corrections
+fixed reproduced platform differences without weakening fixtures. Repository checks,
+279 macOS tests, six focused Linux tests and complete primary runtime/type proofs pass.
+[Retained evidence](evidence/phase-2-color-foundations-2026-09-08.md) records the source,
+commands and limits. CLR-04 is COMPLETE: every paint input retains floating values, strict wire migrations pass, and Rust/Python/WASM/native/publication use the shared lowering boundary.
+[Paint evidence](evidence/phase-2-paint-2026-09-09.md) records four independently authored figures, exact cross-host RGBA output, inspected SVG/PDF/native, retained live snapshots, 298 macOS tests, 14 focused Linux tests and passing repository/type checks. CLR-05 and G-COLOR are now qualified in the [integrated color report](evidence/phase-2-color-acceptance-2026-09-09.md).
+
+## WP-IP01 reference and interpolation foundations — 8 September 2026
+
+[ADR-017](adr/017-shared-interpolation-values.md) freezes target dispatch, exceptional
+values, owned lifetimes, operation-specific bounds and explicit typed adaptations.
+All 27 pinned exports, three gamma factories, rho and duration are inventoried. The
+Node oracle generates 370 scalar/value/color/zoom cases; real Chromium 151.0.7922.34
+generates 36 CSS/SVG transform pairs with source/binary hashes. Both regenerate byte
+for byte. WP-IP01 is COMPLETE for contract/reference scope; G-INTERPOLATE stays open.
+
+The new shared scalar/composition module passes 56 applicable reference cases plus
+independent rounding, spline seam, factory-count and owned-sample tests. The floating
+color interpolation module passes 106 applicable cases with exact CSS output, plus
+independent hue/gamma/alpha anchors. Structured values pass 191 cases including the complete
+source/target kind matrix and explicit adaptations; 17 zoom and 36 browser transform cases
+pass. Strict standalone descriptors, every public factory/configuration, actual Python/WASM
+samples, six invalid type cases per host, copies and disposal pass. Linux passes all 11
+interpolation kernel tests plus six color/path regressions; two new descriptor tests pass
+on macOS. Clippy, repository checks and combined primary runtime/type proofs pass.
+[Retained evidence](evidence/phase-2-interpolation-foundations-2026-09-09.md) identifies this source snapshot and validation limits.
+Chart paint/scale/axis consumers, inspected integrated publication and final parity gates
+remain outstanding; no G-INTERPOLATE closure is claimed.
+
+## GG-02 stage implementation and acceptance — 8 September 2026
+
+Against `fab2505` plus the uncommitted continuation, canonical profile provenance,
+scale/stat ordering, inferred discrete groups, horizontal recipes and typed bounded
+expression graphs are implemented in the shared core. Ten stage tests and four
+expression tests pass. The independent R 4.6.1 / ggplot2 4.0.3 corpus has 22 cases
+and repeats byte for byte, including log/coordinate order, scale limits/zoom,
+back-transform-before-after-stat expressions, missing/explicit groups and orientation.
+Shared named statistics now apply the same source policies as inline operations;
+conflicting consumer scale contexts explicitly reject.
+
+The regular primary proof runner includes all new stage authors and positive/negative
+Python/TypeScript consumers. Actual Rust/Python/WASM execution passes 13 figures per
+host, source-expression filters and shared aliases. Static/Presented/Current capture
+and profile edits preserve old requests after disposal. All 13 three-host PNGs have
+identical RGBA channels. Native four-panel rendering, publication PNGs and rasterized
+PDFs have been inspected; every PDF uses the supplied embedded Noto Sans.
+
+GG-02 is COMPLETE for its assigned stage scope. `mise run check` passes; macOS
+276 tests and Linux core/export 270 tests pass with none ignored. Actual
+primary and aggregate binding proofs pass. The [acceptance report](evidence/phase-2-stages-2026-09-08.md)
+retains commands, outputs, source hashes, images and limitations. Source reductions explicitly use the registered dataset before chart
+filters/facet splits, while generated reductions use the prepared layer population.
+Post-scale outputs cover size/color (size for point/rule); independent aesthetics,
+physical units and complete default family behavior remain in GG-03 and later owners.
+No broader ggplot2 or cross-library gate closes from this package alone.
+
+## Integrated shape acceptance — 9 September 2026
+
+[WP-S08](evidence/phase-2-shape-acceptance-2026-09-09.md) is COMPLETE at the retained
+source snapshot over `fab2505951061eaafe9adb52c86b248ee0dfa6bf`. All 63 exports and
+220 methods have per-item Pass verdicts under the finite typed d3-shape 3.2.0 profile.
+Fresh macOS/Linux Python and Node/WASM generator, interaction and 1,544-update runs
+pass; all host update records agree. There are 420 macOS workspace and 419 Linux
+core/export/extension tests-doctests, and repository plus actual binding checks pass.
+Native and nine publication images were inspected. All PNG/PDF bytes agree; two
+Terminal SVG comparisons preserve control-coordinate differences no larger than
+5.684341886080802e-14 within the existing tolerance and rasterize identically.
+The remaining theme dash gap and two acceptance regressions are fixed without changing
+oracle expectations. G-SHAPE passes; G-PARITY, G4 and WP-21/22/23 remain open.
+Continue WP-AX01's bounded provider integration. Its existing identity slice now also
+has passing macOS Python and inspected native guide evidence. The owner's remaining
+Phase 2 scope continues in prerequisite order.
+
+## Phase 2 handoff verified; P2-00 integration contract delivered — 8 September 2026
+
+The owner-requested predecessor **Review API simplicity** finished with completed
+turns and no reported turn error. Verified `fab2505951061eaafe9adb52c86b248ee0dfa6bf`
+(`Add primary chart authoring and shared host runtime`, 8 September 2026 23:11:16 UTC)
+is HEAD and contains the primary Rust/Python/WASM implementation and completion
+evidence. `git merge-base --is-ancestor fab2505 HEAD` passed. The task reader exposed
+no final message for those completed turns; commit content, date and the committed
+completion report establish the handoff. AP-09 performance qualification remains
+open; it is not a prerequisite for independent Phase 2 contracts/legend acceptance.
+The waiting heartbeat was paused for implementation and then deleted after its
+handoff condition was fulfilled; it no longer polls the predecessor.
+
+P2-00 is COMPLETE for its entry scope: [ADR-014](adr/014-phase-2-integration-contract.md)
+records canonical-definition policy/provenance, compatible migration, explicit resource
+ownership and the shared Node/separate R reference-lock layout. The
+[coverage register](phase-2-coverage.md) links all eight lane inventories and GG-00–19
+to requirements, semantic owners, AP-00 routes, fixtures, surfaces and open gaps.
+It excludes delivered API foundations from remaining effort and preserves the combined
+plan's dependency edges. Lane entries/GG-00 still own concrete reference installation,
+locks and exhaustive method/argument fixtures; no oracle ran for this entry package.
+
+Validation: `mise exec -- python3 scripts/check_repository.py` passed workspace/host
+isolation and local Markdown file links on Darwin arm64. This is contract validation,
+not runtime/parity certification. Baseline worktree contained the earlier Phase 2
+plans/review/ledger edits; these are retained. No production dependency, portable
+version or package publication changed. GG-01's remaining shared legend acceptance
+is delivered in the following entry. G-AUTH, all D3 gates, G-GGPLOT, G-PARITY and
+expanded G4 remain OPEN.
+
+## GG-01 shared legend acceptance delivered — 8 September 2026
+
+GG-01 / FIX-GG01 is COMPLETE for its specified scene and inspected SVG/PDF/PNG
+matrix against `fab2505` plus this uncommitted slice. Shared layout now omits empty
+guides, and primary `legend().untitled()` omits the title while retaining keys.
+`generic_title()` explicitly retains the legacy Color/Value fallback in Rust, Python
+and WASM. Existing primary fixture authors now use that explicit fallback; independent
+expected fixtures and comparators remain unchanged. No second guide engine was added.
+
+The [acceptance report](evidence/phase-2-entry-and-legends-2026-09-08.md) and
+[retained evidence](evidence/phase-2-legends/README.md) cover 24 ordinary/collected/local
+facet cases, including empty/hidden/tight/shared/incompatible guides and untitled
+builds/edits. Actual Python and WASM each match all 24 Rust portable scenes exactly,
+produce 72 exports and pass six host-dispatched untitled/generic edits. All 24 direct
+PNGs and independently rendered PDFs were visually inspected. The full primary
+runtime/type proof passes, including baseline component-family equivalence and replay.
+Final `mise run check` and `mise run test` pass on Darwin arm64: 253 tests, zero
+failed/ignored. The focused export run passes six tests including the 24-case matrix.
+Final outputs equal the retained inspected artifacts; logs and source/artifact hashes
+identify this validation snapshot.
+
+The initial full test run exposed reliance on the old `untitled()` behavior in fixture
+authors; that failure is retained alongside the corrected final evidence. Full guides,
+colorbars and advanced collection remain GG-05. No fresh native-window, Linux, R oracle
+or sustained performance run is claimed. Next package: GG-00's reference inventory/oracle
+or a ready independent D3 entry; cumulative gates and AP-09 remain OPEN.
 
 ## Primary authoring implemented; final performance qualification pending — 8 September 2026
 
@@ -46,6 +241,77 @@ regression is not established, and a stable visible-window rerun has been reques
 exception, full-assistive/other-platform limitations, dependency advisories and expanded
 parity/G4 requirements remain explicit. Next action: complete the requested visible
 native measurements, preserve failed traces, then close or explicitly leave G-AUTH open.
+
+## Phase 2 implementation awaiting API commit — 7 September 2026
+
+Historical waiting entry, superseded by the verified 8 September handoff above.
+
+Owner authorized implementation after the task **Review API simplicity** completes
+and commits its code. At this handoff its local task snapshot was active; no completion
+or qualifying commit was verified. Phase 2 implementation remains pending that condition.
+A follow-up in the Phase 2 task checks every five minutes, verifies the completed task's
+commit and resumes from P2-00 against that baseline. It stays quiet while unchanged.
+The handoff baseline remains `b631f0e6d7e41722b5774433d616f704234157d7` plus active
+edits; the implementation start must record the actual qualifying revision. This
+waiting step ran no feature checks and advanced no package or gate.
+
+## Phase 2 plans reconciled with the current API — 7 September 2026
+
+Owner-authorized planning update against `b631f0e6d7e41722b5774433d616f704234157d7`
+plus active AP edits. Updated the [Phase 2 plan](impl_plans/phase-2-parity-implementation-plan.md),
+[axis handoff](impl_plans/d3-axis-parity-plan.md),
+[primary-authoring handoffs](impl_plans/primary-authoring-api-plan.md) and
+[main integration plan](impl_plans/gpui-charts-implementation-plan.md) using the
+[current API review](evidence/phase-2-current-api-review-2026-09-07.md).
+Scope: GG2-01/02/04/12, AXIS-01/07, AUT-01/03–07 and BND-01/03/04.
+
+GG-01 now reconciles the delivered shared painter and remaining FIX-GG01 edge/visual
+cases. P2-00 is the first new parity handoff, linking AP-00's register and current
+Data/Plot/Chart/Output owners. GG-02 specifies profile execution/wire/cache/capture
+propagation; WP-AX01 includes primary handles/names/layer bindings and host navigation;
+AP-07 and each semantic package share host syntax and actual export/declaration/runtime
+proof responsibilities. Live Python/WASM authoring additions supersede the review's
+earlier JSON-only source observation; their acceptance remains with AP-07's evidence.
+Historical effort allowances now require subtraction of delivered AP/legend work before
+estimating remaining effort. Original-scope WP completion is retained and expanded
+requalification remains required. Historical review reports remain unchanged.
+
+Validation in the repository on Darwin arm64 via mise:
+
+- `mise exec -- python3 scripts/check_repository.py`: passed dependency/host-isolation
+  graph and local Markdown file-link checks; no target execution or external-link/anchor validation.
+- `git -c core.whitespace=-blank-at-eol diff --check -- docs/impl_plans/phase-2-parity-implementation-plan.md docs/impl_plans/d3-axis-parity-plan.md docs/impl_plans/primary-authoring-api-plan.md docs/impl_plans/gpui-charts-implementation-plan.md docs/implementation-status.md`:
+  passed, retaining the repository's Markdown hard-break convention.
+- Reviewed the updated handoffs: all eight D3 inputs, GG-00–19 and cumulative gate
+  prerequisites are retained; the new API section is shared by the companion plans.
+
+No feature tests or acceptance gates are claimed by this update. No production code, dependency,
+fixture, public wire version or package/gate completion state changed in this task;
+unrelated live edits were preserved. Next action: P2-00 contract/evidence reconciliation,
+then GG-00 and ready D3 entry packages; GG-01 remaining acceptance can proceed independently.
+
+## Phase 2 current API review — 7 September 2026
+
+Reviewed the Phase 2 plan against `b631f0e6d7e41722b5774433d616f704234157d7`
+plus the active primary-authoring working tree. The
+[current API review](evidence/phase-2-current-api-review-2026-09-07.md) maps each
+parity family to its current public owner. The capability scope remains applicable;
+the GG-01 implementation kickoff is stale because ordinary and faceted legends now
+share a painter and an export regression. Full GG-01 edge and visual acceptance
+remains unresolved. Future packages must extend existing Data/Plot/Chart/Output,
+define compatibility-profile propagation, migrate primary axis consumers with the
+scale/guide identity split, and deliver actual Python/WASM exports and declarations.
+
+On Darwin arm64, `mise exec -- cargo test -p chart-core --test authoring --test authoring_runtime --test authoring_host --locked`
+passed 20 tests and `mise exec -- cargo test -p chart-export --test authoring --locked`
+passed 4 tests. `mise exec -- python3 scripts/check_repository.py` passed graph and
+local Markdown file-link checks; scoped `git diff --check` passed for tracked changes.
+These checks cover the built Rust test binaries; Rust host dispatch
+does not establish Python/WASM runtime support. No fresh native UI, Linux, external
+oracle, performance or visual-inspection evidence was produced by this review.
+No production code, plan or gate state was changed. Next action: reconcile the GG-01
+handoff and attach the report's concrete API owners and acceptance cases to the
+Phase 2 packages while coordinating with the active AP implementation.
 
 ## Primary authoring implementation in progress — 7 September 2026
 
@@ -533,16 +799,18 @@ unchanged; WP-16 remains under its active assignment and WP-17–20 remain prere
 for final integration. G-PARITY joins G3, all eight D3 gates and G-GGPLOT before the
 existing WP-21–23 final certification. No implementation gate advanced.
 
-All new package owners are unassigned and all implementation evidence is absent.
-READY means prerequisite records permit starting the task; it does not certify the
-unimplemented feature. Exact owned work and FIX-GG cases are defined once in the plan.
+At the original planning run, all new package owners were unassigned and implementation
+evidence was absent. The table below incorporates the subsequent current API handoff
+reconciliation; historical paragraphs above retain their original revision context.
+READY permits the stated next action and does not certify the feature. Exact owned
+work and FIX-GG cases are defined once in the plan.
 
 | Package | State | Requirement scope | Evidence / next action |
 | --- | --- | --- | --- |
-| P2-00 — Integration contract and coverage register | READY | GG2-01/12, ARC-03/04, BND-01 | Planning only; verify WP-14 interfaces and agree one profile/wire/reference strategy. |
-| GG-00 — Reference inventory and executable oracle | NOT STARTED | GG2-01/12 | Requires P2-00; pin release/dependencies and generate complete coverage. |
-| GG-01 — Repair the existing legend omission | READY | GG2-04, GRA-07, SCL-05, LAY-03, THM-03 | Historical GGP-01 probe only; reproduce, fix and inspect focused artifacts. |
-| GG-02 — Compatibility profile, stages and inferred grouping | NOT STARTED | GG2-01/02 | Requires GG-00. |
+| P2-00 — Integration contract and coverage register | COMPLETE | GG2-01/12, ARC-03/04, BND-01, QLT-02/05 | ADR-014 and phase-2-coverage.md; committed API baseline fab2505 reconciled. Reference locks/oracles remain with lane entries and GG-00. |
+| GG-00 — Reference inventory and executable oracle | COMPLETE | GG2-01/12 | Pinned 643-export inventory, 57 R sources, 32 reproducible seed records/96 artifacts; [entry evidence](evidence/phase-2-oracles-2026-09-08.md). Semantic argument matrices remain with delivering packages. |
+| GG-01 — Reconcile shared legend acceptance | COMPLETE | GG2-04, GRA-07, SCL-05, LAY-03, THM-03 | FIX-GG01: 24 cases, exact actual Python/WASM scenes, 216 exports and inspected PNG/PDF sheets; empty-guide and untitled defects repaired. Evidence: phase-2-entry-and-legends-2026-09-08.md. Full guides remain GG-05. |
+| GG-02 — Compatibility profile, stages and inferred grouping | COMPLETE | GG2-01/02 | [Stage acceptance](evidence/phase-2-stages-2026-09-08.md); primary/binding proofs pass. Later ggplot2 families remain separate. |
 | GG-03 — Independent aesthetic encodings | NOT STARTED | GG2-03 | Requires GG-02, SP-04, WP-S05. |
 | GG-04 — ggplot2 scale and palette policies | NOT STARTED | GG2-03 | Requires GG-03, SP-06, CP-04, CLR-04. |
 | GG-05 — Complete guides and legend composition | NOT STARTED | GG2-04 | Requires GG-01, GG-04, WP-AX04. |
@@ -640,11 +908,11 @@ by this assignment. Next interpolation package: **WP-IP01** after the accepted W
 
 | Interpolation package | State | Owner | Revision/evidence | Requirements | Next action |
 | --- | --- | --- | --- | --- | --- |
-| WP-IP01 — Contract and reference harness | READY | Unassigned | Planning only; no oracle run | ITP-01/08 | Requires WP-14; reconcile pinned export/source inventory and share the reference lock with color/scale/chromatic/axis. |
-| WP-IP02 — Scalar kernels and composition | NOT STARTED | Unassigned | None | ITP-02/03 | Requires WP-IP01. |
-| WP-IP03 — Structured values | NOT STARTED | Unassigned | None | ITP-01/02/07 | Requires WP-IP02; color dispatch joins WP-IP04 in integration. |
-| WP-IP04 — Color interpolation | NOT STARTED | Unassigned | None | ITP-04 | Requires WP-IP02 and CLR-03; consumes the shared color engine. |
-| WP-IP05 — Transform and zoom interpolation | NOT STARTED | Unassigned | None | ITP-05/06 | Requires WP-IP02. |
+| WP-IP01 — Contract and reference harness | COMPLETE | Core | ADR-017, 370 Node and 36 pinned Chromium cases, exact regeneration | ITP-01/08 | Requires WP-14; reconcile pinned export/source inventory and share the reference lock with color/scale/chromatic/axis. |
+| WP-IP02 — Scalar kernels and composition | COMPLETE | Core/hosts | 56 reference cases, independent contracts and actual host proofs pass | ITP-02/03 | Requires WP-IP01. |
+| WP-IP03 — Structured values | COMPLETE | Core/hosts | 191 reference cases, target dispatch matrix, ownership and actual hosts pass | ITP-01/02/07 | Requires WP-IP02; color dispatch joins WP-IP04 in integration. |
+| WP-IP04 — Color interpolation | COMPLETE | Core/hosts | 106 reference cases, exact CSS, independent anchors and actual hosts pass | ITP-04 | Requires WP-IP02 and CLR-03; consumes the shared color engine. |
+| WP-IP05 — Transform and zoom interpolation | COMPLETE | Core/hosts | 17 zoom and 36 pinned browser cases plus actual hosts pass | ITP-05/06 | Requires WP-IP02. |
 | WP-IP06 — Portable and chart integration | NOT STARTED | Unassigned | None | ITP-07 | Requires WP-IP03/04/05, CLR-04, SP-04 and WP-16/19/20. |
 | WP-IP07 — Parity certification | NOT STARTED | Unassigned | None | ITP-01–08 | Requires WP-IP06, SP-07, WP-AX06, CLR-05 and CP-05; precedes WP-21/22/23. |
 
@@ -689,10 +957,10 @@ implementation and all path acceptance gates still open.
 
 | Path package | State | Owner | Revision/evidence | Requirements | Next action |
 | --- | --- | --- | --- | --- | --- |
-| WP-P01 — Contract and reference corpus | READY | Unassigned | Planning review only | PTH-01–06, ARC-04, QLT-02 | WP-14 prerequisite met; pin the complete corpus and decide state/arc/precision contracts in the shared ADR. |
-| WP-P02 — Checked builder and complete geometry | NOT STARTED | Unassigned | None | PTH-01/02/03/05 | Requires WP-P01; FIX-P01/02/03/05. |
-| WP-P03 — Shared SVG path output | NOT STARTED | Unassigned | None | PTH-01/04 | Requires WP-P02; FIX-P04 and actual SVG. |
-| WP-P04 — Renderers, portable APIs and acceptance | NOT STARTED | Unassigned | None | PTH-01–06 | Requires WP-P03; complete FIX-P01–06 and G-PATH before WP-S01 completion/WP-21. |
+| WP-P01 — Contract and reference corpus | COMPLETE | Core | ADR-015; pinned 86-sequence corpus and request/result DTO | PTH-01–06, ARC-04, QLT-02 | Source/license hashes, independent expectations and standalone consumers retained; G-PATH remains open. |
+| WP-P02 — Checked builder and complete geometry | COMPLETE | Core | Seven focused path tests; actual three-host traces | PTH-01/02/03/05 | All operations, owned numeric results, atomic failures, independent geometry and explicit budgets; renderer gate remains P04. |
+| WP-P03 — Shared SVG path output | COMPLETE | Core/export | FIX-P04 sequence/precision checks; actual representative SVG | PTH-01/04 | Shared formatter; analytic retained arcs; legacy path output defaults preserved. |
+| WP-P04 — Renderers, portable APIs and acceptance | COMPLETE | Core/native/export/bindings | [Path acceptance](evidence/phase-2-paths-2026-09-08.md), retained hashes/artifacts | PTH-01–06 | FIX-P01–06 actual three-host proof, native/publication inspection and macOS/Linux checks pass. |
 
 
 ## D3 color parity planning handoff
@@ -727,11 +995,11 @@ remain open. Next within this plan: **CLR-01 — contract and reference oracle**
 
 | Color package | State | Owner | Revision/evidence | Requirements | Next action |
 | --- | --- | --- | --- | --- | --- |
-| CLR-01 — Contract and reference oracle | READY | Unassigned | Planning only | COL-01–06, ARC-04, BND-01, QLT-02 | WP-14 prerequisite met; pin complete source/oracle and freeze typed/wire/paint contracts. |
-| CLR-02 — RGB/HSL, parsing and common operations | NOT STARTED | Unassigned | None | COL-01–04 | Requires CLR-01. |
-| CLR-03 — Lab, HCL/LCh and Cubehelix | NOT STARTED | Unassigned | None | COL-02–04 | Requires CLR-02; supplies SP-04 color kernels. |
-| CLR-04 — Authoring, portable operations and paint integration | NOT STARTED | Unassigned | None | COL-05, BND-01/03/04, THM-01/02/03, SCN-03 | Requires CLR-03. |
-| CLR-05 — Integrated parity acceptance | NOT STARTED | Unassigned | None | COL-01–06, QLT-02/03/04, SCN-04 | Requires CLR-04, SP-04, WP-20; precedes WP-21/22. |
+| CLR-01 — Contract and reference oracle | COMPLETE | Core | 351-case pinned oracle, deterministic regeneration; ADR-016 | COL-01–06, ARC-04, BND-01, QLT-02 | WP-14 prerequisite met; pin complete source/oracle and freeze typed/wire/paint contracts. |
+| CLR-02 — RGB/HSL, parsing and common operations | COMPLETE | Core | Actual Rust/Python/WASM FIX-C01 and type proofs; see foundation report | COL-01–04 | Requires CLR-01. |
+| CLR-03 — Lab, HCL/LCh and Cubehelix | COMPLETE | Core | Full conversion/method corpus and Linux regression pass | COL-02–04 | Requires CLR-02; supplies SP-04 color kernels. |
+| CLR-04 — Authoring, portable operations and paint integration | COMPLETE | Core/hosts | [Qualified paint snapshot](evidence/phase-2-paint-2026-09-09.md): every input, migration, actual hosts/native/publication, retained live updates | COL-05, BND-01/03/04, THM-01/02/03, SCN-03 | CLR-05 awaits SP-04. |
+| CLR-05 — Integrated parity acceptance | COMPLETE | Core/hosts/native/export | [Integrated evidence](evidence/phase-2-color-acceptance-2026-09-09.md) | COL-01–06, QLT-02/03/04, SCN-04 | G-COLOR passes for declared typed snapshot; release gates remain separate. |
 
 ## D3 scale-chromatic parity planning handoff
 
@@ -768,11 +1036,11 @@ catalog. CP-03 requires SP-04, and CP-05 requires SP-07/WP-20 before WP-21/22.
 
 | Chromatic package | State | Owner | Revision/evidence | Requirements | Next action |
 | --- | --- | --- | --- | --- | --- |
-| CP-01 — Reference contract and oracle | READY | Unassigned | Planning/source inventory only | CHR-01/03/05/06, ARC-04 | WP-14 prerequisite met; coordinate shared oracle and interpolation/schema boundary with SP-01/04. |
-| CP-02 — Exact discrete catalog | NOT STARTED | Unassigned | None | CHR-01/02 | Requires CP-01. |
-| CP-03 — Complete interpolator catalog | NOT STARTED | Unassigned | None | CHR-01/03 | Requires CP-02 and SP-04. |
-| CP-04 — Chart, guide and portable integration | NOT STARTED | Unassigned | None | CHR-04/05, SCL-03, THM-02, BND-01/03/04 | Requires CP-03. |
-| CP-05 — Integrated certification | NOT STARTED | Unassigned | None | CHR-01–06, QLT-02/03/04 | Requires CP-04, SP-07 and WP-20; precedes WP-21/22. |
+| CP-01 — Reference contract and oracle | COMPLETE | Core/reference | [Entry](evidence/phase-2-chromatic-entry-2026-09-09.md) | CHR-01/03/05/06, ARC-04 | All 76 exports and reference provenance pinned. |
+| CP-02 — Exact discrete catalog | COMPLETE | Core | [Foundation](evidence/phase-2-chromatic-foundations-2026-09-09.md) | CHR-01/02 | All 218 actual arrays exact. |
+| CP-03 — Complete interpolator catalog | COMPLETE | Core | [Foundation](evidence/phase-2-chromatic-foundations-2026-09-09.md) | CHR-01/03 | All 38 ramps and 160,666 sampled rows. |
+| CP-04 — Chart, guide and portable integration | COMPLETE | Core/hosts | [Integration](evidence/phase-2-chromatic-integration-2026-09-09.md) | CHR-04/05, SCL-03, THM-02, BND-01/03/04 | v6 metadata, actual hosts, composition/themes and exceptional normalization pass. |
+| CP-05 — Integrated certification | COMPLETE | Core/native/export/hosts | [G-CHROMATIC](evidence/phase-2-chromatic-integration-2026-09-09.md) | CHR-01–06, QLT-02/03/04 | Qualified snapshot; WP-21/22 release rechecks remain. |
 
 ## D3 hierarchy parity planning handoff
 
@@ -848,13 +1116,13 @@ Markdown hard-break convention). Graph validation is not platform runtime execut
 
 | Scale package | State | Owner | Revision/evidence | Requirements | Next action |
 | --- | --- | --- | --- | --- | --- |
-| SP-01 — Compatibility contract and oracle | READY | Unassigned | Planning only; no oracle run | SCL-06/07/08, ARC-04, BND-01, QLT-02 | After WP-14, pin the complete fixture oracle and record method/default/migration contracts. |
-| SP-02 — Continuous mapping and numeric families | NOT STARTED | Unassigned | None | SCL-01/02/03/06/07, DAT-05 | Requires SP-01 and WP-IP02. |
-| SP-03 — Ordinal, band and point | NOT STARTED | Unassigned | None | SCL-01/06/07, DAT-02 | Requires SP-01. |
-| SP-04 — Interpolation, distribution and color | NOT STARTED | Unassigned | None | SCL-03/06/07, GRA-03, BND-01 | Requires SP-02/03, CLR-04 and WP-IP03/04; CLR-04 supplies descriptors/paint lowering as well as preceding CLR-03 kernels. |
-| SP-05 — Numeric ticks, nice and formatting | NOT STARTED | Unassigned | None | SCL-07, LAY-01/02, THM-03 | Requires SP-02/04; shared API consumed by WP-AX02. |
-| SP-06 — UTC and explicit local calendars | NOT STARTED | Unassigned | None | SCL-04/06/07, DAT-05, BND-01 | Requires SP-02/05; shared API consumed by WP-AX02. |
-| SP-07 — Integrated parity proof | NOT STARTED | Unassigned | None | SCL-01–08, BND-01/03/04, SCN-04, QLT-02/03/04 | Requires SP-03–06 and WP-16/18/20; acceptance precedes WP-21/22/23. |
+| SP-01 — Compatibility contract and oracle | COMPLETE | Core/reference | [Reference and gap report](evidence/phase-2-scale-reference-2026-09-09.md): 26 factories, 461 cases, 200 formats, four zones, complete method dispositions | SCL-06/07/08, ARC-04, BND-01, QLT-02 | Measurement only; G-SCALE OPEN. Proceed SP-02. |
+| SP-02 — Continuous mapping and numeric families | COMPLETE | Core | [Numeric qualification](evidence/phase-2-numeric-scales-2026-09-09.md): 161 configurations, explicit nice, named axes/navigation, v5, 43 macOS and 20 Linux tests | SCL-01/02/03/06/07, DAT-05 | D3 ticks/formatters remain SP-05; host qualification SP-07. |
+| SP-03 — Ordinal, band and point | COMPLETE | Core | [Categorical qualification](evidence/phase-2-categorical-scales-2026-09-09.md): all 130 cases, exact keys, named axes/dodge/update snapshots, 55 macOS and 30 Linux tests; repository checks pass | SCL-01/06/07, DAT-02 | Standalone host/native/performance qualification remains SP-07. |
+| SP-04 — Interpolation, distribution and color | COMPLETE | Core | [Distribution qualification](evidence/phase-2-distribution-scales-2026-09-09.md): 160 pinned configurations, defaults, numeric styles, interval/midpoint guides, post-stat correction/zoom and one paint boundary; 66 macOS and 36 Linux tests; checks pass | SCL-03/06/07, GRA-03, BND-01 | Registered interpolation remains WP-IP06; standalone host/native/performance qualification SP-07/WP-21/22. |
+| SP-05 — Numeric ticks, nice and formatting | COMPLETE | Core | [Numeric format qualification](evidence/phase-2-numeric-format-2026-09-09.md): 269 exact tick/label configurations, 200 standalone format cases, expanded 11,176 labels, nice/locale/empty-label publication; 99 macOS and 33 Linux tests; checks pass | SCL-07, LAY-01/02, THM-03 | Standalone host qualification remains SP-07; shared API consumed by WP-AX02. |
+| SP-06 — UTC and explicit local calendars | COMPLETE | Core/hosts | [Calendar qualification](evidence/phase-2-calendar-scales-2026-09-09.md): 2,750 filtered intervals, 16,632 exact custom labels, 160 mapping configurations; same-revision Python/WASM and byte-identical DST SVGs; 52 macOS/50 Linux tests and repository checks pass | SCL-04/06/07, DAT-05, BND-01 | Shared API consumed by WP-AX02; public facade/type/native/performance integration remains SP-07. |
+| SP-07 — Integrated parity proof | COMPLETE | Core/hosts/native/export | [Integrated evidence](evidence/phase-2-scale-integration-2026-09-09.md) | SCL-01–08, BND-01/03/04, SCN-04, QLT-02/03/04 | G-SCALE passes for declared typed snapshot; release gates remain separate. |
 
 ## D3 shape parity planning handoff
 
@@ -951,14 +1219,14 @@ owns deliverables and acceptance criteria; planning approval is not implementati
 
 | Package | State | Owner | Commit/PR | Requirement IDs | Evidence | Open work / next action |
 | --- | --- | --- | --- | --- | --- | --- |
-| WP-S01 — Shape contract, oracle and path foundation | NOT STARTED | Unassigned | — | SHP-01, SHP-08, SHP-10 | Planning review only | Requires WP-14 and WP-P04. Consume the shared path foundation; pin shape artifacts and prove shape-specific FIX-S01 cases. |
-| WP-S02 — Cartesian generators and complete curves | NOT STARTED | Unassigned | — | SHP-02, SHP-03, SHP-09 | None | Prerequisite: WP-S01. |
-| WP-S03 — Arc geometry and pie layout | NOT STARTED | Unassigned | — | SHP-04, SHP-09 | None | Prerequisite: WP-S01. |
-| WP-S04 — Radial generators and links | NOT STARTED | Unassigned | — | SHP-05, SHP-09 | None | Prerequisites: WP-S02, WP-S03. |
-| WP-S05 — Complete symbol encoding | NOT STARTED | Unassigned | — | SHP-06, SHP-09 | None | Prerequisite: WP-S01. |
-| WP-S06 — Complete stack layouts | NOT STARTED | Unassigned | — | SHP-07, SHP-09 | None | Prerequisites: WP-S01, WP-10. |
-| WP-S07 — Custom protocols and public portability | NOT STARTED | Unassigned | — | SHP-01, SHP-08, SHP-09 | None | Prerequisites: WP-S02, WP-S03, WP-S04, WP-S05, WP-S06. |
-| WP-S08 — Integrated parity acceptance | NOT STARTED | Unassigned | — | SHP-09, SHP-10 | None | Prerequisites: WP-S07, WP-16, WP-18, WP-20. |
+| WP-S01 — Shape contract, oracle and path foundation | COMPLETE | Core/reference/native/export/hosts | [FIX-S01 evidence](evidence/phase-2-shape-foundation-2026-09-09.md) | SHP-01, SHP-08, SHP-10 | 63 exports, 333 contexts, 42 layouts; actual hosts and inspected destinations | Proceed WP-S02; generator families remain open. |
+| WP-S02 — Cartesian generators and complete curves | COMPLETE | Core/hosts/native/export | [FIX-S02/03 evidence](evidence/phase-2-shape-cartesian-2026-09-09.md) | SHP-02, SHP-03, SHP-09 | 20 curves, 829 cases; 369 macOS tests; actual hosts, 64 updates each and inspected destinations | Curved dash styling subsequently accepted in WP-S08. |
+| WP-S03 — Arc geometry and pie layout | COMPLETE | Core/hosts | WP-S01 accepted; ADR-020 | SHP-04, SHP-09 | [620 arc/192 pie Rust cases, 144 built-in host pies, Linux/WASM interactions, 64 updates and publication](evidence/phase-2-shape-arc-2026-09-09.md); implementation complete | Fresh macOS Python, inspected native output and 393-test workspace/repository checks pass; proceed WP-S04. |
+| WP-S04 — Radial generators and links | COMPLETE | Core/hosts/native/export | WP-S02 and WP-S03 accepted; ADR-020 | SHP-05, SHP-09 | [40 point/697 standalone and chart paths, 760 updates per host, exact inspected publication](evidence/phase-2-shape-radial-2026-09-09.md) | Fresh macOS/Linux Python and WASM budget regressions pass; figure-wide projection preflight includes facets/insets. Native inspected; 339 core + 54 export Linux tests, 404 macOS workspace tests/doctests and repository checks pass at recorded snapshots. Proceed WP-S07. |
+| WP-S05 — Complete symbol encoding | COMPLETE | Core/hosts | WP-S01 accepted; ADR-020 | SHP-06, SHP-09 | [13 types, 156 fixtures per host, 104 updates per host, mapped guides and exact inspected publication](evidence/phase-2-shape-symbol-2026-09-09.md); Linux lint/docs pass | Fresh macOS Python, inspected native output and complete workspace/repository qualification pass. |
+| WP-S06 — Complete stack layouts | COMPLETE | Core/hosts/native/export | WP-S01 and WP-10 accepted; ADR-020 | SHP-07, SHP-09 | [435 numerical cases per host, 1,620 tidy comparisons, 480 updates per host, exact inspected three-host publication and 385 Linux tests/doctests](evidence/phase-2-shape-stack-2026-09-09.md) | Fresh macOS Python, 480 updates, inspected native output and complete workspace/repository qualification pass. |
+| WP-S07 — Custom protocols and public portability | COMPLETE | Core/hosts/native/export | WP-S02–06 accepted | SHP-01, SHP-08, SHP-09 | [Five registered protocols, chart/legend integration, wire-v9, 72 updates per host and exact inspected publication](evidence/phase-2-shape-custom-2026-09-09.md) | Native and all three publication themes inspected; actual Python/WASM, strict types and repository checks pass. Full regression follow-up recorded with the evidence; WP-S08 subsequently accepted. |
+| WP-S08 — Integrated parity acceptance | COMPLETE | Core/hosts/native/export | WP-S07, WP-16, WP-18, WP-20 accepted | SHP-09, SHP-10 | [63 exports/220 methods accepted; retained curved dashes and complete cross-family qualification](evidence/phase-2-shape-acceptance-2026-09-09.md) | 420 macOS / 419 Linux tests-doctests, 1,544 updates per actual host, native and nine publication images inspected; G-SHAPE passes. Expanded WP-21/22/23 remain open. |
 
 ## Cumulative gates
 
@@ -971,7 +1239,7 @@ WP-21 additionally requires WP-AX06, and WP-22/23 include axis performance/relea
 
 | Package | State | Owner | Revision | Requirements | Evidence / next action |
 | --- | --- | --- | --- | --- | --- |
-| WP-AX01 — Guide contract and reference harness | READY | Unassigned | — | AXIS-01, AXIS-07 | Planning review only; WP-14 prerequisite met. Implement guide/scale separation, migration and pinned reference harness. |
+| WP-AX01 — Guide contract and reference harness | IN PROGRESS | Core/hosts | WP-14 accepted; reference entry | AXIS-01, AXIS-07 | [372 actual-browser reference cases and complete 4-factory/10-method inventory repeat exactly](evidence/phase-2-axis-entry-2026-09-09.md). Identity, shared-scale guide resolution, primary builders/edits/name maps and version-8 migration implemented; five guide tests plus 39 existing core tests pass on Linux; actual Linux Python/WASM prove shared placement, named navigation, stable scale replacement and retained outputs. Strict positive types and macOS repository/workspace checks pass. Dedicated macOS Python and inspected native guide identity checks also pass; bounded provider integration remains open. |
 | WP-AX02 — Tick selection and formatting | NOT STARTED | Unassigned | — | AXIS-02, AXIS-03 | Requires WP-AX01, SP-03, SP-05, SP-06; consumes shared scale algorithms. |
 | WP-AX03 — Axis geometry and bounded layout | NOT STARTED | Unassigned | — | AXIS-04 | Requires WP-AX02. |
 | WP-AX04 — Styling and publication components | NOT STARTED | Unassigned | — | AXIS-05 | Requires WP-AX03. |
@@ -986,12 +1254,12 @@ WP-21 additionally requires WP-AX06, and WP-22/23 include axis performance/relea
 | G1 | PASSED — minimal portable core | WP-04–08 foundation/native/headless evidence plus WP-09 actual Python/WASM FIX-15/16 runtime comparison; this does not certify full grammar or production host/distribution products. |
 | G2 | PASSED — Cartesian/publication alpha | [Alpha matrix](alpha-api.md) maps complete grammar/facets/themes/publication/extensions and actual portable evidence. G3/G4 retain their remaining scope. |
 | G3 | PASSED (original interactive streaming scope) | WP-15–20 interaction/streaming/export plus WP-21 frozen-resize and native redraw regression fixes; actual native and Rust/Python/WASM evidence. Sustained PERF and expanded parity remain separate. |
-| G-PATH | NOT PASSED | PTH-01–06/FIX-P01–06; WP-P04 standalone path, inspected native/export and actual Rust/Python/WASM proof. Required before WP-S01 completion, WP-21 and G4. |
+| G-PATH | PASSED | PTH-01–06/FIX-P01–06; [WP-P04 source snapshot and evidence](evidence/phase-2-paths-2026-09-08.md). Shape and performance qualification remain separate. |
 | G-AXIS | NOT PASSED | AXIS-01–07/FIX-19; pinned reference matrix, actual bindings, native/publication inspection and transition evidence. Required before WP-21 and G4. |
-| G-SHAPE | NOT PASSED | SHP-01–10, FIX-S01–09; complete generator/method inventory and actual native/headless/binding parity evidence. |
-| G-SCALE | NOT PASSED | SCL-06–08/FIX-20; complete method inventory, actual Rust/Python/WASM scale operations, integrated chart/update behavior and inspected outputs. SP-07 precedes WP-21/22. |
-| G-CHROMATIC | NOT PASSED | CHR-01–06/FIX-21; all 76 exports/218 arrays, actual Rust/Python/WASM operations, scale/guide/update composition and inspected native/publication artifacts. CP-05 precedes WP-21/22. |
-| G-COLOR | NOT PASSED | COL-01–06/FIX-C01; complete color methods, exceptional channels, actual Rust/Python/WASM, coherent paint/update and inspected native/publication evidence. CLR-05 precedes WP-21/22. |
+| G-SHAPE | PASSED for finite typed snapshot | SHP-01–10/FIX-S01–09 through WP-S08; [integrated evidence](evidence/phase-2-shape-acceptance-2026-09-09.md). Complete per-item verdicts, actual hosts and inspected destinations; WP-21/22/23 remain open. |
+| G-SCALE | PASSED for declared typed snapshot | SCL-01–08/FIX-20 through SP-07; [integrated evidence](evidence/phase-2-scale-integration-2026-09-09.md). WP-21/22 release rechecks remain open. |
+| G-CHROMATIC | PASSED for retained typed snapshot | CHR-01–06/FIX-21 through CP-05; [final evidence](evidence/phase-2-chromatic-integration-2026-09-09.md). Other Phase 2/release gates remain open. |
+| G-COLOR | PASSED for declared typed snapshot | COL-01–06/FIX-C01 through CLR-05; [integrated evidence](evidence/phase-2-color-acceptance-2026-09-09.md). WP-21/22 release rechecks remain open. |
 | G-INTERPOLATE | NOT PASSED | ITP-01–08/FIX-I01; all 27 exports/configuration/result controls, shared consumers, actual Rust/Python/WASM and applicable inspected native/publication evidence. WP-IP07 precedes WP-21/22. |
 | G-HIERARCHY | NOT PASSED | HIR-01–08/FIX-H01-A–H; complete method/layout/history coverage, actual Rust/Python/WASM and inspected native/publication artifacts. WP-H08 precedes WP-21/22. |
 | G-GGPLOT | NOT PASSED | GG2-01–12 / FIX-GG00–19 and GG-19 complete reference/host/destination capability evidence. |

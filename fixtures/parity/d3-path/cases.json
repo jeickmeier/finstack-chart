@@ -1,0 +1,5887 @@
+{
+  "schema_version": 1,
+  "reference": {
+    "name": "d3-path",
+    "version": "3.1.0",
+    "license": "ISC",
+    "source": "https://github.com/d3/d3-path/tree/v3.1.0",
+    "lock_sha256": "bcaf52b90527128695304aabf5a959f0b19445715d4d6ca465a0ea6de8b3187e",
+    "source_files": {
+      "src/index.js": "c8823092b0d809ccc9e931a4de4375c19c5aa24a9c167aef650b94edab50b62d",
+      "src/path.js": "2c2d30e2c5279c8f6f42edc6731a4af029949ec83f47ffb48c3e35d21f877800"
+    },
+    "node": "24.14.0",
+    "timezone": "UTC",
+    "locale": "en-US"
+  },
+  "constructors": [
+    {
+      "name": "path",
+      "svg": ""
+    },
+    {
+      "name": "Path",
+      "svg": ""
+    },
+    {
+      "name": "pathRound-default",
+      "svg": "M1.235,2.346"
+    }
+  ],
+  "invalid_digits": [
+    {
+      "digits": -1,
+      "error": "invalid digits: -1"
+    },
+    {
+      "digits": -0.1,
+      "error": "invalid digits: -0.1"
+    }
+  ],
+  "cases": [
+    {
+      "id": "empty",
+      "fixture": "FIX-P01",
+      "digits": null,
+      "operations": [],
+      "observations": [],
+      "svg": ""
+    },
+    {
+      "id": "basic-controls",
+      "fixture": "FIX-P01",
+      "digits": null,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            1,
+            2
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        },
+        {
+          "op": "quadraticCurveTo",
+          "args": [
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "op": "bezierCurveTo",
+          "args": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M1,2",
+          "current": [
+            1,
+            2
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4Q5,6,7,8",
+          "current": [
+            7,
+            8
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4Q5,6,7,8C9,10,11,12,13,14",
+          "current": [
+            13,
+            14
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M1,2L3,4Q5,6,7,8C9,10,11,12,13,14"
+    },
+    {
+      "id": "multiple-moves",
+      "fixture": "FIX-P01",
+      "digits": null,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            1,
+            2
+          ]
+        },
+        {
+          "op": "moveTo",
+          "args": [
+            3,
+            4
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            5,
+            6
+          ]
+        },
+        {
+          "op": "moveTo",
+          "args": [
+            7,
+            8
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M1,2",
+          "current": [
+            1,
+            2
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2M3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            3,
+            4
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2M3,4L5,6",
+          "current": [
+            5,
+            6
+          ],
+          "start": [
+            3,
+            4
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2M3,4L5,6M7,8",
+          "current": [
+            7,
+            8
+          ],
+          "start": [
+            7,
+            8
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M1,2M3,4L5,6M7,8"
+    },
+    {
+      "id": "empty-close",
+      "fixture": "FIX-P01",
+      "digits": null,
+      "operations": [
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "closePath"
+        }
+      ],
+      "observations": [
+        {
+          "svg": "",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": ""
+    },
+    {
+      "id": "repeat-close-and-continue",
+      "fixture": "FIX-P01",
+      "digits": null,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            1,
+            2
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            5,
+            6
+          ]
+        },
+        {
+          "op": "closePath"
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M1,2",
+          "current": [
+            1,
+            2
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4Z",
+          "current": [
+            1,
+            2
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4ZZ",
+          "current": [
+            1,
+            2
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4ZZL5,6",
+          "current": [
+            5,
+            6
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4ZZL5,6Z",
+          "current": [
+            1,
+            2
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M1,2L3,4ZZL5,6Z"
+    },
+    {
+      "id": "bare-lineTo",
+      "fixture": "FIX-P01",
+      "digits": null,
+      "operations": [
+        {
+          "op": "lineTo",
+          "args": [
+            1,
+            2
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            7,
+            8
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "L1,2",
+          "current": [
+            1,
+            2
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "L1,2Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "L1,2ZL7,8",
+          "current": [
+            7,
+            8
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "L1,2ZL7,8"
+    },
+    {
+      "id": "post-close-lineTo",
+      "fixture": "FIX-P01",
+      "digits": null,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            1,
+            2
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            1,
+            2
+          ]
+        },
+        {
+          "op": "closePath"
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M1,2",
+          "current": [
+            1,
+            2
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4Z",
+          "current": [
+            1,
+            2
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4ZL1,2",
+          "current": [
+            1,
+            2
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4ZL1,2Z",
+          "current": [
+            1,
+            2
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M1,2L3,4ZL1,2Z"
+    },
+    {
+      "id": "bare-quadraticCurveTo",
+      "fixture": "FIX-P01",
+      "digits": null,
+      "operations": [
+        {
+          "op": "quadraticCurveTo",
+          "args": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            7,
+            8
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "Q1,2,3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "Q1,2,3,4Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "Q1,2,3,4ZL7,8",
+          "current": [
+            7,
+            8
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "Q1,2,3,4ZL7,8"
+    },
+    {
+      "id": "post-close-quadraticCurveTo",
+      "fixture": "FIX-P01",
+      "digits": null,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            1,
+            2
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "quadraticCurveTo",
+          "args": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "op": "closePath"
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M1,2",
+          "current": [
+            1,
+            2
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4Z",
+          "current": [
+            1,
+            2
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4ZQ1,2,3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4ZQ1,2,3,4Z",
+          "current": [
+            1,
+            2
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M1,2L3,4ZQ1,2,3,4Z"
+    },
+    {
+      "id": "bare-bezierCurveTo",
+      "fixture": "FIX-P01",
+      "digits": null,
+      "operations": [
+        {
+          "op": "bezierCurveTo",
+          "args": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            7,
+            8
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "C1,2,3,4,5,6",
+          "current": [
+            5,
+            6
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "C1,2,3,4,5,6Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "C1,2,3,4,5,6ZL7,8",
+          "current": [
+            7,
+            8
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "C1,2,3,4,5,6ZL7,8"
+    },
+    {
+      "id": "post-close-bezierCurveTo",
+      "fixture": "FIX-P01",
+      "digits": null,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            1,
+            2
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "bezierCurveTo",
+          "args": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "op": "closePath"
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M1,2",
+          "current": [
+            1,
+            2
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4Z",
+          "current": [
+            1,
+            2
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4ZC1,2,3,4,5,6",
+          "current": [
+            5,
+            6
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4ZC1,2,3,4,5,6Z",
+          "current": [
+            1,
+            2
+          ],
+          "start": [
+            1,
+            2
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M1,2L3,4ZC1,2,3,4,5,6Z"
+    },
+    {
+      "id": "rect--5--4",
+      "fixture": "FIX-P03",
+      "digits": null,
+      "operations": [
+        {
+          "op": "rect",
+          "args": [
+            10,
+            20,
+            -5,
+            -4
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            17,
+            23
+          ]
+        },
+        {
+          "op": "closePath"
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M10,20h-5v-4h5Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h-5v-4h5ZL17,23",
+          "current": [
+            17,
+            23
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h-5v-4h5ZL17,23Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M10,20h-5v-4h5ZL17,23Z"
+    },
+    {
+      "id": "rect--5-0",
+      "fixture": "FIX-P03",
+      "digits": null,
+      "operations": [
+        {
+          "op": "rect",
+          "args": [
+            10,
+            20,
+            -5,
+            0
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            17,
+            23
+          ]
+        },
+        {
+          "op": "closePath"
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M10,20h-5v0h5Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h-5v0h5ZL17,23",
+          "current": [
+            17,
+            23
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h-5v0h5ZL17,23Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M10,20h-5v0h5ZL17,23Z"
+    },
+    {
+      "id": "rect--5-4",
+      "fixture": "FIX-P03",
+      "digits": null,
+      "operations": [
+        {
+          "op": "rect",
+          "args": [
+            10,
+            20,
+            -5,
+            4
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            17,
+            23
+          ]
+        },
+        {
+          "op": "closePath"
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M10,20h-5v4h5Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h-5v4h5ZL17,23",
+          "current": [
+            17,
+            23
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h-5v4h5ZL17,23Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M10,20h-5v4h5ZL17,23Z"
+    },
+    {
+      "id": "rect-0--4",
+      "fixture": "FIX-P03",
+      "digits": null,
+      "operations": [
+        {
+          "op": "rect",
+          "args": [
+            10,
+            20,
+            0,
+            -4
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            17,
+            23
+          ]
+        },
+        {
+          "op": "closePath"
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M10,20h0v-4h0Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h0v-4h0ZL17,23",
+          "current": [
+            17,
+            23
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h0v-4h0ZL17,23Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M10,20h0v-4h0ZL17,23Z"
+    },
+    {
+      "id": "rect-0-0",
+      "fixture": "FIX-P03",
+      "digits": null,
+      "operations": [
+        {
+          "op": "rect",
+          "args": [
+            10,
+            20,
+            0,
+            0
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            17,
+            23
+          ]
+        },
+        {
+          "op": "closePath"
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M10,20h0v0h0Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h0v0h0ZL17,23",
+          "current": [
+            17,
+            23
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h0v0h0ZL17,23Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M10,20h0v0h0ZL17,23Z"
+    },
+    {
+      "id": "rect-0-4",
+      "fixture": "FIX-P03",
+      "digits": null,
+      "operations": [
+        {
+          "op": "rect",
+          "args": [
+            10,
+            20,
+            0,
+            4
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            17,
+            23
+          ]
+        },
+        {
+          "op": "closePath"
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M10,20h0v4h0Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h0v4h0ZL17,23",
+          "current": [
+            17,
+            23
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h0v4h0ZL17,23Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M10,20h0v4h0ZL17,23Z"
+    },
+    {
+      "id": "rect-5--4",
+      "fixture": "FIX-P03",
+      "digits": null,
+      "operations": [
+        {
+          "op": "rect",
+          "args": [
+            10,
+            20,
+            5,
+            -4
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            17,
+            23
+          ]
+        },
+        {
+          "op": "closePath"
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M10,20h5v-4h-5Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h5v-4h-5ZL17,23",
+          "current": [
+            17,
+            23
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h5v-4h-5ZL17,23Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M10,20h5v-4h-5ZL17,23Z"
+    },
+    {
+      "id": "rect-5-0",
+      "fixture": "FIX-P03",
+      "digits": null,
+      "operations": [
+        {
+          "op": "rect",
+          "args": [
+            10,
+            20,
+            5,
+            0
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            17,
+            23
+          ]
+        },
+        {
+          "op": "closePath"
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M10,20h5v0h-5Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h5v0h-5ZL17,23",
+          "current": [
+            17,
+            23
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h5v0h-5ZL17,23Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M10,20h5v0h-5ZL17,23Z"
+    },
+    {
+      "id": "rect-5-4",
+      "fixture": "FIX-P03",
+      "digits": null,
+      "operations": [
+        {
+          "op": "rect",
+          "args": [
+            10,
+            20,
+            5,
+            4
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            17,
+            23
+          ]
+        },
+        {
+          "op": "closePath"
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M10,20h5v4h-5Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h5v4h-5ZL17,23",
+          "current": [
+            17,
+            23
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,20h5v4h-5ZL17,23Z",
+          "current": [
+            10,
+            20
+          ],
+          "start": [
+            10,
+            20
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M10,20h5v4h-5ZL17,23Z"
+    },
+    {
+      "id": "opposite-winding-holes",
+      "fixture": "FIX-P03",
+      "digits": null,
+      "operations": [
+        {
+          "op": "rect",
+          "args": [
+            0,
+            0,
+            20,
+            20
+          ]
+        },
+        {
+          "op": "rect",
+          "args": [
+            5,
+            5,
+            -10,
+            10
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0,0h20v20h-20Z",
+          "current": [
+            0,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0h20v20h-20ZM5,5h-10v10h10Z",
+          "current": [
+            5,
+            5
+          ],
+          "start": [
+            5,
+            5
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0,0h20v20h-20ZM5,5h-10v10h10Z"
+    },
+    {
+      "id": "arc-false-0",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 0,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3M10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3M10,0"
+    },
+    {
+      "id": "arc-false-9.99999e-7",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 9.99999e-7,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3M10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3M10,0"
+    },
+    {
+      "id": "arc-false-0.000001",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 0.000001,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3M10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3M10,0"
+    },
+    {
+      "id": "arc-false-0.000001000001",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 0.000001000001,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,0,1,7,3",
+          "current": [
+            6.9999999999975,
+            3.000005000005
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,0,1,7,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,0,1,7,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,0,1,7,3ZM10,0"
+    },
+    {
+      "id": "arc-false-3.141592653589793",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 3.141592653589793,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3",
+          "current": [
+            -3,
+            3.0000000000000004
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,1,1,-3,3ZM10,0"
+    },
+    {
+      "id": "arc-false-6.283184307178586",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 6.283184307178586,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,1,1,7,3",
+          "current": [
+            6.9999999999975,
+            2.9999949999949975
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,1,7,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,1,7,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,1,1,7,3ZM10,0"
+    },
+    {
+      "id": "arc-false-6.283184307179586",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 6.283184307179586,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,1,1,7,3",
+          "current": [
+            6.9999999999975,
+            2.999994999999998
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,1,7,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,1,7,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,1,1,7,3ZM10,0"
+    },
+    {
+      "id": "arc-false-6.283184307180586",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 6.283184307180586,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3",
+          "current": [
+            7,
+            3
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3ZM10,0"
+    },
+    {
+      "id": "arc-false-6.283185307179586",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 6.283185307179586,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3",
+          "current": [
+            7,
+            3
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3ZM10,0"
+    },
+    {
+      "id": "arc-false-9.42477796076938",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 9.42477796076938,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3",
+          "current": [
+            7,
+            3
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3ZM10,0"
+    },
+    {
+      "id": "arc-false--3.141592653589793",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": -3.141592653589793,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3",
+          "current": [
+            -3,
+            2.9999999999999996
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,1,1,-3,3ZM10,0"
+    },
+    {
+      "id": "arc-false--6.283185307179586",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": -6.283185307179586,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3",
+          "current": [
+            7,
+            3
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,1,1,-3,3A5,5,0,1,1,7,3ZM10,0"
+    },
+    {
+      "id": "arc-true-0",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 0,
+            "anticlockwise": true
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3M10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3M10,0"
+    },
+    {
+      "id": "arc-true-9.99999e-7",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 9.99999e-7,
+            "anticlockwise": true
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3",
+          "current": [
+            7,
+            3
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3ZM10,0"
+    },
+    {
+      "id": "arc-true-0.000001",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 0.000001,
+            "anticlockwise": true
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,1,0,7,3",
+          "current": [
+            6.9999999999975,
+            3.000005
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,0,7,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,0,7,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,1,0,7,3ZM10,0"
+    },
+    {
+      "id": "arc-true-0.000001000001",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 0.000001000001,
+            "anticlockwise": true
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,1,0,7,3",
+          "current": [
+            6.9999999999975,
+            3.000005000005
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,0,7,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,0,7,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,1,0,7,3ZM10,0"
+    },
+    {
+      "id": "arc-true-3.141592653589793",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 3.141592653589793,
+            "anticlockwise": true
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3",
+          "current": [
+            -3,
+            3.0000000000000004
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,1,0,-3,3ZM10,0"
+    },
+    {
+      "id": "arc-true-6.283184307178586",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 6.283184307178586,
+            "anticlockwise": true
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,0,0,7,3",
+          "current": [
+            6.9999999999975,
+            2.9999949999949975
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,0,0,7,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,0,0,7,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,0,0,7,3ZM10,0"
+    },
+    {
+      "id": "arc-true-6.283184307179586",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 6.283184307179586,
+            "anticlockwise": true
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,0,0,7,3",
+          "current": [
+            6.9999999999975,
+            2.999994999999998
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,0,0,7,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,0,0,7,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,0,0,7,3ZM10,0"
+    },
+    {
+      "id": "arc-true-6.283184307180586",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 6.283184307180586,
+            "anticlockwise": true
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3M10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3M10,0"
+    },
+    {
+      "id": "arc-true-6.283185307179586",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 6.283185307179586,
+            "anticlockwise": true
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3",
+          "current": [
+            7,
+            3
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3ZM10,0"
+    },
+    {
+      "id": "arc-true-9.42477796076938",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": 9.42477796076938,
+            "anticlockwise": true
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3",
+          "current": [
+            -3,
+            3.0000000000000018
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,1,0,-3,3ZM10,0"
+    },
+    {
+      "id": "arc-true--3.141592653589793",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": -3.141592653589793,
+            "anticlockwise": true
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3",
+          "current": [
+            -3,
+            2.9999999999999996
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,1,0,-3,3ZM10,0"
+    },
+    {
+      "id": "arc-true--6.283185307179586",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 2,
+            "y": 3,
+            "r": 5,
+            "a0": 0,
+            "a1": -6.283185307179586,
+            "anticlockwise": true
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3",
+          "current": [
+            7,
+            3
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3ZM10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M7,3A5,5,0,1,0,-3,3A5,5,0,1,0,7,3ZM10,0"
+    },
+    {
+      "id": "zero-radius-empty-state",
+      "fixture": "FIX-P02",
+      "digits": null,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 1,
+            "y": 2,
+            "r": 0,
+            "a0": 0,
+            "a1": 1,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M1,2",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1,2L3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M1,2L3,4"
+    },
+    {
+      "id": "zero-sweep-empty-state",
+      "fixture": "FIX-P02",
+      "digits": null,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 1,
+            "y": 2,
+            "r": 5,
+            "a0": 0,
+            "a1": 0,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            8,
+            8,
+            9,
+            9,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M6,2",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M6,2",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M6,2M8,8",
+          "current": [
+            8,
+            8
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M6,2M8,8"
+    },
+    {
+      "id": "connecting-arc",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            0,
+            0
+          ]
+        },
+        {
+          "op": "arc",
+          "args": {
+            "x": 10,
+            "y": 20,
+            "r": 5,
+            "a0": -1,
+            "a1": 2,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            4,
+            5
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0,0",
+          "current": [
+            0,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0L12.702,15.793A5,5,0,0,1,7.919,24.546",
+          "current": [
+            7.919265817264288,
+            24.54648713412841
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0L12.702,15.793A5,5,0,0,1,7.919,24.546L4,5",
+          "current": [
+            4,
+            5
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0,0L12.702,15.793A5,5,0,0,1,7.919,24.546L4,5"
+    },
+    {
+      "id": "arc-connection-9.99999e-7",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            5.000000999999,
+            0
+          ]
+        },
+        {
+          "op": "arc",
+          "args": {
+            "x": 0,
+            "y": 0,
+            "r": 5,
+            "a0": 0,
+            "a1": 3.141592653589793,
+            "anticlockwise": false
+          }
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M5,0",
+          "current": [
+            5.000000999999,
+            0
+          ],
+          "start": [
+            5.000000999999,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M5,0A5,5,0,1,1,-5,0",
+          "current": [
+            -5,
+            6.123233995736766e-16
+          ],
+          "start": [
+            5.000000999999,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M5,0A5,5,0,1,1,-5,0"
+    },
+    {
+      "id": "arc-connection-0.000001",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            5.000001,
+            0
+          ]
+        },
+        {
+          "op": "arc",
+          "args": {
+            "x": 0,
+            "y": 0,
+            "r": 5,
+            "a0": 0,
+            "a1": 3.141592653589793,
+            "anticlockwise": false
+          }
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M5,0",
+          "current": [
+            5.000001,
+            0
+          ],
+          "start": [
+            5.000001,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M5,0L5,0A5,5,0,1,1,-5,0",
+          "current": [
+            -5,
+            6.123233995736766e-16
+          ],
+          "start": [
+            5.000001,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M5,0L5,0A5,5,0,1,1,-5,0"
+    },
+    {
+      "id": "arc-connection-0.000001000001",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            5.000001000001,
+            0
+          ]
+        },
+        {
+          "op": "arc",
+          "args": {
+            "x": 0,
+            "y": 0,
+            "r": 5,
+            "a0": 0,
+            "a1": 3.141592653589793,
+            "anticlockwise": false
+          }
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M5,0",
+          "current": [
+            5.000001000001,
+            0
+          ],
+          "start": [
+            5.000001000001,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M5,0L5,0A5,5,0,1,1,-5,0",
+          "current": [
+            -5,
+            6.123233995736766e-16
+          ],
+          "start": [
+            5.000001000001,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M5,0L5,0A5,5,0,1,1,-5,0"
+    },
+    {
+      "id": "negative-radius-atomic",
+      "fixture": "FIX-P05",
+      "digits": null,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            2,
+            3
+          ]
+        },
+        {
+          "op": "arc",
+          "args": {
+            "x": 0,
+            "y": 0,
+            "r": -1,
+            "a0": 0,
+            "a1": 1,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            4,
+            5
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            5,
+            6,
+            7,
+            8,
+            -2
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            9,
+            10
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M2,3",
+          "current": [
+            2,
+            3
+          ],
+          "start": [
+            2,
+            3
+          ],
+          "error": null
+        },
+        {
+          "svg": "M2,3",
+          "current": [
+            2,
+            3
+          ],
+          "start": [
+            2,
+            3
+          ],
+          "error": "negative radius: -1"
+        },
+        {
+          "svg": "M2,3L4,5",
+          "current": [
+            4,
+            5
+          ],
+          "start": [
+            2,
+            3
+          ],
+          "error": null
+        },
+        {
+          "svg": "M2,3L4,5",
+          "current": [
+            4,
+            5
+          ],
+          "start": [
+            2,
+            3
+          ],
+          "error": "negative radius: -2"
+        },
+        {
+          "svg": "M2,3L4,5L9,10",
+          "current": [
+            9,
+            10
+          ],
+          "start": [
+            2,
+            3
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M2,3L4,5L9,10"
+    },
+    {
+      "id": "arcTo-empty-0",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            0
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,0Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,0ZL3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M10,0ZL3,4"
+    },
+    {
+      "id": "arcTo-empty-2",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,0Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,0ZL3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M10,0ZL3,4"
+    },
+    {
+      "id": "arcTo-empty-20",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            20
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,0Z",
+          "current": [
+            null,
+            null
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,0ZL3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M10,0ZL3,4"
+    },
+    {
+      "id": "arcTo-0-0-0",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            0,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            0
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0,0",
+          "current": [
+            0,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0L10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0L10,0Z",
+          "current": [
+            0,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0L10,0ZL3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0,0L10,0ZL3,4"
+    },
+    {
+      "id": "arcTo-0-0-2",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            0,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0,0",
+          "current": [
+            0,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0L8,0A2,2,0,0,1,10,2",
+          "current": [
+            10,
+            1.9999999999999998
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0L8,0A2,2,0,0,1,10,2Z",
+          "current": [
+            0,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0L8,0A2,2,0,0,1,10,2ZL3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0,0L8,0A2,2,0,0,1,10,2ZL3,4"
+    },
+    {
+      "id": "arcTo-0-0-20",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            0,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            20
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0,0",
+          "current": [
+            0,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0L-10,0A20,20,0,0,1,10,20",
+          "current": [
+            10,
+            19.999999999999996
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0L-10,0A20,20,0,0,1,10,20Z",
+          "current": [
+            0,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0L-10,0A20,20,0,0,1,10,20ZL3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0,0L-10,0A20,20,0,0,1,10,20ZL3,4"
+    },
+    {
+      "id": "arcTo-10-0-0",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            10,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            0
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            10,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            10,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,0Z",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            10,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,0ZL3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            10,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M10,0ZL3,4"
+    },
+    {
+      "id": "arcTo-10-0-2",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            10,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            10,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            10,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,0Z",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            10,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,0ZL3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            10,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M10,0ZL3,4"
+    },
+    {
+      "id": "arcTo-10-0-20",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            10,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            20
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            10,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            10,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,0Z",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            10,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M10,0ZL3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            10,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M10,0ZL3,4"
+    },
+    {
+      "id": "arcTo-9.999-0-0",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            9.999,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            0
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M9.999,0",
+          "current": [
+            9.999,
+            0
+          ],
+          "start": [
+            9.999,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M9.999,0",
+          "current": [
+            9.999,
+            0
+          ],
+          "start": [
+            9.999,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M9.999,0Z",
+          "current": [
+            9.999,
+            0
+          ],
+          "start": [
+            9.999,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M9.999,0ZL3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            9.999,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M9.999,0ZL3,4"
+    },
+    {
+      "id": "arcTo-9.999-0-2",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            9.999,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M9.999,0",
+          "current": [
+            9.999,
+            0
+          ],
+          "start": [
+            9.999,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M9.999,0",
+          "current": [
+            9.999,
+            0
+          ],
+          "start": [
+            9.999,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M9.999,0Z",
+          "current": [
+            9.999,
+            0
+          ],
+          "start": [
+            9.999,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M9.999,0ZL3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            9.999,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M9.999,0ZL3,4"
+    },
+    {
+      "id": "arcTo-9.999-0-20",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            9.999,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            20
+          ]
+        },
+        {
+          "op": "closePath"
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            3,
+            4
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M9.999,0",
+          "current": [
+            9.999,
+            0
+          ],
+          "start": [
+            9.999,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M9.999,0",
+          "current": [
+            9.999,
+            0
+          ],
+          "start": [
+            9.999,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M9.999,0Z",
+          "current": [
+            9.999,
+            0
+          ],
+          "start": [
+            9.999,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M9.999,0ZL3,4",
+          "current": [
+            3,
+            4
+          ],
+          "start": [
+            9.999,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M9.999,0ZL3,4"
+    },
+    {
+      "id": "arcTo-reverse",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            0,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            -10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0,0",
+          "current": [
+            0,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0L8,0A2,2,0,0,0,10,-2",
+          "current": [
+            10,
+            -1.9999999999999998
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0,0L8,0A2,2,0,0,0,10,-2"
+    },
+    {
+      "id": "arcTo-collinear",
+      "fixture": "FIX-P02",
+      "digits": null,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            0,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            20,
+            0,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0,0",
+          "current": [
+            0,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0L10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0,0L10,0"
+    },
+    {
+      "id": "arcTo-coincident-end",
+      "fixture": "FIX-P02",
+      "digits": null,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            0,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            0,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0,0",
+          "current": [
+            0,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0L10,0",
+          "current": [
+            10,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0,0L10,0"
+    },
+    {
+      "id": "arcTo-distance-9.99999e-7",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            9.9990000005,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M9.999,0",
+          "current": [
+            9.9990000005,
+            0
+          ],
+          "start": [
+            9.9990000005,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M9.999,0",
+          "current": [
+            9.9990000005,
+            0
+          ],
+          "start": [
+            9.9990000005,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M9.999,0"
+    },
+    {
+      "id": "arcTo-cross-9.99999e-7",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            0,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            1,
+            0,
+            2,
+            9.99999e-7,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0,0",
+          "current": [
+            0,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0L1,0",
+          "current": [
+            1,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0,0L1,0"
+    },
+    {
+      "id": "arcTo-distance-0.000001",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            9.999,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M9.999,0",
+          "current": [
+            9.999,
+            0
+          ],
+          "start": [
+            9.999,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M9.999,0",
+          "current": [
+            9.999,
+            0
+          ],
+          "start": [
+            9.999,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M9.999,0"
+    },
+    {
+      "id": "arcTo-cross-0.000001",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            0,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            1,
+            0,
+            2,
+            0.000001,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0,0",
+          "current": [
+            0,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0L1,0",
+          "current": [
+            1,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0,0L1,0"
+    },
+    {
+      "id": "arcTo-distance-0.000001000001",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            9.9989999995,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            10,
+            0,
+            10,
+            10,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M9.999,0",
+          "current": [
+            9.9989999995,
+            0
+          ],
+          "start": [
+            9.9989999995,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M9.999,0L8,0A2,2,0,0,1,10,2",
+          "current": [
+            10,
+            1.9999999999999998
+          ],
+          "start": [
+            9.9989999995,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M9.999,0L8,0A2,2,0,0,1,10,2"
+    },
+    {
+      "id": "arcTo-cross-0.000001000001",
+      "fixture": "FIX-P02",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            0,
+            0
+          ]
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            1,
+            0,
+            2,
+            0.000001000001,
+            2
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0,0",
+          "current": [
+            0,
+            0
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0L1,0A2,2,0,0,1,1,0",
+          "current": [
+            1.000001000044449,
+            1.0000454490728244e-12
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0,0L1,0A2,2,0,0,1,1,0"
+    },
+    {
+      "id": "round-0",
+      "fixture": "FIX-P04",
+      "digits": 0,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            1.5,
+            -1.5
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            0,
+            1.23456789
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            1e-9,
+            1e+22
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M2,-1",
+          "current": [
+            1.5,
+            -1.5
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        },
+        {
+          "svg": "M2,-1L0,1",
+          "current": [
+            0,
+            1.23456789
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        },
+        {
+          "svg": "M2,-1L0,1L0,1e+22",
+          "current": [
+            1e-9,
+            1e+22
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M2,-1L0,1L0,1e+22"
+    },
+    {
+      "id": "round-small-arc-0",
+      "fixture": "FIX-P04",
+      "digits": 0,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 0,
+            "y": 0,
+            "r": 0.00001,
+            "a0": 0,
+            "a1": 1.5707963267948966,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            1,
+            1,
+            2,
+            0,
+            0.5
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0,0A0,0,0,0,1,0,0",
+          "current": [
+            6.123233995736766e-22,
+            0.00001
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0A0,0,0,0,1,0,0L1,1A1,1,0,0,0,1,1",
+          "current": [
+            1.3535516228219013,
+            0.6464483771780987
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0,0A0,0,0,0,1,0,0L1,1A1,1,0,0,0,1,1"
+    },
+    {
+      "id": "round-1",
+      "fixture": "FIX-P04",
+      "digits": 1,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            1.5,
+            -1.5
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            0,
+            1.23456789
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            1e-9,
+            1e+22
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M1.5,-1.5",
+          "current": [
+            1.5,
+            -1.5
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1.5,-1.5L0,1.2",
+          "current": [
+            0,
+            1.23456789
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1.5,-1.5L0,1.2L0,1e+22",
+          "current": [
+            1e-9,
+            1e+22
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M1.5,-1.5L0,1.2L0,1e+22"
+    },
+    {
+      "id": "round-small-arc-1",
+      "fixture": "FIX-P04",
+      "digits": 1,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 0,
+            "y": 0,
+            "r": 0.00001,
+            "a0": 0,
+            "a1": 1.5707963267948966,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            1,
+            1,
+            2,
+            0,
+            0.5
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0,0A0,0,0,0,1,0,0",
+          "current": [
+            6.123233995736766e-22,
+            0.00001
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0A0,0,0,0,1,0,0L0.6,0.6A0.5,0.5,0,0,0,1.4,0.6",
+          "current": [
+            1.3535516228219013,
+            0.6464483771780987
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0,0A0,0,0,0,1,0,0L0.6,0.6A0.5,0.5,0,0,0,1.4,0.6"
+    },
+    {
+      "id": "round-3",
+      "fixture": "FIX-P04",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            1.5,
+            -1.5
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            0,
+            1.23456789
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            1e-9,
+            1e+22
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M1.5,-1.5",
+          "current": [
+            1.5,
+            -1.5
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1.5,-1.5L0,1.235",
+          "current": [
+            0,
+            1.23456789
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1.5,-1.5L0,1.235L0,1e+22",
+          "current": [
+            1e-9,
+            1e+22
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M1.5,-1.5L0,1.235L0,1e+22"
+    },
+    {
+      "id": "round-small-arc-3",
+      "fixture": "FIX-P04",
+      "digits": 3,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 0,
+            "y": 0,
+            "r": 0.00001,
+            "a0": 0,
+            "a1": 1.5707963267948966,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            1,
+            1,
+            2,
+            0,
+            0.5
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0,0A0,0,0,0,1,0,0",
+          "current": [
+            6.123233995736766e-22,
+            0.00001
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0A0,0,0,0,1,0,0L0.646,0.646A0.5,0.5,0,0,0,1.354,0.646",
+          "current": [
+            1.3535516228219013,
+            0.6464483771780987
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0,0A0,0,0,0,1,0,0L0.646,0.646A0.5,0.5,0,0,0,1.354,0.646"
+    },
+    {
+      "id": "round-15",
+      "fixture": "FIX-P04",
+      "digits": 15,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            1.5,
+            -1.5
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            0,
+            1.23456789
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            1e-9,
+            1e+22
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M1.5,-1.5",
+          "current": [
+            1.5,
+            -1.5
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1.5,-1.5L0,1.23456789",
+          "current": [
+            0,
+            1.23456789
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1.5,-1.5L0,1.23456789L1e-9,1e+22",
+          "current": [
+            1e-9,
+            1e+22
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M1.5,-1.5L0,1.23456789L1e-9,1e+22"
+    },
+    {
+      "id": "round-small-arc-15",
+      "fixture": "FIX-P04",
+      "digits": 15,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 0,
+            "y": 0,
+            "r": 0.00001,
+            "a0": 0,
+            "a1": 1.5707963267948966,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            1,
+            1,
+            2,
+            0,
+            0.5
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0.00001,0A0.00001,0.00001,0,0,1,0,0.00001",
+          "current": [
+            6.123233995736766e-22,
+            0.00001
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0.00001,0A0.00001,0.00001,0,0,1,0,0.00001L0.646446609415565,0.646450144949471A0.5,0.5,0,0,0,1.353551622821901,0.646448377178099",
+          "current": [
+            1.3535516228219013,
+            0.6464483771780987
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0.00001,0A0.00001,0.00001,0,0,1,0,0.00001L0.646446609415565,0.646450144949471A0.5,0.5,0,0,0,1.353551622821901,0.646448377178099"
+    },
+    {
+      "id": "round-16",
+      "fixture": "FIX-P04",
+      "digits": 16,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            1.5,
+            -1.5
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            0,
+            1.23456789
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            1e-9,
+            1e+22
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M1.5,-1.5",
+          "current": [
+            1.5,
+            -1.5
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1.5,-1.5L0,1.23456789",
+          "current": [
+            0,
+            1.23456789
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1.5,-1.5L0,1.23456789L1e-9,1e+22",
+          "current": [
+            1e-9,
+            1e+22
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M1.5,-1.5L0,1.23456789L1e-9,1e+22"
+    },
+    {
+      "id": "round-small-arc-16",
+      "fixture": "FIX-P04",
+      "digits": 16,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 0,
+            "y": 0,
+            "r": 0.00001,
+            "a0": 0,
+            "a1": 1.5707963267948966,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            1,
+            1,
+            2,
+            0,
+            0.5
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0.00001,0A0.00001,0.00001,0,0,1,6.123233995736766e-22,0.00001",
+          "current": [
+            6.123233995736766e-22,
+            0.00001
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0.00001,0A0.00001,0.00001,0,0,1,6.123233995736766e-22,0.00001L0.6464466094155652,0.6464501449494711A0.5,0.5,0,0,0,1.3535516228219013,0.6464483771780987",
+          "current": [
+            1.3535516228219013,
+            0.6464483771780987
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0.00001,0A0.00001,0.00001,0,0,1,6.123233995736766e-22,0.00001L0.6464466094155652,0.6464501449494711A0.5,0.5,0,0,0,1.3535516228219013,0.6464483771780987"
+    },
+    {
+      "id": "round-2.9",
+      "fixture": "FIX-P04",
+      "digits": 2.9,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            1.5,
+            -1.5
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            0,
+            1.23456789
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            1e-9,
+            1e+22
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M1.5,-1.5",
+          "current": [
+            1.5,
+            -1.5
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1.5,-1.5L0,1.23",
+          "current": [
+            0,
+            1.23456789
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        },
+        {
+          "svg": "M1.5,-1.5L0,1.23L0,1e+22",
+          "current": [
+            1e-9,
+            1e+22
+          ],
+          "start": [
+            1.5,
+            -1.5
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M1.5,-1.5L0,1.23L0,1e+22"
+    },
+    {
+      "id": "round-small-arc-2.9",
+      "fixture": "FIX-P04",
+      "digits": 2.9,
+      "operations": [
+        {
+          "op": "arc",
+          "args": {
+            "x": 0,
+            "y": 0,
+            "r": 0.00001,
+            "a0": 0,
+            "a1": 1.5707963267948966,
+            "anticlockwise": false
+          }
+        },
+        {
+          "op": "arcTo",
+          "args": [
+            1,
+            1,
+            2,
+            0,
+            0.5
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0,0A0,0,0,0,1,0,0",
+          "current": [
+            6.123233995736766e-22,
+            0.00001
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,0A0,0,0,0,1,0,0L0.65,0.65A0.5,0.5,0,0,0,1.35,0.65",
+          "current": [
+            1.3535516228219013,
+            0.6464483771780987
+          ],
+          "start": [
+            null,
+            null
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0,0A0,0,0,0,1,0,0L0.65,0.65A0.5,0.5,0,0,0,1.35,0.65"
+    },
+    {
+      "id": "unrounded-magnitudes",
+      "fixture": "FIX-P04",
+      "digits": null,
+      "operations": [
+        {
+          "op": "moveTo",
+          "args": [
+            0,
+            1e-9
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            1e+22,
+            1e-7
+          ]
+        },
+        {
+          "op": "lineTo",
+          "args": [
+            0.000001,
+            1e+21
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "svg": "M0,1e-9",
+          "current": [
+            0,
+            1e-9
+          ],
+          "start": [
+            0,
+            1e-9
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,1e-9L1e+22,1e-7",
+          "current": [
+            1e+22,
+            1e-7
+          ],
+          "start": [
+            0,
+            1e-9
+          ],
+          "error": null
+        },
+        {
+          "svg": "M0,1e-9L1e+22,1e-7L0.000001,1e+21",
+          "current": [
+            0.000001,
+            1e+21
+          ],
+          "start": [
+            0,
+            1e-9
+          ],
+          "error": null
+        }
+      ],
+      "svg": "M0,1e-9L1e+22,1e-7L0.000001,1e+21"
+    }
+  ]
+}

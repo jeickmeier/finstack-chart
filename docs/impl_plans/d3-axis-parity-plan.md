@@ -4,8 +4,11 @@ Phase 2 coordination: [combined implementation plan](phase-2-parity-implementati
 This document retains its detailed inventory and package ownership; the combined plan
 owns cross-lane scheduling and ggplot2 integration.
 
-Date: 7 September 2026. Specification: 0.2.0. State: planned; implementation parity is not achieved.
-Reviewed revision: `1cb955740c2dad2607b0a2330201125294cab5d0` plus the existing working tree.
+Date: 7 September 2026. Original review specification: 0.2.0; current contract: 0.5.0.
+State: planned; implementation parity is not achieved.
+Original reviewed revision: `1cb955740c2dad2607b0a2330201125294cab5d0` plus its working tree.
+Primary API handoff reconciled at `b631f0e6d7e41722b5774433d616f704234157d7`
+plus active authoring edits using the [current API review](../evidence/phase-2-current-api-review-2026-09-07.md).
 This assignment changes planning documents only. Concurrent state/action and binding edits
 were present before the review and are outside this changeset.
 
@@ -171,7 +174,7 @@ All names below are proposed API spellings. Acceptance fixes behavior, not spell
 
 | Package | Prerequisites | Deliverables / owned areas | Acceptance and estimate |
 | --- | --- | --- | --- |
-| WP-AX01 — Guide contract and reference harness | WP-14 | AXIS-01/07: guide/scale identity split and bounded provider boundary in core; versioned portable shape and migration; D3 profile; reference fixture generator and provenance manifest; conforming ADR updating ADR-005 limits/default-policy interpretation | Same scale drives independently configured top/bottom guides; two translated guides coexist; existing definitions migrate without changing output; reference inputs and expected outputs are reproducible. 2–4 days. |
+| WP-AX01 — Guide contract and reference harness | WP-14 | AXIS-01/07, AUT-01/04: guide/scale identity split and bounded provider boundary in core; primary AxisBuilder/AxisHandle/name-map and portable migration; D3 profile coordinated with P2-00/GG-02; reference fixture generator and provenance manifest; conforming ADR updating ADR-005 limits/default-policy interpretation | Same scale drives independently configured top/bottom guides through primary Rust and actual host builders; two translated guides coexist; named axes, layer bindings, navigation and existing definitions migrate without changing meaning/output; reference inputs and expected outputs are reproducible. Historical 2–4 days; re-estimate remaining migration with AP owners. |
 | WP-AX02 — Tick selection and formatting | WP-AX01, SP-03, SP-05, SP-06 | AXIS-02/03: per-guide arguments/values/formatters and canonical tick metadata; consume shared numeric/time formatting, tick policies and rounded-band inputs from the scale lane | FIX-19 selection/format cases, including explicit-list bypass, reset, empty labels and boundary cases; same labels/values in actual Rust/Python/WASM. 2–4 days. |
 | WP-AX03 — Axis geometry and bounded layout | WP-AX02 | AXIS-04: range-derived domain paths, four-side anchors, inner/outer/padding/offset, translation, preservation/adaptive policies, facet/composition integration | FIX-19 independent geometry expectations and inspected SVG/native examples, custom/reversed ranges, negative ticks, crowded/repeated labels, DPI and narrow bands. 3–5 days. |
 | WP-AX04 — Styling and publication components | WP-AX03 | AXIS-05: guide/tick roles, portable overrides, SVG component structure, native/export consumer integration, text/outline policy | Styled domain/ticks/labels independently; retained logical labels and vector output in inspected SVG/PDF/PNG; actual portable outputs agree. 2–4 days. |
@@ -183,8 +186,21 @@ project estimate and excluding work already owned by the scale parity lane and u
 host capability changes. Scale providers and formatters are shared prerequisites, not
 duplicated axis engines or separately counted implementations.
 
-WP-AX01 can proceed after WP-14 without taking over the active WP-15 edits. Coordinate
-public identity/schema changes with that owner and SP-01 before landing. SP-01 owns the
+WP-AX01 can proceed after WP-14 while coordinating with the active AP implementation.
+The current `plot/axis.rs` AxisBuilder holds AxisSpec; AxisHandle wraps ScaleId, and
+naming an axis assigns a scale identity. The split must migrate `Plot::named_axes`,
+primary wire name maps, layer axis selection and host navigation alongside low-level
+guide/layout types. Keep scale bindings distinct from decorative guide identity;
+prove existing named-axis usage and a shared top/bottom pair through primary Rust and
+actual Python/WASM operations, exports and declarations. AP-07 owns shared host syntax;
+WP-AX01 owns this capability's conversions and behavioral cases. Available Rust
+dispatch tests do not replace runtime host proofs. Pure contract/kernel work need not
+wait for final G-AUTH acceptance.
+
+Coordinate public identity/schema changes with AP-03/04/07, P2-00 and SP-01 before
+landing. Use the common profile propagation/migration decision in GG-02 instead of
+an axis-only policy envelope; do not add a dependency on GG-19 or final authoring
+certification. SP-01 owns the
 scale capability model; SP-03 owns categorical alignment/rounding; SP-05/06 own numeric
 and time tick/format algorithms and timezone resources. WP-AX02 consumes these accepted
 contracts and adds guide-level precedence/presentation. Share the reference dependency
@@ -244,3 +260,7 @@ Rust 1.97.1 (`8bab26f4f`, 14 July 2026); reviewed 7 September 2026.
 No D3 fixture generator, new production code, new runtime binding proof, native capture,
 export inspection, Linux run or transition benchmark was produced in this planning task.
 The next concrete action is **WP-AX01**, within a separately assigned implementation slice.
+
+## WP-AX01 reference entry — 9 September 2026
+
+The [entry evidence](../evidence/phase-2-axis-entry-2026-09-09.md) records 372 actual D3 browser cases and the complete public inventory, repeated byte for byte. The shared lock now includes pinned development-only selection/transition support; the prior lock remains hash-verified for historical oracle provenance. This is reference preparation only. Production guide/scale migration, provider resolution and actual host acceptance remain open.

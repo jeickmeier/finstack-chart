@@ -1,0 +1,1314 @@
+{
+  "base_revision": "fab2505951061eaafe9adb52c86b248ee0dfa6bf",
+  "qualification": "Qualified final transformed source snapshot; macOS/Linux/Node runtime and native inspection passed. Later Phase 2 work may change these files.",
+  "files": {
+    "Cargo.lock": {
+      "sha256": "17df1552e13bcf7f00e23708589197d54ff9f4469bd0d7d92967442152481717",
+      "bytes": 231975
+    },
+    "Cargo.toml": {
+      "sha256": "7cb30db797cda23d880f1954d3cc79c3987c6aedc0f15b14f4c2bfdacdc73fae",
+      "bytes": 1365
+    },
+    "crates/chart-core/src/accessibility.rs": {
+      "sha256": "66c87dc34cef60429d512c8280fabccab03e79a986f1d2ac55f5d7149a4bd3cb",
+      "bytes": 8814
+    },
+    "crates/chart-core/src/color/LICENSE": {
+      "sha256": "faa682e3e430941f958d26180458f5934a62f58dac4d70ccdd15608c15d0f884",
+      "bytes": 731
+    },
+    "crates/chart-core/src/color/authoring.rs": {
+      "sha256": "c90e35720b69b4479ca09efc738af01769e2918e33f2d325a1b76302830bd628",
+      "bytes": 4045
+    },
+    "crates/chart-core/src/color/convert.rs": {
+      "sha256": "60b310eb497cbda635bbb4728de7bc2a21279e864bfb7a891edf896769503dfb",
+      "bytes": 7132
+    },
+    "crates/chart-core/src/color/format.rs": {
+      "sha256": "8561d4c8963ff66a9fb2c697bf829a755254c8b2ec207686953dc223b5ff431f",
+      "bytes": 2967
+    },
+    "crates/chart-core/src/color/mod.rs": {
+      "sha256": "2a995165a462f01a003ce61ac9f75e7a6aac8966f710cffdf51c5168d47efe10",
+      "bytes": 14343
+    },
+    "crates/chart-core/src/color/names.rs": {
+      "sha256": "cadf9cd93260cf94e4d8838fc60764c90f2cfaaf6956f563ae24ea2fc2295e79",
+      "bytes": 4381
+    },
+    "crates/chart-core/src/color/paint.rs": {
+      "sha256": "7f423f8f6e2c095d81a9df18838946f2202196a5db0a9fff5bb833359d0afc79",
+      "bytes": 3748
+    },
+    "crates/chart-core/src/color/parse.rs": {
+      "sha256": "3309e37d37681744e69e643d60e58ef247b1ea0c13c338747d486d6fcd36c263",
+      "bytes": 5312
+    },
+    "crates/chart-core/src/color/scalar.rs": {
+      "sha256": "f0f080aeb80907637e2d1da82f44aacd03784f2df52729626e1ea20d5d4be81f",
+      "bytes": 468
+    },
+    "crates/chart-core/src/color/trig/LICENSE": {
+      "sha256": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+      "bytes": 3093
+    },
+    "crates/chart-core/src/color/trig/mod.rs": {
+      "sha256": "36602a66c821ddecfd90299912b20fa69525ee8fe16aac640f492a8cddc5e034",
+      "bytes": 7240
+    },
+    "crates/chart-core/src/color/trig/reduce_large.rs": {
+      "sha256": "0cb180133c8c5badfb4ae7d650fa293064b0a74a0e694ee01801def4f5136b6d",
+      "bytes": 7907
+    },
+    "crates/chart-core/src/composition.rs": {
+      "sha256": "7bed5df32ad5498a83a20188fd3ef59facc872297eaeb467feb0c57ed502edb1",
+      "bytes": 16800
+    },
+    "crates/chart-core/src/data/columns.rs": {
+      "sha256": "4f3d1c3774f232914c68da8f94ba4bfb8c5b199ae8b64772404e83e257f58f06",
+      "bytes": 20950
+    },
+    "crates/chart-core/src/data/mod.rs": {
+      "sha256": "1d8ee952eb4a0978a0595c23f4d6b3b6d6b6544cb9d0444a9d85e81137a7179d",
+      "bytes": 818
+    },
+    "crates/chart-core/src/data/retention.rs": {
+      "sha256": "74c50075cccecf40871112bd1ab882a96ad70bef2f42bbc477ef214d5bcb03aa",
+      "bytes": 3965
+    },
+    "crates/chart-core/src/data/schema.rs": {
+      "sha256": "184e16100c31f794e4e2e661ad79959ca9d419c738fb4907c8e5c5a44a314f19",
+      "bytes": 6874
+    },
+    "crates/chart-core/src/data/snapshot.rs": {
+      "sha256": "8431b35f767e7b8e03fec5f16b243aca1f7c7c882e4b2c4ea22c7522bcf95cc5",
+      "bytes": 14844
+    },
+    "crates/chart-core/src/dense.rs": {
+      "sha256": "cbbf574cedc71bf494eb0baeff5f7e9763bdaf5bcb0b48398aa666366de96029",
+      "bytes": 10837
+    },
+    "crates/chart-core/src/dense/candles.rs": {
+      "sha256": "9b00ec2decd39d15437b48c53bcf7c2aed2a195910efbf2241052674392276f7",
+      "bytes": 13789
+    },
+    "crates/chart-core/src/dense/lines.rs": {
+      "sha256": "7c4a83807c4dde167214d180bef4cb624a2021be90469ca29e687e8b74589484",
+      "bytes": 3014
+    },
+    "crates/chart-core/src/diagnostic.rs": {
+      "sha256": "3bdb1fb13ca6fda3135445d288cfe226bd39d617718ce64e1a811c2cce836252",
+      "bytes": 5889
+    },
+    "crates/chart-core/src/editing.rs": {
+      "sha256": "108c12f1a9ed28a9da491fece11a1202b8294447b08f3e3d8f874056883e246e",
+      "bytes": 19616
+    },
+    "crates/chart-core/src/geometry.rs": {
+      "sha256": "f8bce28c607756eb04fdb7b101629dfcf60819f75bc2d52ef40ad3331df4f488",
+      "bytes": 2752
+    },
+    "crates/chart-core/src/grammar/after_scale.rs": {
+      "sha256": "2afc57a1e6a27f35013b9fe495ced20f1ae2b5ee9ac643c0f23a43c929d6458b",
+      "bytes": 5038
+    },
+    "crates/chart-core/src/grammar/colors.rs": {
+      "sha256": "a9aad6563bf923bc71d92eea2c7c0594bb5191768ef1836b8f7d70b34051abe4",
+      "bytes": 24409
+    },
+    "crates/chart-core/src/grammar/compiler.rs": {
+      "sha256": "b7965698630563f9d306835c322526036bec767b66d056cefb24b96a819d609a",
+      "bytes": 78824
+    },
+    "crates/chart-core/src/grammar/definition.rs": {
+      "sha256": "c84074c4cedfc11338e47b0d811d19cef9ec64fcf06ef8bd306f6a791d37c8d3",
+      "bytes": 40392
+    },
+    "crates/chart-core/src/grammar/expression.rs": {
+      "sha256": "55777fca67e30df9fc5f6e242072837d15bc429ea8295336e8b76212d5673bf8",
+      "bytes": 24701
+    },
+    "crates/chart-core/src/grammar/expression_stage.rs": {
+      "sha256": "49fee242d43a0fca60685d25de7d8f7687592e1b6688f4d2dfed1a71dfd72870",
+      "bytes": 6287
+    },
+    "crates/chart-core/src/grammar/extensions.rs": {
+      "sha256": "ccc7698f3945d3482c88d5e1425502c3d84d7709dff5ac3ca23ca46757fe7303",
+      "bytes": 23363
+    },
+    "crates/chart-core/src/grammar/facets.rs": {
+      "sha256": "2e54983d2b8f7354b6a963e653096e4ee21de9a4c3e9ca693820f0898327f67d",
+      "bytes": 20661
+    },
+    "crates/chart-core/src/grammar/geometry_extensions.rs": {
+      "sha256": "9fdc74f8ca660d577f9c48cf4c650c105706282cdee8f3cb8cfb9f7dd373f610",
+      "bytes": 12087
+    },
+    "crates/chart-core/src/grammar/incremental_bins.rs": {
+      "sha256": "f52e7ea100c97a020decfddaa64009a6bc65d6d365c59de5d222130249ad9855",
+      "bytes": 11480
+    },
+    "crates/chart-core/src/grammar/mod.rs": {
+      "sha256": "829c9859d23c5d410e6f15267b0b3e29f942d4d9596552b7e18c110d55f02384",
+      "bytes": 4081
+    },
+    "crates/chart-core/src/grammar/numeric_aesthetics.rs": {
+      "sha256": "39ce087ab7e98b67e8a35f56abe233a50682071fe8a3bb79c126a6eb7f4af4b0",
+      "bytes": 4328
+    },
+    "crates/chart-core/src/grammar/orientation.rs": {
+      "sha256": "b646f7cbeb2edb97f69422e0ab3deb0ab17955e635a5e2f354772e0ff401504c",
+      "bytes": 3849
+    },
+    "crates/chart-core/src/grammar/positions.rs": {
+      "sha256": "1e66f4a0995936737431c25cdc5b675216cbac241c7442ae5e1e3e8bc01498ef",
+      "bytes": 11648
+    },
+    "crates/chart-core/src/grammar/prepared.rs": {
+      "sha256": "e7751ffd0ffcea438dd51899288da67dd7c1755739b7dd74946458e05940ea93",
+      "bytes": 22357
+    },
+    "crates/chart-core/src/grammar/scale_stage.rs": {
+      "sha256": "56c037dbbbdc307fad36fb6aab98392b468310a3d53d2daafcbfd1f3eafe6a36",
+      "bytes": 9978
+    },
+    "crates/chart-core/src/grammar/semantics.rs": {
+      "sha256": "388b1ad35a50e947748cc65fd61f5611e2df56e6191231a0ec368724f5c079f6",
+      "bytes": 14918
+    },
+    "crates/chart-core/src/grammar/statistical_types.rs": {
+      "sha256": "f5e07f478560516be57ed073a9570bf40df21d3e2c665e86835c1b7eaa5eac40",
+      "bytes": 11759
+    },
+    "crates/chart-core/src/grammar/statistics.rs": {
+      "sha256": "e5ca9022268f897c1fac47dbc11fefe94c8200d98cad75c1c36e73a350b77257",
+      "bytes": 20466
+    },
+    "crates/chart-core/src/grammar/stats.rs": {
+      "sha256": "b463e8397858ff8eccb1b80c36f8bf56dd567ed833dac52deb2db3f65078d6ff",
+      "bytes": 21051
+    },
+    "crates/chart-core/src/grammar/typed.rs": {
+      "sha256": "62d3d19d9a506d0278c086e695aecff06c0f5b855352358956a31a4da8824d01",
+      "bytes": 7181
+    },
+    "crates/chart-core/src/identity.rs": {
+      "sha256": "52e689f28422027e036379b2c8a341b99e1e43ce88f6cdb8d1265237b50d9e43",
+      "bytes": 3445
+    },
+    "crates/chart-core/src/ingestion.rs": {
+      "sha256": "9b28d2610904e10b1c8c0a0bc9c7623ead8ae7bb93cc7bdd06a83673b65e59b8",
+      "bytes": 8077
+    },
+    "crates/chart-core/src/inspection.rs": {
+      "sha256": "ae48e45e47d6c8ed553ebeadf4180c5e87ae5f5e5f851223a7ec34dc3de073a0",
+      "bytes": 18135
+    },
+    "crates/chart-core/src/inspection/index.rs": {
+      "sha256": "edbb5b1580171aafc413e5c7ee5443e5091e51121ddacd10964bd26f59869101",
+      "bytes": 16628
+    },
+    "crates/chart-core/src/inspection/selection.rs": {
+      "sha256": "ca979a202686cdf33ad38d5997f5d98cee77ff2479f5ac1d8ec9045a85a38927",
+      "bytes": 8806
+    },
+    "crates/chart-core/src/interpolate/LICENSE": {
+      "sha256": "e008c5e25a6be382593089c29bfabbc553c6378eee02895aec46ce396cc404ee",
+      "bytes": 731
+    },
+    "crates/chart-core/src/interpolate/authoring.rs": {
+      "sha256": "74be6fb4659a680a58e4e22ac35c00e9fa9dbbf26ef7e4b999a6f56885f9c082",
+      "bytes": 9857
+    },
+    "crates/chart-core/src/interpolate/color.rs": {
+      "sha256": "49bef5af3c5520e47727592cc3e024d575b1af53e21387cb5ff8372a7d4f1a7b",
+      "bytes": 8604
+    },
+    "crates/chart-core/src/interpolate/descriptor.rs": {
+      "sha256": "ef914c33c9e590ffd699e8631ebf9d97259dcb3c7b5faad7c657e5bac0edb937",
+      "bytes": 16653
+    },
+    "crates/chart-core/src/interpolate/mod.rs": {
+      "sha256": "4285a7291b9292a628ce8fd3edea588aca9141a5bc8d2b0eae7fb0f8cae7c34d",
+      "bytes": 2127
+    },
+    "crates/chart-core/src/interpolate/scalar.rs": {
+      "sha256": "3aea72cb90aa0ca9c33e96ea0d903c8fd26a6c41dd7ff7993a6817b73f0b3ba1",
+      "bytes": 6679
+    },
+    "crates/chart-core/src/interpolate/structured.rs": {
+      "sha256": "5694e73de49405448e31563666f3221dfa9415b85d5f5325c86481e757f405c4",
+      "bytes": 14186
+    },
+    "crates/chart-core/src/interpolate/text.rs": {
+      "sha256": "ffa92cc0c8489358939e45495cdbff356c312641d0421404509a8594b1592997",
+      "bytes": 5993
+    },
+    "crates/chart-core/src/interpolate/transform.rs": {
+      "sha256": "0242cabc19d0520fdc0c9d90f597691a368e77ff36a4351636b3c1906d28268b",
+      "bytes": 8218
+    },
+    "crates/chart-core/src/interpolate/transform_parse.rs": {
+      "sha256": "4bab2798bbfd130c24748235bc331979aceef46c3ec4c420ee84eb54033d9dc6",
+      "bytes": 8297
+    },
+    "crates/chart-core/src/interpolate/value.rs": {
+      "sha256": "17cf527b17d28d44172bc3ac1a669e205dfbfd1436c37e2f4d80587c77fb95de",
+      "bytes": 9394
+    },
+    "crates/chart-core/src/interpolate/zoom.rs": {
+      "sha256": "2239dd530b843cba914281dd293f69a8f834262f600201a37a306e038e5d93eb",
+      "bytes": 5111
+    },
+    "crates/chart-core/src/layout/axes.rs": {
+      "sha256": "6aeee92865b66bb059f5041b6dcedc60335de836ae9b93a4d42cfebd790adbf2",
+      "bytes": 32182
+    },
+    "crates/chart-core/src/layout/composition.rs": {
+      "sha256": "1c50f2f38c95baf139381cdfb22899d352c147f082e7437b5d953a3f5baf27d5",
+      "bytes": 17022
+    },
+    "crates/chart-core/src/layout/coordinates.rs": {
+      "sha256": "240fee58df3a854bb1cc1ee6333042c273f1a73ae9c746387b4d72747a7c86c8",
+      "bytes": 5091
+    },
+    "crates/chart-core/src/layout/engine.rs": {
+      "sha256": "1e4c4f9910339237a1490caa403af62a25fb8148182fd74e2887875d93a54600",
+      "bytes": 27148
+    },
+    "crates/chart-core/src/layout/facets.rs": {
+      "sha256": "260af93e2a97658362cc32b3d9476389d61db581d3c01c97ec8580b9050df99b",
+      "bytes": 15166
+    },
+    "crates/chart-core/src/layout/mod.rs": {
+      "sha256": "6e45b9bb1f525e0572f4e29203aba153a21cb2250bce3f4f7ea6b1bebd1d4d13",
+      "bytes": 570
+    },
+    "crates/chart-core/src/layout/project.rs": {
+      "sha256": "66a45e5709491e4594f4a3769068805ac8834a9efc5b205abdd0c8cfb7bd3847",
+      "bytes": 21806
+    },
+    "crates/chart-core/src/layout/text.rs": {
+      "sha256": "f3e24fd05011f9a4f7e609e2c9aedfa2e06f9b15149069bc476f8e190951b3c6",
+      "bytes": 8491
+    },
+    "crates/chart-core/src/layout/theme.rs": {
+      "sha256": "e4072d571139190d4e92135d72914aadfc66a3786ea3310ffaf98043f7b3b458",
+      "bytes": 11455
+    },
+    "crates/chart-core/src/layout/types.rs": {
+      "sha256": "4d9e8a05f80a57fa93a0a0758b703fa3f6a479f7ddcabeb9263708b9350065ed",
+      "bytes": 18295
+    },
+    "crates/chart-core/src/lib.rs": {
+      "sha256": "8a109269ac160ab99719e4a14fad50aeff7ba99350fd394891415ce6fda1b04e",
+      "bytes": 5753
+    },
+    "crates/chart-core/src/limits.rs": {
+      "sha256": "f62d44d14e4a2c70abb79d2682ed698e9749b9cddf792e48b163f3d7fceb7910",
+      "bytes": 1745
+    },
+    "crates/chart-core/src/linking.rs": {
+      "sha256": "2be144ef373abd898c205e4a66f71e7e3a1fd4410f14c09883b57f39e20e0e04",
+      "bytes": 14624
+    },
+    "crates/chart-core/src/navigation.rs": {
+      "sha256": "75bc63c81f1ee97511969cc9d0c1c348eca4030329683ddc654bcc69c41691c2",
+      "bytes": 24462
+    },
+    "crates/chart-core/src/number.rs": {
+      "sha256": "793d9c90413dfd635b21f9ccd5342047406fe5bf2d6e3a07851f592b853bf8b8",
+      "bytes": 6957
+    },
+    "crates/chart-core/src/path/geometry.rs": {
+      "sha256": "d4873fc26ffee30371a98cd9a14706a3915a36c64ce71ea5d8e0b3a06a928944",
+      "bytes": 6400
+    },
+    "crates/chart-core/src/path/lower.rs": {
+      "sha256": "adde9f04593e5d609715dd6be544ffba68655d211838287a352820d8e282b1b8",
+      "bytes": 15652
+    },
+    "crates/chart-core/src/path/mod.rs": {
+      "sha256": "f303de92bad67e3a66d665976d08575a5d2e9c866170d782fe5491d19d57bdd6",
+      "bytes": 19154
+    },
+    "crates/chart-core/src/path/svg.rs": {
+      "sha256": "67db19b603a07652153e21b38fcc251ef6fdf902d7228e6721eaed72af9478ae",
+      "bytes": 2292
+    },
+    "crates/chart-core/src/plot/axis.rs": {
+      "sha256": "30eaad1040908d78fa69d2de4ba25a54716758acfdf963a869a2a1a54b4b0b12",
+      "bytes": 17518
+    },
+    "crates/chart-core/src/plot/color.rs": {
+      "sha256": "e213a2971c8b3efba4cb694c22f1499f5d61cf2616487c9a2c6e697314ffa3cc",
+      "bytes": 5997
+    },
+    "crates/chart-core/src/plot/composition.rs": {
+      "sha256": "0f58b6bbfe7dc9993a2ea2150addfc0e9eb8f47607fc75e1936e2098194594e8",
+      "bytes": 13395
+    },
+    "crates/chart-core/src/plot/data.rs": {
+      "sha256": "a86f17e29f12c0a965e29344fa60013fb741450a1354575e4a0bba3deb477938",
+      "bytes": 14903
+    },
+    "crates/chart-core/src/plot/edit.rs": {
+      "sha256": "f8cbfa0894b79c682f0ff82906a55b8f723a51ceef95c312929c8fe8031d5cfe",
+      "bytes": 15609
+    },
+    "crates/chart-core/src/plot/facet.rs": {
+      "sha256": "d8fda7c9494072d000583d15a8a87cea890abd32fc941834be532441ee2c770a",
+      "bytes": 8609
+    },
+    "crates/chart-core/src/plot/host/compose.rs": {
+      "sha256": "4f292fcf3de0129956b92e00ca300194181e45c1c00a4a1de81b7662db558f03",
+      "bytes": 13139
+    },
+    "crates/chart-core/src/plot/host/configure.rs": {
+      "sha256": "30b2c43ade36cbd949f36385789bfb4f1163c6cced9d29410f500d2f163d2b24",
+      "bytes": 23004
+    },
+    "crates/chart-core/src/plot/host/draft.rs": {
+      "sha256": "be1b60b3980e096bb485d34169df5b6032fdc0c904b50ea67cfbda7e45c161a5",
+      "bytes": 3555
+    },
+    "crates/chart-core/src/plot/host/expression.rs": {
+      "sha256": "ea4b3bb7405428111c4dc2bd90b327784e5c36b98c5c0aa49453eccdbd624c9b",
+      "bytes": 3660
+    },
+    "crates/chart-core/src/plot/host/mod.rs": {
+      "sha256": "b34e55899561676046bc69d1e0121c8e86c34f17138b4b96354e140418f98579",
+      "bytes": 18633
+    },
+    "crates/chart-core/src/plot/layer.rs": {
+      "sha256": "aa56d9d1d162d9b887f92fd6ba0476948a5a81168e0b3fbf7d028be56bb78a82",
+      "bytes": 19358
+    },
+    "crates/chart-core/src/plot/mapping.rs": {
+      "sha256": "d6ac32501c84b2285fdba277d1ef3629234e6adb030c4eee74b10f863f5eaff8",
+      "bytes": 12456
+    },
+    "crates/chart-core/src/plot/mod.rs": {
+      "sha256": "b26dd2f116cd0e5464db6f2601d3d22211640e2f34e67f2c9bd4c1d86dcd4350",
+      "bytes": 29331
+    },
+    "crates/chart-core/src/plot/options.rs": {
+      "sha256": "e14ed7bca8f660a985b1ec02b8f4b8e35520823fdabe08eb4423a6f885d2313c",
+      "bytes": 12541
+    },
+    "crates/chart-core/src/plot/resolve.rs": {
+      "sha256": "959ad63ffa6e1863a6e3740333bcdb4c1da9094561e2fc72855fd5d75cbcfdae",
+      "bytes": 5476
+    },
+    "crates/chart-core/src/plot/stat.rs": {
+      "sha256": "1ef4ffe333957dc07d264a567e6c6d8d338ca4eb43d259535be8745ed67f4eb6",
+      "bytes": 20065
+    },
+    "crates/chart-core/src/plot/text.rs": {
+      "sha256": "d3929120fcf6770dea54f6494ae4c968e69f581af82161786e1769be45353e62",
+      "bytes": 5520
+    },
+    "crates/chart-core/src/plot/theme.rs": {
+      "sha256": "83f5d78d564fb9e77c752ae4319b6f2bace3e192c392fa3870c75b3fe2501031",
+      "bytes": 4407
+    },
+    "crates/chart-core/src/plot/transaction.rs": {
+      "sha256": "eaa8aa4d14e84c001c5770e16709fcc14d1453dc8d77388edb920139ba87b118",
+      "bytes": 8479
+    },
+    "crates/chart-core/src/plot/transform.rs": {
+      "sha256": "0c2960d58e6ef1eb5ef575ab85471b1f64de50312d3b5b19ceb08429d1122c0b",
+      "bytes": 5484
+    },
+    "crates/chart-core/src/plot/wire.rs": {
+      "sha256": "d757bc05f0a2a22dbcc5ea0cc4a1db7ce2c0182da96c15c39960491738bd0bae",
+      "bytes": 6182
+    },
+    "crates/chart-core/src/portable/encoding.rs": {
+      "sha256": "f51d7a58cd949b974f56686b345b2db2f0981b1cbe9fad7085fab3ee0efb01ae",
+      "bytes": 3458
+    },
+    "crates/chart-core/src/portable/input.rs": {
+      "sha256": "f6189d2d814809459044b2484b288a421a5a88df5da435cef63b34ded4b46684",
+      "bytes": 6862
+    },
+    "crates/chart-core/src/portable/mod.rs": {
+      "sha256": "8db0a6ab74cb4899e3a3611903cc266e32feee115ae39ac5c3a491b62c697461",
+      "bytes": 3127
+    },
+    "crates/chart-core/src/portable/scales.rs": {
+      "sha256": "e5ca33f956b0e1097d000f0a6a21c81401f16a0267c20d234ed7830792522190",
+      "bytes": 7621
+    },
+    "crates/chart-core/src/portable/session.rs": {
+      "sha256": "80ceebb9abe08ed91e3b0259759abe7a72ba8dcb90fcb180ccb8b7bfd2bb99c2",
+      "bytes": 11294
+    },
+    "crates/chart-core/src/portable/stream.rs": {
+      "sha256": "b83b0dd52cea1e9834bf0b7b89f08fe3eb2bf43381d06287516ee5c5554f6a9d",
+      "bytes": 1073
+    },
+    "crates/chart-core/src/portable/wire.rs": {
+      "sha256": "fab2a9217c803c1261188be0bc25e096404f8eb2418d786aa1fb3a5eada45e4c",
+      "bytes": 11999
+    },
+    "crates/chart-core/src/provenance.rs": {
+      "sha256": "d8783ab77f359b6b02ad3604d50bac7090cc54c8f548fe8c90cf2659bdc6181b",
+      "bytes": 6323
+    },
+    "crates/chart-core/src/runtime.rs": {
+      "sha256": "3c2c3150d7c31c37f7c43879edf28368553dd061c05bc4d5beb3a9b82189c0e4",
+      "bytes": 22378
+    },
+    "crates/chart-core/src/runtime/presentation.rs": {
+      "sha256": "0c7efb4a1f4d76980648a4df3e227101384ec59d109c0e4f002aa95075a097d2",
+      "bytes": 7651
+    },
+    "crates/chart-core/src/scales/LICENSE": {
+      "sha256": "e008c5e25a6be382593089c29bfabbc553c6378eee02895aec46ce396cc404ee",
+      "bytes": 731
+    },
+    "crates/chart-core/src/scales/LICENSE-d3-array": {
+      "sha256": "3e6849627f74ff73c257a3ae1efb574015d94fc1035c05ec3c15805165efcbc4",
+      "bytes": 731
+    },
+    "crates/chart-core/src/scales/LICENSE-d3-time": {
+      "sha256": "faa682e3e430941f958d26180458f5934a62f58dac4d70ccdd15608c15d0f884",
+      "bytes": 731
+    },
+    "crates/chart-core/src/scales/LICENSE-d3-time-format": {
+      "sha256": "e008c5e25a6be382593089c29bfabbc553c6378eee02895aec46ce396cc404ee",
+      "bytes": 731
+    },
+    "crates/chart-core/src/scales/band.rs": {
+      "sha256": "484dd75ba49c5f55d6409e1bec9f4239412824a5565f962650a5ef04b67033e5",
+      "bytes": 6490
+    },
+    "crates/chart-core/src/scales/calendar.rs": {
+      "sha256": "75f8f72768917a724961fe014c6ea1540569d502762a4651f8cbb8c39574f1b4",
+      "bytes": 30932
+    },
+    "crates/chart-core/src/scales/chromatic/LICENSE": {
+      "sha256": "0986d93944902cca9af86824b6a641b4b7c2d10602fc510c433a8bcd443919fe",
+      "bytes": 1423
+    },
+    "crates/chart-core/src/scales/chromatic/data.rs": {
+      "sha256": "992bf106d7d76fb4b55551c4cfefe699c088c56b3252d8639b643d031571c4b1",
+      "bytes": 55553
+    },
+    "crates/chart-core/src/scales/chromatic/mod.rs": {
+      "sha256": "9473d92bb77783d900e7a4585fe2ed028b4933686ec7f5e29dda561b04c6e751",
+      "bytes": 11221
+    },
+    "crates/chart-core/src/scales/civil.rs": {
+      "sha256": "87eea8dc26f7e404d65377c7c00a5a2246e941014718a2ffd55c136bc656c29c",
+      "bytes": 2268
+    },
+    "crates/chart-core/src/scales/classifier.rs": {
+      "sha256": "4d98d28e155ea244883e62b19ee85206941aa0a270120ab195a6ab8dd1c7b958",
+      "bytes": 12130
+    },
+    "crates/chart-core/src/scales/color.rs": {
+      "sha256": "eaef9f2a02d3e65841e16ee94aacc237e1c8bf36887ce4812dafaa399dd595d1",
+      "bytes": 19373
+    },
+    "crates/chart-core/src/scales/interpolated.rs": {
+      "sha256": "2f20607d11a795757288bedd5914d83d749d20033be11b3bf3deea35930fb8f9",
+      "bytes": 22792
+    },
+    "crates/chart-core/src/scales/linear.rs": {
+      "sha256": "9e8b6d1a8f0c4f52c961b7c3b5df03ef6cc8de2376578d01f41f69b37a62015d",
+      "bytes": 13209
+    },
+    "crates/chart-core/src/scales/mapped.rs": {
+      "sha256": "46b676ad109be381f2fd50b65e78a0f5569e0ec7abc8127a4e78c678a2a518e5",
+      "bytes": 24792
+    },
+    "crates/chart-core/src/scales/mod.rs": {
+      "sha256": "7cd0740dc2c5a25047b7ef925569695366e49d31ade9e6ba15e3ccd6d810e5e2",
+      "bytes": 5408
+    },
+    "crates/chart-core/src/scales/nonlinear.rs": {
+      "sha256": "a8183e73547003b63fd5ce24426bcad12dc47e7a2951cf5573681c7584db3748",
+      "bytes": 9436
+    },
+    "crates/chart-core/src/scales/numeric.rs": {
+      "sha256": "5e055e33a0fddba3fd644c51538c48037b1901847b0958199903451ace541f42",
+      "bytes": 27413
+    },
+    "crates/chart-core/src/scales/ordinal.rs": {
+      "sha256": "9cd2f7345bbc8b53cfc53e330b89cd23b2ac36fd1bcbfac57baf209cd2bf3038",
+      "bytes": 5682
+    },
+    "crates/chart-core/src/scales/session.rs": {
+      "sha256": "5912e6baf11ff8f89b8ad8a619b5c2507a36deda8df6d8287dbb79aa1ad3fb30",
+      "bytes": 8488
+    },
+    "crates/chart-core/src/scales/spacing.rs": {
+      "sha256": "56dd619fe41ea2a270c5fd5946c31e30e1f40091e2c301d5eb0e5b97367f20aa",
+      "bytes": 13329
+    },
+    "crates/chart-core/src/scales/standalone.rs": {
+      "sha256": "fb935445910507d963f33c1179482b7cc2b144f94b48e05191a6fd7f61522343",
+      "bytes": 18938
+    },
+    "crates/chart-core/src/scales/standalone_authoring.rs": {
+      "sha256": "328db457f82cc2a44165696ba55e1a82655904ddc461b9f64449e86d0582187b",
+      "bytes": 21193
+    },
+    "crates/chart-core/src/scales/ticks.rs": {
+      "sha256": "55b3eea7778824ec944345117bdb199b39aa093ba7e074a1b7f9df9575cdd890",
+      "bytes": 9784
+    },
+    "crates/chart-core/src/scales/time.rs": {
+      "sha256": "3b20eaa858e8fca6444719d58ee0fbefa57188e65d2baa7557dc34212822b25a",
+      "bytes": 15187
+    },
+    "crates/chart-core/src/scales/time_format.rs": {
+      "sha256": "f43bd8d19dc9eaf7593c9a42a61cb8946f6c8ef6fae02a9ca9c8eb73be4d89e4",
+      "bytes": 15007
+    },
+    "crates/chart-core/src/scales/utc.rs": {
+      "sha256": "c20c9f11390fc5f7e0b20c992c49aeb5104a068b97e9b0862cea6d1c06bbe5f4",
+      "bytes": 15943
+    },
+    "crates/chart-core/src/scene.rs": {
+      "sha256": "feb684e868d9ac7491a8c5914bf825fa7953f480d95fb6acc16b822b8c3d41e9",
+      "bytes": 24895
+    },
+    "crates/chart-core/src/scheduling.rs": {
+      "sha256": "5a966940cda873f7eab49b32a211ce88f2566bc859657be848762463a729f94b",
+      "bytes": 10742
+    },
+    "crates/chart-core/src/services.rs": {
+      "sha256": "e4aaed7ec1cff4d0c94cda55f3a938a7fc3d4867b5c27ecb0c603b42d9867549",
+      "bytes": 7476
+    },
+    "crates/chart-core/src/state.rs": {
+      "sha256": "a29318a116617e3389d69bd4b6a9b36f6f93beda1f6861f93444f4e556fae9e2",
+      "bytes": 21425
+    },
+    "crates/chart-core/src/state/follow.rs": {
+      "sha256": "8272c2abce6703cab672402068c2d05a31ddec74ac3d60428d5e67bd8ba1f6fc",
+      "bytes": 3490
+    },
+    "crates/chart-core/src/state/reducer.rs": {
+      "sha256": "bc07abb1f0089e12f9b7a284f07635550dfa8f949befdf3cfc403c2eca06d29e",
+      "bytes": 52339
+    },
+    "crates/chart-core/src/state/types.rs": {
+      "sha256": "182a2ea0b908ce34b4785157fa8b415cc9cf8d63ab147f97d26f324ad8490ec2",
+      "bytes": 10397
+    },
+    "crates/chart-core/src/state/windows.rs": {
+      "sha256": "410b4bfd67b9c187418f7f21424e1fb366ef3f0572f603ce330f778e953b13c4",
+      "bytes": 1963
+    },
+    "crates/chart-core/src/theme.rs": {
+      "sha256": "c3c86cd2463f5155f72bdbd149828d643c88495603db18bd3bb54b9e3d91ac10",
+      "bytes": 14151
+    },
+    "crates/chart-core/src/transaction.rs": {
+      "sha256": "5a60e676ac462b9aa4b3220889a063e1250afe65be68c8748e744a0effbcbde3",
+      "bytes": 33573
+    },
+    "crates/chart-core/src/typography.rs": {
+      "sha256": "9b792eeb58676a4be861b93fa8c9ef3b2254cd10102f15bdb1d8ff27def9eaf1",
+      "bytes": 13300
+    },
+    "crates/chart-core/src/typography/LICENSE-d3-format": {
+      "sha256": "2a6d2d5f32ba0b755ddbc1c833f766e30cdbe6ebe9a6d4e3e24427721f0b63d3",
+      "bytes": 731
+    },
+    "crates/chart-core/src/typography/numeric_format.rs": {
+      "sha256": "a76e48386d149a3c7aef62ab3fa362e0dc5b85acb2be94f02e4e6c8953e462ab",
+      "bytes": 21546
+    },
+    "crates/chart-core/tests/actions.rs": {
+      "sha256": "3f16aec41f441af4067e2c9da56e6a8de2ded07b749fed1fb8b355d0656d9733",
+      "bytes": 20876
+    },
+    "crates/chart-core/tests/authoring.rs": {
+      "sha256": "5308bf310dec71b36f02d79581007e739190436212d4d2ddb889f12b84aa34f4",
+      "bytes": 18253
+    },
+    "crates/chart-core/tests/authoring_families.rs": {
+      "sha256": "ec139c0e075142fe0e8f2d8d8cef410e3dacff69224279d0ffe00f4bd6287f6e",
+      "bytes": 997
+    },
+    "crates/chart-core/tests/authoring_host.rs": {
+      "sha256": "9c8bcaaee47384548b6cf6102eddc0e78b9338ecdff8088b4f80c96808e44f2c",
+      "bytes": 3539
+    },
+    "crates/chart-core/tests/authoring_runtime.rs": {
+      "sha256": "f8eaf5328171a125032e0b6d220ebf52acd9cbf92ab8bdaba1ff7e031894c433",
+      "bytes": 16099
+    },
+    "crates/chart-core/tests/chromatic.rs": {
+      "sha256": "31c5cd3a3cce7b1cdabb999dd5a72d650d0e29b68b6f0f97ff0252ec5fede3f8",
+      "bytes": 3274
+    },
+    "crates/chart-core/tests/chromatic_integration.rs": {
+      "sha256": "90177b4aa2fc595b6db7deedb6a7447987a6ecf0d2251ad8e9d1b8df41ed7883",
+      "bytes": 13986
+    },
+    "crates/chart-core/tests/color_parity.rs": {
+      "sha256": "1c316523f43839e9fa3a84a83fcdddf0f178397c956391d867fef8b2fa99779b",
+      "bytes": 10342
+    },
+    "crates/chart-core/tests/contracts.rs": {
+      "sha256": "70f2c9653ee8fd145395148735437fb6d7330014582bcad0eb296218da80ef28",
+      "bytes": 17839
+    },
+    "crates/chart-core/tests/data_transactions.rs": {
+      "sha256": "2bfb28c7efdd39bbe79175c220958bde7de5006f26af24e9ff5d4b2c5ae90577",
+      "bytes": 34764
+    },
+    "crates/chart-core/tests/dense.rs": {
+      "sha256": "2b182468c42215d98e8aacd6fbfe67540ad5fbd958a7f7d4fbb0af5868e35d29",
+      "bytes": 8451
+    },
+    "crates/chart-core/tests/expressions.rs": {
+      "sha256": "4faa9560715e1a39d7839b24f3f25ea0a936ad898aa2f12916804617a22ef5e8",
+      "bytes": 4867
+    },
+    "crates/chart-core/tests/facets.rs": {
+      "sha256": "822409607cc9048f2ee1afb77aae9a091ff35fd1c5e8608bc30211261a5a2591",
+      "bytes": 18152
+    },
+    "crates/chart-core/tests/full_scales.rs": {
+      "sha256": "ed0dbf75a8dfed31d1d6f6ee4b47e71d4f7034b4accf86643585dcad3af797fb",
+      "bytes": 7436
+    },
+    "crates/chart-core/tests/ggplot_stages.rs": {
+      "sha256": "4bc401c97328b8ff5201aaf5c2730bbba5e3438cf959e9df725ddd260ac032b7",
+      "bytes": 25350
+    },
+    "crates/chart-core/tests/grammar.rs": {
+      "sha256": "f48a7de379900e09ab6f7dba44555ca763798e53ea205f6cbb19be753101d957",
+      "bytes": 39721
+    },
+    "crates/chart-core/tests/host_tools.rs": {
+      "sha256": "bf9d868e9243238af73d2e1e4dba4ebd77cfd8871498e19fed16b8a352346629",
+      "bytes": 23628
+    },
+    "crates/chart-core/tests/inspection.rs": {
+      "sha256": "6c3329c41dffc64e770884c48fff90b1eca3ea365aacbc593fd9244b0689e8ad",
+      "bytes": 19461
+    },
+    "crates/chart-core/tests/interpolate_color.rs": {
+      "sha256": "92bb5b51c7bc968307aa24dbb69561b6f6a2c9e867564c66c724d9ef8db405f7",
+      "bytes": 5955
+    },
+    "crates/chart-core/tests/interpolate_descriptors.rs": {
+      "sha256": "fa41869ec37bc7775d151190fbadedd8befbfc8cd81a8867d5e12a4dd5efa736",
+      "bytes": 4674
+    },
+    "crates/chart-core/tests/interpolate_motion.rs": {
+      "sha256": "80fffb48fb9dc3a12cb7fd4994d8280d6597ef48a6a9a3d33d15ab0f4e8d0c7a",
+      "bytes": 8996
+    },
+    "crates/chart-core/tests/interpolate_scalar.rs": {
+      "sha256": "5c612ec45cf812ebdf2b35f6b429b34c930dea1cd41a29e548437c356e461fe7",
+      "bytes": 7532
+    },
+    "crates/chart-core/tests/interpolate_values.rs": {
+      "sha256": "b4eb6f583166361bcf47cb14281ae4331c88dcc673abbd889cedeff5be6501a2",
+      "bytes": 9177
+    },
+    "crates/chart-core/tests/layout.rs": {
+      "sha256": "a325325bd8a1686d174d9e6799a4d9a2b1fa9e3f181bd021ee337273362bc50a",
+      "bytes": 35046
+    },
+    "crates/chart-core/tests/paint_integration.rs": {
+      "sha256": "d3b9a7e911d025f052111dc7a77b5567b849534f795f05a080e12bdbeaad1e1d",
+      "bytes": 17400
+    },
+    "crates/chart-core/tests/path_lowering.rs": {
+      "sha256": "25fcb9cc352665a09579948fc3f78ed32a3b4e514114ee29dbafee1046934bcf",
+      "bytes": 10071
+    },
+    "crates/chart-core/tests/path_parity.rs": {
+      "sha256": "f6a0938a7294f3f843393f1266a2a165c9902bcded9f1917b2c678cc0974fdfd",
+      "bytes": 9228
+    },
+    "crates/chart-core/tests/portable.rs": {
+      "sha256": "f53f33cc667e25df0e9d75879281aa58cd927b6ab01d0fc9ab9e342957198203",
+      "bytes": 7523
+    },
+    "crates/chart-core/tests/reference_inventory.rs": {
+      "sha256": "4e5f5a35c31042ae1c52f06410dc49ea0620a578516383c95ece079252926c6a",
+      "bytes": 5368
+    },
+    "crates/chart-core/tests/scale_calendar.rs": {
+      "sha256": "4024a69492aebdcfc3a41dceb1e902a9bffbaaebbe2d91c831b462d3e079d75b",
+      "bytes": 33321
+    },
+    "crates/chart-core/tests/scale_categorical.rs": {
+      "sha256": "f32fe5f7ecc5d28bba3392ff057c758bd3f72bf80e6707b11934bd830602b3dc",
+      "bytes": 11760
+    },
+    "crates/chart-core/tests/scale_classifier.rs": {
+      "sha256": "79c4c7c649a8e4b0b31fcc82dd776d0f4abd47cdf1a213d1054bbee806b1fca0",
+      "bytes": 8802
+    },
+    "crates/chart-core/tests/scale_interpolated.rs": {
+      "sha256": "6876ce2a50d5a25398b6f5405a97fbddc985931eaa5fb28387045af6f926e008",
+      "bytes": 11722
+    },
+    "crates/chart-core/tests/scale_numeric.rs": {
+      "sha256": "5d1dda75918cca19b54aa7cc2cfe310fdba900bb58fff4dd9fd03d4a4d63fed7",
+      "bytes": 8915
+    },
+    "crates/chart-core/tests/scale_operations.rs": {
+      "sha256": "8f5d278ac87c78727345b1b9379f37799813e02966c8665371252be7dd677e4a",
+      "bytes": 7393
+    },
+    "crates/chart-core/tests/scale_population.rs": {
+      "sha256": "f284ab3575a19e12d44cc0ac5bb8b185d025774700ba2ad7538e1c324d220bfe",
+      "bytes": 15658
+    },
+    "crates/chart-core/tests/scale_ticks_format.rs": {
+      "sha256": "bcc12ca769e879a969417294533cf115223eff706924c7f9032b3bf50b768f7e",
+      "bytes": 14057
+    },
+    "crates/chart-core/tests/scales.rs": {
+      "sha256": "3b6d057188c043b753ab7e42105ee134d640b1f47fa42ba5480f6d9f1b158c94",
+      "bytes": 14347
+    },
+    "crates/chart-core/tests/scheduling.rs": {
+      "sha256": "e9958e6bd06e6e345ec8cdd9752d795b348936b8502059d697ff311c53ced8c1",
+      "bytes": 6104
+    },
+    "crates/chart-core/tests/shape_foundation.rs": {
+      "sha256": "47386bd4568e3727c853376ad03886786b842e67cedb4a119dac57c9be12e332",
+      "bytes": 3042
+    },
+    "crates/chart-core/tests/stage_cache.rs": {
+      "sha256": "629f0e242eb327d5f9c277287c5a350288be5d7cf0fad33c104363a34ee86c92",
+      "bytes": 7737
+    },
+    "crates/chart-core/tests/statistics.rs": {
+      "sha256": "00ac3128ec34a3b87d093980d48af0795054e84de40a7cd2c445da8328bd90c6",
+      "bytes": 28617
+    },
+    "crates/chart-core/tests/streaming.rs": {
+      "sha256": "634c92c957eb8577fc9d5b76c379a087338bceb3a0b82c39e4ecd7137ea1ec7d",
+      "bytes": 25829
+    },
+    "crates/chart-core/tests/support/authoring_families.rs": {
+      "sha256": "6a308eb8daec449ee6972a6ac4be27491b527e215e378ebb3716ab3f383b73a5",
+      "bytes": 7303
+    },
+    "crates/chart-export/examples/chromatic_proof.rs": {
+      "sha256": "5305e9183a4738e75051443455ee02da90a5fd93e13b23b578d030e6fdea11bf",
+      "bytes": 1495
+    },
+    "crates/chart-python/src/authoring/color.rs": {
+      "sha256": "b18327432dd112205e5c23be570f76ba603a179a0adb2a2f5d7855bf5d545a58",
+      "bytes": 2636
+    },
+    "crates/chart-python/src/authoring/data.rs": {
+      "sha256": "364a19f2f37f390b3d5958cd77792ffdcc076c9612c65afd5ae76f58aa306c84",
+      "bytes": 4525
+    },
+    "crates/chart-python/src/authoring/interpolate.rs": {
+      "sha256": "0220af1b9451b454519617159dec1732ed90bfd9c7a5b34561aa4808e7896519",
+      "bytes": 3968
+    },
+    "crates/chart-python/src/authoring/mod.rs": {
+      "sha256": "bd0a47274e1dbef81d1a09f06ade6c7d67533bc2cc8a67f6210410635f589640",
+      "bytes": 7132
+    },
+    "crates/chart-python/src/authoring/output.rs": {
+      "sha256": "99740cb334de559f22515cc7fbe349abacd50930c7e796f51796ab5b20f61081",
+      "bytes": 4979
+    },
+    "crates/chart-python/src/authoring/path.rs": {
+      "sha256": "64e515239726d86208c8a3ff5ff82d439c8d53c19eab8b9375c12d1eeb6c3228",
+      "bytes": 2333
+    },
+    "crates/chart-python/src/authoring/runtime.rs": {
+      "sha256": "f013143b431695c74a26ab519398fd780e99d147e3e6c62bdbaf8d9f4be6dc30",
+      "bytes": 9578
+    },
+    "crates/chart-python/src/authoring/scale.rs": {
+      "sha256": "ccc119a6aa194e28c2b23eab51548126d9df7a919c492a041c7ff811141cfdca",
+      "bytes": 2002
+    },
+    "crates/chart-python/src/authoring/time.rs": {
+      "sha256": "ca88a49f306a381e52991a13a208c3739d6521a875e6fdd022e0c39c1fb85d20",
+      "bytes": 3736
+    },
+    "crates/chart-python/src/lib.rs": {
+      "sha256": "6c549b134187ddda11f9ea0aa4c3532e113995554eeedfe7656469f22dc73c3f",
+      "bytes": 6503
+    },
+    "crates/chart-wasm/src/authoring/color.rs": {
+      "sha256": "2aa332d588d7389381699e6747dd8d65b817f3b2920299fd2cada2c8598bca57",
+      "bytes": 2574
+    },
+    "crates/chart-wasm/src/authoring/data.rs": {
+      "sha256": "90015f0be978c59b9961c743708d0a6a8e33f8411131f64d11b103e701a67171",
+      "bytes": 4799
+    },
+    "crates/chart-wasm/src/authoring/interpolate.rs": {
+      "sha256": "6c280826461599ebe50f0ee3f7c8fdcaca606f131fc1ff1ce1a234cf5fa310dd",
+      "bytes": 3585
+    },
+    "crates/chart-wasm/src/authoring/mod.rs": {
+      "sha256": "2645fe31d42db671ffbf11887feba6ec017ba6d7316880e286bc5a94d85b2c27",
+      "bytes": 6451
+    },
+    "crates/chart-wasm/src/authoring/output.rs": {
+      "sha256": "f82ac7e9c8ad7963f524fbae984c2e2aa774f4baaa2f2b58926bd8c08e351d12",
+      "bytes": 4501
+    },
+    "crates/chart-wasm/src/authoring/path.rs": {
+      "sha256": "90e51fe4cda1b821d90d2a88c9bc65616c42f194eeda6682e956794ad43383c4",
+      "bytes": 2264
+    },
+    "crates/chart-wasm/src/authoring/runtime.rs": {
+      "sha256": "c667a0554ed50ea2619a0de23278f1697f5c5014358963d713117a532b444f35",
+      "bytes": 8955
+    },
+    "crates/chart-wasm/src/authoring/scale.rs": {
+      "sha256": "b2a27720c815217decaa441f8d9b97c56274cc44b762396120cfcfb4432a1d74",
+      "bytes": 1801
+    },
+    "crates/chart-wasm/src/authoring/time.rs": {
+      "sha256": "47d799cc555a6887aa811f61f5a0279983555662991dd9cf22135728432ba088",
+      "bytes": 3483
+    },
+    "crates/chart-wasm/src/lib.rs": {
+      "sha256": "c0e15964605918aa99b2e3cdbc7eaeddb4239765815f4b8c454906ba1da4061d",
+      "bytes": 5026
+    },
+    "docs/adr/019-chromatic-catalog-and-evaluation.md": {
+      "sha256": "7d8f8fe8d0256be66f02d16089db0edde9807c8a385fc5d7ad647caff390a7d7",
+      "bytes": 4966
+    },
+    "docs/authoring-guide.md": {
+      "sha256": "9036c480f402d0307386c8889972fe7064ca20c886a6fb08b3968fea75ec8111",
+      "bytes": 36662
+    },
+    "docs/evidence/phase-2-chromatic-integration-2026-09-09.md": {
+      "sha256": "f0961c3adf618be9fa2cd87bdf18cf72aa376f78bbee1df6584b2c5dea8487ba",
+      "bytes": 13084
+    },
+    "docs/portable-contract.md": {
+      "sha256": "859f86ed38083c69fdcafba1ab389bb217da6ef811799ce525e2b0030e47416c",
+      "bytes": 16498
+    },
+    "examples/chart-gallery/examples/chromatic.rs": {
+      "sha256": "b8cbdc95a1300c186c7c28e47cf31783564092d07978b9c1820d747a93928284",
+      "bytes": 2832
+    },
+    "examples/common/chromatic_fixtures.rs": {
+      "sha256": "427dc910119ec8e86e375935f8d839850339bdf86370a64c366bf524b21baf17",
+      "bytes": 3307
+    },
+    "fixtures/parity/d3-scale-chromatic/LICENSE": {
+      "sha256": "0986d93944902cca9af86824b6a641b4b7c2d10602fc510c433a8bcd443919fe",
+      "bytes": 1423
+    },
+    "fixtures/parity/d3-scale-chromatic/cases.json": {
+      "sha256": "a34cc6679cc7b2c64ca2f8bc8f585841d9165687a8276a96bdc8f838879ee802",
+      "bytes": 8391080
+    },
+    "fixtures/parity/d3-scale-chromatic/composition-manifest.json": {
+      "sha256": "bf3f72088ef7c26c49f3eabaf7a1e9444d6d3998bc5630a5689118cc895578df",
+      "bytes": 9214
+    },
+    "fixtures/parity/d3-scale-chromatic/composition.json": {
+      "sha256": "1f5625fb27aa4d2f61d67fe865e5ce99c7a63e1ccb7d4e204b5f0ce3a23a6200",
+      "bytes": 316733
+    },
+    "fixtures/parity/d3-scale-chromatic/manifest.json": {
+      "sha256": "3904508d94557d8ea1b473d9a54d9f45622a53be89054ded0a89cc9b0e51857a",
+      "bytes": 14074
+    },
+    "fixtures/parity/d3-scale-chromatic/transformed-manifest.json": {
+      "sha256": "11cf22bdc7713c7e56f813e92ea974a6cb807bec9f11cf7b11381e41c6018eca",
+      "bytes": 9196
+    },
+    "fixtures/parity/d3-scale-chromatic/transformed.json": {
+      "sha256": "b60878e29d4a6e88d6c40c06b9b4fbf738816a6e0f02a8956220923c6c114c23",
+      "bytes": 97014
+    },
+    "fixtures/parity/d3-scale-chromatic/trig.json": {
+      "sha256": "f789bf80ad65612bb27a71fdd2daffd18d637102b2cc1dfa62b7fa7816f3185b",
+      "bytes": 2469549
+    },
+    "packages/python/finstack_chart/__init__.py": {
+      "sha256": "9178a38d1aecce8a1e104b163fa4680b8cd8ab054eb644c32d36e3b6ab0b68aa",
+      "bytes": 27833
+    },
+    "packages/python/finstack_chart/__init__.pyi": {
+      "sha256": "33418d40ab1e25793b1f3e0dfdf643516865c1a477f70b80ac315a33d3599c3b",
+      "bytes": 40604
+    },
+    "packages/python/finstack_chart/_interpolation.py": {
+      "sha256": "12bb2344241b387bff82395cfa782967f6f107ae1b9fd35defbeb74a904d56b1",
+      "bytes": 8933
+    },
+    "packages/python/finstack_chart/_interpolation.pyi": {
+      "sha256": "3069935b0bf2909745c77af68becf7ad286e402a2455cf08bb9773718b518efc",
+      "bytes": 7577
+    },
+    "packages/python/finstack_chart/_scales.py": {
+      "sha256": "b729b199e933b0ccfbda2cd01e9999f2c7acc86d97898a413492ae2463d22f8a",
+      "bytes": 7695
+    },
+    "packages/python/finstack_chart/_scales.pyi": {
+      "sha256": "fbf6e6c3f85e651276141f7bf4d044df12d188e270e25135465e1a2c498eb0ad",
+      "bytes": 6037
+    },
+    "packages/python/finstack_chart/examples.py": {
+      "sha256": "1c346fa081e154c67e5d6d182d5e4bc67b242042274fcebd735d1dedebad2ef2",
+      "bytes": 918
+    },
+    "packages/python/finstack_chart/examples.pyi": {
+      "sha256": "863067540b6817b60e33e15de55bf7b5cfa82724d50562ff8463cdfcd8d092fc",
+      "bytes": 332
+    },
+    "packages/python/finstack_chart/py.typed": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "packages/wasm/authoring.cjs": {
+      "sha256": "4c12dc9ed34b98bb6ac4e646923224bbdf813bb9c7933ec873bd6ab860a865b5",
+      "bytes": 27233
+    },
+    "packages/wasm/authoring.d.cts": {
+      "sha256": "2558ebbdccae9ddde6706336e651796045c1eee971eef8525f656ea8945ab1d4",
+      "bytes": 39993
+    },
+    "packages/wasm/examples.cjs": {
+      "sha256": "64f22138a36765f8500e0caf48724681c85ea5a08941f5b7bbbd45d246c56e3e",
+      "bytes": 768
+    },
+    "packages/wasm/examples.d.cts": {
+      "sha256": "640c2389130f3f09954a2f0fe94f85001088cb48edae701e83112352db853eab",
+      "bytes": 345
+    },
+    "packages/wasm/interpolation.cjs": {
+      "sha256": "0570e1a1dd40e14ea3b09d1b39cfc1971ef4b89b00a78bd693cd16b2375e449c",
+      "bytes": 7473
+    },
+    "packages/wasm/interpolation.d.cts": {
+      "sha256": "2d973a768d0fd8fa38388e1661f8b7e0db88b4df0bd9975a83f14258ac436775",
+      "bytes": 7862
+    },
+    "packages/wasm/scales.cjs": {
+      "sha256": "b60fce9905b137c11fc5c9541dc80580dc86a8c158dc2d8ceac58e040a317ecd",
+      "bytes": 6239
+    },
+    "packages/wasm/scales.d.cts": {
+      "sha256": "8d7d38540c15593619b4c9a70467fb122b47e0d00c32ec9d5be553cf8a554570",
+      "bytes": 4655
+    },
+    "scripts/bindings/authoring/chromatic_typing_invalid.py": {
+      "sha256": "d4383edbf2cbff6e0aa9d4258ef62655c560179f5b2a5143d700a867f9268de9",
+      "bytes": 235
+    },
+    "scripts/bindings/authoring/color_types.cts": {
+      "sha256": "05470674245032bea3f24dc986ad1003f2d91efa08afb67d1aae9b13e9f7af67",
+      "bytes": 1191
+    },
+    "scripts/bindings/authoring/color_typing.py": {
+      "sha256": "1d1eb68a00768cf25d1949726f3afdc3f4183b91fe818bfb125f4255a9577d7e",
+      "bytes": 942
+    },
+    "scripts/bindings/authoring/color_typing_invalid.py": {
+      "sha256": "7e3bb8811deab98b20a2235e740a5ca488addeab2a35d34aa29b41a6df46abea",
+      "bytes": 123
+    },
+    "scripts/bindings/authoring/compare.py": {
+      "sha256": "7393985e3279250dcf0abab6274115a2dc376328bdeff27aee78cf59932c6612",
+      "bytes": 9688
+    },
+    "scripts/bindings/authoring/families.cjs": {
+      "sha256": "86a6ccca273f7aae0a7092dafdc7838e1faafa0039086905c853f1acd57a2feb",
+      "bytes": 11364
+    },
+    "scripts/bindings/authoring/families.py": {
+      "sha256": "48fcb45e403e4ed56649b2df3ef8123c40a3b18c33bb3802a76505f975849d39",
+      "bytes": 12378
+    },
+    "scripts/bindings/authoring/interpolate_types.cts": {
+      "sha256": "31d64848e8fd1bb9ef6b8d500dc2c07815f84600d5cad9eab96b9d8cde4b9485",
+      "bytes": 2187
+    },
+    "scripts/bindings/authoring/interpolate_typing.py": {
+      "sha256": "f22b420e1d2c3930b60745c5f2aa68a51531c3c60b44cf5ee8f600841f4d4357",
+      "bytes": 1456
+    },
+    "scripts/bindings/authoring/interpolate_typing_invalid.py": {
+      "sha256": "ffac5be2cd09e27545d688264958be7d81236d6359909bbb803e26b87262331e",
+      "bytes": 247
+    },
+    "scripts/bindings/authoring/python_proof.py": {
+      "sha256": "30ad0e7a28a822d825081db9739fa59b29897888bf650d2be0db21cf54890b09",
+      "bytes": 12453
+    },
+    "scripts/bindings/authoring/replay.cjs": {
+      "sha256": "4241e0c60127369ba41cfef548c7a7fa3dc24c171fc2c240a3310cc46ff20ced",
+      "bytes": 9246
+    },
+    "scripts/bindings/authoring/replay.py": {
+      "sha256": "8f083e409489b5706fd5c91400620745623e1f6a9354c65eeda6eb5df8cf8975",
+      "bytes": 10068
+    },
+    "scripts/bindings/authoring/scale_types.cts": {
+      "sha256": "cf64896e3a12fbd0099e1624fdde4dfd07fd6acf0a4b53cec5d890c6e63284b7",
+      "bytes": 1499
+    },
+    "scripts/bindings/authoring/scale_typing.py": {
+      "sha256": "3899fde5923170a03eba5590714482187aaaadf6306e4afbd096877283b85e19",
+      "bytes": 1210
+    },
+    "scripts/bindings/authoring/scale_typing_invalid.py": {
+      "sha256": "5ad77d552ec0d353e395858f3aa3fc4bdadd9ee3e3717fb2d1470f798088e2c6",
+      "bytes": 313
+    },
+    "scripts/bindings/authoring/stages_types.cts": {
+      "sha256": "14701f19d353c2ae9a7da2d58d4f91f1e1f8e029bf3c727c3b7bdb7908249449",
+      "bytes": 1304
+    },
+    "scripts/bindings/authoring/stages_typing.py": {
+      "sha256": "bb33d4c6b277323d49dd2d7c135a7265166c274a550f3da59b2d1782608d58ec",
+      "bytes": 787
+    },
+    "scripts/bindings/authoring/stages_typing_invalid.py": {
+      "sha256": "53907ff285de6fdedffd14492539cca8ba1c370831064641ae5573fc7b9d2a6c",
+      "bytes": 278
+    },
+    "scripts/bindings/authoring/types.cts": {
+      "sha256": "f8af0a9e0d00a1adc404b923eb34648ce9b1babb9eb95dafe5f206df603b1b6f",
+      "bytes": 1681
+    },
+    "scripts/bindings/authoring/typing_invalid.py": {
+      "sha256": "0af037f6420a35cecd3682927c52dc829451399b74b152d4ecd055782654a3da",
+      "bytes": 279
+    },
+    "scripts/bindings/authoring/typing_valid.py": {
+      "sha256": "d934895506ef9a75f1c6586e5fa88e86ea4bb5bc28b8e9aab8fc31d20d73aa1a",
+      "bytes": 1161
+    },
+    "scripts/bindings/authoring/wasm_proof.cjs": {
+      "sha256": "6d28d8f261bc0e2c9aa904e0227ee49cdf64d4f559140cf2808c441fd41488c5",
+      "bytes": 13139
+    },
+    "scripts/bindings/chromatic.cjs": {
+      "sha256": "25ebcf645f4f1a7b589f2124507f541578fb956f0f3f8ed5c5699f4e32ef9cd6",
+      "bytes": 2735
+    },
+    "scripts/bindings/chromatic.py": {
+      "sha256": "a3c0ddda737ec6401d5645d11eafd138d9748eb7e6ae72756545a75bdeea8557",
+      "bytes": 2860
+    },
+    "scripts/bindings/chromatic_composition.cjs": {
+      "sha256": "5fdf85a05c72492c478b77b09079cb607ef5a847ea7fa23fcf5ae670e66f2d9a",
+      "bytes": 3084
+    },
+    "scripts/bindings/chromatic_composition.py": {
+      "sha256": "e68bc77dbd755cebef99d6a53cd395d92ffc7326b47346d2b7acedcad85c08c2",
+      "bytes": 3708
+    },
+    "scripts/bindings/chromatic_gallery.cjs": {
+      "sha256": "2d3cd95c42c437f5f2bdf70b260f0a2173546c3db3a39bbd06d593b63c187171",
+      "bytes": 3508
+    },
+    "scripts/bindings/chromatic_gallery.py": {
+      "sha256": "57a507ed60b213da9002c6b1c761a2a5b7a30e3dafd5bb6fd2daead60031be69",
+      "bytes": 3494
+    },
+    "scripts/bindings/chromatic_memory.cjs": {
+      "sha256": "81ce9a428fb4417db0b9a1e338b39b8a8e90dac768c22fd0e20f24e17598b674",
+      "bytes": 1572
+    },
+    "scripts/bindings/chromatic_transformed.cjs": {
+      "sha256": "dea99415519d8bcc3b3f80fb984649a7d8d6fc7c1ed9bd2b428c4761fba09416",
+      "bytes": 1886
+    },
+    "scripts/bindings/chromatic_transformed.py": {
+      "sha256": "259e397149621de885a9da8c7bb473b45c58df09448110b586152575e65082ac",
+      "bytes": 1855
+    },
+    "scripts/bindings/chromatic_updates.cjs": {
+      "sha256": "ba9f3d0a5475e53d9e7078557c66acef0731a3bc69d3f8c7e4c693c5c6345972",
+      "bytes": 3233
+    },
+    "scripts/bindings/chromatic_updates.py": {
+      "sha256": "d2e69e1ef981139be458f0617b9822bd4aa71d03d9f24b970f65dd929d10a807",
+      "bytes": 3129
+    },
+    "scripts/bindings/color.cjs": {
+      "sha256": "050fd8aa75258b84e17300afde516fdb502a59a22272c69cd5d28ff14403484a",
+      "bytes": 2912
+    },
+    "scripts/bindings/color.py": {
+      "sha256": "daa1b8d6fa12220e0cde0cc2d3fd358e89c4f1a16f04494e365b9f075524e974",
+      "bytes": 3405
+    },
+    "scripts/bindings/color_acceptance.cjs": {
+      "sha256": "d3b1732c85c48b779b736e523b93dfd23507494fd363d2a3e2c70ea52ac6fbe0",
+      "bytes": 2519
+    },
+    "scripts/bindings/color_acceptance.py": {
+      "sha256": "c9ecdd521c3dffec87cca78e84e61587023fbc774c7f115f4ff710a0c23155f6",
+      "bytes": 2288
+    },
+    "scripts/bindings/compare.py": {
+      "sha256": "f48b4aff2f58f845e4d5bf7224ba66e0d8954eaf4dbe8159706e2f77808e6819",
+      "bytes": 27687
+    },
+    "scripts/bindings/compare_live_export.py": {
+      "sha256": "2116bbc88e71fd9ff22e50f1e1b940faf3e9eaaaa866e54473ab6438b5812374",
+      "bytes": 4088
+    },
+    "scripts/bindings/ggplot_legends.cjs": {
+      "sha256": "2ce14fe2c06b35b730cfa728974ace2f295f767640e1e68f0780b532efc45fb9",
+      "bytes": 3059
+    },
+    "scripts/bindings/ggplot_legends.py": {
+      "sha256": "3de4bbb3b7166ac898e91c7eb700fa6e709ce59d8e0bdc082b82d35507ed65c3",
+      "bytes": 2756
+    },
+    "scripts/bindings/ggplot_stage_publication.py": {
+      "sha256": "252787759499a527386ca63396c85148821f1e3a1875b81b7b96d1094182ff82",
+      "bytes": 2005
+    },
+    "scripts/bindings/ggplot_stages.cjs": {
+      "sha256": "5ff471faaa7a5fe2a83de1f7cb0b3be2b0a2087cb62896e9f0e18b218eae347e",
+      "bytes": 8012
+    },
+    "scripts/bindings/ggplot_stages.py": {
+      "sha256": "5427fdfdd4bd0e45cd77e9326a86b741ba30230729464d3ba1e5724423320bf5",
+      "bytes": 8252
+    },
+    "scripts/bindings/interpolate.cjs": {
+      "sha256": "d99b70b285d8a86ba9e9c6d984a6349a0d3e4659f631bc4b3d50d7124f7801d3",
+      "bytes": 6832
+    },
+    "scripts/bindings/interpolate.py": {
+      "sha256": "9c0942ba5abdc70fd44dfedd8f01f80f2965d1723ef402a0f78299997b19ad79",
+      "bytes": 7459
+    },
+    "scripts/bindings/live_export_proof.cjs": {
+      "sha256": "5b5e24afdad9f6591cd9c5e52b4f7683541ebfb36cbdf68aacd31a8f80c67368",
+      "bytes": 2552
+    },
+    "scripts/bindings/live_export_proof.py": {
+      "sha256": "aa23e8dd6b128833193b2f4fd7dae5906b8ba519406b0415a55b817123ab9964",
+      "bytes": 2526
+    },
+    "scripts/bindings/paint.cjs": {
+      "sha256": "8f343f21798c3b200a086feb2da32beae43fe172f968da53b7d65ecd1658ada9",
+      "bytes": 8229
+    },
+    "scripts/bindings/paint.py": {
+      "sha256": "3732028f275b921f853727cfe078e41bef3900a17a43b0b71128a042bfd3c38c",
+      "bytes": 8563
+    },
+    "scripts/bindings/path.cjs": {
+      "sha256": "79c58c4514572f7200f31c1b01ad9ac114a6b50a93dce208329261e8adde9b73",
+      "bytes": 4770
+    },
+    "scripts/bindings/path.py": {
+      "sha256": "e281e0d0dbdae471813a55aac8e28b6d66c0b677c15a49e0625e04cf65b443e8",
+      "bytes": 4849
+    },
+    "scripts/bindings/path_compare.py": {
+      "sha256": "c73e7ca87235fc355685a008d9037d72caf3663f5701f42d4bbce48f92a6f3e6",
+      "bytes": 2498
+    },
+    "scripts/bindings/python_proof.py": {
+      "sha256": "b2eced059c66da34b9ea9c1365d9595376596076e5593ff4706c535dd2dc048d",
+      "bytes": 14980
+    },
+    "scripts/bindings/scale_gallery.cjs": {
+      "sha256": "920b3a2b5b8a1da5857a874ed654e639f90c2b329288f54c89e1bad635bea7eb",
+      "bytes": 5382
+    },
+    "scripts/bindings/scale_gallery.py": {
+      "sha256": "1a40d9fe2e0a1181c50cf17f573ce415ae7d9fd8c607742aedfaf00bc7d473c5",
+      "bytes": 5358
+    },
+    "scripts/bindings/scale_interaction.cjs": {
+      "sha256": "6f6328ef12482444fd9735db2f699b75af6905e1421761a52e64f9ac024ec72a",
+      "bytes": 3214
+    },
+    "scripts/bindings/scale_interaction.py": {
+      "sha256": "22fbe053061124827e63faa3c10458f8ef9521dbabc5b73c7f7172429729ec33",
+      "bytes": 3236
+    },
+    "scripts/bindings/scale_memory.cjs": {
+      "sha256": "97dfa8ca48c005ebe966797e5e9df594705b5e00a98a6ad6123cf30f0891fd14",
+      "bytes": 1809
+    },
+    "scripts/bindings/scale_updates.cjs": {
+      "sha256": "6d9b03a1d756f7371c6ee5ac483ba2f99343facd7fbcccbfbd0ddf442db6cb23",
+      "bytes": 3056
+    },
+    "scripts/bindings/scale_updates.py": {
+      "sha256": "dcfb4f0cb5e84b2c31568f8a2de18efe9ffb4c7e650f882988582356b60ec299",
+      "bytes": 2952
+    },
+    "scripts/bindings/scales.cjs": {
+      "sha256": "cdd2dfa24fc770b8f1629b8f24cd34b020af2a7435b1f670b62100929201bcc0",
+      "bytes": 7518
+    },
+    "scripts/bindings/scales.py": {
+      "sha256": "eb3587a1c08d1929fa9e54e2b5c291633860e33befba3226264435594a41f8d7",
+      "bytes": 8371
+    },
+    "scripts/bindings/shape_foundation.cjs": {
+      "sha256": "b27b9d472b2afb380161bbe11063a6578f1d993a0cf6a832933612b290673f39",
+      "bytes": 2837
+    },
+    "scripts/bindings/shape_foundation.py": {
+      "sha256": "a54aa0687ec378e0609c9a5fe823a6cb6745d9f898e0fb6bc073112878d88e07",
+      "bytes": 2822
+    },
+    "scripts/bindings/shape_foundation_compare.py": {
+      "sha256": "d5d85e554b0ff22465c94df6af5c77cb112e4c63c7dc2174a1ab2f525d825830",
+      "bytes": 640
+    },
+    "scripts/bindings/time.cjs": {
+      "sha256": "8e35a071f04825f02497ba6eb89850a273a961b089469e7fa27d03ca9f04ca63",
+      "bytes": 6012
+    },
+    "scripts/bindings/time.py": {
+      "sha256": "6c2819e7e2ba98ca1f2e973c13770cf0832e47e00227612846a1e0796b5b6fc6",
+      "bytes": 5911
+    },
+    "scripts/bindings/wasm_proof.cjs": {
+      "sha256": "757ff1e7e705c9da1a90d0ec100e74de194dfc0c48c7330203d9a936fb28a57f",
+      "bytes": 15574
+    },
+    "scripts/run_primary_authoring_proofs.py": {
+      "sha256": "b051703b36eb7d76d1e1aefe6ca6b2219b287ac37874b6dc5cb8bad0887d3d8a",
+      "bytes": 13262
+    },
+    "tools/reference/node/chromatic-composition.mjs": {
+      "sha256": "5b3a06b1d2603e9510eb3182b57c788db44e4f880195aa00caf6c3baab33b973",
+      "bytes": 4002
+    },
+    "tools/reference/node/chromatic-transformed.mjs": {
+      "sha256": "3c2ef8dcd78bdeeae91cfc8f02c1d6a08161989b74eb463487051eb0773ba221",
+      "bytes": 1889
+    },
+    "tools/reference/node/chromatic-trig.mjs": {
+      "sha256": "1f471b34de626e30818f3e92123e8c40d6286bbfa6bb182e46c253e092b983f6",
+      "bytes": 1688
+    },
+    "tools/reference/node/chromatic.mjs": {
+      "sha256": "c669e8b553859a232eb2190a37e32ffb6abb56b1bc41bc54202725bb0edc80aa",
+      "bytes": 4034
+    }
+  }
+}

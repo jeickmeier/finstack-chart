@@ -1,8 +1,12 @@
 # Phase 2 — Complete D3 and ggplot2 capability parity
 
-Document version: 0.4.0. Date: 7 September 2026.
-State: planned; no implementation or parity gate is completed by this document.
-Planning baseline: `127fe2d4853f89b62ba59a17248485e3c378ba60` plus the live working tree.
+Document version: 0.5.0. Date: 7 September 2026.
+State: implementation authorized; package outcomes belong to the status ledger.
+Original planning baseline: `127fe2d4853f89b62ba59a17248485e3c378ba60` plus its working tree.
+Implementation baseline: `fab2505951061eaafe9adb52c86b248ee0dfa6bf`, the committed
+primary authoring implementation. [P2-00 coverage](../phase-2-coverage.md) and
+[ADR-014](../adr/014-phase-2-integration-contract.md) supersede the historical
+[current API review](../evidence/phase-2-current-api-review-2026-09-07.md) where noted.
 Authority: [specification](../spec/gpui-charts-specification.md#21-phase-2-parity-scope).
 Execution states and evidence: [status ledger](../implementation-status.md).
 
@@ -24,22 +28,25 @@ the combined sequence, shared interfaces, ggplot2 packages and cumulative accept
 It does not copy their method inventories or reset their package IDs.
 
 Phase 1 is the foundation and interactive streaming program, WP-01–20 in the
-[original plan](gpui-charts-implementation-plan.md). At this planning baseline, WP-01–15
-are recorded DONE, WP-16 is IN PROGRESS, WP-17–20 remain open, G2 has historical
-acceptance and G3 is open. These are ledger observations, not fresh runtime certification.
-Finish that assigned work independently. Phase 2 contract/oracle work can start from
-accepted WP-14 interfaces; integration packages wait for the specific Phase 1 evidence
-listed below. There is no requirement to finish every Phase 1 task before pure kernels.
+[original plan](gpui-charts-implementation-plan.md). The ledger now records original
+WP-01–23 completion, with original-scope limitations retained; the primary-authoring
+AP-00–08 implementation is complete; AP-09 performance qualification remains open.
+Those historical results do not certify the changed API
+or expanded parity. Reuse accepted WP-14 and runtime interfaces, checking affected
+behavior against the current AP implementation at integration. Pure kernel and oracle
+work may proceed independently of final authoring certification.
 
-WP-21–23 remain the single final hardening/performance/release sequence, after Phase 2
-capability acceptance. This preserves the existing specification's requirement that
+WP-21–23 remain the single final hardening/performance/release sequence for the expanded
+scope, after Phase 2 capability acceptance. Their original-scope completion is retained;
+new workloads and changed paths require requalification. This preserves the requirement that
 D3 parity precede G4. Neither G2 nor G3 is renamed a production release. Phase 2 expands
 that final release to include the ggplot2 capability profile; it does not create a
 second release process or treat planning as permission to publish packages.
 
-The current assignment is documentation only. No chart implementation, reference
-installation, dependency adoption, fixture regeneration or public wire-version change
-is part of it. Existing source and review edits are preserved.
+The original assignment was documentation only. The owner subsequently authorized
+implementation after Review API simplicity finished and committed its code. That
+handoff is satisfied by `fab2505`; proceed one reviewable package slice at a time.
+Existing source, review edits and historical acceptance limitations are preserved.
 
 ## 2. Complete input register and traceability
 
@@ -58,7 +65,8 @@ each implementation owner must reproduce applicable gaps before changing behavio
 | [D3 axis review and plan](d3-axis-parity-plan.md), 3.0.0 | WP-AX01–06 | AXIS-01–07; FIX-19; G-AXIS | Guide identity, tick policy, components and transitions |
 | [D3 hierarchy review and plan](d3-hierarchy-parity-plan.md), 3.1.2 | WP-H01–08 | HIR-01–08; FIX-H01; G-HIERARCHY | Topology, operations, all layouts/tilers/helpers and history |
 | [ggplot2 review](../evidence/ggplot2-parity-review-2026-09-07.md), 4.0.3 | GG-00–19 below | GG2-01–12; FIX-GG00–19; G-GGPLOT | Full chart capability coverage and reference behavior |
-| [ggplot2 retained probe](../evidence/ggplot2-parity-2026-09-07/probe.rs) and [output](../evidence/ggplot2-parity-2026-09-07/probe.log) | GG-01/02 | GGP-01/05 findings | Reproduce missing legends and explicit-group behavior |
+| [ggplot2 retained probe](../evidence/ggplot2-parity-2026-09-07/probe.rs) and [output](../evidence/ggplot2-parity-2026-09-07/probe.log) | GG-01/02 | GGP-01/05 findings | Historical defect/default evidence; reconcile the delivered legend fix and retain grouping comparisons |
+| [Current package API review](../evidence/phase-2-current-api-review-2026-09-07.md) | P2-00, GG-01/02/18, WP-AX01, AP-07 | AUT-01/03–07, BND-01/03/04 | Current owner mapping, legend acceptance, profile lifetime, axis migration and host proof requirements; source observations retain their review revision |
 
 | ggplot2 review finding | Required closure owner | Concrete completion evidence |
 | --- | --- | --- |
@@ -126,11 +134,39 @@ to make a new profile appear backward compatible.
 | D3 palette catalog | CP-01–04 | GG-04 adds only reference-specific missing catalogs/policies, with provenance |
 | Axis component identities/geometry/transition lifecycle | WP-AX01–05 | GG-05/12/13/14; categorical/continuous legends remain shared guide consumers |
 | Grammar staging, generated fields, grouping, aesthetic resolution | GG-02/03 | Every GG stat/geom/position; one compiler and dependency graph |
-| General legend allocation and components | GG-01/05 | Single/faceted figures, D3 color metadata and GG guides; no parallel legend painter |
+| General legend allocation and components | GG-01 acceptance / GG-05 extensions | Reuse the delivered single/faceted painter; extend it for D3 color metadata and GG guides |
 | Coordinate projection, subdivision, inverse and clipping protocol | GG-13 | GG-15 geography and all geoms; radial shape projection alone is insufficient |
 | Topology and hierarchy layout/history | WP-H01–08 | Existing core recipes and extension consumers; not required by GG statistical kernels |
 | Wire migration, operation registry and host adapters | One integration owner; each delivering package supplies its descriptors/tests | BND-01/02 and ADR-006/012; no independently chosen envelope versions |
 | Revisions, scheduling, updates and coherent snapshots | WP-15–20 | Every new family; exact batch fallback until incremental equivalence is proven |
+
+### 4.1 Integration through the current primary API
+
+Use [AP-00's capability register](../primary-authoring-api.md) and the
+[current API mapping](../evidence/phase-2-current-api-review-2026-09-07.md#current-api-routing-and-remaining-scope)
+as the starting inventory. P2-00 links reference coverage to those rows; it does not
+create a second authoring backlog. Revalidate active code before assigning a slice.
+
+- `chart-core/src/plot/` owns Data/Plot and typed components. Extend existing mappings,
+  stat/position, scale/color, facet and composition builders in their semantic package.
+  Keep checked source/generated fields, explicit `group_all`, inferred facet catalogs
+  and separate annotation/title/axis-label/legend components. Existing `after_stat` and
+  `after_bin` reads are foundations; GG-02 adds the remaining expression semantics.
+  Existing fixed annotations do not satisfy GG-08's source/stat-row text geoms.
+- `chart-core/src/runtime.rs` and its modules own the retained Chart. Session delegates
+  to it. Extend the same store/compiler/reducer/queue and invalidation contracts;
+  retain native worker/presentation ownership in `gpui-charts`.
+- `chart-export/src/authoring.rs` owns Output, export options and static/live request
+  acquisition. GG-17/18 extend existing destinations and captures; preserve Presented
+  versus Current independently of visible/full-domain and interaction inclusion.
+- Standalone path/shape/color/interpolation/scale/hierarchy families retain their D3
+  owners and direct APIs, feeding the same primary components. AP foundations do not
+  establish these missing kernels or reference-equivalent defaults.
+- AP-07 owns shared Python/WASM syntax, converters and declarations; each semantic
+  package adds its public operations, component options and actual host tests. Host
+  authoring wrappers and actual baseline proofs are delivered in `fab2505`, superseding
+  the review's earlier JSON-only snapshot. Extend registrations, exports and declarations;
+  neither Rust dispatch tests nor wrapper source alone establishes host acceptance.
 
 Core remains synchronous and usable without GPUI, interpreters, mandatory threading,
 system fonts or I/O. Keep algorithms within existing crate ownership. Evaluate mature
@@ -157,7 +193,16 @@ again. Commit no empty public API forest. Exit: owner/dependency map, migration 
 reference lock layout and explicitly open gap register. Use one shared pinned Node
 reference workspace for the D3 modules and browser oracle, plus a separate pinned R
 environment for ggplot2; share fixture metadata/comparison conventions across them.
-Proposed effort: 2–4 days.
+Link AP-00's delivered capability rows and active AP ownership. Record the remaining
+GG-01 acceptance cases; assign GG-02 profile lifetime, WP-AX01 primary identity migration
+and each package's AP-07 host integration before handing off those consumers. Resolve
+each interface when its package starts; a missing host proof does not block independent
+kernels. Proposed effort: 2–4 days, excluding already completed AP contract work.
+
+Delivered entry contract: [ADR-014](../adr/014-phase-2-integration-contract.md) and
+[coverage register](../phase-2-coverage.md), against committed API baseline `fab2505`.
+Reference lock creation and method/argument expansion remain with the lane entries
+and GG-00; this integration handoff does not execute or certify their oracles.
 
 Default execution is one reviewable slice at a time; waves describe dependency order,
 not an instruction to start agents or assume staffing. Independent ready kernels may
@@ -165,7 +210,7 @@ be assigned separately. Entries within a wave still follow their package prerequ
 
 | Wave | Work | Exit / dependent work unlocked |
 | --- | --- | --- |
-| A — Lock contracts and reproduce gaps | P2-00; D3 entry packages WP-P01, CLR-01, WP-IP01, SP-01, CP-01, WP-AX01, WP-H01; GG-00 and GG-01 | Reproducible reference inputs, compatibility/resource boundaries and corrected legend regression. WP-S01 still waits for WP-P04. |
+| A — Lock contracts and reconcile gaps | P2-00; D3 entry packages WP-P01, CLR-01, WP-IP01, SP-01, CP-01, WP-AX01, WP-H01; GG-00 and GG-01 acceptance | Reproducible reference inputs, compatibility/resource boundaries and remaining legend acceptance evidence. WP-S01 still waits for WP-P04. |
 | B — Shared mathematical foundations | WP-P02–04; CLR-02–04; WP-IP02–05; SP-02/03; CP-02; WP-H02; GG-02 | Accepted path/color/scalar/value/category/topology contracts; grammar stages and profile migration |
 | C — D3 families and grammar consumers | WP-S01–07; SP-04–06; CP-03/04; WP-AX02–04; WP-H03–06; GG-03/04/06/07/08 | Complete kernels, independent aesthetics and initial statistical/geometry routes |
 | D — ggplot2 breadth and presentation | GG-05/09/10/11/12/13/14/15/16/17; begin each only when its prerequisites pass | Full analytical layers, guides/facets/coordinates, math/geography, authoring and devices |
@@ -214,21 +259,32 @@ unstable R object addresses and grob names as semantic identity. FIX-GG00 passes
 regeneration is deterministic, offline Rust comparison works, every inventory row has
 an owner and genuine gaps are reported as open. Pinning a version is not parity.
 
-### GG-01 — Repair the existing legend omission
+### GG-01 — Reconcile shared legend acceptance
 
 Prerequisite: WP-12/13 evidence; independent of P2-00/GG-00 and D3 delivery.
 Requirements: GG2-04, GRA-07, SCL-05, LAY-03, THM-03. Owns `layout/engine.rs`,
-`layout/facets.rs` and common guide layout. Reproduce GGP-01, then extract shared
-measurement/allocation/painting for single and faceted charts. Preserve semantic guide
-identity, clipping and tight-layout diagnostics. FIX-GG01: two-entry scatter guide,
-one-panel facet control, empty/hidden guide, shared and incompatible guides; assert
-scene content and inspect SVG/PDF/PNG. This is the first implementation slice.
+`layout/facets.rs` and common guide layout. The current engine already shares
+single/faceted measurement and painting, with a passing ordinary/faceted labels and
+source-provenance regression in `chart-export/tests/authoring.rs`. Retain GGP-01's
+probe as historical evidence and reconcile it against that implementation. Do not
+extract another painter. Preserve semantic guide identity, clipping and tight-layout
+diagnostics. Complete FIX-GG01: two-entry scatter guide, one-panel facet control,
+empty/hidden guide, tight layout, shared and incompatible guides; assert scene content
+and inspect SVG/PDF/PNG. Repair only reproduced remaining failures. The focused
+regression does not close this full matrix; acceptance reconciliation can proceed
+independently of P2-00 and coordinate with the active AP owner.
+
+Delivered 8 September 2026: the [GG-01 acceptance report](../evidence/phase-2-entry-and-legends-2026-09-08.md)
+records the complete specified matrix, repaired empty/untitled cases, actual host
+proofs and inspected publication artifacts. Full guide extensions remain GG-05.
 
 ### GG-02 — Compatibility profile, stages and inferred grouping
 
 Prerequisites: GG-00. Requirements: GG2-01/02. Owns grammar/compiler and portable
-profile contract. Add explicit source, after-stat, after-scale and theme-derived
-expression stages with checked types, bounded operations and cycle detection. Define
+profile contract, extending `plot/mapping.rs`, `plot/stat.rs` and `plot/wire.rs`.
+Reuse existing source/after-stat/after-bin typed reads and add the remaining source,
+after-stat, after-scale and theme-derived expression semantics with checked types,
+bounded operations and cycle detection. Define
 scale transform/OOB/limits before statistics where the ggplot2 profile requires it;
 coordinate limits remain post-stat view operations. Carry transformed-space metadata
 to prevent double application. Infer groups from eligible discrete aesthetics with
@@ -236,6 +292,17 @@ explicit override; define inheritance, default stat/geom pairing and orientation
 Keep R evaluation in the oracle only. FIX-GG02: log histogram versus coordinate-log,
 scale limit versus zoom, colored lines without explicit group, multiple discrete
 aesthetics, stat-specific group override, missing values and legacy v1 round trips.
+
+Before introducing a profile beyond `Profile::LibraryV1`, implement
+[ADR-014](../adr/014-phase-2-integration-contract.md): resolved execution policies and
+immutable profile provenance live in the canonical definition. Today primary interchange stores profile separately;
+`Plot::chart`, `Chart::apply_plot` and `Output::request` pass normalized definitions.
+This is an integration prerequisite, not a demonstrated LibraryV1 defect. Implement
+the selected policy consistently through runtime edits, worker/cache identity, wire
+migration and static/live capture. FIX-GG02 must verify primary and legacy envelope
+round trips, profile changes after an edit, static output and both Presented/Current
+captures, including retained old snapshots after later changes/disposal. Preserve
+resource/profile provenance; adding enum variants alone does not change semantics.
 
 ### GG-03 — Independent aesthetic encodings
 
@@ -401,7 +468,7 @@ exports across hosts. Unavailable required projections keep parity open.
 ### GG-16 — Extensibility and authoring conveniences
 
 For the primary-API refactor, AP-03/04 integrate these capabilities into the main
-builders and AP-07 exposes the host-native syntax. GG-16 owns the extension/dispatch
+builders and AP-07 owns the host-native syntax. GG-16 owns the extension/dispatch
 semantics and their evidence; it must not introduce a competing authoring surface.
 
 Prerequisites: GG-02/05/07/12/13. Requirements: GG2-10. Owns registry/public builders,
@@ -415,11 +482,14 @@ FIX-GG16 exercises an external custom example at each extension boundary through
 and registered Python/WASM, malformed outputs, callback context, native-only rejection,
 deterministic repeated preparation and copy/disposal. GG-18 supplies later model/math/
 geographic extension combinations; a generic registration struct is insufficient.
+Reuse delivered composition, labels/alt text and built-layer inspection routes where
+present; charge only the missing dispatch/protocol semantics and their integration.
 
 ### GG-17 — Saving and device capability completion
 
 Prerequisites: GG-08/14/15, WP-20. Requirements: GG2-11. Owns chart-export and explicit
-host save adapters. Preserve SVG/PDF/PNG; inventory and deliver reference device
+host save adapters. Extend existing Output/ExportOptions/FigureRequest and artifact
+save routes. Preserve SVG/PDF/PNG; inventory and deliver reference device
 capabilities for JPEG/TIFF/BMP, PostScript/EPS, supported metafile/TeX routes and custom
 device hooks with a per-platform matrix. The [saving contract](https://ggplot2.tidyverse.org/reference/ggsave.html)
 supplies dimensions/units/scale/DPI/background/size-limit and filename/device behavior;
@@ -444,6 +514,12 @@ source/filter/zoom differences, selection of aggregates/derived paths, coherent 
 snapshots, invalid update rollback and disposal. Recompute global models exactly until
 an optimization has independent equivalence and measurements. Native interactions
 and publication must consume the same presented geometry and semantic revision.
+Exercise primary Data/Plot/Chart/Output usage and standalone operations through actual
+package exports, conversions and generated declarations/stubs. Reuse AP-07 syntax and
+proof infrastructure and retain legacy interchange compatibility. Carry alternate
+profile policies and migrated scale/guide identities through these paths. Verify the
+Presented/Current × visible/full-domain × interaction-inclusion capture matrix with
+new semantics; existing export coverage is the starting regression, not work to rebuild.
 
 ### GG-19 — Capability certification and handoff
 
@@ -508,12 +584,14 @@ hierarchy 35–57 days; scale needs re-estimation after SP-01. Do not sum overla
 path/shape, scale/interpolation or oracle/host integration work twice.
 
 New ggplot2-only planning allowances below exclude D3 kernels, Phase 1, P2-00 and
-WP-21–23. They include focused fixtures/review/host integration. They are effort
-ranges for one integrator, not elapsed-time promises or estimates from measured throughput.
+WP-21–23. These are historical allowances before the current API reconciliation,
+including focused fixtures/review/host integration. P2-00 must subtract delivered AP
+foundations and legend work, assign shared binding work once and estimate only remaining
+integration/acceptance. They are not current remaining-effort or elapsed-time promises.
 
 | Packages | Additional engineer-days | Main uncertainty |
 | --- | --- | --- |
-| GG-00/01 | 5–8 / 1–3 | Oracle reproducibility and legend extraction |
+| GG-00/01 | 5–8 / 1–3 (historical) | Oracle reproducibility; GG-01 now needs acceptance reconciliation and any reproduced residual fixes |
 | GG-02/03/04/05 | 8–14 / 5–9 / 6–10 / 7–12 | Stages, migration, reference color policies and guide layout |
 | GG-06/07/08 | 8–13 / 6–10 / 4–7 | Weighted/position defaults and geometric/text consumers |
 | GG-09/10/11 | 12–20 / 20–35 / 14–24 | Estimator/model dependencies, contour numerics and topology |
@@ -521,17 +599,19 @@ ranges for one integrator, not elapsed-time promises or estimates from measured 
 | GG-15/16/17 | 18–30 / 8–14 / 10–20 | CRS portability, external protocols and device capabilities |
 | GG-18/19 | 10–18 / 5–9 | Full cross-host/update combinations and inventory completeness |
 
-New GG allowance totals **182–315 engineer-days**, plus P2-00's 2–4 days. This is a
-provisional breadth estimate, not a total project budget. Re-estimate after GG-00 and
-the model/math/geography/device spikes; unverified dependency capabilities and any
+Historical GG allowance totals **182–315 engineer-days**, plus P2-00's 2–4 days.
+Remaining effort is unestimated pending the delivered-work reconciliation. Re-estimate
+after GG-00 and the model/math/geography/device spikes; unverified dependency capabilities and any
 newly inventoried arguments remain explicit cost/schedule risks. Do not convert the
 original 16–24-week project estimate into a Phase 2 promise. Resource limits and
 performance evidence determine supported workload sizes, not permission to omit families.
 
-First implementation handoff: **GG-01**, reproduce and fix the current legend defect
-using its retained probe and single-versus-facet expected scene. Own only shared guide
-layout and focused tests/artifacts; coordinate with active WP-16. In the parity program,
-start **P2-00**, then **GG-00 and the existing D3 entry packages** in prerequisite order.
+P2-00's integration contract and GG-01's specified acceptance are delivered against
+the committed primary API baseline; see the [entry/legend report](../evidence/phase-2-entry-and-legends-2026-09-08.md).
+Next parity engineering handoff: **GG-00 and the existing D3 entry packages** in
+prerequisite order. Preserve the AP implementation and link its delivered capability
+rows. No duplicate runtime extraction, authoring facade or legend rewrite belongs in
+this handoff; full G-AUTH is not a prerequisite for pure parity kernels.
 The model, math, geographic and device spikes are bounded implementation tasks inside
 their packages once their prerequisite contracts exist, not reasons to pause this plan.
 
@@ -543,9 +623,15 @@ Checked the official ggplot2 index (displayed 4.0.3), tagged namespace, aestheti
 smoothing and saving documentation. One direct geographic documentation URL failed;
 GG-00 must verify the complete release source and dependency lock for that family.
 
-This task provides source synthesis and intended acceptance, not an executed oracle
-or a fresh implementation audit. Exact documentation validation commands/results are
+The original planning task provided source synthesis and intended acceptance, not an
+executed oracle or a fresh implementation audit. Exact documentation validation commands/results are
 recorded in the ledger. No R/D3 suite, Rust feature test, native UI, export inspection,
 Python/WASM runtime, Linux execution or performance benchmark was run by this planning
-assignment. All implementation gates remain open; historical review evidence retains
+assignment. No implementation gate was advanced; historical review evidence retains
 its original revision and scope.
+
+The current API review subsequently ran 24 focused Rust tests and records their exact
+revision, commands and limitations. This plan revision consumes that evidence and
+rechecks live source ownership, including ongoing host-wrapper additions; it does not
+rerun or expand those test claims. Documentation validation for this update belongs in
+the ledger. Package and gate completion remain evidence-driven and unchanged here.

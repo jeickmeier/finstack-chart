@@ -1,0 +1,42 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.03s
+     Running tests/inspection.rs (target/debug/deps/inspection-e18906f4d970d895)
+
+running 10 tests
+test empty_inspection_and_invalid_options_are_recoverable ... ok
+test keyboard_wrap_clear_idempotency_and_stale_stamp_are_atomic ... ok
+test histogram_hit_retains_aggregate_members_and_respects_containment ... ok
+test scatter_nearest_radius_clips_and_equal_distance_z_order ... ok
+test rectangle_selection_intersects_bars_instead_of_testing_centers ... ok
+test nearest_x_groups_preserve_gap_targets_and_never_invent_interpolation ... ok
+test brushes_lasso_series_and_limits_preserve_vertex_provenance ... ok
+test stable_keyboard_identity_survives_rebuild_and_removal_clears_it ... ok
+test candle_wicks_are_contained_and_keyboard_deduplicates_each_candle ... ok
+test dense_spatial_and_sorted_x_match_scan_without_source_work ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.39s
+
+     Running tests/shape_cartesian.rs (target/debug/deps/shape_cartesian-d4570c112a12798a)
+
+running 6 tests
+test independent_monotone_and_natural_invariants_hold ... ok
+test input_errors_and_resource_bounds_never_return_partial_owned_geometry ... ok
+test ordering_gaps_independent_boundaries_and_helper_inheritance_are_explicit ... ok
+test native_accessors_and_custom_protocol_receive_exact_order_and_area_lifecycle ... ok
+test complete_cartesian_seed_matrix_matches_actual_generators ... ok
+test extended_controls_helpers_and_irregular_matrix_matches_reference ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/shape_integration.rs (target/debug/deps/shape_integration-8ba9373c88abbc8d)
+
+running 6 tests
+test nonzero_holes_curved_strokes_caps_and_subdivision_limits_are_explicit ... ok
+test missing_secondary_coordinate_splits_the_paired_run_and_retains_source_keys ... ok
+test clipped_area_interiors_keep_source_focus_without_inventing_brush_vertices ... ok
+test general_area_has_independent_boundaries_and_no_lower_upper_order_constraint ... ok
+test singleton_curve_policy_remains_distinct_from_legacy_line_points ... ok
+test curves_project_before_generation_and_controls_are_never_source_targets ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

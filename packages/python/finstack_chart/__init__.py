@@ -13,7 +13,10 @@ ChartError = _native.ChartError
 LegacyChart = _native.Chart
 
 def _encode(value):
-    return _json.dumps(value, allow_nan=False, separators=(",", ":"))
+    def default(value):
+        if isinstance(value, ColorValue): return _decode(value.to_json())
+        raise TypeError(f"Unsupported authored value: {type(value).__name__}")
+    return _json.dumps(value, default=default, allow_nan=False, separators=(",", ":"))
 
 def _decode(value):
     return _json.loads(value)
@@ -27,6 +30,66 @@ class _Owned:
         return self
     def __exit__(self, *_):
         self.dispose()
+
+class ColorValue(_Owned):
+    """Owned floating color; channel arithmetic and formatting execute in Rust."""
+    @classmethod
+    def from_json(cls, value): return cls(_native._Color.from_json(value))
+    def to_json(self): return self._inner.to_json()
+    def value(self): return _decode(self._inner.value_json())
+    def space(self): return self.value()["space"]
+    def channels(self): return {key:self.channel(key) for key in self.value()["channels"]}
+    def channel(self, name): return self._inner.channel(name)
+    def with_channel(self, name, value): return ColorValue(self._inner.with_channel(name,value))
+    def copy(self, channels=None):
+        result=ColorValue(self._inner.copy())
+        try:
+            for name,value in (channels or {}).items():
+                next_value=result.with_channel(name,value);result.dispose();result=next_value
+            return result
+        except BaseException:
+            result.dispose();raise
+    def convert(self, space): return ColorValue(self._inner.convert(space))
+    def rgb(self): return self.convert("Rgb")
+    def brighter(self, k=None): return ColorValue(self._inner.brighter(k))
+    def darker(self, k=None): return ColorValue(self._inner.darker(k))
+    def displayable(self): return self._inner.displayable()
+    def clamp(self): return ColorValue(self._inner.clamp())
+    def format_hex(self): return self._inner.format("formatHex")
+    def format_hex8(self): return self._inner.format("formatHex8")
+    def format_rgb(self): return self._inner.format("formatRgb")
+    def format_hsl(self): return self._inner.format("formatHsl")
+    def hex(self): return self.format_hex()
+    def __str__(self): return self._inner.format("toString")
+
+def color(css):
+    result=_native._Color.parse(css)
+    return None if result is None else ColorValue(result)
+
+def _color_constructor(name):
+    names={"rgb":("r","g","b"),"hsl":("h","s","l"),"lab":("l","a","b"),"hcl":("h","c","l"),"lch":("l","c","h"),"cubehelix":("h","s","l"),"gray":("l",)}[name]+("opacity",)
+    def create(*args, **kwargs):
+        if kwargs:
+            if not args and set(kwargs)=={"value"}: args=(kwargs.pop("value"),)
+            elif set(kwargs)-set(names): raise TypeError("Unknown color constructor channel.")
+            else:
+                unset=object();values=list(args)+[unset]*max(0,len(names)-len(args))
+                for key,value in kwargs.items():
+                    index=names.index(key)
+                    if values[index] is not unset: raise TypeError("Color channel supplied twice.")
+                    values[index]=value
+                while values and values[-1] is unset: values.pop()
+                if any(v is unset for v in values): raise TypeError("Missing color constructor channel.")
+                args=tuple(values)
+        if name!="gray" and len(args)==1:
+            if isinstance(args[0],ColorValue): return args[0].convert(name)
+            if isinstance(args[0],str): return ColorValue(_native._Color.from_css(args[0],name))
+        if any(type(v) not in (float,int) for v in args): raise TypeError("Color channels require numbers.")
+        return ColorValue(_native._Color(name,list(args)))
+    create.__name__=name
+    return create
+for _color_name in ("rgb","hsl","lab","gray","hcl","lch","cubehelix"):
+    globals()[_color_name]=_color_constructor(_color_name)
 
 class Field(_Owned):
     """Opaque field with its original dataset owner."""
@@ -124,13 +187,213 @@ class Component(_Owned):
                 inner = self._inner.candle_volume(*(v._inner for v in args))
             elif name == "axis" and len(args) == 2 and all(isinstance(v, Component) for v in args):
                 inner = self._inner.link_axis(*(v._inner for v in args))
+            elif name == "symbol_types" and len(args) == 3 and isinstance(args[0], Field):
+                inner=self._inner.symbol_types_field(args[0]._inner,_encode(args[1]),_encode(args[2]))
+            elif name == "shape_value" and len(args) == 2:
+                target, source = args
+                if isinstance(source, Field): inner = self._inner.shape_value_field(_encode(target), source._inner)
+                elif isinstance(source, Component): inner = self._inner.shape_value_expression(_encode(target), source._inner)
+                else: inner = self._inner.set(name, _encode(args))
+            elif name == "numeric_scale" and len(args) == 3:
+                target, source, scale = args
+                descriptor = scale.mapped() if isinstance(scale, StandaloneScale) else scale
+                if isinstance(source, Field): inner = self._inner.numeric_scale_field(_encode(target), source._inner, _encode(descriptor))
+                elif isinstance(source, Component): inner = self._inner.numeric_scale_expression(_encode(target), source._inner, _encode(descriptor))
+                else: inner = self._inner.set(name, _encode((target, source, descriptor)))
             else:
                 if name in ("geometry", "time_domain"): args = tuple(str(v) if type(v) is int else v for v in args)
                 inner = self._inner.set(name, _encode(args))
             return type(self)(inner)
         return apply
 
+class Path(_Owned):
+    """Mutable checked standalone path. SVG precision never changes numeric geometry."""
+    def __init__(self, digits=None, *, limits=None):
+        if digits is not None and type(digits) not in (int, float): raise TypeError("Digits require a number or None.")
+        super().__init__(_native._Path(digits, None if limits is None else _encode(limits)))
+    @classmethod
+    def _wrap(cls, inner):
+        result = object.__new__(cls)
+        _Owned.__init__(result, inner)
+        return result
+    @classmethod
+    def from_json(cls, request): return cls._wrap(_native._Path.from_json(request))
+    def copy(self): return Path._wrap(self._inner.copy())
+    def _draw(self, method, values, anticlockwise=False):
+        if any(type(v) not in (int,float) for v in values): raise TypeError("Path coordinates require numbers.")
+        if type(anticlockwise) is not bool: raise TypeError("Arc direction requires a boolean.")
+        self._inner.draw(method, values, anticlockwise)
+        return self
+    def move_to(self,x,y): return self._draw("moveTo",[x,y])
+    def line_to(self,x,y): return self._draw("lineTo",[x,y])
+    def quadratic_curve_to(self,cx,cy,x,y): return self._draw("quadraticCurveTo",[cx,cy,x,y])
+    def bezier_curve_to(self,cx1,cy1,cx2,cy2,x,y): return self._draw("bezierCurveTo",[cx1,cy1,cx2,cy2,x,y])
+    def arc_to(self,x1,y1,x2,y2,r): return self._draw("arcTo",[x1,y1,x2,y2,r])
+    def arc(self,x,y,r,a0,a1,anticlockwise=False): return self._draw("arc",[x,y,r,a0,a1],anticlockwise)
+    def rect(self,x,y,w,h): return self._draw("rect",[x,y,w,h])
+    def close_path(self): return self._draw("closePath",[])
+    def apply_batch(self,operations): self._inner.batch(_encode(operations)); return self
+    def to_svg(self): return self._inner.to_svg()
+    def __str__(self): return self.to_svg()
+    def result(self): return _decode(self._inner.result_json())
+    def replay(self,sink):
+        """Call sink once per owned numeric command; failure retains its accepted prefix."""
+        for command in _decode(self._inner.replay_json()): sink(command)
+
+class ShapeRegistry(_Owned):
+    """Explicit trusted Rust registrations; constructing a registry installs no code."""
+    def __init__(self): super().__init__(_native._ShapeRegistry())
+    @classmethod
+    def _wrap(cls, inner):
+        result=object.__new__(cls); _Owned.__init__(result,inner); return result
+    @staticmethod
+    def example():
+        """Install the external example implementations in a proof-enabled build."""
+        if not hasattr(_native._ShapeRegistry, 'example'):
+            raise RuntimeError('The extension-proof build feature is required for example registrations.')
+        return ShapeRegistry._wrap(_native._ShapeRegistry.example())
+    def copy(self): return self._wrap(self._inner.copy())
+    def selection(self, selection, family):
+        return _decode(self._inner.selection_json(_encode(selection), _encode(family)))
+
+class ShapeLine(_Owned):
+    """Reusable checked D3 line controls; generate returns an independent Path."""
+    def __init__(self, config=None): super().__init__(_native._ShapeLine(_encode({} if config is None else config)))
+    @classmethod
+    def _wrap(cls, inner):
+        result=object.__new__(cls)
+        _Owned.__init__(result,inner)
+        return result
+    def copy(self): return self._wrap(self._inner.copy())
+    def config(self): return _decode(self._inner.config_json())
+    def generate(self, rows): return Path._wrap(self._inner.generate(_encode(rows)))
+    def generate_registered(self, rows, registry, selection):
+        return Path._wrap(self._inner.generate_registered(_encode(rows), registry._inner, _encode(selection)))
+
+class ShapeArea(_Owned):
+    """Independent paired boundaries, defined gaps and inherited boundary generators."""
+    def __init__(self, config=None): super().__init__(_native._ShapeArea(_encode({} if config is None else config)))
+    @classmethod
+    def _wrap(cls, inner):
+        result=object.__new__(cls)
+        _Owned.__init__(result,inner)
+        return result
+    def copy(self): return self._wrap(self._inner.copy())
+    def config(self): return _decode(self._inner.config_json())
+    def generate(self, rows): return Path._wrap(self._inner.generate(_encode(rows)))
+    def boundary(self, which): return ShapeLine._wrap(self._inner.boundary(_encode(which)))
+    def generate_registered(self, rows, registry, selection):
+        return Path._wrap(self._inner.generate_registered(_encode(rows), registry._inner, _encode(selection)))
+
+class ShapeLineRadial(ShapeLine):
+    """Owned Rust LineRadial generator with materialized selectors."""
+    def __init__(self, config=None): _Owned.__init__(self, _native._ShapeLineRadial(_encode({} if config is None else config)))
+class ShapeAreaRadial(ShapeLine):
+    """Owned Rust AreaRadial generator with materialized selectors."""
+    def __init__(self, config=None): _Owned.__init__(self, _native._ShapeAreaRadial(_encode({} if config is None else config)))
+    def boundary(self, which): return ShapeLineRadial._wrap(self._inner.boundary(_encode(which)))
+class ShapeLink(ShapeLine):
+    """Owned Rust Link generator with materialized selectors."""
+    def __init__(self, config=None): _Owned.__init__(self, _native._ShapeLink(_encode({} if config is None else config)))
+class ShapeLinkRadial(_Owned):
+    """Owned Rust radial link with fixed radial-tangent geometry."""
+    def __init__(self, config=None): super().__init__(_native._ShapeLinkRadial(_encode({} if config is None else config)))
+    @classmethod
+    def _wrap(cls, inner):
+        result=object.__new__(cls); _Owned.__init__(result,inner); return result
+    def copy(self): return self._wrap(self._inner.copy())
+    def config(self): return _decode(self._inner.config_json())
+    def generate(self, data): return Path._wrap(self._inner.generate(_encode(data)))
+def point_radial(angle, radius):
+    """Return Rust pointRadial coordinates as an owned pair."""
+    return _native._point_radial(angle, radius)
+
+class ShapeSymbol(_Owned):
+    """Owned area/stroke-size symbol generator; all geometry runs in Rust."""
+    def __init__(self, config=None): super().__init__(_native._ShapeSymbol(_encode({} if config is None else config)))
+    @classmethod
+    def _wrap(cls, value):
+        obj=cls.__new__(cls); _Owned.__init__(obj,value); return obj
+    def copy(self): return ShapeSymbol._wrap(self._inner.copy())
+    def config(self): return _decode(self._inner.config_json())
+    def generate(self): return Path._wrap(self._inner.generate())
+    @staticmethod
+    def palettes():
+        fill, stroke=_decode(_native._ShapeSymbol.palettes_json())
+        return tuple(fill), tuple(stroke)
+
+    def generate_registered(self, registry, selection):
+        return Path._wrap(self._inner.generate_registered(registry._inner, _encode(selection)))
+
+class ShapeArc(_Owned):
+    """Owned checked sector/annulus generator; constants may replace datum fields."""
+    def __init__(self, config=None): super().__init__(_native._ShapeArc(_encode({} if config is None else config)))
+    @classmethod
+    def _wrap(cls, inner):
+        result=object.__new__(cls)
+        _Owned.__init__(result,inner)
+        return result
+    def copy(self): return self._wrap(self._inner.copy())
+    def config(self): return _decode(self._inner.config_json())
+    def generate(self, datum=None): return Path._wrap(self._inner.generate(_encode({} if datum is None else datum)))
+    def centroid(self, datum=None): return _decode(self._inner.centroid_json(_encode({} if datum is None else datum)))
+
+class ShapePie(_Owned):
+    """Owned pie layout; materialized values preserve original data and input order."""
+    def __init__(self, config=None): super().__init__(_native._ShapePie(_encode({} if config is None else config)))
+    @classmethod
+    def _wrap(cls, inner):
+        result=object.__new__(cls)
+        _Owned.__init__(result,inner)
+        return result
+    def copy(self): return self._wrap(self._inner.copy())
+    def config(self): return _decode(self._inner.config_json())
+    def layout(self, data, values=None): return _decode(self._inner.layout_json(_encode(data),_encode(data if values is None else values)))
+
+    def layout_registered(self, data, values, registry, selection):
+        return _decode(self._inner.layout_registered_json(_encode(data), _encode(values), registry._inner, _encode(selection)))
+
+class ShapeStack(_Owned):
+    """Owned stack layout; materialized rows follow configured series key order."""
+    def __init__(self, config=None): super().__init__(_native._ShapeStack(_encode({} if config is None else config)))
+    @classmethod
+    def _wrap(cls, inner):
+        result=object.__new__(cls)
+        _Owned.__init__(result,inner)
+        return result
+    def copy(self): return self._wrap(self._inner.copy())
+    def config(self): return _decode(self._inner.config_json())
+    def layout(self, data, values=None):
+        from ._interpolation import _un_number
+        result=_decode(self._inner.layout_json(_encode(data),_encode(data if values is None else values)))
+        for series in result:
+            for point in series['points']:
+                point['y0']=_un_number(point['y0']);point['y1']=_un_number(point['y1'])
+        return result
+
+    def layout_registered(self, data, values, registry, order=None, offset=None):
+        from ._interpolation import _un_number
+        result=_decode(self._inner.layout_registered_json(_encode(data), _encode(values), registry._inner, _encode(order), _encode(offset)))
+        for series in result:
+            for point in series['points']:
+                point['y0']=_un_number(point['y0']);point['y1']=_un_number(point['y1'])
+        return result
+
+
+def path(): return Path()
+def path_round(digits=3): return Path(digits)
+
+class VectorPath(Component):
+    def transform(self, matrix, *, max_error=0.01, max_commands=1000000):
+        return VectorPath(self._inner.set("transform",_encode([list(matrix),max_error,max_commands])))
+def vector_path(id, path): return VectorPath(path._inner.annotation(id))
+
+# Generic registry name; the established shape name retains the same owned identity.
+ExtensionRegistry = ShapeRegistry
+
 class PlotBuilder(_Owned):
+    def with_registry(self, registry): return self.with_shape_registry(registry)
+    def with_shape_registry(self, registry): return type(self)(self._inner.with_shape_registry(registry._inner))
     def __getattr__(self, name):
         if name.startswith("_"): raise AttributeError(name)
         def apply(*args, **kwargs):
@@ -154,7 +417,8 @@ class Plot(_Owned):
     def chart(self): return Chart(self)
     def to_json(self): return self._inner.to_json()
     @staticmethod
-    def from_json(value): return Plot(_native._Plot.from_json(value))
+    def from_json(value, registry=None):
+        return Plot(_native._Plot.from_json(value) if registry is None else _native._Plot.from_json_with_registry(value,registry._inner))
 
 class ExportOptions(_Owned):
     def __getattr__(self, name):
@@ -276,16 +540,28 @@ class Chart(_Owned):
     def link_capture(self, component, event): return _decode(self._inner.link_capture(component._inner,_encode(event)))
     def link_resolve(self, component, message): return _decode(self._inner.link_resolve(component._inner,_encode(message)))
 
+class _Expression(Component):
+    def __add__(self, other): return self.add(other)
+    def __sub__(self, other): return self.sub(other)
+    def __mul__(self, other): return self.mul(other)
+    def __truediv__(self, other): return self.div(other)
+    def __pow__(self, other): return self.pow(other)
+    def __neg__(self): return self.negate()
+
 # Each family has its own public type; implementation and validation remain in Rust.
-_FAMILIES = {'Aes': 'aes', 'Layer': 'points line area ribbon bars volume ohlc rule rectangle cells histogram', 'Stat': 'identity_stat bin count summary fit custom_stat', 'StatAes': 'stat_aes', 'BinAes': 'bin_aes', 'Position': 'stack dodge jitter', 'Filter': 'filter', 'Transform': 'transform', 'Scale': 'scale_linear scale_log scale_symlog scale_band scale_point scale_utc scale_session', 'Axis': 'x_axis y_axis', 'ColorScale': 'color_discrete color_continuous', 'Legend': 'legend', 'Facet': 'facet_wrap facet_grid', 'Style': 'style', 'Theme': 'theme', 'TextStyle': 'text_style', 'TextRun': 'text_run', 'RichText': 'rich_text', 'Title': 'title', 'Subtitle': 'subtitle', 'Caption': 'caption', 'SourceNote': 'source_note', 'Footnote': 'footnote', 'Labels': 'labels', 'Callout': 'callout', 'PanelLetter': 'panel_letter', 'Inset': 'inset', 'NumberFormat': 'number_format', 'LayoutOptions': 'layout_options', 'RenderOptions': 'render_options', 'StreamOptions': 'stream_options', 'AnnotationEdit': 'annotation_edit', 'Link': 'link'}
+_FAMILIES = {'SourceExpression': 'source_expr', 'StatExpression': 'stat_expr', 'BinExpression': 'bin_expr', 'ScaleExpression': 'after_scale_expr from_theme', 'ScaleAes': 'scale_aes', 'Aes': 'aes', 'Layer': 'points line area ribbon shape_line shape_area shape_line_radial shape_area_radial shape_link shape_link_horizontal shape_link_vertical shape_link_radial shape_arc shape_pie shape_symbol bars volume ohlc rule rectangle cells histogram', 'Stat': 'identity_stat bin count summary fit custom_stat', 'StatAes': 'stat_aes', 'BinAes': 'bin_aes', 'Position': 'stack shape_stack dodge jitter', 'Filter': 'filter', 'Transform': 'transform', 'Scale': 'scale_linear scale_log scale_symlog scale_band scale_point scale_utc scale_session', 'Axis': 'x_axis y_axis', 'Guide': 'axis_guide', 'ColorScale': 'color_discrete color_continuous', 'Legend': 'legend', 'Facet': 'facet_wrap facet_grid', 'Style': 'style', 'Theme': 'theme', 'TextStyle': 'text_style', 'TextRun': 'text_run', 'RichText': 'rich_text', 'Title': 'title', 'Subtitle': 'subtitle', 'Caption': 'caption', 'SourceNote': 'source_note', 'Footnote': 'footnote', 'Labels': 'labels', 'Callout': 'callout', 'PanelLetter': 'panel_letter', 'Inset': 'inset', 'NumberFormat': 'number_format', 'LayoutOptions': 'layout_options', 'RenderOptions': 'render_options', 'StreamOptions': 'stream_options', 'AnnotationEdit': 'annotation_edit', 'Link': 'link'}
 _FACTORY_TYPES = {}
 for _family, _factories in _FAMILIES.items():
-    _class = type(_family, (Component,), {"__module__": __name__})
+    _class = type(_family, (_Expression if _family.endswith("Expression") else Component,), {"__module__": __name__})
     globals()[_family] = _class
     for _name in _factories.split(): _FACTORY_TYPES[_name] = _class
 
 def _factory(name, cls):
     def create(*args):
+        if name == "filter" and len(args)==1 and isinstance(args[0],Component):
+            return cls(_native._Component("filter", "[0]").with_component("expression", args[0]._inner))
+        if name == "source_expr" and len(args)==1 and isinstance(args[0],Field):
+            return cls(_native._Component.source_expression(args[0]._inner))
         if name in ("jitter", "custom_stat"): args = tuple(str(v) if type(v) is int else v for v in args)
         return cls(_native._Component(name,_encode(args)))
     create.__name__ = name
@@ -293,3 +569,43 @@ def _factory(name, cls):
 for _name, _class in _FACTORY_TYPES.items():
     if _name != "transform": globals()[_name] = _factory(_name,_class)
 def transform(name, stat): return Transform(_native._Component.transform(name,stat._inner))
+
+# Standalone interpolation shares these owned handle/error conventions.
+from . import _interpolation as _interpolation_api
+for _name in _interpolation_api.__all__:
+    globals()[_name] = getattr(_interpolation_api, _name)
+from ._scales import ScaleKey, StandaloneScale
+
+def _scale_payload(spec, kind):
+    if isinstance(spec, StandaloneScale):
+        descriptor = spec.spec()
+        if kind not in descriptor: raise TypeError(f"This chart constructor requires a {kind} scale descriptor.")
+        return descriptor[kind]
+    return spec
+def scale_numeric(spec): return Scale(_native._Component("scale_numeric", _encode([_scale_payload(spec, "Numeric")])))
+def scale_registered(name, version, parameters): return Scale(_native._Component("scale_registered", _encode([name, version, parameters])))
+def scale_calendar(spec): return Scale(_native._Component("scale_calendar", _encode([_scale_payload(spec, "Time")])))
+def scale_band_d3(spec): return Scale(_native._Component("scale_band_d3", _encode([spec])))
+def scale_point_d3(spec): return Scale(_native._Component("scale_point_d3", _encode([spec])))
+def color_mapped(name, scale, training="Authored"):
+    if isinstance(scale, StandaloneScale): descriptor = scale.mapped(training)
+    else:
+        if training != "Authored": raise TypeError("Set training on the supplied mapped descriptor.")
+        descriptor = scale
+    return ColorScale(_native._Component("color_mapped", _encode([name, descriptor])))
+
+from ._shape import CurveSpec, ShapeCoordinate, ShapeLimits, ShapeLineConfig, ShapeAreaConfig
+
+from ._shape import ArcDatum, ShapeArcConfig, PieAngles, ShapePieConfig, PieSlice
+
+from ._shape import ArcParameters
+
+from ._shape import SymbolKind, ShapeSymbolConfig
+
+from ._shape import ShapeStackConfig, StackOrder, StackOffset, StackMissing, StackLimits, StackPoint, StackSeries
+
+from ._shape import ShapeLineRadialConfig, ShapeAreaRadialConfig, ShapeLinkConfig, ShapeLinkRadialConfig, RadialBoundary, LinkEndpoint, LinkDatum
+
+from ._shape import RadialParameters
+
+from ._shape import ShapeOperationId, ShapeOperation, ShapeFamily

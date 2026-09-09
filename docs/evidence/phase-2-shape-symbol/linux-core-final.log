@@ -1,0 +1,81 @@
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 22.03s
+     Running tests/facets.rs (target/debug/deps/facets-170d5af10e1c2319)
+
+running 9 tests
+test source_filters_precede_catalog_validation_and_empty_panel_drop ... ok
+test declared_figure_overflow_and_default_plot_clip_are_preserved_in_facets ... ok
+test shared_log_scale_uses_positive_population_from_all_panels ... ok
+test fix06_explicit_annotation_policy_shared_domain_and_exact_panel_targets ... ok
+test figure_budgets_invalid_catalog_and_tiny_dense_labels_fail_or_fallback_explicitly ... ok
+test group_facet_chart_statistics_have_independent_expected_populations_and_cache_keys ... ok
+test explicit_empty_panels_grid_coordinates_and_reordering_preserve_keys ... ok
+test free_scales_intentionally_differ_and_resize_font_changes_keep_aligned_panes ... ok
+test color_guides_collect_only_exact_compatible_id_domain_and_palette ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/shape_arc_integration.rs (target/debug/deps/shape_arc_integration-6b1ce027ce2131b5)
+
+running 5 tests
+test named_shape_statistical_inputs_reject_unexpected_fields ... ok
+test generated_counts_feed_one_pie_without_losing_aggregate_membership ... ok
+test grouped_pies_ignore_slice_color_for_automatic_population_and_validate_channels ... ok
+test pie_layout_preserves_input_targets_and_open_donut_holes ... ok
+test arc_radii_are_display_units_and_centers_use_named_projection ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/shape_arc_pie.rs (target/debug/deps/shape_arc_pie-9d92b8cfa9a2e520)
+
+running 3 tests
+test native_accessors_analytics_invalid_inputs_and_limits ... ok
+test full_pie_values_order_and_angle_matrix_retains_owned_data ... ok
+test full_arc_geometry_padding_corner_and_centroid_matrix ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/shape_cartesian.rs (target/debug/deps/shape_cartesian-28013c4732824a6b)
+
+running 6 tests
+test independent_monotone_and_natural_invariants_hold ... ok
+test input_errors_and_resource_bounds_never_return_partial_owned_geometry ... ok
+test ordering_gaps_independent_boundaries_and_helper_inheritance_are_explicit ... ok
+test native_accessors_and_custom_protocol_receive_exact_order_and_area_lifecycle ... ok
+test complete_cartesian_seed_matrix_matches_actual_generators ... ok
+test extended_controls_helpers_and_irregular_matrix_matches_reference ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/shape_integration.rs (target/debug/deps/shape_integration-480edffbfbc7c496)
+
+running 6 tests
+test nonzero_holes_curved_strokes_caps_and_subdivision_limits_are_explicit ... ok
+test missing_secondary_coordinate_splits_the_paired_run_and_retains_source_keys ... ok
+test clipped_area_interiors_keep_source_focus_without_inventing_brush_vertices ... ok
+test general_area_has_independent_boundaries_and_no_lower_upper_order_constraint ... ok
+test singleton_curve_policy_remains_distinct_from_legacy_line_points ... ok
+test curves_project_before_generation_and_controls_are_never_source_targets ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/shape_symbol.rs (target/debug/deps/shape_symbol-3850a340590d0e90)
+
+running 3 tests
+test standalone_draw_native_accessor_and_bounds_share_one_engine ... ok
+test filled_area_and_stroked_topology_are_distinct ... ok
+test every_symbol_size_matches_independent_reference_and_palette_aliases ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/shape_symbol_integration.rs (target/debug/deps/shape_symbol_integration-ff3f035cf9309877)
+
+running 5 tests
+test size_guide_samples_use_the_actual_mapping_instead_of_input_units ... ok
+test explicit_symbol_catalogs_validate_and_preserve_unknown_policy ... ok
+test open_strokes_and_zero_size_do_not_create_filled_or_invisible_targets ... ok
+test display_area_is_independent_of_log_center_and_legacy_point_radius ... ok
+test mapped_types_and_size_guides_retain_exact_resolved_geometry ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

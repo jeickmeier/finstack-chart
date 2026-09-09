@@ -1,0 +1,136 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 17.60s
+     Running tests/authoring.rs (target/debug/deps/authoring-e72a047800eb2f6b)
+
+running 13 tests
+test columns_and_rows_prepare_identical_values_without_manual_ids ... ok
+test automatic_timestamp_origins_align_independent_datasets_without_narrowing_ticks ... ok
+test nondefault_recipe_and_primary_axis_options_survive_later_components ... ok
+test exact_nullable_data_and_timestamps_survive_materialization ... ok
+test facets_reject_same_ordinal_with_different_field_names ... ok
+test component_options_reject_incompatible_owners_without_preparation ... ok
+test schema_errors_and_foreign_handles_reject_without_mutating_data ... ok
+test labels_are_single_annotations_and_callout_components_preserve_the_endpoint ... ok
+test histogram_lowers_to_the_existing_bin_kernel_and_source_membership ... ok
+test grid_infers_empty_combinations_and_build_rejects_invalid_catalogs ... ok
+test shared_automatic_color_catalog_is_consistent_across_data_and_updates ... ok
+test imported_identity_preserves_seeded_jitter_and_rejects_ambiguous_data_owners ... ok
+test shared_transform_runs_once_and_generated_color_uses_its_own_stage ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/authoring_host.rs (target/debug/deps/authoring_host-496965855666fc05)
+
+running 2 tests
+test host_composition_matches_independent_bins_and_rejects_misplaced_components ... ok
+test primary_envelope_roundtrip_preserves_exact_data_names_and_rejects_malformed_registry ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/full_scales.rs (target/debug/deps/full_scales-d12122b0cf1d4e57)
+
+running 4 tests
+test symlog_signed_roundtrip_extreme_ratio ... ok
+test supplied_sessions_compress_gaps_and_retain_exact_large_timestamps ... ok
+test logarithmic_policies_roundtrips_and_invalids ... ok
+test points_and_colors_have_declared_missing_and_domain_policy ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ggplot_stages.rs (target/debug/deps/ggplot_stages-4a7f309a40142640)
+
+running 10 tests
+test inferred_multiple_discrete_fields_and_stat_override_use_exact_interactions ... ok
+test logged_summary_projects_once_into_destination_geometry ... ok
+test missing_discrete_values_and_float_group_keys_match_reference_partitions ... ok
+test source_expressions_and_reductions_use_registered_data_before_filters ... ok
+test after_scale_and_theme_expressions_preserve_defaults_overrides_and_old_snapshots ... ok
+test after_stat_expressions_reduce_generated_populations_and_backtransform_log_values ... ok
+test shared_statistics_use_source_grouping_and_scale_context_once ... ok
+test horizontal_histogram_and_column_defaults_reuse_stat_and_geometry_stages ... ok
+test scale_transforms_limits_and_oob_precede_statistics_while_coordinates_do_not ... ok
+test profile_provenance_grouping_and_revision_survive_primary_and_legacy_round_trips ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests/interpolate_color.rs (target/debug/deps/interpolate_color-3e2507b2c8696e08)
+
+running 2 tests
+test floating_channels_opacity_hue_and_splines_keep_their_contracts ... ok
+test every_color_export_gamma_and_hue_matches_offline_reference ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/interpolate_descriptors.rs (target/debug/deps/interpolate_descriptors-d9128d74c924a783)
+
+running 2 tests
+test every_descriptor_family_round_trips_and_keeps_owned_samples ... ok
+test color_consumers_keep_floating_channels_and_portable_validation_is_strict ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/interpolate_scalar.rs (target/debug/deps/interpolate_scalar-817ad7592387e3cb)
+
+running 3 tests
+test parameter_controls_and_output_counts_are_bounded ... ok
+test independent_rounding_composition_and_owned_sampling_contracts ... ok
+test every_scalar_and_composition_case_matches_the_offline_oracle ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/interpolate_values.rs (target/debug/deps/interpolate_values-474bbffd7d8a560b)
+
+running 3 tests
+test independent_target_shapes_dates_casts_and_reuse ... ok
+test every_structured_value_case_matches_offline_reference_and_adaptations ... ok
+test strict_value_decoding_and_aggregate_limits_reject_invalid_inputs ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/paint_integration.rs (target/debug/deps/paint_integration-c8b37a8fbb9b7768)
+
+running 4 tests
+test floating_palette_avoids_endpoint_rounding_and_preserves_legacy_mapping ... ok
+test paint_retains_descriptors_and_legacy_bytes_with_strict_ingestion ... ok
+test floating_color_only_edits_reuse_statistics_and_match_fresh_batch ... ok
+test every_retained_paint_location_requires_version_four_and_preserves_legacy_versions ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/portable.rs (target/debug/deps/portable-f732eb6c47af9857)
+
+running 6 tests
+test native_accessors_fail_serialization_instead_of_disappearing ... ok
+test fix16_all_64_bits_null_payload_and_formatted_columns_round_trip ... ok
+test strict_versions_required_fields_unknown_operations_and_duplicate_keys_reject ... ok
+test state_restore_cannot_reuse_revision_for_changed_content ... ok
+test fix15_round_trip_correction_viewport_and_aggregate_members ... ok
+test bounded_decoding_and_failed_transactions_leave_data_and_state_unchanged ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/scale_classifier.rs (target/debug/deps/scale_classifier-bf5b1175171473b7)
+
+running 2 tests
+test generic_outputs_large_keys_and_population_corrections_are_independent ... ok
+test all_pinned_classifier_cases_match_mapping_extents_and_cuts ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/scale_interpolated.rs (target/debug/deps/scale_interpolated-790c5c4693993174)
+
+running 3 tests
+test custom_typed_interpolation_midpoint_rounding_and_rank_degeneracies ... ok
+test continuous_typed_ranges_use_shared_numeric_knots ... ok
+test all_pinned_sequential_diverging_and_rank_cases_match ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests/scale_numeric.rs (target/debug/deps/scale_numeric-5bdafc7d6304fd1e)
+
+running 2 tests
+test independent_piecewise_radial_clamp_and_copy_contracts ... ok
+test pinned_numeric_mapping_and_inverse_families_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+

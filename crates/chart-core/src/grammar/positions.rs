@@ -19,9 +19,10 @@ fn order(order: &[GroupValue], limits: CompileLimits) -> ChartResult<()> {
     }
     Ok(())
 }
-fn additive_space(space: &ValueSpace) -> bool {
+pub(super) fn additive_space(space: &ValueSpace) -> bool {
     match space {
         ValueSpace::Data => true,
+        ValueSpace::Scaled { input, scale } => scale.transform.is_none() && additive_space(input),
         ValueSpace::Transformed { input, transform } => {
             transform.offset == 0. && additive_space(input)
         }
@@ -39,8 +40,22 @@ pub(super) fn validate(
             "OHLC uses identity positioning to keep open/close and price bounds coherent.",
         ));
     }
+    if matches!(
+        layer.geom,
+        Geom::ShapeLineRadial { .. } | Geom::ShapeAreaRadial { .. }
+    ) && layer.position != Position::Identity
+    {
+        return Err(error(
+            DiagnosticCode::UnsupportedCapability,
+            "Radial runs use identity positioning to preserve their shared center; encode the center explicitly.",
+        ));
+    }
     match &layer.position {
         Position::Identity => {}
+        Position::ShapeStack(s) => {
+            order(&s.groups, limits)?;
+            super::stack_position::validate(layer, domains, s, limits)?;
+        }
         Position::Stack(s) => {
             order(&s.order, limits)?;
             if !matches!(layer.geom, Geom::Rectangle | Geom::Rule | Geom::Bar { .. })
@@ -76,12 +91,20 @@ pub(super) fn validate(
                 && ((s.x != 0.
                     && !matches!(
                         domains.x_space,
-                        None | Some(ValueSpace::Data | ValueSpace::Transformed { .. })
+                        None | Some(
+                            ValueSpace::Data
+                                | ValueSpace::Transformed { .. }
+                                | ValueSpace::Scaled { .. }
+                        )
                     ))
                     || (s.y != 0.
                         && !matches!(
                             domains.y_space,
-                            None | Some(ValueSpace::Data | ValueSpace::Transformed { .. })
+                            None | Some(
+                                ValueSpace::Data
+                                    | ValueSpace::Transformed { .. }
+                                    | ValueSpace::Scaled { .. }
+                            )
                         )))
             {
                 return Err(error(
@@ -101,8 +124,12 @@ pub(super) fn apply(
     domains: &DomainContributions,
     rows: &mut [EncodedRow],
     limits: CompileLimits,
-) -> ChartResult<()> {
+    shapes: &super::shape_extensions::ResolvedShapes,
+) -> ChartResult<Option<super::stack_position::StackLayout>> {
     validate(layer, domains, limits)?;
+    if let Position::ShapeStack(s) = &layer.position {
+        return super::stack_position::apply(layer, rows, s, limits, shapes).map(Some);
+    }
     let ordered = match &layer.position {
         Position::Stack(s) => Some(&s.order),
         Position::Dodge(s) => Some(&s.order),
@@ -128,10 +155,12 @@ pub(super) fn apply(
     }
     match &layer.position {
         Position::Dodge(_) => {
-            if matches!(layer.geom, Geom::Rectangle | Geom::Rule | Geom::Bar { .. })
-                && rows
-                    .iter()
-                    .any(|r| matches!((r.x,r.x2),(Some(x),Some(x2)) if x!=x2))
+            if matches!(
+                layer.geom,
+                Geom::Rectangle | Geom::Rule | Geom::ShapeLink { .. } | Geom::Bar { .. }
+            ) && rows
+                .iter()
+                .any(|r| matches!((r.x,r.x2),(Some(x),Some(x2)) if x!=x2))
             {
                 return Err(error(
                     DiagnosticCode::Validation,
@@ -254,7 +283,7 @@ pub(super) fn apply(
         }
         _ => {}
     }
-    Ok(())
+    Ok(None)
 }
 fn stable_key(target: &Target, group: &Option<GroupValue>) -> String {
     // Deliberate stable encoding excludes changing membership and input revisions.
@@ -295,6 +324,9 @@ pub(super) fn output_space(layer: &Layer, domains: &mut DomainContributions) {
         &layer.position,
         Position::Stack(StackSpec {
             normalize: true,
+            ..
+        }) | Position::ShapeStack(ShapeStackSpec {
+            offset: crate::shape::StackOffset::Expand,
             ..
         })
     ) {

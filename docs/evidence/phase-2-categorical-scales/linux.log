@@ -1,0 +1,56 @@
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 33.47s
+     Running tests/full_scales.rs (target/debug/deps/full_scales-91157937eac2655d)
+
+running 4 tests
+test supplied_sessions_compress_gaps_and_retain_exact_large_timestamps ... ok
+test points_and_colors_have_declared_missing_and_domain_policy ... ok
+test logarithmic_policies_roundtrips_and_invalids ... ok
+test symlog_signed_roundtrip_extreme_ratio ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scale_categorical.rs (target/debug/deps/scale_categorical-8c12c78049f12479)
+
+running 3 tests
+test independent_spacing_windows_and_hit_geometry_preserve_category_identity ... ok
+test exact_typed_keys_and_explicit_training_do_not_mutate_frozen_catalogs ... ok
+test all_pinned_band_point_and_ordinal_cases_match ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests/scales.rs (target/debug/deps/scales-5a3836ca6eafdbf1)
+
+running 9 tests
+test baseline_padding_and_nice_precede_viewport_and_are_independent_of_range ... ok
+test decimal_ticks_do_not_accumulate_label_noise_and_time_omission_precedes_precision_conversion ... ok
+test fix07_large_origin_time_projection_keeps_integer_precision_and_labels ... ok
+test robust_projection_handles_huge_domains_without_intermediate_overflow ... ok
+test numeric_ticks_are_bounded_ordered_unique_and_locale_independent ... ok
+test categorical_explicit_order_centers_extents_gaps_and_lookup_are_distinct_from_inverse ... ok
+test fix07_empty_constant_descending_and_explicit_domains_are_locked ... ok
+test utc_calendar_matches_independent_unix_date_fixtures_and_rejects_invalid_dates ... ok
+test utc_ticks_follow_month_year_leap_day_and_monday_boundaries ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/statistics.rs (target/debug/deps/statistics-401710c7bb773624)
+
+running 14 tests
+test strict_inputs_budgets_and_incompatible_position_contracts_reject ... ok
+test stored_d3_r7_reference_examples_match_only_the_agreed_quantile_definition ... ok
+test named_generated_output_is_shared_and_cannot_be_reinterpreted_as_source ... ok
+test count_requires_all_inputs_and_reports_invalid_strict_and_empty_groups ... ok
+test stable_accumulation_survives_intermediate_overflow_and_extreme_quantiles ... ok
+test fix04_quantiles_stable_summary_missing_and_explicit_empty_sum ... ok
+test dodge_uses_band_width_and_preserves_missing_slots ... ok
+test fix05_intercept_ols_zoom_filter_degenerate_and_large_origin ... ok
+test transformed_stat_fields_are_not_transformed_again_and_mismatch_rejects ... ok
+test zero_preserving_transformed_stacks_work_and_unused_bad_generated_fields_reject ... ok
+test fix03_mixed_sign_stack_normalize_and_reorder_domains ... ok
+test fix02_explicit_auto_constant_empty_and_overflow_bin_conservation ... ok
+test seeded_jitter_is_stable_in_data_and_display_units ... ok
+test exact_batch_fallback_after_append_correction_removal_and_reorder ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

@@ -81,6 +81,13 @@ pub fn custom_stat(
     stat(Kind::Custom(OperationRef::new(id, version), parameters))
 }
 impl StatBuilder {
+    pub(super) fn explicit_grouping(&self, data: &Data) -> ChartResult<Option<Grouping>> {
+        if self.all_groups {
+            Ok(Some(Grouping::All))
+        } else {
+            self.group.as_ref().map(|g| g.grouping(data)).transpose()
+        }
+    }
     /// Bind one custom-statistic numeric parameter to a checked source mapping at build.
     /// The parameter object receives the canonical Numeric value; opaque IDs are never guessed.
     pub fn field_parameter(mut self, name: impl Into<String>, mapping: impl Into<Mapping>) -> Self {
@@ -214,16 +221,10 @@ impl StatBuilder {
                 "Outlier handling requires explicit bin edges.",
             ));
         }
-        let group = if self.all_groups {
-            Grouping::All
-        } else {
-            self.group
-                .as_ref()
-                .or(aes.group.as_ref())
-                .map(|v| v.field(data))
-                .transpose()?
-                .map_or(Grouping::All, Grouping::Field)
-        };
+        let group = self
+            .explicit_grouping(data)?
+            .or(aes.resolved_grouping(data)?)
+            .unwrap_or(Grouping::All);
         let x = || {
             self.x
                 .as_ref()
@@ -461,6 +462,10 @@ pub fn filter(value: impl Into<Mapping>) -> FilterBuilder {
     }
 }
 impl FilterBuilder {
+    pub(super) fn expression(mut self, value: crate::grammar::Expression<Mapping>) -> Self {
+        self.value = value.into();
+        self
+    }
     /// Inclusive lower bound.
     pub fn minimum(mut self, minimum: f64) -> Self {
         self.minimum = Some(minimum);
@@ -495,6 +500,18 @@ pub fn stack(order: Vec<GroupValue>) -> PositionBuilder {
         failure: None,
     }
 }
+/// Reference stack with explicit tidy groups, input rank order and missing gaps.
+pub fn shape_stack(groups: Vec<GroupValue>) -> PositionBuilder {
+    PositionBuilder {
+        value: Position::ShapeStack(ShapeStackSpec {
+            groups,
+            order: crate::shape::StackOrder::None,
+            offset: crate::shape::StackOffset::None,
+            missing: crate::shape::StackMissing::Gap,
+        }),
+        failure: None,
+    }
+}
 /// Dodge into exact group slots occupying the full categorical band by default.
 pub fn dodge(order: Vec<GroupValue>) -> PositionBuilder {
     PositionBuilder {
@@ -517,6 +534,42 @@ pub fn jitter(seed: u64) -> PositionBuilder {
 impl PositionBuilder {
     pub(super) fn lower(&self) -> ChartResult<Position> {
         self.failure.clone().map_or(Ok(self.value.clone()), Err)
+    }
+    /// Reference stacking rank policy, including explicit catalog permutations.
+    pub fn stack_order(mut self, order: crate::shape::StackOrder) -> Self {
+        if let Position::ShapeStack(s) = &mut self.value {
+            s.order = order;
+        } else {
+            self.failure = Some(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Stack order requires shape_stack.",
+            ));
+        }
+        self
+    }
+    /// Reference stack baseline/normalization policy.
+    pub fn stack_offset(mut self, offset: crate::shape::StackOffset) -> Self {
+        if let Position::ShapeStack(s) = &mut self.value {
+            s.offset = offset;
+        } else {
+            self.failure = Some(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Stack offset requires shape_stack.",
+            ));
+        }
+        self
+    }
+    /// Explicit missing-cell policy for the tidy stack matrix.
+    pub fn stack_missing(mut self, missing: crate::shape::StackMissing) -> Self {
+        if let Position::ShapeStack(s) = &mut self.value {
+            s.missing = missing;
+        } else {
+            self.failure = Some(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Stack missing policy requires shape_stack.",
+            ));
+        }
+        self
     }
     /// Normalize each sign side for a stack.
     pub fn normalize(mut self, normalize: bool) -> Self {

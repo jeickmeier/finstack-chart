@@ -1,0 +1,16 @@
+    Blocking waiting for file lock on build directory
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+   Compiling chart-extension-example v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/custom-extension)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 15.80s
+     Running tests/scale_distributions.rs (target/debug/deps/scale_distributions-784e5be8aacc6f3d)
+
+running 4 tests
+test named_mappings_use_independent_midpoint_radius_opacity_and_width ... ok
+test post_stat_training_and_exact_integer_threshold_keys_reach_the_chart ... ok
+test corrected_shared_quantile_population_matches_fresh_batch_and_ignores_zoom ... ok
+test opacity_multiplies_floating_alpha_before_the_single_paint_boundary ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+

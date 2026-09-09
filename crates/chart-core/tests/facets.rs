@@ -418,8 +418,8 @@ fn color_guides_collect_only_exact_compatible_id_domain_and_palette() {
         input: ColorInput::Category(F),
         scale: ColorScale::Discrete {
             domain: Some(vec!["A".into(), "B".into()]),
-            palette: vec![blue, red],
-            missing: blue,
+            palette: vec![blue.into(), red.into()],
+            missing: blue.into(),
         },
     });
     let count = |c: &LaidOutChart| {

@@ -1,5 +1,9 @@
 # ADR-006: Portable envelopes and executable binding proofs
 
+Phase 2 amendment: [ADR-017](017-shared-interpolation-values.md) defines separate
+versioned standalone interpolation descriptors and owned samples. Its explicit
+exceptional numeric tags do not change exact source integers or finite scene geometry.
+
 Status: ACCEPTED for WP-09 / minimal G1. Date: 6 September 2026.
 Requirements: BND-01–04, ARC-02, DAT-01, QLT-01; FIX-15/16 subsets.
 

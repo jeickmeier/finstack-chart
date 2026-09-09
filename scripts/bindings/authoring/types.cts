@@ -4,6 +4,7 @@ const p: Plot = plot(data).aes(aes().x(data.field('x')).y('y')).layer(line()).la
 const action: DispatchOutcome = p.chart().legendVisible(false);
 const width: number = exportOptions(300,200).dpi(96) ? 300 : 0;
 void [action,width,p.edit().title(title('Edited')).build()];
+legend().scale('series').untitled().genericTitle().generic_title().title('Series');
 // @ts-expect-error Titles must use their figure component slot.
 labels().title('Wrong');
 // @ts-expect-error An annotation cannot be installed as a title.
@@ -17,3 +18,8 @@ p.edit().data(data);
 
 import {densityHistogram,withExtensions,chamferedBars} from '../../../target/authoring/wasm-module/examples.cjs';
 withExtensions(plot(data)).layer(chamferedBars().stat(densityHistogram(data.field('x'),[0,1,2]))).build();
+
+import {Path,pathRound,vectorPath} from '../../../target/authoring/wasm-module/authoring.cjs';
+const pathValue: Path = pathRound().moveTo(0,0).arcTo(10,0,10,10,2).closePath();
+pathValue.copy().toSvg();
+p.edit().annotation(vectorPath('curve',pathValue).fill(null)).build();

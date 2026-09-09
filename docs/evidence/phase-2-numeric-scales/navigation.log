@@ -1,0 +1,14 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.77s
+     Running unittests src/lib.rs (target/debug/deps/chart_core-48ca692dceeb6957)
+
+running 6 tests
+test navigation::tests::pointer_anchor_uses_log_and_symlog_coordinates ... ok
+test navigation::tests::sessions_zoom_by_active_time_and_reject_unknown_calendar_extent ... ok
+test navigation::tests::timestamp_navigation_preserves_large_integer_identity ... ok
+test navigation::tests::reversed_ranges_domain_clamp_region_and_invalid_inputs ... ok
+test navigation::tests::piecewise_numeric_zoom_retains_knots_and_pointer_anchor ... ok
+test navigation::tests::category_windows_preserve_catalog_lookup_and_singletons ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+

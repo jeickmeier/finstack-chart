@@ -39,6 +39,8 @@ inputs. Completed cancellation handles retain metadata/status only. Queue counte
 report pending/running jobs, rows/bytes, peak jobs and cumulative outcomes.
 
 The version-1 portable `export_control` envelope supports Begin, Cancel and Status.
+Begin with a floating-color output theme requires version two; byte-only overrides
+retain version one. Captured output themes retain their original color descriptors.
 Begin chooses Presented (default) or Current data/state, publication overrides and
 interaction policy. `export_job` consumes the canonical string job ID and returns
 owned bytes. These execute through actual Python and Node WASM adapters on the shared

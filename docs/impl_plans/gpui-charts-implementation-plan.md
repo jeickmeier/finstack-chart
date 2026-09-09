@@ -23,7 +23,9 @@ the Phase 1 foundation/interactive scope; Phase 2 can begin independent contract
 kernels after WP-14, then waits for the named runtime prerequisites. WP-21–23 remain
 the one final hardening/release sequence after G-PARITY. Existing D3 inventories and
 package IDs remain authoritative for their detailed work. Historical budgets below
-exclude the new ggplot2 scope; use the secondary plan's estimates and re-estimation gates.
+exclude the new ggplot2 scope; use the secondary plan's historical allowances and
+remaining-work reconciliation. Original-scope WP completion is retained; expanded
+parity and changed authoring paths require the specified requalification.
 
 The [D3 shape parity plan](d3-shape-parity-plan.md) adds required SHP-01–10,
 WP-S01–WP-S08 and FIX-S01–FIX-S09. It contains the full API inventory, current code
@@ -87,7 +89,7 @@ Default delivery uses one developer/integrator, potentially assisted by AI. Inde
 | M-SHAPE — D3 shape completion | WP-S01–WP-S08 | 8–13 additional developer-weeks, provisional | G-SHAPE: full generators/layouts/custom protocols and integrated native/export/binding evidence. |
 | M-INTERPOLATE — D3 interpolation completion | WP-IP01–07 | 27–45 engineer-days, provisional; includes interpolation transferred from SP-04 | G-INTERPOLATE: full standalone API and integrated evidence. |
 | M-HIERARCHY — D3 hierarchy completion | WP-H01–WP-H08 | 35–57 additional engineer-days, provisional; shared shape work excluded | G-HIERARCHY: full standalone operations/layouts and integrated native/export/binding/history evidence. |
-| M-PARITY — Phase 2 integration and ggplot2 completion | P2-00, all eight D3 lanes, GG-00–19 | GG-only 182–315 engineer-days plus P2-00 2–4 days; D3/shared work and final hardening excluded | G-PARITY: G3, eight D3 gates and G-GGPLOT; detailed sequence and risks in the secondary plan. |
+| M-PARITY — Phase 2 integration and ggplot2 completion | P2-00, all eight D3 lanes, GG-00–19 | Historical GG-only 182–315 engineer-days plus P2-00 2–4 days; reconcile delivered AP/legend work before estimating remaining effort; D3/shared work and final hardening excluded | G-PARITY: G3, eight D3 gates and G-GGPLOT; detailed sequence and risks in the secondary plan. |
 | M4 — Production hardening | WP-21–WP-23 | 4–6 weeks | G4: all requirement/fixture/performance/platform/documentation evidence. |
 
 Cumulative original-scope planning ranges: alpha 9–13 weeks; interactive beta 12–18 weeks; scoped production 16–24 weeks. These do not include the added M-SHAPE, scale, axis or interpolation effort. Subtract transferred interpolation work from scale estimates when combining budgets. Re-estimate the expanded delivery schedule after WP-S01 and WP-S02; independent algorithm work can overlap M3, but WP-S08 consumes WP-16/18/20. Production Python wheels/viewer/notebooks, a browser rendering product, and chart families outside the explicitly required parity inventories remain excluded. The original totals also exclude M-HIERARCHY; re-estimate after WP-H01/H02. AI availability does not remove the need to run platform, visual, and sustained-load checks.
@@ -481,10 +483,10 @@ WP-21/22/23 acceptance. The status ledger tracks each supplemental package separ
 - Measure the supplemental shape workloads in the parity plan, including spline/arc command growth, streamgraph recomputation, hit indexes and publication lowering; do not infer these from simple-line timings.
 - Include the path plan's append/replay, serialization bytes, arc subdivision and retained-snapshot memory workloads, sharing arc measurements with the shape lane.
 - Include axis-heavy resize/update and transition cases from WP-AX06 in the existing workloads; report guide/tick counts and layout/formatting costs.
-- Measure CP-05 catalog footprint, evaluator allocations, large mapped-color scenes and repeated palette changes using the existing protocol.
+- Measure CP-05 catalog footprint, evaluator allocations, large mapped-color scenes and repeated palette changes using the existing protocol. The [CP-05 measurements](../evidence/phase-2-chromatic-integration-2026-09-09.md) supply initial component/update timings and a WASM capacity plateau; native allocation counts and sustained-load budgets remain WP-22.
 - Include WP-IP07 factory-versus-sampling costs, structured-output allocations, color/transform/zoom and shared consumer workloads under the existing PERF protocol.
-- Measure SP-07 piecewise/category lookup, exact quantile retraining and interpolation allocations; use the existing PERF protocol and disclose added workload sizes.
-- Include CLR-05 parse/conversion/palette and color-only update workloads; verify no per-mark parsing or unintended numerical recomputation.
+- Measure SP-07 piecewise/category lookup, exact quantile retraining and interpolation allocations; use the existing PERF protocol and disclose added workload sizes. The [SP-07 measurements](../evidence/phase-2-scale-integration-2026-09-09.md) supply initial kernel timings and a WASM memory plateau, not the sustained-load pass.
+- Include CLR-05 parse/conversion/palette and color-only update workloads; verify no per-mark parsing or unintended numerical recomputation. The [CLR-05 component/update measurements](../evidence/phase-2-color-acceptance-2026-09-09.md) are initial workload evidence, not release budget acceptance.
 - Measure WP-H08 hierarchy workloads: balanced/deep/wide topology, skewed packing, treemap history reuse/reset, hit indexes, publication and cache/snapshot memory; record algorithm-specific budgets before measurement.
 - Account for accepted/rejected/dropped/coalesced operations and compare retained results against known reference outcomes.
 - Measure frame/input latency, ingest-to-present lag, worker/index/preparation cost, memory plateau and snapshot disposal.
@@ -516,6 +518,15 @@ one wire/resource/reference-tool strategy; existing entry packages retain their 
 inventory/oracle work. G-PARITY precedes final WP-21/22 acceptance; a package can start
 independent preparation earlier without advancing that gate. No D3 certification
 package depends on GG-19, and no producer depends on its final consumer's certification.
+
+The [current API handoff](phase-2-parity-implementation-plan.md#41-integration-through-the-current-primary-api)
+extends Data/Plot/Chart/Output and the AP-00 register. First reconcile P2-00 contracts
+with active AP owners, then assign GG-00 and ready D3 entry packages. GG-01 now owns
+remaining acceptance of the delivered shared legend painter. GG-02 carries alternate
+profile semantics through execution/wire/capture; WP-AX01 migrates primary axis handles,
+names, layer bindings and host navigation. Every semantic package supplies primary
+API usage and actual applicable host/export evidence using AP-07's shared syntax.
+Pure kernels need not wait for G-AUTH; no package/gate is closed by this plan update.
 
 **Shared path/shape ownership:** [WP-P01–04](d3-path-parity-plan.md#work-packages-and-dependency-order)
 own the builder, path sink, arcs, SVG precision and primitive-level native/export/binding

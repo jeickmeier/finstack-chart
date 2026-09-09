@@ -83,7 +83,7 @@ impl Gallery {
                 self.chart.update(cx, |c, cx| {
                     c.set_data(self.store.snapshot(), cx)?;
                     let mut r = c.layout_request().clone();
-                    r.output_theme.background = Some(chart_core::theme::rgb(245, 225, 215));
+                    r.output_theme.background = Some(chart_core::theme::rgb(245, 225, 215).into());
                     c.set_layout(r, cx)
                 })?;
                 self.dimensions = (480., 240.);

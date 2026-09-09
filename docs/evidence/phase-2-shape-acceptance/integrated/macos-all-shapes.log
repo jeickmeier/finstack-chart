@@ -1,0 +1,43 @@
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_foundation.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/final-proofs/foundation
+PASS shape_foundation
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_cartesian.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module
+PASS shape_cartesian
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_arc_pie.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module
+PASS shape_arc_pie
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_symbol.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module
+PASS shape_symbol
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_stack.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module
+PASS shape_stack
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_radial.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module
+PASS shape_radial
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_custom.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module
+PASS shape_custom
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_dashes.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module
+PASS shape_dashes
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_projection_budget.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module
+PASS shape_projection_budget
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_cartesian_interaction.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module
+PASS shape_cartesian_interaction
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_cartesian_updates.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/final-proofs/cartesian-updates.json
+PASS shape_cartesian_updates
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_arc_interaction.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module
+PASS shape_arc_interaction
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_arc_updates.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/final-proofs/arc-updates.json
+PASS shape_arc_updates
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_symbol_interaction.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module
+PASS shape_symbol_interaction
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_symbol_updates.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/final-proofs/symbol-updates.json
+PASS shape_symbol_updates
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_stack_interaction.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module
+PASS shape_stack_interaction
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_stack_updates.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/final-proofs/stack-updates.json
+PASS shape_stack_updates
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_radial_interaction.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module
+PASS shape_radial_interaction
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_radial_updates.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/final-proofs/radial-updates.json
+PASS shape_radial_updates
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_custom_updates.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/final-proofs/custom-updates.json
+PASS shape_custom_updates
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_dashes_gallery.py /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/python-current-module /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/dashes/rust /Users/jeickmeier/Projects/finstack-chart/target/shape-acceptance/macos/final-proofs/dashes
+PASS shape_dashes_gallery
+PASS FIX-S01-09 actual python shape corpus, interactions, updates and retained ownership; visual/native qualification is separate.

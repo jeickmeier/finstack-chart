@@ -1,7 +1,18 @@
 //! Owned primary authoring handles; source columns cross typed WASM vectors.
+mod color;
 mod data;
+mod interpolate;
 mod output;
+mod path;
 mod runtime;
+mod scale;
+mod shape;
+mod shape_arc_pie;
+mod shape_radial;
+mod shape_registry;
+mod shape_stack;
+mod shape_symbol;
+mod time;
 use super::failure;
 use chart_core::{
     plot::{
@@ -58,6 +69,67 @@ impl _Component {
             .map(Self::wrap)
             .map_err(failure)
     }
+    pub fn numeric_scale_field(
+        &self,
+        target: &str,
+        field: &_Field,
+        scale: &str,
+    ) -> Result<Self, JsError> {
+        self.get()?
+            .numeric_scale_field(
+                portable::decode(target).map_err(failure)?,
+                *field.get()?,
+                portable::decode(scale).map_err(failure)?,
+            )
+            .map(Self::wrap)
+            .map_err(failure)
+    }
+    pub fn numeric_scale_expression(
+        &self,
+        target: &str,
+        input: &_Component,
+        scale: &str,
+    ) -> Result<Self, JsError> {
+        self.get()?
+            .numeric_scale_expression(
+                portable::decode(target).map_err(failure)?,
+                input.get()?,
+                portable::decode(scale).map_err(failure)?,
+            )
+            .map(Self::wrap)
+            .map_err(failure)
+    }
+    pub fn symbol_types_field(
+        &self,
+        field: &_Field,
+        domain: &str,
+        palette: &str,
+    ) -> Result<Self, JsError> {
+        self.get()?
+            .symbol_types_field(
+                *field.get()?,
+                portable::decode(domain).map_err(failure)?,
+                portable::decode(palette).map_err(failure)?,
+            )
+            .map(Self::wrap)
+            .map_err(failure)
+    }
+    pub fn shape_value_field(&self, target: &str, field: &_Field) -> Result<Self, JsError> {
+        self.get()?
+            .shape_value_field(portable::decode(target).map_err(failure)?, *field.get()?)
+            .map(Self::wrap)
+            .map_err(failure)
+    }
+    pub fn shape_value_expression(
+        &self,
+        target: &str,
+        input: &_Component,
+    ) -> Result<Self, JsError> {
+        self.get()?
+            .shape_value_expression(portable::decode(target).map_err(failure)?, input.get()?)
+            .map(Self::wrap)
+            .map_err(failure)
+    }
     pub fn field_parameter(&self, name: &str, field: &_Field) -> Result<Self, JsError> {
         self.get()?
             .field_parameter(name, *field.get()?)
@@ -69,6 +141,9 @@ impl _Component {
             .data(data.get()?)
             .map(Self::wrap)
             .map_err(failure)
+    }
+    pub fn source_expression(field: &_Field) -> Result<Self, JsError> {
+        Ok(Self::wrap(Component::source_expression(*field.get()?)))
     }
     pub fn transform(name: &str, stat: &Self) -> Result<Self, JsError> {
         Component::transform(name, stat.get()?)
@@ -100,6 +175,15 @@ impl _Component {
 handle!(_Draft, _Draft, Draft);
 #[wasm_bindgen]
 impl _Draft {
+    pub fn with_shape_registry(
+        &self,
+        registry: &shape_registry::_ShapeRegistry,
+    ) -> Result<Self, JsError> {
+        self.get()?
+            .extensions(registry.get()?.clone())
+            .map(Self::wrap)
+            .map_err(failure)
+    }
     #[cfg(feature = "extension-proof")]
     pub fn with_example_extensions(&self) -> Result<Self, JsError> {
         self.get()?
@@ -142,6 +226,14 @@ impl _Draft {
 handle!(_Plot, _Plot, plot::Plot);
 #[wasm_bindgen]
 impl _Plot {
+    pub fn from_json_with_registry(
+        input: &str,
+        registry: &shape_registry::_ShapeRegistry,
+    ) -> Result<Self, JsError> {
+        plot::Plot::from_json_with_extensions(input, registry.get()?.clone())
+            .map(Self::wrap)
+            .map_err(failure)
+    }
     pub fn edit(&self) -> Result<_Draft, JsError> {
         Ok(_Draft::wrap(Draft::edit(self.get()?)))
     }

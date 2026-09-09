@@ -54,16 +54,32 @@
 //! # }
 //! ```
 
+mod after_scale;
+mod stack_position;
+pub use after_scale::*;
 mod colors;
+mod numeric_aesthetics;
+mod radial_shapes;
+mod shape_encoding;
+pub use numeric_aesthetics::{NumericAesthetic, NumericEncoding};
+pub use radial_shapes::RadialParameters;
 mod compiler;
 mod incremental_bins;
 pub use incremental_bins::StatUpdateMetrics;
 mod definition;
+mod expression;
+mod expression_stage;
 mod extensions;
 mod facets;
 mod geometry_extensions;
+pub(crate) mod orientation;
 pub(crate) mod positions;
+mod shape_extensions;
+pub use orientation::Orientation;
 mod prepared;
+mod scale_extensions;
+mod scale_stage;
+mod semantics;
 mod statistical_types;
 mod statistics;
 mod stats;
@@ -72,10 +88,15 @@ mod typed;
 pub use colors::*;
 pub use compiler::Compiler;
 pub use definition::*;
+pub use expression::*;
 pub use extensions::*;
 pub use facets::*;
 pub use geometry_extensions::*;
 pub use prepared::*;
+pub use scale_extensions::*;
+pub use scale_stage::*;
+pub use semantics::*;
+pub use shape_extensions::*;
 pub use statistical_types::*;
 pub use typed::*;
 
@@ -87,3 +108,6 @@ fn error(code: DiagnosticCode, message: impl Into<String>) -> Diagnostic {
         "Correct the declared mapping, operation, scope or budget before preparing again.",
     )
 }
+
+mod symbols;
+pub use symbols::{SymbolEncoding, SymbolLegend, SymbolLegendEntry, SymbolSizeGuide};

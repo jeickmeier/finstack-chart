@@ -1,0 +1,50 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+   Compiling chart-extension-example v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/custom-extension)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.52s
+     Running tests/authoring.rs (target/debug/deps/authoring-463ea1b30b728598)
+
+running 5 tests
+test live_capture_requires_presentation_only_for_presented_basis ... ok
+test repeated_frozen_paints_preserve_scene_and_capture_policy_after_live_commit ... ok
+test ordinary_and_faceted_legends_share_exported_labels_and_source_provenance ... ok
+test presented_current_projection_and_interaction_captures_remain_independent_after_disposal ... ok
+test real_svg_pdf_png_preserve_component_text_geometry_and_physical_size ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.55s
+
+     Running tests/scale_categorical.rs (target/debug/deps/scale_categorical-4a664784181f0475)
+
+running 2 tests
+test category_append_matches_fresh_batch_and_retains_prior_export ... ok
+test named_category_axes_preserve_dodge_slots_and_descriptor_versions ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests/scale_distributions.rs (target/debug/deps/scale_distributions-784e5be8aacc6f3d)
+
+running 4 tests
+test named_mappings_use_independent_midpoint_radius_opacity_and_width ... ok
+test post_stat_training_and_exact_integer_threshold_keys_reach_the_chart ... ok
+test corrected_shared_quantile_population_matches_fresh_batch_and_ignores_zoom ... ok
+test opacity_multiplies_floating_alpha_before_the_single_paint_boundary ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+     Running tests/scale_numeric.rs (target/debug/deps/scale_numeric-0600e25a4503a120)
+
+running 1 test
+test each_numeric_family_executes_through_named_axes_and_retained_publication ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+
+     Running tests/scale_ticks_format.rs (target/debug/deps/scale_ticks_format-1d80d1304c63f790)
+
+running 3 tests
+test invalid_formatter_rejected_before_empty_axis_or_category_publication ... ok
+test inferred_numeric_locale_survives_wire_and_retained_publication ... ok
+test raw_log_candidates_survive_label_suppression_and_layout_thinning ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.65s
+

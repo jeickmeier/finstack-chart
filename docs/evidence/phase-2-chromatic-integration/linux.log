@@ -1,0 +1,63 @@
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.74s
+     Running unittests src/lib.rs (target/debug/deps/chart_core-a27a11c556a0c361)
+
+running 12 tests
+test navigation::tests::sessions_zoom_by_active_time_and_reject_unknown_calendar_extent ... ok
+test navigation::tests::timestamp_navigation_preserves_large_integer_identity ... ok
+test navigation::tests::piecewise_numeric_zoom_retains_knots_and_pointer_anchor ... ok
+test navigation::tests::reversed_ranges_domain_clamp_region_and_invalid_inputs ... ok
+test navigation::tests::calendar_navigation_uses_piecewise_mapping_and_exact_timestamps ... ok
+test navigation::tests::pointer_anchor_uses_log_and_symlog_coordinates ... ok
+test state::tests::state_and_viewport_revision_exhaustion_leave_state_unchanged ... ok
+test state::reducer::tests::disposal_is_terminal_even_when_cancellation_cannot_advance_a_revision ... ok
+test transaction::tests::exhausted_store_dataset_and_ordinal_counters_roll_back ... ok
+test navigation::tests::category_windows_preserve_catalog_lookup_and_singletons ... ok
+test inspection::index::tests::duplicate_x_signed_zeros_keep_frontmost_128_and_all_keyboard_identities ... ok
+test color::trig::tests::fixed_trigonometry_matches_pinned_v8_anchors ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/chromatic.rs (target/debug/deps/chromatic-b49bdaa49c7ef5a1)
+
+running 2 tests
+test every_actual_scheme_array_is_exact_and_owned ... ok
+test every_interpolator_sample_matches_exact_reference_bytes ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.38s
+
+     Running tests/chromatic_integration.rs (target/debug/deps/chromatic_integration-08b83e935b7118bf)
+
+running 4 tests
+test asymmetric_normalization_reversal_missing_and_guide_identity ... ok
+test nonfinite_named_ordinal_keys_are_missing_and_do_not_shift_training ... ok
+test palette_reconfiguration_reuses_tables_and_matches_fresh_preparation ... ok
+test palette_metadata_checked_and_v1_v6_ingestion_is_strict ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/color_parity.rs (target/debug/deps/color_parity-eb7b828b7de6c2c2)
+
+running 3 tests
+test independent_color_math_and_quantization_preserve_floating_information ... ok
+test color_descriptors_parser_budgets_and_channel_names_reject_malformed_inputs ... ok
+test complete_color_oracle_covers_all_constructors_and_inherited_operations ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+     Running tests/interpolate_color.rs (target/debug/deps/interpolate_color-7b4857376314861f)
+
+running 2 tests
+test floating_channels_opacity_hue_and_splines_keep_their_contracts ... ok
+test every_color_export_gamma_and_hue_matches_offline_reference ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/reference_inventory.rs (target/debug/deps/reference_inventory-d01b49fab52b5066)
+
+running 2 tests
+test complete_reference_inventory_retains_owners_and_independent_seed_expectations ... ok
+test chromatic_reference_inventory_retains_every_export_size_and_sample ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+

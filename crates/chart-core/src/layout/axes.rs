@@ -8,25 +8,12 @@ pub(super) fn validate_specs(axes: &[AxisSpec], limits: crate::Limits) -> ChartR
     use std::collections::BTreeSet;
     crate::limits::require_within(axes.len() <= 4, "independent axis count (four)")?;
     let mut ids = BTreeSet::new();
-    let mut sides = BTreeSet::new();
     for a in axes {
-        if !a.label_rotation.is_finite() || a.label_rotation.abs() > 360. {
-            return Err(error(
-                DiagnosticCode::Validation,
-                "Axis label rotation must be -360..360 degrees.",
-            ));
-        }
-        if let Some(t) = &a.typography {
-            t.validate(limits)?;
-        }
-        if let Some(t) = &a.title {
-            t.validate(limits)?;
-        }
-
-        if !ids.insert(a.id) || (a.visible && !sides.insert(a.side)) {
+        validate_style(&a.guide, limits)?;
+        if !ids.insert(a.id) {
             return Err(error(
                 DiagnosticCode::SchemaConflict,
-                "Axes need unique IDs and one visible guide per side.",
+                "Positional scales need unique IDs.",
             ));
         }
         if let Some(v) = a.viewport {
@@ -34,23 +21,6 @@ pub(super) fn validate_specs(axes: &[AxisSpec], limits: crate::Limits) -> ChartR
         }
         if let Some(v) = a.range {
             v.distinct()?;
-        }
-        if let Some(f) = &a.number_format {
-            f.validate()?;
-        }
-        if let Some(ticks) = &a.guide_ticks {
-            if a.number_format.is_some() {
-                return Err(error(
-                    DiagnosticCode::SchemaConflict,
-                    "Explicit custom labels cannot also request a numeric formatter.",
-                ));
-            }
-            if ticks.iter().any(|tick| tick.label.is_empty()) {
-                return Err(error(
-                    DiagnosticCode::Validation,
-                    "Custom guide labels must be nonempty.",
-                ));
-            }
         }
         if let AxisScale::Secondary {
             source,
@@ -81,7 +51,10 @@ pub(super) fn validate_specs(axes: &[AxisSpec], limits: crate::Limits) -> ChartR
                 })?;
             if !matches!(
                 primary.scale,
-                AxisScale::Auto | AxisScale::Linear(_) | AxisScale::Nonlinear { .. }
+                AxisScale::Auto
+                    | AxisScale::Linear(_)
+                    | AxisScale::Numeric(_)
+                    | AxisScale::Nonlinear { .. }
             ) {
                 return Err(error(
                     DiagnosticCode::SchemaConflict,
@@ -91,11 +64,26 @@ pub(super) fn validate_specs(axes: &[AxisSpec], limits: crate::Limits) -> ChartR
         }
         let range = Bounds::new(0., 1.)?;
         match &a.scale {
+            AxisScale::Calendar { spec, interval } => {
+                TimeAxisScale::resolve(spec.clone(), range, None, a.outside)?;
+                if let Some(interval) = interval {
+                    interval.validate()?;
+                }
+            }
+            AxisScale::Numeric(spec) => {
+                NumericScale::new(spec.clone())?;
+            }
             AxisScale::Linear(domain) => {
                 domain.resolve(None)?;
             }
             AxisScale::Nonlinear { transform, domain } => {
                 NonlinearScale::resolve(None, *domain, *transform, range, a.viewport, a.outside)?;
+            }
+            AxisScale::D3Band(options) => {
+                BandScale::resolve_d3(&[], options, range)?;
+            }
+            AxisScale::D3Point(options) => {
+                PointScale::resolve_d3(&[], options, range)?;
             }
             AxisScale::Band(options) => {
                 BandScale::resolve(&[], options, range)?;
@@ -112,12 +100,121 @@ pub(super) fn validate_specs(axes: &[AxisSpec], limits: crate::Limits) -> ChartR
     Ok(())
 }
 
+pub(super) fn validate_style(a: &GuideStyle, limits: crate::Limits) -> ChartResult<()> {
+    if !a.label_rotation.is_finite() || a.label_rotation.abs() > 360. {
+        return Err(error(
+            DiagnosticCode::Validation,
+            "Axis label rotation must be -360..360 degrees.",
+        ));
+    }
+    if let Some(t) = &a.typography {
+        t.validate(limits)?;
+    }
+    if let Some(t) = &a.title {
+        t.validate(limits)?;
+    }
+
+    if let Some(f) = &a.number_format {
+        f.validate()?;
+    }
+    if let Some(f) = &a.numeric_format {
+        f.prepare()?;
+        if a.number_format.is_some() {
+            return Err(error(
+                DiagnosticCode::SchemaConflict,
+                "An axis may select only one numeric formatter.",
+            ));
+        }
+    }
+    if let Some(f) = &a.time_format {
+        f.prepare(Calendar::new(CalendarZone::Utc)?)?;
+        if a.number_format.is_some() || a.numeric_format.is_some() || a.guide_ticks.is_some() {
+            return Err(error(
+                DiagnosticCode::SchemaConflict,
+                "Time formatting cannot be combined with numeric or custom guide labels.",
+            ));
+        }
+    }
+    if let Some(ticks) = &a.guide_ticks {
+        if a.number_format.is_some() || a.numeric_format.is_some() {
+            return Err(error(
+                DiagnosticCode::SchemaConflict,
+                "Explicit custom labels cannot also request a numeric formatter.",
+            ));
+        }
+        if ticks.iter().any(|tick| tick.label.is_empty()) {
+            return Err(error(
+                DiagnosticCode::Validation,
+                "Custom guide labels must be nonempty.",
+            ));
+        }
+    }
+    Ok(())
+}
+
+pub(super) const MAX_GUIDES: usize = 64;
+pub(super) fn validate_guides(
+    axes: &[AxisSpec],
+    guides: &[GuideSpec],
+    limits: crate::Limits,
+) -> ChartResult<()> {
+    crate::limits::require_within(
+        axes.len().saturating_add(guides.len()) <= MAX_GUIDES,
+        "positional guide count (64)",
+    )?;
+    let mut ids: std::collections::BTreeSet<_> =
+        axes.iter().map(|a| a.default_guide().id).collect();
+    for guide in guides {
+        if !ids.insert(guide.id) {
+            return Err(error(
+                DiagnosticCode::SchemaConflict,
+                "Positional guides need unique guide identities.",
+            ));
+        }
+        if guide.translation.iter().any(|v| !v.is_finite()) {
+            return Err(error(
+                DiagnosticCode::Validation,
+                "Guide translation must be finite.",
+            ));
+        }
+        validate_style(&guide.style, limits)?;
+        let scale = axes.iter().find(|a| a.id == guide.scale).ok_or_else(|| {
+            error(
+                DiagnosticCode::MissingResource,
+                "Guide references an absent positional scale.",
+            )
+        })?;
+        if scale.side.horizontal() != guide.side.horizontal() {
+            return Err(error(
+                DiagnosticCode::SchemaConflict,
+                "Guide orientation differs from its shared scale.",
+            ));
+        }
+        if matches!(scale.scale, AxisScale::Secondary { .. }) {
+            return Err(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Additional guides require a primary positional scale.",
+            ));
+        }
+    }
+    Ok(())
+}
+
 pub(crate) fn validate_definition_axes(
     definition: &crate::grammar::ChartDefinition,
 ) -> ChartResult<()> {
     if definition.axes.is_empty() {
-        return Ok(());
+        let axes = [
+            AxisSpec::new(ScaleId::new(0), AxisSide::Bottom),
+            AxisSpec::new(ScaleId::new(1), AxisSide::Left),
+        ];
+        return validate_guides(&axes, &definition.guides, crate::Limits::default());
     }
+    validate_guides(
+        &definition.axes,
+        &definition.guides,
+        crate::Limits::default(),
+    )?;
     validate_specs(&definition.axes, crate::Limits::default())?;
     for layer in &definition.layers {
         for (id, horizontal) in [(layer.scales.x, true), (layer.scales.y, false)] {
@@ -199,6 +296,7 @@ fn resolve_axis_inner(
         let resolved = resolve_axis_inner(chart, r, &primary, plot)?;
         let (domain, view) = match &resolved.scale {
             ResolvedScale::Linear(s) => (s.domain(), s.viewport()),
+            ResolvedScale::Numeric(s) => (s.domain(), s.viewport()),
             ResolvedScale::Nonlinear(s) => (s.domain(), s.viewport()),
             _ => {
                 return Err(error(
@@ -219,22 +317,23 @@ fn resolve_axis_inner(
             }
         };
         let domain = Bounds::new(convert(domain.start())?, convert(domain.end())?)?.distinct()?;
-        Bounds::new(convert(view.start())?, convert(view.end())?)?.distinct()?;
+        let view = Bounds::new(convert(view.start())?, convert(view.end())?)?.distinct()?;
+        let formatter = guide_formatter(spec, NumericFamily::Linear, view, r.target_ticks as f64)?;
         let ticks = resolved
             .ticks
             .iter()
             .map(|t| {
-                let value = match &resolved.scale {
-                    ResolvedScale::Linear(s) => s.invert(t.position)?,
-                    ResolvedScale::Nonlinear(s) => s.invert(t.position)?,
-                    _ => unreachable!(),
+                let crate::composition::ScaleValue::Number(value) = t.value else {
+                    unreachable!()
                 };
                 Ok(GuideTick {
+                    value: crate::composition::ScaleValue::Number(convert(value)?),
                     position: t.position,
                     label: numeric_label(
                         spec,
                         convert(value)?,
                         format_nonlinear_tick(convert(value)?),
+                        formatter.as_ref(),
                     )?,
                 })
             })
@@ -277,7 +376,10 @@ fn resolve_axis_inner(
     };
     let viewport = match window {
         Some(AxisWindow::Numeric(a, b))
-            if matches!(space, ValueSpace::Data | ValueSpace::Transformed { .. }) =>
+            if matches!(
+                space,
+                ValueSpace::Data | ValueSpace::Transformed { .. } | ValueSpace::Scaled { .. }
+            ) =>
         {
             Some(Bounds::new(*a, *b)?)
         }
@@ -313,35 +415,104 @@ fn resolve_axis_inner(
         (AxisScale::Auto, _) => AxisScale::Linear(ContinuousDomain::default()),
         (s, _) => s.clone(),
     };
-    if spec.number_format.is_some()
-        && !matches!(space, ValueSpace::Data | ValueSpace::Transformed { .. })
+    if (spec.number_format.is_some() || spec.numeric_format.is_some())
+        && !matches!(
+            space,
+            ValueSpace::Data | ValueSpace::Transformed { .. } | ValueSpace::Scaled { .. }
+        )
     {
         return Err(error(
             DiagnosticCode::SchemaConflict,
             "Numeric formatting requires a numeric guide; time and categories retain their own labels.",
         ));
     }
-    let mut ticks = vec![];
+    if spec.time_format.is_some()
+        && !matches!(family, AxisScale::Utc { .. } | AxisScale::Calendar { .. })
+    {
+        return Err(error(
+            DiagnosticCode::SchemaConflict,
+            "Time formatting requires a UTC or calendar time axis.",
+        ));
+    }
     let scale = match (family, &space) {
-        (AxisScale::Linear(options), ValueSpace::Data | ValueSpace::Transformed { .. }) => {
+        (
+            AxisScale::Registered {
+                operation,
+                parameters,
+            },
+            _,
+        ) => {
+            let window = match window {
+                Some(window) => Some(window.clone()),
+                None => viewport
+                    .map(|view| -> ChartResult<AxisWindow> {
+                        match &space {
+                            ValueSpace::Timestamp { origin, .. } => Ok(AxisWindow::Timestamp(
+                                project::timestamp(view.start(), *origin)?,
+                                project::timestamp(view.end(), *origin)?,
+                            )),
+                            _ => Ok(AxisWindow::Numeric(view.start(), view.end())),
+                        }
+                    })
+                    .transpose()?,
+            };
+            let provider = chart.scale_registrations.resolve(
+                &operation,
+                crate::grammar::ScaleProviderInput {
+                    parameters: &parameters,
+                    extent: extent
+                        .map(|e| Bounds::new(e.minimum, e.maximum))
+                        .transpose()?,
+                    space: &space,
+                    range,
+                    window,
+                    outside: spec.outside,
+                    limits: r.limits,
+                    max_values: r.max_categories,
+                    max_ticks: r.max_ticks,
+                },
+                r.units == crate::services::Units::Points,
+            )?;
+            ResolvedScale::Provider(CheckedPositionalScale::new(
+                provider,
+                space.clone(),
+                r.limits,
+                r.max_categories,
+            )?)
+        }
+        (AxisScale::Numeric(options), ValueSpace::Data | ValueSpace::Transformed { .. }) => {
+            let scale = NumericAxisScale::resolve(options, range, viewport, spec.outside)?;
+
+            ResolvedScale::Numeric(scale)
+        }
+        (
+            AxisScale::Linear(options),
+            ValueSpace::Data | ValueSpace::Transformed { .. } | ValueSpace::Scaled { .. },
+        ) => {
             let scale = LinearScale::resolve(extent, options, range, viewport, spec.outside)?;
-            if spec.visible {
-                for t in scale.ticks(r.target_ticks, r.max_ticks)? {
-                    if let Some(position) = scale.map(t.value)? {
-                        ticks.push(GuideTick {
-                            position,
-                            label: numeric_label(spec, t.value, t.label)?,
-                        });
-                    }
-                }
-            }
+
             ResolvedScale::Linear(scale)
         }
         (
             AxisScale::Nonlinear { transform, domain },
-            ValueSpace::Data | ValueSpace::Transformed { .. },
+            ValueSpace::Data | ValueSpace::Transformed { .. } | ValueSpace::Scaled { .. },
         ) => {
-            let contribution = if matches!(transform, ScaleTransform::Log { .. }) {
+            let contribution = if let ValueSpace::Scaled { scale, .. } = &space {
+                if scale.transform != Some(transform) || scale.id != spec.id {
+                    return Err(error(
+                        DiagnosticCode::SchemaConflict,
+                        "Prepared scale stage differs from the bound axis transformation.",
+                    ));
+                }
+                extent
+                    .map(|e| -> ChartResult<crate::grammar::Extent> {
+                        Ok(crate::grammar::Extent {
+                            minimum: transform.inverse(e.minimum)?,
+                            maximum: transform.inverse(e.maximum)?,
+                        })
+                    })
+                    .transpose()?
+            } else if matches!(transform, ScaleTransform::Log { .. }) {
                 positive_extent(chart, spec)?
             } else {
                 extent
@@ -354,40 +525,28 @@ fn resolve_axis_inner(
                 viewport,
                 spec.outside,
             )?;
-            if spec.visible {
-                for t in scale.ticks(r.target_ticks, r.max_ticks)? {
-                    if let Some(position) = scale.map(t.value)? {
-                        ticks.push(GuideTick {
-                            position,
-                            label: numeric_label(spec, t.value, t.label)?,
-                        });
-                    }
-                }
-            }
+
             ResolvedScale::Nonlinear(scale)
         }
-        (AxisScale::Point(options), ValueSpace::Categorical { categories }) => {
+        (
+            family @ (AxisScale::Point(_) | AxisScale::D3Point(_)),
+            ValueSpace::Categorical { categories },
+        ) => {
             if viewport.is_some() || spec.outside != OutsidePolicy::Extend {
                 return Err(error(
                     DiagnosticCode::UnsupportedCapability,
                     "Point scales use category domains without numeric viewport policies.",
                 ));
             }
-            let mut scale = PointScale::resolve(categories, &options, range)?;
+            let mut scale = match family {
+                AxisScale::Point(options) => PointScale::resolve(categories, &options, range)?,
+                AxisScale::D3Point(options) => PointScale::resolve_d3(categories, &options, range)?,
+                _ => unreachable!(),
+            };
             if let Some(AxisWindow::Category { first, last }) = window {
                 scale = scale.with_window(first, last)?;
             }
-            if spec.visible {
-                let stride = scale.visible_domain().len().div_ceil(r.max_ticks).max(1);
-                for label in scale.visible_domain().iter().step_by(stride) {
-                    if let Some(position) = scale.center(label)? {
-                        ticks.push(GuideTick {
-                            position,
-                            label: label.clone(),
-                        });
-                    }
-                }
-            }
+
             ResolvedScale::Point(scale)
         }
         (
@@ -412,41 +571,58 @@ fn resolve_axis_inner(
                 })
                 .transpose()?;
             let scale = SessionScale::new(calendar, range, time_window.or(view), spec.outside)?;
-            if spec.visible {
-                for t in scale.ticks(r.target_ticks, r.max_ticks)? {
-                    if let Some(position) = scale.map(t.value)? {
-                        ticks.push(GuideTick {
-                            position,
-                            label: t.label,
-                        });
-                    }
-                }
-            }
+
             ResolvedScale::Session(scale)
         }
-        (AxisScale::Band(options), ValueSpace::Categorical { categories }) => {
+        (
+            family @ (AxisScale::Band(_) | AxisScale::D3Band(_)),
+            ValueSpace::Categorical { categories },
+        ) => {
             if viewport.is_some() || spec.outside != OutsidePolicy::Extend {
                 return Err(error(
                     DiagnosticCode::UnsupportedCapability,
                     "Band scales use explicit category domains; numeric viewport/clamp/omit policies are unsupported.",
                 ));
             }
-            let mut scale = BandScale::resolve(categories, &options, range)?;
+            let mut scale = match family {
+                AxisScale::Band(options) => BandScale::resolve(categories, &options, range)?,
+                AxisScale::D3Band(options) => BandScale::resolve_d3(categories, &options, range)?,
+                _ => unreachable!(),
+            };
             if let Some(AxisWindow::Category { first, last }) = window {
                 scale = scale.with_window(first, last)?;
             }
-            if spec.visible {
-                let stride = scale.visible_domain().len().div_ceil(r.max_ticks).max(1);
-                for label in scale.visible_domain().iter().step_by(stride) {
-                    if let Some(position) = scale.center(label)? {
-                        ticks.push(GuideTick {
-                            position,
-                            label: label.clone(),
-                        });
-                    }
-                }
-            }
+
             ResolvedScale::Band(scale)
+        }
+        (
+            AxisScale::Calendar {
+                spec: options,
+                interval: _,
+            },
+            ValueSpace::Timestamp {
+                representation,
+                origin,
+            },
+        ) => {
+            if representation.unit != options.unit {
+                return Err(error(
+                    DiagnosticCode::SchemaConflict,
+                    "Calendar axis and timestamp source units must agree.",
+                ));
+            }
+            let viewport = viewport
+                .map(|b| {
+                    Ok(TimeBounds {
+                        start: project::timestamp(b.start(), *origin)?,
+                        end: project::timestamp(b.end(), *origin)?,
+                    })
+                })
+                .transpose()?;
+            let scale =
+                TimeAxisScale::resolve(options, range, time_window.or(viewport), spec.outside)?;
+
+            ResolvedScale::Calendar(Box::new(scale))
         }
         (
             AxisScale::Utc { domain, interval },
@@ -493,19 +669,7 @@ fn resolve_axis_inner(
                 range,
                 spec.outside,
             )?;
-            if spec.visible {
-                for t in scale.ticks(
-                    interval.unwrap_or(scale.auto_interval(r.target_ticks)?),
-                    r.max_ticks,
-                )? {
-                    if let Some(position) = scale.map(t.value)? {
-                        ticks.push(GuideTick {
-                            position,
-                            label: t.label,
-                        });
-                    }
-                }
-            }
+
             ResolvedScale::Utc(scale)
         }
         _ => {
@@ -515,13 +679,14 @@ fn resolve_axis_inner(
             ));
         }
     };
-    ticks.sort_by(|a, b| a.position.total_cmp(&b.position));
-    Ok(ResolvedAxis {
+    let mut axis = ResolvedAxis {
         spec: spec.clone(),
         space,
         scale,
-        ticks,
-    })
+        ticks: vec![],
+    };
+    axis.ticks = super::guide_ticks::resolve(&axis, &spec.guide, r)?;
+    Ok(axis)
 }
 
 pub(super) fn resolve_axis(
@@ -530,46 +695,7 @@ pub(super) fn resolve_axis(
     spec: &AxisSpec,
     plot: Rect,
 ) -> ChartResult<ResolvedAxis> {
-    let result = (|| {
-        if let Some(ticks) = &spec.guide_ticks
-            && (ticks.len() > r.max_ticks
-                || ticks.iter().map(|t| t.label.len()).sum::<usize>() > r.limits.max_text_bytes)
-        {
-            return Err(error(
-                DiagnosticCode::ResourceLimit,
-                "Custom guide exceeds tick/text budgets.",
-            ));
-        }
-        let mut axis = resolve_axis_inner(chart, r, spec, plot)?;
-        if let Some(ticks) = &spec.guide_ticks {
-            if spec.number_format.is_some() {
-                return Err(error(
-                    DiagnosticCode::SchemaConflict,
-                    "Explicit custom labels cannot also request a numeric formatter.",
-                ));
-            }
-            axis.ticks.clear();
-            for tick in ticks {
-                if tick.label.is_empty() {
-                    return Err(error(
-                        DiagnosticCode::Validation,
-                        "Custom guide labels must be nonempty.",
-                    ));
-                }
-                if let Some(position) = axis.map_value(&tick.value)?
-                    && spec.visible
-                {
-                    axis.ticks.push(GuideTick {
-                        position,
-                        label: tick.label.clone(),
-                    });
-                }
-            }
-            axis.ticks.sort_by(|a, b| a.position.total_cmp(&b.position));
-        }
-        Ok(axis)
-    })();
-    result.map_err(|mut e: crate::Diagnostic| {
+    resolve_axis_inner(chart, r, spec, plot).map_err(|mut e: crate::Diagnostic| {
         e.message = format!("Scale {}: {}", spec.id.get(), e.message);
         e
     })
@@ -631,13 +757,16 @@ fn positive_extent(
         };
         for mark in layer.marks() {
             match &mark.geometry {
-                PreparedGeometry::Point(p) => include(*p, false)?,
+                PreparedGeometry::Point(p)
+                | PreparedGeometry::ShapePath { center: p, .. }
+                | PreparedGeometry::ShapePathRun { center: p, .. } => include(*p, false)?,
                 PreparedGeometry::Polygon(points) => {
                     for p in points {
                         include(*p, true)?;
                     }
                 }
-                PreparedGeometry::BandRun { lower, upper } => {
+                PreparedGeometry::BandRun { lower, upper }
+                | PreparedGeometry::StackBandRun { lower, upper, .. } => {
                     for p in lower.iter().chain(upper) {
                         include(*p, true)?;
                     }
@@ -660,7 +789,36 @@ fn positive_extent(
     Ok(extent)
 }
 
-fn numeric_label(spec: &AxisSpec, value: f64, default: String) -> ChartResult<String> {
+pub(super) fn guide_formatter(
+    spec: &GuideStyle,
+    family: NumericFamily,
+    view: Bounds,
+    count: f64,
+) -> ChartResult<Option<crate::typography::NumericFormatter>> {
+    spec.numeric_format
+        .as_ref()
+        .map(|f| {
+            family.tick_format(
+                &[
+                    crate::interpolate::Number(view.start()),
+                    crate::interpolate::Number(view.end()),
+                ],
+                count,
+                Some(&f.specifier),
+                f.locale.clone(),
+            )
+        })
+        .transpose()
+}
+pub(super) fn numeric_label(
+    spec: &GuideStyle,
+    value: f64,
+    default: String,
+    formatter: Option<&crate::typography::NumericFormatter>,
+) -> ChartResult<String> {
+    if let Some(f) = formatter {
+        return Ok(f.format(value));
+    }
     if let Some(f) = &spec.number_format {
         f.format(value)
     } else {

@@ -99,11 +99,13 @@ impl Inspector {
         let mut overflow = false;
         self.index.visit(bounds, |i| {
             let c = &self.index.candidates[i];
-            if overflow || c.hit.selection == SelectionPolicy::Disabled {
+            if c.shape.is_some() || overflow || c.hit.selection == SelectionPolicy::Disabled {
                 return;
             }
             let matches = if let SelectionRegion::Series { layer, panel } = region {
                 c.hit.layer == *layer && c.hit.panel == *panel
+            } else if c.clamped_anchor {
+                false
             } else if let Some(custom) = &c.custom {
                 match &custom.hit {
                     HitGeometry::Point { center, .. } => {

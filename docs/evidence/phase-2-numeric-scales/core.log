@@ -1,0 +1,35 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.83s
+     Running tests/full_scales.rs (target/debug/deps/full_scales-d12122b0cf1d4e57)
+
+running 4 tests
+test symlog_signed_roundtrip_extreme_ratio ... ok
+test supplied_sessions_compress_gaps_and_retain_exact_large_timestamps ... ok
+test points_and_colors_have_declared_missing_and_domain_policy ... ok
+test logarithmic_policies_roundtrips_and_invalids ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scale_numeric.rs (target/debug/deps/scale_numeric-5bdafc7d6304fd1e)
+
+running 2 tests
+test independent_piecewise_radial_clamp_and_copy_contracts ... ok
+test pinned_numeric_mapping_and_inverse_families_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests/scales.rs (target/debug/deps/scales-9ef19060c9fb5f72)
+
+running 9 tests
+test baseline_padding_and_nice_precede_viewport_and_are_independent_of_range ... ok
+test robust_projection_handles_huge_domains_without_intermediate_overflow ... ok
+test utc_calendar_matches_independent_unix_date_fixtures_and_rejects_invalid_dates ... ok
+test utc_ticks_follow_month_year_leap_day_and_monday_boundaries ... ok
+test categorical_explicit_order_centers_extents_gaps_and_lookup_are_distinct_from_inverse ... ok
+test fix07_empty_constant_descending_and_explicit_domains_are_locked ... ok
+test numeric_ticks_are_bounded_ordered_unique_and_locale_independent ... ok
+test decimal_ticks_do_not_accumulate_label_noise_and_time_omission_precedes_precision_conversion ... ok
+test fix07_large_origin_time_projection_keeps_integer_precision_and_labels ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

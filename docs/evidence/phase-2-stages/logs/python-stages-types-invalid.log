@@ -1,0 +1,6 @@
+scripts/bindings/authoring/stages_typing_invalid.py:3: error: Argument 1 to "x" of "Aes" has incompatible type "StatExpression"; expected "str | float | Field | Mapping[str, object] | SourceExpression"  [arg-type]
+scripts/bindings/authoring/stages_typing_invalid.py:4: error: Argument 1 to "y" of "StatAes" has incompatible type "SourceExpression"; expected "str | float | Mapping[str, object] | StatExpression"  [arg-type]
+scripts/bindings/authoring/stages_typing_invalid.py:5: error: Argument 1 to "y" of "BinAes" has incompatible type "StatExpression"; expected "str | float | Mapping[str, object] | BinExpression"  [arg-type]
+scripts/bindings/authoring/stages_typing_invalid.py:6: error: Argument 1 to "size" of "ScaleAes" has incompatible type "SourceExpression"; expected "ScaleExpression"  [arg-type]
+scripts/bindings/authoring/stages_typing_invalid.py:7: error: Argument 1 to "add" of "_Expression" has incompatible type "StatExpression"; expected "SourceExpression | float"  [arg-type]
+Found 5 errors in 1 file (checked 1 source file)

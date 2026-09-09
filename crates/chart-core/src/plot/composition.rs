@@ -10,6 +10,61 @@ use crate::{
     typography::RichText,
 };
 
+/// Fixed path annotation builder; geometry owns its snapshot independently of a mutable path.
+#[derive(Clone, Debug)]
+pub struct VectorPathBuilder(pub(super) crate::composition::VectorAnnotation);
+/// Compose one path with a stable annotation identity and a black one-unit stroke.
+pub fn vector_path(
+    id: impl Into<String>,
+    geometry: crate::path::PathGeometry,
+) -> VectorPathBuilder {
+    VectorPathBuilder(crate::composition::VectorAnnotation {
+        id: id.into(),
+        geometry,
+        anchor: Anchor::Output { x: 0., y: 0. },
+        fill: None,
+        stroke: Some(crate::scene::Stroke {
+            color: crate::theme::rgb(0, 0, 0).into(),
+            width: 1.,
+        }),
+        overflow: false,
+    })
+}
+impl VectorPathBuilder {
+    /// Transform local geometry before anchor placement with an explicit output error/work bound.
+    pub fn transform(
+        mut self,
+        map: crate::path::Affine,
+        max_error: f64,
+        max_commands: usize,
+    ) -> ChartResult<Self> {
+        self.0.geometry = self.0.geometry.transformed(map, max_error, max_commands)?;
+        Ok(self)
+    }
+    /// Position the local path origin through an explicit coordinate-space anchor.
+    pub fn anchor(mut self, anchor: Anchor) -> Self {
+        self.0.anchor = anchor;
+        self
+    }
+    /// Set optional nonzero fill.
+    pub fn fill<P: Into<crate::color::Paint>>(mut self, fill: Option<P>) -> Self {
+        self.0.fill = fill.map(Into::into);
+        self
+    }
+    /// Set optional solid stroke.
+    pub fn stroke<P: Into<crate::color::Paint>>(
+        mut self,
+        stroke: Option<crate::scene::Stroke<P>>,
+    ) -> Self {
+        self.0.stroke = stroke.map(|s| s.map_color(Into::into));
+        self
+    }
+    /// Use the full figure clip instead of the addressed panel clip.
+    pub fn overflow(mut self, overflow: bool) -> Self {
+        self.0.overflow = overflow;
+        self
+    }
+}
 impl From<f64> for ScaleValue {
     fn from(value: f64) -> Self {
         Self::Number(value)

@@ -1,5 +1,5 @@
+use crate::services::ResourceDescriptor;
 use crate::typography::{RichRun, RichText, TextDirection};
-use crate::{scene::Color, services::ResourceDescriptor};
 
 /// Reusable typography options shared by titles, annotations, axes and legends.
 #[derive(Clone, Debug)]
@@ -34,8 +34,8 @@ impl TextStyle {
         self
     }
     /// Override inherited text color.
-    pub fn color(mut self, color: Color) -> Self {
-        self.run.color = Some(color);
+    pub fn color(mut self, color: impl Into<crate::color::Paint>) -> Self {
+        self.run.color = Some(color.into());
         self
     }
     /// Explicit shaping language tag.

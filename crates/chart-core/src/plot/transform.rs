@@ -125,6 +125,7 @@ impl TransformBuilder {
         root: &Data,
         input: DataRef,
         inherited: &AesBuilder,
+        profile: Profile,
     ) -> ChartResult<TransformDefinition> {
         validate_name(&self.name)?;
         if self.data.is_some() && self.input.is_some() {
@@ -139,6 +140,14 @@ impl TransformBuilder {
             self.statistic
                 .lower(root, &self.mappings.merged(inherited, true))?,
         );
+        if profile == Profile::Ggplot2_4_0_3 {
+            let mapping = self.mappings.merged(inherited, true);
+            node.grammar = Some(TransformGrammar {
+                source: mapping.resolve(root)?,
+                color: mapping.color.as_ref().map(|c| c.field(root)).transpose()?,
+                stat_grouping: self.statistic.explicit_grouping(root)?,
+            });
+        }
         node.filters = self
             .filters
             .iter()

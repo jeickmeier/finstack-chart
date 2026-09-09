@@ -242,6 +242,16 @@ impl DenseChart {
 }
 fn vertices(p: &Primitive) -> usize {
     match p {
+        Primitive::VectorPath { geometry, .. } | Primitive::ShapePath { geometry, .. } => geometry
+            .commands()
+            .iter()
+            .map(|c| match c {
+                crate::path::Command::QuadraticTo(_) => 2,
+                crate::path::Command::CubicTo(_) => 3,
+                crate::path::Command::Close => 0,
+                _ => 1,
+            })
+            .sum(),
         Primitive::Path { commands, .. }
         | Primitive::FilledPath { commands, .. }
         | Primitive::DashedPath { commands, .. } => commands

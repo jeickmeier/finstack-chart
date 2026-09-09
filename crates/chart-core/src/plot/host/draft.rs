@@ -59,6 +59,7 @@ impl Draft {
                 _ => return Err(unsupported(method)),
             }),
             Target::Edit(b) => Target::Edit(match method {
+                "profile" => b.clone().profile(a.one()?),
                 "remove_layer" => b.clone().remove_layer(&a.string()?),
                 "remove_annotation" => b.clone().remove_annotation(&a.string()?),
                 "clear_facets" => {

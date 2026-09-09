@@ -5,9 +5,9 @@ use crate::{
 };
 use chart_core::{
     ChartResult, DiagnosticCode, ResourceId, Revision,
+    color::Paint,
     plot::Plot,
     runtime::Chart,
-    scene::Color,
     services::{ResourceDescriptor, ResourceKind},
     state::{ChartState, InteractionCapture},
 };
@@ -40,7 +40,7 @@ pub struct ExportOptions {
     dpi: u32,
     text: TextMode,
     view: ViewMode,
-    background: Color,
+    background: Paint,
     interaction: InteractionCapture,
     basis: CaptureBasis,
     precision: f64,
@@ -57,7 +57,7 @@ pub fn export_options(page: PageSize) -> ExportOptions {
         dpi: 300,
         text: TextMode::Preserve,
         view: ViewMode::VisibleView,
-        background: chart_core::theme::rgb(255, 255, 255),
+        background: chart_core::theme::rgb(255, 255, 255).into(),
         interaction: InteractionCapture::default(),
         basis: CaptureBasis::Presented,
         precision: 0.01,
@@ -109,8 +109,8 @@ impl ExportOptions {
         self
     }
     /// Set the output background, including transparent alpha.
-    pub fn background(mut self, background: Color) -> Self {
-        self.background = background;
+    pub fn background(mut self, background: impl Into<Paint>) -> Self {
+        self.background = background.into();
         self
     }
     /// Include only the explicitly selected interaction state.

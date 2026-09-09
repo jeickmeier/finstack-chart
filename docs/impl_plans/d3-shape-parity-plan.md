@@ -4,8 +4,11 @@ Phase 2 coordination: [combined implementation plan](phase-2-parity-implementati
 This document retains its detailed inventory and package ownership; the combined plan
 owns cross-lane scheduling and ggplot2 integration.
 
-Date: 7 September 2026. Project contract: 0.2.0. Status: planning complete;
-implementation and parity acceptance remain open.
+Original planning date: 7 September 2026, under project contract 0.2.0.
+Current status, 9 September 2026: WP-S01–08 and G-SHAPE are accepted for the finite
+typed d3-shape 3.2.0 profile. [Integrated evidence](../evidence/phase-2-shape-acceptance-2026-09-09.md)
+owns the source snapshot, per-item verdicts and validation boundaries. The gap review
+below preserves its original inspected-revision findings; WP-21/22/23 remain open.
 Reviewed checkout: `1cb955740c2dad2607b0a2330201125294cab5d0`, including the live
 working tree. Concurrent state/action/binding edits were present and were not changed.
 
@@ -244,3 +247,56 @@ test counts are historical evidence, not rerun or parity certification here.
 Next implementation action: complete WP-P01–04 from the path plan, then assign WP-S01
 to consume that foundation and lock the shape contracts before adding generators. All SHP-01–10 and
 G-SHAPE implementation gates remain open.
+
+## Delivery record — 9 September 2026
+
+WP-S01 is complete for its entry/foundation scope. The [accepted snapshot](../evidence/phase-2-shape-foundation-2026-09-09.md)
+pins all exports/methods/defaults, 333 numeric contexts and 42 layouts, and proves
+sector/hole/external-sink consumption in actual Rust/Python/WASM/native/publication.
+The assessment above is the historical entry review. [WP-S02 is complete](../evidence/phase-2-shape-cartesian-2026-09-09.md)
+for Cartesian generators, all 20 curves and their shared chart/host integration.
+WP-S03 is in progress; WP-S03–08 and G-SHAPE remain open.
+
+WP-S03, WP-S05 and WP-S06 implementations now have actual Linux/Python/WASM and
+headless publication evidence; their macOS/native qualification remains pending.
+The [stack report](../evidence/phase-2-shape-stack-2026-09-09.md) records reference
+layouts, primary sparse bars/areas, updates, source identity and compatibility.
+The [ledger](../implementation-status.md) remains authoritative for open packages
+and prerequisites; these partial results do not advance G-SHAPE.
+
+
+WP-S03, WP-S05 and WP-S06 final platform qualification is now complete at the
+retained source snapshots: fresh macOS Python, inspected native galleries, complete
+repository checks and 393 workspace tests/doctests pass. Their evidence reports and
+ledger rows own exact scope and identities. WP-S04 standalone radial/link controls
+pass Rust, macOS/Linux Python and WASM; chart integration is the active next slice.
+WP-S07/08 and G-SHAPE remain open.
+
+## WP-S04 accepted — 9 September 2026
+
+[The radial/link report](../evidence/phase-2-shape-radial-2026-09-09.md) records full
+standalone/chart/reference/update/publication/native qualification, including the final
+figure-wide layout budget correction and fresh adapter regressions. The full macOS
+workspace passes 404 tests/doctests at its recorded snapshot. WP-S01–06 are accepted;
+WP-S07 is ready. G-SHAPE requires WP-S07/08 and remains open.
+
+## WP-S07 acceptance — 9 September 2026
+
+[Registered protocols](../evidence/phase-2-shape-custom-2026-09-09.md) complete all five
+native/portable protocol families, chart and size-guide integration, wire-v9 retention,
+actual Rust/Python/WASM execution and strict public type consumers. Seventy-two updates
+per host and exact three-theme/two-resolution publication pass; native, original SVG,
+PDF and PNG were inspected. WP-S07 is accepted. WP-S08 now owns curved dash styling,
+the complete per-item evidence inventory and cumulative G-SHAPE qualification.
+
+## WP-S08 acceptance — 9 September 2026
+
+[Integrated acceptance](../evidence/phase-2-shape-acceptance-2026-09-09.md) closes
+WP-S08 and G-SHAPE for the declared typed profile. All 63 exports/220 methods have
+verdicts; fresh macOS/Linux Python and Node/WASM run every family, interaction and
+1,544 updates per host. Curved dashes retain fill/source geometry and have inspected
+native/SVG/PDF/PNG evidence. All PNG/PDF bytes match, and the two Terminal SVG
+numeric differences remain within the locked control-coordinate tolerance and render
+identically. Repository, 420 macOS/419 Linux tests-doctests and actual binding proofs
+pass. Oracle expectations remain unchanged. Expanded platform/release QA and measured
+shape workloads retain WP-21/22/23 ownership; other Phase 2 gates are not closed here.

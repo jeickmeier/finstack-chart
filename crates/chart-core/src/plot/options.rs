@@ -26,9 +26,9 @@ option_fields!(LayoutOptions {
     max_vertices: usize => "Bound projected geometry before destination callbacks.",
     limits: Limits => "Supply scene/resource/text/path budgets.",
     figure_bounds: Option<Rect> => "Set explicit enclosing figure clipping for specialist composition.",
-    host_theme: crate::theme::ThemePatch => "Supply typed host theme tokens before authored overrides.",
-    output_theme: crate::theme::ThemePatch => "Supply typed output theme overrides after authoring.",
-    interaction_theme: std::collections::BTreeMap<crate::LayerId, crate::theme::ThemePatch> => "Supply interaction styling for exact layer identities."
+    host_theme: crate::theme::ThemePatch<crate::color::Paint> => "Supply typed host theme tokens before authored overrides.",
+    output_theme: crate::theme::ThemePatch<crate::color::Paint> => "Supply typed output theme overrides after authoring.",
+    interaction_theme: std::collections::BTreeMap<crate::LayerId, crate::theme::ThemePatch<crate::color::Paint>> => "Supply interaction styling for exact layer identities."
 });
 /// Begin destination layout options without choosing a font, output units or physical size.
 pub fn layout_options() -> LayoutOptions {

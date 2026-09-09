@@ -4,7 +4,7 @@ use super::{
     *,
 };
 use crate::composition::{Anchor, Collision};
-use crate::grammar::{PanelKey, PreparedChart, PreparedGeometry};
+use crate::grammar::{PanelKey, PreparedChart};
 use crate::scene::{Color, Primitive, Scene, SceneItem, Stroke};
 use crate::services::TextMeasurer;
 use crate::theme::ThemePatch;
@@ -19,6 +19,7 @@ pub(super) struct Furniture {
 fn ink(r: &LayoutRequest) -> Color {
     r.host_theme
         .annotation
+        .map(crate::color::Paint::resolve)
         .unwrap_or(crate::theme::rgb(55, 60, 65))
 }
 fn invalid(message: &str) -> Diagnostic {
@@ -36,45 +37,6 @@ pub(super) fn prepare(
     let Some(f) = chart.state().figure(chart.definition()) else {
         return Ok(None);
     };
-    f.validate(r.limits)?;
-    // Charge inset projection work before cloning layer geometry or calling font services.
-    let vertices = |p: &PreparedChart, ids: Option<&[crate::LayerId]>| {
-        p.layers()
-            .iter()
-            .filter(|l| ids.is_none_or(|ids| ids.contains(&l.id())))
-            .flat_map(|l| l.marks())
-            .map(|m| match &m.geometry {
-                PreparedGeometry::Point(_) => 1,
-                PreparedGeometry::LineRun(p) => p.len(),
-                PreparedGeometry::BandRun { lower, upper } => lower.len() + upper.len(),
-                _ => 2,
-            })
-            .sum::<usize>()
-    };
-    let mut cost = vertices(chart, None);
-    for inset in &f.insets {
-        let p = match &inset.panel {
-            Some(key) => chart
-                .panels()
-                .iter()
-                .find(|p| &p.key == key)
-                .map(|p| p.chart.as_ref())
-                .ok_or_else(|| invalid("Inset names an absent prepared panel."))?,
-            None if chart.panels().is_empty() => chart,
-            None => return Err(invalid("A faceted inset must select a parent panel.")),
-        };
-        if inset
-            .layers
-            .iter()
-            .any(|id| !p.layers().iter().any(|l| l.id() == *id))
-        {
-            return Err(invalid("Inset names a layer absent from its parent panel."));
-        }
-        cost = cost
-            .checked_add(vertices(p, Some(&inset.layers)))
-            .ok_or_else(|| invalid("Inset geometry budget overflows."))?;
-    }
-    crate::limits::require_within(cost <= r.max_vertices, "figure plus inset projected vertex")?;
     let top = f
         .title
         .iter()
@@ -347,6 +309,35 @@ pub(super) fn finish(
             chart: Arc::new(view),
         });
         occupied.push(bounds);
+    }
+    for a in &f.paths {
+        let Some((position, clip)) = anchor(chart, &a.anchor, r.bounds)? else {
+            chart.diagnostics.push(pressure(
+                "Path annotation was omitted by its anchor scale/no-space policy.",
+            ));
+            continue;
+        };
+        let geometry = a.geometry.transformed(
+            crate::path::Affine::new([1., 0., 0., 1., position.x(), position.y()])?,
+            0.01,
+            r.limits.max_path_commands,
+        )?;
+        items.push(SceneItem {
+            layer: None,
+            clip: Some(if a.overflow { r.bounds } else { clip }),
+            primitive: Primitive::VectorPath {
+                dashes: if a.stroke.is_some() {
+                    theme.dashes.clone().unwrap_or_default()
+                } else {
+                    vec![]
+                },
+                geometry,
+                fill: a.fill.map(crate::color::Paint::resolve),
+                stroke: a.stroke.map(|s| s.map_color(crate::color::Paint::resolve)),
+            },
+        });
+        chart.targets.push(vec![]);
+        chart.item_panels.push(None);
     }
     let mut annotations: Vec<_> = f.annotations.iter().enumerate().collect();
     annotations.sort_by_key(|(index, a)| (std::cmp::Reverse(a.priority), *index));

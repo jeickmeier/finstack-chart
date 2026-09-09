@@ -87,12 +87,32 @@ fn compare(case: &Value, built: Plot) {
             .into_iter()
             .flatten()
             {
-                match value {
-                    Numeric::Field(id)
-                    | Numeric::Category(id)
-                    | Numeric::Timestamp { field: id, .. } => *id = field_id(*id),
-                    Numeric::Literal(_) => {}
+                fn remap(
+                    value: &mut Numeric,
+                    field_id: &impl Fn(chart_core::FieldId) -> chart_core::FieldId,
+                ) {
+                    match value {
+                        Numeric::Scaled { input, .. } => remap(input, field_id),
+                        Numeric::Expression(expr) => {
+                            for node in &mut expr.nodes {
+                                if let chart_core::grammar::ExpressionNode::Read(read) = node {
+                                    match read {
+                                        chart_core::grammar::SourceRead::Field(id)
+                                        | chart_core::grammar::SourceRead::Timestamp {
+                                            field: id,
+                                            ..
+                                        } => *id = field_id(*id),
+                                    }
+                                }
+                            }
+                        }
+                        Numeric::Field(id)
+                        | Numeric::Category(id)
+                        | Numeric::Timestamp { field: id, .. } => *id = field_id(*id),
+                        Numeric::Literal(_) => {}
+                    }
                 }
+                remap(value, &field_id);
             }
             aes.group = aes.group.map(field_id);
         }

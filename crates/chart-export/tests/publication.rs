@@ -241,7 +241,8 @@ fn png_straight_alpha_is_not_premultiplied_or_double_composited() {
         green: 100,
         blue: 50,
         alpha: 128,
-    };
+    }
+    .into();
     p.layout.padding = 0.;
     p.layout.minimum_plot = (1., 1.);
     for a in &mut p.layout.axes {

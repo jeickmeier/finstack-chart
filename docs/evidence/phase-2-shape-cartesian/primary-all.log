@@ -1,0 +1,417 @@
+RUN node /Users/jeickmeier/.npm/_npx/e04ecd76da0b5726/node_modules/typescript/lib/tsc.js --version
+Version 6.0.2
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 -m mypy --version
+mypy 2.3.0 (compiled: yes)
+RUN cargo run -p chart-export --example primary_binding_proof --locked -- /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/native
+ut "input-host-tools" / "edit-undo"
+primary input "input-host-tools" / "edit-redo"
+primary input "input-host-tools" / "select-source"
+primary input "input-host-tools" / "capture-semantic-selection"
+primary input "input-host-tools" / "resolve-table-selection"
+primary input "input-host-tools" / "repeated-table-selection"
+primary input "input-host-tools" / "linked-echo-suppressed"
+primary input "input-host-tools" / "missing-source-rejected"
+primary input "input-host-tools" / "missing-source-reported"
+primary input "input-host-tools" / "wrong-edit-constraint-type"
+primary input "input-host-tools" / "accessible-page-budget"
+primary input "input-host-tools" / "pan-selected-source-outside"
+primary input "input-host-tools" / "capture-clipped-selection"
+primary input "input-host-category-link" / "select-gamma"
+primary input "input-host-category-link" / "show-alpha-only"
+primary input "input-host-category-link" / "capture-hidden-category-selection"
+primary input "input-host-category-link" / "resolve-hidden-category-selection"
+primary input "input-host-category-link" / "visible-table-remains-alpha-only"
+primary action "configure"
+primary action "configure-noop"
+primary action "hover"
+primary action "hover-noop"
+primary action "focus"
+primary action "pin"
+primary action "select"
+primary action "stale"
+primary action "begin-annotation"
+primary action "preview"
+primary action "cancel"
+primary action "begin-annotation-again"
+primary action "preview-again"
+primary action "commit"
+primary action "undo"
+primary action "redo"
+primary action "viewport"
+primary action "freeze"
+primary action "resume"
+primary action "legend"
+primary action "linked"
+primary action "linked-echo"
+primary action "reset"
+PASS primary Rust source, actions, replay, definition-only edit and detached capture fixture
+RUN cargo build -p chart-python --features extension-module,extension-proof --locked
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.20s
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/python_proof.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python
+PASS primary Python 23 action transitions and 47 independent input steps
+PASS primary Python 70-step streaming replay
+PASS primary Python exact data, copy/accessor ownership, actions/queries, stale fences, edits, capture matrix, queues, disposal, retention and interpreter detachment
+RUN cargo build -p chart-wasm --features extension-proof --target wasm32-unknown-unknown --locked
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+   Compiling chart-extension-example v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/custom-extension)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+   Compiling chart-wasm v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-wasm)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 25.32s
+RUN /private/tmp/wp09-tools/wasm-bindgen-0.2.128-aarch64-apple-darwin/wasm-bindgen /Users/jeickmeier/Projects/finstack-chart/target/scale-integration-target/wasm32-unknown-unknown/debug/chart_wasm.wasm --target nodejs --out-dir /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module
+RUN node --expose-gc /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/wasm_proof.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm
+PASS primary WASM 23 action transitions and 47 independent input steps
+PASS primary WASM 70-step streaming replay
+PASS primary WASM exact data, copies/accessors, actions/queries, stale fences, edits, capture matrix, queues, disposal, retention and memory plateau
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/compare.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary
+PASS three primary authors: initial
+PASS three primary authors: scene
+PASS three primary authors: action
+PASS three primary authors: zoom
+PASS three primary authors: transaction
+PASS three primary authors: replay
+PASS three primary authors: final
+PASS three primary authors: exact
+PASS three primary authors: statistics
+PASS three primary authors: extension
+PASS three primary authors: extension-scene
+PASS independent domains, means, OLS, exact timestamp/integer/null/category values, source identity relationships, updates, captures and image sizes
+PASS 34 primary statistic/position/geometry/scale/facet/composition families: full semantic and scene parity
+PASS primary runtime replay: runtime-actions 23
+PASS primary runtime replay: runtime-input 47
+PASS primary three-host 70-step streaming receipts, retained rows, exact bins, independent summaries and historical pins
+RUN node /Users/jeickmeier/.npm/_npx/e04ecd76da0b5726/node_modules/typescript/lib/tsc.js --noEmit --strict --target es2022 --lib es2022,esnext.disposable --module nodenext /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/typing/consumer.cts
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 -m mypy --strict --cache-dir /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/mypy-cache /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/typing_valid.py
+Success: no issues found in 1 source file
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 -m mypy --strict --cache-dir /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/mypy-cache /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/typing_invalid.py
+scripts/bindings/authoring/typing_invalid.py:4: error: "Labels" has no attribute "title"  [attr-defined]
+scripts/bindings/authoring/typing_invalid.py:5: error: Argument 1 to "title" of "PlotBuilder" has incompatible type "Labels"; expected "Title"  [arg-type]
+scripts/bindings/authoring/typing_invalid.py:6: error: Argument 1 to "title" of "PlotBuilder" has incompatible type "Subtitle"; expected "Title"  [arg-type]
+scripts/bindings/authoring/typing_invalid.py:7: error: Argument 1 to "layer" of "PlotBuilder" has incompatible type "Legend"; expected "Layer | Labels | Callout | VectorPath"  [arg-type]
+scripts/bindings/authoring/typing_invalid.py:8: error: "PlotEdit" has no attribute "data"  [attr-defined]
+Found 5 errors in 1 file (checked 1 source file)
+RUN cargo run -p chart-export --example ggplot_stage_proof --locked -- /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/stages/rust
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.85s
+     Running `target/scale-integration-target/debug/examples/ggplot_stage_proof /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/stages/rust`
+PASS FIX-GG02 Rust: 13 primary stage figures with retained semantic profile and SVG/PDF/PNG publication.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/ggplot_stages.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/stages/python
+PASS FIX-GG02 Python: 13 independently authored stage figures, R numeric/style expectations, stage rejection, static/Presented/Current capture and disposal.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/ggplot_stages.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/stages/wasm
+PASS FIX-GG02 WASM: 13 independently authored stage figures, R numeric/style expectations, stage rejection, static/Presented/Current capture and disposal.
+RUN node /Users/jeickmeier/.npm/_npx/e04ecd76da0b5726/node_modules/typescript/lib/tsc.js --noEmit --strict --target es2022 --lib es2022,esnext.disposable --module nodenext /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/typing/stages.cts
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 -m mypy --strict --cache-dir /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/mypy-cache /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/stages_typing.py
+Success: no issues found in 1 source file
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 -m mypy --strict --cache-dir /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/mypy-cache /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/stages_typing_invalid.py
+scripts/bindings/authoring/stages_typing_invalid.py:3: error: Argument 1 to "x" of "Aes" has incompatible type "StatExpression"; expected "str | float | Field | Mapping[str, object] | SourceExpression"  [arg-type]
+scripts/bindings/authoring/stages_typing_invalid.py:4: error: Argument 1 to "y" of "StatAes" has incompatible type "SourceExpression"; expected "str | float | Mapping[str, object] | StatExpression"  [arg-type]
+scripts/bindings/authoring/stages_typing_invalid.py:5: error: Argument 1 to "y" of "BinAes" has incompatible type "StatExpression"; expected "str | float | Mapping[str, object] | BinExpression"  [arg-type]
+scripts/bindings/authoring/stages_typing_invalid.py:6: error: Argument 1 to "size" of "ScaleAes" has incompatible type "SourceExpression"; expected "ScaleExpression"  [arg-type]
+scripts/bindings/authoring/stages_typing_invalid.py:7: error: Argument 1 to "add" of "_Expression" has incompatible type "StatExpression"; expected "SourceExpression | float"  [arg-type]
+Found 5 errors in 1 file (checked 1 source file)
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/color.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/color-python.json
+PASS FIX-C01 Python: 351 cases, every constructor/method, exceptional tags, copies, strict descriptors and disposal.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/color.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/color-wasm.json
+PASS FIX-C01 WASM: 351 cases, all constructor/methods, exceptional tags, copies, strict descriptors and disposal.
+RUN node /Users/jeickmeier/.npm/_npx/e04ecd76da0b5726/node_modules/typescript/lib/tsc.js --noEmit --strict --target es2022 --lib es2022,esnext.disposable --module nodenext /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/typing/color.cts
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 -m mypy --strict --cache-dir /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/mypy-cache /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/color_typing.py
+Success: no issues found in 1 source file
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 -m mypy --strict --cache-dir /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/mypy-cache /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/color_typing_invalid.py
+scripts/bindings/authoring/color_typing_invalid.py:2: error: No overload variant of "rgb" matches argument types "int", "int"  [call-overload]
+scripts/bindings/authoring/color_typing_invalid.py:2: note: Possible overload variants:
+scripts/bindings/authoring/color_typing_invalid.py:2: note:     def rgb(value: str | ColorValue) -> ColorValue
+scripts/bindings/authoring/color_typing_invalid.py:2: note:     def rgb(r: float, g: float, b: float, opacity: float = ...) -> ColorValue
+scripts/bindings/authoring/color_typing_invalid.py:3: error: No overload variant of "hsl" matches argument types "str", "str", "str"  [call-overload]
+scripts/bindings/authoring/color_typing_invalid.py:3: note: Possible overload variants:
+scripts/bindings/authoring/color_typing_invalid.py:3: note:     def hsl(value: str | ColorValue) -> ColorValue
+scripts/bindings/authoring/color_typing_invalid.py:3: note:     def hsl(h: float, s: float, l: float, opacity: float = ...) -> ColorValue
+scripts/bindings/authoring/color_typing_invalid.py:4: error: Argument 1 to "color" has incompatible type "int"; expected "str"  [arg-type]
+scripts/bindings/authoring/color_typing_invalid.py:5: error: Argument 1 to "gray" has incompatible type "str"; expected "float"  [arg-type]
+scripts/bindings/authoring/color_typing_invalid.py:6: error: Argument 1 to "convert" of "ColorValue" has incompatible type "Literal['unknown']"; expected "Literal['Rgb', 'Hsl', 'Lab', 'Hcl', 'Cubehelix', 'rgb', 'hsl', 'lab', 'hcl', 'lch', 'cubehelix']"  [arg-type]
+Found 5 errors in 1 file (checked 1 source file)
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/interpolate.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/interpolate-python.json
+PASS FIX-I01 Python: 370 value/configuration cases, 36 browser transform cases, owned samples, descriptors and disposal.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/interpolate.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/interpolate-wasm.json
+PASS FIX-I01 WASM: 370 value/configuration cases, 36 browser transforms, owned samples, descriptors and disposal.
+RUN node /Users/jeickmeier/.npm/_npx/e04ecd76da0b5726/node_modules/typescript/lib/tsc.js --noEmit --strict --target es2022 --lib es2022,esnext.disposable --module nodenext /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/typing/interpolate.cts
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 -m mypy --strict --cache-dir /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/mypy-cache /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/interpolate_typing.py
+Success: no issues found in 1 source file
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 -m mypy --strict --cache-dir /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/mypy-cache /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/interpolate_typing_invalid.py
+scripts/bindings/authoring/interpolate_typing_invalid.py:2: error: Argument 1 to "sample" of "Interpolator" has incompatible type "str"; expected "float"  [arg-type]
+scripts/bindings/authoring/interpolate_typing_invalid.py:3: error: "_NumericFactory" has no attribute "gamma"  [attr-defined]
+scripts/bindings/authoring/interpolate_typing_invalid.py:4: error: Argument 1 to "numeric_array" has incompatible type "Literal['BigInt64Array']"; expected "Literal['Float32Array', 'Float64Array', 'Int8Array', 'Uint8Array', 'Uint8ClampedArray', 'Int16Array', 'Uint16Array', 'Int32Array', 'Uint32Array']"  [arg-type]
+scripts/bindings/authoring/interpolate_typing_invalid.py:5: error: Argument 2 to "quantize" has incompatible type "float"; expected "int"  [arg-type]
+scripts/bindings/authoring/interpolate_typing_invalid.py:6: error: Argument 1 to "rho" of "_ZoomFactory" has incompatible type "str"; expected "float"  [arg-type]
+scripts/bindings/authoring/interpolate_typing_invalid.py:7: error: No overload variant of "piecewise" matches argument types "Callable[[Any, Any], Any]", "list[int]"  [call-overload]
+scripts/bindings/authoring/interpolate_typing_invalid.py:7: note: Possible overload variants:
+scripts/bindings/authoring/interpolate_typing_invalid.py:7: note:     def piecewise(values: Sequence[InterpolationInput]) -> Interpolator[InterpolationResult]
+scripts/bindings/authoring/interpolate_typing_invalid.py:7: note:     def [_T] piecewise(factory: _FactoryBase[_T], values: Sequence[InterpolationInput]) -> Interpolator[_T]
+Found 6 errors in 1 file (checked 1 source file)
+RUN cargo run -p chart-export --example paint_proof --locked -- /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/paint/rust
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.96s
+     Running `target/scale-integration-target/debug/examples/paint_proof /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/paint/rust`
+PASS CLR-04 Rust: four public paint figures, version-four round trips and retained output background.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/paint.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/paint/python
+PASS CLR-04 Python: four independently authored publication figures, every paint input, strict descriptors and retained ownership.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/paint.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/paint/wasm
+PASS CLR-04 WASM: four independently authored publication figures, every paint input, strict descriptors and retained ownership.
+RUN cargo run -p chart-export --example color_acceptance_proof --locked -- /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/color-acceptance/rust
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.87s
+     Running `target/scale-integration-target/debug/examples/color_acceptance_proof /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/color-acceptance/rust`
+PASS CLR-05: three v5 color figures and immutable SVG/PDF/PNG publication.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/color_acceptance.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/color-acceptance/python
+PASS CLR-05 Python: three independently authored perceptual/alpha/grayscale figures and retained publication.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/color_acceptance.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/color-acceptance/wasm
+PASS CLR-05 WASM: three independently authored perceptual/alpha/grayscale figures and retained publication.
+RUN cargo test -p chart-core --test scale_operations --test scale_population --test scale_calendar --test scale_numeric --locked
+eil_offset_and_ticks ... ok
+test automatic_fixed_zone_ticks_and_nice_match_all_reference_counts ... ok
+test fixed_zone_time_mapping_and_inverse_match_reference ... ok
+test original_time_scale_inventory_matches_declared_integer_date_overlap ... ok
+test expanded_filtered_intervals_custom_formats_and_utc_day_selection_match ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.56s
+
+     Running tests/scale_numeric.rs (target/scale-integration-target/debug/deps/scale_numeric-5bdafc7d6304fd1e)
+
+running 3 tests
+test independent_piecewise_radial_clamp_and_copy_contracts ... ok
+test chart_clamp_uses_effective_mapping_domain ... ok
+test pinned_numeric_mapping_and_inverse_families_match ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/scale_operations.rs (target/scale-integration-target/debug/deps/scale_operations-bf81001f7bee2573)
+
+running 2 tests
+test standalone_named_options_are_atomic_and_capabilities_are_checked ... ok
+test every_pinned_operation_and_declared_adaptation_is_observable ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.91s
+
+     Running tests/scale_population.rs (target/scale-integration-target/debug/deps/scale_population-6ed0d75201cd90c2)
+
+running 4 tests
+test classifier_labels_are_compact_without_merging_distinct_cutpoints ... ok
+test numeric_thresholds_read_integer_columns_numerically_and_explicit_keys_stay_exact ... ok
+test faceted_quantiles_count_duplicate_observations_and_broadcast_population_once ... ok
+test ordinal_and_quantile_updates_match_independent_retained_batches_and_keep_old_owners ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+RUN cargo run -p chart-export --example scale_proof --locked -- /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/scales/rust
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.81s
+     Running `target/scale-integration-target/debug/examples/scale_proof /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/scales/rust`
+PASS SP-07: five v5 scale figures and immutable SVG/PDF/PNG publication.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/scales.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/scales/python-scales.json
+PASS Python FIX-20 raw/public [{'cases': 661, 'operations': 19562, 'adaptations': 1112, 'diagnostics': 275, 'public': False}, {'cases': 661, 'operations': 19562, 'adaptations': 1112, 'diagnostics': 275, 'public': True}]
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/scales.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/scales/wasm-scales.json
+PASS WASM FIX-20 raw/public [
+  {
+    cases: 661,
+    operations: 19562,
+    adaptations: 1112,
+    diagnostics: 275,
+    public: false
+  },
+  {
+    cases: 661,
+    operations: 19562,
+    adaptations: 1112,
+    diagnostics: 275,
+    public: true
+  }
+]
+RUN cargo test -p chart-export --test scale_calendar --locked
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.18s
+     Running tests/scale_calendar.rs (target/scale-integration-target/debug/deps/scale_calendar-4b308155db3b3bf4)
+
+running 2 tests
+test calendar_axis_preserves_piecewise_knots_units_and_visible_windows ... ok
+test fold_gap_labels_and_geometry_share_revision_in_v5_publication ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.35s
+
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/time.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/scales/time-python /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/scales/time-rust --public
+PASS SP-06 Python {'intervals': 2750, 'formats': 990, 'automatic': 240, 'mapping': 160} two retained publication fixtures and exact integer lifecycle
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/time.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/scales/time-wasm /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/scales/time-rust --public
+PASS SP-06 WASM { intervals: 2750, formats: 990, automatic: 240, mapping: 160 } two retained publication fixtures and exact bigint lifecycle
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/scale_gallery.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/scales/python
+PASS SP-07 Python: five independently authored v5 scale figures, typed source routes and retained SVG/PDF/PNG.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/scale_gallery.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/scales/wasm
+PASS SP-07 WASM: five independently authored v5 scale figures, typed source routes and retained SVG/PDF/PNG.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/scale_interaction.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/scales/python-interaction.json
+PASS SP-07 Python piecewise numeric/time navigation, inspection, brushing, linking and retained exports.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/scale_interaction.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/scales/wasm-interaction.json
+PASS SP-07 WASM piecewise numeric/time navigation, inspection, brushing, linking and retained exports.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/scale_updates.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/scales/python-updates.json
+PASS SP-07 Python: sixteen append/upsert/remove/retention steps match fresh batch PNG; exact uint64 categories and old captures survive.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/scale_updates.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/scales/wasm-updates.json
+PASS SP-07 WASM: sixteen append/upsert/remove/retention steps match fresh batch PNG; exact uint64 categories and old captures survive.
+RUN node --expose-gc /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/scale_memory.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/scales/memory.json
+PASS SP-07 owned scale allocation plateau [ 3211264, 3211264, 3211264, 3211264, 3211264, 3211264 ]
+RUN node /Users/jeickmeier/.npm/_npx/e04ecd76da0b5726/node_modules/typescript/lib/tsc.js --noEmit --strict --target es2022 --lib es2022,esnext.disposable --module nodenext /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/typing/scales.cts
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 -m mypy --strict --cache-dir /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/mypy-cache /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/scale_typing.py
+Success: no issues found in 1 source file
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 -m mypy --strict --cache-dir /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/mypy-cache /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/scale_typing_invalid.py
+ing', 'diverging_log', 'diverging_pow', 'diverging_sqrt', 'diverging_symlog', 'utc', 'local']"  [arg-type]
+scripts/bindings/authoring/scale_typing_invalid.py:3: error: List item 0 has incompatible type "object"; expected "int | float | str | ScaleKey | MissingValue | None"  [list-item]
+scripts/bindings/authoring/scale_typing_invalid.py:4: error: Argument "unit" to "StandaloneScale" has incompatible type "Literal['fortnights']"; expected "Literal['Seconds', 'Milliseconds', 'Microseconds', 'Nanoseconds']"  [arg-type]
+scripts/bindings/authoring/scale_typing_invalid.py:5: error: Argument 1 to "floor" of "StandaloneScale" has incompatible type "str"; expected "int"  [arg-type]
+scripts/bindings/authoring/scale_typing_invalid.py:6: error: Argument "clamp" to "configure" of "StandaloneScale" has incompatible type "str"; expected "bool"  [arg-type]
+scripts/bindings/authoring/scale_typing_invalid.py:7: error: No overload variant of "ScaleKey" matches argument types "str", "str"  [call-overload]
+scripts/bindings/authoring/scale_typing_invalid.py:7: note: Possible overload variants:
+scripts/bindings/authoring/scale_typing_invalid.py:7: note:     def ScaleKey(kind: Literal['Integer', 'Unsigned', 'Timestamp'], value: int) -> ScaleKey
+scripts/bindings/authoring/scale_typing_invalid.py:7: note:     def ScaleKey(kind: Literal['Number'], value: float) -> ScaleKey
+scripts/bindings/authoring/scale_typing_invalid.py:7: note:     def ScaleKey(kind: Literal['Text'], value: str) -> ScaleKey
+scripts/bindings/authoring/scale_typing_invalid.py:7: note:     def ScaleKey(kind: Literal['Boolean'], value: bool) -> ScaleKey
+scripts/bindings/authoring/scale_typing_invalid.py:7: note:     def ScaleKey(kind: Literal['Null'], value: None = ...) -> ScaleKey
+Found 6 errors in 1 file (checked 1 source file)
+PASS FIX-AUTH07 primary runtime and type proofs: /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary. Artifact inspection remains a separate recorded check.
+RUN cargo test -p chart-core --test chromatic --test chromatic_integration --locked
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.10s
+     Running tests/chromatic.rs (target/scale-integration-target/debug/deps/chromatic-772fad5a86221eee)
+
+running 2 tests
+test every_actual_scheme_array_is_exact_and_owned ... ok
+test every_interpolator_sample_matches_exact_reference_bytes ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.36s
+
+     Running tests/chromatic_integration.rs (target/scale-integration-target/debug/deps/chromatic_integration-cc880be0585ba598)
+
+running 7 tests
+test equal_endpoint_swatches_do_not_erase_reversed_ramp_identity ... ok
+test asymmetric_normalization_reversal_missing_and_guide_identity ... ok
+test nonfinite_named_ordinal_keys_are_missing_and_do_not_shift_training ... ok
+test palette_reconfiguration_reuses_tables_and_matches_fresh_preparation ... ok
+test palette_metadata_checked_and_v1_v6_ingestion_is_strict ... ok
+test every_named_scale_composition_matches_pinned_reference ... ok
+test exceptional_normalized_parameters_preserve_valid_reference_colors ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/chromatic.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/chromatic-python.json
+PASS CP-04 Python: 218 exact scheme arrays and 160666 ramp rows, catalog metadata, reversal, invalid inputs, copies and disposal.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/chromatic.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/chromatic-wasm.json
+PASS CP-04 WASM: 218 exact scheme arrays and 160666 ramp rows, catalog metadata, reversal, invalid inputs, copies and disposal.
+RUN cargo run -p chart-export --example chromatic_proof --locked -- /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/chromatic/rust
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.97s
+     Running `target/scale-integration-target/debug/examples/chromatic_proof /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/chromatic/rust`
+PASS FIX-21: five v6 chromatic figures and immutable SVG/PDF/PNG publication.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/chromatic_gallery.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/chromatic/python
+PASS FIX-21 Python: five independently authored v6 catalog figures, retained SVG/PDF/PNG.
+PASS CP-04 Python: non-finite numeric categories retain missing paint and do not shift named palette training.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/chromatic_gallery.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/chromatic/wasm
+PASS FIX-21 WASM: five independently authored v6 catalog figures, retained SVG/PDF/PNG.
+PASS CP-04 WASM: non-finite numeric categories retain missing paint and do not shift named palette training.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/chromatic_updates.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/chromatic-updates-python.json
+PASS CP-05 Python: twenty-four append/upsert/remove/retention steps match fresh batch PNG; exact uint64 categories and old captures survive.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/chromatic_updates.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/chromatic-updates-wasm.json
+PASS CP-05 WASM: twenty-four append/upsert/remove/retention steps match fresh batch PNG; exact uint64 categories and old captures survive.
+RUN node --expose-gc /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/chromatic_memory.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/chromatic-memory.json
+PASS FIX-21 owned catalog/ramp/scale plateau [ 2686976, 2686976, 2686976, 2686976, 2686976, 2686976 ]
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 -m mypy --strict --cache-dir /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/mypy-cache /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/chromatic_typing_invalid.py
+scripts/bindings/authoring/chromatic_typing_invalid.py:2: error: Argument 1 to "chromatic" has incompatible type "Literal['ViridisTypo']"; expected "Literal['Blues', 'BrBG', 'BuGn', 'BuPu', 'Cividis', 'Cool', 'CubehelixDefault', 'GnBu', 'Greens', 'Greys', 'Inferno', 'Magma', 'OrRd', 'Oranges', 'PRGn', 'PiYG', 'Plasma', 'PuBu', 'PuBuGn', 'PuOr', 'PuRd', 'Purples', 'Rainbow', 'RdBu', 'RdGy', 'RdPu', 'RdYlBu', 'RdYlGn', 'Reds', 'Sinebow', 'Spectral', 'Turbo', 'Viridis', 'Warm', 'YlGn', 'YlGnBu', 'YlOrBr', 'YlOrRd']"  [arg-type]
+scripts/bindings/authoring/chromatic_typing_invalid.py:3: error: Argument 1 to "chromatic" has incompatible type "Literal['Category10']"; expected "Literal['Blues', 'BrBG', 'BuGn', 'BuPu', 'Cividis', 'Cool', 'CubehelixDefault', 'GnBu', 'Greens', 'Greys', 'Inferno', 'Magma', 'OrRd', 'Oranges', 'PRGn', 'PiYG', 'Plasma', 'PuBu', 'PuBuGn', 'PuOr', 'PuRd', 'Purples', 'Rainbow', 'RdBu', 'RdGy', 'RdPu', 'RdYlBu', 'RdYlGn', 'Reds', 'Sinebow', 'Spectral', 'Turbo', 'Viridis', 'Warm', 'YlGn', 'YlGnBu', 'YlOrBr', 'YlOrRd']"  [arg-type]
+scripts/bindings/authoring/chromatic_typing_invalid.py:4: error: Argument 2 to "chromatic_scheme" has incompatible type "str"; expected "int | None"  [arg-type]
+scripts/bindings/authoring/chromatic_typing_invalid.py:5: error: Incompatible types (expression has type "Literal[2]", TypedDict item "version" has type "Literal[1]")  [typeddict-item]
+Found 4 errors in 1 file (checked 1 source file)
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/chromatic_composition.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/chromatic-composition-python.json
+PASS FIX-21 Python: 90 composed mappings / 1268 exact scene colors across all sequential/diverging/rank/classifier families.
+PASS FIX-21 Python: editorial/terminal/grayscale preserve canonical evaluation and convert both marks and guide swatches.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/chromatic_composition.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/chromatic-composition-wasm.json
+PASS FIX-21 WASM: 90 composed mappings / 1268 exact scene colors across all sequential/diverging/rank/classifier families.
+PASS FIX-21 WASM: editorial/terminal/grayscale preserve canonical evaluation and convert both marks and guide swatches.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/chromatic_transformed.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/chromatic-transformed-python.json
+PASS FIX-21 Python: 304 exceptional normalization cases; valid reference colors and twelve explicit undefined-color diagnostics.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/chromatic_transformed.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/chromatic-transformed-wasm.json
+PASS FIX-21 WASM: 304 exceptional normalization cases; valid reference colors and twelve explicit undefined-color diagnostics.
+RUN cargo test -p chart-core --test shape_foundation --locked
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.57s
+     Running tests/shape_foundation.rs (target/scale-integration-target/debug/deps/shape_foundation-1f6b659699d8ce7a)
+
+running 2 tests
+test shape_inventory_accounts_for_methods_aliases_and_protocols ... ok
+test every_reference_shape_context_uses_one_checked_path_engine ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+RUN cargo run -p chart-export --example shape_foundation --locked -- /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/shape-foundation/rust
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.55s
+     Running `target/scale-integration-target/debug/examples/shape_foundation /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/shape-foundation/rust`
+PASS FIX-S01: circular sector, winding hole and external-sink Bezier use shared paths at 300/600 DPI; generator implementations remain separate work.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_foundation.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/shape-foundation/python
+PASS FIX-S01 Python: 333 contexts, exact digits, precision-independent external replay/copy ownership and independent sector/hole/Bezier publication at 300/600 DPI.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_foundation.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/shape-foundation/wasm
+PASS FIX-S01 WASM: 333 contexts, exact digits, precision-independent external replay/copy ownership and independent sector/hole/Bezier publication at 300/600 DPI.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_foundation_compare.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/shape-foundation
+PASS FIX-S01: identical full scenes and PNG bytes across Rust/Python/WASM at 300/600 DPI. Native/SVG/PDF inspection is separate.
+RUN cargo test -p chart-core --test shape_cartesian --test shape_integration --locked
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.66s
+     Running tests/shape_cartesian.rs (target/scale-integration-target/debug/deps/shape_cartesian-d4570c112a12798a)
+
+running 6 tests
+test independent_monotone_and_natural_invariants_hold ... ok
+test input_errors_and_resource_bounds_never_return_partial_owned_geometry ... ok
+test ordering_gaps_independent_boundaries_and_helper_inheritance_are_explicit ... ok
+test native_accessors_and_custom_protocol_receive_exact_order_and_area_lifecycle ... ok
+test complete_cartesian_seed_matrix_matches_actual_generators ... ok
+test extended_controls_helpers_and_irregular_matrix_matches_reference ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/shape_integration.rs (target/scale-integration-target/debug/deps/shape_integration-8ba9373c88abbc8d)
+
+running 6 tests
+test nonzero_holes_curved_strokes_caps_and_subdivision_limits_are_explicit ... ok
+test missing_secondary_coordinate_splits_the_paired_run_and_retains_source_keys ... ok
+test clipped_area_interiors_keep_source_focus_without_inventing_brush_vertices ... ok
+test general_area_has_independent_boundaries_and_no_lower_upper_order_constraint ... ok
+test singleton_curve_policy_remains_distinct_from_legacy_line_points ... ok
+test curves_project_before_generation_and_controls_are_never_source_targets ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+RUN cargo run -p chart-export --example shape_cartesian --locked -- /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/shape-cartesian/rust
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.58s
+     Running `target/scale-integration-target/debug/examples/shape_cartesian /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/shape-cartesian/rust`
+PASS Cartesian publication: 20 line curves, 19 general areas, source anchors and 300/600 DPI outputs.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_cartesian.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module
+PASS Python Cartesian: 829 cases including 2 nonfinite-reference diagnostics; actual generator, boundary, copy, repeated output and independent Path ownership.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_cartesian_gallery.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/shape-cartesian/python
+PASS Python Cartesian publication: 20 curves, 19 areas and retained source anchors at 300/600 DPI.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_cartesian_updates.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/shape-cartesian/python-updates.json
+PASS Python Cartesian: 64 append/upsert/remove/retention checks across global/local curves, areas, facets and exact large keys; old exports retained.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_cartesian_interaction.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/python-module
+PASS Python presented shape containment, non-source controls, clipped interior focus, exact keys and v7 round trips.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_cartesian.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module
+PASS WASM Cartesian: 829 cases including 2 nonfinite-reference diagnostics; actual generator, boundary, copy, repeated output and independent Path ownership.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_cartesian_gallery.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/shape-cartesian/wasm
+PASS WASM Cartesian publication: 20 curves, 19 areas and retained source anchors at 300/600 DPI.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_cartesian_updates.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/shape-cartesian/wasm-updates.json
+PASS WASM Cartesian: 64 append/upsert/remove/retention checks across global/local curves, areas, facets and exact large keys; old exports retained.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_cartesian_interaction.cjs /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/wasm-module
+PASS WASM presented shape containment, non-source controls, clipped interior focus, exact keys and v7 round trips.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/shape_cartesian_compare.py /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/shape-cartesian
+PASS FIX-S02/03: identical full scenes and PNG bytes across Rust/Python/WASM at 300/600 DPI. Native/SVG/PDF inspection is separate.
+RUN node /Users/jeickmeier/.npm/_npx/e04ecd76da0b5726/node_modules/typescript/lib/tsc.js --noEmit --strict --target es2022 --lib es2022,esnext.disposable --module nodenext /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/typing/shape.cts
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 -m mypy --strict --cache-dir /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/mypy-cache /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/shape_typing.py
+Success: no issues found in 1 source file
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 -m mypy --strict --cache-dir /Users/jeickmeier/Projects/finstack-chart/target/shape-cartesian-primary/mypy-cache /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/authoring/shape_typing_invalid.py
+scripts/bindings/authoring/shape_typing_invalid.py:2: error: Argument 1 to "ShapeLine" has incompatible type "dict[str, dict[str, object]]"; expected "ShapeLineConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_typing_invalid.py:3: error: Argument 1 to "ShapeArea" has incompatible type "dict[str, dict[str, str]]"; expected "ShapeAreaConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_typing_invalid.py:4: error: Argument 1 to "ShapeLine" has incompatible type "dict[str, list[int]]"; expected "ShapeLineConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_typing_invalid.py:5: error: Argument 1 to "ShapeLine" has incompatible type "dict[str, dict[str, str]]"; expected "ShapeLineConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_typing_invalid.py:6: error: Argument 1 to "boundary" of "ShapeArea" has incompatible type "Literal['Upper']"; expected "Literal['X0', 'X1', 'Y0', 'Y1']"  [arg-type]
+Found 5 errors in 1 file (checked 1 source file)

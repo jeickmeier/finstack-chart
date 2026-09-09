@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "name": "d3-interpolate",
+  "version": "3.0.1",
+  "license": "ISC",
+  "source": "https://github.com/d3/d3-interpolate/tree/v3.0.1",
+  "lock_sha256": "bcaf52b90527128695304aabf5a959f0b19445715d4d6ca465a0ea6de8b3187e",
+  "source_files": {
+    "src/array.js": "dd9c75f24121d2d255c7772c92f343f0509e2eeec08e16948e4208e033dd2485",
+    "src/basis.js": "943852e1343ec225d33d7ebe5a3062318ed0481bb9c31a206777e9b8a7c3c102",
+    "src/basisClosed.js": "cbc80f7539afd77d796298b8869126c8ccfd36cd822ff10ae3ce5c654358a652",
+    "src/color.js": "60db43fb1a54612a311f7f7838428fa76280c14fc8b4be7845700d54496a3178",
+    "src/constant.js": "ce0ca2e21f54bb515e78aa6ff99a77c0283f46575167e4ac88092b60dd1e65a0",
+    "src/cubehelix.js": "f541922cc6ce1f5fe6456f1a3480f813278ef901136f7f4bedcfc8f0bafc4ed4",
+    "src/date.js": "c6f26e1c2973037708c252dbadd79857d7836d13222166fd88288e3365e4af5e",
+    "src/discrete.js": "8f3492cee27da1c3fa55ab99224cf070ff67f73673d12975167cbfd9f7e971a7",
+    "src/hcl.js": "0c533c30795b304acb19b9f9c36346cd78c2c1f3c0df4a966a38eb11d1d07228",
+    "src/hsl.js": "37a0dfce6415ff27151c269c975dfe97f6cea98940d65fcd3e76656a7babe9ef",
+    "src/hue.js": "d020accf2428ae2f3f6a87684c516a087172f57dfa24c3dae9c418e11cb268de",
+    "src/index.js": "6507c8a8b50662d762f40d84863acb92e1988917ab452a2aea465499c394a6aa",
+    "src/lab.js": "1bbad6cd4faf30a71b73da5b4180d285fd66dca4cc43dfb61422669468aa39ad",
+    "src/number.js": "ed494932c08d821136b3566e404608c79356035866a742a79585ef761d61139b",
+    "src/numberArray.js": "7d9888008e3303a570040ff0023d7cf56a84519aebce26ebe0974c6845a237c2",
+    "src/object.js": "3a9b696b54c9023f49433f6075d165dfa2701fd90af63b77682f165071fd41bb",
+    "src/piecewise.js": "d8cdd43bbaf4ed400ada1dbd46e096c2803be243017b20179d3ae26c8e8ed15c",
+    "src/quantize.js": "3c87994a88f1e52785083aaa00f21d0b9fd27e7e26069f275da45ec1f65735c8",
+    "src/rgb.js": "bb72347ab34582ebdff17195db056cc0b87d53b6b48d22624189ab6c4a176a5e",
+    "src/round.js": "ca99b653ebb4dbe75fd95223be937c0b69f1e1769592d956bbe740ea86e602b1",
+    "src/string.js": "b41e340d1bd5b261d5526ecb07b03157cae5e51242de2eba5f48bfe36dfde549",
+    "src/transform/decompose.js": "36ca9c47bc97998892dc36cc8dcb5c7261ae84746e66641a1651504c252d7100",
+    "src/transform/index.js": "854d8c2cb7f153c34589c95bf9f494933537babee3b96a64baaa1191a44c4d4f",
+    "src/transform/parse.js": "8587d135df0f2b3a59cf0eca83c3658965b37bc7ea6f5e3350b427465f114da4",
+    "src/value.js": "0ac89c506dae390174914dbafaf5c80e3a89541bf6dda8ad68e1f42562279c1b",
+    "src/zoom.js": "5a1261f0ff5cd30192cdcb2cbd437b996f9edf475b3b634882b5662146d5c2bc"
+  },
+  "node": "24.14.0",
+  "timezone": "UTC",
+  "locale": "en-US",
+  "browser": {
+    "engine": "Chromium",
+    "version": "151.0.7922.34",
+    "executable_sha256": "7687bff7cb2db075f250e6d5848bbc8838cac3802ac3952a899c574f8eccab45",
+    "os": "darwin",
+    "release": "25.5.0",
+    "arch": "arm64"
+  },
+  "case_count": 36,
+  "generator_sha256": "30a3c22121d1367185c9af312d426dc94d19e5a549c9909848bc2b0ffb8b0512",
+  "cases_sha256": "4c1274497b5c1697e523aab886f93ab8a090dbec970376f57184f4f8ea09a7fb",
+  "tolerances": {
+    "decomposition": {
+      "absolute": 1e-12,
+      "relative": 1e-12
+    },
+    "browser_parser_resolution": {
+      "absolute": 0.00001,
+      "relative": 0.000001
+    },
+    "canonical_template": "exact; resolved-matrix numeric tokens compare at 1e-12 absolute/relative",
+    "parser_note": "Chromium CSS lengths/angles and SVG values may round during parsing; binary64 headless input preserves authored precision and uses the measured geometry tolerance."
+  },
+  "status": "Reference only; WP-IP05/06 acceptance remains open."
+}

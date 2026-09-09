@@ -1,0 +1,14 @@
+    Blocking waiting for file lock on build directory
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+   Compiling chart-extension-example v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/custom-extension)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 00s
+     Running tests/scale_categorical.rs (target/debug/deps/scale_categorical-4a664784181f0475)
+
+running 2 tests
+test category_append_matches_fresh_batch_and_retains_prior_export ... ok
+test named_category_axes_preserve_dodge_slots_and_descriptor_versions ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+

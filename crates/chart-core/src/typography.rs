@@ -1,5 +1,5 @@
 //! Explicit rich-text requests and destination-shaped immutable glyphs.
-use crate::scene::{Color, PathCommand};
+use crate::scene::PathCommand;
 use crate::services::{ResourceDescriptor, TextMetrics, Units};
 use crate::{ChartResult, Diagnostic, DiagnosticCode, Limits, Point};
 use serde::{Deserialize, Serialize};
@@ -33,7 +33,7 @@ pub struct RichRun {
     pub size: f64,
     /// Optional run color; absent inherits the furniture color.
     #[serde(default)]
-    pub color: Option<Color>,
+    pub color: Option<crate::color::Paint>,
     /// Explicit shaping language tag; default is undetermined.
     #[serde(default = "und")]
     pub language: String,
@@ -358,3 +358,18 @@ impl NumberFormat {
         ))
     }
 }
+
+impl RichText {
+    /// Whether any run requires the authored floating-color capability.
+    pub fn has_floating_paint(&self) -> bool {
+        self.lines
+            .iter()
+            .flatten()
+            .any(|r| r.color.is_some_and(crate::color::Paint::is_floating))
+    }
+}
+
+mod numeric_format;
+pub use numeric_format::*;
+
+pub use crate::scales::{TimeFormat, TimeFormatter, TimeLocale};

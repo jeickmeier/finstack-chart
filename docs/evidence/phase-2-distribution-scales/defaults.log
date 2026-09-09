@@ -1,0 +1,20 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.34s
+     Running tests/scale_classifier.rs (target/debug/deps/scale_classifier-bf5b1175171473b7)
+
+running 3 tests
+test generic_outputs_large_keys_and_population_corrections_are_independent ... ok
+test reference_constructor_defaults_are_usable_without_manual_configuration ... ok
+test all_pinned_classifier_cases_match_mapping_extents_and_cuts ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/scale_interpolated.rs (target/debug/deps/scale_interpolated-790c5c4693993174)
+
+running 3 tests
+test custom_typed_interpolation_midpoint_rounding_and_rank_degeneracies ... ok
+test continuous_typed_ranges_use_shared_numeric_knots ... ok
+test all_pinned_sequential_diverging_and_rank_cases_match ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+

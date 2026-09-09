@@ -209,3 +209,13 @@ was performed. This is source evidence and a plan, not an implementation certifi
 Exact local checks and their results are recorded in the status ledger. All CHR-01–06
 implementation requirements remain open. **Next: CP-01**, agreeing the shared oracle
 and RGB/Cubehelix boundary with SP-01/04, then CP-02's exact discrete catalog.
+
+## Delivery record — 9 September 2026
+
+CP-01–05 are complete and G-CHROMATIC passes for the retained typed FIX-21 snapshot,
+including the 304-case exceptional-normalization supplement.
+See the [retained integration snapshot](../evidence/phase-2-chromatic-integration-2026-09-09.md).
+The historical assessment above describes entry gaps. Exact catalog/ramp operations,
+all scale composition families, checked metadata/v6 migration, actual hosts, updates,
+theme conversion, native/publication inspection and measured costs now have evidence.
+WP-21/22 and the other Phase 2 gates remain separate acceptance work.

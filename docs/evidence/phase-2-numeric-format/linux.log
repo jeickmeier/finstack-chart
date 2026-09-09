@@ -1,0 +1,65 @@
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 23.03s
+     Running tests/layout.rs (target/debug/deps/layout-e1a273a2c1bc9a52)
+
+running 20 tests
+test invalid_scale_options_reject_even_at_tiny_bounds_before_measurement ... ok
+test known_linear_geometry_clips_targets_ranges_and_inverse_share_one_scene ... ok
+test category_catalogs_merge_by_label_across_layers_and_reject_numeric_statistics ... ok
+test outside_policies_split_lines_and_annotation_overflow_is_explicit ... ok
+test category_label_projection_survives_codes_reordering_removal_and_explicit_domain ... ok
+test projection_overflow_and_category_or_guide_budgets_fail_without_replacing_a_scene ... ok
+test automatic_category_training_is_eligible_and_keeps_retained_relative_order ... ok
+test representable_narrow_numeric_domains_have_finite_scene_and_distinct_labels ... ok
+test resource_and_work_errors_precede_callbacks_and_preserve_previous_scene ... ok
+test wp11_area_and_ribbon_split_missing_and_validate_bounds ... ok
+test destination_text_changes_margins_without_recomputing_statistics ... ok
+test independent_named_axes_accept_distinct_calculation_spaces_and_hidden_layers_train ... ok
+test tiny_empty_and_empty_histogram_have_controlled_states_and_finite_geometry ... ok
+test crowded_labels_are_thinned_deterministically_with_a_pressure_diagnostic ... ok
+test utc_large_origin_scene_uses_integer_inverse_and_calendar_labels ... ok
+test wp11_mapped_color_changes_styles_and_metadata_without_numeric_domain_changes ... ok
+test wp11_ohlc_validation_and_volume_invalidity_are_independent ... ok
+test visibility_has_its_own_scene_stamp_and_does_not_change_trained_domains ... ok
+test zoom_keeps_histogram_edges_counts_membership_domains_and_snapshot ... ok
+test wp11_portable_log_axis_and_secondary_units_use_shared_projection ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/scale_classifier.rs (target/debug/deps/scale_classifier-9e18e6e8b3fde577)
+
+running 3 tests
+test generic_outputs_large_keys_and_population_corrections_are_independent ... ok
+test reference_constructor_defaults_are_usable_without_manual_configuration ... ok
+test all_pinned_classifier_cases_match_mapping_extents_and_cuts ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests/scale_interpolated.rs (target/debug/deps/scale_interpolated-46f7f18a25e6da30)
+
+running 3 tests
+test custom_typed_interpolation_midpoint_rounding_and_rank_degeneracies ... ok
+test continuous_typed_ranges_use_shared_numeric_knots ... ok
+test all_pinned_sequential_diverging_and_rank_cases_match ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/scale_numeric.rs (target/debug/deps/scale_numeric-c22a985d3ddc329b)
+
+running 2 tests
+test independent_piecewise_radial_clamp_and_copy_contracts ... ok
+test pinned_numeric_mapping_and_inverse_families_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/scale_ticks_format.rs (target/debug/deps/scale_ticks_format-81e8ee77a02254d4)
+
+running 5 tests
+test independent_resource_sign_rounding_and_copy_contracts ... ok
+test distribution_nice_preserves_midpoints_and_rebuilds_thresholds ... ok
+test all_pinned_standalone_tick_formats ... ok
+test all_pinned_numeric_ticks_and_default_labels ... ok
+test expanded_pinned_specifiers_locales_and_tick_boundaries ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.72s
+

@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "owner": "GG-02",
+  "reference": "ggplot2 4.0.3",
+  "r_version": "4.6.1",
+  "ggplot2_source_sha256": "690224bd61642b6222adb109470988e87f786e193cca77a15c0923cf9da73fa5",
+  "seed": 1729,
+  "case_count": 22,
+  "case_ids": [
+    "log_histogram",
+    "horizontal_log_histogram",
+    "horizontal_columns",
+    "horizontal_count",
+    "coordinate_log_histogram",
+    "log_mean",
+    "log_after_stat_expression",
+    "coordinate_log_mean",
+    "scale_limit_mean",
+    "coordinate_zoom_mean",
+    "squish_mean",
+    "keep_mean",
+    "multiple_discrete",
+    "missing_groups",
+    "inferred_lines",
+    "numeric_groups",
+    "source_reduction",
+    "stat_group_override",
+    "source_expression",
+    "after_stat_expression",
+    "after_scale_expression",
+    "theme_expression"
+  ],
+  "files": {
+    "tools/reference/r/stages.R": "76dbc06a6ed38d21f33b8e441eeb8167d1ce88e14eebd38b3aa7e9ee22dc6e37",
+    "tools/reference/r/run.py": "48593eda8f1bd8ac0fa93ef37ab2e0294f333dc05ba10f52a8297a43e16eb0e4",
+    "tools/reference/r/renv.lock": "cf48fbd065d8367d6e127b7f3bb6c726a9aca0baa466546daed4852d1a5ed5b2",
+    "tools/reference/r/manifest_stages.py": "e116858fd07e85d7843c328a13689cf8515468e0223c792f17565f0580f72d0c",
+    "fixtures/parity/ggplot2/stages.json": "4b950e490003eb9f94f2045c49596745ae00dd4e780799c121f73e34fef66fdb",
+    "fixtures/parity/ggplot2/sources.json": "dc5887c368b49b8c0cad6a3a94d4e81ab1a4a4e0c1096c56326e0d5c16942085"
+  },
+  "regenerate": "mise exec -- python3 tools/reference/r/run.py tools/reference/r/stages.R"
+}

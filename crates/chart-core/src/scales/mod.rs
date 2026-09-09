@@ -2,17 +2,46 @@
 //! Domain training is separate from visible viewport and destination range projection.
 
 mod band;
+mod calendar;
+/// Named chromatic catalog, independent from scale normalization.
+pub mod chromatic;
+mod civil;
+mod classifier;
 mod color;
+mod interpolated;
 mod linear;
+mod mapped;
 mod nonlinear;
+mod numeric;
+mod ordinal;
+mod provider;
 mod session;
+mod spacing;
+mod standalone;
+mod standalone_authoring;
+pub(crate) mod ticks;
+mod time;
+mod time_format;
 mod utc;
 
 pub use band::*;
+pub use calendar::*;
+pub use classifier::*;
 pub use color::*;
+pub use interpolated::*;
 pub use linear::*;
+pub use mapped::*;
 pub use nonlinear::*;
+pub use numeric::*;
+pub use ordinal::*;
+pub use provider::*;
 pub use session::*;
+pub use spacing::{BandSpec, CategoryScale, PointSpec};
+pub use standalone::*;
+pub use standalone_authoring::*;
+pub use ticks::{log_tick_candidates, log_tick_format, tick_candidates, tick_step};
+pub use time::*;
+pub use time_format::*;
 pub use utc::*;
 
 use crate::{ChartResult, Diagnostic, DiagnosticCode};

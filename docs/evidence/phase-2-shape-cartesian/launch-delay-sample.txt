@@ -1,0 +1,32 @@
+Analysis of sampling chromatic-772fad5a86221eee (pid 89487) every 1 millisecond
+Process:         chromatic-772fad5a86221eee [89487]
+Path:            /Users/USER/*/chromatic-772fad5a86221eee
+Load Address:    0x1042e8000
+Identifier:      chromatic-772fad5a86221eee
+Version:         ???
+Code Type:       ARM64
+Parent Process:  cargo [89400]
+Target Type:     live task
+
+Date/Time:       2026-09-09 09:23:41.568 -0400
+Launch Time:     2026-09-09 09:09:54.995 -0400
+OS Version:      macOS 26.5.2 (25F84)
+Report Version:  7
+Analysis Tool:   /usr/bin/sample
+
+Physical footprint:         96K
+Physical footprint (peak):  96K
+Idle exit:                  untracked
+----
+
+Call graph:
+    800 Thread_263751045: Main Thread   DispatchQueue_<multiple>
+      800 _dyld_start  (in dyld) + 0  [0x1051289c0]
+
+Total number in stack (recursive counted multiple, when >=5):
+
+Sort by top of stack, same collapsed (when >= 5):
+        _dyld_start  (in dyld)        800
+
+Binary images description not available
+

@@ -1,0 +1,11 @@
+
+Success: no issues found in 1 source file
+
+scripts/bindings/authoring/shape_stack_typing_invalid.py:2: error: Argument 1 to "ShapeStack" has incompatible type "dict[str, str]"; expected "ShapeStackConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_stack_typing_invalid.py:3: error: Argument 1 to "ShapeStack" has incompatible type "dict[str, str]"; expected "ShapeStackConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_stack_typing_invalid.py:4: error: Argument 1 to "ShapeStack" has incompatible type "dict[str, str]"; expected "ShapeStackConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_stack_typing_invalid.py:5: error: Argument 1 to "stack_order" of "Position" has incompatible type "list[int]"; expected "Literal['None', 'Reverse', 'Ascending', 'Descending', 'Appearance', 'InsideOut'] | _StackPermutation"  [arg-type]
+scripts/bindings/authoring/shape_stack_typing_invalid.py:6: error: Argument 1 to "stack_offset" of "Position" has incompatible type "Literal['Normalized']"; expected "Literal['None', 'Expand', 'Diverging', 'Silhouette', 'Wiggle']"  [arg-type]
+scripts/bindings/authoring/shape_stack_typing_invalid.py:7: error: Argument 1 to "stack_missing" of "Position" has incompatible type "Literal[True]"; expected "Literal['Gap', 'Zero', 'Error']"  [arg-type]
+Found 6 errors in 1 file (checked 1 source file)
+

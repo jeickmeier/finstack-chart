@@ -1,0 +1,1774 @@
+{
+  "schema_version": 1,
+  "reference": "ggplot2 4.0.3",
+  "r_version": "4.6.1",
+  "seed": 1729,
+  "cases": [
+    {
+      "id": "log_histogram",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 3,
+          "columns": {
+            "count": [
+              3,
+              2,
+              2
+            ],
+            "x": [
+              0.5,
+              1.5,
+              2.5
+            ],
+            "xmin": [
+              0,
+              1,
+              2
+            ],
+            "xmax": [
+              1,
+              2,
+              3
+            ],
+            "density": [
+              0.428571428571429,
+              0.285714285714286,
+              0.285714285714286
+            ],
+            "ncount": [
+              1,
+              0.666666666666667,
+              0.666666666666667
+            ],
+            "ndensity": [
+              1,
+              0.666666666666667,
+              0.666666666666667
+            ],
+            "flipped_aes": [
+              false,
+              false,
+              false
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              -1,
+              -1,
+              -1
+            ],
+            "y": [
+              3,
+              2,
+              2
+            ],
+            "ymin": [
+              0,
+              0,
+              0
+            ],
+            "ymax": [
+              3,
+              2,
+              2
+            ],
+            "colour": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "fill": [
+              "#595959FF",
+              "#595959FF",
+              "#595959FF"
+            ],
+            "linewidth": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "linetype": [
+              1,
+              1,
+              1
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "width": [
+              0.9,
+              0.9,
+              0.9
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "horizontal_log_histogram",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 3,
+          "columns": {
+            "count": [
+              3,
+              2,
+              2
+            ],
+            "y": [
+              0.5,
+              1.5,
+              2.5
+            ],
+            "ymin": [
+              0,
+              1,
+              2
+            ],
+            "ymax": [
+              1,
+              2,
+              3
+            ],
+            "density": [
+              0.428571428571429,
+              0.285714285714286,
+              0.285714285714286
+            ],
+            "ncount": [
+              1,
+              0.666666666666667,
+              0.666666666666667
+            ],
+            "ndensity": [
+              1,
+              0.666666666666667,
+              0.666666666666667
+            ],
+            "flipped_aes": [
+              true,
+              true,
+              true
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              -1,
+              -1,
+              -1
+            ],
+            "x": [
+              3,
+              2,
+              2
+            ],
+            "xmin": [
+              0,
+              0,
+              0
+            ],
+            "xmax": [
+              3,
+              2,
+              2
+            ],
+            "colour": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "fill": [
+              "#595959FF",
+              "#595959FF",
+              "#595959FF"
+            ],
+            "linewidth": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "linetype": [
+              1,
+              1,
+              1
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "width": [
+              0.9,
+              0.9,
+              0.9
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "horizontal_columns",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 2,
+          "columns": {
+            "x": [
+              3,
+              7
+            ],
+            "y": [
+              1,
+              2
+            ],
+            "PANEL": [
+              "1",
+              "1"
+            ],
+            "group": [
+              1,
+              2
+            ],
+            "flipped_aes": [
+              true,
+              true
+            ],
+            "xmin": [
+              0,
+              0
+            ],
+            "xmax": [
+              3,
+              7
+            ],
+            "ymin": [
+              0.55,
+              1.55
+            ],
+            "ymax": [
+              1.45,
+              2.45
+            ],
+            "colour": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "fill": [
+              "#595959FF",
+              "#595959FF"
+            ],
+            "linewidth": [
+              0.5,
+              0.5
+            ],
+            "linetype": [
+              1,
+              1
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "width": [
+              0.9,
+              0.9
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "horizontal_count",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 2,
+          "columns": {
+            "count": [
+              2,
+              1
+            ],
+            "prop": [
+              1,
+              1
+            ],
+            "y": [
+              1,
+              2
+            ],
+            "flipped_aes": [
+              true,
+              true
+            ],
+            "PANEL": [
+              "1",
+              "1"
+            ],
+            "group": [
+              1,
+              2
+            ],
+            "x": [
+              2,
+              1
+            ],
+            "xmin": [
+              0,
+              0
+            ],
+            "xmax": [
+              2,
+              1
+            ],
+            "ymin": [
+              0.55,
+              1.55
+            ],
+            "ymax": [
+              1.45,
+              2.45
+            ],
+            "colour": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "fill": [
+              "#595959FF",
+              "#595959FF"
+            ],
+            "linewidth": [
+              0.5,
+              0.5
+            ],
+            "linetype": [
+              1,
+              1
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "width": [
+              0.9,
+              0.9
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "coordinate_log_histogram",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 3,
+          "columns": {
+            "count": [
+              3,
+              2,
+              2
+            ],
+            "x": [
+              5.5,
+              55,
+              550
+            ],
+            "xmin": [
+              1,
+              10,
+              100
+            ],
+            "xmax": [
+              10,
+              100,
+              1000
+            ],
+            "density": [
+              0.0476190476190476,
+              0.00317460317460317,
+              0.000317460317460317
+            ],
+            "ncount": [
+              1,
+              0.666666666666667,
+              0.666666666666667
+            ],
+            "ndensity": [
+              1,
+              0.0666666666666667,
+              0.00666666666666667
+            ],
+            "flipped_aes": [
+              false,
+              false,
+              false
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              -1,
+              -1,
+              -1
+            ],
+            "y": [
+              3,
+              2,
+              2
+            ],
+            "ymin": [
+              0,
+              0,
+              0
+            ],
+            "ymax": [
+              3,
+              2,
+              2
+            ],
+            "colour": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "fill": [
+              "#595959FF",
+              "#595959FF",
+              "#595959FF"
+            ],
+            "linewidth": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "linetype": [
+              1,
+              1,
+              1
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "width": [
+              0.9,
+              0.9,
+              0.9
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "log_mean",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 1,
+          "columns": {
+            "x": [
+              1
+            ],
+            "group": [
+              -1
+            ],
+            "y": [
+              1
+            ],
+            "ymin": [
+              {
+                "number": "NA"
+              }
+            ],
+            "ymax": [
+              {
+                "number": "NA"
+              }
+            ],
+            "PANEL": [
+              "1"
+            ],
+            "flipped_aes": [
+              false
+            ],
+            "shape": [
+              19
+            ],
+            "colour": [
+              "black"
+            ],
+            "fill": [
+              {
+                "number": "NA"
+              }
+            ],
+            "size": [
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "log_after_stat_expression",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 1,
+          "columns": {
+            "x": [
+              1
+            ],
+            "group": [
+              -1
+            ],
+            "y": [
+              1.30102999566398
+            ],
+            "ymin": [
+              {
+                "number": "NA"
+              }
+            ],
+            "ymax": [
+              {
+                "number": "NA"
+              }
+            ],
+            "PANEL": [
+              "1"
+            ],
+            "flipped_aes": [
+              false
+            ],
+            "shape": [
+              19
+            ],
+            "colour": [
+              "black"
+            ],
+            "fill": [
+              {
+                "number": "NA"
+              }
+            ],
+            "size": [
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "coordinate_log_mean",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 1,
+          "columns": {
+            "x": [
+              1
+            ],
+            "group": [
+              -1
+            ],
+            "y": [
+              37
+            ],
+            "ymin": [
+              {
+                "number": "NA"
+              }
+            ],
+            "ymax": [
+              {
+                "number": "NA"
+              }
+            ],
+            "PANEL": [
+              "1"
+            ],
+            "flipped_aes": [
+              false
+            ],
+            "shape": [
+              19
+            ],
+            "colour": [
+              "black"
+            ],
+            "fill": [
+              {
+                "number": "NA"
+              }
+            ],
+            "size": [
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "scale_limit_mean",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 1,
+          "columns": {
+            "x": [
+              1
+            ],
+            "group": [
+              -1
+            ],
+            "y": [
+              5.5
+            ],
+            "ymin": [
+              {
+                "number": "NA"
+              }
+            ],
+            "ymax": [
+              {
+                "number": "NA"
+              }
+            ],
+            "PANEL": [
+              "1"
+            ],
+            "flipped_aes": [
+              false
+            ],
+            "shape": [
+              19
+            ],
+            "colour": [
+              "black"
+            ],
+            "fill": [
+              {
+                "number": "NA"
+              }
+            ],
+            "size": [
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5
+            ]
+          }
+        }
+      ],
+      "warnings": [
+        "Removed 1 row containing non-finite outside the scale range (`stat_summary()`)."
+      ]
+    },
+    {
+      "id": "coordinate_zoom_mean",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 1,
+          "columns": {
+            "x": [
+              1
+            ],
+            "group": [
+              -1
+            ],
+            "y": [
+              37
+            ],
+            "ymin": [
+              {
+                "number": "NA"
+              }
+            ],
+            "ymax": [
+              {
+                "number": "NA"
+              }
+            ],
+            "PANEL": [
+              "1"
+            ],
+            "flipped_aes": [
+              false
+            ],
+            "shape": [
+              19
+            ],
+            "colour": [
+              "black"
+            ],
+            "fill": [
+              {
+                "number": "NA"
+              }
+            ],
+            "size": [
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "squish_mean",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 1,
+          "columns": {
+            "x": [
+              1
+            ],
+            "group": [
+              -1
+            ],
+            "y": [
+              7
+            ],
+            "ymin": [
+              {
+                "number": "NA"
+              }
+            ],
+            "ymax": [
+              {
+                "number": "NA"
+              }
+            ],
+            "PANEL": [
+              "1"
+            ],
+            "flipped_aes": [
+              false
+            ],
+            "shape": [
+              19
+            ],
+            "colour": [
+              "black"
+            ],
+            "fill": [
+              {
+                "number": "NA"
+              }
+            ],
+            "size": [
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "keep_mean",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 1,
+          "columns": {
+            "x": [
+              1
+            ],
+            "group": [
+              -1
+            ],
+            "y": [
+              37
+            ],
+            "ymin": [
+              {
+                "number": "NA"
+              }
+            ],
+            "ymax": [
+              {
+                "number": "NA"
+              }
+            ],
+            "PANEL": [
+              "1"
+            ],
+            "flipped_aes": [
+              false
+            ],
+            "shape": [
+              19
+            ],
+            "colour": [
+              "black"
+            ],
+            "fill": [
+              {
+                "number": "NA"
+              }
+            ],
+            "size": [
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "multiple_discrete",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 4,
+          "columns": {
+            "x": [
+              1,
+              1,
+              2,
+              2
+            ],
+            "y": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "colour": [
+              "#F8766D",
+              "#00BFC4",
+              "#F8766D",
+              "#00BFC4"
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "shape": [
+              19,
+              19,
+              19,
+              19
+            ],
+            "fill": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "size": [
+              1.5,
+              1.5,
+              1.5,
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "missing_groups",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 4,
+          "columns": {
+            "x": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "y": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "colour": [
+              "#F8766D",
+              "grey50",
+              "#00BFC4",
+              "grey50"
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              1,
+              3,
+              2,
+              3
+            ],
+            "shape": [
+              19,
+              19,
+              19,
+              19
+            ],
+            "fill": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "size": [
+              1.5,
+              1.5,
+              1.5,
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "inferred_lines",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 4,
+          "columns": {
+            "x": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "y": [
+              1,
+              3,
+              2,
+              4
+            ],
+            "colour": [
+              "#F8766D",
+              "#F8766D",
+              "#00BFC4",
+              "#00BFC4"
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              1,
+              1,
+              2,
+              2
+            ],
+            "flipped_aes": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "linewidth": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ],
+            "linetype": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "numeric_groups",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 5,
+          "columns": {
+            "x": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "y": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "group": [
+              1,
+              1,
+              2,
+              2,
+              3
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "shape": [
+              19,
+              19,
+              19,
+              19,
+              19
+            ],
+            "colour": [
+              "black",
+              "black",
+              "black",
+              "black",
+              "black"
+            ],
+            "fill": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "size": [
+              1.5,
+              1.5,
+              1.5,
+              1.5,
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "source_reduction",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 3,
+          "columns": {
+            "x": [
+              1,
+              1,
+              1
+            ],
+            "y": [
+              0.00900900900900901,
+              0.0900900900900901,
+              0.900900900900901
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              -1,
+              -1,
+              -1
+            ],
+            "shape": [
+              19,
+              19,
+              19
+            ],
+            "colour": [
+              "black",
+              "black",
+              "black"
+            ],
+            "fill": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "size": [
+              1.5,
+              1.5,
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "stat_group_override",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 1,
+          "columns": {
+            "x": [
+              1
+            ],
+            "group": [
+              1
+            ],
+            "y": [
+              37
+            ],
+            "ymin": [
+              {
+                "number": "NA"
+              }
+            ],
+            "ymax": [
+              {
+                "number": "NA"
+              }
+            ],
+            "PANEL": [
+              "1"
+            ],
+            "flipped_aes": [
+              false
+            ],
+            "shape": [
+              19
+            ],
+            "colour": [
+              "black"
+            ],
+            "fill": [
+              {
+                "number": "NA"
+              }
+            ],
+            "size": [
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "source_expression",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 3,
+          "columns": {
+            "x": [
+              2,
+              2,
+              2
+            ],
+            "y": [
+              2,
+              20,
+              200
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              -1,
+              -1,
+              -1
+            ],
+            "shape": [
+              19,
+              19,
+              19
+            ],
+            "colour": [
+              "black",
+              "black",
+              "black"
+            ],
+            "fill": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "size": [
+              1.5,
+              1.5,
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "after_stat_expression",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 3,
+          "columns": {
+            "count": [
+              3,
+              2,
+              2
+            ],
+            "x": [
+              5.5,
+              55,
+              550
+            ],
+            "xmin": [
+              1,
+              10,
+              100
+            ],
+            "xmax": [
+              10,
+              100,
+              1000
+            ],
+            "density": [
+              0.0476190476190476,
+              0.00317460317460317,
+              0.000317460317460317
+            ],
+            "ncount": [
+              1,
+              0.666666666666667,
+              0.666666666666667
+            ],
+            "ndensity": [
+              1,
+              0.0666666666666667,
+              0.00666666666666667
+            ],
+            "flipped_aes": [
+              false,
+              false,
+              false
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              -1,
+              -1,
+              -1
+            ],
+            "y": [
+              0.428571428571429,
+              0.285714285714286,
+              0.285714285714286
+            ],
+            "ymin": [
+              0,
+              0,
+              0
+            ],
+            "ymax": [
+              0.428571428571429,
+              0.285714285714286,
+              0.285714285714286
+            ],
+            "colour": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "fill": [
+              "#595959FF",
+              "#595959FF",
+              "#595959FF"
+            ],
+            "linewidth": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "linetype": [
+              1,
+              1,
+              1
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "width": [
+              0.9,
+              0.9,
+              0.9
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "after_scale_expression",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 3,
+          "columns": {
+            "x": [
+              1,
+              1,
+              1
+            ],
+            "y": [
+              1,
+              10,
+              100
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              -1,
+              -1,
+              -1
+            ],
+            "shape": [
+              19,
+              19,
+              19
+            ],
+            "colour": [
+              "black",
+              "black",
+              "black"
+            ],
+            "fill": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "size": [
+              3,
+              3,
+              3
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "theme_expression",
+      "owner": "GG-02",
+      "layers": [
+        {
+          "row_count": 3,
+          "columns": {
+            "x": [
+              1,
+              1,
+              1
+            ],
+            "y": [
+              1,
+              10,
+              100
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              -1,
+              -1,
+              -1
+            ],
+            "shape": [
+              19,
+              19,
+              19
+            ],
+            "colour": [
+              "#1256ab",
+              "#1256ab",
+              "#1256ab"
+            ],
+            "fill": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "size": [
+              1.5,
+              1.5,
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "warnings": []
+    }
+  ]
+}

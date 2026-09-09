@@ -5,32 +5,39 @@ use std::collections::BTreeSet;
 /// Portable palette and domain policy; changing color never contributes positional domains.
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
-pub enum ColorScale {
+pub enum ColorScale<P = Color> {
+    /// Typed D3-compatible mapping with independent population and output configuration.
+    Mapped {
+        /// Shared core scale; interpolated color outputs retain floating channels.
+        scale: MappedScaleSpec,
+        /// Missing source/output paint.
+        missing: P,
+    },
     /// Exact category mapping in authored/retained order, cycling a declared palette.
     Discrete {
         /// Optional fixed category order.
         domain: Option<Vec<String>>,
         /// Nonempty palette.
-        palette: Vec<Color>,
+        palette: Vec<P>,
         /// Null and unknown explicit-domain style.
-        missing: Color,
+        missing: P,
     },
     /// Piecewise sRGB-byte interpolation along a finite numeric domain.
     Continuous {
         /// Exact data domain, descending allowed.
         domain: Bounds,
         /// At least two colors, equally spaced in parameter space.
-        palette: Vec<Color>,
+        palette: Vec<P>,
         /// Clamp to endpoint colors; false uses missing outside.
         clamp: bool,
         /// Null/nonfinite/outside style.
-        missing: Color,
+        missing: P,
     },
 }
 /// Semantic legend metadata, independent of its eventual destination layout.
 #[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub struct ColorLegend {
-    /// Declared semantic guide title, used when checking guide compatibility.
+    /// Declared semantic guide title, used when checking guide compatibility; empty omits it.
     pub title: Option<String>,
     /// Scale identity.
     pub id: crate::ScaleId,
@@ -40,11 +47,31 @@ pub struct ColorLegend {
     pub continuous: bool,
     /// Missing-value swatch.
     pub missing: Color,
+    /// Actual classifier intervals, absent for ordinary categorical and continuous guides.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub intervals: Vec<GuideInterval>,
+    /// Exact mapped scale contract for guide compatibility, including interpolation and training.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub mapping: Option<MappedScaleSpec>,
+    /// Independently authored diverging midpoint.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub midpoint: Option<crate::interpolate::Number>,
 }
-impl ColorScale {
+impl<P> ColorScale<P> {
+    /// Whether source inputs are category keys.
+    pub fn is_categorical(&self) -> bool {
+        match self {
+            Self::Discrete { .. } => true,
+            Self::Continuous { .. } => false,
+            Self::Mapped { scale, .. } => scale.categorical(),
+        }
+    }
     /// Validate palette/domain, even when the current population is empty.
     pub fn validate(&self) -> ChartResult<()> {
         match self {
+            Self::Mapped { scale, .. } => {
+                MappedScale::new(scale.clone())?;
+            }
             Self::Discrete {
                 domain, palette, ..
             } => {
@@ -73,6 +100,8 @@ impl ColorScale {
         }
         Ok(())
     }
+}
+impl ColorScale {
     /// Resolve one categorical value; unknown/null values get the explicit missing style.
     pub fn categorical(&self, value: Option<&str>, first_seen: &[String]) -> ChartResult<Color> {
         self.validate()?;
@@ -100,6 +129,9 @@ impl ColorScale {
     /// Resolve one numeric value, never changing the original source value.
     pub fn numeric(&self, value: Option<f64>) -> ChartResult<Color> {
         self.validate()?;
+        if let Self::Mapped { scale, missing } = self {
+            return MappedScale::for_colors(scale.clone())?.color(value, None, *missing);
+        }
         self.numeric_validated(value)
     }
     pub(crate) fn numeric_validated(&self, value: Option<f64>) -> ChartResult<Color> {
@@ -139,6 +171,9 @@ impl ColorScale {
     pub fn legend(&self, id: crate::ScaleId, first_seen: &[String]) -> ChartResult<ColorLegend> {
         self.validate()?;
         let (continuous, missing, entries) = match self {
+            Self::Mapped { scale, missing } => {
+                return MappedScale::for_colors(scale.clone())?.legend(id, *missing);
+            }
             Self::Discrete {
                 domain,
                 palette,
@@ -183,6 +218,9 @@ impl ColorScale {
             continuous,
             missing,
             entries,
+            intervals: vec![],
+            midpoint: None,
+            mapping: None,
         })
     }
 }
@@ -208,8 +246,8 @@ impl Default for PointOptions {
 pub struct PointScale {
     labels: Vec<String>,
     window: std::ops::Range<usize>,
-    range: Bounds,
-    padding: f64,
+    index: std::collections::BTreeMap<String, usize>,
+    spacing: super::spacing::Spacing,
 }
 impl PointScale {
     /// Resolve stable centers in either destination direction.
@@ -233,9 +271,64 @@ impl PointScale {
         Ok(Self {
             labels: labels.to_vec(),
             window: 0..labels.len(),
-            range,
-            padding: options.padding,
+            index: labels
+                .iter()
+                .enumerate()
+                .map(|(i, k)| (k.clone(), i))
+                .collect(),
+            spacing: super::spacing::Spacing::new(
+                labels.len(),
+                range,
+                &super::BandSpec::<String> {
+                    domain: None,
+                    padding_inner: 1.,
+                    padding_outer: options.padding,
+                    align: 0.5,
+                    round: false,
+                },
+                super::ScaleCompatibility::Legacy,
+                true,
+            )?,
         })
+    }
+    /// Resolve explicit D3 point alignment, rounding and zero-default padding.
+    pub fn resolve_d3(
+        first_seen: &[String],
+        options: &super::PointSpec,
+        range: Bounds,
+    ) -> ChartResult<Self> {
+        let prepared = super::CategoryScale::point(
+            super::PointSpec {
+                domain: Some(options.domain.as_deref().unwrap_or(first_seen).to_vec()),
+                ..options.clone()
+            },
+            range,
+        )?;
+        let labels = prepared.domain().to_vec();
+        Ok(Self {
+            index: labels
+                .iter()
+                .enumerate()
+                .map(|(i, k)| (k.clone(), i))
+                .collect(),
+            window: 0..labels.len(),
+            spacing: super::spacing::Spacing::new(
+                labels.len(),
+                range,
+                prepared.spec(),
+                super::ScaleCompatibility::D3,
+                true,
+            )?,
+            labels,
+        })
+    }
+    /// Nonnegative interval between neighboring points.
+    pub fn step(&self) -> f64 {
+        self.spacing.step()
+    }
+    /// Points have zero bandwidth.
+    pub fn bandwidth(&self) -> f64 {
+        0.
     }
     /// Exact category order.
     pub fn domain(&self) -> &[String] {
@@ -248,48 +341,29 @@ impl PointScale {
     /// Restrict presentation to an inclusive stable-label window without changing training.
     pub fn with_window(mut self, first: &str, last: &str) -> ChartResult<Self> {
         self.window = super::category_window(&self.labels, first, last)?;
+        self.spacing = self.spacing.resize(self.window.len())?;
         Ok(self)
     }
     /// Destination range.
     pub fn range(&self) -> Bounds {
-        self.range
+        self.spacing.range
     }
     /// Position of one known category; a singleton is always centered.
     pub fn center(&self, label: &str) -> ChartResult<Option<f64>> {
-        let Some(i) = self.visible_domain().iter().position(|s| s == label) else {
+        let Some(&i) = self.index.get(label) else {
             return Ok(None);
         };
-        let t = if self.window.len() == 1 {
-            0.5
-        } else {
-            (i as f64 + self.padding) / (self.window.len() as f64 - 1. + 2. * self.padding)
-        };
-        Ok(Some(super::linear::interpolate(self.range, t)?))
+        if !self.window.contains(&i) {
+            return Ok(None);
+        }
+        self.spacing.center(i - self.window.start).map(Some)
     }
     /// Nearest category within the destination range, with stable earlier-category ties.
     pub fn category_at(&self, p: f64) -> ChartResult<Option<&str>> {
-        if !p.is_finite() {
-            return Err(error(
-                DiagnosticCode::NumericalDomain,
-                "Point lookup must be finite.",
-            ));
-        }
-        if !self.range.contains(p) {
-            return Ok(None);
-        }
-        let mut best = None;
-        let mut distance = f64::INFINITY;
-        for label in self.visible_domain() {
-            let d =
-                (super::linear::fraction(self.range, self.center(label)?.expect("known label"))?
-                    - super::linear::fraction(self.range, p)?)
-                .abs();
-            if d < distance {
-                best = Some(label.as_str());
-                distance = d;
-            }
-        }
-        Ok(best)
+        Ok(self
+            .spacing
+            .point_at(p)?
+            .map(|i| self.labels[self.window.start + i].as_str()))
     }
     /// Category lookup only, with zero extent at each point.
     pub fn capabilities(&self) -> ScaleCapabilities {
@@ -297,5 +371,163 @@ impl PointScale {
             numeric_inverse: false,
             category_lookup: true,
         }
+    }
+}
+
+impl<P> ColorScale<P> {
+    /// Transform palette inputs while retaining domain, order and outside policies.
+    pub fn map_colors<Q>(self, mut map: impl FnMut(P) -> Q) -> ColorScale<Q> {
+        match self {
+            Self::Mapped { scale, missing } => ColorScale::Mapped {
+                scale,
+                missing: map(missing),
+            },
+            Self::Discrete {
+                domain,
+                palette,
+                missing,
+            } => ColorScale::Discrete {
+                domain,
+                palette: palette.into_iter().map(&mut map).collect(),
+                missing: map(missing),
+            },
+            Self::Continuous {
+                domain,
+                palette,
+                clamp,
+                missing,
+            } => ColorScale::Continuous {
+                domain,
+                palette: palette.into_iter().map(&mut map).collect(),
+                clamp,
+                missing: map(missing),
+            },
+        }
+    }
+}
+/// Prepared palette shared by mapped marks and guide stops; no per-row parsing or factories.
+#[derive(Clone, Debug)]
+pub struct PreparedColorScale {
+    bytes: ColorScale,
+    ramps: Option<Vec<crate::interpolate::ColorInterpolator>>,
+    mapped: Option<MappedScale>,
+    missing: crate::color::Paint,
+}
+impl ColorScale<crate::color::Paint> {
+    /// Compile floating RGB ramps once, preserving exact legacy byte interpolation.
+    pub fn prepare(&self) -> ChartResult<PreparedColorScale> {
+        self.validate()?;
+        let ramps = if let Self::Continuous { palette, .. } = self {
+            if palette.iter().any(|p| p.is_floating()) {
+                Some(
+                    palette
+                        .windows(2)
+                        .map(|p| {
+                            crate::interpolate::ColorInterpolator::new(
+                                crate::interpolate::ColorRoute::Rgb,
+                                p[0].value(),
+                                p[1].value(),
+                                None,
+                            )
+                        })
+                        .collect::<ChartResult<_>>()?,
+                )
+            } else {
+                None
+            }
+        } else {
+            None
+        };
+        Ok(PreparedColorScale {
+            bytes: self.clone().map_colors(crate::color::Paint::resolve),
+            ramps,
+            missing: match self {
+                Self::Mapped { missing, .. }
+                | Self::Continuous { missing, .. }
+                | Self::Discrete { missing, .. } => *missing,
+            },
+            mapped: if let Self::Mapped { scale, .. } = self {
+                Some(MappedScale::for_colors(scale.clone())?)
+            } else {
+                None
+            },
+        })
+    }
+    /// Whether palette or missing paint requires the floating-color capability.
+    pub fn has_floating(&self) -> bool {
+        let (palette, missing) = match self {
+            Self::Mapped { .. } => return true,
+            Self::Discrete {
+                palette, missing, ..
+            }
+            | Self::Continuous {
+                palette, missing, ..
+            } => (palette, missing),
+        };
+        missing.is_floating() || palette.iter().any(|p| p.is_floating())
+    }
+}
+impl PreparedColorScale {
+    /// Map a typed category, retaining floating color channels until final paint lowering.
+    pub fn category_paint(&self, key: Option<&ScaleKey>) -> ChartResult<crate::color::Paint> {
+        if let Some(scale) = &self.mapped {
+            return scale.paint(None, key, self.missing);
+        }
+        Err(error(
+            DiagnosticCode::SchemaConflict,
+            "Typed category color requires a mapped scale.",
+        ))
+    }
+    /// Map a typed category to final byte paint.
+    pub fn category(&self, key: Option<&ScaleKey>) -> ChartResult<Color> {
+        self.category_paint(key).map(crate::color::Paint::resolve)
+    }
+    /// Prepared categorical palette and domain; continuous callers use `numeric`.
+    pub fn byte_scale(&self) -> &ColorScale {
+        &self.bytes
+    }
+    /// Map a numeric value to final byte paint.
+    pub fn numeric(&self, value: Option<f64>) -> ChartResult<Color> {
+        self.numeric_paint(value).map(crate::color::Paint::resolve)
+    }
+    /// Map a numeric value using the prepared ramp and exact outside/null policy.
+    pub fn numeric_paint(&self, value: Option<f64>) -> ChartResult<crate::color::Paint> {
+        if let Some(scale) = &self.mapped {
+            return scale.paint(value, None, self.missing);
+        }
+        let Some(ramps) = &self.ramps else {
+            return self.bytes.numeric_validated(value).map(Into::into);
+        };
+        let ColorScale::Continuous { domain, clamp, .. } = &self.bytes else {
+            unreachable!("ramps require continuous scale")
+        };
+        let Some(v) = value.filter(|v| v.is_finite()) else {
+            return Ok(self.missing);
+        };
+        if !clamp && !domain.contains(v) {
+            return Ok(self.missing);
+        }
+        let t = super::linear::fraction(*domain, v.clamp(domain.minimum(), domain.maximum()))?
+            .clamp(0., 1.)
+            * ramps.len() as f64;
+        let i = (t.floor() as usize).min(ramps.len() - 1);
+        Ok(ramps[i].sample_color(t - i as f64)?.into())
+    }
+    /// Guide stops sample the same prepared floating ramp as marks.
+    pub fn legend(&self, id: crate::ScaleId, first_seen: &[String]) -> ChartResult<ColorLegend> {
+        if let (Some(scale), ColorScale::Mapped { missing, .. }) = (&self.mapped, &self.bytes) {
+            return scale.legend(id, *missing);
+        }
+        let mut legend = self.bytes.legend(id, first_seen)?;
+        if let Some(ramps) = &self.ramps {
+            let n = legend.entries.len();
+            for (i, (_, paint)) in legend.entries.iter_mut().enumerate() {
+                let index = i.min(n - 2);
+                *paint = ramps[index]
+                    .sample_color(if i == n - 1 { 1. } else { 0. })?
+                    .to_paint();
+            }
+        }
+        Ok(legend)
     }
 }

@@ -1,0 +1,47 @@
+RUN wasm-generate
+
+RUN color-wasm
+PASS FIX-C01 WASM: 351 cases, all constructor/methods, exceptional tags, copies, strict descriptors and disposal.
+
+RUN interpolate-wasm
+PASS FIX-I01 WASM: 370 value/configuration cases, 36 browser transforms, owned samples, descriptors and disposal.
+
+RUN scales-wasm
+PASS WASM FIX-20 raw/public [
+  {
+    cases: 661,
+    operations: 19562,
+    adaptations: 1112,
+    diagnostics: 275,
+    public: false
+  },
+  {
+    cases: 661,
+    operations: 19562,
+    adaptations: 1112,
+    diagnostics: 275,
+    public: true
+  }
+]
+
+RUN chromatic-wasm
+PASS CP-04 WASM: 218 exact scheme arrays and 160666 ramp rows, catalog metadata, reversal, invalid inputs, copies and disposal.
+
+RUN chromatic_composition-wasm
+PASS FIX-21 WASM: 90 composed mappings / 1268 exact scene colors across all sequential/diverging/rank/classifier families.
+PASS FIX-21 WASM: editorial/terminal/grayscale preserve canonical evaluation and convert both marks and guide swatches.
+
+RUN chromatic_transformed-wasm
+PASS FIX-21 WASM: 304 exceptional normalization cases; valid reference colors and twelve explicit undefined-color diagnostics.
+
+RUN chromatic_gallery-wasm
+PASS FIX-21 WASM: five independently authored v6 catalog figures, retained SVG/PDF/PNG.
+PASS CP-04 WASM: non-finite numeric categories retain missing paint and do not shift named palette training.
+
+RUN chromatic_updates-wasm
+PASS CP-05 WASM: twenty-four append/upsert/remove/retention steps match fresh batch PNG; exact uint64 categories and old captures survive.
+
+RUN chromatic-memory
+PASS FIX-21 owned catalog/ramp/scale plateau [ 2621440, 2621440, 2621440, 2621440, 2621440, 2621440 ]
+
+PASS final source: selected actual host runtimes, all color/interpolation/scale/chromatic matrices, scenes, ownership and updates.

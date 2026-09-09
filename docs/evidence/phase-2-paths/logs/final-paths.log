@@ -1,0 +1,23 @@
+RUN cargo run -p chart-export --example path_binding_proof --locked -- /Users/jeickmeier/Projects/finstack-chart/target/path-proof/final/rust
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.11s
+     Running `target/debug/examples/path_binding_proof /Users/jeickmeier/Projects/finstack-chart/target/path-proof/final/rust`
+PASS FIX-P01–06 Rust: 86 operation sequences; retained scenes; SVG/PDF/PNG at 300/600 DPI.
+
+RUN cargo build -p chart-python --features extension-module --locked
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.10s
+
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/path.py /Users/jeickmeier/Projects/finstack-chart/target/path-proof/final/python-module /Users/jeickmeier/Projects/finstack-chart/target/path-proof/final/rust /Users/jeickmeier/Projects/finstack-chart/target/path-proof/final/python
+PASS FIX-P01–06 Python: 86 sequences, batches/copies/errors/disposal and six actual exports.
+
+RUN cargo build -p chart-wasm --target wasm32-unknown-unknown --locked
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.11s
+
+RUN /private/tmp/wp09-tools/wasm-bindgen-0.2.128-aarch64-apple-darwin/wasm-bindgen /Users/jeickmeier/Projects/finstack-chart/target/wasm32-unknown-unknown/debug/chart_wasm.wasm --target nodejs --out-dir /Users/jeickmeier/Projects/finstack-chart/target/path-proof/final/wasm-module
+
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/path.cjs /Users/jeickmeier/Projects/finstack-chart/target/path-proof/final/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/path-proof/final/rust /Users/jeickmeier/Projects/finstack-chart/target/path-proof/final/wasm
+PASS FIX-P01–06 WASM: 86 sequences, batches/copies/errors/disposal and six actual exports.
+
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/path_compare.py /Users/jeickmeier/Projects/finstack-chart/target/path-proof/final
+PASS FIX-P01–06: 86 full operation traces and all retained scene geometry/targets across Rust, Python and WASM.
+
+PASS path runtime proof. Native and publication artifact inspection remain separately recorded.

@@ -1,0 +1,46 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.89s
+     Running tests/color_parity.rs (target/debug/deps/color_parity-e69fbf2042409b1c)
+
+running 3 tests
+test independent_color_math_and_quantization_preserve_floating_information ... ok
+test color_descriptors_parser_budgets_and_channel_names_reject_malformed_inputs ... ok
+test complete_color_oracle_covers_all_constructors_and_inherited_operations ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests/interpolate_color.rs (target/debug/deps/interpolate_color-3e2507b2c8696e08)
+
+running 2 tests
+test floating_channels_opacity_hue_and_splines_keep_their_contracts ... ok
+test every_color_export_gamma_and_hue_matches_offline_reference ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/interpolate_descriptors.rs (target/debug/deps/interpolate_descriptors-d9128d74c924a783)
+
+running 2 tests
+test every_descriptor_family_round_trips_and_keeps_owned_samples ... ok
+test color_consumers_keep_floating_channels_and_portable_validation_is_strict ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/interpolate_values.rs (target/debug/deps/interpolate_values-474bbffd7d8a560b)
+
+running 3 tests
+test independent_target_shapes_dates_casts_and_reuse ... ok
+test every_structured_value_case_matches_offline_reference_and_adaptations ... ok
+test strict_value_decoding_and_aggregate_limits_reject_invalid_inputs ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/paint_integration.rs (target/debug/deps/paint_integration-c8b37a8fbb9b7768)
+
+running 4 tests
+test paint_retains_descriptors_and_legacy_bytes_with_strict_ingestion ... ok
+test floating_palette_avoids_endpoint_rounding_and_preserves_legacy_mapping ... ok
+test floating_color_only_edits_reuse_statistics_and_match_fresh_batch ... ok
+test every_retained_paint_location_requires_version_four_and_preserves_legacy_versions ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

@@ -1,5 +1,7 @@
+use super::RadialParameters;
 use super::{
-    AutoBinSpec, CountSpec, DodgeSpec, JitterSpec, OlsSpec, StackSpec, StatAes, SummarySpec,
+    AutoBinSpec, CountSpec, DodgeSpec, JitterSpec, OlsSpec, ShapeStackSpec, StackSpec, StatAes,
+    SummarySpec,
 };
 use crate::data::InvalidPolicy;
 use crate::scene::Color;
@@ -51,6 +53,15 @@ impl From<TransformId> for DataRef {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub enum Numeric {
+    /// Typed source-stage expression; reductions use the selected dataset before filtering and facets.
+    Expression(super::Expression<super::SourceRead>),
+    /// Explicit scale-stage numeric mapping; retained space prevents a second transform.
+    Scaled {
+        /// Prior source-stage numeric mapping.
+        input: Box<Numeric>,
+        /// Resolved transform, limits, out-of-bounds policy and scale identity.
+        scale: Box<super::ScaleProjection>,
+    },
     /// Numeric source field; integer precision is checked, timestamps require `Timestamp`.
     Field(FieldId),
     /// Stable categorical label projected through a band scale; invalid in numeric statistics.
@@ -65,6 +76,11 @@ pub enum Numeric {
         #[serde(with = "crate::portable::signed")]
         origin: i64,
     },
+}
+impl From<super::Expression<super::SourceRead>> for Numeric {
+    fn from(value: super::Expression<super::SourceRead>) -> Self {
+        Self::Expression(value)
+    }
 }
 impl From<FieldId> for Numeric {
     fn from(id: FieldId) -> Self {
@@ -81,6 +97,9 @@ pub enum Grouping {
     All,
     /// Independent groups of a categorical, UTF-8, integer or boolean field.
     Field(FieldId),
+    /// Ordered interaction of distinct exact fields; missing values are an explicit group.
+    /// The vector is bounded by the compiler's filter budget and may contain one field.
+    Interaction(Vec<FieldId>),
 }
 
 /// Source filtering changes the population before statistics; viewport actions do not.
@@ -199,6 +218,20 @@ pub struct Statistic {
     pub parameters: StatParameters,
 }
 impl Statistic {
+    fn requires_stages(&self) -> bool {
+        if matches!(self.grouping(), Some(Grouping::Interaction(_))) {
+            return true;
+        }
+        let staged = |n: &Numeric| matches!(n, Numeric::Scaled { .. } | Numeric::Expression(_));
+        match &self.parameters {
+            StatParameters::Bin(s) => staged(&s.input),
+            StatParameters::AutoBin(s) => staged(&s.input),
+            StatParameters::Summary(s) => staged(&s.input),
+            StatParameters::Ols(s) => staged(&s.x) || staged(&s.y),
+            StatParameters::Count(s) => s.required.iter().any(staged),
+            _ => false,
+        }
+    }
     /// Declared source population grouping; identity operations preserve their input groups.
     pub fn grouping(&self) -> Option<&Grouping> {
         match &self.parameters {
@@ -244,6 +277,9 @@ impl Default for Statistic {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct TransformDefinition {
+    /// Retained source-stage context for compatibility grouping and scale preparation.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub grammar: Option<super::TransformGrammar>,
     /// Explicit missing-facet and panel targeting policy.
     #[serde(default)]
     pub facet: super::FacetTarget,
@@ -266,6 +302,7 @@ impl TransformDefinition {
     pub fn new(id: TransformId, input: impl Into<DataRef>, statistic: Statistic) -> Self {
         Self {
             id,
+            grammar: None,
             facet: super::FacetTarget::default(),
             scope: super::StatScope::default(),
             input: input.into(),
@@ -280,6 +317,9 @@ impl TransformDefinition {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Default, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct SourceAes {
+    /// Explicit whole-population or multi-field grouping, overriding the legacy group field.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub grouping: Option<Grouping>,
     /// First horizontal coordinate.
     pub x: Option<Numeric>,
     /// First vertical coordinate.
@@ -300,6 +340,15 @@ pub struct SourceAes {
     pub group: Option<FieldId>,
 }
 impl SourceAes {
+    fn requires_stages(&self) -> bool {
+        self.grouping.is_some()
+            || [
+                &self.x, &self.y, &self.x2, &self.y2, &self.low, &self.high, &self.size,
+            ]
+            .into_iter()
+            .flatten()
+            .any(|n| matches!(n, Numeric::Scaled { .. } | Numeric::Expression(_)))
+    }
     /// Begin explicit source mappings.
     pub fn new() -> Self {
         Self::default()
@@ -344,10 +393,23 @@ impl SourceAes {
     /// Bind a stable source group.
     pub fn group(mut self, field: FieldId) -> Self {
         self.group = Some(field);
+        self.grouping = None;
+        self
+    }
+    /// Explicit whole population or exact field interaction.
+    pub fn grouped(mut self, grouping: Grouping) -> Self {
+        self.grouping = Some(grouping);
+        self.group = None;
         self
     }
     pub(crate) fn inherit(&self, base: &Self) -> Self {
         Self {
+            grouping: self.grouping.clone().or_else(|| {
+                self.group
+                    .is_none()
+                    .then(|| base.grouping.clone())
+                    .flatten()
+            }),
             x: self.x.clone().or_else(|| base.x.clone()),
             y: self.y.clone().or_else(|| base.y.clone()),
             x2: self.x2.clone().or_else(|| base.x2.clone()),
@@ -355,7 +417,9 @@ impl SourceAes {
             low: self.low.clone().or_else(|| base.low.clone()),
             high: self.high.clone().or_else(|| base.high.clone()),
             size: self.size.clone().or_else(|| base.size.clone()),
-            group: self.group.or(base.group),
+            group: self
+                .group
+                .or_else(|| self.grouping.is_none().then_some(base.group).flatten()),
         }
     }
 }
@@ -378,10 +442,17 @@ pub enum BinField {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub enum BinNumeric {
+    /// Expression over generated bin fields after scale back-transformation.
+    Expression(super::Expression<BinField>),
     /// Generated typed field.
     Field(BinField),
     /// Explicit constant coordinate/baseline.
     Literal(f64),
+}
+impl From<super::Expression<BinField>> for BinNumeric {
+    fn from(value: super::Expression<BinField>) -> Self {
+        Self::Expression(value)
+    }
 }
 impl From<f64> for BinNumeric {
     fn from(value: f64) -> Self {
@@ -444,6 +515,34 @@ pub enum Mappings {
     Binned(BinAes),
 }
 
+impl Mappings {
+    fn requires_stages(&self) -> bool {
+        match self {
+            Self::Source(a) => a.requires_stages(),
+            Self::Statistical(a) => [
+                Some(&a.x),
+                Some(&a.y),
+                a.x2.as_ref(),
+                a.y2.as_ref(),
+                a.size.as_ref(),
+            ]
+            .into_iter()
+            .flatten()
+            .any(|v| matches!(v, super::StatNumeric::Expression(_))),
+            Self::Binned(a) => [
+                Some(&a.x),
+                Some(&a.y),
+                a.x2.as_ref(),
+                a.y2.as_ref(),
+                a.size.as_ref(),
+            ]
+            .into_iter()
+            .flatten()
+            .any(|v| matches!(v, BinNumeric::Expression(_))),
+        }
+    }
+}
+
 /// Source/order policy for straight line runs.
 #[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Default, Eq, PartialEq)]
 #[serde(deny_unknown_fields)]
@@ -459,6 +558,81 @@ pub enum LineOrder {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub enum Geom {
+    /// Radial authored runs around one x/y center per run, with destination-unit radii.
+    ShapeLineRadial {
+        /// Authored order, or start-angle order for X.
+        order: LineOrder,
+        /// Explicitly bridge missing polar coordinates.
+        connect_gaps: bool,
+        /// Complete checked Cartesian curve after polar conversion.
+        curve: crate::shape::CurveSpec,
+        /// Constant start angle and inner radius, overridden by Angle/Radius channels.
+        parameters: RadialParameters,
+    },
+    /// Paired radial boundaries around one x/y center per run.
+    ShapeAreaRadial {
+        /// Authored order, or start-angle order for X.
+        order: LineOrder,
+        /// Explicitly bridge missing polar pairs.
+        connect_gaps: bool,
+        /// Checked area-capable curve.
+        curve: crate::shape::CurveSpec,
+        /// Constant independent boundaries, overridden by named radial channels.
+        parameters: RadialParameters,
+    },
+    /// One edge per row from x/y to x2/y2, curved after both endpoint projections.
+    ShapeLink {
+        /// Generic two-point curve; BumpX/BumpY produce horizontal/vertical tangents.
+        curve: crate::shape::CurveSpec,
+    },
+    /// One radial edge per row, centered at x/y with named polar endpoints.
+    ShapeLinkRadial {
+        /// Source lower and target upper polar endpoints, overridden by named channels.
+        parameters: RadialParameters,
+    },
+    /// Area/stroke-size symbols, independent of legacy point radius semantics.
+    ShapeSymbol {
+        /// Constant type, overridden by an explicit categorical symbol mapping.
+        kind: crate::shape::SymbolKind,
+        /// Area/stroke size, overridden by the AreaSize numeric channel.
+        size: f64,
+        /// Filled/stroked policy; Auto follows the chosen symbol topology.
+        paint: crate::shape::SymbolPaint,
+    },
+    /// One circular sector per row; x/y is the center and radii use destination units.
+    ShapeArc {
+        /// Constant radii, sweep, padding and corners, overridden by named numeric mappings.
+        parameters: crate::shape::ArcParameters,
+    },
+    /// Grouped pie layout feeding the same arc engine; named PieValue supplies weights.
+    ShapePie {
+        /// Constant radii/corners; layout replaces datum start/end/pad angles.
+        parameters: crate::shape::ArcParameters,
+        /// Pie-wide sweep and padding.
+        angles: crate::shape::PieAngles,
+        /// Stable angular sorting, independent of source output order.
+        order: crate::shape::PieOrder,
+        /// Partition weights by retained row group; false combines the current layer/panel.
+        grouped: bool,
+    },
+    /// Authored-order D3 line geometry; curves evaluate after destination projection.
+    ShapeLine {
+        /// Source order within each group.
+        order: LineOrder,
+        /// Explicitly bridge missing coordinates.
+        connect_gaps: bool,
+        /// Complete checked built-in curve family.
+        curve: crate::shape::CurveSpec,
+    },
+    /// General D3 area: (x,y) lower and independent (x2,y2) upper coordinates.
+    ShapeArea {
+        /// Source order within each group.
+        order: LineOrder,
+        /// Explicitly bridge missing paired coordinates.
+        connect_gaps: bool,
+        /// Area-capable checked curve; bundle is rejected.
+        curve: crate::shape::CurveSpec,
+    },
     /// Circular points.
     Point,
     /// Straight runs; isolated valid points remain explicit one-vertex runs.
@@ -519,7 +693,27 @@ impl Geom {
     }
     pub(crate) fn run(self) -> Option<(LineOrder, bool)> {
         match self {
-            Self::Line {
+            Self::ShapeLineRadial {
+                order,
+                connect_gaps,
+                ..
+            }
+            | Self::ShapeAreaRadial {
+                order,
+                connect_gaps,
+                ..
+            }
+            | Self::ShapeLine {
+                order,
+                connect_gaps,
+                ..
+            }
+            | Self::ShapeArea {
+                order,
+                connect_gaps,
+                ..
+            }
+            | Self::Line {
                 order,
                 connect_gaps,
             }
@@ -553,6 +747,8 @@ pub enum Position {
     Identity,
     /// Add positive and negative heights separately, in explicit group order.
     Stack(StackSpec),
+    /// Reference order/offset stack over explicit tidy groups and sorted samples.
+    ShapeStack(ShapeStackSpec),
     /// Fixed band-relative slots; missing groups keep their configured slot.
     Dodge(DodgeSpec),
     /// Stable per-target displacement in declared data or destination units.
@@ -562,15 +758,15 @@ pub enum Position {
 /// Constant solid styling, separate from data aesthetic mappings.
 #[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
-pub struct Style {
+pub struct Style<P = Color> {
     /// Fill/stroke color, before any future palette scale.
-    pub color: Color,
+    pub color: P,
     /// Positive point radius in eventual destination units.
     pub radius: f64,
     /// Positive stroke width in eventual destination units.
     pub stroke_width: f64,
 }
-impl Default for Style {
+impl<P: From<Color>> Default for Style<P> {
     fn default() -> Self {
         Self {
             color: Color {
@@ -578,7 +774,8 @@ impl Default for Style {
                 green: 90,
                 blue: 150,
                 alpha: 255,
-            },
+            }
+            .into(),
             radius: 3.,
             stroke_width: 1.5,
         }
@@ -617,12 +814,36 @@ pub enum ClipPolicy {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Layer {
+    /// Versioned native shape protocols selected in the shared compiler (wire v9).
+    #[serde(default, skip_serializing_if = "std::collections::BTreeMap::is_empty")]
+    pub shape_protocols: std::collections::BTreeMap<super::ShapeFamily, super::ShapeOperation>,
+    /// Explicit categorical symbol types, independent of color and grouping.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub symbol: Option<super::SymbolEncoding>,
+    /// Input samples evaluated through the actual area-size mapping for guide glyphs.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub symbol_size_guide: Option<super::SymbolSizeGuide>,
+    /// Independent numeric style scales, prepared after statistics and before after-scale expressions.
+    #[serde(default, skip_serializing_if = "std::collections::BTreeMap::is_empty")]
+    pub numeric_scales: std::collections::BTreeMap<super::NumericAesthetic, super::NumericEncoding>,
+    /// Physical independent-axis direction; mappings remain in physical x/y coordinates.
+    #[serde(default, skip_serializing_if = "super::Orientation::is_vertical")]
+    pub orientation: super::Orientation,
+    /// Nonpositional expressions evaluated after scales and positions, before mark styling.
+    #[serde(default, skip_serializing_if = "std::collections::BTreeMap::is_empty")]
+    pub after_scale: std::collections::BTreeMap<
+        super::AfterScaleAesthetic,
+        super::Expression<super::AfterScaleRead>,
+    >,
+    /// Source-stage mappings retained independently of generated encodings.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub grammar: Option<super::LayerGrammar>,
     /// Optional versioned custom geometry after shared encoding and positioning.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub geometry_extension: Option<super::GeometryExtension>,
     /// Direction-dependent candle colors; supplied OHLC values remain unchanged.
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub candle_colors: Option<super::CandleColors>,
+    pub candle_colors: Option<super::CandleColors<crate::color::Paint>>,
     /// Explicit missing-facet and panel targeting policy.
     #[serde(default)]
     pub facet: super::FacetTarget,
@@ -650,7 +871,7 @@ pub struct Layer {
     /// Semantic position applied before domain collection.
     pub position: Position,
     /// Constant styling.
-    pub style: Style,
+    pub style: Style<crate::color::Paint>,
     /// Optional stage-aware color mapping with semantic legend metadata.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub color: Option<super::ColorEncoding>,
@@ -662,6 +883,13 @@ impl Layer {
     pub fn new(id: LayerId, data: impl Into<DataRef>, geom: Geom, mappings: SourceAes) -> Self {
         Self {
             id,
+            grammar: None,
+            orientation: super::Orientation::Vertical,
+            after_scale: Default::default(),
+            numeric_scales: Default::default(),
+            shape_protocols: Default::default(),
+            symbol: None,
+            symbol_size_guide: None,
             geometry_extension: None,
             candle_colors: None,
             facet: super::FacetTarget::default(),
@@ -755,8 +983,8 @@ impl Layer {
         self
     }
     /// Choose an explicit constant style.
-    pub fn styled(mut self, style: Style) -> Self {
-        self.style = style;
+    pub fn styled<P: Into<crate::color::Paint>>(mut self, style: Style<P>) -> Self {
+        self.style = style.map_color(Into::into);
         self
     }
     /// Disable chart mapping inheritance for independent/annotation schemas.
@@ -770,6 +998,10 @@ impl Layer {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct ChartDefinition {
+    /// Canonical compatibility provenance and resolved execution policy.
+    /// Absence preserves LibraryV1 byte and behavioral defaults.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub semantics: Option<super::ExecutionSemantics>,
     /// Optional portable figure furniture and prepared-data inset views.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub figure: Option<crate::composition::FigureComposition>,
@@ -788,20 +1020,121 @@ pub struct ChartDefinition {
     /// Optional portable axes; when nonempty these replace destination default axes.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub axes: Vec<crate::layout::AxisSpec>,
+    /// Independently identified guides reusing declared positional scales (wire v8).
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub guides: Vec<crate::layout::GuideSpec>,
     /// Submission order is paint order; duplicate layer IDs reject.
     pub layers: Vec<Layer>,
 }
 impl ChartDefinition {
+    /// Minimum definition-envelope version required by its retained capabilities.
+    pub fn wire_version(&self) -> u32 {
+        if self
+            .axes
+            .iter()
+            .any(|axis| matches!(axis.scale, crate::layout::AxisScale::Registered { .. }))
+        {
+            return 10;
+        }
+        if self.layers.iter().any(|l| !l.shape_protocols.is_empty()) {
+            return 9;
+        }
+        if !self.guides.is_empty() {
+            return 8;
+        }
+        if self.layers.iter().any(|l| {
+            matches!(
+                l.geom,
+                Geom::ShapeSymbol { .. }
+                    | Geom::ShapeLineRadial { .. }
+                    | Geom::ShapeAreaRadial { .. }
+                    | Geom::ShapeLink { .. }
+                    | Geom::ShapeLinkRadial { .. }
+                    | Geom::ShapeLine { .. }
+                    | Geom::ShapeArea { .. }
+                    | Geom::ShapeArc { .. }
+                    | Geom::ShapePie { .. }
+            ) || matches!(l.position, Position::ShapeStack(_))
+        }) {
+            return 7;
+        }
+        if self.layers.iter().any(|l|l.numeric_scales.values().any(|s|s.scale.has_chromatic())
+            || l.color.as_ref().is_some_and(|c|matches!(&c.scale,crate::scales::ColorScale::Mapped {scale,..} if scale.has_chromatic()))) { return 6; }
+        if self.layers.iter().any(|l| {
+            !l.numeric_scales.is_empty()
+                || l.color
+                    .as_ref()
+                    .is_some_and(|c| matches!(c.scale, crate::scales::ColorScale::Mapped { .. }))
+        }) {
+            return 5;
+        }
+        if self.axes.iter().any(|a| {
+            a.numeric_format.is_some()
+                || a.time_format.is_some()
+                || matches!(
+                    a.scale,
+                    crate::layout::AxisScale::Numeric(_)
+                        | crate::layout::AxisScale::D3Band(_)
+                        | crate::layout::AxisScale::D3Point(_)
+                        | crate::layout::AxisScale::Calendar { .. }
+                )
+        }) {
+            return 5;
+        }
+        if self.has_floating_paint() {
+            return 4;
+        }
+        if self.theme.as_ref().is_some_and(|t| t.geometry.is_some())
+            || self.semantics.is_some()
+            || self.mappings.requires_stages()
+            || self
+                .axes
+                .iter()
+                .any(|a| a.population_oob.is_some() || a.scale_stage.is_some())
+            || self.layers.iter().any(|l| {
+                l.orientation == super::Orientation::Horizontal
+                    || !l.after_scale.is_empty()
+                    || l.grammar.is_some()
+                    || l.mappings.requires_stages()
+                    || l.statistic.requires_stages()
+                    || l.filters
+                        .iter()
+                        .any(|f| matches!(f.value, Numeric::Scaled { .. } | Numeric::Expression(_)))
+                    || l.color.as_ref().is_some_and(|c| {
+                        matches!(
+                            c.input,
+                            super::ColorInput::GroupField(_)
+                                | super::ColorInput::Numeric(
+                                    Numeric::Scaled { .. } | Numeric::Expression(_)
+                                )
+                        )
+                    })
+            })
+            || self.transforms.iter().any(|t| {
+                t.grammar.is_some()
+                    || t.statistic.requires_stages()
+                    || t.filters
+                        .iter()
+                        .any(|f| matches!(f.value, Numeric::Scaled { .. } | Numeric::Expression(_)))
+            })
+        {
+            3
+        } else {
+            self.figure.as_ref().map_or(1, |f| f.version)
+        }
+    }
     /// Start an empty, valid definition at an explicit revision.
     pub fn new(revision: Revision) -> Self {
         Self {
             revision,
+            semantics: None,
             facets: None,
             theme: None,
             figure: None,
             mappings: SourceAes::new(),
             transforms: vec![],
             axes: vec![],
+            guides: vec![],
             layers: vec![],
         }
     }
@@ -857,5 +1190,36 @@ impl Default for CompileLimits {
             max_prepared_rows: 1_000_000,
             max_vertices: 1_000_000,
         }
+    }
+}
+
+impl<P> Style<P> {
+    /// Transform the authored color while preserving numeric styling.
+    pub fn map_color<Q>(self, map: impl FnOnce(P) -> Q) -> Style<Q> {
+        Style {
+            color: map(self.color),
+            radius: self.radius,
+            stroke_width: self.stroke_width,
+        }
+    }
+}
+impl Style<crate::color::Paint> {
+    /// Resolve constant paint once before preparing marks.
+    pub fn resolve(self) -> Style {
+        self.map_color(crate::color::Paint::resolve)
+    }
+}
+
+impl ChartDefinition {
+    /// Walk authored paint inputs without converting colors or inspecting source rows.
+    pub fn has_floating_paint(&self) -> bool {
+        self.theme.as_ref().is_some_and(crate::theme::ThemeSpec::has_floating_paint)
+            || self.figure.as_ref().is_some_and(crate::composition::FigureComposition::has_floating_paint)
+            || self.axes.iter().any(|a| a.title.as_ref().is_some_and(crate::typography::RichText::has_floating_paint)
+                || a.typography.as_ref().is_some_and(|r| r.color.is_some_and(crate::color::Paint::is_floating)))
+            || self.layers.iter().any(|l| l.style.color.is_floating()
+                || l.candle_colors.is_some_and(|c| c.up.is_floating() || c.down.is_floating())
+                || l.color.as_ref().is_some_and(|c| c.scale.has_floating())
+                || l.after_scale.values().any(|e| e.nodes.iter().any(|n| matches!(n, super::ExpressionNode::Literal(super::ExpressionValue::Color(p)) if p.is_floating()))))
     }
 }

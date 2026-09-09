@@ -1,0 +1,9 @@
+{
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.5.2\nBuildVersion:\t\t25F84\n",
+  "shape_node_command": "mise exec -- node --version",
+  "shape_node_current": "v24.14.0",
+  "binding_runner_environment": "bindings/environment.txt",
+  "note": "The broader bindings-proof task records Node v26.7.0 in its own environment; the shape runner uses mise exec Node v24.14.0. Linux uses the established offline rust:1.97.1-bookworm environment.",
+  "font_sha256": "2ec33f84606cbaa0a1a944488e14f97faf2f6a25ecdd8354f5358f06da13c7d9",
+  "svg_raster_probe_sha256": "ed5d5f6773a880ce881a7aa4c73c71e8e04c8a98bca19bf2a469cf5445877222"
+}

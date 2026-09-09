@@ -1,0 +1,109 @@
+RUN cargo run -p chart-export --example binding_proof --locked -- /Users/jeickmeier/Projects/finstack-chart/target/path-proof/bindings-final/native
+ued-not-committed"
+stream "commit-policy"
+stream "pin-historical"
+stream "cannot-select-evicted-frozen-mark"
+stream "resume"
+stream "retention-replay"
+stream "advance-watermark"
+stream "atomic-late-reject"
+stream "choose-late-drop"
+stream "future-does-not-advance"
+stream "drop-and-accept"
+stream "count-retention"
+stream "inspect-window"
+stream "replay-00"
+stream "replay-01"
+stream "replay-02"
+stream "replay-03"
+stream "replay-04"
+stream "replay-05"
+stream "replay-06"
+stream "replay-07"
+stream "replay-08"
+stream "replay-09"
+stream "replay-10"
+stream "replay-11"
+stream "replay-12"
+stream "replay-13"
+stream "replay-14"
+stream "replay-15"
+stream "replay-16"
+stream "replay-17"
+stream "replay-18"
+stream "replay-19"
+stream "replay-20"
+stream "replay-21"
+stream "replay-22"
+stream "replay-23"
+stream "replay-24"
+stream "replay-25"
+stream "replay-26"
+stream "replay-27"
+stream "replay-28"
+stream "replay-29"
+stream "replay-30"
+stream "replay-31"
+stream "replay-32"
+stream "replay-33"
+stream "replay-34"
+stream "replay-35"
+stream "replay-36"
+stream "replay-37"
+stream "replay-38"
+stream "replay-39"
+stream "queue-drained"
+stream "replay-old-receipt-current-data"
+stream "choose-lossy-overload"
+stream "explicit-drop-newest"
+stream "explicit-loss-accounting"
+stream "no-dropped-commit"
+stream "unpin"
+stream "released-pin"
+PASS Rust FIX-14 held captures, atomic dual-dataset updates, bounded/canceled exports and owned bytes after disposal
+PASS Rust FIX-06: missing facet policy and unknown target panel rejected
+PASS native shared portable fixture, transaction replay, action and controlled disposal
+RUN cargo build -p chart-python --features extension-module,extension-proof --locked
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.15s
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/python_proof.py /Users/jeickmeier/Projects/finstack-chart/target/path-proof/bindings-final/python-module /Users/jeickmeier/Projects/finstack-chart/target/path-proof/bindings-final/python
+PASS Python: actual extension, portable fixture, copies, detached thread progress, disposal and 13 malformed input cases
+PASS Python FIX-06: missing facet policy and unknown target panel rejected
+PASS Python FIX-17 unregistered/unknown-version/native-only/stage-schema errors
+PASS 36 statistic/position/family cases in the actual Python extension
+PASS WP-15 Python shared action trace: 23 transitions
+PASS WP-16/17 Python shared input queries/actions: 47 steps
+PASS WP-18 Python streaming replay: 70 steps
+PASS Python FIX-14 40 held-capture steps and bytes after disposal
+RUN cargo build -p chart-wasm --features extension-proof --target wasm32-unknown-unknown --locked
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.12s
+RUN /private/tmp/wp09-tools/wasm-bindgen-0.2.128-aarch64-apple-darwin/wasm-bindgen /Users/jeickmeier/Projects/finstack-chart/target/wasm32-unknown-unknown/debug/chart_wasm.wasm --target nodejs --out-dir /Users/jeickmeier/Projects/finstack-chart/target/path-proof/bindings-final/wasm-module
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/wasm_proof.cjs /Users/jeickmeier/Projects/finstack-chart/target/path-proof/bindings-final/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/path-proof/bindings-final/wasm
+PASS WASM: real Node WebAssembly, portable fixture, copies, invalidated old memory view, repeated updates, disposal and 13 malformed cases
+PASS WASM FIX-06: missing facet policy and unknown target panel rejected
+PASS WASM FIX-17 unregistered/unknown-version/native-only/stage-schema errors
+PASS 36 statistic/position/family cases in actual WASM
+PASS WP-15 WASM shared action trace: 23 transitions
+PASS WP-16/17 WASM shared input queries/actions: 47 steps
+PASS WP-18 WASM streaming replay: 70 steps
+PASS WASM FIX-14 40 held-capture steps and bytes after disposal
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/compare.py /Users/jeickmeier/Projects/finstack-chart/target/path-proof/bindings-final
+er-item panel identity, collected guides and vector PDF
+PASS WP-13 FIX-12/13: theme invariant populations/domains/targets, two panels and source-sharing inset, rich/rotated/tabular text, explicit bold/Arabic resources, symbols/dashes/gradients, vector searchable PDF and three-host exact SVG
+PASS WP-14 FIX-17: registered custom density/schema, exact counts/membership, common generated builtin points and shared axes, custom labels/hit/semantics/selection/keyboard order, vector exports and independent up/down/doji candle colors
+PASS WP-15 exact Rust/Python/WASM action events and component revisions; real-font preview/cancel/commit/undo/redo geometry
+PASS WP-16 Rust/Python/WASM indexed inspection, provenance selection, typed navigation, pinned previews, cancellation and exact export geometry
+PASS WP-17 actual Rust/Python/WASM accessible data, snapped annotation preview/cancel/commit/undo/redo, linked provenance, echoes, missing keys and clipped/category selections
+PASS WP-18 70-step actual Rust/Python/WASM queue/retention/replay trace; independent retained rows and exact bin memberships; historical pins and exact SVG bytes
+PASS WP-19 actual Rust/Python/WASM density: exact raw lookup/publication unchanged; ordered gap endpoints and visible extrema; first/high/low/last OHLC and compensated valid-volume sums; exact SVG bytes
+PASS WP-20 FIX-14: 40 actual Rust/Python/WASM capture steps; coherent atomic dataset revisions; independent supplied-value projection; clean/preview annotation labels; visible/full dimensions; bounded errors/cancellation; byte-identical exports after disposal
+RUN cargo run -p chart-export --example path_binding_proof --locked -- /Users/jeickmeier/Projects/finstack-chart/target/path-proof/bindings-final/paths/rust
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.11s
+     Running `target/debug/examples/path_binding_proof /Users/jeickmeier/Projects/finstack-chart/target/path-proof/bindings-final/paths/rust`
+PASS FIX-P01–06 Rust: 86 operation sequences; retained scenes; SVG/PDF/PNG at 300/600 DPI.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/path.py /Users/jeickmeier/Projects/finstack-chart/target/path-proof/bindings-final/python-module /Users/jeickmeier/Projects/finstack-chart/target/path-proof/bindings-final/paths/rust /Users/jeickmeier/Projects/finstack-chart/target/path-proof/bindings-final/paths/python
+PASS FIX-P01–06 Python: 86 sequences, batches/copies/errors/disposal and six actual exports.
+RUN node /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/path.cjs /Users/jeickmeier/Projects/finstack-chart/target/path-proof/bindings-final/wasm-module /Users/jeickmeier/Projects/finstack-chart/target/path-proof/bindings-final/paths/rust /Users/jeickmeier/Projects/finstack-chart/target/path-proof/bindings-final/paths/wasm
+PASS FIX-P01–06 WASM: 86 sequences, batches/copies/errors/disposal and six actual exports.
+RUN /Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3 /Users/jeickmeier/Projects/finstack-chart/scripts/bindings/path_compare.py /Users/jeickmeier/Projects/finstack-chart/target/path-proof/bindings-final/paths
+PASS FIX-P01–06: 86 full operation traces and all retained scene geometry/targets across Rust, Python and WASM.
+PASS WP-09/10/11/12/13/14/15/16/17/18/19/20 runtime proof. Results: /Users/jeickmeier/Projects/finstack-chart/target/path-proof/bindings-final

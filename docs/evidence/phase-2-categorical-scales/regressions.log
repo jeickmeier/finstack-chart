@@ -1,0 +1,58 @@
+    Blocking waiting for file lock on build directory
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 35.44s
+     Running tests/authoring.rs (target/debug/deps/authoring-e72a047800eb2f6b)
+
+running 13 tests
+test facets_reject_same_ordinal_with_different_field_names ... ok
+test component_options_reject_incompatible_owners_without_preparation ... ok
+test exact_nullable_data_and_timestamps_survive_materialization ... ok
+test columns_and_rows_prepare_identical_values_without_manual_ids ... ok
+test labels_are_single_annotations_and_callout_components_preserve_the_endpoint ... ok
+test histogram_lowers_to_the_existing_bin_kernel_and_source_membership ... ok
+test automatic_timestamp_origins_align_independent_datasets_without_narrowing_ticks ... ok
+test nondefault_recipe_and_primary_axis_options_survive_later_components ... ok
+test schema_errors_and_foreign_handles_reject_without_mutating_data ... ok
+test grid_infers_empty_combinations_and_build_rejects_invalid_catalogs ... ok
+test imported_identity_preserves_seeded_jitter_and_rejects_ambiguous_data_owners ... ok
+test shared_transform_runs_once_and_generated_color_uses_its_own_stage ... ok
+test shared_automatic_color_catalog_is_consistent_across_data_and_updates ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/inspection.rs (target/debug/deps/inspection-e18906f4d970d895)
+
+running 10 tests
+test empty_inspection_and_invalid_options_are_recoverable ... ok
+test keyboard_wrap_clear_idempotency_and_stale_stamp_are_atomic ... ok
+test histogram_hit_retains_aggregate_members_and_respects_containment ... ok
+test nearest_x_groups_preserve_gap_targets_and_never_invent_interpolation ... ok
+test rectangle_selection_intersects_bars_instead_of_testing_centers ... ok
+test brushes_lasso_series_and_limits_preserve_vertex_provenance ... ok
+test scatter_nearest_radius_clips_and_equal_distance_z_order ... ok
+test stable_keyboard_identity_survives_rebuild_and_removal_clears_it ... ok
+test candle_wicks_are_contained_and_keyboard_deduplicates_each_candle ... ok
+test dense_spatial_and_sorted_x_match_scan_without_source_work ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+
+     Running tests/statistics.rs (target/debug/deps/statistics-684098a785e745a5)
+
+running 14 tests
+test strict_inputs_budgets_and_incompatible_position_contracts_reject ... ok
+test stored_d3_r7_reference_examples_match_only_the_agreed_quantile_definition ... ok
+test stable_accumulation_survives_intermediate_overflow_and_extreme_quantiles ... ok
+test named_generated_output_is_shared_and_cannot_be_reinterpreted_as_source ... ok
+test zero_preserving_transformed_stacks_work_and_unused_bad_generated_fields_reject ... ok
+test count_requires_all_inputs_and_reports_invalid_strict_and_empty_groups ... ok
+test fix03_mixed_sign_stack_normalize_and_reorder_domains ... ok
+test dodge_uses_band_width_and_preserves_missing_slots ... ok
+test fix04_quantiles_stable_summary_missing_and_explicit_empty_sum ... ok
+test transformed_stat_fields_are_not_transformed_again_and_mismatch_rejects ... ok
+test fix02_explicit_auto_constant_empty_and_overflow_bin_conservation ... ok
+test fix05_intercept_ols_zoom_filter_degenerate_and_large_origin ... ok
+test seeded_jitter_is_stable_in_data_and_display_units ... ok
+test exact_batch_fallback_after_append_correction_removal_and_reorder ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

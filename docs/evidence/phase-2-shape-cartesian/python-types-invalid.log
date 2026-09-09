@@ -1,0 +1,6 @@
+scripts/bindings/authoring/shape_typing_invalid.py:2: error: Argument 1 to "ShapeLine" has incompatible type "dict[str, dict[str, object]]"; expected "ShapeLineConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_typing_invalid.py:3: error: Argument 1 to "ShapeArea" has incompatible type "dict[str, dict[str, str]]"; expected "ShapeAreaConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_typing_invalid.py:4: error: Argument 1 to "ShapeLine" has incompatible type "dict[str, list[int]]"; expected "ShapeLineConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_typing_invalid.py:5: error: Argument 1 to "ShapeLine" has incompatible type "dict[str, dict[str, str]]"; expected "ShapeLineConfig | None"  [arg-type]
+scripts/bindings/authoring/shape_typing_invalid.py:6: error: Argument 1 to "boundary" of "ShapeArea" has incompatible type "Literal['Upper']"; expected "Literal['X0', 'X1', 'Y0', 'Y1']"  [arg-type]
+Found 5 errors in 1 file (checked 1 source file)

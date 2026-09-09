@@ -53,8 +53,9 @@ pub fn chart_input(
     font: NativeFont,
     theme: &Theme,
 ) -> ChartResult<ChartInput> {
-    Ok(ChartInput::from_plot(plot, font)?
-        .layout(chart_core::plot::layout_options().host_theme(theme_patch(theme)?)))
+    Ok(ChartInput::from_plot(plot, font)?.layout(
+        chart_core::plot::layout_options().host_theme(theme_patch(theme)?.map_colors(Into::into)),
+    ))
 }
 /// Apply a Kit snapshot at the host level; authored named/plot/layer tokens keep their precedence.
 pub fn apply_theme(
@@ -63,7 +64,7 @@ pub fn apply_theme(
     cx: &mut Context<ChartView>,
 ) -> ChartResult<()> {
     let mut r = view.layout_request().clone();
-    r.host_theme = theme_patch(theme)?;
+    r.host_theme = theme_patch(theme)?.map_colors(Into::into);
     view.set_layout(r, cx)
 }
 /// A real Kit control dispatching through the shared chart reducer. Recoverable errors stay on

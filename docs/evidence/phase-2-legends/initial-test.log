@@ -1,0 +1,90 @@
+mise WARN  failed to write cache file: /Users/jeickmeier/Library/Caches/mise/protoc/35.1/bin_paths-a7857.msgpack.z Operation not permitted (os error 1)
+mise WARN  failed to write cache file: /Users/jeickmeier/Library/Caches/mise/watchexec/2.5.1/bin_paths-a7857.msgpack.z Operation not permitted (os error 1)
+[test] $ if [[ "$(uname -s)" == "Darwin" ]]; then
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling pyo3-ffi v0.29.2
+   Compiling pyo3 v0.29.2
+   Compiling chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+   Compiling chart-extension-example v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/custom-extension)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+   Compiling gpui-charts v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts)
+   Compiling chart-wasm v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-wasm)
+   Compiling chart-python v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-python)
+   Compiling gpui-charts-kit v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/gpui-charts-kit)
+   Compiling chart-gallery v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/chart-gallery)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 26.97s
+warning: the following packages contain code that will be rejected by a future version of Rust: block v0.1.6
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+     Running unittests src/lib.rs (target/debug/deps/chart_core-05ad430274d61de3)
+
+running 9 tests
+test navigation::tests::pointer_anchor_uses_log_and_symlog_coordinates ... ok
+test navigation::tests::timestamp_navigation_preserves_large_integer_identity ... ok
+test navigation::tests::sessions_zoom_by_active_time_and_reject_unknown_calendar_extent ... ok
+test navigation::tests::reversed_ranges_domain_clamp_region_and_invalid_inputs ... ok
+test state::reducer::tests::disposal_is_terminal_even_when_cancellation_cannot_advance_a_revision ... ok
+test state::tests::state_and_viewport_revision_exhaustion_leave_state_unchanged ... ok
+test navigation::tests::category_windows_preserve_catalog_lookup_and_singletons ... ok
+test transaction::tests::exhausted_store_dataset_and_ordinal_counters_roll_back ... ok
+test inspection::index::tests::duplicate_x_signed_zeros_keep_frontmost_128_and_all_keyboard_identities ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/actions.rs (target/debug/deps/actions-59537cb51ed800f6)
+
+running 9 tests
+test controlled_acknowledgements_cannot_overwrite_newer_actions_or_reuse_components ... ok
+test legacy_viewports_replace_primary_named_windows_without_losing_other_axes ... ok
+test freeze_resume_and_disposal_release_only_owned_snapshot_resources ... ok
+test invalid_previews_and_resource_caps_preserve_valid_state_and_bounded_history ... ok
+test linked_sequences_are_bounded_idempotent_and_preserve_origin_without_feedback_history ... ok
+test effective_changes_separate_hover_focus_pin_selection_follow_and_visibility ... ok
+test gestures_pin_old_coordinates_cancel_without_committing_and_reject_competing_owners ... ok
+test frozen_resize_advances_projection_without_admitting_later_semantics ... ok
+test annotation_preview_is_one_undo_command_and_cancellation_never_changes_source_or_history ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/authoring.rs (target/debug/deps/authoring-bd17af62e8256d4e)
+
+running 13 tests
+test facets_reject_same_ordinal_with_different_field_names ... ok
+test labels_are_single_annotations_and_callout_components_preserve_the_endpoint ... ok
+test schema_errors_and_foreign_handles_reject_without_mutating_data ... ok
+test columns_and_rows_prepare_identical_values_without_manual_ids ... ok
+test component_options_reject_incompatible_owners_without_preparation ... ok
+test exact_nullable_data_and_timestamps_survive_materialization ... ok
+test automatic_timestamp_origins_align_independent_datasets_without_narrowing_ticks ... ok
+test histogram_lowers_to_the_existing_bin_kernel_and_source_membership ... ok
+test grid_infers_empty_combinations_and_build_rejects_invalid_catalogs ... ok
+test shared_transform_runs_once_and_generated_color_uses_its_own_stage ... ok
+test nondefault_recipe_and_primary_axis_options_survive_later_components ... ok
+test imported_identity_preserves_seeded_jitter_and_rejects_ambiguous_data_owners ... ok
+test shared_automatic_color_catalog_is_consistent_across_data_and_updates ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/authoring_families.rs (target/debug/deps/authoring_families-df11efa6ee885c7a)
+
+running 2 tests
+test primary_composition_preserves_independent_publication_fixtures ... ok
+test primary_builders_preserve_independent_family_fixtures ... FAILED
+
+failures:
+
+---- primary_builders_preserve_independent_family_fixtures stdout ----
+
+thread 'primary_builders_preserve_independent_family_fixtures' (257884789) panicked at crates/chart-core/tests/support/authoring_families.rs:124:5:
+assertion `left == right` failed: family-point-color: complete semantic rows/domains/membership/source/state
+  left: Object {"version": Number(1), "definition_revision": String("0"), "store_revision": String("0"), "state": Object {"interaction": Object {"follow": String("FollowLatest"), "legend_visible": Bool(true), "selection": Array [], "pinned": Null, "annotations": Object {}, "configuration": Object {"max_targets": Number(4096), "history_capacity": Number(64), "manual_view_enters_history": Bool(true)}, "revisions": Object {"durable": String("0"), "follow": String("0"), "hover": String("0"), "focus": String("0"), "pin": String("0"), "selection": String("0"), "visibility": String("0"), "annotations": String("0"), "gesture": String("0"), "configuration": String("0")}}, "version": Number(1), "definition_revision": String("0"), "state_revision": String("0"), "viewport_revision": String("0"), "viewport": Object {"x": Null, "y": Null}, "hidden_layers": Array []}, "datasets": Array [Object {"version": Object {"dataset": String("1"), "revision": String("0"), "schema_version": String("1")}, "schema": Object {"version": String("1"), "fields": Array [Object {"id": String("1"), "name": String("field_1"), "kind": String("Categorical"), "nullable": Bool(true), "unit": Null, "label": Null}, Object {"id": String("2"), "name": String("field_2"), "kind": String("Float64"), "nullable": Bool(true), "unit": Null, "label": Null}]}, "retention": String("Unbounded"), "chunks": Array [Object {"schema_version": String("1"), "fields": Array [Object {"id": String("1"), "name": String("field_1"), "kind": String("Categorical"), "nullable": Bool(true), "unit": Null, "label": Null}, Object {"id": String("2"), "name": String("field_2"), "kind": String("Float64"), "nullable": Bool(true), "unit": Null, "label": Null}], "keys": Array [String("9007199254743001"), String("9007199254743002"), String("9007199254743003")], "columns": Array [Object {"values": Object {"Categorical": Object {"codes": Array [Number(0), Number(1), Number(2)], "dictionary": Array [String("Gamma"), String("Alpha"), String("Beta")]}}, "validity": Array [Bool(true), Bool(true), Bool(true)], "formatted": Null}, Object {"values": Object {"Float64": Array [Number(3.0), Number(1.0), Number(2.0)]}, "validity": Array [Bool(true), Bool(true), Bool(true)], "formatted": Null}]}]}], "layers": Array [Object {"id": String("1103"), "visible": Bool(true), "domains": Object {"x": Object {"minimum": Number(0.0), "maximum": Number(2.0)}, "y": Object {"minimum": Number(1.0), "maximum": Number(3.0)}, "x_space": Object {"Categorical": Object {"categories": Array [String("Gamma"), String("Alpha"), String("Beta")]}}, "y_space": String("Data")}, "rows": Object {"Source": Array [Object {"key": String("9007199254743001"), "ordinal": String("0")}, Object {"key": String("9007199254743002"), "ordinal": String("1")}, Object {"key": String("9007199254743003"), "ordinal": String("2")}]}, "schema": Object {"Source": Object {"version": String("1"), "fields": Array [Object {"id": String("1"), "name": String("field_1"), "kind": String("Categorical"), "nullable": Bool(true), "unit": Null, "label": Null}, Object {"id": String("2"), "name": String("field_2"), "kind": String("Float64"), "nullable": Bool(true), "unit": Null, "label": Null}]}}, "operations": Array [Object {"scope": String("Group"), "panel": Null, "operation": Object {"id": String("chart.identity"), "version": String("1")}, "parameters": String("Identity"), "input": Object {"dataset": String("1"), "revision": String("0"), "schema_version": String("1")}, "filters": Array [], "grouping": String("All"), "space": String("Data"), "incremental": Object {"append": Bool(false), "window": Bool(false), "correction": Bool(false), "full_recompute": Bool(true)}, "counts": Object {"input": Number(3), "filtered": Number(0), "invalid_filter": Number(0), "invalid_stat": Number(0), "below": Number(0), "above": Number(0), "output": Number(3)}}], "color_legend": Object {"title": String(""), "id": String("1102"), "entries": Array [Array [String("Alpha"), Object {"red": Number(30), "green": Number(125), "blue": Number(180), "alpha": Number(210)}], Array [String("Beta"), Object {"red": Number(220), "green": Number(70), "blue": Number(55), "alpha": Number(210)}], Array [String("Gamma"), Object {"red": Number(128), "green": Number(128), "blue": Number(128), "alpha": Number(70)}]], "continuous": Bool(false), "missing": Object {"red": Number(128), "green": Number(128), "blue": Number(128), "alpha": Number(70)}}, "invalid_geometry": Number(0), "targets": Array [Object {"Source": Object {"dataset": String("1"), "key": String("9007199254743001")}}, Object {"Source": Object {"dataset": String("1"), "key": String("9007199254743002")}}, Object {"Source": Object {"dataset": String("1"), "key": String("9007199254743003")}}]}], "panels": Array [], "transforms": Array []}
+ right: Object {"version": Number(1), "definition_revision": String("0"), "store_revision": String("0"), "state": Object {"interaction": Object {"follow": String("FollowLatest"), "legend_visible": Bool(true), "selection": Array [], "pinned": Null, "annotations": Object {}, "configuration": Object {"max_targets": Number(4096), "history_capacity": Number(64), "manual_view_enters_history": Bool(true)}, "revisions": Object {"durable": String("0"), "follow": String("0"), "hover": String("0"), "focus": String("0"), "pin": String("0"), "selection": String("0"), "visibility": String("0"), "annotations": String("0"), "gesture": String("0"), "configuration": String("0")}}, "version": Number(1), "definition_revision": String("0"), "state_revision": String("0"), "viewport_revision": String("0"), "viewport": Object {"x": Null, "y": Null}, "hidden_layers": Array []}, "datasets": Array [Object {"version": Object {"dataset": String("1"), "revision": String("0"), "schema_version": String("1")}, "schema": Object {"version": String("1"), "fields": Array [Object {"id": String("1"), "name": String("field_1"), "kind": String("Categorical"), "nullable": Bool(true), "unit": Null, "label": Null}, Object {"id": String("2"), "name": String("field_2"), "kind": String("Float64"), "nullable": Bool(true), "unit": Null, "label": Null}]}, "retention": String("Unbounded"), "chunks": Array [Object {"schema_version": String("1"), "fields": Array [Object {"id": String("1"), "name": String("field_1"), "kind": String("Categorical"), "nullable": Bool(true), "unit": Null, "label": Null}, Object {"id": String("2"), "name": String("field_2"), "kind": String("Float64"), "nullable": Bool(true), "unit": Null, "label": Null}], "keys": Array [String("9007199254743001"), String("9007199254743002"), String("9007199254743003")], "columns": Array [Object {"values": Object {"Categorical": Object {"codes": Array [Number(0), Number(1), Number(2)], "dictionary": Array [String("Gamma"), String("Alpha"), String("Beta")]}}, "validity": Array [Bool(true), Bool(true), Bool(true)], "formatted": Null}, Object {"values": Object {"Float64": Array [Number(3.0), Number(1.0), Number(2.0)]}, "validity": Array [Bool(true), Bool(true), Bool(true)], "formatted": Null}]}]}], "layers": Array [Object {"id": String("1103"), "visible": Bool(true), "domains": Object {"x": Object {"minimum": Number(0.0), "maximum": Number(2.0)}, "y": Object {"minimum": Number(1.0), "maximum": Number(3.0)}, "x_space": Object {"Categorical": Object {"categories": Array [String("Gamma"), String("Alpha"), String("Beta")]}}, "y_space": String("Data")}, "rows": Object {"Source": Array [Object {"key": String("9007199254743001"), "ordinal": String("0")}, Object {"key": String("9007199254743002"), "ordinal": String("1")}, Object {"key": String("9007199254743003"), "ordinal": String("2")}]}, "schema": Object {"Source": Object {"version": String("1"), "fields": Array [Object {"id": String("1"), "name": String("field_1"), "kind": String("Categorical"), "nullable": Bool(true), "unit": Null, "label": Null}, Object {"id": String("2"), "name": String("field_2"), "kind": String("Float64"), "nullable": Bool(true), "unit": Null, "label": Null}]}}, "operations": Array [Object {"scope": String("Group"), "panel": Null, "operation": Object {"id": String("chart.identity"), "version": String("1")}, "parameters": String("Identity"), "input": Object {"dataset": String("1"), "revision": String("0"), "schema_version": String("1")}, "filters": Array [], "grouping": String("All"), "space": String("Data"), "incremental": Object {"append": Bool(false), "window": Bool(false), "correction": Bool(false), "full_recompute": Bool(true)}, "counts": Object {"input": Number(3), "filtered": Number(0), "invalid_filter": Number(0), "invalid_stat": Number(0), "below": Number(0), "above": Number(0), "output": Number(3)}}], "color_legend": Object {"title": Null, "id": String("1102"), "entries": Array [Array [String("Alpha"), Object {"red": Number(30), "green": Number(125), "blue": Number(180), "alpha": Number(210)}], Array [String("Beta"), Object {"red": Number(220), "green": Number(70), "blue": Number(55), "alpha": Number(210)}], Array [String("Gamma"), Object {"red": Number(128), "green": Number(128), "blue": Number(128), "alpha": Number(70)}]], "continuous": Bool(false), "missing": Object {"red": Number(128), "green": Number(128), "blue": Number(128), "alpha": Number(70)}}, "invalid_geometry": Number(0), "targets": Array [Object {"Source": Object {"dataset": String("1"), "key": String("9007199254743001")}}, Object {"Source": Object {"dataset": String("1"), "key": String("9007199254743002")}}, Object {"Source": Object {"dataset": String("1"), "key": String("9007199254743003")}}]}], "panels": Array [], "transforms": Array []}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    primary_builders_preserve_independent_family_fixtures
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `-p chart-core --test authoring_families`
+[test] ERROR task failed

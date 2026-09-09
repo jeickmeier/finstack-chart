@@ -147,7 +147,7 @@ pub struct Inset {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct FigureComposition {
-    /// Supported version is one.
+    /// Version one for legacy furniture; version two enables retained paths.
     pub version: u32,
     /// Figure title reserved above all panels.
     #[serde(default)]
@@ -170,6 +170,9 @@ pub struct FigureComposition {
     /// Data/relative/output direct labels and callouts.
     #[serde(default)]
     pub annotations: Vec<Annotation>,
+    /// Fixed retained paths in destination units, translated to an explicit anchor.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub paths: Vec<VectorAnnotation>,
     /// Bounded alternate views into prepared panels/layers.
     #[serde(default)]
     pub insets: Vec<Inset>,
@@ -185,6 +188,7 @@ impl Default for FigureComposition {
             footnotes: vec![],
             panel_letters: vec![],
             annotations: vec![],
+            paths: vec![],
             insets: vec![],
         }
     }
@@ -192,14 +196,14 @@ impl Default for FigureComposition {
 impl FigureComposition {
     /// Validate text/identity/count/placement bounds before shaping or cloning inset geometry.
     pub fn validate(&self, limits: Limits) -> ChartResult<()> {
-        if self.version != 1 {
+        if !matches!(self.version, 1 | 2) || (self.version == 1 && !self.paths.is_empty()) {
             return Err(Diagnostic::error(
                 DiagnosticCode::UnsupportedCapability,
                 "Unsupported figure composition version.",
-                "Use composition version one.",
+                "Use composition version two for retained paths, or version one for legacy furniture.",
             ));
         }
-        if self.annotations.len() > 256
+        if self.annotations.len().saturating_add(self.paths.len()) > 256
             || self.insets.len() > 4
             || self.panel_letters.len() > 256
             || self.source_notes.len() + self.footnotes.len() > 64
@@ -244,6 +248,25 @@ impl FigureComposition {
                 anchor.validate()?;
             }
         }
+        let mut path_remaining = limits.max_path_commands;
+        for a in &self.paths {
+            if !valid_id(&a.id) || !ids.insert(&a.id) {
+                return Err(invalid());
+            }
+            a.anchor.validate()?;
+            a.geometry.validate_for_scene()?;
+            crate::limits::require_within(
+                a.geometry.commands().len() <= path_remaining,
+                "figure path command",
+            )?;
+            path_remaining -= a.geometry.commands().len();
+            if let Some(stroke) = a.stroke {
+                crate::geometry::positive(
+                    stroke.width,
+                    "Path stroke must be finite and positive.",
+                )?;
+            }
+        }
         ids.clear();
         for i in &self.insets {
             if !valid_id(&i.id)
@@ -271,6 +294,23 @@ impl FigureComposition {
         }
         Ok(())
     }
+}
+/// One fixed path annotation with stable identity and no source-row replication.
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
+pub struct VectorAnnotation {
+    /// Stable authored identity, unique among all annotations.
+    pub id: String,
+    /// Position of the local path origin; geometry itself uses destination units.
+    pub anchor: Anchor,
+    /// Owned full-precision path snapshot.
+    pub geometry: crate::path::PathGeometry,
+    /// Optional nonzero fill.
+    pub fill: Option<crate::color::Paint>,
+    /// Optional solid stroke.
+    pub stroke: Option<crate::scene::Stroke<crate::color::Paint>>,
+    /// Allow the path to extend from the addressed panel to the full figure clip.
+    pub overflow: bool,
 }
 impl Anchor {
     pub(crate) fn validate(&self) -> ChartResult<()> {
@@ -325,24 +365,27 @@ impl FigureComposition {
                     .any(|a| a.id == id && a.side.horizontal() == horizontal)
             }
         };
-        for a in &self.annotations {
-            for anchor in std::iter::once(&a.anchor).chain(&a.callout) {
-                match anchor {
-                    Anchor::Data {
-                        panel: p, scales, ..
-                    } => {
-                        panel(p)?;
-                        if !axis(scales.x, true) || !axis(scales.y, false) {
-                            return Err(Diagnostic::error(
-                                DiagnosticCode::MissingResource,
-                                "Annotation names an absent or incorrectly oriented axis.",
-                                "Use existing x/y axis handles.",
-                            ));
-                        }
+        for anchor in self
+            .annotations
+            .iter()
+            .flat_map(|a| std::iter::once(&a.anchor).chain(&a.callout))
+            .chain(self.paths.iter().map(|a| &a.anchor))
+        {
+            match anchor {
+                Anchor::Data {
+                    panel: p, scales, ..
+                } => {
+                    panel(p)?;
+                    if !axis(scales.x, true) || !axis(scales.y, false) {
+                        return Err(Diagnostic::error(
+                            DiagnosticCode::MissingResource,
+                            "Annotation names an absent or incorrectly oriented axis.",
+                            "Use existing x/y axis handles.",
+                        ));
                     }
-                    Anchor::Panel { panel: p, .. } => panel(p)?,
-                    _ => {}
                 }
+                Anchor::Panel { panel: p, .. } => panel(p)?,
+                _ => {}
             }
         }
         for letter in &self.panel_letters {
@@ -377,4 +420,23 @@ fn invalid() -> Diagnostic {
         "Invalid figure furniture identity, offset or inset rectangle.",
         "Use unique bounded IDs, finite offsets and nonempty inset rectangles inside the parent plot.",
     )
+}
+
+impl FigureComposition {
+    /// Whether retained furniture contains floating paint inputs.
+    pub fn has_floating_paint(&self) -> bool {
+        self.title
+            .iter()
+            .chain(&self.subtitle)
+            .chain(&self.caption)
+            .chain(&self.source_notes)
+            .chain(&self.footnotes)
+            .chain(self.panel_letters.iter().map(|p| &p.text))
+            .chain(self.annotations.iter().map(|a| &a.text))
+            .any(RichText::has_floating_paint)
+            || self.paths.iter().any(|p| {
+                p.fill.is_some_and(crate::color::Paint::is_floating)
+                    || p.stroke.is_some_and(|s| s.color.is_floating())
+            })
+    }
 }

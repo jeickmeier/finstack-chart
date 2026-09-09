@@ -1,6 +1,8 @@
 //! Owned host syntax dispatch. Each call immediately updates a canonical typed builder.
 //! Only small scalar options cross JSON here; owned data and components remain typed handles.
 mod compose;
+mod expression;
+use expression::Expr;
 mod configure;
 pub use configure::panel_key;
 mod draft;
@@ -16,6 +18,8 @@ use serde_json::Value;
     reason = "Authoring-only values; inline builders avoid a separate allocation on every fluent option call."
 )]
 enum Kind {
+    Expression(Expr),
+    ScaleAes(AfterScaleAesBuilder),
     Aes(AesBuilder),
     Layer(LayerBuilder),
     Stat(StatBuilder),
@@ -26,6 +30,7 @@ enum Kind {
     Transform(TransformBuilder),
     Scale(ScaleBuilder),
     Axis(AxisBuilder),
+    Guide(GuideBuilder),
     Color(ColorScaleBuilder),
     Legend(LegendBuilder),
     Facet(FacetBuilder),
@@ -40,6 +45,7 @@ enum Kind {
     Note(SourceNoteBuilder),
     Footnote(FootnoteBuilder),
     Labels(LabelsBuilder),
+    VectorPath(VectorPathBuilder),
     Callout(CalloutBuilder),
     Panel(PanelLetterBuilder),
     Inset(InsetBuilder),
@@ -53,6 +59,94 @@ enum Kind {
 /// One owned primary builder, shared by Python and WASM syntax adapters.
 #[derive(Clone)]
 pub struct Component(Kind);
+impl Component {
+    /// Start a source expression from an owner-scoped field handle.
+    pub fn source_expression(field: FieldHandle) -> Self {
+        Self(Kind::Expression(Expr::Source(source_expr(field))))
+    }
+    /// Snapshot a standalone path into the canonical fixed-annotation builder.
+    pub fn vector_path(id: &str, path: &crate::path::Path) -> Self {
+        Self(Kind::VectorPath(super::vector_path(id, path.geometry())))
+    }
+    /// Attach a numeric aesthetic while preserving an owner-scoped field identity.
+    pub fn numeric_scale_field(
+        &self,
+        target: crate::grammar::NumericAesthetic,
+        field: FieldHandle,
+        scale: crate::scales::MappedScaleSpec,
+    ) -> ChartResult<Self> {
+        let Kind::Layer(layer) = &self.0 else {
+            return Err(unsupported("numeric_scale"));
+        };
+        Ok(Self(Kind::Layer(layer.clone().numeric_scale(
+            target,
+            Mapping::Handle(field),
+            scale,
+        ))))
+    }
+    /// Resolve a symbol catalog through an owner-scoped field handle.
+    pub fn symbol_types_field(
+        &self,
+        field: FieldHandle,
+        domain: Vec<String>,
+        palette: Vec<crate::shape::SymbolKind>,
+    ) -> ChartResult<Self> {
+        let Kind::Layer(layer) = &self.0 else {
+            return Err(unsupported("symbol_types"));
+        };
+        Ok(Self(Kind::Layer(layer.clone().symbol_types(
+            Mapping::Handle(field),
+            domain,
+            palette,
+        ))))
+    }
+    /// Attach an unnormalized shape parameter through an owned source field.
+    pub fn shape_value_field(
+        &self,
+        target: crate::grammar::NumericAesthetic,
+        field: FieldHandle,
+    ) -> ChartResult<Self> {
+        let Kind::Layer(layer) = &self.0 else {
+            return Err(unsupported("shape_value"));
+        };
+        Ok(Self(Kind::Layer(
+            layer.clone().shape_value(target, Mapping::Handle(field)),
+        )))
+    }
+    /// Attach an unnormalized shape parameter through a core source expression.
+    pub fn shape_value_expression(
+        &self,
+        target: crate::grammar::NumericAesthetic,
+        expression: &Self,
+    ) -> ChartResult<Self> {
+        let (Kind::Layer(layer), Kind::Expression(Expr::Source(expr))) = (&self.0, &expression.0)
+        else {
+            return Err(unsupported("shape_value source expression"));
+        };
+        Ok(Self(Kind::Layer(
+            layer
+                .clone()
+                .shape_value(target, Mapping::Expression(expr.clone())),
+        )))
+    }
+    /// Attach a numeric aesthetic through a source expression without host evaluation.
+    pub fn numeric_scale_expression(
+        &self,
+        target: crate::grammar::NumericAesthetic,
+        expression: &Self,
+        scale: crate::scales::MappedScaleSpec,
+    ) -> ChartResult<Self> {
+        let (Kind::Layer(layer), Kind::Expression(Expr::Source(expr))) = (&self.0, &expression.0)
+        else {
+            return Err(unsupported("numeric_scale source expression"));
+        };
+        Ok(Self(Kind::Layer(layer.clone().numeric_scale(
+            target,
+            Mapping::Expression(expr.clone()),
+            scale,
+        ))))
+    }
+}
 struct Args(Vec<Value>);
 impl Args {
     fn parse(input: &str) -> ChartResult<Self> {
@@ -100,7 +194,7 @@ impl Args {
         self.count(1)?;
         mapping(&self.0[0])
     }
-    fn color(&self) -> ChartResult<crate::scene::Color> {
+    fn color(&self) -> ChartResult<crate::color::Paint> {
         self.count(1)?;
         color(&self.0[0])
     }
@@ -155,6 +249,21 @@ fn exact_u64(value: &Value) -> ChartResult<u64> {
                 "Large integers require an exact integer adapter.",
             )
         })
+}
+fn numeric_input(value: &Value) -> ChartResult<NumericScaleInput> {
+    if value.get("Statistical").is_some() {
+        #[derive(serde::Deserialize)]
+        #[serde(deny_unknown_fields)]
+        struct Statistical {
+            #[serde(rename = "Statistical")]
+            field: crate::grammar::StatField,
+        }
+        let input: Statistical = serde_json::from_value(value.clone())
+            .map_err(|e| error(DiagnosticCode::Validation, e.to_string()))?;
+        Ok(NumericScaleInput::Statistical(input.field))
+    } else {
+        Ok(NumericScaleInput::Source(mapping(value)?))
+    }
 }
 fn mapping(value: &Value) -> ChartResult<Mapping> {
     match value {
@@ -230,32 +339,12 @@ fn group(value: Value) -> ChartResult<GroupValue> {
 fn groups(values: Vec<Value>) -> ChartResult<Vec<GroupValue>> {
     values.into_iter().map(group).collect()
 }
-/// Convert host color text or named byte channels without duplicating palette semantics.
-pub fn color(value: &Value) -> ChartResult<crate::scene::Color> {
-    if let Some(s) = value.as_str() {
-        let bytes = s
-            .strip_prefix('#')
-            .filter(|v| matches!(v.len(), 6 | 8) && v.is_ascii())
-            .ok_or_else(|| {
-                error(
-                    DiagnosticCode::Validation,
-                    "Color text must be #RRGGBB or #RRGGBBAA.",
-                )
-            })?;
-        let channel = |i| {
-            u8::from_str_radix(&bytes[i..i + 2], 16)
-                .map_err(|_| error(DiagnosticCode::Validation, "Invalid hexadecimal color."))
-        };
-        return Ok(crate::scene::Color {
-            red: channel(0)?,
-            green: channel(2)?,
-            blue: channel(4)?,
-            alpha: if bytes.len() == 8 { channel(6)? } else { 255 },
-        });
-    }
+/// Retain a parsed host color using the same descriptor contract as every authored input.
+pub fn color(value: &Value) -> ChartResult<crate::color::Paint> {
     serde_json::from_value(value.clone())
         .map_err(|e| error(DiagnosticCode::Validation, e.to_string()))
 }
+
 fn scale_value(value: &Value) -> ChartResult<crate::composition::ScaleValue> {
     match value {
         Value::String(v) => Ok(v.clone().into()),
@@ -278,9 +367,26 @@ impl Component {
             }};
         }
         Ok(Self(match name {
+            "source_expr" => Kind::Expression(Expr::Source(source_expr(a.mapping()?))),
+            "stat_expr" => Kind::Expression(Expr::Stat(crate::grammar::Expression::read(a.one()?))),
+            "bin_expr" => Kind::Expression(Expr::Bin(crate::grammar::Expression::read(a.one()?))),
+            "after_scale_expr" => Kind::Expression(Expr::Scale(after_scale_expr(a.one()?))),
+            "from_theme" => Kind::Expression(Expr::Scale(from_theme(a.one()?))),
+            "scale_aes" => empty!(ScaleAes, scale_aes),
             "aes" => empty!(Aes, aes),
             "points" => empty!(Layer, points),
             "line" => empty!(Layer, line),
+            "shape_line" => empty!(Layer, shape_line),
+            "shape_line_radial" => empty!(Layer, shape_line_radial),
+            "shape_area_radial" => empty!(Layer, shape_area_radial),
+            "shape_link" => Kind::Layer(shape_link(a.one()?)),
+            "shape_link_horizontal" => empty!(Layer, shape_link_horizontal),
+            "shape_link_vertical" => empty!(Layer, shape_link_vertical),
+            "shape_link_radial" => empty!(Layer, shape_link_radial),
+            "shape_symbol" => empty!(Layer, shape_symbol),
+            "shape_arc" => empty!(Layer, shape_arc),
+            "shape_pie" => empty!(Layer, shape_pie),
+            "shape_area" => empty!(Layer, shape_area),
             "area" => empty!(Layer, area),
             "ribbon" => empty!(Layer, ribbon),
             "bars" => empty!(Layer, bars),
@@ -306,6 +412,7 @@ impl Component {
             "stat_aes" => empty!(StatAes, stat_aes),
             "bin_aes" => empty!(BinAes, bin_aes),
             "stack" => Kind::Position(stack(groups(a.one()?)?)),
+            "shape_stack" => Kind::Position(shape_stack(groups(a.one()?)?)),
             "dodge" => Kind::Position(dodge(groups(a.one()?)?)),
             "jitter" => {
                 a.count(1)?;
@@ -319,9 +426,29 @@ impl Component {
             "scale_point" => empty!(Scale, scale_point),
             "scale_utc" => empty!(Scale, scale_utc),
             "scale_session" => Kind::Scale(scale_session(a.one()?)),
+            "scale_numeric" => Kind::Scale(scale_numeric(a.one()?)),
+            "scale_registered" => {
+                a.count(3)?;
+                Kind::Scale(scale_registered(
+                    a.at::<String>(0)?,
+                    crate::Revision::new(exact_u64(&a.0[1])?),
+                    a.0[2].clone(),
+                ))
+            }
+            "scale_band_d3" => Kind::Scale(scale_band_d3(a.one()?)),
+            "scale_point_d3" => Kind::Scale(scale_point_d3(a.one()?)),
+            "scale_calendar" => Kind::Scale(scale_calendar(a.one()?)),
+            "axis_guide" => {
+                let (name, source) = a.pair::<String, String>()?;
+                Kind::Guide(axis_guide(name, source))
+            }
             "x_axis" => empty!(Axis, x_axis),
             "y_axis" => empty!(Axis, y_axis),
             "color_discrete" => Kind::Color(color_discrete(a.string()?)),
+            "color_mapped" => {
+                a.count(2)?;
+                Kind::Color(color_mapped(a.at::<String>(0)?, a.at(1)?))
+            }
             "color_continuous" => {
                 a.count(3)?;
                 Kind::Color(color_continuous(a.at::<String>(0)?, a.at(1)?, a.at(2)?))

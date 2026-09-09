@@ -1,0 +1,79 @@
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 34.80s
+     Running unittests src/lib.rs (target/debug/deps/chart_core-a27a11c556a0c361)
+
+running 12 tests
+test navigation::tests::reversed_ranges_domain_clamp_region_and_invalid_inputs ... ok
+test navigation::tests::pointer_anchor_uses_log_and_symlog_coordinates ... ok
+test navigation::tests::sessions_zoom_by_active_time_and_reject_unknown_calendar_extent ... ok
+test navigation::tests::piecewise_numeric_zoom_retains_knots_and_pointer_anchor ... ok
+test navigation::tests::calendar_navigation_uses_piecewise_mapping_and_exact_timestamps ... ok
+test navigation::tests::timestamp_navigation_preserves_large_integer_identity ... ok
+test state::reducer::tests::disposal_is_terminal_even_when_cancellation_cannot_advance_a_revision ... ok
+test state::tests::state_and_viewport_revision_exhaustion_leave_state_unchanged ... ok
+test navigation::tests::category_windows_preserve_catalog_lookup_and_singletons ... ok
+test transaction::tests::exhausted_store_dataset_and_ordinal_counters_roll_back ... ok
+test inspection::index::tests::duplicate_x_signed_zeros_keep_frontmost_128_and_all_keyboard_identities ... ok
+test color::trig::tests::fixed_trigonometry_matches_pinned_v8_anchors ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/inspection.rs (target/debug/deps/inspection-a571310f9b8005aa)
+
+running 10 tests
+test empty_inspection_and_invalid_options_are_recoverable ... ok
+test keyboard_wrap_clear_idempotency_and_stale_stamp_are_atomic ... ok
+test rectangle_selection_intersects_bars_instead_of_testing_centers ... ok
+test histogram_hit_retains_aggregate_members_and_respects_containment ... ok
+test brushes_lasso_series_and_limits_preserve_vertex_provenance ... ok
+test nearest_x_groups_preserve_gap_targets_and_never_invent_interpolation ... ok
+test scatter_nearest_radius_clips_and_equal_distance_z_order ... ok
+test stable_keyboard_identity_survives_rebuild_and_removal_clears_it ... ok
+test candle_wicks_are_contained_and_keyboard_deduplicates_each_candle ... ok
+test dense_spatial_and_sorted_x_match_scan_without_source_work ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.66s
+
+     Running tests/path_lowering.rs (target/debug/deps/path_lowering-ef76ed0e665404dc)
+
+running 5 tests
+test every_numeric_argument_rejects_nonfinite_without_changing_the_builder ... ok
+test replay_and_scene_snapshots_preserve_supplied_metadata_without_vertex_targets ... ok
+test circular_lowering_obeys_coordinate_bound_at_multiple_scales_and_directions ... ok
+test transforms_preserve_arcs_or_lower_with_destination_bounds_and_budget ... ok
+test primary_path_snapshot_and_versions_preserve_legacy_contract ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/shape_cartesian.rs (target/debug/deps/shape_cartesian-28013c4732824a6b)
+
+running 6 tests
+test input_errors_and_resource_bounds_never_return_partial_owned_geometry ... ok
+test ordering_gaps_independent_boundaries_and_helper_inheritance_are_explicit ... ok
+test independent_monotone_and_natural_invariants_hold ... ok
+test native_accessors_and_custom_protocol_receive_exact_order_and_area_lifecycle ... ok
+test complete_cartesian_seed_matrix_matches_actual_generators ... ok
+test extended_controls_helpers_and_irregular_matrix_matches_reference ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests/shape_foundation.rs (target/debug/deps/shape_foundation-5c56fe710bccf645)
+
+running 2 tests
+test shape_inventory_accounts_for_methods_aliases_and_protocols ... ok
+test every_reference_shape_context_uses_one_checked_path_engine ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/shape_integration.rs (target/debug/deps/shape_integration-480edffbfbc7c496)
+
+running 6 tests
+test nonzero_holes_curved_strokes_caps_and_subdivision_limits_are_explicit ... ok
+test missing_secondary_coordinate_splits_the_paired_run_and_retains_source_keys ... ok
+test clipped_area_interiors_keep_source_focus_without_inventing_brush_vertices ... ok
+test general_area_has_independent_boundaries_and_no_lower_upper_order_constraint ... ok
+test singleton_curve_policy_remains_distinct_from_legacy_line_points ... ok
+test curves_project_before_generation_and_controls_are_never_source_targets ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

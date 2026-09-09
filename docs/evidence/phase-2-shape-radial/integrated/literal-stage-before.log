@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/scripts/bindings/shape_radial_interaction.py", line 72, in <module>
+    d=c.Data.columns({'category':['a','b','b']});p=c.plot(d).layer(c.shape_link_radial().stat(c.count().group('category')).after_stat(c.stat_aes().x(2.).y(100.)).shape_value('StartAngle',0.).shape_value('EndAngle',1.).shape_value('InnerRadius',10.).shape_value('OuterRadius',{'Statistical':'Count'})).build();f=output.request(p,options).prepare();targets=[group for group in f.scene()['targets']if group];assert len(targets)==2 and all(len(g)==2 and g[0]==g[1]for g in targets);assert [len(g[0]['Aggregate']['members'])for g in targets]==[1,2];f.dispose();p.dispose()
+                                                                                                                                                                                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/packages/python/finstack_chart/__init__.py", line 387, in prepare
+    def prepare(self): return FigureSnapshot(self._inner.prepare())
+                                             ^^^^^^^^^^^^^^^^^^^^^
+chart_python.ChartError: {"code":"CHART_SCHEMA_CONFLICT","severity":"Error","message":"Source color mappings require source rows.","correction":"Correct the declared mapping, operation, scope or budget before preparing again.","context":{"dataset":"6058","layer":"6062","field":null,"resource":null,"resource_revision":null,"stamp":null,"dataset_revision":"0","schema_version":"1","affected_rows":"0","row_samples":[]}}

@@ -323,6 +323,7 @@ enum Paint {
     Empty,
     Quad(gpui::PaintQuad),
     Path(Path<Pixels>, gpui::Rgba),
+    Paths(Vec<(Path<Pixels>, gpui::Rgba)>),
     Text(Box<ShapedLine>, gpui::Point<Pixels>),
 }
 struct Item {
@@ -430,6 +431,83 @@ impl NativeFrame {
                 };
                 let primitive = outlined.as_ref().unwrap_or(&item.primitive);
                 let paint = match primitive {
+                    Primitive::VectorPath {
+                        geometry,
+                        fill,
+                        stroke,
+                        dashes,
+                    }
+                    | Primitive::ShapePath {
+                        geometry,
+                        fill,
+                        stroke,
+                        dashes,
+                        ..
+                    } => {
+                        if !geometry.has_segments() {
+                            Paint::Empty
+                        } else {
+                            let tolerance = 0.0625 / f64::from(window.scale_factor());
+                            let commands =
+                                geometry.lower(tolerance, request.limits.max_path_commands)?;
+                            let dashed = if !dashes.is_empty() && stroke.is_some() {
+                                Some(geometry.dashed(
+                                    dashes,
+                                    tolerance,
+                                    request.limits.max_path_commands,
+                                )?)
+                            } else {
+                                None
+                            };
+                            let mut paths = vec![];
+                            for (color, width) in fill
+                                .iter()
+                                .map(|c| (*c, None))
+                                .chain(stroke.iter().map(|s| (s.color, Some(s.width))))
+                            {
+                                let mut path = match width {
+                                    Some(w) => PathBuilder::stroke(pixel(w)?).with_style(
+                                        gpui::PathStyle::Stroke(
+                                            gpui::StrokeOptions::default()
+                                                .with_line_width(f32::from(pixel(w)?))
+                                                .with_tolerance(tolerance as f32),
+                                        ),
+                                    ),
+                                    None => PathBuilder::fill().with_style(gpui::PathStyle::Fill(
+                                        gpui::FillOptions::default()
+                                            .with_fill_rule(gpui::FillRule::NonZero)
+                                            .with_tolerance(tolerance as f32),
+                                    )),
+                                };
+                                let at = |p| retained_point_at(p, bounds.origin, tolerance);
+                                let commands = if width.is_some() {
+                                    dashed.as_ref().unwrap_or(&commands)
+                                } else {
+                                    &commands
+                                };
+                                for c in commands {
+                                    match *c {
+                                        PathCommand::MoveTo(p) => path.move_to(at(p)?),
+                                        PathCommand::LineTo(p) => path.line_to(at(p)?),
+                                        PathCommand::QuadraticTo(a, b) => {
+                                            path.curve_to(at(b)?, at(a)?)
+                                        }
+                                        PathCommand::CubicTo(a, b, c) => {
+                                            path.cubic_bezier_to(at(c)?, at(a)?, at(b)?)
+                                        }
+                                        PathCommand::Close => path.close(),
+                                    }
+                                }
+                                paths.push((
+                                    path.build().map_err(|e| {
+                                        error(DiagnosticCode::Validation, e.to_string())
+                                    })?,
+                                    native_color(color),
+                                ));
+                            }
+                            Paint::Paths(paths)
+                        }
+                    }
                     Primitive::NativePaint {
                         bounds: r,
                         painter,
@@ -612,6 +690,11 @@ impl NativeFrame {
                                 Paint::Empty => {}
                                 Paint::Quad(q) => window.paint_quad(q.clone()),
                                 Paint::Path(p, c) => window.paint_path(p.clone(), *c),
+                                Paint::Paths(paths) => {
+                                    for (p, c) in paths {
+                                        window.paint_path(p.clone(), *c);
+                                    }
+                                }
                                 Paint::Text(line, p) => line
                                     .paint(
                                         *p,
@@ -633,6 +716,26 @@ impl NativeFrame {
             },
         )
     }
+}
+
+fn retained_point_at(
+    p: Point,
+    offset: gpui::Point<Pixels>,
+    tolerance: f64,
+) -> ChartResult<gpui::Point<Pixels>> {
+    let result = point_at(p, offset)?;
+    for (value, rounded) in [
+        (p.x() + f64::from(f32::from(offset.x)), result.x),
+        (p.y() + f64::from(f32::from(offset.y)), result.y),
+    ] {
+        if (value - f64::from(f32::from(rounded))).abs() > tolerance / std::f64::consts::SQRT_2 {
+            return Err(error(
+                DiagnosticCode::PrecisionLoss,
+                "Retained path exceeds its physical pixel precision.",
+            ));
+        }
+    }
+    Ok(result)
 }
 
 fn self_font_missing(font: &NativeFont, descriptor: &ResourceDescriptor) -> bool {

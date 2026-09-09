@@ -21,9 +21,16 @@ const native = new Proxy(rawNative,{get(target,key){
   });
 }});
 function encode(value) {
-  return JSON.stringify(value, (_, v) => {
+  const channels = new WeakSet();
+  return JSON.stringify(value, function(_, v) {
+    if (v instanceof ColorValue) {
+      const descriptor = decode(v.to_json());
+      channels.add(descriptor.value.channels);
+      return descriptor;
+    }
+    if (v && typeof v === 'object' && v.version === 1 && ['Rgb','Hsl','Lab','Hcl','Cubehelix'].includes(v.value?.space) && v.value.channels && typeof v.value.channels === 'object') channels.add(v.value.channels);
     if (typeof v === 'bigint') return v.toString();
-    if (typeof v === 'number' && (!Number.isFinite(v) || (Number.isInteger(v) && !Number.isSafeInteger(v)))) throw new RangeError('Scalar options require finite, safe Numbers or exact BigInt.');
+    if (typeof v === 'number' && (!Number.isFinite(v) || (!channels.has(this) && Number.isInteger(v) && !Number.isSafeInteger(v)))) throw new RangeError('Scalar options require finite, safe Numbers or exact BigInt.');
     return v;
   });
 }
@@ -50,6 +57,41 @@ class Owned {
   dispose() { this._inner.dispose(); }
   free() { this._inner.free(); }
 }
+class ColorValue extends Owned {
+  static from_json(value){return new ColorValue(native._Color.from_json(value));}
+  to_json(){return this._inner.to_json();}
+  value(){return decode(this._inner.value_json());}
+  space(){return this.value().space;}
+  channels(){return Object.fromEntries(Object.keys(this.value().channels).map(name=>[name,this.channel(name)]));}
+  channel(name){return this._inner.channel(name);}
+  with_channel(name,value){if(typeof value!=='number')throw new TypeError('Color channels require numbers.');return new ColorValue(this._inner.with_channel(name,value));}
+  copy(channels={}){
+    let result=new ColorValue(this._inner.copy());
+    try {for(const [name,value]of Object.entries(channels)){const next=result.with_channel(name,value);result.free();result=next;}return result;}
+    catch(error){result.free();throw error;}
+  }
+  convert(space){return new ColorValue(this._inner.convert(space));}
+  rgb(){return this.convert('Rgb');}
+  brighter(k){return new ColorValue(this._inner.brighter(k));}
+  darker(k){return new ColorValue(this._inner.darker(k));}
+  displayable(){return this._inner.displayable();}
+  clamp(){return new ColorValue(this._inner.clamp());}
+  format_hex(){return this._inner.format('formatHex');}
+  format_hex8(){return this._inner.format('formatHex8');}
+  format_rgb(){return this._inner.format('formatRgb');}
+  format_hsl(){return this._inner.format('formatHsl');}
+  hex(){return this.format_hex();}
+  toString(){return this._inner.format('toString');}
+}
+function color(css){const value=native._Color.parse(css);return value==null?null:new ColorValue(value);}
+function colorConstructor(name){return (...args)=>{
+  if(name!=='gray'&&args.length===1){
+    if(args[0] instanceof ColorValue)return args[0].convert(name);
+    if(typeof args[0]==='string')return new ColorValue(native._Color.from_css(args[0],name));
+  }
+  if(args.some(v=>typeof v!=='number'))throw new TypeError('Color channels require numbers.');
+  return new ColorValue(new native._Color(name,Float64Array.from(args)));
+};}
 class Field extends Owned {}
 class Column extends Owned {
   nullable(v=true) {if(typeof v!=='boolean')throw new TypeError('Nullable requires a boolean.');return new Column(this._inner.nullable(v));}
@@ -125,11 +167,150 @@ class Component extends Owned {
     else if(name==='layer'&&args.length===2)next=t._inner.theme_layer(...args.map(v=>v._inner));
     else if(name==='candle_volume')next=t._inner.candle_volume(...args.map(v=>v._inner));
     else if(name==='axis'&&args.length===2)next=t._inner.link_axis(...args.map(v=>v._inner));
+    else if(name==='symbol_types'&&args.length===3&&args[0] instanceof Field)next=t._inner.symbol_types_field(args[0]._inner,encode(args[1]),encode(args[2]));
+    else if(name==='shape_value'&&args.length===2){const [target,source]=args;if(source instanceof Field)next=t._inner.shape_value_field(encode(target),source._inner);else if(source instanceof Component)next=t._inner.shape_value_expression(encode(target),source._inner);else next=t._inner.set(name,shapeEncode(args));}
+    else if(['shape_protocol','arc_parameters','radial_parameters','pie_angles','symbol_size','symbol_size_guide'].includes(name))next=t._inner.set(name,shapeEncode(args));
+    else if(name==='numeric_scale'&&args.length===3){const [target,source,scale]=args,descriptor=scale instanceof module.exports.StandaloneScale?scale.mapped():scale;if(source instanceof Field)next=t._inner.numeric_scale_field(encode(target),source._inner,encode(descriptor));else if(source instanceof Component)next=t._inner.numeric_scale_expression(encode(target),source._inner,encode(descriptor));else next=t._inner.set(name,encode([target,source,descriptor]));}
     else next=t._inner.set(name,encode(args));
     return new t.constructor(next);
   });}
 }
+class Path extends Owned {
+  constructor(digits, {limits}={}) {
+    if(digits!==undefined && digits!==null && typeof digits!=='number')throw new TypeError('Digits require a number or null.');
+    super(new native._Path(digits,limits===undefined?undefined:encode(limits)));
+  }
+  static _wrap(inner) {const result=new Owned(inner);Object.setPrototypeOf(result,Path.prototype);return result;}
+  static from_json(request) {return Path._wrap(native._Path.from_json(request));}
+  copy() {return Path._wrap(this._inner.copy());}
+  _draw(method,values,anticlockwise=false) {
+    if(values.some(v=>typeof v!=='number'))throw new TypeError('Path coordinates require numbers.');
+    if(typeof anticlockwise!=='boolean')throw new TypeError('Arc direction requires a boolean.');
+    this._inner.draw(method,Float64Array.from(values),anticlockwise);return this;
+  }
+  move_to(x,y){return this._draw('moveTo',[x,y]);}
+  line_to(x,y){return this._draw('lineTo',[x,y]);}
+  quadratic_curve_to(cx,cy,x,y){return this._draw('quadraticCurveTo',[cx,cy,x,y]);}
+  bezier_curve_to(cx1,cy1,cx2,cy2,x,y){return this._draw('bezierCurveTo',[cx1,cy1,cx2,cy2,x,y]);}
+  arc_to(x1,y1,x2,y2,r){return this._draw('arcTo',[x1,y1,x2,y2,r]);}
+  arc(x,y,r,a0,a1,anticlockwise=false){return this._draw('arc',[x,y,r,a0,a1],anticlockwise);}
+  rect(x,y,w,h){return this._draw('rect',[x,y,w,h]);}
+  close_path(){return this._draw('closePath',[]);}
+  apply_batch(operations){this._inner.batch(JSON.stringify(operations,(_,v)=>{
+    if(typeof v==='number'&&!Number.isFinite(v))throw new RangeError('Batch coordinates must be finite.');return v;
+  }));return this;}
+  to_svg(){return this._inner.to_svg();}
+  toString(){return this.to_svg();}
+  result(){return decode(this._inner.result_json());}
+  replay(sink){for(const command of decode(this._inner.replay_json()))sink(command);}
+}
+class ShapeRegistry extends Owned {
+  constructor(){super(new native._ShapeRegistry());}
+  static _wrap(inner){const result=new Owned(inner);Object.setPrototypeOf(result,this.prototype);return result;}
+  static example(){
+    if(typeof native._ShapeRegistry.example!=='function')throw new Error('The extension-proof build feature is required for example registrations.');
+    return ShapeRegistry._wrap(native._ShapeRegistry.example());
+  }
+  copy(){return ShapeRegistry._wrap(this._inner.copy());}
+  selection(selection,family){return decode(this._inner.selection_json(shapeEncode(selection),encode(family)));}
+}
+class ShapeLine extends Owned {
+  constructor(config={}) {super(new native._ShapeLine(encode(config)));}
+  static _wrap(inner){const result=new Owned(inner);Object.setPrototypeOf(result,this.prototype);return result;}
+  copy(){return this.constructor._wrap(this._inner.copy());}
+  config(){return decode(this._inner.config_json());}
+  generate(rows){return Path._wrap(this._inner.generate(encode(rows)));}
+  generateRegistered(data,registry,selection){return Path._wrap(this._inner.generate_registered(shapeEncode(data),registry._inner,shapeEncode(selection)));}
+}
+class ShapeArea extends Owned {
+  constructor(config={}) {super(new native._ShapeArea(encode(config)));}
+  static _wrap(inner){const result=new Owned(inner);Object.setPrototypeOf(result,this.prototype);return result;}
+  copy(){return ShapeArea._wrap(this._inner.copy());}
+  config(){return decode(this._inner.config_json());}
+  generate(rows){return Path._wrap(this._inner.generate(encode(rows)));}
+  boundary(which){return ShapeLine._wrap(this._inner.boundary(encode(which)));}
+  generateRegistered(data,registry,selection){return Path._wrap(this._inner.generate_registered(shapeEncode(data),registry._inner,shapeEncode(selection)));}
+}
+
+class RadialGenerator extends Owned {
+  static _wrap(inner){const result=new Owned(inner);Object.setPrototypeOf(result,this.prototype);return result;}
+  copy(){return this.constructor._wrap(this._inner.copy());}
+  config(){return decode(this._inner.config_json());}
+  generate(data){return Path._wrap(this._inner.generate(encode(data)));}
+}
+class ShapeLineRadial extends RadialGenerator {
+  constructor(config={}){super(new native._ShapeLineRadial(encode(config)));}
+  generateRegistered(data,registry,selection){return Path._wrap(this._inner.generate_registered(shapeEncode(data),registry._inner,shapeEncode(selection)));}
+}
+class ShapeAreaRadial extends RadialGenerator {
+  constructor(config={}){super(new native._ShapeAreaRadial(encode(config)));}
+  boundary(which){return ShapeLineRadial._wrap(this._inner.boundary(encode(which)));}
+  generateRegistered(data,registry,selection){return Path._wrap(this._inner.generate_registered(shapeEncode(data),registry._inner,shapeEncode(selection)));}
+}
+class ShapeLink extends RadialGenerator {
+  constructor(config={}){super(new native._ShapeLink(encode(config)));}
+  generateRegistered(data,registry,selection){return Path._wrap(this._inner.generate_registered(shapeEncode(data),registry._inner,shapeEncode(selection)));}
+}
+class ShapeLinkRadial extends RadialGenerator {
+  constructor(config={}){super(new native._ShapeLinkRadial(encode(config)));}
+}
+function point_radial(angle,radius){return Array.from(native._point_radial(angle,radius));}
+
+function shapeEncode(value) {
+  return JSON.stringify(value,(_,v)=>{
+    if(typeof v==='function'||typeof v==='symbol')throw new TypeError('Shape descriptors cannot serialize executable callbacks or symbols.');
+    if(typeof v==='bigint')return v.toString();
+    if(typeof v==='number'&&!Number.isFinite(v))throw new RangeError('Shape values must be finite.');
+    return v;
+  });
+}
+class ShapeSymbol extends Owned {
+  constructor(config={}){super(new native._ShapeSymbol(shapeEncode(config)));}
+  static _wrap(inner){const result=new Owned(inner);Object.setPrototypeOf(result,this.prototype);return result;}
+  copy(){return ShapeSymbol._wrap(this._inner.copy());}
+  config(){return decode(this._inner.config_json());}
+  generate(){return Path._wrap(this._inner.generate());}
+  static palettes(){return Object.freeze(decode(native._ShapeSymbol.palettes_json()).map(x=>Object.freeze(x)));}
+  generateRegistered(registry,selection){return Path._wrap(this._inner.generate_registered(registry._inner,shapeEncode(selection)));}
+}
+class ShapeArc extends Owned {
+  constructor(config={}) {super(new native._ShapeArc(shapeEncode(config)));}
+  static _wrap(inner){const result=new Owned(inner);Object.setPrototypeOf(result,this.prototype);return result;}
+  copy(){return ShapeArc._wrap(this._inner.copy());}
+  config(){return decode(this._inner.config_json());}
+  generate(datum={}){return Path._wrap(this._inner.generate(shapeEncode(datum)));}
+  centroid(datum={}){return decode(this._inner.centroid_json(shapeEncode(datum)));}
+}
+class ShapePie extends Owned {
+  constructor(config={}) {super(new native._ShapePie(shapeEncode(config)));}
+  static _wrap(inner){const result=new Owned(inner);Object.setPrototypeOf(result,this.prototype);return result;}
+  copy(){return ShapePie._wrap(this._inner.copy());}
+  config(){return decode(this._inner.config_json());}
+  layout(data,values=data){return decode(this._inner.layout_json(shapeEncode(data),shapeEncode(Array.from(values))));}
+  layoutRegistered(data,values,registry,selection){return decode(this._inner.layout_registered_json(shapeEncode(data),shapeEncode(Array.from(values)),registry._inner,shapeEncode(selection)));}
+}
+
+class ShapeStack extends Owned {
+  constructor(config={}) {super(new native._ShapeStack(shapeEncode(config)));}
+  static _wrap(inner){const result=new Owned(inner);Object.setPrototypeOf(result,this.prototype);return result;}
+  copy(){return ShapeStack._wrap(this._inner.copy());}
+  config(){return decode(this._inner.config_json());}
+  layout(data,values=data){const result=decode(this._inner.layout_json(shapeEncode(data),shapeEncode(Array.from(values,row=>Array.from(row)))));for(const series of result)for(const p of series.points){p.y0=interpolationApi._valueCodec.unnumber(p.y0);p.y1=interpolationApi._valueCodec.unnumber(p.y1);}return result;}
+  layoutRegistered(data,values,registry,order=null,offset=null){
+    const result=decode(this._inner.layout_registered_json(shapeEncode(data),shapeEncode(Array.from(values,row=>Array.from(row))),registry._inner,shapeEncode(order),shapeEncode(offset)));
+    for(const series of result)for(const p of series.points){p.y0=interpolationApi._valueCodec.unnumber(p.y0);p.y1=interpolationApi._valueCodec.unnumber(p.y1);}return result;
+  }
+}
+
+const path=()=>new Path();
+const path_round=(digits=3)=>new Path(digits);
+class VectorPath extends Component {
+  transform(matrix,maxError=0.01,maxCommands=1000000){return new VectorPath(this._inner.set('transform',encode([Array.from(matrix),maxError,maxCommands])));}
+}
+const vector_path=(id,path)=>new VectorPath(path._inner.annotation(id));
 class PlotBuilder extends Owned {
+  with_registry(registry){return this.with_shape_registry(registry);}
+  with_shape_registry(registry){return new this.constructor(this._inner.with_shape_registry(registry._inner));}
   constructor(inner){super(inner);return fluent(this,(t,name,args)=>{
     let next;
     if(args.length===1&&args[0] instanceof Component)next=t._inner.with_component(name,args[0]._inner);
@@ -146,7 +327,7 @@ class Plot extends Owned {
   edit(){return new PlotEdit(this._inner.edit());}
   chart(){return new Chart(this);}
   to_json(){return this._inner.to_json();}
-  static from_json(value){return new Plot(native._Plot.from_json(value));}
+  static from_json(value,registry){return new Plot(registry===undefined?native._Plot.from_json(value):native._Plot.from_json_with_registry(value,registry._inner));}
   static _from_example_json(value){return new Plot(native._Plot.from_json_with_example_extensions(value));}
 }
 class ExportOptions extends Owned {
@@ -248,14 +429,29 @@ class Chart extends Owned {
   link_capture(component,event){return decode(this._inner.link_capture(component._inner,encode(event)));}
   link_resolve(component,message){return decode(this._inner.link_resolve(component._inner,encode(message)));}
 }
-const families = {"Aes": "aes", "Layer": "points line area ribbon bars volume ohlc rule rectangle cells histogram", "Stat": "identity_stat bin count summary fit custom_stat", "StatAes": "stat_aes", "BinAes": "bin_aes", "Position": "stack dodge jitter", "Filter": "filter", "Transform": "transform", "Scale": "scale_linear scale_log scale_symlog scale_band scale_point scale_utc scale_session", "Axis": "x_axis y_axis", "ColorScale": "color_discrete color_continuous", "Legend": "legend", "Facet": "facet_wrap facet_grid", "Style": "style", "Theme": "theme", "TextStyle": "text_style", "TextRun": "text_run", "RichText": "rich_text", "Title": "title", "Subtitle": "subtitle", "Caption": "caption", "SourceNote": "source_note", "Footnote": "footnote", "Labels": "labels", "Callout": "callout", "PanelLetter": "panel_letter", "Inset": "inset", "NumberFormat": "number_format", "LayoutOptions": "layout_options", "RenderOptions": "render_options", "StreamOptions": "stream_options", "AnnotationEdit": "annotation_edit", "Link": "link"};
-module.exports={ChartError,LegacyChart:native.Chart,Editor,Column,Data,Field,Component,PlotBuilder,PlotEdit,Plot,Chart,Output,ExportOptions,FigureRequest,FigureSnapshot,ExportQueue,ExportJob,Updates,Transaction,column,categorical,timestamps,plot,export_options};
+const families = {"SourceExpression":"source_expr","StatExpression":"stat_expr","BinExpression":"bin_expr","ScaleExpression":"after_scale_expr from_theme","ScaleAes":"scale_aes","Aes": "aes", "Layer": "points line area ribbon shape_line shape_area shape_line_radial shape_area_radial shape_link shape_link_horizontal shape_link_vertical shape_link_radial shape_arc shape_pie shape_symbol bars volume ohlc rule rectangle cells histogram", "Stat": "identity_stat bin count summary fit custom_stat", "StatAes": "stat_aes", "BinAes": "bin_aes", "Position": "stack shape_stack dodge jitter", "Filter": "filter", "Transform": "transform", "Scale": "scale_linear scale_log scale_symlog scale_band scale_point scale_utc scale_session", "Axis": "x_axis y_axis", "Guide": "axis_guide", "ColorScale": "color_discrete color_continuous", "Legend": "legend", "Facet": "facet_wrap facet_grid", "Style": "style", "Theme": "theme", "TextStyle": "text_style", "TextRun": "text_run", "RichText": "rich_text", "Title": "title", "Subtitle": "subtitle", "Caption": "caption", "SourceNote": "source_note", "Footnote": "footnote", "Labels": "labels", "Callout": "callout", "PanelLetter": "panel_letter", "Inset": "inset", "NumberFormat": "number_format", "LayoutOptions": "layout_options", "RenderOptions": "render_options", "StreamOptions": "stream_options", "AnnotationEdit": "annotation_edit", "Link": "link"};
+module.exports={ShapeLineRadial,ShapeAreaRadial,ShapeLink,ShapeLinkRadial,point_radial,pointRadial:point_radial,ShapeStack,ShapeSymbol,ShapeRegistry,ShapeLine,ShapeArea,ShapeArc,ShapePie,ColorValue,color,ChartError,LegacyChart:native.Chart,Path,VectorPath,path,path_round,vector_path,Editor,Column,Data,Field,Component,PlotBuilder,PlotEdit,Plot,Chart,Output,ExportOptions,FigureRequest,FigureSnapshot,ExportQueue,ExportJob,Updates,Transaction,column,categorical,timestamps,plot,export_options};
 for(const [family,names] of Object.entries(families)) {
   const Type=class extends Component {};
   Object.defineProperty(Type,'name',{value:family});
   module.exports[family]=Type;
-  for(const name of names.split(' '))module.exports[name]=name==='transform'?(name,stat)=>new Type(native._Component.transform(name,stat._inner)):(...args)=>new Type(new native._Component(name,encode(args)));
+  for(const name of names.split(' '))module.exports[name]=name==='transform'?(name,stat)=>new Type(native._Component.transform(name,stat._inner)):(...args)=>new Type(name==='filter'&&args.length===1&&args[0] instanceof Component ? new native._Component('filter','[0]').with_component('expression',args[0]._inner) : name==='source_expr'&&args.length===1&&args[0] instanceof Field ? native._Component.source_expression(args[0]._inner) : new native._Component(name,encode(args)));
 }
+
+for(const name of ['rgb','hsl','lab','gray','hcl','lch','cubehelix'])module.exports[name]=colorConstructor(name);
+const interpolationApi=require('./interpolation.cjs')(native,Owned,ColorValue,count);
+Object.assign(module.exports,interpolationApi);
+Object.assign(module.exports,require('./scales.cjs')(native,Owned,interpolationApi._valueCodec,interpolationApi.Interpolator));
+function scalePayload(spec,kind){if(spec instanceof module.exports.StandaloneScale){const d=spec.spec();if(!Object.hasOwn(d,kind))throw new TypeError(`This chart constructor requires a ${kind} scale descriptor.`);return d[kind];}return spec;}
+module.exports.scale_numeric=spec=>new module.exports.Scale(new native._Component('scale_numeric',encode([scalePayload(spec,'Numeric')])));
+module.exports.scale_registered=(name,version,parameters)=>new module.exports.Scale(new native._Component('scale_registered',encode([name,version,parameters])));
+module.exports.scale_calendar=spec=>new module.exports.Scale(new native._Component('scale_calendar',encode([scalePayload(spec,'Time')])));
+module.exports.scale_band_d3=spec=>new module.exports.Scale(new native._Component('scale_band_d3',encode([spec])));
+module.exports.scale_point_d3=spec=>new module.exports.Scale(new native._Component('scale_point_d3',encode([spec])));
+module.exports.color_mapped=(name,scale,training='Authored')=>{if(!(scale instanceof module.exports.StandaloneScale)&&training!=='Authored')throw new TypeError('Set training on the supplied mapped descriptor.');return new module.exports.ColorScale(new native._Component('color_mapped',encode([name,scale instanceof module.exports.StandaloneScale?scale.mapped(training):scale])));};
+
+// One registry identity; retain the established shape-specific spelling.
+module.exports.ExtensionRegistry=ShapeRegistry;
 
 // Host-native camelCase aliases retain the documented snake_case compatibility spellings.
 const camel = name => name.replace(/_([a-z])/g,(_,c)=>c.toUpperCase());

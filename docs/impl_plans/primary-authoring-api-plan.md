@@ -557,6 +557,13 @@ values, mutation/copies, disposal, Python detachment and WASM memory growth. Val
 stubs/declarations against runtime behavior. No wheels, notebook/browser viewer or new
 distribution product is implied.
 
+For parity handoffs, reconcile the live Python/WASM registrations and package wrappers
+before adding syntax. Each semantic owner extends those adapters and their public
+exports/declarations, with actual primary chart and applicable standalone runtime
+proofs in the same package. Rust `plot::host`/export dispatch coverage is infrastructure
+evidence only. Keep legacy-envelope compatibility tests alongside host-native usage;
+AP-07 remains responsible for shared conversions, exact values and diagnostics.
+
 ### AP-08 — Migrate consumers and make the primary API the documented default
 
 Prerequisite: AP-07. Owns gallery/recipes, public docs, export visibility, changelog and
@@ -618,7 +625,17 @@ longer owns an alternative late authoring façade. Do not make a semantic kernel
 on G-AUTH or make G-PARITY and G-AUTH depend on each other. Capability acceptance feeds
 both gates; the refactored release requires both when parity is in its scope.
 
-Implementation begins with AP-00 under the owner's completed-baseline assumption.
+The [Phase 2 API reconciliation](phase-2-parity-implementation-plan.md#41-integration-through-the-current-primary-api)
+routes new work through the delivered Data/Plot/Chart/Output owners and AP-00 register.
+GG-01 reconciles the existing shared legend painter's remaining acceptance; GG-02
+owns alternate-profile policy propagation through execution/wire/capture; WP-AX01
+owns the scale/guide split across primary handles, names, bindings and navigation.
+AP owners integrate those contracts without recreating their semantic kernels or
+charging for already delivered authoring foundations. These are interface handoffs,
+not new dependencies between cumulative gates.
+
+AP-00 establishes the inventory under the owner's completed-baseline assumption;
+resume the next assigned incomplete slice from its register and ledger evidence.
 Confirm the supplied interface/revision inventory once; if an assumed capability is
 absent, record that discrepancy and continue independent authoring work without
 silently rebuilding or closing the original package. Shipping a refactor requalifies

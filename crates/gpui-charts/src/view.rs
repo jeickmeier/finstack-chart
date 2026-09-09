@@ -672,8 +672,8 @@ impl Render for ChartView {
             .theme
             .as_ref()
             .and_then(|t| t.resolve(&self.request.host_theme).ok())
-            .unwrap_or_else(|| self.request.host_theme.clone());
-        tokens.overlay(&self.request.output_theme);
+            .unwrap_or_else(|| self.request.host_theme.resolve());
+        tokens.overlay(&self.request.output_theme.resolve());
         let focus_color = chart_core::theme::paint_color(
             tokens.focus.unwrap_or(chart_core::theme::rgb(59, 130, 196)),
             tokens.color_mode,

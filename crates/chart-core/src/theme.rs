@@ -46,29 +46,33 @@ pub enum Symbol {
     Triangle,
 }
 /// Presentation overrides; absence inherits the previous cascade level.
-#[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq)]
-#[serde(default, deny_unknown_fields)]
-pub struct ThemePatch {
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[serde(
+    default,
+    deny_unknown_fields,
+    bound(deserialize = "P: Deserialize<'de>")
+)]
+pub struct ThemePatch<P = Color> {
     /// Explicit final color conversion policy, including mapped paints and legend swatches.
     pub color_mode: Option<ColorMode>,
     /// Optional full-panel gradient, replacing the solid panel fill.
-    pub gradient: Option<crate::scene::LinearGradient>,
+    pub gradient: Option<crate::scene::LinearGradient<P>>,
     /// Figure background.
-    pub background: Option<Color>,
+    pub background: Option<P>,
     /// Panel fill.
-    pub panel: Option<Color>,
+    pub panel: Option<P>,
     /// Text/guide foreground.
-    pub foreground: Option<Color>,
+    pub foreground: Option<P>,
     /// Grid color (alpha zero disables grids).
-    pub grid: Option<Color>,
+    pub grid: Option<P>,
     /// Explicit constant mark override; mapped colors remain authoritative.
-    pub mark: Option<Color>,
+    pub mark: Option<P>,
     /// Annotation text/callout color.
-    pub annotation: Option<Color>,
+    pub annotation: Option<P>,
     /// Visible focus accent.
-    pub focus: Option<Color>,
+    pub focus: Option<P>,
     /// Selection accent.
-    pub selection: Option<Color>,
+    pub selection: Option<P>,
     /// Label font size in destination units.
     pub font_size: Option<f64>,
     /// Figure/panel padding.
@@ -84,7 +88,7 @@ pub struct ThemePatch {
     /// Point symbol; size continues to come from the layer encoding.
     pub symbol: Option<Symbol>,
 }
-impl ThemePatch {
+impl<P: Copy> ThemePatch<P> {
     /// Overlay explicitly present values without string heuristics.
     pub fn overlay(&mut self, next: &Self) {
         macro_rules! copy {($($field:ident),*)=>{$(if next.$field.is_some(){self.$field=next.$field;})*};}
@@ -193,29 +197,36 @@ impl NamedTheme {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct ThemeSpec {
+    /// Version-two geometry defaults available to theme-derived expressions.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub geometry: Option<GeometryTheme<crate::color::Paint>>,
     /// Supported version is one.
     pub version: u32,
     /// Optional named theme; absent preserves the host/default cascade.
     pub named: Option<NamedTheme>,
     /// Plot-level overrides.
     #[serde(default)]
-    pub plot: ThemePatch,
+    pub plot: ThemePatch<crate::color::Paint>,
     /// Layer overrides applied after plot tokens and before interaction/output patches.
     #[serde(default)]
-    pub layers: BTreeMap<LayerId, ThemePatch>,
+    pub layers: BTreeMap<LayerId, ThemePatch<crate::color::Paint>>,
 }
 impl ThemeSpec {
     /// Select a supplied theme.
     pub fn named(named: NamedTheme) -> Self {
         Self {
             version: 1,
+            geometry: None,
             named: Some(named),
             plot: ThemePatch::default(),
             layers: BTreeMap::new(),
         }
     }
     /// Defaults -> host -> named -> plot; layer/interaction/output resolve at presentation.
-    pub fn resolve(&self, host: &ThemePatch) -> ChartResult<ThemePatch> {
+    pub fn resolve<P: Copy + Into<crate::color::Paint>>(
+        &self,
+        host: &ThemePatch<P>,
+    ) -> ChartResult<ThemePatch> {
         if self.layers.len() > 256 {
             return Err(Diagnostic::error(
                 DiagnosticCode::ResourceLimit,
@@ -223,12 +234,15 @@ impl ThemeSpec {
                 "Use a bounded chart theme.",
             ));
         }
-        if self.version != 1 {
+        if self.version != if self.geometry.is_some() { 2 } else { 1 } {
             return Err(Diagnostic::error(
                 DiagnosticCode::UnsupportedCapability,
                 "Unsupported theme version.",
-                "Use theme version one.",
+                "Use version two for geometry defaults and version one for legacy themes.",
             ));
+        }
+        if let Some(geometry) = &self.geometry {
+            geometry.validate()?;
         }
         host.validate()?;
         self.plot.validate()?;
@@ -236,11 +250,11 @@ impl ThemeSpec {
             layer.validate()?;
         }
         let mut t = ThemePatch::default();
-        t.overlay(host);
+        t.overlay(&host.clone().map_colors(|p| p.into().resolve()));
         if let Some(n) = self.named {
             t.overlay(&n.tokens());
         }
-        t.overlay(&self.plot);
+        t.overlay(&self.plot.resolve());
         Ok(t)
     }
 }
@@ -257,5 +271,151 @@ pub fn paint_color(c: Color, mode: Option<ColorMode>) -> Color {
         green: y,
         blue: y,
         alpha: c.alpha,
+    }
+}
+
+/// Geometry theme values corresponding to ggplot2 4.0.3 element_geom defaults.
+/// Physical size conversion belongs to the aesthetic and destination contracts.
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[serde(deny_unknown_fields)]
+pub struct GeometryTheme<P = Color> {
+    /// Foreground geometry color.
+    pub ink: P,
+    /// Background geometry color.
+    pub paper: P,
+    /// Accent geometry color.
+    pub accent: P,
+    /// Positive semantic point size.
+    pub point_size: f64,
+    /// Positive semantic line width.
+    pub line_width: f64,
+}
+impl<P: From<Color>> Default for GeometryTheme<P> {
+    fn default() -> Self {
+        Self {
+            ink: rgb(0, 0, 0).into(),
+            paper: rgb(255, 255, 255).into(),
+            accent: rgb(51, 102, 255).into(),
+            point_size: 1.5,
+            line_width: 0.5,
+        }
+    }
+}
+impl<P> GeometryTheme<P> {
+    /// Reject invalid size tokens before evaluating any geometry expression.
+    pub fn validate(&self) -> ChartResult<()> {
+        if !self.point_size.is_finite()
+            || self.point_size <= 0.
+            || !self.line_width.is_finite()
+            || self.line_width <= 0.
+        {
+            return Err(Diagnostic::error(
+                DiagnosticCode::NumericalDomain,
+                "Geometry theme sizes must be finite and positive.",
+                "Supply positive point size and line width.",
+            ));
+        }
+        Ok(())
+    }
+    /// Transform colors without changing semantic size tokens.
+    pub fn map_colors<Q>(self, mut map: impl FnMut(P) -> Q) -> GeometryTheme<Q> {
+        GeometryTheme {
+            ink: map(self.ink),
+            paper: map(self.paper),
+            accent: map(self.accent),
+            point_size: self.point_size,
+            line_width: self.line_width,
+        }
+    }
+}
+impl GeometryTheme<crate::color::Paint> {
+    /// Prepare geometry colors for post-scale expression reads.
+    pub fn resolve(&self) -> GeometryTheme {
+        self.clone().map_colors(crate::color::Paint::resolve)
+    }
+}
+
+impl<P> Default for ThemePatch<P> {
+    fn default() -> Self {
+        Self {
+            gradient: None,
+            background: None,
+            panel: None,
+            foreground: None,
+            grid: None,
+            mark: None,
+            annotation: None,
+            focus: None,
+            selection: None,
+            color_mode: None,
+            font_size: None,
+            padding: None,
+            gap: None,
+            tick_length: None,
+            stroke_width: None,
+            dashes: None,
+            symbol: None,
+        }
+    }
+}
+impl<P> ThemePatch<P> {
+    /// Transform only color inputs, preserving all cascade and typography fields.
+    pub fn map_colors<Q>(self, mut map: impl FnMut(P) -> Q) -> ThemePatch<Q> {
+        ThemePatch {
+            gradient: self.gradient.map(|g| g.map_colors(&mut map)),
+            background: self.background.map(&mut map),
+            panel: self.panel.map(&mut map),
+            foreground: self.foreground.map(&mut map),
+            grid: self.grid.map(&mut map),
+            mark: self.mark.map(&mut map),
+            annotation: self.annotation.map(&mut map),
+            focus: self.focus.map(&mut map),
+            selection: self.selection.map(&mut map),
+            color_mode: self.color_mode,
+            font_size: self.font_size,
+            padding: self.padding,
+            gap: self.gap,
+            tick_length: self.tick_length,
+            stroke_width: self.stroke_width,
+            dashes: self.dashes,
+            symbol: self.symbol,
+        }
+    }
+}
+impl ThemePatch<crate::color::Paint> {
+    /// Prepare all constant colors before iterating scene items.
+    pub fn resolve(&self) -> ThemePatch {
+        self.clone().map_colors(crate::color::Paint::resolve)
+    }
+    /// Whether this patch retains any floating input.
+    pub fn has_floating(&self) -> bool {
+        [
+            self.background,
+            self.panel,
+            self.foreground,
+            self.grid,
+            self.mark,
+            self.annotation,
+            self.focus,
+            self.selection,
+        ]
+        .into_iter()
+        .flatten()
+        .any(crate::color::Paint::is_floating)
+            || self
+                .gradient
+                .is_some_and(|g| g.start.is_floating() || g.end.is_floating())
+    }
+}
+impl ThemeSpec {
+    /// Whether the retained theme requires the floating-color definition capability.
+    pub fn has_floating_paint(&self) -> bool {
+        self.plot.has_floating()
+            || self.layers.values().any(ThemePatch::has_floating)
+            || self.geometry.as_ref().is_some_and(|g| {
+                [g.ink, g.paper, g.accent]
+                    .into_iter()
+                    .any(crate::color::Paint::is_floating)
+            })
     }
 }

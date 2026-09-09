@@ -4,6 +4,10 @@ Phase 2 coordination: [combined implementation plan](phase-2-parity-implementati
 This document retains its detailed inventory and package ownership; the combined plan
 owns cross-lane scheduling and ggplot2 integration.
 
+Delivery update, 9 September 2026: SP-01–07 are COMPLETE. G-SCALE passes for the
+explicit typed FIX-20 scope in the [integrated report](../evidence/phase-2-scale-integration-2026-09-09.md).
+The original gap analysis below is historical; WP-21/22/23 release gates remain open.
+
 Date: 7 September 2026. Assignment: assess current plans/code and plan parity;
 documentation only. Baseline: `1cb9557`, with pre-existing action/state/host edits.
 Requirements: SCL-01–08, DAT-02/05, BND-01/03/04, QLT-02. Acceptance: FIX-20,

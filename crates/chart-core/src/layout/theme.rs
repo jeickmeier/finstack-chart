@@ -22,7 +22,7 @@ pub(super) fn tokens(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<Th
         theme.resolve(&r.host_theme)?
     } else {
         r.host_theme.validate()?;
-        r.host_theme.clone()
+        r.host_theme.resolve()
     };
     for (id, p) in &r.interaction_theme {
         if !chart.definition().layers.iter().any(|l| &l.id == id) {
@@ -35,11 +35,11 @@ pub(super) fn tokens(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<Th
         p.validate()?;
     }
     r.output_theme.validate()?;
-    t.overlay(&r.output_theme);
+    t.overlay(&r.output_theme.resolve());
     Ok(t)
 }
 pub(super) fn configure(t: &ThemePatch, r: &mut LayoutRequest) {
-    r.host_theme = t.clone();
+    r.host_theme = t.clone().map_colors(Into::into);
     if let Some(v) = t.font_size {
         r.font_size = v;
     }
@@ -138,28 +138,30 @@ pub(super) fn apply(
         }
     }
     let interaction_offset = items.len();
+    let output_theme = r.output_theme.resolve();
+    for layer in &chart.prepared.definition().layers {
+        let mut local = t.clone();
+        if let Some(p) = chart
+            .prepared
+            .definition()
+            .theme
+            .as_ref()
+            .and_then(|s| s.layers.get(&layer.id))
+        {
+            local.overlay(&p.resolve());
+        }
+        if let Some(p) = r.interaction_theme.get(&layer.id) {
+            local.overlay(&p.resolve());
+        }
+        local.overlay(&output_theme);
+        chart.paint_themes.insert(layer.id, local);
+    }
     for (index, source) in chart.scene.items().iter().enumerate() {
         let mut item = source.clone();
-        let mut local = t.clone();
-        if let Some(id) = item.layer {
-            if let Some(p) = chart
-                .prepared
-                .definition()
-                .theme
-                .as_ref()
-                .and_then(|s| s.layers.get(&id))
-            {
-                local.overlay(p);
-            }
-            if let Some(p) = r.interaction_theme.get(&id) {
-                local.overlay(p);
-            }
-            local.overlay(&r.output_theme);
-            chart
-                .paint_themes
-                .entry(id)
-                .or_insert_with(|| local.clone());
-        }
+        let local = item
+            .layer
+            .and_then(|id| chart.paint_themes.get(&id))
+            .unwrap_or(t);
         let authored = item.layer.and_then(|id| {
             chart
                 .prepared
@@ -196,6 +198,23 @@ pub(super) fn apply(
             None
         };
         match &mut item.primitive {
+            Primitive::VectorPath { fill, stroke, .. }
+            | Primitive::ShapePath { fill, stroke, .. } => {
+                if let Some(c) = color {
+                    if let Some(fill) = fill {
+                        *fill = c;
+                    }
+                    if let Some(stroke) = stroke.as_mut() {
+                        stroke.color = c;
+                    }
+                }
+                if !mapped_size
+                    && let Some(w) = explicit_width
+                    && let Some(stroke) = stroke
+                {
+                    stroke.width = w;
+                }
+            }
             Primitive::GradientRectangle { .. } => {}
             Primitive::Rectangle { fill, .. }
             | Primitive::NativePaint { fill, .. }
@@ -251,6 +270,19 @@ pub(super) fn apply(
                 Primitive::Path { commands, stroke } => Some((commands.clone(), *stroke)),
                 _ => None,
             };
+            if let Primitive::ShapePath {
+                dashes: pattern,
+                stroke: Some(_),
+                ..
+            }
+            | Primitive::VectorPath {
+                dashes: pattern,
+                stroke: Some(_),
+                ..
+            } = &mut item.primitive
+            {
+                *pattern = dashes.clone();
+            }
             if let Some((commands, stroke)) = path {
                 item.primitive = Primitive::DashedPath {
                     commands,
@@ -284,6 +316,14 @@ pub(super) fn apply(
 pub(super) fn monochrome(p: &mut Primitive, mode: Option<crate::theme::ColorMode>) {
     let apply = |c: &mut crate::scene::Color| *c = crate::theme::paint_color(*c, mode);
     match p {
+        Primitive::VectorPath { fill, stroke, .. } | Primitive::ShapePath { fill, stroke, .. } => {
+            if let Some(fill) = fill {
+                apply(fill);
+            }
+            if let Some(stroke) = stroke {
+                apply(&mut stroke.color);
+            }
+        }
         Primitive::Rectangle { fill, .. }
         | Primitive::NativePaint { fill, .. }
         | Primitive::Point { fill, .. }

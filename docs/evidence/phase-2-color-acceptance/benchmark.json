@@ -1,0 +1,80 @@
+{
+  "measurements": [
+    {
+      "kernel": "parse_css",
+      "timing": {
+        "ns_max": 190.14834,
+        "ns_median": 180.5425,
+        "ns_min": 177.64,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "rgb_lab_rgb",
+      "timing": {
+        "ns_max": 187.945,
+        "ns_median": 183.57166,
+        "ns_min": 180.71916,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "hcl_to_paint",
+      "timing": {
+        "ns_max": 60.80166,
+        "ns_median": 54.28,
+        "ns_min": 53.05918,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "prepare_hcl_interpolator",
+      "timing": {
+        "ns_max": 343.31584,
+        "ns_median": 341.73084,
+        "ns_min": 337.08834,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "sample_prepared_hcl",
+      "timing": {
+        "ns_max": 251.07584,
+        "ns_median": 241.89584,
+        "ns_min": 238.08,
+        "operations_per_sample": 50000,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "color_only_prepare",
+      "rows": 1000,
+      "statistics_reused": true,
+      "timing": {
+        "ns_max": 175320.8,
+        "ns_median": 151341.7,
+        "ns_min": 148927.1,
+        "operations_per_sample": 20,
+        "samples": 7
+      }
+    },
+    {
+      "kernel": "color_only_prepare",
+      "rows": 10000,
+      "statistics_reused": true,
+      "timing": {
+        "ns_max": 1786475.0,
+        "ns_median": 1756683.3,
+        "ns_min": 1693554.15,
+        "operations_per_sample": 20,
+        "samples": 7
+      }
+    }
+  ],
+  "method": "one warmup and seven samples; input generation excluded; prepared color update includes encoding and cache-reuse assertions",
+  "profile": "release"
+}

@@ -1,5 +1,16 @@
 # ADR-005: Foundational scale, tick and destination-layout algorithms
 
+Phase 2 guide identity: [ADR-021](021-independent-axis-guides.md) separates independently
+placed guides from retained positional scales and preserves legacy default-guide meaning.
+
+Phase 2 scale compatibility: [ADR-018](018-scale-compatibility-and-resources.md)
+retains these recipe meanings under an explicit Legacy policy and assigns D3 defaults,
+new descriptors and supplied timezone resources to SP-02–07.
+
+Phase 2 amendment: [ADR-017](017-shared-interpolation-values.md) assigns standalone
+range interpolation to one shared core module. Scale normalization, checked finite
+geometry and the existing byte-palette compatibility mode retain their contracts.
+
 Status: ACCEPTED for WP-06 and WP-10; full scale families remain WP-11.
 Date: 6 September 2026. Requirements: SCL-01/02/04/05, LAY-01/02, DAT-05. Fixture: FIX-07.
 

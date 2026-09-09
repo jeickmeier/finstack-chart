@@ -7,6 +7,15 @@ use crate::{ChartResult, DiagnosticCode, FieldId};
 /// Generated stat fields intentionally do not implement conversion to this type.
 #[derive(Clone, Debug)]
 pub enum Mapping {
+    /// Source-stage expression resolved against the selected layer dataset.
+    Expression(crate::grammar::Expression<Mapping>),
+    /// Explicit resolved source scale stage, preserved when editing portable mappings.
+    Scaled {
+        /// Owned underlying source mapping.
+        input: Box<Mapping>,
+        /// Checked scale policy.
+        scale: crate::grammar::ScaleProjection,
+    },
     /// Resolve a name in the selected layer dataset.
     Field(String),
     /// Require the same owning dataset as the supplied handle.
@@ -42,8 +51,26 @@ impl From<f64> for Mapping {
     }
 }
 impl Mapping {
+    pub(super) fn grouping(&self, data: &Data) -> ChartResult<crate::grammar::Grouping> {
+        if let Self::Literal(value) = self {
+            if !value.is_finite() {
+                return Err(error(
+                    DiagnosticCode::NumericalDomain,
+                    "A constant grouping value must be finite.",
+                ));
+            }
+            Ok(crate::grammar::Grouping::All)
+        } else {
+            self.field(data).map(crate::grammar::Grouping::Field)
+        }
+    }
     pub(super) fn field(&self, data: &Data) -> ChartResult<FieldId> {
         match self {
+            Self::Expression(_) => Err(error(
+                DiagnosticCode::SchemaConflict,
+                "This aesthetic requires a source field rather than a numeric expression.",
+            )),
+            Self::Scaled { input, .. } => input.field(data),
             Self::Field(name) | Self::Timestamp { field: name, .. } => Ok(data.field(name)?.id()),
             Self::Handle(handle) if handle.dataset == data.id => Ok(handle.field),
             Self::Handle(_) => Err(error(
@@ -60,6 +87,24 @@ impl Mapping {
         }
     }
     pub(super) fn resolve(&self, data: &Data) -> ChartResult<Numeric> {
+        if let Self::Expression(expr) = self {
+            return Ok(Numeric::Expression(expr.try_map_reads(|read| {
+                if matches!(read,Self::Expression(_) | Self::Scaled {..}) {
+                    return Err(error(DiagnosticCode::SchemaConflict,"Expression reads require source fields; compose expressions with typed operators."));
+                }
+                match read.resolve(data)? {
+                    Numeric::Field(f) => Ok(crate::grammar::SourceRead::Field(f)),
+                    Numeric::Timestamp {field,origin} => Ok(crate::grammar::SourceRead::Timestamp {field,origin}),
+                    _ => Err(error(DiagnosticCode::SchemaConflict,"Source numeric expressions require numeric fields or relative timestamps.")),
+                }
+            })?));
+        }
+        if let Self::Scaled { input, scale } = self {
+            return Ok(Numeric::Scaled {
+                input: Box::new(input.resolve(data)?),
+                scale: Box::new(scale.clone()),
+            });
+        }
         if let Self::Literal(value) = self {
             return Ok(Numeric::Literal(*value));
         }
@@ -108,6 +153,7 @@ impl Mapping {
 /// Aesthetic mappings inherited by layers, resolved against each layer's selected data.
 #[derive(Clone, Debug, Default)]
 pub struct AesBuilder {
+    pub(super) grouping: Option<crate::grammar::Grouping>,
     pub(super) x: Option<Mapping>,
     pub(super) y: Option<Mapping>,
     pub(super) x2: Option<Mapping>,
@@ -136,14 +182,28 @@ macro_rules! mapping_methods {
     )*};
 }
 impl AesBuilder {
+    pub(super) fn resolved_grouping(
+        &self,
+        data: &Data,
+    ) -> ChartResult<Option<crate::grammar::Grouping>> {
+        if self.all_groups {
+            Ok(Some(crate::grammar::Grouping::All))
+        } else if let Some(group) = &self.grouping {
+            Ok(Some(group.clone()))
+        } else {
+            self.group.as_ref().map(|g| g.grouping(data)).transpose()
+        }
+    }
     /// Explicitly use one group while retaining every other inherited aesthetic.
     pub fn group_all(mut self) -> Self {
+        self.grouping = None;
         self.group = None;
         self.all_groups = true;
         self
     }
     /// Partition observations using an exact source field, independently of appearance.
     pub fn group(mut self, value: impl Into<Mapping>) -> Self {
+        self.grouping = None;
         self.group = Some(value.into());
         self.all_groups = false;
         self
@@ -162,14 +222,20 @@ impl AesBuilder {
         let mut result = self.clone();
         macro_rules! inherit { ($($name:ident),*) => { $(if result.$name.is_none() { result.$name = base.$name.clone(); })* }; }
         inherit!(x, y, x2, y2, low, high, size, color, color_scale);
-        if result.group.is_none() && !result.all_groups {
+        if result.group.is_none() && !result.all_groups && result.grouping.is_none() {
+            result.grouping = base.grouping.clone();
             result.group = base.group.clone();
             result.all_groups = base.all_groups;
         }
         result
     }
     pub(super) fn resolve(&self, data: &Data) -> ChartResult<SourceAes> {
+        let explicit = self.group.as_ref().map(|g| g.grouping(data)).transpose()?;
         Ok(SourceAes {
+            grouping: self.grouping.clone().or_else(|| {
+                matches!(explicit, Some(crate::grammar::Grouping::All))
+                    .then_some(crate::grammar::Grouping::All)
+            }),
             x: self.x.as_ref().map(|v| v.resolve(data)).transpose()?,
             y: self.y.as_ref().map(|v| v.resolve(data)).transpose()?,
             x2: self.x2.as_ref().map(|v| v.resolve(data)).transpose()?,
@@ -177,7 +243,66 @@ impl AesBuilder {
             low: self.low.as_ref().map(|v| v.resolve(data)).transpose()?,
             high: self.high.as_ref().map(|v| v.resolve(data)).transpose()?,
             size: self.size.as_ref().map(|v| v.resolve(data)).transpose()?,
-            group: self.group.as_ref().map(|v| v.field(data)).transpose()?,
+            group: if let Some(crate::grammar::Grouping::Field(field)) = explicit {
+                Some(field)
+            } else {
+                None
+            },
         })
+    }
+}
+
+impl From<crate::grammar::Expression<Mapping>> for Mapping {
+    fn from(value: crate::grammar::Expression<Mapping>) -> Self {
+        Self::Expression(value)
+    }
+}
+/// Begin a typed source expression, resolved within each layer's selected dataset.
+pub fn source_expr(field: impl Into<Mapping>) -> crate::grammar::Expression<Mapping> {
+    crate::grammar::Expression::read(field.into())
+}
+
+/// Typed nonpositional mappings evaluated after scale mapping and positions.
+#[derive(Clone, Debug, Default)]
+pub struct AfterScaleAesBuilder {
+    pub(super) mappings: std::collections::BTreeMap<
+        crate::grammar::AfterScaleAesthetic,
+        crate::grammar::Expression<crate::grammar::AfterScaleRead>,
+    >,
+}
+/// Begin post-scale size/color modifiers.
+pub fn scale_aes() -> AfterScaleAesBuilder {
+    AfterScaleAesBuilder::default()
+}
+/// Read an aesthetic's resolved scale value, before any post-scale modifiers.
+pub fn after_scale_expr(
+    aesthetic: crate::grammar::AfterScaleAesthetic,
+) -> crate::grammar::Expression<crate::grammar::AfterScaleRead> {
+    crate::grammar::Expression::read(crate::grammar::AfterScaleRead::Aesthetic(aesthetic))
+}
+/// Read a geometry-theme token in the same typed expression kernel.
+pub fn from_theme(
+    token: crate::grammar::ThemeRead,
+) -> crate::grammar::Expression<crate::grammar::AfterScaleRead> {
+    crate::grammar::Expression::read(crate::grammar::AfterScaleRead::Theme(token))
+}
+impl AfterScaleAesBuilder {
+    /// Set point/rule size from a numeric expression.
+    pub fn size(
+        mut self,
+        expr: crate::grammar::Expression<crate::grammar::AfterScaleRead>,
+    ) -> Self {
+        self.mappings
+            .insert(crate::grammar::AfterScaleAesthetic::Size, expr);
+        self
+    }
+    /// Set geometry color from a color expression.
+    pub fn color(
+        mut self,
+        expr: crate::grammar::Expression<crate::grammar::AfterScaleRead>,
+    ) -> Self {
+        self.mappings
+            .insert(crate::grammar::AfterScaleAesthetic::Color, expr);
+        self
     }
 }

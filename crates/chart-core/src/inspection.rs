@@ -61,7 +61,45 @@ pub struct InspectionOutcome {
     pub origin: InputOrigin,
 }
 #[derive(Clone, Debug)]
+struct ShapeHit {
+    path: crate::path::FlattenedPath,
+    dashed_stroke: Option<crate::path::FlattenedPath>,
+    fill: bool,
+    stroke: Option<f64>,
+    sources: Vec<InspectedTarget>,
+}
+impl ShapeHit {
+    fn contains(&self, p: Point) -> bool {
+        self.path.contains(
+            p,
+            self.fill,
+            if self.dashed_stroke.is_some() {
+                None
+            } else {
+                self.stroke
+            },
+        ) || self
+            .dashed_stroke
+            .as_ref()
+            .is_some_and(|path| path.contains(p, false, self.stroke))
+    }
+    fn nearest(&self, p: Point) -> InspectedTarget {
+        self.sources
+            .iter()
+            .min_by(|a, b| {
+                let distance =
+                    |v: &InspectedTarget| (v.position.x() - p.x()).hypot(v.position.y() - p.y());
+                distance(a).total_cmp(&distance(b))
+            })
+            .expect("shape has source anchors")
+            .clone()
+    }
+}
+#[derive(Clone, Debug)]
 struct Candidate {
+    shape: Option<Arc<ShapeHit>>,
+    source_only: bool,
+    clamped_anchor: bool,
     custom: Option<crate::grammar::GeometryInteraction>,
     hit: InspectedTarget,
     clip: Rect,
@@ -106,6 +144,7 @@ impl Inspector {
             data.prepare_lookup();
         }
         let mut candidates = vec![];
+        let mut remaining_shape_vertices = 1_000_000;
         let mut paint_group = None;
         let mut layer_order = 0;
         for (index, (item, targets)) in presented
@@ -122,7 +161,12 @@ impl Inspector {
                 .layers
                 .iter()
                 .find(|l| l.id == layer)
-                .is_some_and(|l| matches!(l.geom, Geom::Line { .. }));
+                .is_some_and(|l| {
+                    matches!(
+                        l.geom,
+                        Geom::Line { .. } | Geom::ShapeLine { .. } | Geom::ShapeLineRadial { .. }
+                    )
+                });
             let clip = item.clip.unwrap_or(presented.scene().bounds());
             let group = (layer, clip, presented.item_panels()[index].clone());
             if paint_group.as_ref() != Some(&group) {
@@ -145,6 +189,9 @@ impl Inspector {
                             anchor.y().clamp(top, bottom),
                         )?;
                         candidates.push(Candidate {
+                            clamped_anchor: false,
+                            shape: None,
+                            source_only: false,
                             custom: Some(info.clone()),
                             hit: InspectedTarget {
                                 values: info.values.clone(),
@@ -170,6 +217,109 @@ impl Inspector {
                 }
                 continue;
             }
+            if let Primitive::ShapePath {
+                geometry,
+                anchors,
+                fill,
+                stroke,
+                dashes,
+            } = &item.primitive
+            {
+                if anchors.len() != targets.len() {
+                    return Err(error(
+                        DiagnosticCode::Validation,
+                        "Shape source-anchor and target counts differ.",
+                    ));
+                }
+                if targets.is_empty() {
+                    continue;
+                }
+                let sources: Vec<_> = anchors
+                    .iter()
+                    .zip(targets)
+                    .map(|(p, target)| InspectedTarget {
+                        values: vec![],
+                        selection: crate::grammar::SelectionPolicy::AtomicTarget,
+                        panel: presented.item_panels()[index].clone(),
+                        layer,
+                        target: target.clone(),
+                        position: *p,
+                    })
+                    .collect();
+                if let Some(bounds) = geometry.bounds(0.01, 1_000_000)? {
+                    let w = stroke.map_or(0., |s| 2. * s.width);
+                    let bounds = Bounds {
+                        x0: bounds.origin().x() - w,
+                        x1: bounds.max_x() + w,
+                        y0: bounds.origin().y() - w,
+                        y1: bounds.max_y() + w,
+                    };
+                    if geometry.has_segments() && bounds.intersects(clip.into()) {
+                        for source in &sources {
+                            let clamped_anchor = !contains(clip, source.position);
+                            let mut hit = source.clone();
+                            if clamped_anchor {
+                                hit.position = Point::new(
+                                    hit.position.x().clamp(clip.origin().x(), clip.max_x()),
+                                    hit.position.y().clamp(clip.origin().y(), clip.max_y()),
+                                )?;
+                            }
+                            candidates.push(Candidate {
+                                shape: None,
+                                source_only: !line || clamped_anchor,
+                                clamped_anchor,
+                                custom: None,
+                                bounds: Bounds::point(hit.position),
+                                hit,
+                                clip,
+                                rectangle: None,
+                                line: line && !clamped_anchor,
+                                segment: None,
+                                layer_order,
+                            });
+                        }
+                        let hit = sources[0].clone();
+                        let shape = Arc::new(ShapeHit {
+                            path: {
+                                let flat = geometry.flatten(0.01, remaining_shape_vertices)?;
+                                remaining_shape_vertices -=
+                                    flat.subpaths.iter().map(|s| s.points.len()).sum::<usize>();
+                                flat
+                            },
+                            dashed_stroke: if !dashes.is_empty()
+                                && stroke.is_some_and(|s| s.color.alpha > 0)
+                            {
+                                let commands =
+                                    geometry.dashed(dashes, 0.01, remaining_shape_vertices)?;
+                                let flat = crate::path::PathGeometry::from_beziers(&commands)?
+                                    .flatten(0.01, remaining_shape_vertices)?;
+                                remaining_shape_vertices -=
+                                    flat.subpaths.iter().map(|s| s.points.len()).sum::<usize>();
+                                Some(flat)
+                            } else {
+                                None
+                            },
+                            fill: fill.is_some_and(|c| c.alpha > 0),
+                            stroke: stroke.filter(|s| s.color.alpha > 0).map(|s| s.width),
+                            sources,
+                        });
+                        candidates.push(Candidate {
+                            clamped_anchor: false,
+                            shape: Some(shape),
+                            source_only: false,
+                            custom: None,
+                            hit,
+                            clip,
+                            rectangle: None,
+                            line: false,
+                            segment: None,
+                            bounds: bounds.clipped(clip),
+                            layer_order,
+                        });
+                    }
+                }
+                continue;
+            }
             let mut add = |position: Point,
                            target: &Target,
                            rectangle: Option<Rect>,
@@ -177,6 +327,9 @@ impl Inspector {
                 // Partially visible rectangles can be inspected where their actual clip intersects.
                 if rectangle.is_some() || segment.is_some() || contains(clip, position) {
                     candidates.push(Candidate {
+                        clamped_anchor: false,
+                        shape: None,
+                        source_only: false,
                         custom: None,
                         hit: InspectedTarget {
                             values: vec![],

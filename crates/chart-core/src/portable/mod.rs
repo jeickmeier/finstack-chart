@@ -3,8 +3,10 @@
 mod encoding;
 mod input;
 pub use input::{InputOperation, InputQuery, NavigationWire, SelectionWire};
+mod scales;
 mod session;
 mod stream;
+pub use scales::{ScaleChange, ScaleQuery};
 pub use stream::{StreamEnvelope, StreamOperation};
 mod wire;
 use crate::{ChartResult, Diagnostic, DiagnosticCode};
@@ -83,3 +85,8 @@ fn version(v: u32) -> ChartResult<()> {
     }
     Ok(())
 }
+
+mod shapes;
+pub use shapes::{
+    pie_layout_json, pie_layout_registered_json, stack_layout_json, stack_layout_registered_json,
+};
