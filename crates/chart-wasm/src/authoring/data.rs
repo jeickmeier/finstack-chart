@@ -3,7 +3,14 @@ use chart_core::{
     data::TimeUnit,
     plot::{ColumnData, ColumnsBuilder, Data},
 };
-handle!(_Column, _Column, ColumnData);
+/// Decode a typed `Uint8Array` of zero/one flags; any other byte is rejected.
+fn flags(values: Vec<u8>, what: &str) -> Result<Vec<bool>, JsError> {
+    if values.iter().any(|v| *v > 1) {
+        return Err(JsError::new(&format!("{what} must contain zero or one.")));
+    }
+    Ok(values.into_iter().map(|v| v != 0).collect())
+}
+handle!(_Column, ColumnData);
 #[wasm_bindgen]
 impl _Column {
     pub fn float64(values: Vec<f64>) -> Self {
@@ -16,16 +23,7 @@ impl _Column {
         Self::wrap(values.into())
     }
     pub fn boolean(values: Vec<u8>) -> Result<Self, JsError> {
-        if values.iter().any(|v| *v > 1) {
-            return Err(JsError::new("Boolean payload must contain zero or one."));
-        }
-        Ok(Self::wrap(
-            values
-                .into_iter()
-                .map(|v| v != 0)
-                .collect::<Vec<_>>()
-                .into(),
-        ))
+        Ok(Self::wrap(flags(values, "Boolean payload")?.into()))
     }
     pub fn strings(values: Vec<String>) -> Self {
         Self::wrap(values.into())
@@ -47,25 +45,20 @@ impl _Column {
         Ok(Self::wrap(self.get()?.clone().nullable(value)))
     }
     pub fn validity(&self, values: Vec<u8>) -> Result<Self, JsError> {
-        if values.iter().any(|v| *v > 1) {
-            return Err(JsError::new("Validity must contain zero or one."));
-        }
-        Ok(Self::wrap(
-            self.get()?
-                .clone()
-                .validity(values.into_iter().map(|v| v != 0).collect()),
-        ))
+        let validity = flags(values, "Validity")?;
+        Ok(Self::wrap(self.get()?.clone().validity(validity)))
     }
     pub fn formatted(&self, values: Vec<String>, validity: Vec<u8>) -> Result<Self, JsError> {
-        if values.len() != validity.len() || validity.iter().any(|v| *v > 1) {
+        if values.len() != validity.len() {
             return Err(JsError::new("Formatted values and validity must agree."));
         }
+        let validity = flags(validity, "Validity")?;
         Ok(Self::wrap(
             self.get()?.clone().formatted(
                 values
                     .into_iter()
                     .zip(validity)
-                    .map(|(s, v)| (v != 0).then_some(s))
+                    .map(|(s, valid)| valid.then_some(s))
                     .collect(),
             ),
         ))
@@ -80,7 +73,7 @@ impl _Column {
         self.inner.take();
     }
 }
-handle!(_Columns, _Columns, ColumnsBuilder);
+handle!(_Columns, ColumnsBuilder);
 #[wasm_bindgen]
 impl _Columns {
     pub fn identity(&self, identity: u64) -> Result<Self, JsError> {
@@ -126,7 +119,7 @@ impl _Columns {
         self.inner.take();
     }
 }
-handle!(_Data, _Data, Data);
+handle!(_Data, Data);
 #[wasm_bindgen]
 impl _Data {
     pub fn field(&self, name: &str) -> Result<_Field, JsError> {
@@ -139,7 +132,7 @@ impl _Data {
         self.inner.take();
     }
 }
-handle!(_Field, _Field, plot::FieldHandle);
+handle!(_Field, plot::FieldHandle);
 #[wasm_bindgen]
 impl _Field {
     pub fn dispose(&mut self) {

@@ -1,5 +1,5 @@
+//! Owned stack layout adapter; numerical policy is canonical Rust.
 use super::shape_registry::ShapeRegistryHandle;
-// Owned stack layout adapter; numerical policy is canonical Rust.
 use super::{disposed, failure, handle};
 use chart_core::{portable, shape::Stack};
 use pyo3::prelude::*;
@@ -43,7 +43,4 @@ impl ShapeStackHandle {
     fn layout_json(&self, data: &str, values: &str) -> PyResult<String> {
         portable::stack_layout_json(self.get()?, data, values).map_err(failure)
     }
-}
-pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
-    module.add_class::<ShapeStackHandle>()
 }

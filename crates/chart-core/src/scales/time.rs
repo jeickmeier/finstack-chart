@@ -76,6 +76,8 @@ impl TimeScaleSpec {
 /// Prepared time mapping. Calendar operations are independently checked against coverage.
 #[derive(Clone, Debug)]
 pub struct TimeScale {
+    registrations:
+        std::sync::Arc<crate::grammar::interpolation_extensions::InterpolationRegistrations>,
     spec: TimeScaleSpec,
     origin: i64,
     mapping: ContinuousScale,
@@ -86,6 +88,21 @@ pub struct TimeScale {
 impl TimeScale {
     /// Prepare interpolation once, subtracting an integer origin before float conversion.
     pub fn new(spec: TimeScaleSpec) -> ChartResult<Self> {
+        Self::new_with_registrations(spec, Default::default())
+    }
+    /// Prepare a time range against explicitly installed interpolation factories.
+    pub fn new_with_registry(
+        spec: TimeScaleSpec,
+        registry: &crate::grammar::ExtensionRegistry,
+    ) -> ChartResult<Self> {
+        Self::new_with_registrations(spec, registry.interpolations.clone())
+    }
+    pub(crate) fn new_with_registrations(
+        spec: TimeScaleSpec,
+        registrations: std::sync::Arc<
+            crate::grammar::interpolation_extensions::InterpolationRegistrations,
+        >,
+    ) -> ChartResult<Self> {
         let calendar = Calendar::new(spec.zone.clone())?;
         let origin = spec.domain.first().copied().unwrap_or(0);
         let domain = spec
@@ -93,14 +110,17 @@ impl TimeScale {
             .iter()
             .map(|v| utc::relative(*v, origin).map(Number))
             .collect::<ChartResult<Vec<_>>>()?;
-        let mapping = ContinuousScale::new(ContinuousScaleSpec {
-            family: NumericFamily::Linear,
-            domain: domain.clone(),
-            range: spec.range.clone(),
-            factory: spec.factory,
-            clamp: spec.clamp,
-            unknown: spec.unknown.clone(),
-        })?;
+        let mapping = ContinuousScale::new_with_registrations(
+            ContinuousScaleSpec {
+                family: NumericFamily::Linear,
+                domain: domain.clone(),
+                range: spec.range.clone(),
+                factory: spec.factory.clone(),
+                clamp: spec.clamp,
+                unknown: spec.unknown.clone(),
+            },
+            registrations.clone(),
+        )?;
         let range = spec
             .range
             .iter()
@@ -149,6 +169,7 @@ impl TimeScale {
             inverse,
             date_inverse,
             calendar,
+            registrations,
         })
     }
     /// Authored descriptor; cloned descriptors and scales are independent.
@@ -217,7 +238,7 @@ impl TimeScale {
             spec.domain[0] = nice.start;
             *spec.domain.last_mut().expect("nonempty domain") = nice.end;
         }
-        Self::new(spec)
+        Self::new_with_registrations(spec, self.registrations.clone())
     }
     /// Compile custom or conditional labels with this scale's exact calendar revision.
     pub fn tick_format(&self, format: TimeFormat) -> ChartResult<TimeFormatter> {
@@ -225,25 +246,47 @@ impl TimeScale {
     }
     /// Immutable configuration replacement, with normal preparation checks.
     pub fn reconfigure(&self, spec: TimeScaleSpec) -> ChartResult<Self> {
-        Self::new(spec)
+        Self::new_with_registrations(spec, self.registrations.clone())
     }
     /// Versioned portable standalone descriptor with canonical integer strings.
     pub fn to_json(&self) -> ChartResult<String> {
+        self.spec
+            .factory
+            .validate_registration(&self.registrations, true)?;
         crate::portable::encode(&TimeWire {
-            version: 1,
+            version: if self.spec.factory.has_registration() {
+                2
+            } else {
+                1
+            },
             spec: self.spec.clone(),
         })
     }
     /// Decode bounded resources, reject unknown versions, then prepare the common engine.
     pub fn from_json(input: &str) -> ChartResult<Self> {
+        Self::from_json_with_registry(input, &crate::grammar::ExtensionRegistry::new())
+    }
+    /// Decode explicit native factory references with supplied code registrations.
+    pub fn from_json_with_registry(
+        input: &str,
+        registry: &crate::grammar::ExtensionRegistry,
+    ) -> ChartResult<Self> {
         let wire: TimeWire = crate::portable::decode(input)?;
-        if wire.version != 1 {
+        let required = if wire.spec.factory.has_registration() {
+            2
+        } else {
+            1
+        };
+        if wire.version != required {
             return Err(error(
                 DiagnosticCode::UnsupportedCapability,
                 "Unsupported standalone time scale version.",
             ));
         }
-        Self::new(wire.spec)
+        wire.spec
+            .factory
+            .validate_registration(&registry.interpolations, true)?;
+        Self::new_with_registry(wire.spec, registry)
     }
 }
 #[derive(Serialize, Deserialize)]

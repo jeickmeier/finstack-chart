@@ -199,15 +199,26 @@ pub(super) fn project(
                         } else {
                             (&x.scale, xspace, p.x())
                         };
-                        let (ResolvedScale::Band(scale), ValueSpace::Categorical { categories }) =
-                            (axis, space)
-                        else {
+                        let ValueSpace::Categorical { categories } = space else {
                             return Err(error(
                                 DiagnosticCode::SchemaConflict,
                                 "Dodge requires resolved categorical bands.",
                             ));
                         };
-                        let Some(bounds) = scale.extent(&categories[value as usize])? else {
+                        let category = &categories[value as usize];
+                        let bounds = match axis {
+                            ResolvedScale::Band(scale) => scale.extent(category)?,
+                            ResolvedScale::Provider(scale) => scale.band_extent(
+                                &crate::composition::ScaleValue::Category(category.clone()),
+                            )?,
+                            _ => {
+                                return Err(error(
+                                    DiagnosticCode::SchemaConflict,
+                                    "Dodge requires resolved categorical bands.",
+                                ));
+                            }
+                        };
+                        let Some(bounds) = bounds else {
                             return Ok(None);
                         };
                         let slot = spec

@@ -92,10 +92,6 @@ impl FontResource {
     pub fn descriptor(&self) -> ResourceDescriptor {
         self.descriptor
     }
-    /// SHA-256 of the exact supplied bytes, for reproducibility.
-    pub fn sha256(&self) -> &str {
-        &self.hash
-    }
     pub(crate) fn embedding_type(&self) -> (&'static str, &'static str) {
         if self.bytes.starts_with(b"OTTO") {
             ("font/otf", "opentype")

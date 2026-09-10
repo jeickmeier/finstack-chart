@@ -145,7 +145,15 @@ fn endpoints<const N: usize>(domain: Vec<ScaleInput>) -> ChartResult<[Number; N]
 }
 impl ScaleConstructor {
     /// Reference defaults prepared through the same checked option path as reconfiguration.
-    pub fn create(self, mut options: ScaleOptions) -> ChartResult<StandaloneScale> {
+    pub fn create(self, options: ScaleOptions) -> ChartResult<StandaloneScale> {
+        self.create_with_registry(options, &crate::grammar::ExtensionRegistry::new())
+    }
+    /// Construct against explicitly installed native range factories.
+    pub fn create_with_registry(
+        self,
+        mut options: ScaleOptions,
+        registry: &crate::grammar::ExtensionRegistry,
+    ) -> ChartResult<StandaloneScale> {
         use ScaleConstructor as C;
         let family = match self {
             C::Log | C::SequentialLog | C::DivergingLog => NumericFamily::Log { base: 10. },
@@ -233,15 +241,21 @@ impl ScaleConstructor {
             }
             _ => StandaloneScaleSpec::Numeric(NumericScaleSpec::d3(family)),
         };
-        options.apply_spec(spec)
+        options.apply_spec(spec, registry.interpolations.clone())
     }
 }
 impl ScaleOptions {
     /// Atomically apply only explicitly supplied fields, preserving family and other settings.
     pub fn apply(self, scale: &StandaloneScale) -> ChartResult<StandaloneScale> {
-        self.apply_spec(scale.spec().clone())
+        self.apply_spec(scale.spec().clone(), scale.registrations.clone())
     }
-    fn apply_spec(mut self, mut spec: StandaloneScaleSpec) -> ChartResult<StandaloneScale> {
+    fn apply_spec(
+        mut self,
+        mut spec: StandaloneScaleSpec,
+        registrations: std::sync::Arc<
+            crate::grammar::interpolation_extensions::InterpolationRegistrations,
+        >,
+    ) -> ChartResult<StandaloneScale> {
         use StandaloneScaleSpec as S;
         if self.interpolator.is_some()
             && (self.range.is_some() || self.factory.is_some() || self.round.is_some())
@@ -519,6 +533,6 @@ impl ScaleOptions {
         if self != Self::default() {
             return Err(invalid("An option is not supported by this scale family."));
         }
-        StandaloneScale::new(spec)
+        StandaloneScale::new_with_registrations(spec, registrations)
     }
 }

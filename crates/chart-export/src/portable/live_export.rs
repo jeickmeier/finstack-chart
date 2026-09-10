@@ -1,13 +1,7 @@
 use super::*;
-use crate::{FigureRequest, Format, TextMode, ViewMode};
+use crate::{CaptureBasis, FigureRequest, TextMode, ViewMode};
 use chart_core::state::InteractionCapture;
 
-#[derive(Deserialize, Default)]
-enum Basis {
-    #[default]
-    Presented,
-    Current,
-}
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
 struct Envelope {
@@ -20,7 +14,7 @@ enum Operation {
     Begin {
         format: String,
         #[serde(default)]
-        basis: Basis,
+        basis: CaptureBasis,
         #[serde(default)]
         interaction: InteractionCapture,
         #[serde(default)]
@@ -66,26 +60,16 @@ impl PortableChart {
                 outline,
                 output_theme,
             } => {
-                let format = match format.as_str() {
-                    "svg" => Format::Svg,
-                    "pdf" => Format::Pdf,
-                    "png" => Format::Png,
-                    _ => {
-                        return Err(error(
-                            DiagnosticCode::UnsupportedCapability,
-                            "Export format must be svg, pdf or png.",
-                        ));
-                    }
-                };
+                let format = crate::host::format(&format)?;
                 let (definition, source, state, origin, mut profile) = match basis {
-                    Basis::Current => (
+                    CaptureBasis::Current => (
                         i.core.definition().clone(),
                         i.core.source(),
                         i.core.state().clone(),
                         None,
                         i.profile.clone(),
                     ),
-                    Basis::Presented => {
+                    CaptureBasis::Presented => {
                         let figure = i.presented.as_ref().ok_or_else(|| {
                             error(
                                 DiagnosticCode::Validation,

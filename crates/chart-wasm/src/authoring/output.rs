@@ -4,7 +4,7 @@ use chart_export::{
     host::{self, Options},
 };
 
-handle!(_ExportOptions, _ExportOptions, Options);
+handle!(_ExportOptions, Options);
 #[wasm_bindgen]
 impl _ExportOptions {
     #[wasm_bindgen(constructor)]
@@ -29,12 +29,12 @@ impl _ExportOptions {
         self.inner.take();
     }
 }
-handle!(_Output, _Output, Output);
+handle!(_Output, Output);
 #[wasm_bindgen]
 impl _Output {
     #[wasm_bindgen(constructor)]
     pub fn new(bytes: Vec<u8>) -> Result<Self, JsError> {
-        (Output::new(bytes)).map(Self::wrap).map_err(failure)
+        Output::new(bytes).map(Self::wrap).map_err(failure)
     }
     pub fn request(
         &self,
@@ -51,52 +51,55 @@ impl _Output {
         portable::encode(&self.get()?.primary_font()).map_err(failure)
     }
     pub fn register_font(&mut self, bytes: Vec<u8>) -> Result<String, JsError> {
-        let output = self.inner.as_mut().ok_or_else(disposed)?;
-        (output
+        self.get_mut()?
             .register_font(bytes)
-            .and_then(|d| portable::encode(&d)))
-        .map_err(failure)
+            .and_then(|d| portable::encode(&d))
+            .map_err(failure)
     }
     pub fn dispose(&mut self) {
         self.inner.take();
     }
 }
-handle!(_FigureRequest, _FigureRequest, FigureRequest);
+handle!(_FigureRequest, FigureRequest);
 #[wasm_bindgen]
 impl _FigureRequest {
     pub fn prepare(&self) -> Result<_FigureSnapshot, JsError> {
-        let r = self.get()?;
-        (r.prepare()).map(_FigureSnapshot::wrap).map_err(failure)
+        self.get()?
+            .prepare()
+            .map(_FigureSnapshot::wrap)
+            .map_err(failure)
     }
     pub fn manifest(&self) -> Result<String, JsError> {
-        let r = self.get()?;
-        (r.manifest().and_then(|v| portable::encode(&v))).map_err(failure)
+        self.get()?
+            .manifest()
+            .and_then(|v| portable::encode(&v))
+            .map_err(failure)
     }
     pub fn dispose(&mut self) {
         self.inner.take();
     }
 }
-handle!(_FigureSnapshot, _FigureSnapshot, FigureSnapshot);
+handle!(_FigureSnapshot, FigureSnapshot);
 #[wasm_bindgen]
 impl _FigureSnapshot {
+    pub fn guides(&self) -> Result<String, JsError> {
+        self.get()?.guides_json().map_err(failure)
+    }
     pub fn scene(&self) -> Result<String, JsError> {
-        let f = self.get()?;
-        (f.scene_json()).map_err(failure)
+        self.get()?.scene_json().map_err(failure)
     }
     pub fn manifest(&self) -> Result<String, JsError> {
         portable::encode(&self.get()?.metadata().manifest()).map_err(failure)
     }
     pub fn export(&self, format: &str) -> Result<Vec<u8>, JsError> {
-        let f = self.get()?;
         let format = host::format(format).map_err(failure)?;
-        let bytes = (f.export(format)).map_err(failure)?.bytes;
-        Ok(bytes)
+        Ok(self.get()?.export(format).map_err(failure)?.bytes)
     }
     pub fn dispose(&mut self) {
         self.inner.take();
     }
 }
-handle!(_ExportQueue, _ExportQueue, ExportQueue);
+handle!(_ExportQueue, ExportQueue);
 #[wasm_bindgen]
 impl _ExportQueue {
     #[wasm_bindgen(constructor)]
@@ -127,7 +130,7 @@ impl _ExportQueue {
         }
     }
 }
-handle!(_ExportJob, _ExportJob, ExportJob);
+handle!(_ExportJob, ExportJob);
 #[wasm_bindgen]
 impl _ExportJob {
     pub fn cancel(&self) -> Result<bool, JsError> {
@@ -135,8 +138,7 @@ impl _ExportJob {
     }
     pub fn run(&mut self) -> Result<Vec<u8>, JsError> {
         let job = self.inner.take().ok_or_else(disposed)?;
-        let bytes = (job.run()).map_err(failure)?.bytes;
-        Ok(bytes)
+        Ok(job.run().map_err(failure)?.bytes)
     }
     pub fn dispose(&mut self) {
         self.inner.take();

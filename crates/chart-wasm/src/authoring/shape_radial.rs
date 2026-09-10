@@ -1,12 +1,12 @@
+//! Radial and link ownership adapters; coordinate arithmetic stays in chart-core.
 use super::shape_registry::_ShapeRegistry;
-// Radial and link ownership adapters; coordinate arithmetic stays in chart-core.
 use super::{disposed, failure, handle, path::_Path};
 use chart_core::{
     portable,
     shape::{AreaRadial, LineRadial, Link, LinkDatum, LinkRadial, RadialBoundary},
 };
 use wasm_bindgen::prelude::*;
-handle!(_ShapeLineRadial, _ShapeLineRadial, LineRadial);
+handle!(_ShapeLineRadial, LineRadial);
 #[wasm_bindgen]
 impl _ShapeLineRadial {
     pub fn generate_registered(
@@ -46,7 +46,7 @@ impl _ShapeLineRadial {
         self.inner.take();
     }
 }
-handle!(_ShapeAreaRadial, _ShapeAreaRadial, AreaRadial);
+handle!(_ShapeAreaRadial, AreaRadial);
 #[wasm_bindgen]
 impl _ShapeAreaRadial {
     pub fn generate_registered(
@@ -90,7 +90,7 @@ impl _ShapeAreaRadial {
         self.inner.take();
     }
 }
-handle!(_ShapeLink, _ShapeLink, Link);
+handle!(_ShapeLink, Link);
 #[wasm_bindgen]
 impl _ShapeLink {
     pub fn generate_registered(
@@ -130,7 +130,7 @@ impl _ShapeLink {
         self.inner.take();
     }
 }
-handle!(_ShapeLinkRadial, _ShapeLinkRadial, LinkRadial);
+handle!(_ShapeLinkRadial, LinkRadial);
 #[wasm_bindgen]
 impl _ShapeLinkRadial {
     #[wasm_bindgen(constructor)]

@@ -302,7 +302,19 @@ export class Scale extends Component {
   interval(value: Options): this;
 }
 
+export type GuideProfile = 'LibraryV1' | 'D3_3_0_0';
+export interface GuideTickArguments {count?:number|null;specifier?:string|null;interval?:CalendarInterval|null;}
+export type GuideFormatter = {Labels:ReadonlyArray<string>} |
+ {Numeric:{specifier:string;locale?:NumericLocale}} |
+ {Time:{pattern?:string|null;locale?:TimeLocale}} |
+ {Registered:{operation:{id:string;version:number|bigint|string};parameters:JSONValue}};
+
 export class Axis extends Component {
+ guide_profile(profile:GuideProfile):this; guideProfile(profile:GuideProfile):this;
+ tick_arguments(arguments_:GuideTickArguments|null):this; tickArguments(arguments_:GuideTickArguments|null):this;
+ tick_values(values:ReadonlyArray<ScaleValue>|null):this; tickValues(values:ReadonlyArray<ScaleValue>|null):this;
+ tick_format(format:GuideFormatter|null):this; tickFormat(format:GuideFormatter|null):this;
+
  numeric_format(value:{specifier:string;locale?:NumericLocale}):this;numericFormat(value:{specifier:string;locale?:NumericLocale}):this;
  time_format(value:{pattern?:string|null;locale?:TimeLocale}):this;timeFormat(value:{pattern?:string|null;locale?:TimeLocale}):this;
   private readonly _family: "Axis";
@@ -651,6 +663,11 @@ export function scaleUtc(): Scale;
 export function scale_session(calendar: Options): Scale;
 export function scaleSession(calendar: Options): Scale;
 export class Guide extends Component {
+ guide_profile(profile:GuideProfile):this; guideProfile(profile:GuideProfile):this;
+ tick_arguments(arguments_:GuideTickArguments|null):this; tickArguments(arguments_:GuideTickArguments|null):this;
+ tick_values(values:ReadonlyArray<ScaleValue>|null):this; tickValues(values:ReadonlyArray<ScaleValue>|null):this;
+ tick_format(format:GuideFormatter|null):this; tickFormat(format:GuideFormatter|null):this;
+
  private readonly _family: "Guide";
  scale(name: string): this;
  side(side: string): this;
@@ -812,6 +829,7 @@ export class FigureRequest extends Owned {
  manifest(): Record<string, unknown>;
 }
 export class FigureSnapshot extends Owned {
+ guides(): Record<string, unknown>;
  scene(): Record<string, unknown>;
  manifest(): Record<string, unknown>;
  export(format: Format): Uint8Array;

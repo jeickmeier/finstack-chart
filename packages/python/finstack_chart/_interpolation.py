@@ -5,7 +5,7 @@ import math
 import re
 from collections.abc import Mapping
 from typing import Generic, TypeVar
-from . import _native, _Owned, ColorValue
+from . import _native, _Owned, ColorValue, ShapeRegistry
 
 class MissingValue:
     """Explicit missing interpolation value, distinct from None/null."""
@@ -107,7 +107,8 @@ _T = TypeVar("_T")
 class Interpolator(_Owned, Generic[_T]):
     """Owned compiled operation; samples remain independent of later calls and disposal."""
     @classmethod
-    def from_json(cls, value): return cls(_native._Interpolator.from_json(value))
+    def from_json(cls, value, registry=None):
+        return cls(_native._Interpolator.from_json(value) if registry is None else _native._Interpolator.from_json_registered(value, registry._inner))
     def to_json(self): return self._inner.to_json()
     def copy(self): return Interpolator(self._inner.copy())
     def sample(self, t): return _unpack(json.loads(self._inner.sample_json(t)))
@@ -138,10 +139,39 @@ class _Factory:
         gamma=self._options.get("gamma")
         return json.loads(_native._Interpolator.factory(self._name,None if gamma is None else _un_number(gamma)))
 
+class RegisteredInterpolationFactory:
+    """An installed Rust factory selection with an independently owned registry snapshot."""
+    __slots__ = ("_registry", "_factory")
+    def __init__(self, registry, operation_id, version, parameters=None):
+        if not isinstance(registry, ShapeRegistry): raise TypeError("Expected a ShapeRegistry.")
+        if type(version) not in (int, str) or not re.fullmatch(r"[0-9]+", str(version)):
+            raise TypeError("Factory version requires an exact nonnegative integer.")
+        self._factory = json.loads(registry._inner.interpolation_factory_json(
+            _json({"id": operation_id, "version": str(version)}), _json({} if parameters is None else parameters)))
+        self._registry = registry.copy()
+    def _descriptor(self):
+        self._registry._inner.interpolation_factory_json(_json(self._factory["registration"]["operation"]), _json(self._factory["registration"]["parameters"]))
+        return json.loads(_json(self._factory))
+    def _compile(self, spec): return Interpolator(_native._Interpolator.from_spec(_json(spec), self._registry._inner))
+    def __call__(self, a, b):
+        budget=[0,0]
+        return self._compile({"operation":"Between", "factory":self._descriptor(), "a":_pack(a,0,budget), "b":_pack(b,0,budget)})
+    def copy(self):
+        result=object.__new__(type(self));result._factory=self._descriptor();result._registry=self._registry.copy();return result
+    def dispose(self): self._registry.dispose()
+    def __enter__(self): self._descriptor();return self
+    def __exit__(self, *args): self.dispose()
+
+def registered_interpolation(registry, operation_id, version, parameters=None):
+    return RegisteredInterpolationFactory(registry, operation_id, version, parameters)
+
 def piecewise(*args):
     if len(args)==1: factory=interpolate;values=args[0]
     elif len(args)==2: factory,values=args
     else: raise TypeError("piecewise expects values or a built-in factory and values.")
+    if isinstance(factory,RegisteredInterpolationFactory):
+        budget=[0,0]
+        return factory._compile({"operation":"Piecewise", "factory":factory._descriptor(), "values":[_pack(v,0,budget) for v in values]})
     if not isinstance(factory,_Factory): raise TypeError("Portable piecewise needs a registered built-in factory.")
     return _Factory("piecewise",{"factory":factory._descriptor()})(values)
 
@@ -149,7 +179,7 @@ def quantize(interpolator, count):
     if not isinstance(interpolator,Interpolator): raise TypeError("quantize requires an owned Interpolator.")
     return interpolator.quantize(count)
 
-__all__=["MissingValue","MISSING","InterpolationDate","NumericArray","Interpolator","date_value","numeric_array","piecewise","quantize"]
+__all__=["RegisteredInterpolationFactory","registered_interpolation","MissingValue","MISSING","InterpolationDate","NumericArray","Interpolator","date_value","numeric_array","piecewise","quantize"]
 for _name in ["interpolate","interpolateArray","interpolateBasis","interpolateBasisClosed","interpolateDate","interpolateDiscrete","interpolateHue","interpolateNumber","interpolateNumberArray","interpolateObject","interpolateRound","interpolateString","interpolateTransformCss","interpolateTransformSvg","interpolateZoom","interpolateRgb","interpolateRgbBasis","interpolateRgbBasisClosed","interpolateHsl","interpolateHslLong","interpolateLab","interpolateHcl","interpolateHclLong","interpolateCubehelix","interpolateCubehelixLong"]:
     _snake=re.sub(r"(?<!^)(?=[A-Z])","_",_name).lower()
     globals()[_snake]=_Factory(_name);__all__.append(_snake)

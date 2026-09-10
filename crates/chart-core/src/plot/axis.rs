@@ -414,7 +414,31 @@ impl AxisBuilder {
         self.spec.outside = outside;
         self
     }
-    /// Supply semantic tick values and labels; duplicates/empty text retain their meaning.
+    /// Select guide policy without changing its shared scale or data-domain training.
+    pub fn guide_profile(mut self, profile: crate::layout::GuideProfile) -> Self {
+        self.spec.profile = profile;
+        self
+    }
+    /// Replace per-guide density/interval/format hints; None restores profile defaults.
+    pub fn tick_arguments(mut self, arguments: Option<GuideTickArguments>) -> Self {
+        self.spec.tick_arguments = arguments;
+        self
+    }
+    /// Replace typed tick values independently of formatting. None restores automatic values.
+    pub fn tick_values(mut self, values: Option<Vec<ScaleValue>>) -> Self {
+        self.spec.tick_values = values;
+        self.spec.guide_ticks = None;
+        self
+    }
+    /// Replace the formatter independently of values. None restores scale-default formatting.
+    pub fn tick_format(mut self, format: Option<crate::layout::GuideFormatter>) -> Self {
+        self.spec.tick_format = format;
+        self.spec.number_format = None;
+        self.spec.numeric_format = None;
+        self.spec.time_format = None;
+        self
+    }
+    /// Supply coupled legacy tick values and labels; the D3 profile preserves empty labels.
     pub fn ticks(mut self, ticks: impl IntoIterator<Item = (ScaleValue, String)>) -> Self {
         self.spec.guide_ticks = Some(
             ticks
@@ -598,7 +622,31 @@ impl GuideBuilder {
         self.spec.visible = visible;
         self
     }
-    /// Supply typed semantic tick values and labels.
+    /// Select guide policy without changing its shared scale or data-domain training.
+    pub fn guide_profile(mut self, profile: crate::layout::GuideProfile) -> Self {
+        self.spec.profile = profile;
+        self
+    }
+    /// Replace per-guide density/interval/format hints; None restores profile defaults.
+    pub fn tick_arguments(mut self, arguments: Option<GuideTickArguments>) -> Self {
+        self.spec.tick_arguments = arguments;
+        self
+    }
+    /// Replace typed tick values independently of formatting. None restores automatic values.
+    pub fn tick_values(mut self, values: Option<Vec<ScaleValue>>) -> Self {
+        self.spec.tick_values = values;
+        self.spec.guide_ticks = None;
+        self
+    }
+    /// Replace the formatter independently of values. None restores scale-default formatting.
+    pub fn tick_format(mut self, format: Option<crate::layout::GuideFormatter>) -> Self {
+        self.spec.tick_format = format;
+        self.spec.number_format = None;
+        self.spec.numeric_format = None;
+        self.spec.time_format = None;
+        self
+    }
+    /// Supply coupled legacy tick values and labels; the D3 profile preserves empty labels.
     pub fn ticks(mut self, ticks: impl IntoIterator<Item = (ScaleValue, String)>) -> Self {
         self.spec.guide_ticks = Some(
             ticks

@@ -7,6 +7,8 @@ use std::sync::Arc;
 /// Supported binary factories. Each maps to one independently qualified reference export.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub enum FactoryKind {
+    /// Explicitly installed versioned native factory.
+    Registered,
     /// Target-kind dispatch.
     Value,
     /// Weighted numerical interpolation.
@@ -42,8 +44,17 @@ pub enum FactoryKind {
     /// Direct Cubehelix hue, optional lightness gamma.
     CubehelixLong,
 }
-/// A serializable built-in factory; native custom `Sample` implementations remain separate.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+/// Versioned registration and bounded declarative parameters.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct InterpolationRegistration {
+    /// Exact installed implementation identity.
+    pub operation: crate::grammar::OperationRef,
+    /// Checked native factory configuration.
+    pub parameters: serde_json::Value,
+}
+/// A built-in or explicitly registered factory. Built-in wire fields are unchanged.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct InterpolationFactory {
     /// Binary operation.
@@ -51,19 +62,75 @@ pub struct InterpolationFactory {
     /// Optional RGB/Cubehelix gamma; other routes reject this configuration.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub gamma: Option<Number>,
+    /// Present only for `Registered`; endpoints remain in the surrounding descriptor.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub registration: Option<Box<InterpolationRegistration>>,
 }
 impl InterpolationFactory {
     /// Select a factory with its reference default configuration.
     pub fn new(kind: FactoryKind) -> Self {
-        Self { kind, gamma: None }
+        Self {
+            kind,
+            gamma: None,
+            registration: None,
+        }
     }
-    /// Compile a bounded pair with the shared engine.
-    pub fn between(self, a: Value, b: Value) -> ChartResult<Interpolator> {
+    /// Select installed native code without serializing executable callbacks.
+    pub fn registered(
+        operation: crate::grammar::OperationRef,
+        parameters: serde_json::Value,
+    ) -> Self {
+        Self {
+            kind: FactoryKind::Registered,
+            gamma: None,
+            registration: Some(Box::new(InterpolationRegistration {
+                operation,
+                parameters,
+            })),
+        }
+    }
+    /// Compile a bounded pair with the shared engine and builtin-only registry.
+    pub fn between(&self, a: Value, b: Value) -> ChartResult<Interpolator> {
         Interpolator::new(InterpolationSpec::Between {
-            factory: self,
+            factory: self.clone(),
             a,
             b,
         })
+    }
+    /// Compile a pair against an explicitly supplied registry snapshot.
+    pub fn between_with_registry(
+        &self,
+        a: Value,
+        b: Value,
+        registry: &crate::grammar::ExtensionRegistry,
+    ) -> ChartResult<Interpolator> {
+        Interpolator::new_with_registry(
+            InterpolationSpec::Between {
+                factory: self.clone(),
+                a,
+                b,
+            },
+            registry,
+        )
+    }
+    pub(crate) fn has_registration(&self) -> bool {
+        self.kind == FactoryKind::Registered || self.registration.is_some()
+    }
+    pub(crate) fn validate_registration(
+        &self,
+        registry: &crate::grammar::interpolation_extensions::InterpolationRegistrations,
+        portable: bool,
+    ) -> ChartResult<()> {
+        match (&self.registration, self.kind) {
+            (Some(r), FactoryKind::Registered) if self.gamma.is_none() => {
+                registry.validate(&r.operation, &r.parameters, portable)
+            }
+            (None, kind) if kind != FactoryKind::Registered => Ok(()),
+            _ => Err(error(
+                DiagnosticCode::Validation,
+                "Registered interpolation requires its registration and cannot use builtin gamma options.",
+            )),
+        }
     }
 }
 /// Version-one operation payload; authored values are retained without backend objects.
@@ -167,11 +234,28 @@ enum Compiled {
     Piecewise(Piecewise<Interpolator>),
     Transform(TransformInterpolator),
     Zoom(ZoomInterpolator),
+    Registered(crate::grammar::interpolation_extensions::RegisteredInterpolator),
 }
 impl Interpolator {
     /// Validate and compile a descriptor once; sampling never re-parses it.
     pub fn new(spec: InterpolationSpec) -> ChartResult<Self> {
-        let compiled = compile(&spec)?;
+        Self::new_with_registrations(spec, &Default::default())
+    }
+    /// Compile against explicitly installed native implementations; retain prepared samplers.
+    pub fn new_with_registry(
+        spec: InterpolationSpec,
+        registry: &crate::grammar::ExtensionRegistry,
+    ) -> ChartResult<Self> {
+        Self::new_with_registrations(spec, &registry.interpolations)
+    }
+    pub(crate) fn new_with_registrations(
+        spec: InterpolationSpec,
+        registrations: &crate::grammar::interpolation_extensions::InterpolationRegistrations,
+    ) -> ChartResult<Self> {
+        // Apply the same aggregate descriptor budget before native factory callbacks.
+        let encoded = crate::portable::encode(&spec)?;
+        let _: InterpolationSpec = crate::portable::decode(&encoded)?;
+        let compiled = compile(&spec, registrations)?;
         Ok(Self {
             spec: Arc::new(spec),
             compiled: Arc::new(compiled),
@@ -181,21 +265,33 @@ impl Interpolator {
     pub fn spec(&self) -> &InterpolationSpec {
         &self.spec
     }
-    /// Strict version-one standalone decoding with existing byte/depth/token budgets.
+    /// Strict builtin-only decoding. Registered descriptors need `from_json_with_registry`.
     pub fn from_json(json: &str) -> ChartResult<Self> {
+        Self::from_json_with_registry(json, &crate::grammar::ExtensionRegistry::new())
+    }
+    /// Decode a versioned descriptor with an explicitly installed registry.
+    pub fn from_json_with_registry(
+        json: &str,
+        registry: &crate::grammar::ExtensionRegistry,
+    ) -> ChartResult<Self> {
         let wire: Wire = crate::portable::decode(json)?;
-        if wire.version != 1 {
+        if wire.version != wire.spec.wire_version() {
             return Err(error(
                 DiagnosticCode::UnsupportedCapability,
-                "Unsupported interpolation descriptor version; expected 1.",
+                "Interpolation descriptor version does not match its capabilities.",
             ));
         }
-        Self::new(wire.spec)
+        wire.spec
+            .validate_registrations(&registry.interpolations, true)?;
+        let result = Self::new_with_registry(wire.spec, registry)?;
+        result.require_portable()?;
+        Ok(result)
     }
-    /// Serialize the authored operation, never generated samples or native callbacks.
-    pub fn to_json(&self) -> ChartResult<String> {
+    /// Bounded authored descriptor for another in-process consumer, without installing code.
+    /// This is not a portable serialization claim; receiving consumers must validate registries.
+    pub fn descriptor_json(&self) -> ChartResult<String> {
         let json = crate::portable::encode(&BorrowedWire {
-            version: 1,
+            version: self.spec.wire_version(),
             spec: &self.spec,
         })?;
         if json.len() > MAX_VALUE_BYTES {
@@ -206,10 +302,36 @@ impl Interpolator {
         }
         Ok(json)
     }
+    /// Serialize only portable operations, never native-only callbacks or generated samples.
+    pub fn to_json(&self) -> ChartResult<String> {
+        self.require_portable()?;
+        self.descriptor_json()
+    }
+    pub(crate) fn require_portable(&self) -> ChartResult<()> {
+        let portable = match self.compiled.as_ref() {
+            Compiled::Registered(f) => f.portable(),
+            Compiled::Piecewise(f) => {
+                for segment in f.segments() {
+                    segment.require_portable()?;
+                }
+                true
+            }
+            _ => true,
+        };
+        if portable {
+            Ok(())
+        } else {
+            Err(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Native-only interpolation cannot be serialized as a portable operation.",
+            ))
+        }
+    }
     /// Sample an independently owned typed result.
     pub fn sample(&self, t: f64) -> ChartResult<Value> {
         parameter(t)?;
         match self.compiled.as_ref() {
+            Compiled::Registered(f) => f.sample(t),
             Compiled::Chromatic(f) => f
                 .evaluate(t)
                 .map(|c| Value::Color(crate::color::Paint::from(c).value())),
@@ -275,6 +397,11 @@ impl Interpolator {
     pub fn sample_color(&self, t: f64) -> ChartResult<ColorValue> {
         parameter(t)?;
         match self.compiled.as_ref() {
+            Compiled::Registered(f) => match f.sample(t)? {
+                Value::Color(value) => Ok(value),
+                Value::Text(text) => crate::color::parse(&text)?.ok_or_else(not_color),
+                _ => Err(not_color()),
+            },
             Compiled::Chromatic(f) => f.evaluate(t).map(|c| crate::color::Paint::from(c).value()),
             Compiled::Color(f) => f.sample_color(t),
             Compiled::Value(f) => f.color_sample(t)?.ok_or_else(not_color),
@@ -340,7 +467,10 @@ fn values_budget(values: &[Value], minimum: usize) -> ChartResult<()> {
     }
     Ok(())
 }
-fn compile(spec: &InterpolationSpec) -> ChartResult<Compiled> {
+fn compile(
+    spec: &InterpolationSpec,
+    registrations: &crate::grammar::interpolation_extensions::InterpolationRegistrations,
+) -> ChartResult<Compiled> {
     Ok(match spec {
         InterpolationSpec::Chromatic { spec } => {
             Compiled::Chromatic(crate::scales::chromatic::ChromaticRamp::new(*spec)?)
@@ -348,6 +478,17 @@ fn compile(spec: &InterpolationSpec) -> ChartResult<Compiled> {
         InterpolationSpec::Between { factory, a, b } => {
             a.validate()?;
             b.validate()?;
+            factory.validate_registration(registrations, false)?;
+            if let Some(registration) = &factory.registration {
+                return Ok(Compiled::Registered(registrations.compile(
+                    &registration.operation,
+                    crate::grammar::InterpolationInput {
+                        source: a,
+                        target: b,
+                        parameters: &registration.parameters,
+                    },
+                )?));
+            }
             let route = match factory.kind {
                 FactoryKind::Rgb => Some(ColorRoute::Rgb),
                 FactoryKind::Hsl => Some(ColorRoute::Hsl),
@@ -425,7 +566,14 @@ fn compile(spec: &InterpolationSpec) -> ChartResult<Compiled> {
         InterpolationSpec::Piecewise { factory, values } => {
             values_budget(values, 2)?;
             Compiled::Piecewise(Piecewise::new(values, |a, b| {
-                factory.between(a.clone(), b.clone())
+                Interpolator::new_with_registrations(
+                    InterpolationSpec::Between {
+                        factory: factory.clone(),
+                        a: a.clone(),
+                        b: b.clone(),
+                    },
+                    registrations,
+                )
             })?)
         }
         InterpolationSpec::Transform { a, b, syntax } => Compiled::Transform(
@@ -440,4 +588,32 @@ fn compile(spec: &InterpolationSpec) -> ChartResult<Compiled> {
             ZoomInterpolator::new(*a, *b)?
         }),
     })
+}
+
+impl InterpolationSpec {
+    /// Minimum standalone envelope version; builtins retain version one.
+    pub fn wire_version(&self) -> u32 {
+        if self.has_registration() { 2 } else { 1 }
+    }
+    /// Whether the descriptor requires an explicitly installed factory.
+    pub fn has_registration(&self) -> bool {
+        match self {
+            Self::Between { factory, .. } | Self::Piecewise { factory, .. } => {
+                factory.has_registration()
+            }
+            _ => false,
+        }
+    }
+    pub(crate) fn validate_registrations(
+        &self,
+        registry: &crate::grammar::interpolation_extensions::InterpolationRegistrations,
+        portable: bool,
+    ) -> ChartResult<()> {
+        match self {
+            Self::Between { factory, .. } | Self::Piecewise { factory, .. } => {
+                factory.validate_registration(registry, portable)
+            }
+            _ => Ok(()),
+        }
+    }
 }

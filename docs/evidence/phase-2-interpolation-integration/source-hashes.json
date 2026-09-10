@@ -1,0 +1,638 @@
+{
+  "revision": "51f2edafdf5ec65121966dedcb1d5ffa838f80de",
+  "note": "Working-tree source snapshot. Changed files may include concurrent edits; hashes record identity, not exclusive authorship. Baseline hashes precede this interpolation assignment.",
+  "files": {
+    "Cargo.lock": {
+      "sha256": "17df1552e13bcf7f00e23708589197d54ff9f4469bd0d7d92967442152481717",
+      "baseline_sha256": null
+    },
+    "Cargo.toml": {
+      "sha256": "7cb30db797cda23d880f1954d3cc79c3987c6aedc0f15b14f4c2bfdacdc73fae",
+      "baseline_sha256": null
+    },
+    "crates/chart-core/src/grammar/colors.rs": {
+      "sha256": "2e6c25ba5ea9528d75765133bbd89b767d839481822fe8d1a7fc275125490ae7",
+      "baseline_sha256": "6e3fb13d181c7c30a8009e4252209c9ddfe65e7c841775ea5f63194592deaa76"
+    },
+    "crates/chart-core/src/grammar/compiler.rs": {
+      "sha256": "bf54108ed4c9cf1bd2656b00633efaccd7ad1c964bec4d28e540b8045f989919",
+      "baseline_sha256": "24c034d4b1bcc4bcf4331f306a3e1a531b08d373ec9ab7d119e835791e49b1ce"
+    },
+    "crates/chart-core/src/grammar/definition.rs": {
+      "sha256": "2d4cd00053b8173fcfb35f48166a1f736c1bc48098bb0d0bf354f806f3c95032",
+      "baseline_sha256": "f202edaf6bb9847ba1b959ca40c0357ab79e1daa9b45d08554d3cbc53ba8f7a4"
+    },
+    "crates/chart-core/src/grammar/extensions.rs": {
+      "sha256": "b006694a91a11dfb0bceca0509befc2b410c03b34cb4798154c3bd623e1efff8",
+      "baseline_sha256": "06a50ac743407096e38013aa15d170963d12fdab6b0253ad1a431ff66ec94a40"
+    },
+    "crates/chart-core/src/grammar/interpolation_extensions.rs": {
+      "sha256": "1458f42bfbca8cb9f78492a4604c102fe3a52098b5cd748a26aed9b2df78f533",
+      "baseline_sha256": null
+    },
+    "crates/chart-core/src/grammar/mod.rs": {
+      "sha256": "1bb8a1c8ebbff39339b31de2e2290ce894b80a3bd3a1f6b7a1371fdac61ebe0e",
+      "baseline_sha256": "fb80383aac26d7802d68a675a1b85e52358567a2f3f5606af584bc4edb84c3ba"
+    },
+    "crates/chart-core/src/grammar/numeric_aesthetics.rs": {
+      "sha256": "1903f335a5e3dbb619c45e3db986b46bd78281355246325719129eb122fd1f9f",
+      "baseline_sha256": "bba878b60e8420574a202e833780fcdaa1ca58f74ae40b057150ddc76545337f"
+    },
+    "crates/chart-core/src/grammar/symbols.rs": {
+      "sha256": "5d907faa32ed032c5128a06221c36486149c2db9fdf14bedb0216e81f159c169",
+      "baseline_sha256": "f82a2cd6790fb057cafb4363fe3cbbf9b5b34e6a5b3458ae81be1b21871e2a39"
+    },
+    "crates/chart-core/src/interpolate/authoring.rs": {
+      "sha256": "eeb8671fdda9ac6a8b548e96739a6e5128f1737ca6817cb6b282ffd32313a71a",
+      "baseline_sha256": "74be6fb4659a680a58e4e22ac35c00e9fa9dbbf26ef7e4b999a6f56885f9c082"
+    },
+    "crates/chart-core/src/interpolate/color.rs": {
+      "sha256": "49bef5af3c5520e47727592cc3e024d575b1af53e21387cb5ff8372a7d4f1a7b",
+      "baseline_sha256": "49bef5af3c5520e47727592cc3e024d575b1af53e21387cb5ff8372a7d4f1a7b"
+    },
+    "crates/chart-core/src/interpolate/descriptor.rs": {
+      "sha256": "884e98775109b0801868defb3ff950984d356de8b4bba4d59767eea55a853852",
+      "baseline_sha256": "ef914c33c9e590ffd699e8631ebf9d97259dcb3c7b5faad7c657e5bac0edb937"
+    },
+    "crates/chart-core/src/interpolate/mod.rs": {
+      "sha256": "7e6c4e60420d1cb9fc8157dda6e9669cd85de3815caa8bc449fb74b70628d5a9",
+      "baseline_sha256": "4285a7291b9292a628ce8fd3edea588aca9141a5bc8d2b0eae7fb0f8cae7c34d"
+    },
+    "crates/chart-core/src/interpolate/scalar.rs": {
+      "sha256": "f0e2bc1d4455fd43c2700a8ba159d6ef2a29bcb01aeaddb59b6170afd230b29e",
+      "baseline_sha256": "3aea72cb90aa0ca9c33e96ea0d903c8fd26a6c41dd7ff7993a6817b73f0b3ba1"
+    },
+    "crates/chart-core/src/interpolate/structured.rs": {
+      "sha256": "5694e73de49405448e31563666f3221dfa9415b85d5f5325c86481e757f405c4",
+      "baseline_sha256": "5694e73de49405448e31563666f3221dfa9415b85d5f5325c86481e757f405c4"
+    },
+    "crates/chart-core/src/interpolate/text.rs": {
+      "sha256": "ffa92cc0c8489358939e45495cdbff356c312641d0421404509a8594b1592997",
+      "baseline_sha256": "ffa92cc0c8489358939e45495cdbff356c312641d0421404509a8594b1592997"
+    },
+    "crates/chart-core/src/interpolate/transform.rs": {
+      "sha256": "0242cabc19d0520fdc0c9d90f597691a368e77ff36a4351636b3c1906d28268b",
+      "baseline_sha256": "0242cabc19d0520fdc0c9d90f597691a368e77ff36a4351636b3c1906d28268b"
+    },
+    "crates/chart-core/src/interpolate/transform_parse.rs": {
+      "sha256": "4bab2798bbfd130c24748235bc331979aceef46c3ec4c420ee84eb54033d9dc6",
+      "baseline_sha256": "4bab2798bbfd130c24748235bc331979aceef46c3ec4c420ee84eb54033d9dc6"
+    },
+    "crates/chart-core/src/interpolate/value.rs": {
+      "sha256": "17cf527b17d28d44172bc3ac1a669e205dfbfd1436c37e2f4d80587c77fb95de",
+      "baseline_sha256": "17cf527b17d28d44172bc3ac1a669e205dfbfd1436c37e2f4d80587c77fb95de"
+    },
+    "crates/chart-core/src/interpolate/zoom.rs": {
+      "sha256": "2239dd530b843cba914281dd293f69a8f834262f600201a37a306e038e5d93eb",
+      "baseline_sha256": "2239dd530b843cba914281dd293f69a8f834262f600201a37a306e038e5d93eb"
+    },
+    "crates/chart-core/src/plot/mod.rs": {
+      "sha256": "96d73831fffd08ba68a3a69ea07be9254703d706a610c598f9bbf4667c0d5e3c",
+      "baseline_sha256": "012a0827aed874fc5633783dfa5bedea30cfdb93014795e9c082c873025502b0"
+    },
+    "crates/chart-core/src/plot/wire.rs": {
+      "sha256": "3fe79864085bd50d546e159239804f4c9be90f291417d51f8720e6f053b7c75f",
+      "baseline_sha256": "e4d1c3c739cf2184f3c600b14822c3b24e7e9041c0f27bdf4e41c2549aad15cf"
+    },
+    "crates/chart-core/src/portable/scales.rs": {
+      "sha256": "48dce0f41c74663ffc077dbb40451665aafc42361e280d17292d80fc17c3787d",
+      "baseline_sha256": "e5ca33f956b0e1097d000f0a6a21c81401f16a0267c20d234ed7830792522190"
+    },
+    "crates/chart-core/src/portable/wire.rs": {
+      "sha256": "f739e1cd8a969e8472bd9b7aeeae3544e34cfdd307014196855374ca7cc75e5d",
+      "baseline_sha256": "845e6d4f4b0760806df521398f6ebcb6960514dac5fc797df9d0b0e3671de40e"
+    },
+    "crates/chart-core/src/scales/color.rs": {
+      "sha256": "2c3570c61cb6e95afdd066e090b249bee5d76d3d7bc681bce4ae1c70070566b0",
+      "baseline_sha256": "eaef9f2a02d3e65841e16ee94aacc237e1c8bf36887ce4812dafaa399dd595d1"
+    },
+    "crates/chart-core/src/scales/interpolated.rs": {
+      "sha256": "ce5764a92463f81094f49c2ddde898821c1de795d625f47d3f258f5d5c20489f",
+      "baseline_sha256": "2f20607d11a795757288bedd5914d83d749d20033be11b3bf3deea35930fb8f9"
+    },
+    "crates/chart-core/src/scales/mapped.rs": {
+      "sha256": "f11adab025509a478fde571b018c8de156717407e7983663225f4c6b71e6db78",
+      "baseline_sha256": "46b676ad109be381f2fd50b65e78a0f5569e0ec7abc8127a4e78c678a2a518e5"
+    },
+    "crates/chart-core/src/scales/standalone.rs": {
+      "sha256": "87364acc5e05014e4c3e596909aa65ab46a1a3db64d5ed667d2c3fc07005a296",
+      "baseline_sha256": "fb935445910507d963f33c1179482b7cc2b144f94b48e05191a6fd7f61522343"
+    },
+    "crates/chart-core/src/scales/standalone_authoring.rs": {
+      "sha256": "6fdc1057a79c94f0ef41e752b23b750e01d4f8625cc9a811632d5b986d365b72",
+      "baseline_sha256": "328db457f82cc2a44165696ba55e1a82655904ddc461b9f64449e86d0582187b"
+    },
+    "crates/chart-core/src/scales/time.rs": {
+      "sha256": "3b13994ef367323b3f27a0c94bd6fe93aeeb32d7be6d0235e444717177f313e8",
+      "baseline_sha256": "3b20eaa858e8fca6444719d58ee0fbefa57188e65d2baa7557dc34212822b25a"
+    },
+    "crates/chart-core/tests/interpolate_color.rs": {
+      "sha256": "92bb5b51c7bc968307aa24dbb69561b6f6a2c9e867564c66c724d9ef8db405f7",
+      "baseline_sha256": "92bb5b51c7bc968307aa24dbb69561b6f6a2c9e867564c66c724d9ef8db405f7"
+    },
+    "crates/chart-core/tests/interpolate_descriptors.rs": {
+      "sha256": "fa41869ec37bc7775d151190fbadedd8befbfc8cd81a8867d5e12a4dd5efa736",
+      "baseline_sha256": "fa41869ec37bc7775d151190fbadedd8befbfc8cd81a8867d5e12a4dd5efa736"
+    },
+    "crates/chart-core/tests/interpolate_motion.rs": {
+      "sha256": "80fffb48fb9dc3a12cb7fd4994d8280d6597ef48a6a9a3d33d15ab0f4e8d0c7a",
+      "baseline_sha256": "80fffb48fb9dc3a12cb7fd4994d8280d6597ef48a6a9a3d33d15ab0f4e8d0c7a"
+    },
+    "crates/chart-core/tests/interpolate_registered.rs": {
+      "sha256": "2617fec959e0775b18fdc27f8cf297926bd5e5b48370d3bd7b94542f51b1f826",
+      "baseline_sha256": null
+    },
+    "crates/chart-core/tests/interpolate_scalar.rs": {
+      "sha256": "5c612ec45cf812ebdf2b35f6b429b34c930dea1cd41a29e548437c356e461fe7",
+      "baseline_sha256": "5c612ec45cf812ebdf2b35f6b429b34c930dea1cd41a29e548437c356e461fe7"
+    },
+    "crates/chart-core/tests/interpolate_values.rs": {
+      "sha256": "b4eb6f583166361bcf47cb14281ae4331c88dcc673abbd889cedeff5be6501a2",
+      "baseline_sha256": "b4eb6f583166361bcf47cb14281ae4331c88dcc673abbd889cedeff5be6501a2"
+    },
+    "crates/chart-core/tests/scale_interpolated.rs": {
+      "sha256": "6876ce2a50d5a25398b6f5405a97fbddc985931eaa5fb28387045af6f926e008",
+      "baseline_sha256": "6876ce2a50d5a25398b6f5405a97fbddc985931eaa5fb28387045af6f926e008"
+    },
+    "crates/chart-export/examples/interpolation_proof.rs": {
+      "sha256": "946be5c8c5a633d9bf972bd3f184ed2dae4a0beaf5fe84defd21cb60626c216c",
+      "baseline_sha256": null
+    },
+    "crates/chart-export/src/snapshot.rs": {
+      "sha256": "59bce9a3d707baa001726b174311a3945ae20741249847d7669c8df2f597ffb1",
+      "baseline_sha256": "bbcc75dd2aeb7ecb8c4c99cb141d2b1d70aad9345a5fd30c945f6404a2d2b265"
+    },
+    "crates/chart-python/src/authoring/interpolate.rs": {
+      "sha256": "6d17abda65456cbddadd68bd79f8d2205995c6b6b0896f6f33dd51dcf2fe0a6e",
+      "baseline_sha256": "c4482f37b743437b34f71461db5cc4820966b4edac7b5319e245a05ecd4c81f3"
+    },
+    "crates/chart-python/src/authoring/scale.rs": {
+      "sha256": "b749bc398bd686cbfdf8e772e273d37ce3c34200b438f26c5bb3d4512d44c103",
+      "baseline_sha256": "b37d516103c308f87fb3c00b003f8c978e9c3590eb2b62926108d84d493aa14d"
+    },
+    "crates/chart-python/src/authoring/shape_registry.rs": {
+      "sha256": "52787b781f6984825865af4d5ad8a43f0d923a445a49cacefc25a6c801885ff4",
+      "baseline_sha256": "a69773f04fa4d1dcb3533fba34064d640ef01dcdb35e055012d2f6937f49576b"
+    },
+    "crates/chart-wasm/src/authoring/interpolate.rs": {
+      "sha256": "8e482268f4a1676990ffcacd369d5c073e96863b7f6932e049d8e6da36fa340a",
+      "baseline_sha256": "39a75399de663cb2f2c8dc80e03a8ccd1e802c78aa0006f5cbddffdd2f43492a"
+    },
+    "crates/chart-wasm/src/authoring/scale.rs": {
+      "sha256": "5424ae15b6674d675ac551452f75b31ee4fc2d3d02bcaac46472e47b0cdfc58a",
+      "baseline_sha256": "04a625b0332062a47153189c1abbc1e68a0321ff8dfa8a9ced55778ee82373de"
+    },
+    "crates/chart-wasm/src/authoring/shape_registry.rs": {
+      "sha256": "b81fba7fb5ab602dc0a923992c36b8e94dfe1d76672870eedc8320ce593209be",
+      "baseline_sha256": "8fecce063c4d964176ac9d9b48e16a6a6a1b9a66d9c38878ae51a204b94b0262"
+    },
+    "crates/gpui-charts-kit/src/lib.rs": {
+      "sha256": "f9e6cd8dc4036ab78569e8c22a78a08612e251a2d547db0b8f95f980d8bf1b02",
+      "baseline_sha256": "6762827a43e9a2a4b4b970c777f7108f30bc25724114c7505e2bbb894226feb0"
+    },
+    "docs/adr/001-host-dependency-and-toolchain.md": {
+      "sha256": "0b57b975765f020fb6f1a8624cf4f1d1e8aa8ffae16e0033857b5f527db64140",
+      "baseline_sha256": null
+    },
+    "docs/adr/002-minimal-core-contracts.md": {
+      "sha256": "a7c5844ef4e0e8ead5440e4957222fbe5d84b4c45acd8eff1f8b8a2f7c2d58f7",
+      "baseline_sha256": null
+    },
+    "docs/adr/003-font-and-renderer-capability-route.md": {
+      "sha256": "1a35fba90919d6d1fec27c978838034a61fa60e5f61d9c9310a0752d987019fe",
+      "baseline_sha256": null
+    },
+    "docs/adr/004-immutable-data-and-transactions.md": {
+      "sha256": "47758d4c6d7f10aad0c57476918f4adac72cda6194751c6697ff0088c9119bb9",
+      "baseline_sha256": null
+    },
+    "docs/adr/005-foundational-scales-and-layout.md": {
+      "sha256": "6c3ba546b399c59b4d5b22a73b3bb0c86e13fc8d121369bd07ba6873e0f26972",
+      "baseline_sha256": null
+    },
+    "docs/adr/006-portable-specification-and-binding-proofs.md": {
+      "sha256": "76d36d3f68b2fbaafc738374f2ee052c34b0b8395c070b58c1174dad6ae74839",
+      "baseline_sha256": null
+    },
+    "docs/adr/007-actions-gestures-and-controlled-state.md": {
+      "sha256": "97fa23c30538c2405903d07847a5fb9df9ab8f62169303d55a5b603a18ddb819",
+      "baseline_sha256": null
+    },
+    "docs/adr/008-benchmark-protocol.md": {
+      "sha256": "f1431537ff742e2e23b8c520c18243ae7e5661536a82f3af36e69c590fc710c2",
+      "baseline_sha256": null
+    },
+    "docs/adr/009-supported-platform-and-accessibility.md": {
+      "sha256": "ce125248a26d7ce4e1420912f3a62842e90fffb1d4a431df85522338d4cf7799",
+      "baseline_sha256": null
+    },
+    "docs/adr/010-package-and-release-policy.md": {
+      "sha256": "520e38cb9e345225ccb6ff4c7f150c51e98423e5f64c3445b35d39c2b9e029fe",
+      "baseline_sha256": null
+    },
+    "docs/adr/011-explicit-typography-and-composition.md": {
+      "sha256": "a1ce719c9f4c31b00bb71b5f4d8cc5cdfdd3014395d75fc2337ffd5b847d3a03",
+      "baseline_sha256": null
+    },
+    "docs/adr/012-registered-alpha-extensions.md": {
+      "sha256": "aefc3c99b8907d5418b4c3b4c066d332a08d5ab1c6c06badd99ef7a5ddc1739b",
+      "baseline_sha256": null
+    },
+    "docs/adr/013-primary-authoring-api.md": {
+      "sha256": "93e17915c9bbad6f433c80b71ceca066474c440973b2abbede3dff5df56d7c21",
+      "baseline_sha256": null
+    },
+    "docs/adr/014-phase-2-integration-contract.md": {
+      "sha256": "261dbd7284c1f4a25ce0c455aec513bb2d7c77b839698cb3274efd32895ee3b0",
+      "baseline_sha256": null
+    },
+    "docs/adr/015-path-authoring-and-replay.md": {
+      "sha256": "f0c03a5d7bbf3785b1244903c22aef2d410c62811bd7deb3adc1287e6005d12b",
+      "baseline_sha256": null
+    },
+    "docs/adr/016-color-values-and-paint-boundary.md": {
+      "sha256": "c0ce668322f789fa69feb0a25898fd7a710ab161b0e9070ef05c03eed0df6877",
+      "baseline_sha256": null
+    },
+    "docs/adr/017-shared-interpolation-values.md": {
+      "sha256": "5948d5dee15261364dfe7f952c403a0cdecdb48b73e13c88de181162d33f8102",
+      "baseline_sha256": null
+    },
+    "docs/adr/018-scale-compatibility-and-resources.md": {
+      "sha256": "e1f37844606275ee3cb52465ac5d773c96b47e599af9aa51015fcffa7aa78363",
+      "baseline_sha256": null
+    },
+    "docs/adr/019-chromatic-catalog-and-evaluation.md": {
+      "sha256": "7d8f8fe8d0256be66f02d16089db0edde9807c8a385fc5d7ad647caff390a7d7",
+      "baseline_sha256": null
+    },
+    "docs/adr/020-shape-generators-and-curve-protocols.md": {
+      "sha256": "0672428510235a32922a912cb035db1473b884943d4ee1b0ee59e5633aa409c2",
+      "baseline_sha256": null
+    },
+    "docs/adr/021-independent-axis-guides.md": {
+      "sha256": "18ecd01df702526cbb2b1bf79ffcc1ad2a434cb0f75d2487ed97e85888373c22",
+      "baseline_sha256": null
+    },
+    "docs/ai-development.md": {
+      "sha256": "0fdd75694f5bf219e06e6cc586c2d1344868f3522259a2a79aee508273432b44",
+      "baseline_sha256": null
+    },
+    "docs/alpha-api.md": {
+      "sha256": "06eb86b1c503521bb6b25f2bcfc2f6e18e6a60872484e1767b82611d9c4d4f88",
+      "baseline_sha256": null
+    },
+    "docs/authoring-guide.md": {
+      "sha256": "9036c480f402d0307386c8889972fe7064ca20c886a6fb08b3968fea75ec8111",
+      "baseline_sha256": null
+    },
+    "docs/developer-guide.md": {
+      "sha256": "2722f5a34e68ad0f32869cf3b253230c8de7e61baaa3fdadf9ead5c66147dcdb",
+      "baseline_sha256": null
+    },
+    "docs/extension-contract.md": {
+      "sha256": "879c1906dd6bce7705b7d64dd55c1ec5db5d86016bf74c282d2fead33c1a44b8",
+      "baseline_sha256": null
+    },
+    "docs/facet-layout-contract.md": {
+      "sha256": "eb689a3f402192e72a33ace71580d3c638c645f20cccc73d47982118f0bd126f",
+      "baseline_sha256": null
+    },
+    "docs/host-tools-contract.md": {
+      "sha256": "fce6669679619392b0c8760dd74ded7cbb45d325207aa9e9fad002db8c7c7f04",
+      "baseline_sha256": null
+    },
+    "docs/impl_plans/d3-axis-parity-plan.md": {
+      "sha256": "d2abb91087d90da863d9ec7a90aa0cfcb97bb9292b6345aac7bdee1a6e90b052",
+      "baseline_sha256": null
+    },
+    "docs/impl_plans/d3-color-parity-plan.md": {
+      "sha256": "8385cb0cf2848ee1c49167dd8d70f681b62988ee5fba05020aa047db3190adc9",
+      "baseline_sha256": null
+    },
+    "docs/impl_plans/d3-hierarchy-parity-plan.md": {
+      "sha256": "b9156f56f78dd9de469f79738c9ff1614ffab3bfabc455c4151683a574c39cbe",
+      "baseline_sha256": null
+    },
+    "docs/impl_plans/d3-interpolate-parity-plan.md": {
+      "sha256": "02b477aaa71d0bcb480f1c248c865872ea5e8ef1b636ee07db22bb9d93e86e29",
+      "baseline_sha256": null
+    },
+    "docs/impl_plans/d3-path-parity-plan.md": {
+      "sha256": "4b0fad22b1b10c51ab8f94a3728014e546b8de92aaf3ff7688001d2ee77c5d69",
+      "baseline_sha256": null
+    },
+    "docs/impl_plans/d3-scale-chromatic-parity-plan.md": {
+      "sha256": "93a5b92771853e36bd795ca99653d72b2fa141ff6535c3e62b2320a2a02f78df",
+      "baseline_sha256": null
+    },
+    "docs/impl_plans/d3-scale-parity-plan.md": {
+      "sha256": "f7bd7e1185d7e6cc30889b0eeb2491084ac245deea4db0d38eb3002ad593d843",
+      "baseline_sha256": null
+    },
+    "docs/impl_plans/d3-shape-parity-plan.md": {
+      "sha256": "1ea1e95dfbe968d3b62102ebcf6f6cc4038424485ce7eda13e3eab2cc65df338",
+      "baseline_sha256": null
+    },
+    "docs/impl_plans/gpui-charts-implementation-plan.md": {
+      "sha256": "f54a1b5fbf6f59eb6fae51422eaa07aa36883a27d3c658732259d3d7fd21a031",
+      "baseline_sha256": null
+    },
+    "docs/impl_plans/package-infrastructure-plan.md": {
+      "sha256": "9da2556d5fe6c6b1b9d3e6fac3b54c4ca266bdefbd06a2efb82abb35dec69931",
+      "baseline_sha256": null
+    },
+    "docs/impl_plans/phase-2-parity-implementation-plan.md": {
+      "sha256": "010aed158fa1c2003729a9be67cca4fc2d748b10adc470ead2f8fb028963661f",
+      "baseline_sha256": null
+    },
+    "docs/impl_plans/primary-authoring-api-plan.md": {
+      "sha256": "8dd5cd4811bc32a8b646b6f53e1e9a131e693b6c2804c4a31a86593e12828555",
+      "baseline_sha256": null
+    },
+    "docs/implementation-status.md": {
+      "sha256": "7c3a4a25ceaab915d35f6b2edf8a8f21fc822f3d05aff1330e24d792e0b74022",
+      "baseline_sha256": null
+    },
+    "docs/interaction-contract.md": {
+      "sha256": "b3b099063871422a9648cd409176c18f83fecff7aa83eca2852941f4830a860e",
+      "baseline_sha256": null
+    },
+    "docs/live-export-contract.md": {
+      "sha256": "c160e9ab3b0596bcdbc790eb268a8be5ace5b2003d8fc911ac223c35422c9a87",
+      "baseline_sha256": null
+    },
+    "docs/phase-2-coverage.md": {
+      "sha256": "959ce5df31ea228e5e43374cd9c890a074658da667decdc90bb5c9f7ab45226f",
+      "baseline_sha256": null
+    },
+    "docs/portable-contract.md": {
+      "sha256": "859f86ed38083c69fdcafba1ab389bb217da6ef811799ce525e2b0030e47416c",
+      "baseline_sha256": null
+    },
+    "docs/primary-authoring-api.md": {
+      "sha256": "3333140e00d24f8aff8345c2018939efabf01e60dd2dd675a8873974a4d88d1e",
+      "baseline_sha256": null
+    },
+    "docs/release-evidence.md": {
+      "sha256": "294e0bffdd1d13c5c3b8b047cf17f5ffd93dd2228a234f0b2c07ba08a3f43c4b",
+      "baseline_sha256": null
+    },
+    "docs/release-guide.md": {
+      "sha256": "dd83dcab87b0c3f6d3d18885db19d0e5cc4b36c136f75b78397d3c9e0e205f72",
+      "baseline_sha256": null
+    },
+    "docs/scale-geometry-contract.md": {
+      "sha256": "9f07693f7d38538d68d815cfcff1ecaa441e98ea84925e8f0743db11147f6089",
+      "baseline_sha256": null
+    },
+    "docs/scheduling-density-contract.md": {
+      "sha256": "38de56534a0f55d3eeda63ceb5237ead3ad9956c4271da8ef203cd0da21806db",
+      "baseline_sha256": null
+    },
+    "docs/spec/gpui-charts-migration-plan.md": {
+      "sha256": "455d2575711f8704c69c55cba9080ea0f7a2bea312de675d7ec2ef84af0e1759",
+      "baseline_sha256": null
+    },
+    "docs/spec/gpui-charts-specification.md": {
+      "sha256": "9eaf68d678bceff430f7bc50cc2b3021734c5e1ace794bc81ae57b9d6fe4ba52",
+      "baseline_sha256": null
+    },
+    "docs/state-action-contract.md": {
+      "sha256": "6af5dcedde7f14e442f3805e6e1bc2f2df9d358192a6c32b13c5d2ff391d4026",
+      "baseline_sha256": null
+    },
+    "docs/statistics-contract.md": {
+      "sha256": "7df7ba45e45238958423a6321eacab36ad1841685355f1c3058b62d4af55f037",
+      "baseline_sha256": null
+    },
+    "docs/streaming-contract.md": {
+      "sha256": "9e4155800c265c4b658bd70c133e7c3b081cbb196abc4f57ab773d2c30176e79",
+      "baseline_sha256": null
+    },
+    "docs/support-matrix.md": {
+      "sha256": "b1aad1a332009af8b237613a87b470e52fcd179fe0a038d1f310b09840062aa5",
+      "baseline_sha256": null
+    },
+    "docs/theme-typography-composition-contract.md": {
+      "sha256": "c14ecccb24466440a18b148e77f6852464ed2b3883bb05ea620092b0e9e3220f",
+      "baseline_sha256": null
+    },
+    "examples/chart-gallery/examples/interpolation.rs": {
+      "sha256": "d560f9571ccc9742bb3f996725f0bfc46d7d9d5782d120001b11f7227a290bd2",
+      "baseline_sha256": null
+    },
+    "examples/common/interpolation_fixtures.rs": {
+      "sha256": "1db36b928c9e580a2be4a9c71d0bd9fa82af93b33639021bef555a663ab419d2",
+      "baseline_sha256": null
+    },
+    "examples/custom-extension/examples/interpolation_benchmark.rs": {
+      "sha256": "0ac624dbcfe6e95d1820c3e1b904b8317a240f428c858bf3278f2331a78f47b2",
+      "baseline_sha256": null
+    },
+    "examples/custom-extension/src/interpolate.rs": {
+      "sha256": "31a56ce5def14c88ef87db935db2b1994743251828bfd01d596c39dda0758f47",
+      "baseline_sha256": null
+    },
+    "examples/custom-extension/src/lib.rs": {
+      "sha256": "22eb1bd27e22f906d64f1c50f1d59f0dbdeea590581c708b80dbdb30f372cda6",
+      "baseline_sha256": "dbed27b4d4c16c37b2103fd245cf99ba068df4c33bb675632d14f9a4d06fafe0"
+    },
+    "packages/python/finstack_chart/_interpolation.py": {
+      "sha256": "2736125fb9060aa8ea292e221cc5686db8fa6498f907a9f5ef334a08e4c439d0",
+      "baseline_sha256": "12bb2344241b387bff82395cfa782967f6f107ae1b9fd35defbeb74a904d56b1"
+    },
+    "packages/python/finstack_chart/_scales.py": {
+      "sha256": "3cc5e82308e9496d43021696b34864c1c50643eae752a69fa54b33d51916df11",
+      "baseline_sha256": "b729b199e933b0ccfbda2cd01e9999f2c7acc86d97898a413492ae2463d22f8a"
+    },
+    "packages/wasm/authoring.cjs": {
+      "sha256": "8d5c936ac703b79e34f889feb5848b5d18eec37e34a98a4d1447fa739847a95a",
+      "baseline_sha256": "02a41b3597c857e688bb25f7e82b8f10ebdf52d407cc44b957932fbf9bed1ed7"
+    },
+    "packages/wasm/interpolation.cjs": {
+      "sha256": "e12f4d2f74b0e20c9ba79aaeedac4fb00884e58b97a4afd161d41ec7e62c292e",
+      "baseline_sha256": "0570e1a1dd40e14ea3b09d1b39cfc1971ef4b89b00a78bd693cd16b2375e449c"
+    },
+    "packages/wasm/scales.cjs": {
+      "sha256": "ffed859175e75e08be1688f775e4d63d8647d9572052c4771c0647996e450438",
+      "baseline_sha256": "b60fce9905b137c11fc5c9541dc80580dc86a8c158dc2d8ceac58e040a317ecd"
+    },
+    "scripts/bindings/authoring/interpolate_typing.py": {
+      "sha256": "f22b420e1d2c3930b60745c5f2aa68a51531c3c60b44cf5ee8f600841f4d4357",
+      "baseline_sha256": "f22b420e1d2c3930b60745c5f2aa68a51531c3c60b44cf5ee8f600841f4d4357"
+    },
+    "scripts/bindings/authoring/interpolate_typing_invalid.py": {
+      "sha256": "ffac5be2cd09e27545d688264958be7d81236d6359909bbb803e26b87262331e",
+      "baseline_sha256": "ffac5be2cd09e27545d688264958be7d81236d6359909bbb803e26b87262331e"
+    },
+    "scripts/bindings/authoring/interpolation_integration_typing.py": {
+      "sha256": "007a615e1fc033c46d6175a150c11945eacbdccd1b6dde1bb331f165659fef85",
+      "baseline_sha256": null
+    },
+    "scripts/bindings/authoring/interpolation_integration_typing_invalid.py": {
+      "sha256": "8eaf176db6d57ffc2047ef4633ec5b3b5f8c82461e64917fb18bdb5f6710c4d4",
+      "baseline_sha256": null
+    },
+    "scripts/bindings/interpolate.cjs": {
+      "sha256": "d99b70b285d8a86ba9e9c6d984a6349a0d3e4659f631bc4b3d50d7124f7801d3",
+      "baseline_sha256": "d99b70b285d8a86ba9e9c6d984a6349a0d3e4659f631bc4b3d50d7124f7801d3"
+    },
+    "scripts/bindings/interpolate.py": {
+      "sha256": "9c0942ba5abdc70fd44dfedd8f01f80f2965d1723ef402a0f78299997b19ad79",
+      "baseline_sha256": "9c0942ba5abdc70fd44dfedd8f01f80f2965d1723ef402a0f78299997b19ad79"
+    },
+    "scripts/bindings/interpolation_integration.cjs": {
+      "sha256": "1e4720771b8a75c3e2970725f400e05942e3b3702ee858d989c5e6e925e74f73",
+      "baseline_sha256": null
+    },
+    "scripts/bindings/interpolation_integration.py": {
+      "sha256": "4d8084f18c8acf6c4494a137af91c965adae713efd4e2516246b5231ddca407c",
+      "baseline_sha256": null
+    },
+    "scripts/bindings/interpolation_integration_compare.py": {
+      "sha256": "b916e7ccb78b332aecd525fa1ee806147deace3292781e42b3de85ee386cbbfe",
+      "baseline_sha256": null
+    },
+    "scripts/run_primary_authoring_proofs.py": {
+      "sha256": "95042a4f7fc0e211f95a7bf405f237cc047a4200b0d2e196c021b60497920970",
+      "baseline_sha256": "c72afedcd4475e9cdbc06ad109814f79b91ce8160acb3ecbb8b805e1f6d24c96"
+    },
+    "tools/reference/README.md": {
+      "sha256": "84b2367ef85ed051b7fd8e3b56127fd24693b03cf4f807b46e74a069d26db237",
+      "baseline_sha256": null
+    },
+    "tools/reference/extract_chromatic.py": {
+      "sha256": "2fe91997c568b7f8bcb7c18875083dc26c057bc695603633861629cd9eb1625b",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/axis.mjs": {
+      "sha256": "7ee82d3dd3a4df6a5cfa4caf1ffda6a65d3793293ee5990cdf0ada5ba5a45d72",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/calendar.mjs": {
+      "sha256": "e0cbf4f2165ebf86dac00d72364798c55277a42a108560ce6fc691e0e04a25db",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/chromatic-composition.mjs": {
+      "sha256": "5b3a06b1d2603e9510eb3182b57c788db44e4f880195aa00caf6c3baab33b973",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/chromatic-transformed.mjs": {
+      "sha256": "3c2ef8dcd78bdeeae91cfc8f02c1d6a08161989b74eb463487051eb0773ba221",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/chromatic-trig.mjs": {
+      "sha256": "1f471b34de626e30818f3e92123e8c40d6286bbfa6bb182e46c253e092b983f6",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/chromatic.mjs": {
+      "sha256": "c669e8b553859a232eb2190a37e32ffb6abb56b1bc41bc54202725bb0edc80aa",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/color.mjs": {
+      "sha256": "2b8caea1272cf8ce28bf36d48657f56fce309d21b0ece206410c17e704c563d0",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/interpolate-browser.mjs": {
+      "sha256": "30a3c22121d1367185c9af312d426dc94d19e5a549c9909848bc2b0ffb8b0512",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/interpolate.mjs": {
+      "sha256": "0c80768872830d7454506db3b647b7288aa2b9af5372e69a061fa63f7d0d31fc",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/locks/foundation-package-lock.json": {
+      "sha256": "bcaf52b90527128695304aabf5a959f0b19445715d4d6ca465a0ea6de8b3187e",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/manifest.json": {
+      "sha256": "12818680e5f2d116b8325ce3d5b6988739c184cbd1f417988ee27cc40c105ae4",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/numeric-format.mjs": {
+      "sha256": "9330d49edfc1b209e7014ee296ef9f3417b89e8d33e1f1a811f51167e999a013",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/package-lock.json": {
+      "sha256": "8b0a7880a9d4183df4caad0f09aecb69aa9e612e9ef6bf81eb3d047dcc083a33",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/package.json": {
+      "sha256": "ca715aa153c5dadb8da63abdefa11bcf1ecf3ed6f5a9cd34e4e7e91d319a5a1e",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/path.mjs": {
+      "sha256": "3b953d8e0f3fcdbdd9e71783f928d12eeb553911eaef42666305ec130c11a497",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/provenance.mjs": {
+      "sha256": "e8508e9d7dc98643cb8c37f86597ba15a12b6e0a9a1cfbae0669a33b00197056",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/scale-time.mjs": {
+      "sha256": "6893125978793220f521e0d963257baf7cddd1218fdd2a51f85412ff2019e5d0",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/scale.mjs": {
+      "sha256": "bafd68d2320ec2503153feb12d2f60fcc293832ed22add2d30d1b1bb0476600d",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/shape-arc-pie.mjs": {
+      "sha256": "e4d0fb7ab2985422bbe9333796b30f465eb9879633eba59aa10c80cc656a37a2",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/shape-cartesian.mjs": {
+      "sha256": "014f82437ebf96a50defad552de6dad4dafb87a321ce56c1a4398f455b64f656",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/shape-radial-link.mjs": {
+      "sha256": "79a97e7ca6bc8308118a20c50cd6767c5af2b9c80ddd161714790bcbf691fe93",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/shape-radial.mjs": {
+      "sha256": "90096c907016017d405a6a8c330606abd419260488a0d94df752e3ff4a68d1fb",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/shape-stack.mjs": {
+      "sha256": "fcc4a3e1c8db3f0b56edc196bc02982fd51edf5e7da31898e08ad196cfa69195",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/shape-symbol.mjs": {
+      "sha256": "86b770d0101e6d2f0beba6ee1458b6400d43b58a6a0fda55169648210389d95e",
+      "baseline_sha256": null
+    },
+    "tools/reference/node/shape.mjs": {
+      "sha256": "0360709602657a715e7f008faef1202418b82018d53663474084c907242ae049",
+      "baseline_sha256": null
+    },
+    "tools/reference/r/download_sources.py": {
+      "sha256": "8ead02b8e3814f77a27920be71af0c982215a10e302798ae63f873846e0fad11",
+      "baseline_sha256": null
+    },
+    "tools/reference/r/manifest.py": {
+      "sha256": "1dd0298e43d5a0720a05791dc1fdc67bcdf7fa8dcecc4eb78457a0cc205e4b55",
+      "baseline_sha256": null
+    },
+    "tools/reference/r/manifest_stages.py": {
+      "sha256": "e116858fd07e85d7843c328a13689cf8515468e0223c792f17565f0580f72d0c",
+      "baseline_sha256": null
+    },
+    "tools/reference/r/normalize_pdf.py": {
+      "sha256": "b4818916b515e0363cec18ccea0d0aed30f5123f4bc1d3b7a7fc33a4cf33b7b8",
+      "baseline_sha256": null
+    },
+    "tools/reference/r/renv.lock": {
+      "sha256": "cf48fbd065d8367d6e127b7f3bb6c726a9aca0baa466546daed4852d1a5ed5b2",
+      "baseline_sha256": null
+    },
+    "tools/reference/r/run.py": {
+      "sha256": "48593eda8f1bd8ac0fa93ef37ab2e0294f333dc05ba10f52a8297a43e16eb0e4",
+      "baseline_sha256": null
+    },
+    "tools/reference/scale_operations.py": {
+      "sha256": "44781976b469c978ac4cddf54f39b81ed761a1d1566ba2c429f69f9b893a85b7",
+      "baseline_sha256": null
+    }
+  }
+}

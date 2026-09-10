@@ -20,7 +20,7 @@ impl RuntimeHandle {
     }
     fn accept_from(&mut self, py: Python<'_>, source: &Self) -> PyResult<String> {
         let source = source.get()?;
-        let runtime = self.inner.as_mut().ok_or_else(disposed)?;
+        let runtime = self.get_mut()?;
         py.detach(|| runtime.accept_from(source)).map_err(failure)
     }
     #[pyo3(signature=(name, input, expected=None))]
@@ -31,7 +31,7 @@ impl RuntimeHandle {
         input: &str,
         expected: Option<u64>,
     ) -> PyResult<String> {
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
+        let c = self.get_mut()?;
         py.detach(|| c.command(name, input, expected))
             .map_err(failure)
     }
@@ -45,7 +45,7 @@ impl RuntimeHandle {
         stamp: Option<&str>,
     ) -> PyResult<String> {
         let stamp = stamp.map(portable::decode).transpose().map_err(failure)?;
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
+        let c = self.get_mut()?;
         py.detach(|| c.named_query(name, input, gesture, stamp))
             .map_err(failure)
     }
@@ -62,16 +62,16 @@ impl RuntimeHandle {
         self.get()?.state().map_err(failure)
     }
     fn semantics(&mut self, py: Python<'_>) -> PyResult<String> {
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
+        let c = self.get_mut()?;
         py.detach(|| c.semantics()).map_err(failure)
     }
     fn apply_plot(&mut self, py: Python<'_>, plot: &PlotHandle, expected: u64) -> PyResult<bool> {
         let p = plot.get()?;
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
+        let c = self.get_mut()?;
         py.detach(|| c.apply_plot(p, expected)).map_err(failure)
     }
     fn restore_state(&mut self, py: Python<'_>, input: &str, expected: u64) -> PyResult<()> {
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
+        let c = self.get_mut()?;
         py.detach(|| c.restore_state(input, expected))
             .map_err(failure)
     }
@@ -83,7 +83,7 @@ impl RuntimeHandle {
         origin: &str,
         expected: Option<u64>,
     ) -> PyResult<String> {
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
+        let c = self.get_mut()?;
         py.detach(|| c.act(input, origin, expected))
             .map_err(failure)
     }
@@ -96,7 +96,7 @@ impl RuntimeHandle {
         stamp: Option<&str>,
     ) -> PyResult<String> {
         let stamp = stamp.map(portable::decode).transpose().map_err(failure)?;
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
+        let c = self.get_mut()?;
         py.detach(|| c.query(input, gesture, stamp))
             .map_err(failure)
     }
@@ -114,17 +114,13 @@ impl RuntimeHandle {
     ) -> PyResult<FrameHandle> {
         let o = output.get()?;
         let p = options.get()?;
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
+        let c = self.get_mut()?;
         py.detach(|| c.present(o, p))
             .map(FrameHandle::wrap)
             .map_err(failure)
     }
     fn stream(&mut self, options: &ComponentHandle) -> PyResult<()> {
-        self.inner
-            .as_mut()
-            .ok_or_else(disposed)?
-            .stream(options.get()?)
-            .map_err(failure)
+        self.get_mut()?.stream(options.get()?).map_err(failure)
     }
     fn queue_status(&self) -> PyResult<String> {
         self.get()?.queue_status().map_err(failure)
@@ -136,11 +132,11 @@ impl RuntimeHandle {
         self.get()?.pinned().map_err(failure)
     }
     fn commit_next(&mut self, py: Python<'_>) -> PyResult<String> {
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
+        let c = self.get_mut()?;
         py.detach(|| c.commit_next()).map_err(failure)
     }
     fn reset_epoch(&mut self, py: Python<'_>) -> PyResult<String> {
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
+        let c = self.get_mut()?;
         py.detach(|| c.reset_epoch()).map_err(failure)
     }
     fn transaction(&self) -> PyResult<UpdatesHandle> {
@@ -151,15 +147,11 @@ impl RuntimeHandle {
     }
     fn commit(&mut self, py: Python<'_>, transaction: &TransactionHandle) -> PyResult<String> {
         let t = transaction.get()?;
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
+        let c = self.get_mut()?;
         py.detach(|| c.commit(t)).map_err(failure)
     }
     fn enqueue(&mut self, transaction: &TransactionHandle) -> PyResult<String> {
-        self.inner
-            .as_mut()
-            .ok_or_else(disposed)?
-            .enqueue(transaction.get()?)
-            .map_err(failure)
+        self.get_mut()?.enqueue(transaction.get()?).map_err(failure)
     }
     fn dense(
         &self,
@@ -173,16 +165,12 @@ impl RuntimeHandle {
         py.detach(|| c.dense(f, o)).map_err(failure)
     }
     fn link_capture(&mut self, component: &ComponentHandle, event: &str) -> PyResult<String> {
-        self.inner
-            .as_mut()
-            .ok_or_else(disposed)?
+        self.get_mut()?
             .link_capture(component.get()?, event)
             .map_err(failure)
     }
     fn link_resolve(&mut self, component: &ComponentHandle, message: &str) -> PyResult<String> {
-        self.inner
-            .as_mut()
-            .ok_or_else(disposed)?
+        self.get_mut()?
             .link_resolve(component.get()?, message)
             .map_err(failure)
     }
@@ -271,10 +259,4 @@ impl EditorHandle {
     fn dispose(&mut self) {
         self.inner.take();
     }
-}
-pub(super) fn register(m: &Bound<'_, PyModule>) -> PyResult<()> {
-    m.add_class::<EditorHandle>()?;
-    m.add_class::<RuntimeHandle>()?;
-    m.add_class::<UpdatesHandle>()?;
-    m.add_class::<TransactionHandle>()
 }

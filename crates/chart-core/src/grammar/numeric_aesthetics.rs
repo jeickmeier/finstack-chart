@@ -60,6 +60,7 @@ pub(super) fn apply(
     rows: &mut [EncodedRow],
     limits: CompileLimits,
     samples: &BTreeMap<ScaleId, crate::scales::ScalePopulation>,
+    registry: &ExtensionRegistry,
 ) -> ChartResult<()> {
     for (aesthetic, encoding) in &layer.numeric_scales {
         if *aesthetic == NumericAesthetic::Size
@@ -79,10 +80,11 @@ pub(super) fn apply(
         }
         super::shape_encoding::validate_channel(layer.geom, *aesthetic)?;
         let input = super::colors::read_inputs(&encoding.input, data, table, rows, limits, None)?;
-        let scale = MappedScale::for_numbers(
+        let scale = MappedScale::for_numbers_with_registry(
             encoding
                 .scale
                 .trained_population(samples.get(&encoding.id))?,
+            registry,
         )?;
         for (i, row) in rows.iter_mut().enumerate() {
             let result = if matches!(

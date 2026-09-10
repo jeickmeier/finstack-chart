@@ -142,6 +142,7 @@ pub(super) fn apply(
     rows: &mut [EncodedRow],
     limits: CompileLimits,
     samples: &BTreeMap<crate::ScaleId, crate::scales::ScalePopulation>,
+    registry: &ExtensionRegistry,
 ) -> ChartResult<Vec<SymbolLegend>> {
     validate(layer, limits)?;
     let Geom::ShapeSymbol { kind, size, paint } = layer.geom else {
@@ -193,10 +194,11 @@ pub(super) fn apply(
     }
     if let Some(g) = &layer.symbol_size_guide {
         let encoding = &layer.numeric_scales[&NumericAesthetic::AreaSize];
-        let scale = crate::scales::MappedScale::for_numbers(
+        let scale = crate::scales::MappedScale::for_numbers_with_registry(
             encoding
                 .scale
                 .trained_population(samples.get(&encoding.id))?,
+            registry,
         )?;
         let entries = g
             .values

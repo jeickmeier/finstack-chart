@@ -1,4 +1,4 @@
-import {ColorValue,Owned} from './authoring.cjs';
+import {ColorValue,Owned,ShapeRegistry} from './authoring.cjs';
 export type NumericArrayKind='Float32Array'|'Float64Array'|'Int8Array'|'Uint8Array'|'Uint8ClampedArray'|'Int16Array'|'Uint16Array'|'Int32Array'|'Uint32Array';
 export type InterpolationNumericArray=Float32Array|Float64Array|Int8Array|Uint8Array|Uint8ClampedArray|Int16Array|Uint16Array|Int32Array|Uint32Array;
 export type InterpolationInput=null|undefined|boolean|number|string|Date|ColorValue|InterpolationNumericArray|ReadonlyArray<InterpolationInput>|{readonly [key:string]:InterpolationInput};
@@ -9,8 +9,8 @@ export {date_value as dateValue};
 export function numeric_array(kind:NumericArrayKind,values:Iterable<number>):InterpolationNumericArray;
 export {numeric_array as numericArray};
 export class Interpolator<T=InterpolationResult> extends Owned{
-  static from_json(value:string):Interpolator;
-  static fromJson(value:string):Interpolator;
+  static from_json(value:string,registry?:ShapeRegistry):Interpolator;
+  static fromJson(value:string,registry?:ShapeRegistry):Interpolator;
   to_json():string;toJson():string;
   copy():Interpolator<T>;
   sample(t:number):T;
@@ -76,3 +76,12 @@ export function chromatic_catalog():ChromaticCatalog;
 export function chromatic_scheme(name:ChromaticSchemeId,size?:number|null,reverse?:boolean):ColorValue[];
 export function chromatic(name:ChromaticInterpolatorId,reverse?:boolean):Interpolator<ColorValue>;
 export {chromatic_catalog as chromaticCatalog,chromatic_scheme as chromaticScheme};
+
+export interface RegisteredInterpolationFactory extends BinaryInterpolationFactory<InterpolationResult> {
+  copy():RegisteredInterpolationFactory;
+  dispose():void;
+  free():void;
+  [Symbol.dispose]():void;
+}
+export function registered_interpolation(registry:ShapeRegistry,id:string,version:number|bigint|string,parameters?:Readonly<Record<string,unknown>>):RegisteredInterpolationFactory;
+export {registered_interpolation as registeredInterpolation};

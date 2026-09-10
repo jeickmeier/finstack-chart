@@ -1,5 +1,5 @@
+//! Owned symbol generators and palettes; geometry is implemented in chart-core.
 use super::shape_registry::ShapeRegistryHandle;
-// Owned symbol generators and palettes; geometry is implemented in chart-core.
 use super::{disposed, failure, handle, path::PathHandle};
 use chart_core::{
     portable,
@@ -46,7 +46,4 @@ impl ShapeSymbolHandle {
     fn dispose(&mut self) {
         self.inner.take();
     }
-}
-pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
-    module.add_class::<ShapeSymbolHandle>()
 }

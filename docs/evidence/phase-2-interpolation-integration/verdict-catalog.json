@@ -1,0 +1,851 @@
+{
+  "scope": "WP-IP07 independent certification evidence; package and G-INTERPOLATE remain OPEN until WP-AX06",
+  "exports": [
+    {
+      "export": "interpolate",
+      "case_count": 147,
+      "case_ids": [
+        "dispatch-0",
+        "dispatch-1",
+        "dispatch-2",
+        "dispatch-3",
+        "dispatch-4",
+        "dispatch-5",
+        "dispatch-6",
+        "dispatch-7",
+        "dispatch-8",
+        "dispatch-9",
+        "dispatch-10",
+        "dispatch-11",
+        "dispatch-12",
+        "dispatch-13",
+        "dispatch-14",
+        "dispatch-15",
+        "dispatch-16",
+        "dispatch-17",
+        "dispatch-18",
+        "dispatch-19",
+        "dispatch-20",
+        "mixed-0-0",
+        "mixed-0-1",
+        "mixed-0-2",
+        "mixed-0-3",
+        "mixed-0-4",
+        "mixed-0-5",
+        "mixed-0-6",
+        "mixed-0-7",
+        "mixed-0-8",
+        "mixed-0-9",
+        "mixed-1-0",
+        "mixed-1-1",
+        "mixed-1-2",
+        "mixed-1-3",
+        "mixed-1-4",
+        "mixed-1-5",
+        "mixed-1-6",
+        "mixed-1-7",
+        "mixed-1-8",
+        "mixed-1-9",
+        "mixed-2-0",
+        "mixed-2-1",
+        "mixed-2-2",
+        "mixed-2-3",
+        "mixed-2-4",
+        "mixed-2-5",
+        "mixed-2-6",
+        "mixed-2-7",
+        "mixed-2-8",
+        "mixed-2-9",
+        "mixed-3-0",
+        "mixed-3-1",
+        "mixed-3-2",
+        "mixed-3-3",
+        "mixed-3-4",
+        "mixed-3-5",
+        "mixed-3-6",
+        "mixed-3-7",
+        "mixed-3-8",
+        "mixed-3-9",
+        "mixed-4-0",
+        "mixed-4-1",
+        "mixed-4-2",
+        "mixed-4-3",
+        "mixed-4-4",
+        "mixed-4-5",
+        "mixed-4-6",
+        "mixed-4-7",
+        "mixed-4-8",
+        "mixed-4-9",
+        "mixed-5-0",
+        "mixed-5-1",
+        "mixed-5-2",
+        "mixed-5-3",
+        "mixed-5-4",
+        "mixed-5-5",
+        "mixed-5-6",
+        "mixed-5-7",
+        "mixed-5-8",
+        "mixed-5-9",
+        "mixed-6-0",
+        "mixed-6-1",
+        "mixed-6-2",
+        "mixed-6-3",
+        "mixed-6-4",
+        "mixed-6-5",
+        "mixed-6-6",
+        "mixed-6-7",
+        "mixed-6-8",
+        "mixed-6-9",
+        "mixed-7-0",
+        "mixed-7-1",
+        "mixed-7-2",
+        "mixed-7-3",
+        "mixed-7-4",
+        "mixed-7-5",
+        "mixed-7-6",
+        "mixed-7-7",
+        "mixed-7-8",
+        "mixed-7-9",
+        "mixed-8-0",
+        "mixed-8-1",
+        "mixed-8-2",
+        "mixed-8-3",
+        "mixed-8-4",
+        "mixed-8-5",
+        "mixed-8-6",
+        "mixed-8-7",
+        "mixed-8-8",
+        "mixed-8-9",
+        "mixed-9-0",
+        "mixed-9-1",
+        "mixed-9-2",
+        "mixed-9-3",
+        "mixed-9-4",
+        "mixed-9-5",
+        "mixed-9-6",
+        "mixed-9-7",
+        "mixed-9-8",
+        "mixed-9-9",
+        "numeric-text-0",
+        "numeric-text-1",
+        "numeric-text-2",
+        "numeric-text-3",
+        "numeric-text-4",
+        "numeric-text-5",
+        "numeric-text-6",
+        "numeric-text-7",
+        "numeric-text-8",
+        "numeric-text-9",
+        "numeric-text-10",
+        "numeric-text-11",
+        "numeric-text-12",
+        "numeric-text-13",
+        "numeric-text-14",
+        "numeric-text-15",
+        "numeric-text-16",
+        "typed-dispatch-Float32Array",
+        "typed-dispatch-Float64Array",
+        "typed-dispatch-Int8Array",
+        "typed-dispatch-Uint8Array",
+        "typed-dispatch-Uint8ClampedArray",
+        "typed-dispatch-Int16Array",
+        "typed-dispatch-Uint16Array",
+        "typed-dispatch-Int32Array",
+        "typed-dispatch-Uint32Array"
+      ],
+      "adaptations": {
+        "RejectColorCoercion": 6,
+        "RejectArrayInput": 12,
+        "RejectTextCoercion": 4,
+        "RejectNumericCoercion": 8
+      },
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateArray",
+      "case_count": 7,
+      "case_ids": [
+        "interpolateArray-0",
+        "interpolateArray-1",
+        "interpolateArray-2",
+        "interpolateArray-3",
+        "interpolateArray-4",
+        "interpolateArray-5",
+        "interpolateArray-6"
+      ],
+      "adaptations": {
+        "RejectArrayInput": 3
+      },
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateBasis",
+      "case_count": 5,
+      "case_ids": [
+        "interpolateBasis-0",
+        "interpolateBasis-1",
+        "interpolateBasis-2",
+        "interpolateBasis-3",
+        "interpolateBasis-4"
+      ],
+      "adaptations": {
+        "RejectControlCount": 2
+      },
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateBasisClosed",
+      "case_count": 5,
+      "case_ids": [
+        "interpolateBasisClosed-0",
+        "interpolateBasisClosed-1",
+        "interpolateBasisClosed-2",
+        "interpolateBasisClosed-3",
+        "interpolateBasisClosed-4"
+      ],
+      "adaptations": {
+        "RejectControlCount": 1
+      },
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateCubehelix",
+      "case_count": 15,
+      "case_ids": [
+        "interpolateCubehelix-0",
+        "interpolateCubehelix-1",
+        "interpolateCubehelix-2",
+        "interpolateCubehelix-3",
+        "interpolateCubehelix-4",
+        "interpolateCubehelix-5",
+        "interpolateCubehelix-6",
+        "interpolateCubehelix-gamma-0",
+        "interpolateCubehelix-gamma-0.5",
+        "interpolateCubehelix-gamma-1",
+        "interpolateCubehelix-gamma-2.2",
+        "interpolateCubehelix-gamma--1",
+        "interpolateCubehelix-gamma-NaN",
+        "interpolateCubehelix-gamma-Infinity",
+        "interpolateCubehelix-gamma--Infinity"
+      ],
+      "adaptations": {
+        "RejectGamma": 5
+      },
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateCubehelixLong",
+      "case_count": 15,
+      "case_ids": [
+        "interpolateCubehelixLong-0",
+        "interpolateCubehelixLong-1",
+        "interpolateCubehelixLong-2",
+        "interpolateCubehelixLong-3",
+        "interpolateCubehelixLong-4",
+        "interpolateCubehelixLong-5",
+        "interpolateCubehelixLong-6",
+        "interpolateCubehelixLong-gamma-0",
+        "interpolateCubehelixLong-gamma-0.5",
+        "interpolateCubehelixLong-gamma-1",
+        "interpolateCubehelixLong-gamma-2.2",
+        "interpolateCubehelixLong-gamma--1",
+        "interpolateCubehelixLong-gamma-NaN",
+        "interpolateCubehelixLong-gamma-Infinity",
+        "interpolateCubehelixLong-gamma--Infinity"
+      ],
+      "adaptations": {
+        "RejectGamma": 5
+      },
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateDate",
+      "case_count": 5,
+      "case_ids": [
+        "date-0",
+        "date-1",
+        "date-2",
+        "date-3",
+        "date-4"
+      ],
+      "adaptations": {},
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateDiscrete",
+      "case_count": 5,
+      "case_ids": [
+        "interpolateDiscrete-0",
+        "interpolateDiscrete-1",
+        "interpolateDiscrete-2",
+        "interpolateDiscrete-3",
+        "interpolateDiscrete-4"
+      ],
+      "adaptations": {
+        "RejectControlCount": 1
+      },
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateHcl",
+      "case_count": 7,
+      "case_ids": [
+        "interpolateHcl-0",
+        "interpolateHcl-1",
+        "interpolateHcl-2",
+        "interpolateHcl-3",
+        "interpolateHcl-4",
+        "interpolateHcl-5",
+        "interpolateHcl-6"
+      ],
+      "adaptations": {},
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateHclLong",
+      "case_count": 7,
+      "case_ids": [
+        "interpolateHclLong-0",
+        "interpolateHclLong-1",
+        "interpolateHclLong-2",
+        "interpolateHclLong-3",
+        "interpolateHclLong-4",
+        "interpolateHclLong-5",
+        "interpolateHclLong-6"
+      ],
+      "adaptations": {},
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateHsl",
+      "case_count": 7,
+      "case_ids": [
+        "interpolateHsl-0",
+        "interpolateHsl-1",
+        "interpolateHsl-2",
+        "interpolateHsl-3",
+        "interpolateHsl-4",
+        "interpolateHsl-5",
+        "interpolateHsl-6"
+      ],
+      "adaptations": {},
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateHslLong",
+      "case_count": 7,
+      "case_ids": [
+        "interpolateHslLong-0",
+        "interpolateHslLong-1",
+        "interpolateHslLong-2",
+        "interpolateHslLong-3",
+        "interpolateHslLong-4",
+        "interpolateHslLong-5",
+        "interpolateHslLong-6"
+      ],
+      "adaptations": {},
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateHue",
+      "case_count": 16,
+      "case_ids": [
+        "interpolateHue-0",
+        "interpolateHue-1",
+        "interpolateHue-2",
+        "interpolateHue-3",
+        "interpolateHue-4",
+        "interpolateHue-5",
+        "interpolateHue-6",
+        "interpolateHue-7",
+        "interpolateHue-8",
+        "interpolateHue-9",
+        "interpolateHue-10",
+        "interpolateHue-11",
+        "interpolateHue-12",
+        "interpolateHue-13",
+        "interpolateHue-14",
+        "interpolateHue-15"
+      ],
+      "adaptations": {},
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateLab",
+      "case_count": 7,
+      "case_ids": [
+        "interpolateLab-0",
+        "interpolateLab-1",
+        "interpolateLab-2",
+        "interpolateLab-3",
+        "interpolateLab-4",
+        "interpolateLab-5",
+        "interpolateLab-6"
+      ],
+      "adaptations": {},
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateNumber",
+      "case_count": 16,
+      "case_ids": [
+        "interpolateNumber-0",
+        "interpolateNumber-1",
+        "interpolateNumber-2",
+        "interpolateNumber-3",
+        "interpolateNumber-4",
+        "interpolateNumber-5",
+        "interpolateNumber-6",
+        "interpolateNumber-7",
+        "interpolateNumber-8",
+        "interpolateNumber-9",
+        "interpolateNumber-10",
+        "interpolateNumber-11",
+        "interpolateNumber-12",
+        "interpolateNumber-13",
+        "interpolateNumber-14",
+        "interpolateNumber-15"
+      ],
+      "adaptations": {},
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateNumberArray",
+      "case_count": 13,
+      "case_ids": [
+        "typed-Float32Array",
+        "typed-Float64Array",
+        "typed-Int8Array",
+        "typed-Uint8Array",
+        "typed-Uint8ClampedArray",
+        "typed-Int16Array",
+        "typed-Uint16Array",
+        "typed-Int32Array",
+        "typed-Uint32Array",
+        "number-array-0",
+        "number-array-1",
+        "number-array-2",
+        "number-array-3"
+      ],
+      "adaptations": {},
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateObject",
+      "case_count": 7,
+      "case_ids": [
+        "interpolateObject-0",
+        "interpolateObject-1",
+        "interpolateObject-2",
+        "interpolateObject-3",
+        "interpolateObject-4",
+        "interpolateObject-5",
+        "interpolateObject-6"
+      ],
+      "adaptations": {},
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateRgb",
+      "case_count": 15,
+      "case_ids": [
+        "interpolateRgb-0",
+        "interpolateRgb-1",
+        "interpolateRgb-2",
+        "interpolateRgb-3",
+        "interpolateRgb-4",
+        "interpolateRgb-5",
+        "interpolateRgb-6",
+        "interpolateRgb-gamma-0",
+        "interpolateRgb-gamma-0.5",
+        "interpolateRgb-gamma-1",
+        "interpolateRgb-gamma-2.2",
+        "interpolateRgb-gamma--1",
+        "interpolateRgb-gamma-NaN",
+        "interpolateRgb-gamma-Infinity",
+        "interpolateRgb-gamma--Infinity"
+      ],
+      "adaptations": {
+        "RejectGamma": 5
+      },
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateRgbBasis",
+      "case_count": 5,
+      "case_ids": [
+        "interpolateRgbBasis-0",
+        "interpolateRgbBasis-1",
+        "interpolateRgbBasis-2",
+        "interpolateRgbBasis-3",
+        "interpolateRgbBasis-4"
+      ],
+      "adaptations": {
+        "RejectControlCount": 2
+      },
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateRgbBasisClosed",
+      "case_count": 5,
+      "case_ids": [
+        "interpolateRgbBasisClosed-0",
+        "interpolateRgbBasisClosed-1",
+        "interpolateRgbBasisClosed-2",
+        "interpolateRgbBasisClosed-3",
+        "interpolateRgbBasisClosed-4"
+      ],
+      "adaptations": {
+        "RejectControlCount": 1
+      },
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateRound",
+      "case_count": 16,
+      "case_ids": [
+        "interpolateRound-0",
+        "interpolateRound-1",
+        "interpolateRound-2",
+        "interpolateRound-3",
+        "interpolateRound-4",
+        "interpolateRound-5",
+        "interpolateRound-6",
+        "interpolateRound-7",
+        "interpolateRound-8",
+        "interpolateRound-9",
+        "interpolateRound-10",
+        "interpolateRound-11",
+        "interpolateRound-12",
+        "interpolateRound-13",
+        "interpolateRound-14",
+        "interpolateRound-15"
+      ],
+      "adaptations": {},
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateString",
+      "case_count": 11,
+      "case_ids": [
+        "string-0",
+        "string-1",
+        "string-2",
+        "string-3",
+        "string-4",
+        "string-5",
+        "string-6",
+        "string-7",
+        "string-8",
+        "string-9",
+        "string-10"
+      ],
+      "adaptations": {},
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateTransformCss",
+      "case_count": 21,
+      "case_ids": [
+        "css-0",
+        "css-1",
+        "css-2",
+        "css-3",
+        "css-4",
+        "css-5",
+        "css-6",
+        "css-7",
+        "css-8",
+        "css-9",
+        "css-10",
+        "css-11",
+        "css-12",
+        "css-13",
+        "css-14",
+        "css-15",
+        "css-16",
+        "css-17",
+        "css-18",
+        "css-19",
+        "css-20"
+      ],
+      "adaptations": {
+        "RequireResolvedContext": 1,
+        "RejectSyntax": 1,
+        "Reject3D": 1
+      },
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateTransformSvg",
+      "case_count": 15,
+      "case_ids": [
+        "svg-0",
+        "svg-1",
+        "svg-2",
+        "svg-3",
+        "svg-4",
+        "svg-5",
+        "svg-6",
+        "svg-7",
+        "svg-8",
+        "svg-9",
+        "svg-10",
+        "svg-11",
+        "svg-12",
+        "svg-13",
+        "svg-14"
+      ],
+      "adaptations": {
+        "RejectSyntax": 1
+      },
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "interpolateZoom",
+      "case_count": 17,
+      "case_ids": [
+        "zoom-0",
+        "zoom-1",
+        "zoom-2",
+        "zoom-3",
+        "zoom-4",
+        "zoom-5",
+        "zoom-6",
+        "zoom-7",
+        "zoom-8",
+        "zoom-rho-0",
+        "zoom-rho-0.5",
+        "zoom-rho-1",
+        "zoom-rho-2",
+        "zoom-rho-4",
+        "zoom-rho-NaN",
+        "zoom-rho-Infinity",
+        "zoom-rho--Infinity"
+      ],
+      "adaptations": {
+        "RejectZoomView": 1,
+        "RejectRho": 3
+      },
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "piecewise",
+      "case_count": 6,
+      "case_ids": [
+        "piecewise-0",
+        "piecewise-1",
+        "piecewise-2",
+        "piecewise-3",
+        "piecewise-round",
+        "piecewise-default"
+      ],
+      "adaptations": {
+        "RejectControlCount": 2
+      },
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    },
+    {
+      "export": "quantize",
+      "case_count": 4,
+      "case_ids": [
+        "quantize-0",
+        "quantize-1",
+        "quantize-2",
+        "quantize-5"
+      ],
+      "adaptations": {
+        "RejectSampleCount": 2
+      },
+      "standalone_verdict": "PASS declared typed profile in Rust/Python/WASM",
+      "final_lane_verdict": "OPEN: WP-AX06 prerequisite pending"
+    }
+  ],
+  "controls": [
+    {
+      "control": "interpolateRgb.gamma",
+      "case_ids": [
+        "interpolateRgb-gamma-0",
+        "interpolateRgb-gamma-0.5",
+        "interpolateRgb-gamma-1",
+        "interpolateRgb-gamma-2.2",
+        "interpolateRgb-gamma--1",
+        "interpolateRgb-gamma-NaN",
+        "interpolateRgb-gamma-Infinity",
+        "interpolateRgb-gamma--Infinity"
+      ],
+      "verdict": "PASS declared typed profile; explicit diagnostic adaptations retained"
+    },
+    {
+      "control": "interpolateCubehelix.gamma",
+      "case_ids": [
+        "interpolateCubehelix-gamma-0",
+        "interpolateCubehelix-gamma-0.5",
+        "interpolateCubehelix-gamma-1",
+        "interpolateCubehelix-gamma-2.2",
+        "interpolateCubehelix-gamma--1",
+        "interpolateCubehelix-gamma-NaN",
+        "interpolateCubehelix-gamma-Infinity",
+        "interpolateCubehelix-gamma--Infinity"
+      ],
+      "verdict": "PASS declared typed profile; explicit diagnostic adaptations retained"
+    },
+    {
+      "control": "interpolateCubehelixLong.gamma",
+      "case_ids": [
+        "interpolateCubehelixLong-gamma-0",
+        "interpolateCubehelixLong-gamma-0.5",
+        "interpolateCubehelixLong-gamma-1",
+        "interpolateCubehelixLong-gamma-2.2",
+        "interpolateCubehelixLong-gamma--1",
+        "interpolateCubehelixLong-gamma-NaN",
+        "interpolateCubehelixLong-gamma-Infinity",
+        "interpolateCubehelixLong-gamma--Infinity"
+      ],
+      "verdict": "PASS declared typed profile; explicit diagnostic adaptations retained"
+    },
+    {
+      "control": "interpolateZoom.rho",
+      "case_ids": [
+        "zoom-rho-0",
+        "zoom-rho-0.5",
+        "zoom-rho-1",
+        "zoom-rho-2",
+        "zoom-rho-4",
+        "zoom-rho-NaN",
+        "zoom-rho-Infinity",
+        "zoom-rho--Infinity"
+      ],
+      "verdict": "PASS declared typed profile; explicit diagnostic adaptations retained"
+    },
+    {
+      "control": "interpolateZoom.duration",
+      "case_ids": [
+        "zoom-0",
+        "zoom-1",
+        "zoom-2",
+        "zoom-3",
+        "zoom-4",
+        "zoom-5",
+        "zoom-6",
+        "zoom-7",
+        "zoom-8",
+        "zoom-rho-0",
+        "zoom-rho-0.5",
+        "zoom-rho-1",
+        "zoom-rho-2",
+        "zoom-rho-4",
+        "zoom-rho-NaN",
+        "zoom-rho-Infinity",
+        "zoom-rho--Infinity"
+      ],
+      "verdict": "PASS declared typed profile; explicit diagnostic adaptations retained"
+    },
+    {
+      "control": "piecewise default / explicit builtin / installed factory",
+      "verdict": "PASS",
+      "evidence": [
+        "interpolate_scalar.rs",
+        "interpolate_registered.rs",
+        "interpolation_integration.py",
+        "interpolation_integration.cjs"
+      ]
+    },
+    {
+      "control": "quantize count / owned samples / endpoint sampling",
+      "verdict": "PASS",
+      "evidence": [
+        "interpolate_descriptors.rs",
+        "interpolate_values.rs",
+        "interpolate.py",
+        "interpolate.cjs"
+      ]
+    },
+    {
+      "control": "zoom scheduling_duration = abs(reference duration)",
+      "verdict": "PASS host scheduling adaptation; no animation scheduler implied"
+    },
+    {
+      "control": "axis interruption / reduced motion / transition capture",
+      "verdict": "OPEN",
+      "prerequisite": "WP-AX05/06; no implementation or certification in this assignment"
+    }
+  ],
+  "reference": {
+    "original_lock_sha256": "bcaf52b90527128695304aabf5a959f0b19445715d4d6ca465a0ea6de8b3187e",
+    "current_lock_sha256": "8b0a7880a9d4183df4caad0f09aecb69aa9e612e9ef6bf81eb3d047dcc083a33",
+    "interpretation": "Shared development lock evolved; all recorded d3-interpolate and d3-color source hashes match, and both regenerated corpora are byte-identical. Original manifests remain unchanged.",
+    "case_files": {
+      "cases.json": "b0ab325fa9323a1c21b3681e2340da9a655558d0a142cfdc19b7afbc3df0a397",
+      "transforms.json": "4c1274497b5c1697e523aab886f93ab8a090dbec970376f57184f4f8ea09a7fb"
+    },
+    "browser": {
+      "engine": "Chromium",
+      "version": "151.0.7922.34",
+      "executable_sha256": "7687bff7cb2db075f250e6d5848bbc8838cac3802ac3952a899c574f8eccab45",
+      "os": "darwin",
+      "release": "25.5.0",
+      "arch": "arm64"
+    }
+  },
+  "tolerances": {
+    "scalar_color_zoom": {
+      "numeric": {
+        "absolute": 1e-12,
+        "relative": 1e-12
+      },
+      "strings_integer_date_tags": "exact"
+    },
+    "transforms": {
+      "decomposition": {
+        "absolute": 1e-12,
+        "relative": 1e-12
+      },
+      "browser_parser_resolution": {
+        "absolute": 1e-05,
+        "relative": 1e-06
+      },
+      "canonical_template": "exact; resolved-matrix numeric tokens compare at 1e-12 absolute/relative",
+      "parser_note": "Chromium CSS lengths/angles and SVG values may round during parsing; binary64 headless input preserves authored precision and uses the measured geometry tolerance."
+    }
+  },
+  "adaptations": {
+    "RejectControlCount": "Open basis and piecewise need two controls; closed basis/discrete need one.",
+    "RejectSampleCount": "Quantize requires an integer count greater than one.",
+    "RejectGamma": "Gamma must be positive finite.",
+    "RejectRho": "Rho must be finite; finite values are floored at 1e-3.",
+    "RejectArrayInput": "Array operations require array inputs or null/missing empty source.",
+    "RejectNumericCoercion": "Structured values have no primitive numeric conversion.",
+    "RejectTextCoercion": "Date/structured text requires explicit formatting.",
+    "RejectColorCoercion": "Color blending accepts colors, text or missing/null undefined sources.",
+    "RejectZoomView": "Zoom centers must be finite and widths positive finite.",
+    "owned_samples": "Each sample is captured before the next invocation; D3 mutable output identity is not copied into the typed API.",
+    "coercion": "Only explicit bounded primitive numeric conversions; no prototypes or callbacks."
+  }
+}

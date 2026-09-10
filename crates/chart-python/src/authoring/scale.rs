@@ -1,4 +1,5 @@
 //! Owned scale transport. The core owns all dispatch, validation and numerical behavior.
+use super::shape_registry::ShapeRegistryHandle;
 use super::{disposed, failure, handle};
 use chart_core::{
     portable::{self, ScaleChange, ScaleQuery},
@@ -29,6 +30,43 @@ impl ScaleHandle {
             .map(Self::wrap)
             .map_err(failure)
     }
+    #[staticmethod]
+    fn create_registered(
+        py: Python<'_>,
+        family: String,
+        options: String,
+        registry: &ShapeRegistryHandle,
+    ) -> PyResult<Self> {
+        let registry = registry.get()?.clone();
+        py.detach(|| {
+            portable::decode::<ScaleConstructor>(&family)?
+                .create_with_registry(portable::decode(&options)?, &registry)
+        })
+        .map(Self::wrap)
+        .map_err(failure)
+    }
+    #[staticmethod]
+    fn from_spec_registered(
+        py: Python<'_>,
+        spec: String,
+        registry: &ShapeRegistryHandle,
+    ) -> PyResult<Self> {
+        let registry = registry.get()?.clone();
+        py.detach(|| StandaloneScale::new_with_registry(portable::decode(&spec)?, &registry))
+            .map(Self::wrap)
+            .map_err(failure)
+    }
+    #[staticmethod]
+    fn from_json_registered(
+        py: Python<'_>,
+        text: String,
+        registry: &ShapeRegistryHandle,
+    ) -> PyResult<Self> {
+        let registry = registry.get()?.clone();
+        py.detach(|| StandaloneScale::from_json_with_registry(&text, &registry))
+            .map(Self::wrap)
+            .map_err(failure)
+    }
     fn to_json(&self, py: Python<'_>) -> PyResult<String> {
         let s = self.get()?;
         py.detach(|| s.to_json()).map_err(failure)
@@ -50,7 +88,4 @@ impl ScaleHandle {
     fn dispose(&mut self) {
         self.inner.take();
     }
-}
-pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
-    module.add_class::<ScaleHandle>()
 }

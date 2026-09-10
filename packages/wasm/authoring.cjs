@@ -339,6 +339,7 @@ class FigureRequest extends Owned {
   manifest(){return decode(this._inner.manifest());}
 }
 class FigureSnapshot extends Owned {
+  guides(){return decode(this._inner.guides());}
   scene(){return decode(this._inner.scene());}
   manifest(){return decode(this._inner.manifest());}
   export(format){return this._inner.export(format);}
@@ -439,7 +440,7 @@ for(const [family,names] of Object.entries(families)) {
 }
 
 for(const name of ['rgb','hsl','lab','gray','hcl','lch','cubehelix'])module.exports[name]=colorConstructor(name);
-const interpolationApi=require('./interpolation.cjs')(native,Owned,ColorValue,count);
+const interpolationApi=require('./interpolation.cjs')(native,Owned,ColorValue,count,ShapeRegistry);
 Object.assign(module.exports,interpolationApi);
 Object.assign(module.exports,require('./scales.cjs')(native,Owned,interpolationApi._valueCodec,interpolationApi.Interpolator));
 function scalePayload(spec,kind){if(spec instanceof module.exports.StandaloneScale){const d=spec.spec();if(!Object.hasOwn(d,kind))throw new TypeError(`This chart constructor requires a ${kind} scale descriptor.`);return d[kind];}return spec;}

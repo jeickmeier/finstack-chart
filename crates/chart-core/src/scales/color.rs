@@ -66,6 +66,17 @@ impl<P> ColorScale<P> {
             Self::Mapped { scale, .. } => scale.categorical(),
         }
     }
+    /// Validate palettes and explicitly installed interpolation factories.
+    pub fn validate_with_registry(
+        &self,
+        registry: &crate::grammar::ExtensionRegistry,
+    ) -> ChartResult<()> {
+        if let Self::Mapped { scale, .. } = self {
+            MappedScale::new_with_registry(scale.clone(), registry).map(|_| ())
+        } else {
+            self.validate()
+        }
+    }
     /// Validate palette/domain, even when the current population is empty.
     pub fn validate(&self) -> ChartResult<()> {
         match self {
@@ -416,7 +427,14 @@ pub struct PreparedColorScale {
 impl ColorScale<crate::color::Paint> {
     /// Compile floating RGB ramps once, preserving exact legacy byte interpolation.
     pub fn prepare(&self) -> ChartResult<PreparedColorScale> {
-        self.validate()?;
+        self.prepare_with_registry(&crate::grammar::ExtensionRegistry::new())
+    }
+    /// Prepare color and legend consumers using the same captured native factory registry.
+    pub fn prepare_with_registry(
+        &self,
+        registry: &crate::grammar::ExtensionRegistry,
+    ) -> ChartResult<PreparedColorScale> {
+        self.validate_with_registry(registry)?;
         let ramps = if let Self::Continuous { palette, .. } = self {
             if palette.iter().any(|p| p.is_floating()) {
                 Some(
@@ -447,7 +465,10 @@ impl ColorScale<crate::color::Paint> {
                 | Self::Discrete { missing, .. } => *missing,
             },
             mapped: if let Self::Mapped { scale, .. } = self {
-                Some(MappedScale::for_colors(scale.clone())?)
+                Some(MappedScale::for_colors_with_registry(
+                    scale.clone(),
+                    registry,
+                )?)
             } else {
                 None
             },

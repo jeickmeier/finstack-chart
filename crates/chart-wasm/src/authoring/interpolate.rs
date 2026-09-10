@@ -1,9 +1,10 @@
 //! Owned standalone interpolation, without JavaScript mathematical implementations.
 use super::color::_Color;
+use super::shape_registry::_ShapeRegistry;
 use super::{disposed, failure, handle};
 use chart_core::interpolate::{FactoryKind, InterpolationFactory, Interpolator, Value};
 use wasm_bindgen::prelude::*;
-handle!(_Interpolator, _Interpolator, Interpolator);
+handle!(_Interpolator, Interpolator);
 #[wasm_bindgen]
 impl _Interpolator {
     #[wasm_bindgen(constructor)]
@@ -16,6 +17,22 @@ impl _Interpolator {
         Interpolator::from_json(input)
             .map(Self::wrap)
             .map_err(failure)
+    }
+    pub fn from_json_registered(input: &str, registry: &_ShapeRegistry) -> Result<Self, JsError> {
+        Interpolator::from_json_with_registry(input, registry.get()?)
+            .map(Self::wrap)
+            .map_err(failure)
+    }
+    pub fn from_spec(input: &str, registry: &_ShapeRegistry) -> Result<Self, JsError> {
+        Interpolator::new_with_registry(
+            chart_core::portable::decode(input).map_err(failure)?,
+            registry.get()?,
+        )
+        .map(Self::wrap)
+        .map_err(failure)
+    }
+    pub fn descriptor_json(&self) -> Result<String, JsError> {
+        self.get()?.descriptor_json().map_err(failure)
     }
     pub fn to_json(&self) -> Result<String, JsError> {
         self.get()?.to_json().map_err(failure)

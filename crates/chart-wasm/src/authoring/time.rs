@@ -5,7 +5,7 @@ use chart_core::{
     scales::{CalendarInterval, CalendarTicks, TimeFormat, TimeScale, TimeScaleSpec},
 };
 use wasm_bindgen::prelude::*;
-handle!(_TimeScale, _TimeScale, TimeScale);
+handle!(_TimeScale, TimeScale);
 #[wasm_bindgen]
 impl _TimeScale {
     #[wasm_bindgen(constructor)]

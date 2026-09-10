@@ -19,7 +19,7 @@ module.exports=function(native,Owned,codec,Interpolator){
     if(Object.hasOwn(r,'domain'))r.domain=Array.from(r.domain,v=>input(v,mode));
     if(Object.hasOwn(r,'range'))r.range=Array.from(r.range,v=>pack(v));
     if(Object.hasOwn(r,'unknown'))r.unknown=pack(r.unknown);
-    if(Object.hasOwn(r,'interpolator')){if(!(r.interpolator instanceof Interpolator))throw new TypeError('Scale interpolator requires an owned Interpolator.');r.interpolator=JSON.parse(r.interpolator.to_json()).spec;}
+    if(Object.hasOwn(r,'interpolator')){if(!(r.interpolator instanceof Interpolator))throw new TypeError('Scale interpolator requires an owned Interpolator.');r.interpolator=JSON.parse(r.interpolator._inner.descriptor_json()).spec;}
     if(typeof r.factory==='function')r.factory=codec.descriptor(r.factory);
     return r;
   }
@@ -27,12 +27,13 @@ module.exports=function(native,Owned,codec,Interpolator){
   class StandaloneScale extends Owned {
     constructor(family='linear',config={}){
       const mode=['ordinal','band','point','threshold'].includes(family)?'Key':['utc','local'].includes(family)?'Time':'Number';
-      super(native._Scale.create(JSON.stringify(family),JSON.stringify(options(config,mode))));this._readMode();
+      const {registry,...settings}=config;const encoded=JSON.stringify(options(settings,mode));
+      super(registry===undefined?native._Scale.create(JSON.stringify(family),encoded):native._Scale.create_registered(JSON.stringify(family),encoded,registry._inner));this._readMode();
     }
     _readMode(){const family=Object.keys(this.spec())[0];this._mode=['Ordinal','Band','Point','Threshold'].includes(family)?'Key':family==='Time'?'Time':'Number';}
     static _wrap(inner){const s=new Owned(inner);Object.setPrototypeOf(s,StandaloneScale.prototype);s._readMode();return s;}
-    static from_json(text){return StandaloneScale._wrap(native._Scale.from_json(text));}
-    static from_spec(spec){return StandaloneScale._wrap(new native._Scale(JSON.stringify(spec)));}
+    static from_json(text,registry){return StandaloneScale._wrap(registry===undefined?native._Scale.from_json(text):native._Scale.from_json_registered(text,registry._inner));}
+    static from_spec(spec,registry){return StandaloneScale._wrap(registry===undefined?new native._Scale(JSON.stringify(spec)):native._Scale.from_spec_registered(JSON.stringify(spec),registry._inner));}
     to_json(){return this._inner.to_json();}
     copy(){return StandaloneScale._wrap(this._inner.copy());}
     _query(value){return JSON.parse(this._inner.query(JSON.stringify(value)));}

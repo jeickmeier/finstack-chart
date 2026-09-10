@@ -30,7 +30,7 @@ impl ScaleChange {
             Self::Configure(options) => options.apply(scale),
             Self::Reconfigure(spec) => scale.reconfigure(*spec),
             Self::Nice(n) => scale.nice(n.0),
-            Self::NiceTime(selection) => StandaloneScale::new(StandaloneScaleSpec::Time(
+            Self::NiceTime(selection) => scale.reconfigure(StandaloneScaleSpec::Time(
                 scale.time()?.nice(selection)?.spec().clone(),
             )),
             Self::Train(keys) => scale.train(keys),

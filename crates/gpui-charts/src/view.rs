@@ -56,22 +56,12 @@ impl ChartInput {
         source: SnapshotHandle<StoreSnapshot>,
         font: NativeFont,
     ) -> ChartResult<Self> {
-        Self::with_extensions(
-            definition,
-            source,
-            font,
-            Arc::new(chart_core::grammar::ExtensionRegistry::new()),
-        )
-    }
-    /// Compile with explicitly supplied versioned native/portable stat and geometry extensions.
-    pub fn with_extensions(
-        definition: ChartDefinition,
-        source: SnapshotHandle<StoreSnapshot>,
-        font: NativeFont,
-        extensions: Arc<chart_core::grammar::ExtensionRegistry>,
-    ) -> ChartResult<Self> {
         Self::from_chart(
-            chart_core::runtime::Chart::from_external(definition, source, extensions)?,
+            chart_core::runtime::Chart::from_external(
+                definition,
+                source,
+                Arc::new(chart_core::grammar::ExtensionRegistry::new()),
+            )?,
             font,
         )
     }
@@ -118,25 +108,10 @@ impl ChartInput {
         self.host.control(slot, Some(builder));
         self
     }
-    /// Enable operations handled by the application's ChartHostEvent subscription.
-    pub fn host_commands(mut self, commands: &[HostCommand]) -> Self {
-        self.host.commands(commands);
-        self
-    }
     /// Supply bounded meaningful accessibility context before the first frame.
     pub fn accessible_summary(mut self, summary: impl Into<String>) -> ChartResult<Self> {
         self.host.summary(Some(summary.into()))?;
         Ok(self)
-    }
-    /// Choose the initial shared navigation/selection drag tool.
-    pub fn drag_tool(mut self, tool: NativeDragTool) -> Self {
-        self.input.tool = tool;
-        self
-    }
-    /// Enable or disable built-in native input bindings for an application-owned adapter.
-    pub fn default_bindings(mut self, enabled: bool) -> Self {
-        self.input.disabled = !enabled;
-        self
     }
     /// Install bounded authored annotation edit handles.
     pub fn annotation_tools(mut self, tools: Vec<NativeAnnotationTool>) -> ChartResult<Self> {
@@ -224,25 +199,18 @@ impl ChartView {
             host,
         }
     }
-    /// Explicit destination-only reduction; the current source/inspection values stay exact.
-    pub fn set_density(
-        &mut self,
-        options: chart_core::dense::DensityOptions,
-        cx: &mut Context<Self>,
-    ) -> ChartResult<()> {
-        options.validate()?;
-        self.density = options;
-        self.attempted = None;
-        cx.notify();
-        Ok(())
-    }
     /// Configure screen-density reduction through the shared typed options.
     pub fn set_render_options(
         &mut self,
         options: chart_core::plot::RenderOptions,
         cx: &mut Context<Self>,
     ) -> ChartResult<()> {
-        self.set_density(options.build(&self.chart)?, cx)
+        let density = options.build(&self.chart)?;
+        density.validate()?;
+        self.density = density;
+        self.attempted = None;
+        cx.notify();
+        Ok(())
     }
     /// Actual last-presented raw/prepared/rendered work counts.
     pub fn density_metrics(&self) -> Option<&chart_core::dense::DensityMetrics> {
@@ -533,20 +501,14 @@ impl ChartView {
     /// Capture the last coherent painted source, geometry state, inspection and resources.
     /// Pending data/annotation/theme changes cannot enter this capture before they are painted.
     pub fn capture_presented(&self) -> ChartResult<PresentedCapture> {
-        let frame = self
-            .frame
-            .as_ref()
-            .filter(|_| self.inspector.is_some() && self.painted_state.is_some())
-            .ok_or_else(|| {
-                crate::native::error(
-                    chart_core::DiagnosticCode::Validation,
-                    "No coherent painted chart is available for capture.",
-                )
-            })?;
-        let painted = self
-            .painted_state
-            .as_ref()
-            .unwrap_or(frame.chart.prepared().state());
+        let (Some(frame), Some(painted), Some(_)) =
+            (&self.frame, &self.painted_state, &self.inspector)
+        else {
+            return Err(crate::native::error(
+                chart_core::DiagnosticCode::Validation,
+                "No coherent painted chart is available for capture.",
+            ));
+        };
         Ok(PresentedCapture {
             chart: frame.chart.clone(),
             state: frame
@@ -678,12 +640,7 @@ impl Render for ChartView {
             tokens.focus.unwrap_or(chart_core::theme::rgb(59, 130, 196)),
             tokens.color_mode,
         );
-        let focus_color = gpui::rgba(
-            (u32::from(focus_color.red) << 24)
-                | (u32::from(focus_color.green) << 16)
-                | (u32::from(focus_color.blue) << 8)
-                | u32::from(focus_color.alpha),
-        );
+        let focus_color = crate::native::native_color(focus_color);
         if self.input.subscriptions.is_empty() {
             let focus = self.focus.clone();
             self.input
@@ -938,13 +895,10 @@ impl Render for ChartView {
                         return;
                     }
                     window.focus(&this.focus, cx);
-                    let p = this.frame.as_ref().and_then(|f| {
-                        Point::new(
-                            f64::from(f32::from(event.position.x - f.bounds.origin.x)),
-                            f64::from(f32::from(event.position.y - f.bounds.origin.y)),
-                        )
-                        .ok()
-                    });
+                    let p = this
+                        .frame
+                        .as_ref()
+                        .and_then(|f| input::local(event.position, f.bounds.origin).ok());
                     if let Err(e) = this.request_host_command(HostCommand::ContextMenu, p, cx) {
                         this.last_error = Some(e);
                     }
@@ -956,11 +910,7 @@ impl Render for ChartView {
                     return;
                 }
                 let Some(frame) = &this.frame else { return };
-                let local = Point::new(
-                    f64::from(f32::from(event.position.x - frame.bounds.origin.x)),
-                    f64::from(f32::from(event.position.y - frame.bounds.origin.y)),
-                );
-                if let Ok(p) = local
+                if let Ok(p) = input::local(event.position, frame.bounds.origin)
                     && let Err(e) = this.dispatch_inspection(
                         InspectionAction::Hover(Some(p)),
                         InputOrigin::Pointer,

@@ -93,11 +93,11 @@ pub mod prelude {
         legend, line, link, nullable_timestamps, number_format, ohlc, panel_letter, plot, points,
         rectangle, render_options, ribbon, rich_text, rule, scale_aes, scale_band, scale_band_d3,
         scale_calendar, scale_linear, scale_log, scale_numeric, scale_point, scale_point_d3,
-        scale_session, scale_symlog, scale_utc, shape_arc, shape_area, shape_area_radial,
-        shape_line, shape_line_radial, shape_link, shape_link_horizontal, shape_link_radial,
-        shape_link_vertical, shape_pie, shape_stack, shape_symbol, source_expr, source_note, stack,
-        stat_aes, stream_options, style, subtitle, summary, text_run, text_style, theme,
-        time_value, timestamps, title, transform, volume, x_axis, y_axis,
+        scale_registered, scale_session, scale_symlog, scale_utc, shape_arc, shape_area,
+        shape_area_radial, shape_line, shape_line_radial, shape_link, shape_link_horizontal,
+        shape_link_radial, shape_link_vertical, shape_pie, shape_stack, shape_symbol, source_expr,
+        source_note, stack, stat_aes, stream_options, style, subtitle, summary, text_run,
+        text_style, theme, time_value, timestamps, title, transform, volume, x_axis, y_axis,
     };
     pub use crate::plot::{VectorPathBuilder, vector_path};
     pub use crate::runtime::Chart;

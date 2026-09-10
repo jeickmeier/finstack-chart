@@ -1,5 +1,5 @@
+//! Arc and pie ownership adapters; arithmetic and layout live in chart-core.
 use super::shape_registry::ShapeRegistryHandle;
-// Arc and pie ownership adapters; arithmetic and layout live in chart-core.
 use super::{disposed, failure, handle, path::PathHandle};
 use chart_core::{
     portable,
@@ -74,8 +74,4 @@ impl ShapePieHandle {
     fn layout_json(&self, data: &str, values: &str) -> PyResult<String> {
         portable::pie_layout_json(self.get()?, data, values).map_err(failure)
     }
-}
-pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
-    module.add_class::<ShapeArcHandle>()?;
-    module.add_class::<ShapePieHandle>()
 }

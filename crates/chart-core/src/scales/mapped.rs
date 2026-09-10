@@ -237,6 +237,14 @@ pub struct MappedScale {
 impl MappedScale {
     /// Compile an authored or already trained descriptor.
     pub fn new(spec: MappedScaleSpec) -> ChartResult<Self> {
+        Self::new_with_registry(spec, &crate::grammar::ExtensionRegistry::new())
+    }
+    /// Compile against an explicit registry; no callbacks are resolved per mark.
+    pub fn new_with_registry(
+        spec: MappedScaleSpec,
+        registry: &crate::grammar::ExtensionRegistry,
+    ) -> ChartResult<Self> {
+        spec.validate_interpolations(&registry.interpolations, false)?;
         // Validate population policy without discarding an already trained population.
         spec.validate_training()?;
         spec.validate_catalog()?;
@@ -248,12 +256,12 @@ impl MappedScale {
             Ok(i)
         };
         let mapping = match &spec.function {
-            ScaleFunctionSpec::Continuous(s) => {
-                PreparedMapping::Continuous(ContinuousScale::new(s.clone())?)
-            }
-            ScaleFunctionSpec::Interpolated(s) => {
-                PreparedMapping::Interpolated(InterpolatedScale::new(s.clone())?)
-            }
+            ScaleFunctionSpec::Continuous(s) => PreparedMapping::Continuous(
+                ContinuousScale::new_with_registry(s.clone(), registry)?,
+            ),
+            ScaleFunctionSpec::Interpolated(s) => PreparedMapping::Interpolated(
+                InterpolatedScale::new_with_registry(s.clone(), registry)?,
+            ),
             ScaleFunctionSpec::Classifier(s) => {
                 PreparedMapping::Classifier(ClassifierScale::new(ClassifierSpec {
                     domain: s.domain.clone(),
@@ -292,7 +300,14 @@ impl MappedScale {
     }
     /// Compile and validate color outputs; category colors are parsed/quantized once.
     pub fn for_colors(spec: MappedScaleSpec) -> ChartResult<Self> {
-        let mut scale = Self::new(spec)?;
+        Self::for_colors_with_registry(spec, &crate::grammar::ExtensionRegistry::new())
+    }
+    /// Compile floating colors against explicitly registered interpolation factories.
+    pub fn for_colors_with_registry(
+        spec: MappedScaleSpec,
+        registry: &crate::grammar::ExtensionRegistry,
+    ) -> ChartResult<Self> {
+        let mut scale = Self::new_with_registry(spec, registry)?;
         scale.paints = Some(
             scale
                 .values
@@ -315,7 +330,14 @@ impl MappedScale {
     }
     /// Compile and validate numeric outputs even when the current layer has no observations.
     pub fn for_numbers(spec: MappedScaleSpec) -> ChartResult<Self> {
-        let scale = Self::new(spec)?;
+        Self::for_numbers_with_registry(spec, &crate::grammar::ExtensionRegistry::new())
+    }
+    /// Compile numeric outputs against explicitly registered interpolation factories.
+    pub fn for_numbers_with_registry(
+        spec: MappedScaleSpec,
+        registry: &crate::grammar::ExtensionRegistry,
+    ) -> ChartResult<Self> {
+        let scale = Self::new_with_registry(spec, registry)?;
         for value in &scale.values {
             numeric_output(value)?;
         }
@@ -620,4 +642,35 @@ pub(super) fn numeric_output(value: &Value) -> ChartResult<()> {
 // exceptional source numbers as missing just like numerical color observations.
 fn finite_key(key: &ScaleKey) -> bool {
     !matches!(key, ScaleKey::Number(value) if !value.0.is_finite())
+}
+
+impl MappedScaleSpec {
+    /// Whether this scale requires versioned interpolation code installation.
+    pub fn has_registered_interpolation(&self) -> bool {
+        match &self.function {
+            ScaleFunctionSpec::Continuous(s) => s.factory.has_registration(),
+            ScaleFunctionSpec::Interpolated(s) => {
+                matches!(&s.output, ScaleRangeFunction::Interpolate(i) if i.has_registration())
+            }
+            _ => false,
+        }
+    }
+    pub(crate) fn validate_interpolations(
+        &self,
+        registrations: &crate::grammar::interpolation_extensions::InterpolationRegistrations,
+        portable: bool,
+    ) -> ChartResult<()> {
+        match &self.function {
+            ScaleFunctionSpec::Continuous(s) => {
+                s.factory.validate_registration(registrations, portable)
+            }
+            ScaleFunctionSpec::Interpolated(s) => match &s.output {
+                ScaleRangeFunction::Interpolate(i) => {
+                    i.validate_registrations(registrations, portable)
+                }
+                _ => Ok(()),
+            },
+            _ => Ok(()),
+        }
+    }
 }

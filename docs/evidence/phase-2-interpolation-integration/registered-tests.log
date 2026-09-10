@@ -1,0 +1,16 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+error[E0277]: can't compare `&PreparedRows` with `usize`
+   --> crates/chart-core/tests/interpolate_registered.rs:238:9
+    |
+238 |         assert_eq!(prepared.layers()[0].table().rows(),rows);
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no implementation for `&PreparedRows == usize`
+    |
+    = help: the trait `PartialEq<usize>` is not implemented for `&PreparedRows`
+help: the trait `PartialEq` is implemented for `PreparedRows`
+   --> crates/chart-core/src/grammar/prepared.rs:205:42
+    |
+205 | #[derive(serde::Serialize, Clone, Debug, PartialEq)]
+    |                                          ^^^^^^^^^
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `chart-core` (test "interpolate_registered") due to 1 previous error

@@ -478,6 +478,7 @@ impl Compiler {
         }
         let result = PreparedChart {
             scale_registrations: self.extensions.scales.clone(),
+            guide_registrations: self.extensions.guides.clone(),
             panels: vec![],
             shared_training: None,
             definition: Arc::new(definition.clone()),
@@ -552,6 +553,8 @@ pub(super) fn validate_definition(
     extensions: &ExtensionRegistry,
 ) -> ChartResult<Vec<usize>> {
     extensions.validate_scale_selections(definition, false)?;
+    extensions.validate_guide_selections(definition, false)?;
+    extensions.validate_interpolation_selections(definition, false)?;
     if let Some(theme) = &definition.theme {
         theme.resolve(&crate::theme::ThemePatch::<crate::scene::Color>::default())?;
         if theme
@@ -1330,12 +1333,15 @@ fn prepare_layer(
         data,
         &table,
         &mut encoded,
-        limits,
-        catalog.map(Vec::as_slice),
-        layer
-            .color
-            .as_ref()
-            .and_then(|c| budget.color_samples.get(&c.id)),
+        super::colors::ColorContext {
+            limits,
+            registry: extensions,
+            shared: catalog.map(Vec::as_slice),
+            samples: layer
+                .color
+                .as_ref()
+                .and_then(|c| budget.color_samples.get(&c.id)),
+        },
     )?;
     super::numeric_aesthetics::apply(
         layer,
@@ -1344,6 +1350,7 @@ fn prepare_layer(
         &mut encoded,
         limits,
         budget.color_samples,
+        extensions,
     )?;
     let mut symbol_legends = super::symbols::apply(
         layer,
@@ -1352,6 +1359,7 @@ fn prepare_layer(
         &mut encoded,
         limits,
         budget.color_samples,
+        extensions,
     )?;
     if let Some(symbol) = shape_protocols.symbol() {
         super::symbols::custom_glyphs(&mut symbol_legends, symbol, limits, vertices)?;
@@ -1880,6 +1888,7 @@ fn preflight_schemas(
                 output.bins.is_none() && output.statistical.is_none(),
                 output.statistical.as_deref(),
                 limits,
+                extensions,
             )
             .map_err(|e| context(e, data, Some(layer.id)))?;
         }

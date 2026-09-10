@@ -122,6 +122,7 @@ impl FigureSnapshot {
         let mut profile = request.profile.clone();
         let extensions = request.extensions.clone();
         let state = &request.state;
+        extensions.validate_portable_interpolations(definition)?;
         profile.validate()?;
         profile.layout.bounds = Rect::new(0., 0., profile.page.width(), profile.page.height())?;
         let captured_profile = profile.clone();

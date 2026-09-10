@@ -17,7 +17,9 @@ mod zoom;
 use crate::{ChartResult, Diagnostic, DiagnosticCode};
 pub use authoring::InterpolationOptions;
 pub use color::{ColorInterpolator, ColorRoute, HueInterpolator};
-pub use descriptor::{FactoryKind, InterpolationFactory, InterpolationSpec, Interpolator};
+pub use descriptor::{
+    FactoryKind, InterpolationFactory, InterpolationRegistration, InterpolationSpec, Interpolator,
+};
 pub(crate) use scalar::js_round;
 pub use scalar::{Discrete, Piecewise, Sample, ScalarInterpolator, quantize};
 pub use structured::{ValueInterpolator, ValueOperation};

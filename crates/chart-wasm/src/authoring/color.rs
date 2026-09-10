@@ -2,7 +2,7 @@
 use super::{disposed, failure, handle};
 use chart_core::color::{ColorDescriptor, ColorSpace, ColorValue, parse};
 use wasm_bindgen::prelude::*;
-handle!(_Color, _Color, ColorValue);
+handle!(_Color, ColorValue);
 #[wasm_bindgen]
 impl _Color {
     #[wasm_bindgen(constructor)]

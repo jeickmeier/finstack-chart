@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/jeickmeier/Projects/finstack-chart/scripts/bindings/axis_ticks.py", line 37, in <module>
+    axis=configure(axis,case['config'])
+  File "/Users/jeickmeier/Projects/finstack-chart/scripts/bindings/axis_ticks.py", line 19, in configure
+    if 'formatter' in config:axis=axis.tick_format(None if config['formatter'] is None else formatter(config['formatter']))
+                                  ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jeickmeier/Projects/finstack-chart/packages/python/finstack_chart/__init__.py", line 205, in apply
+    inner = self._inner.set(name, _encode(args))
+chart_python.ChartError: {"code":"CHART_VALIDATION","severity":"Error","message":"Builder argument 0: invalid type: integer `1`, expected a string","correction":"Check the named data/layer/aesthetic and its type, or provide an explicit supported component policy.","context":{"dataset":null,"layer":null,"field":null,"resource":null,"resource_revision":null,"stamp":null,"dataset_revision":null,"schema_version":null,"affected_rows":"0","row_samples":[]}}

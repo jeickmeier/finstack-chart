@@ -3,10 +3,14 @@ use super::*;
 use crate::{ChartResult, DiagnosticCode, composition::ScaleValue, scales::*};
 
 pub(super) fn resolve(
+    chart: &crate::grammar::PreparedChart,
     axis: &ResolvedAxis,
     style: &GuideStyle,
     r: &LayoutRequest,
 ) -> ChartResult<Vec<GuideTick>> {
+    if style.uses_tick_configuration() {
+        return configured(chart, axis, style, r);
+    }
     if matches!(axis.scale, ResolvedScale::Provider(_))
         && (style.number_format.is_some()
             || style.numeric_format.is_some()
@@ -222,4 +226,115 @@ pub(super) fn resolve(
     }
     ticks.sort_by(|a, b| a.position.total_cmp(&b.position));
     Ok(ticks)
+}
+
+fn configured(
+    chart: &crate::grammar::PreparedChart,
+    axis: &ResolvedAxis,
+    style: &GuideStyle,
+    r: &LayoutRequest,
+) -> ChartResult<Vec<GuideTick>> {
+    super::axes::validate_style(style, r.limits)?;
+    let arguments = style.tick_arguments.clone().unwrap_or_default();
+    arguments.validate(r.limits.max_text_bytes)?;
+    // Select before enumeration: even an empty explicit list bypasses scale ticks.
+    let values = if let Some(values) = &style.tick_values {
+        crate::limits::require_within(values.len() <= r.max_ticks, "selected guide tick")?;
+        values.clone()
+    } else if let Some(ticks) = &style.guide_ticks {
+        crate::limits::require_within(ticks.len() <= r.max_ticks, "selected guide tick")?;
+        ticks.iter().map(|tick| tick.value.clone()).collect()
+    } else if style.visible {
+        super::guide_selection::values(axis, &arguments, r.max_ticks)?
+    } else {
+        Vec::new()
+    };
+    crate::limits::require_within(values.len() <= r.max_ticks, "selected guide tick")?;
+    let mut bytes = r.limits.max_text_bytes;
+    for value in &values {
+        if let ScaleValue::Category(label) = value {
+            crate::limits::require_within(label.len() <= bytes, "selected guide category byte")?;
+            bytes -= label.len();
+        }
+    }
+    // Validate every semantic value before any per-value formatter. Mapping omission
+    // does not alter the complete callback list or its occurrence indices.
+    let positions = values
+        .iter()
+        .map(|value| axis.map_value(value))
+        .collect::<ChartResult<Vec<_>>>()?;
+    let numeric = match &style.tick_format {
+        Some(GuideFormatter::Numeric(format)) => Some(format.as_ref()),
+        _ => style.numeric_format.as_ref(),
+    };
+    let time = match &style.tick_format {
+        Some(GuideFormatter::Time(format)) => Some(format.as_ref()),
+        _ => style.time_format.as_ref(),
+    };
+    let labels = if let Some(ticks) = &style.guide_ticks {
+        ticks.iter().map(|tick| tick.label.clone()).collect()
+    } else {
+        match &style.tick_format {
+            Some(GuideFormatter::Labels(labels)) => {
+                if labels.len() != values.len() {
+                    return Err(error(
+                        DiagnosticCode::SchemaConflict,
+                        "Explicit guide labels must match the complete selected value list.",
+                    ));
+                }
+                labels.clone()
+            }
+            Some(GuideFormatter::Registered {
+                operation,
+                parameters,
+            }) => chart.guide_registrations.labels(
+                operation,
+                parameters,
+                &values,
+                r.limits,
+                r.units == crate::services::Units::Points,
+            )?,
+            _ if style.number_format.is_some() => {
+                let format = style.number_format.as_ref().expect("checked");
+                values
+                    .iter()
+                    .map(|value| match value {
+                        ScaleValue::Number(n) => format.format(*n),
+                        _ => Err(error(
+                            DiagnosticCode::SchemaConflict,
+                            "Numeric formatting requires numeric guide values.",
+                        )),
+                    })
+                    .collect::<ChartResult<Vec<_>>>()?
+            }
+            _ => super::guide_selection::labels(
+                axis,
+                &values,
+                &arguments,
+                numeric,
+                time,
+                r.max_ticks,
+            )?,
+        }
+    };
+    let mut bytes = r.limits.max_text_bytes;
+    for label in &labels {
+        crate::limits::require_within(label.len() <= bytes, "configured guide label byte")?;
+        bytes -= label.len();
+    }
+    if !style.visible {
+        return Ok(Vec::new());
+    }
+    Ok(values
+        .into_iter()
+        .zip(labels)
+        .zip(positions)
+        .filter_map(|((value, label), position)| {
+            position.map(|position| GuideTick {
+                value,
+                position,
+                label,
+            })
+        })
+        .collect())
 }

@@ -240,7 +240,7 @@ pub(crate) fn pixel(value: f64) -> ChartResult<Pixels> {
     }
     Ok(px(v))
 }
-fn native_color(c: Color) -> gpui::Rgba {
+pub(crate) fn native_color(c: Color) -> gpui::Rgba {
     rgba(
         (u32::from(c.red) << 24)
             | (u32::from(c.green) << 16)

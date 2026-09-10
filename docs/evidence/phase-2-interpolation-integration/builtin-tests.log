@@ -1,0 +1,45 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.83s
+     Running tests/interpolate_color.rs (target/axis-rust-proof/debug/deps/interpolate_color-3e2507b2c8696e08)
+
+running 2 tests
+test floating_channels_opacity_hue_and_splines_keep_their_contracts ... ok
+test every_color_export_gamma_and_hue_matches_offline_reference ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/interpolate_descriptors.rs (target/axis-rust-proof/debug/deps/interpolate_descriptors-d9128d74c924a783)
+
+running 2 tests
+test every_descriptor_family_round_trips_and_keeps_owned_samples ... ok
+test color_consumers_keep_floating_channels_and_portable_validation_is_strict ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/interpolate_motion.rs (target/axis-rust-proof/debug/deps/interpolate_motion-3ecfe3480e95c5c5)
+
+running 3 tests
+test independent_transform_order_reflection_and_zoom_invariants ... ok
+test pinned_real_browser_transforms_match_decomposition_and_geometry ... ok
+test all_zoom_rho_duration_cases_match_reference ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/interpolate_scalar.rs (target/axis-rust-proof/debug/deps/interpolate_scalar-817ad7592387e3cb)
+
+running 3 tests
+test independent_rounding_composition_and_owned_sampling_contracts ... ok
+test parameter_controls_and_output_counts_are_bounded ... ok
+test every_scalar_and_composition_case_matches_the_offline_oracle ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/interpolate_values.rs (target/axis-rust-proof/debug/deps/interpolate_values-474bbffd7d8a560b)
+
+running 3 tests
+test independent_target_shapes_dates_casts_and_reuse ... ok
+test every_structured_value_case_matches_offline_reference_and_adaptations ... ok
+test strict_value_decoding_and_aggregate_limits_reject_invalid_inputs ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+

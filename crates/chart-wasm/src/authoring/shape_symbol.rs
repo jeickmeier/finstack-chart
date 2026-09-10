@@ -1,12 +1,12 @@
+//! Owned symbol generators and palettes; geometry is implemented in chart-core.
 use super::shape_registry::_ShapeRegistry;
-// Owned symbol generators and palettes; geometry is implemented in chart-core.
 use super::{disposed, failure, handle, path::_Path};
 use chart_core::{
     portable,
     shape::{SYMBOLS_FILL, SYMBOLS_STROKE, Symbol},
 };
 use wasm_bindgen::prelude::*;
-handle!(_ShapeSymbol, _ShapeSymbol, Symbol);
+handle!(_ShapeSymbol, Symbol);
 #[wasm_bindgen]
 impl _ShapeSymbol {
     pub fn generate_registered(

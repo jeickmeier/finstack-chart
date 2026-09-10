@@ -253,3 +253,48 @@ for host,extension,command,owner in [('python','py',[sys.executable],module),('w
     run('shape-dashes-'+host,command+[ROOT/'scripts/bindings'/('shape_dashes.'+extension),owner])
     run('shape-dashes-gallery-'+host,command+[ROOT/'scripts/bindings'/('shape_dashes_gallery.'+extension),owner,dash/'rust',dash/host])
 run('shape-dashes-compare',[sys.executable,ROOT/'scripts/bindings/shape_radial_compare.py',dash])
+
+# AXIS-01 independent guides and retained positional providers.
+axis=output/'axis-provider'
+run('axis-core',['cargo','test','-p','chart-core','--test','axis_guides','--test','axis_providers','--locked'])
+run('axis-provider-rust',['cargo','run','-p','chart-export','--example','axis_provider_proof','--locked','--',axis/'rust'])
+for host,extension,command,owner in [('python','py',[sys.executable],module),('wasm','cjs',[node],wasm)]:
+    run('axis-guides-'+host,command+[ROOT/'scripts/bindings'/('axis_guides.'+extension),owner])
+    run('axis-provider-'+host,command+[ROOT/'scripts/bindings'/('axis_providers.'+extension),owner,axis/host])
+for extension in ('svg','pdf','png'):
+    assert len({(axis/host/('provider.'+extension)).read_bytes() for host in ('rust','python','wasm')})==1
+src=(ROOT/'scripts/bindings/authoring/axis_provider_types.cts').read_text().replace('../../../packages/wasm/','../wasm-module/')
+(consumer/'axis-provider.cts').write_text(src)
+run('axis-provider-typescript',tsc+['--noEmit','--strict','--target','es2022','--lib','es2022,esnext.disposable','--module','nodenext',consumer/'axis-provider.cts'])
+run('axis-provider-python-types',base+[ROOT/'scripts/bindings/authoring/axis_provider_typing.py'])
+invalid=run('axis-provider-python-types-invalid',base+[ROOT/'scripts/bindings/authoring/axis_provider_typing_invalid.py'],expected=1)
+assert 'Found 3 errors in 1 file' in invalid
+
+# AXIS-02 independent selection and formatting over the AXIS-01 guide contract.
+axis_ticks=output/'axis-ticks'
+run('axis-ticks-core',['cargo','test','-p','chart-core','--test','axis_ticks','--locked'])
+run('axis-ticks-rust',['cargo','run','-p','chart-export','--example','axis_tick_proof','--locked','--',axis_ticks/'rust'])
+for host,extension,command,owner in [('python','py',[sys.executable],module),('wasm','cjs',[node],wasm)]:
+    run('axis-ticks-'+host,command+[ROOT/'scripts/bindings'/('axis_ticks.'+extension),owner,axis_ticks/host])
+for extension in ('svg','pdf','png'):
+    assert len({(axis_ticks/host/('ticks.'+extension)).read_bytes() for host in ('rust','python','wasm')})==1
+src=(ROOT/'scripts/bindings/authoring/axis_tick_types.cts').read_text().replace('../../../packages/wasm/','../wasm-module/')
+(consumer/'axis-ticks.cts').write_text(src)
+run('axis-ticks-typescript',tsc+['--noEmit','--strict','--target','es2022','--lib','es2022,esnext.disposable','--module','nodenext',consumer/'axis-ticks.cts'])
+run('axis-ticks-python-types',base+[ROOT/'scripts/bindings/authoring/axis_tick_typing.py'])
+invalid=run('axis-ticks-python-types-invalid',base+[ROOT/'scripts/bindings/authoring/axis_tick_typing_invalid.py'],expected=1)
+assert 'Found 3 errors in 1 file' in invalid
+
+# IP06 registered factories, immutable scale consumers and explicit sampled publication.
+ip=output/'interpolation-integration'
+run('interpolation-registered-core',['cargo','test','-p','chart-core','--test','interpolate_registered','--locked'])
+run('interpolation-integration-rust',['cargo','run','-p','chart-export','--example','interpolation_proof','--locked','--',ip/'rust'])
+for host,extension,command,owner in [('python','py',[sys.executable],module),('wasm','cjs',[node],wasm)]:
+    run('interpolation-integration-'+host,command+[ROOT/'scripts/bindings'/('interpolation_integration.'+extension),owner,ip/host])
+run('interpolation-integration-compare',[sys.executable,ROOT/'scripts/bindings/interpolation_integration_compare.py',ip])
+src=(ROOT/'scripts/bindings/authoring/interpolation_integration_types.cts').read_text().replace('../../../target/interpolation-integration/wasm-module/','../wasm-module/')
+(consumer/'interpolation-integration.cts').write_text(src)
+run('interpolation-integration-typescript',tsc+['--noEmit','--strict','--target','es2022','--lib','es2022,esnext.disposable','--module','nodenext',consumer/'interpolation-integration.cts'])
+run('interpolation-integration-python-types',base+[ROOT/'scripts/bindings/authoring/interpolation_integration_typing.py'])
+invalid=run('interpolation-integration-python-types-invalid',base+[ROOT/'scripts/bindings/authoring/interpolation_integration_typing_invalid.py'],expected=1)
+assert 'Found 5 errors in 1 file' in invalid

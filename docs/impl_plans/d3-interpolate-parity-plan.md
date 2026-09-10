@@ -15,6 +15,16 @@ that coverage required, gives each algorithm one owner, and defines how to prove
 Existing alpha acceptance remains valid for its recorded scope. This task changes no
 Rust implementation, binding API, dependency, fixture or visual baseline.
 
+## Implementation update — 9 September 2026
+
+WP-IP01–06 are complete for their recorded scopes. WP-IP07 has a complete standalone
+27-export/configuration catalog, fresh reference/host replay, integrated sampled
+publication and finite preparation/sampling/allocation evidence. It remains PARTIAL
+because WP-AX06 is unfinished; G-INTERPOLATE is not passed. See the
+[integration report](../evidence/phase-2-interpolation-integration-2026-09-09.md) and
+[status ledger](../implementation-status.md). The planning narrative below retains the
+original review's provenance; it is not the current implementation status.
+
 ## Reference scope and sources
 
 Target `d3-interpolate` **3.0.1**, with `d3-color` **3.1.0** proposed for the shared

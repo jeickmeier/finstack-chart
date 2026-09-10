@@ -1,12 +1,12 @@
+//! Arc and pie ownership adapters; arithmetic and layout live in chart-core.
 use super::shape_registry::_ShapeRegistry;
-// Arc and pie ownership adapters; arithmetic and layout live in chart-core.
 use super::{disposed, failure, handle, path::_Path};
 use chart_core::{
     portable,
     shape::{Arc, ArcDatum, Pie},
 };
 use wasm_bindgen::prelude::*;
-handle!(_ShapeArc, _ShapeArc, Arc);
+handle!(_ShapeArc, Arc);
 #[wasm_bindgen]
 impl _ShapeArc {
     #[wasm_bindgen(constructor)]
@@ -36,7 +36,7 @@ impl _ShapeArc {
         portable::encode(&self.get()?.centroid(datum).map_err(failure)?).map_err(failure)
     }
 }
-handle!(_ShapePie, _ShapePie, Pie);
+handle!(_ShapePie, Pie);
 #[wasm_bindgen]
 impl _ShapePie {
     pub fn layout_registered_json(

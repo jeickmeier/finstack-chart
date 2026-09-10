@@ -1,8 +1,8 @@
 //! One shared publication session for native Rust and the Python/WASM proof adapters.
 //! The versioned profile deliberately covers the WP-09 basic publication subset.
 use crate::{
-    FigureSnapshot, FontResource, FontResources, Format, PageSize, PublicationProfile, TextMode,
-    ViewMode, error,
+    FigureSnapshot, FontResource, FontResources, PageSize, PublicationProfile, TextMode, ViewMode,
+    error,
 };
 mod live_export;
 use base64::Engine;
@@ -280,18 +280,7 @@ impl PortableChart {
     }
     /// Return bytes for the explicitly requested format; no host file I/O or silent fallback.
     pub fn export(&self, format: &str) -> ChartResult<Vec<u8>> {
-        let format = match format {
-            "svg" => Format::Svg,
-            "pdf" => Format::Pdf,
-            "png" => Format::Png,
-            _ => {
-                return Err(error(
-                    DiagnosticCode::UnsupportedCapability,
-                    "Format must be svg, pdf or png",
-                ));
-            }
-        };
-        Ok(self.capture()?.export(format)?.bytes)
+        Ok(self.capture()?.export(crate::host::format(format)?)?.bytes)
     }
     /// Apply a transaction, returning its typed applied/replay/conflict/rejection JSON outcome.
     pub fn transaction(&mut self, input: &str) -> ChartResult<String> {
@@ -356,6 +345,11 @@ pub fn diagnostic_json(diagnostic: &Diagnostic) -> String {
 }
 
 impl FigureSnapshot {
+    /// Coherent guide values, labels and configuration, including exact timestamp strings.
+    /// The records use this retained publication layout and never resolve a second state.
+    pub fn guides_json(&self) -> ChartResult<String> {
+        portable::encode(&json!({"version": 1, "guides": self.layout().guide_snapshots()}))
+    }
     /// Owned versioned scene values with exact targets, font identities and diagnostics.
     pub fn scene_json(&self) -> ChartResult<String> {
         let figure = self;

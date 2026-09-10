@@ -5,12 +5,11 @@ This document retains its detailed inventory and package ownership; the combined
 owns cross-lane scheduling and ggplot2 integration.
 
 Date: 7 September 2026. Original review specification: 0.2.0; current contract: 0.5.0.
-State: planned; implementation parity is not achieved.
+State: WP-AX01 and WP-AX02 are COMPLETE for their package scope, with [integrated evidence and validation limits](../evidence/phase-2-axis-ticks-2026-09-09.md). WP-AX03–06 remain unstarted and G-AXIS is open. The owner requested a stop after AX01/02. Full parity is not achieved.
 Original reviewed revision: `1cb955740c2dad2607b0a2330201125294cab5d0` plus its working tree.
 Primary API handoff reconciled at `b631f0e6d7e41722b5774433d616f704234157d7`
 plus active authoring edits using the [current API review](../evidence/phase-2-current-api-review-2026-09-07.md).
-This assignment changes planning documents only. Concurrent state/action and binding edits
-were present before the review and are outside this changeset.
+Historical review scope was planning only. The current owner stop boundary is after WP-AX01/02; the status ledger records the remaining scope and acceptance.
 
 ## Outcome and scope
 

@@ -34,10 +34,17 @@ impl ShapeRegistryHandle {
             .shape_to_json(&selection, family)
             .map_err(failure)
     }
+    fn interpolation_factory_json(&self, operation: &str, parameters: &str) -> PyResult<String> {
+        let f = self
+            .get()?
+            .interpolation_factory(
+                portable::decode(operation).map_err(failure)?,
+                portable::decode(parameters).map_err(failure)?,
+            )
+            .map_err(failure)?;
+        portable::encode(&f).map_err(failure)
+    }
     fn dispose(&mut self) {
         self.inner.take();
     }
-}
-pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
-    module.add_class::<ShapeRegistryHandle>()
 }

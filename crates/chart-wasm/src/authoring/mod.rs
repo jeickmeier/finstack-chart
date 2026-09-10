@@ -31,7 +31,7 @@ fn disposed() -> JsError {
     ))
 }
 macro_rules! handle {
-    ($name:ident, $js:ident, $ty:ty) => {
+    ($name:ident, $ty:ty) => {
         #[wasm_bindgen]
         pub struct $name {
             inner: Option<$ty>,
@@ -40,6 +40,13 @@ macro_rules! handle {
             pub(super) fn get(&self) -> Result<&$ty, JsError> {
                 self.inner.as_ref().ok_or_else(disposed)
             }
+            #[allow(
+                dead_code,
+                reason = "Only mutable owners use this shared macro accessor."
+            )]
+            pub(super) fn get_mut(&mut self) -> Result<&mut $ty, JsError> {
+                self.inner.as_mut().ok_or_else(disposed)
+            }
             pub(super) fn wrap(inner: $ty) -> Self {
                 Self { inner: Some(inner) }
             }
@@ -47,7 +54,7 @@ macro_rules! handle {
     };
 }
 pub(super) use handle;
-handle!(_Component, _Component, Component);
+handle!(_Component, Component);
 #[wasm_bindgen]
 impl _Component {
     #[wasm_bindgen(constructor)]
@@ -172,7 +179,7 @@ impl _Component {
         self.inner.take();
     }
 }
-handle!(_Draft, _Draft, Draft);
+handle!(_Draft, Draft);
 #[wasm_bindgen]
 impl _Draft {
     pub fn with_shape_registry(
@@ -223,7 +230,7 @@ impl _Draft {
         self.inner.take();
     }
 }
-handle!(_Plot, _Plot, plot::Plot);
+handle!(_Plot, plot::Plot);
 #[wasm_bindgen]
 impl _Plot {
     pub fn from_json_with_registry(

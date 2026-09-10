@@ -22,7 +22,7 @@ impl ExportArtifact {
 }
 
 /// Which coherent live inputs to acquire, independently of projection and interaction policy.
-#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, serde::Deserialize)]
 pub enum CaptureBasis {
     /// Exact last acknowledged scene; rejects before first presentation.
     #[default]
@@ -205,15 +205,10 @@ impl Output {
             kind: ResourceKind::Font,
             byte_len: bytes.len() as u64,
         };
-        Self::with_fonts(
-            FontResources::new(vec![FontResource::new(descriptor, bytes)?])?,
-            descriptor,
-        )
-    }
-    /// Use a shared explicit font database and primary face, retaining its exact identities.
-    pub fn with_fonts(fonts: FontResources, primary: ResourceDescriptor) -> ChartResult<Self> {
-        fonts.get(&primary)?;
-        Ok(Self { fonts, primary })
+        Ok(Self {
+            fonts: FontResources::new(vec![FontResource::new(descriptor, bytes)?])?,
+            primary: descriptor,
+        })
     }
     /// Acquire cheap immutable static inputs; no statistics, layout, shaping or encoding occurs.
     pub fn request(&self, plot: &Plot, options: ExportOptions) -> ChartResult<FigureRequest> {

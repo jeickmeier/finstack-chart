@@ -52,7 +52,7 @@ def _options(options, mode):
     if "interpolator" in result:
         i = result["interpolator"]
         if not isinstance(i, Interpolator): raise TypeError("Scale interpolator requires an owned Interpolator.")
-        result["interpolator"] = json.loads(i.to_json())["spec"]
+        result["interpolator"] = json.loads(i._inner.descriptor_json())["spec"]
     if "factory" in result:
         f = result["factory"]
         result["factory"] = f._descriptor() if hasattr(f, "_descriptor") else f
@@ -63,9 +63,10 @@ def _selection(count, interval):
 
 class StandaloneScale(_Owned):
     """Immutable scale. configure, nice and train return independent owned scales."""
-    def __init__(self, family="linear", **options):
+    def __init__(self, family="linear", *, registry=None, **options):
         mode = "Key" if family in ("ordinal", "band", "point", "threshold") else "Time" if family in ("utc", "local") else "Number"
-        super().__init__(_native._Scale.create(_json(family), _json(_options(options, mode))))
+        encoded = _json(_options(options, mode))
+        super().__init__(_native._Scale.create(_json(family), encoded) if registry is None else _native._Scale.create_registered(_json(family), encoded, registry._inner))
         self._read_mode()
     def _read_mode(self):
         family = next(iter(self.spec()))
@@ -74,9 +75,9 @@ class StandaloneScale(_Owned):
     def _wrap(cls, inner):
         s = object.__new__(cls); _Owned.__init__(s, inner); s._read_mode(); return s
     @classmethod
-    def from_json(cls, text): return cls._wrap(_native._Scale.from_json(text))
+    def from_json(cls, text, registry=None): return cls._wrap(_native._Scale.from_json(text) if registry is None else _native._Scale.from_json_registered(text, registry._inner))
     @classmethod
-    def from_spec(cls, spec): return cls._wrap(_native._Scale(_json(spec)))
+    def from_spec(cls, spec, registry=None): return cls._wrap(_native._Scale(_json(spec)) if registry is None else _native._Scale.from_spec_registered(_json(spec), registry._inner))
     def to_json(self): return self._inner.to_json()
     def copy(self): return type(self)._wrap(self._inner.copy())
     def _query(self, value): return json.loads(self._inner.query(_json(value)))

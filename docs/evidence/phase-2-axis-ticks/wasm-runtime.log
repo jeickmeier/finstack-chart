@@ -1,0 +1,51 @@
+/Users/jeickmeier/Projects/finstack-chart/target/axis-ticks/wasm-module/authoring.cjs:12
+    throw new ChartError(diagnostic);
+    ^
+
+ChartError: Builder argument 0: invalid type: integer `1`, expected a string
+    at checked (/Users/jeickmeier/Projects/finstack-chart/target/axis-ticks/wasm-module/authoring.cjs:12:11)
+    at Proxy.<anonymous> (/Users/jeickmeier/Projects/finstack-chart/target/axis-ticks/wasm-module/authoring.cjs:56:156)
+    at /Users/jeickmeier/Projects/finstack-chart/target/axis-ticks/wasm-module/authoring.cjs:174:24
+    at Proxy.<anonymous> (/Users/jeickmeier/Projects/finstack-chart/target/axis-ticks/wasm-module/authoring.cjs:159:235)
+    at configure (/Users/jeickmeier/Projects/finstack-chart/scripts/bindings/axis_ticks.cjs:11:36)
+    at Object.<anonymous> (/Users/jeickmeier/Projects/finstack-chart/scripts/bindings/axis_ticks.cjs:24:69)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10)
+    at Module.load (node:internal/modules/cjs/loader:1533:32)
+    at Module._load (node:internal/modules/cjs/loader:1335:12) {
+  code: 'CHART_VALIDATION',
+  severity: 'Error',
+  correction: 'Check the named data/layer/aesthetic and its type, or provide an explicit supported component policy.',
+  context: {
+    dataset: null,
+    layer: null,
+    field: null,
+    resource: null,
+    resource_revision: null,
+    stamp: null,
+    dataset_revision: null,
+    schema_version: null,
+    affected_rows: '0',
+    row_samples: []
+  },
+  diagnostic: {
+    code: 'CHART_VALIDATION',
+    severity: 'Error',
+    message: 'Builder argument 0: invalid type: integer `1`, expected a string',
+    correction: 'Check the named data/layer/aesthetic and its type, or provide an explicit supported component policy.',
+    context: {
+      dataset: null,
+      layer: null,
+      field: null,
+      resource: null,
+      resource_revision: null,
+      stamp: null,
+      dataset_revision: null,
+      schema_version: null,
+      affected_rows: '0',
+      row_samples: []
+    }
+  }
+}
+
+Node.js v24.14.0

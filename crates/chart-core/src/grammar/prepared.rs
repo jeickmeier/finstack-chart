@@ -545,6 +545,7 @@ pub struct PreparationMetrics {
 /// It owns no typed source rows or callbacks; its handle pins one coherent source snapshot.
 #[derive(Clone, Debug)]
 pub struct PreparedChart {
+    pub(crate) guide_registrations: Arc<super::guide_extensions::GuideRegistrations>,
     pub(crate) scale_registrations: Arc<super::scale_extensions::ScaleRegistrations>,
     pub(crate) panels: Vec<super::PreparedPanel>,
     pub(crate) shared_training: Option<Arc<PreparedChart>>,

@@ -41,6 +41,7 @@ pub(super) fn preflight(
     source: bool,
     fields: Option<&[StatColumn]>,
     limits: CompileLimits,
+    registry: &ExtensionRegistry,
 ) -> ChartResult<()> {
     if encoding.title.as_ref().is_some_and(|t| t.len() > 4096) {
         return Err(error(
@@ -48,7 +49,7 @@ pub(super) fn preflight(
             "Color legend title exceeds 4096 bytes.",
         ));
     }
-    encoding.scale.validate()?;
+    encoding.scale.validate_with_registry(registry)?;
     let categorical = matches!(
         encoding.input,
         ColorInput::Category(_) | ColorInput::Group | ColorInput::GroupField(_)
@@ -107,15 +108,25 @@ pub(super) fn preflight(
     Ok(())
 }
 
+pub(super) struct ColorContext<'a> {
+    pub limits: CompileLimits,
+    pub registry: &'a ExtensionRegistry,
+    pub shared: Option<&'a [String]>,
+    pub samples: Option<&'a crate::scales::ScalePopulation>,
+}
 pub(super) fn apply(
     layer: &Layer,
     data: &DatasetSnapshot,
     table: &PreparedTable,
     rows: &mut [EncodedRow],
-    limits: CompileLimits,
-    shared: Option<&[String]>,
-    samples: Option<&crate::scales::ScalePopulation>,
+    context: ColorContext<'_>,
 ) -> ChartResult<Option<ColorLegend>> {
+    let ColorContext {
+        limits,
+        registry,
+        shared,
+        samples,
+    } = context;
     let Some(encoding) = &layer.color else {
         return Ok(None);
     };
@@ -131,6 +142,7 @@ pub(super) fn apply(
         matches!(table.rows, PreparedRows::Source(_)),
         fields,
         limits,
+        registry,
     )?;
     let AestheticInputs {
         labels,
@@ -148,7 +160,7 @@ pub(super) fn apply(
     } else {
         &encoding.scale
     };
-    let prepared_scale = scale.prepare()?;
+    let prepared_scale = scale.prepare_with_registry(registry)?;
     let categorical_map = if let ColorScale::Discrete {
         domain,
         palette,

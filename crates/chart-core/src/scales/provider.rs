@@ -197,6 +197,18 @@ impl CheckedPositionalScale {
     pub fn band(&self) -> Option<ProviderBand> {
         self.band
     }
+    /// Map a category's full band for shared position adjustments such as dodge.
+    pub fn band_extent(&self, value: &ScaleValue) -> ChartResult<Option<Bounds>> {
+        let band = self.band.ok_or_else(|| {
+            error(
+                DiagnosticCode::UnsupportedCapability,
+                "This positional provider has no bands.",
+            )
+        })?;
+        self.raw_map(value)?
+            .map(|start| Bounds::new(start, start + band.bandwidth))
+            .transpose()
+    }
     /// Report optional inversion independently of categorical lookup.
     pub fn capabilities(&self) -> ScaleCapabilities {
         ScaleCapabilities {

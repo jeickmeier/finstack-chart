@@ -366,3 +366,93 @@ The complete shape surface is qualified under the finite typed d3-shape 3.2.0 pr
 see [the per-item acceptance evidence](evidence/phase-2-shape-acceptance-2026-09-09.md)
 for exact supported contracts, destination tolerances and remaining release/performance
 work. Native callbacks require explicit portable registrations for wire transport.
+
+### Positional provider registrations
+
+A positional provider is installed native code with a versioned identity and bounded
+parameters. One resolved mapping serves its marks and every independent guide. It may
+supply ticks, formatting, bands and an inverse; an inverse is not required. The native
+implementation uses `CustomScale`/`PositionalScale` and the same `ExtensionRegistry`
+that owns other extensions. See the [external example](../examples/custom-extension/src/scales.rs)
+and [provider contract](extension-contract.md#registered-positional-scales-axis-01).
+
+```python
+registry = ExtensionRegistry.example()  # proof-enabled build; installs known Rust code
+p = (plot(data).with_registry(registry)
+     .aes(aes().x("x").y("y")).layer(points())
+     .x_axis(x_axis().coordinate_scale(
+         scale_registered("example.fold", 1, {"limit": 10.0})))
+     .guide(axis_guide("top", "x").side("Top"))
+     .build())
+restored = Plot.from_json(p.to_json(), registry)
+```
+
+Rust uses `.extensions(registry)` with the same scale selector; JavaScript provides
+`withRegistry`, `coordinateScale`, `scaleRegistered` and `axisGuide`. The host
+`ExtensionRegistry` name is an alias of the existing registry class, and
+`with_shape_registry` remains supported. A registry copy and a captured request retain
+their installed implementations after the original owner is disposed.
+
+Provider definitions use version 10. Loading requires an explicitly supplied registry;
+JSON never installs code. Native-only providers reject portable serialization and
+headless publication. Under the ggplot profile, `coordinate_scale` is required because
+a provider has no implicit before-statistics transformation. Generic provider pan/zoom
+rejects without an explicit navigation metric, even when forward positions are numeric.
+The [qualification report](evidence/phase-2-axis-provider-2026-09-09.md) distinguishes
+this provider/identity scope from the still-open D3 guide profile and axis gate.
+
+### Independent guide ticks (WP-AX02)
+
+Default axes and additional guides accept `guide_profile`, `tick_arguments`,
+`tick_values` and `tick_format` (camelCase in JavaScript). The default profile is
+`LibraryV1`; opt into `D3_3_0_0` for the shared D3 tick policies and complete selected
+order, repeated labels and empty labels. This selects presentation policy over the
+chosen scale; complete D3 geometry remains WP-AX03.
+
+Arguments, values and formatter reset independently with `None` / `null`. An empty
+explicit value list selects no ticks without automatic enumeration. Values retain
+numeric, category or exact timestamp types. Formatters are explicit labels, a shared
+numeric/calendar description, or a registered semantic formatter. Register native
+code explicitly before loading its versioned reference. The same captured registry
+survives author/registry disposal; native-only operations reject portable/headless use.
+
+New controls use wire version 11, while plots with older capabilities keep their
+existing wire versions. `Frame.guides()` returns the coherent guide specs, exact
+selected values, order, labels and positions from the immutable frame, with nested
+facet/inset scopes. See [ADR-021](adr/021-independent-axis-guides.md) for bounds and
+unsupported legacy session/secondary combinations and the
+[executable Python proof](../scripts/bindings/axis_ticks.py) and
+[JavaScript proof](../scripts/bindings/axis_ticks.cjs) for complete examples.
+
+## Registered interpolation (WP-IP06)
+
+Explicit installed Rust factories can be used from each primary host. Python:
+
+```python
+registry = ExtensionRegistry.example()  # proof-enabled build only
+factory = registered_interpolation(
+    registry, "example.interpolation", 1, {"mode": "SquaredNumber"}
+)
+samples = piecewise(factory, [0., 100., 200.]).quantize(5)
+scale = StandaloneScale("linear", registry=registry, factory=factory,
+                        domain=[0., 10.], range=[0., 100.])
+# samples == [0., 25., 100., 125., 200.]; scale.map(5.) == 25.
+```
+
+JavaScript uses `registeredInterpolation(registry, id, version, parameters)` and
+`new StandaloneScale('linear', {registry, factory, domain: [0, 10], range: [0, 100]})`.
+Both `Interpolator.from_json`/`fromJson` and `StandaloneScale.from_json`/`fromJson`
+accept a registry for loading registered portable definitions. JavaScript operation
+versions accept exact BigInt/decimal strings or safe integer Numbers; Python accepts
+integer/decimal strings. Registrations are installed Rust code, never arbitrary host
+callbacks. Factory `copy`/`dispose` owns an independent registry lifetime; already
+prepared consumers survive disposal. Standalone scale construction takes the registry
+explicitly, and later `configure`/`nice` operations retain its snapshot.
+
+Registered interpolation/scales use envelope version 2 and registered mapped charts
+version 12. Native-only factories reject serialization and headless export. Builtin
+interpolation wire/API defaults remain unchanged. The
+[three-host proof](../scripts/bindings/interpolation_integration.py) exercises registered
+floating color and size scales, legends/themes, explicit transform/zoom frames, exact
+keys, updates and retained publication. Axis transition lifecycle certification remains
+with WP-AX05/06; this API supplies explicit samples without scheduling animation.

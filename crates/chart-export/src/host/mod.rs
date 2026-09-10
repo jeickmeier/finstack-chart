@@ -260,13 +260,6 @@ impl Runtime {
             &json!({"stamp":dense.scene().stamp(),"metrics":dense.metrics(),"candles":dense.candles(),"items":dense.scene().items()}),
         )
     }
-    /// Resolve a core annotation producer; the returned editor pins its exact scene.
-    pub fn editor(
-        &self,
-        component: &Component,
-    ) -> ChartResult<chart_core::editing::AnnotationEditor> {
-        component.annotation_editor(self.chart()?)
-    }
     /// Capture a link event with core echo suppression and exact identity matching.
     pub fn link_capture(&mut self, component: &Component, event: &str) -> ChartResult<String> {
         let event: StateEvent = portable::decode(event)?;

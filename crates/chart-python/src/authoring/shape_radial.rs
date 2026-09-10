@@ -1,5 +1,5 @@
+//! Radial and link ownership adapters; coordinate arithmetic stays in chart-core.
 use super::shape_registry::ShapeRegistryHandle;
-// Radial and link ownership adapters; coordinate arithmetic stays in chart-core.
 use super::{disposed, failure, handle, path::PathHandle};
 use chart_core::{
     portable,
@@ -160,11 +160,4 @@ impl ShapeLinkRadialHandle {
 fn _point_radial(angle: f64, radius: f64) -> PyResult<(f64, f64)> {
     let p = chart_core::shape::point_radial(angle, radius).map_err(failure)?;
     Ok((p[0], p[1]))
-}
-pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
-    module.add_class::<ShapeLineRadialHandle>()?;
-    module.add_class::<ShapeAreaRadialHandle>()?;
-    module.add_class::<ShapeLinkHandle>()?;
-    module.add_class::<ShapeLinkRadialHandle>()?;
-    module.add_function(wrap_pyfunction!(_point_radial, module)?)
 }

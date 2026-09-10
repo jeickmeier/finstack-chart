@@ -126,9 +126,3 @@ impl FieldHandle {
         self.inner.take();
     }
 }
-pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
-    module.add_class::<ColumnHandle>()?;
-    module.add_class::<ColumnsHandle>()?;
-    module.add_class::<DataHandle>()?;
-    module.add_class::<FieldHandle>()
-}

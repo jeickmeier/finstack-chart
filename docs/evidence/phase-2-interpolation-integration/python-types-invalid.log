@@ -1,0 +1,9 @@
+scripts/bindings/authoring/interpolation_integration_typing_invalid.py:3: error: Argument 3 to "registered_interpolation" has incompatible type "float"; expected "int | str"  [arg-type]
+scripts/bindings/authoring/interpolation_integration_typing_invalid.py:4: error: Argument 4 to "registered_interpolation" has incompatible type "Callable[[], None]"; expected "Mapping[str, object] | None"  [arg-type]
+scripts/bindings/authoring/interpolation_integration_typing_invalid.py:5: error: Argument "registry" to "StandaloneScale" has incompatible type "str"; expected "ShapeRegistry | None"  [arg-type]
+scripts/bindings/authoring/interpolation_integration_typing_invalid.py:6: error: Argument 2 to "from_json" of "Interpolator" has incompatible type "str"; expected "ShapeRegistry | None"  [arg-type]
+scripts/bindings/authoring/interpolation_integration_typing_invalid.py:7: error: No overload variant of "piecewise" matches argument types "Callable[[Any, Any], Interpolator[float]]", "list[float]"  [call-overload]
+scripts/bindings/authoring/interpolation_integration_typing_invalid.py:7: note: Possible overload variants:
+scripts/bindings/authoring/interpolation_integration_typing_invalid.py:7: note:     def piecewise(values: Sequence[InterpolationInput]) -> Interpolator[InterpolationResult]
+scripts/bindings/authoring/interpolation_integration_typing_invalid.py:7: note:     def [_T] piecewise(factory: _FactoryBase[_T], values: Sequence[InterpolationInput]) -> Interpolator[_T]
+Found 5 errors in 1 file (checked 1 source file)

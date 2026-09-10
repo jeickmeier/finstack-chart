@@ -3,7 +3,7 @@ use super::*;
 use serde::{Deserialize, Serialize};
 
 /// Optional built-in factory configuration; irrelevant options reject explicitly.
-#[derive(Clone, Copy, Debug, Default, Serialize, Deserialize)]
+#[derive(Clone, Debug, Default, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct InterpolationOptions {
     /// RGB or Cubehelix gamma.
@@ -248,6 +248,7 @@ impl Interpolator {
                     factory: InterpolationFactory {
                         kind: FactoryKind::from_name(name)?,
                         gamma: options.gamma,
+                        registration: None,
                     },
                     a: args[0].clone(),
                     b: args[1].clone(),

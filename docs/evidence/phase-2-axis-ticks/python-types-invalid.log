@@ -1,0 +1,4 @@
+scripts/bindings/authoring/axis_tick_typing_invalid.py:2: error: Argument 1 to "guide_profile" of "Axis" has incompatible type "Literal['D3']"; expected "Literal['LibraryV1', 'D3_3_0_0']"  [arg-type]
+scripts/bindings/authoring/axis_tick_typing_invalid.py:3: error: Argument 1 to "tick_arguments" of "Axis" has incompatible type "dict[str, str]"; expected "GuideTickArguments | None"  [arg-type]
+scripts/bindings/authoring/axis_tick_typing_invalid.py:4: error: Argument 1 to "tick_format" of "Guide" has incompatible type "dict[str, list[int]]"; expected "GuideLabelFormat | GuideNumericFormat | GuideTimeFormat | GuideRegisteredFormat | None"  [arg-type]
+Found 3 errors in 1 file (checked 1 source file)

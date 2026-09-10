@@ -1,13 +1,13 @@
+//! Owned Cartesian generator adapters; all controls and geometry run in chart-core.
 use super::shape_registry::_ShapeRegistry;
-// Owned Cartesian generator adapters; all controls and geometry run in chart-core.
 use super::{disposed, failure, handle, path::_Path};
 use chart_core::{
     portable,
     shape::{Area, AreaBoundary, Line},
 };
 use wasm_bindgen::prelude::*;
-handle!(_ShapeLine, _ShapeLine, Line);
-handle!(_ShapeArea, _ShapeArea, Area);
+handle!(_ShapeLine, Line);
+handle!(_ShapeArea, Area);
 #[wasm_bindgen]
 impl _ShapeLine {
     pub fn generate_registered(

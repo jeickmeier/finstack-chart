@@ -172,7 +172,7 @@ fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
             ))
         })
         .collect::<ChartResult<BTreeMap<_, _>>>()?;
-    for guide in resolve_guides(&scales, r)?.values() {
+    for guide in resolve_guides(chart, &scales, r)?.values() {
         if guide.spec.visible {
             potential_items = potential_items
                 .checked_add(1 + guide.ticks.len() * 2)
@@ -437,11 +437,12 @@ fn guides(
             } else {
                 l.tick.position >= p.origin().y() && l.tick.position <= p.max_y()
             };
-            if !along
-                || !l.tick.label.is_empty()
-                    && (!inside(bounds, r.bounds)
-                        || placed.iter().any(|b| overlaps(bounds, *b, r.label_gap))
-                        || !seen.insert(l.tick.label.clone()))
+            if a.spec.profile == GuideProfile::LibraryV1
+                && (!along
+                    || !l.tick.label.is_empty()
+                        && (!inside(bounds, r.bounds)
+                            || placed.iter().any(|b| overlaps(bounds, *b, r.label_gap))
+                            || !seen.insert(l.tick.label.clone())))
             {
                 pressure = true;
                 continue;
@@ -635,6 +636,7 @@ fn guide_specs(r: &LayoutRequest) -> Vec<GuideSpec> {
         .collect()
 }
 fn resolve_guides(
+    chart: &PreparedChart,
     axes: &BTreeMap<ScaleId, ResolvedAxis>,
     r: &LayoutRequest,
 ) -> ChartResult<BTreeMap<GuideId, ResolvedGuide>> {
@@ -653,7 +655,7 @@ fn resolve_guides(
         let axis = axes
             .get(&spec.scale)
             .ok_or_else(|| error(DiagnosticCode::MissingResource, "Guide scale is absent."))?;
-        let mut ticks = super::guide_ticks::resolve(axis, &spec.style, r)?;
+        let mut ticks = super::guide_ticks::resolve(chart, axis, &spec.style, r)?;
         let offset = spec.translation[usize::from(!spec.side.horizontal())];
         for tick in &mut ticks {
             tick.position += offset;
@@ -747,7 +749,7 @@ pub(super) fn solve_panels(
                 .iter()
                 .map(|s| Ok((s.id, resolve_axis(&w.prepared, &w.request, s, p)?)))
                 .collect::<ChartResult<_>>()?;
-            w.guides = resolve_guides(&w.axes, &w.request)?;
+            w.guides = resolve_guides(&w.prepared, &w.axes, &w.request)?;
             w.labels = measure_guides(&w.guides, &w.request, measurer)?;
             w.passes = pass + 1;
             next = margins(&w.guides, &w.labels, &w.titles, &w.request, next);

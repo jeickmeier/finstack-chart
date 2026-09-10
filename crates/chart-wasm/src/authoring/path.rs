@@ -6,7 +6,7 @@ use chart_core::{
     portable,
 };
 use wasm_bindgen::prelude::*;
-handle!(_Path, _Path, Path);
+handle!(_Path, Path);
 #[wasm_bindgen]
 impl _Path {
     #[wasm_bindgen(constructor)]
@@ -40,14 +40,12 @@ impl _Path {
         values: &[f64],
         anticlockwise: bool,
     ) -> Result<(), JsError> {
-        self.inner
-            .as_mut()
-            .ok_or_else(disposed)?
+        self.get_mut()?
             .draw(method, values, anticlockwise)
             .map_err(failure)
     }
     pub fn batch(&mut self, operations: &str) -> Result<(), JsError> {
-        let path = self.inner.as_mut().ok_or_else(disposed)?;
+        let path = self.get_mut()?;
         let ops: Vec<PathOp> = portable::decode(operations).map_err(failure)?;
         path.apply_batch(&ops).map_err(failure)
     }

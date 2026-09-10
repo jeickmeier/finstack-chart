@@ -1,0 +1,13 @@
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 25.07s
+     Running tests/axis_ticks.rs (target/debug/deps/axis_ticks-4523a0dec312d4d4)
+
+running 5 tests
+test registered_formatter_gets_full_semantic_context_and_failures_precede_callbacks ... ok
+test explicit_time_values_bypass_an_unbounded_automatic_interval_and_keep_exact_source_units ... ok
+test count_is_a_hint_and_explicit_values_preserve_order_occurrences_and_empty_labels ... ok
+test primary_controls_are_versioned_independent_resettable_and_portability_checked ... ok
+test pinned_axis_reference_preserves_all_selected_values_and_labels_in_both_device_profiles ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+

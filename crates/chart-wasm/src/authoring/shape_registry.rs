@@ -6,7 +6,7 @@ use chart_core::{
 };
 use std::sync::Arc;
 use wasm_bindgen::prelude::*;
-handle!(_ShapeRegistry, _ShapeRegistry, Arc<ExtensionRegistry>);
+handle!(_ShapeRegistry, Arc<ExtensionRegistry>);
 #[wasm_bindgen]
 impl _ShapeRegistry {
     #[wasm_bindgen(constructor)]
@@ -29,6 +29,20 @@ impl _ShapeRegistry {
         self.get()?
             .shape_to_json(&selection, family)
             .map_err(failure)
+    }
+    pub fn interpolation_factory_json(
+        &self,
+        operation: &str,
+        parameters: &str,
+    ) -> Result<String, JsError> {
+        let f = self
+            .get()?
+            .interpolation_factory(
+                portable::decode(operation).map_err(failure)?,
+                portable::decode(parameters).map_err(failure)?,
+            )
+            .map_err(failure)?;
+        portable::encode(&f).map_err(failure)
     }
     pub fn dispose(&mut self) {
         self.inner.take();

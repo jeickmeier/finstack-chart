@@ -138,12 +138,15 @@ pub(super) fn layer_projections(
 pub(super) fn source_layer(layer: &mut Layer, axes: &[crate::layout::AxisSpec]) -> ChartResult<()> {
     if axes.iter().any(|axis| {
         [layer.scales.x, layer.scales.y].contains(&axis.id)
-            && matches!(axis.scale, crate::layout::AxisScale::Numeric(_))
+            && matches!(
+                axis.scale,
+                crate::layout::AxisScale::Numeric(_) | crate::layout::AxisScale::Registered { .. }
+            )
             && axis.scale_stage != Some(ScaleStage::AfterStatistics)
     }) {
         return Err(error(
             DiagnosticCode::UnsupportedCapability,
-            "Numeric knot axes require explicit after-statistics projection in this grammar profile.",
+            "Numeric knot axes and registered providers require explicit after-statistics projection in this grammar profile.",
         ));
     }
     let [x, y] = layer_projections(layer, axes);

@@ -630,7 +630,7 @@ impl PlotBuilder {
         for color in self.colors {
             validate_name(&color.name)?;
             let scale = color.scale?;
-            scale.validate()?;
+            scale.validate_with_registry(&self.extensions)?;
             let id = color.id?;
             if color_scales.insert(color.name.clone(), scale).is_some() {
                 return Err(error(

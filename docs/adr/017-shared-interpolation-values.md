@@ -80,3 +80,41 @@ and chart consumers. WP-IP07 and G-INTERPOLATE require all cross-lane evidence. 
 reference inventory alone does not pass them. Native custom factories are allowed;
 portable custom operations require the existing versioned registry, and unregistered
 closures fail serialization. Rendering, scheduling and disposal stay in their owners.
+
+## WP-IP06 registered consumers (9 September 2026)
+
+`CustomInterpolationFactory` is a trusted pure Rust implementation installed in the
+existing `ExtensionRegistry`. Registration captures the exact operation ID, positive
+64-bit version and portability flag. Factories validate bounded declarative parameters
+and compile one endpoint pair into an owned `Sample<Value>` implementation. No browser,
+Python object, clock, mutable source table or executable closure enters an envelope.
+Core checks typed input/output budgets and finite sample parameters; trusted native
+code remains responsible for purity and termination. Installation is bounded to 64
+factories; parameters use the existing 24-depth/4,096-node/64-KiB extension budget.
+
+`InterpolationFactory::registered` and `between_with_registry` retain the shared
+engine. Python `registered_interpolation` and JavaScript `registeredInterpolation`
+select installed code and own a registry copy. They work with binary calls, `piecewise`
+and explicitly registry-backed `StandaloneScale` constructors. Factory disposal rejects
+new operations while prepared interpolators, scales, charts and captured requests retain
+their own snapshots. Immutable scale configuration/nice/training retains that snapshot.
+
+Builtin interpolation/standalone scale envelopes remain version 1. A registered
+interpolator or standalone scale requires version 2; charts using registered mapped
+interpolation require version 12. Exact operation versions are decimal strings. Loading
+requires the matching installed registration. Native-only selections remain usable in
+native preparation but reject portable serialization and headless publication. An
+in-process `descriptor_json` transport supports host-to-core authoring without claiming
+portability; receiving consumers still validate their registry. The owned factory is
+`Clone` rather than `Copy`; this is the intentional Rust source migration needed for
+registered parameters. Existing built-in factory names, numerical semantics and wire
+fields are preserved.
+
+Mapped color, numeric aesthetic, continuous, sequential/diverging/rank and calendar
+scale consumers call these prepared samplers. Color factories can return floating
+`Value::Color`; formatting to text is an explicit alternative that can already quantize
+channels. Mark and legend lookups use the shared mapping. The proof samples every ramp
+mark directly and uses domain-entry legend swatches, with no backend two-stop gradient
+approximation. Sampled affine/zoom frames are explicit immutable authoring inputs;
+this adds no transition scheduler. WP-AX05/06 still own interruption, reduced motion and
+axis transition certification, and remain required before WP-IP07/G-INTERPOLATE close.

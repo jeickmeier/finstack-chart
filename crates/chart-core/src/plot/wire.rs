@@ -87,7 +87,7 @@ impl Plot {
         extensions: Arc<ExtensionRegistry>,
     ) -> ChartResult<Self> {
         let value: Envelope = crate::portable::decode(input)?;
-        if !matches!(value.version, 1..=10) || value.version != value.definition.wire_version() {
+        if !matches!(value.version, 1..=12) || value.version != value.definition.wire_version() {
             return Err(error(
                 DiagnosticCode::UnsupportedCapability,
                 "Unsupported primary authoring envelope version.",

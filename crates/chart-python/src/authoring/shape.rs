@@ -1,5 +1,5 @@
+//! Owned Cartesian generator adapters; all controls and geometry run in chart-core.
 use super::shape_registry::ShapeRegistryHandle;
-// Owned Cartesian generator adapters; all controls and geometry run in chart-core.
 use super::{disposed, failure, handle, path::PathHandle};
 use chart_core::{
     portable,
@@ -89,8 +89,4 @@ impl ShapeAreaHandle {
     fn dispose(&mut self) {
         self.inner.take();
     }
-}
-pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
-    module.add_class::<ShapeLineHandle>()?;
-    module.add_class::<ShapeAreaHandle>()
 }

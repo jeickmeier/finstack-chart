@@ -5,12 +5,14 @@ use super::{
     error,
     numeric::transform,
 };
+use crate::grammar::{ExtensionRegistry, interpolation_extensions::InterpolationRegistrations};
 use crate::{
     ChartResult, DiagnosticCode,
     color::ColorValue,
     interpolate::{InterpolationSpec, Interpolator, MAX_VALUES, Number, Sample, Value},
 };
 use serde::{Deserialize, Serialize};
+use std::sync::Arc;
 
 /// Domain-to-parameter configuration. These families have no general numeric inverse.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
@@ -311,6 +313,7 @@ impl InterpolatedScaleSpec {
 /// Prepared typed range mapping and floating paint sampling.
 #[derive(Clone, Debug)]
 pub struct InterpolatedScale {
+    registrations: Arc<InterpolationRegistrations>,
     spec: InterpolatedScaleSpec,
     normalization: ScaleNormalizer,
     output: Option<Interpolator>,
@@ -318,6 +321,19 @@ pub struct InterpolatedScale {
 impl InterpolatedScale {
     /// Compile normalization and output once, before mapping any marks.
     pub fn new(spec: InterpolatedScaleSpec) -> ChartResult<Self> {
+        Self::new_with_registrations(spec, Arc::default())
+    }
+    /// Compile against an explicitly supplied immutable factory registry.
+    pub fn new_with_registry(
+        spec: InterpolatedScaleSpec,
+        registry: &ExtensionRegistry,
+    ) -> ChartResult<Self> {
+        Self::new_with_registrations(spec, registry.interpolations.clone())
+    }
+    pub(crate) fn new_with_registrations(
+        spec: InterpolatedScaleSpec,
+        registrations: Arc<InterpolationRegistrations>,
+    ) -> ChartResult<Self> {
         spec.unknown.validate()?;
         if matches!(spec.normalization, NormalizationSpec::Quantile { .. })
             && spec.unknown != Value::Missing
@@ -330,12 +346,16 @@ impl InterpolatedScale {
         let normalization = ScaleNormalizer::new(spec.normalization.clone())?;
         let output = match &spec.output {
             ScaleRangeFunction::Identity => None,
-            ScaleRangeFunction::Interpolate(spec) => Some(Interpolator::new(spec.clone())?),
+            ScaleRangeFunction::Interpolate(spec) => Some(Interpolator::new_with_registrations(
+                spec.clone(),
+                &registrations,
+            )?),
         };
         Ok(Self {
             spec,
             normalization,
             output,
+            registrations,
         })
     }
     pub(super) fn validate_color_output(&self) -> ChartResult<()> {
@@ -379,7 +399,7 @@ impl InterpolatedScale {
     pub fn nice(&self, count: f64) -> ChartResult<Self> {
         let mut spec = self.spec.clone();
         spec.normalization = self.normalization.nice(count)?.spec;
-        Self::new(spec)
+        Self::new_with_registrations(spec, self.registrations.clone())
     }
     /// Map a source number to an independently owned typed value.
     pub fn map(&self, input: Option<f64>) -> ChartResult<Value> {
@@ -458,6 +478,7 @@ impl ContinuousScaleSpec {
 /// Prepared generic continuous range with the same knot normalizer as numeric scales.
 #[derive(Clone, Debug)]
 pub struct ContinuousScale {
+    registrations: Arc<InterpolationRegistrations>,
     spec: ContinuousScaleSpec,
     knots: super::numeric::KnotMapping,
     segments: Vec<Interpolator>,
@@ -467,6 +488,20 @@ pub struct ContinuousScale {
 impl ContinuousScale {
     /// Compile each pair once; typed mapping does not advertise a numeric inverse.
     pub fn new(spec: ContinuousScaleSpec) -> ChartResult<Self> {
+        Self::new_with_registrations(spec, Arc::default())
+    }
+    /// Compile each pair against explicitly installed factory versions.
+    pub fn new_with_registry(
+        spec: ContinuousScaleSpec,
+        registry: &ExtensionRegistry,
+    ) -> ChartResult<Self> {
+        Self::new_with_registrations(spec, registry.interpolations.clone())
+    }
+    pub(crate) fn new_with_registrations(
+        spec: ContinuousScaleSpec,
+        registrations: Arc<InterpolationRegistrations>,
+    ) -> ChartResult<Self> {
+        spec.factory.validate_registration(&registrations, false)?;
         if spec.domain.len().saturating_add(spec.range.len()) > MAX_VALUES {
             return Err(error(
                 DiagnosticCode::ResourceLimit,
@@ -516,9 +551,13 @@ impl ContinuousScale {
         }
         let segments = (0..knots.count())
             .map(|i| {
-                spec.factory.between(
-                    range.get(i).cloned().unwrap_or(Value::Missing),
-                    range.get(i + 1).cloned().unwrap_or(Value::Missing),
+                Interpolator::new_with_registrations(
+                    InterpolationSpec::Between {
+                        factory: spec.factory.clone(),
+                        a: range.get(i).cloned().unwrap_or(Value::Missing),
+                        b: range.get(i + 1).cloned().unwrap_or(Value::Missing),
+                    },
+                    &registrations,
                 )
             })
             .collect::<ChartResult<_>>()?;
@@ -528,6 +567,7 @@ impl ContinuousScale {
             segments,
             negative,
             extent,
+            registrations,
         })
     }
     pub(super) fn validate_color_output(&self) -> ChartResult<()> {
@@ -572,7 +612,7 @@ impl ContinuousScale {
             .clone();
         let mut spec = self.spec.clone();
         spec.domain = domain;
-        Self::new(spec)
+        Self::new_with_registrations(spec, self.registrations.clone())
     }
     fn segment(&self, input: Option<f64>) -> Option<(&Interpolator, f64)> {
         let mut x = input.filter(|x| !x.is_nan())?;

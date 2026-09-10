@@ -1,3 +1,4 @@
+use super::{GuideFormatter, GuideProfile};
 use crate::grammar::{PreparedChart, ValueSpace};
 use crate::provenance::Target;
 use crate::scales::{
@@ -95,6 +96,18 @@ pub enum AxisScale {
 /// Presentation shared by default and independently identified positional guides.
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 pub struct GuideStyle {
+    /// Explicit guide presentation policy, independent of scale/population semantics (wire v11).
+    #[serde(default, skip_serializing_if = "GuideProfile::is_legacy")]
+    pub profile: GuideProfile,
+    /// Per-guide count/interval/format hints; absent uses the selected profile defaults.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub tick_arguments: Option<crate::scales::GuideTickArguments>,
+    /// Independent typed values; None selects automatically, Some([]) selects no ticks.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub tick_values: Option<Vec<crate::composition::ScaleValue>>,
+    /// Independent formatter override; None restores the scale formatter.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub tick_format: Option<GuideFormatter>,
     /// Explicit bounded semantic tick positions/labels, replacing automatic guide candidates.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub guide_ticks: Option<Vec<CustomGuideTick>>,
@@ -119,9 +132,22 @@ pub struct GuideStyle {
     /// Whether to paint and reserve margin for this guide.
     pub visible: bool,
 }
+impl GuideStyle {
+    /// Whether this guide uses the independent value/formatter contract (wire v11).
+    pub fn uses_tick_configuration(&self) -> bool {
+        self.profile != GuideProfile::LibraryV1
+            || self.tick_arguments.is_some()
+            || self.tick_values.is_some()
+            || self.tick_format.is_some()
+    }
+}
 impl Default for GuideStyle {
     fn default() -> Self {
         Self {
+            profile: GuideProfile::LibraryV1,
+            tick_arguments: None,
+            tick_values: None,
+            tick_format: None,
             guide_ticks: None,
             number_format: None,
             numeric_format: None,
@@ -344,7 +370,7 @@ pub enum ResolvedScale {
     Calendar(Box<crate::scales::TimeAxisScale>),
 }
 /// Logical label and final destination coordinate retained for host inspection.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct GuideTick {
     /// Original typed semantic value, retained without inverse reconstruction.
     pub value: crate::composition::ScaleValue,
@@ -428,6 +454,34 @@ pub struct LaidOutInset {
     pub chart: Arc<LaidOutChart>,
 }
 impl LaidOutChart {
+    /// Owned semantic guide snapshots from this exact layout, including facet/inset scopes.
+    /// Values and labels are captured together; no inverse mapping or relayout occurs.
+    pub fn guide_snapshots(&self) -> Vec<super::GuideSnapshot> {
+        fn visit(
+            chart: &LaidOutChart,
+            scope: &mut Vec<super::GuideScope>,
+            out: &mut Vec<super::GuideSnapshot>,
+        ) {
+            out.extend(chart.guides.values().map(|guide| super::GuideSnapshot {
+                scope: scope.clone(),
+                spec: guide.spec.clone(),
+                ticks: guide.ticks.clone(),
+            }));
+            for panel in &chart.panels {
+                scope.push(super::GuideScope::Panel(panel.key.clone()));
+                visit(&panel.chart, scope, out);
+                scope.pop();
+            }
+            for inset in &chart.insets {
+                scope.push(super::GuideScope::Inset(inset.id.clone()));
+                visit(&inset.chart, scope, out);
+                scope.pop();
+            }
+        }
+        let mut snapshots = Vec::new();
+        visit(self, &mut Vec::new(), &mut snapshots);
+        snapshots
+    }
     /// Independently identified default and additional guides over retained scales.
     pub fn guides(&self) -> &BTreeMap<crate::GuideId, ResolvedGuide> {
         &self.guides

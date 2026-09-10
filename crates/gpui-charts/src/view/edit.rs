@@ -115,13 +115,10 @@ impl ChartView {
         let Some(anchor) = anchor else {
             return Ok(None);
         };
-        Ok(frame.chart.project_anchor(anchor)?.and_then(|(p, clip)| {
-            (p.x() >= clip.origin().x()
-                && p.x() <= clip.max_x()
-                && p.y() >= clip.origin().y()
-                && p.y() <= clip.max_y())
-            .then_some(p)
-        }))
+        Ok(frame
+            .chart
+            .project_anchor(anchor)?
+            .and_then(|(p, clip)| super::input::inside(clip, p).then_some(p)))
     }
     pub(super) fn edit_down(
         &mut self,
@@ -132,10 +129,7 @@ impl ChartView {
             return Ok(false);
         };
         let origin = frame.bounds.origin;
-        let p = Point::new(
-            f64::from(f32::from(event.position.x - origin.x)),
-            f64::from(f32::from(event.position.y - origin.y)),
-        )?;
+        let p = super::input::local(event.position, origin)?;
         let mut chosen = None;
         for (i, tool) in self.input.annotation_tools.iter().enumerate().rev() {
             if self

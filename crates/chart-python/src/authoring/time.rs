@@ -103,6 +103,3 @@ impl TimeScaleHandle {
         self.inner.take();
     }
 }
-pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
-    module.add_class::<TimeScaleHandle>()
-}

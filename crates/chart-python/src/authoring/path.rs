@@ -36,14 +36,12 @@ impl PathHandle {
         Ok(Self::wrap(self.get()?.clone()))
     }
     fn draw(&mut self, method: &str, values: Vec<f64>, anticlockwise: bool) -> PyResult<()> {
-        self.inner
-            .as_mut()
-            .ok_or_else(disposed)?
+        self.get_mut()?
             .draw(method, &values, anticlockwise)
             .map_err(failure)
     }
     fn batch(&mut self, operations: &str) -> PyResult<()> {
-        let path = self.inner.as_mut().ok_or_else(disposed)?;
+        let path = self.get_mut()?;
         let ops: Vec<PathOp> = portable::decode(operations).map_err(failure)?;
         path.apply_batch(&ops).map_err(failure)
     }
@@ -65,7 +63,4 @@ impl PathHandle {
     fn dispose(&mut self) {
         self.inner.take();
     }
-}
-pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
-    module.add_class::<PathHandle>()
 }

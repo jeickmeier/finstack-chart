@@ -50,11 +50,6 @@ impl NativePainterRegistry {
         self.0.insert(key, painter);
         Ok(())
     }
-    /// Query the exact installed host capability without calling it.
-    pub fn contains(&self, operation: &OperationRef) -> bool {
-        self.0
-            .contains_key(&(operation.id.clone(), operation.version.get()))
-    }
     pub(crate) fn get(&self, operation: &OperationRef) -> ChartResult<&dyn NativePainter> {
         self.0
             .get(&(operation.id.clone(), operation.version.get()))

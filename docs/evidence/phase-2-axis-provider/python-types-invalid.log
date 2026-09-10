@@ -1,0 +1,4 @@
+scripts/bindings/authoring/axis_provider_typing_invalid.py:2: error: Argument 2 to "scale_registered" has incompatible type "str"; expected "int"  [arg-type]
+scripts/bindings/authoring/axis_provider_typing_invalid.py:3: error: Argument 3 to "scale_registered" has incompatible type "Callable[[], int]"; expected "JSONValue"  [arg-type]
+scripts/bindings/authoring/axis_provider_typing_invalid.py:4: error: Argument 1 to "with_registry" of "PlotBuilder" has incompatible type "str"; expected "ShapeRegistry"  [arg-type]
+Found 3 errors in 1 file (checked 1 source file)

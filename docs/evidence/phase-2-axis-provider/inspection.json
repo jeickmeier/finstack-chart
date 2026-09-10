@@ -1,0 +1,17 @@
+{
+  "accepted": true,
+  "scope": "AXIS-01 provider over legacy guide presentation; not AXIS-04/D3 geometry certification",
+  "observations": "Four folded points align in two pairs with top-guide ticks; the lower guide is independently translated. Native, PNG, external SVG and Poppler PDF renders were inspected with readable labels and no collisions or clipping. Noto Sans is embedded in PDF. Three AppPaint events and one layout were retained.",
+  "sha256": {
+    "native.png": "0f8407744e14a88cce2352b6b029b81e273d31f62ec941cbe8be7ecbe54c7bf1",
+    "native-paint.log": "015eac5c408a2701eb912eb929ec1a2e1038c2eafecdc496abecbb410e647ca1",
+    "rust/provider.png": "0907b875d4af710870fcdfba8bd40435513a17d5409b13c9b3dece1a8bc168cd",
+    "svg.png": "6906619ed535c90fffab387aff701404c2e12d5a76e88c9fae5efaafafe9880e",
+    "pdf.png": "1bb492c13cdce1637e3bab1cf212f74209ffd58263b09b61efb28080744447ca",
+    "pdf-fonts.log": "8e44d9f19019bb904682329f408a59b7fd79d6be3b2bef41336076fbb9e38a2e"
+  },
+  "external_svg_renderer": {
+    "path": "/private/tmp/wp08-render-probe/target/debug/sp07-render-probe",
+    "sha256": "ed5d5f6773a880ce881a7aa4c73c71e8e04c8a98bca19bf2a469cf5445877222"
+  }
+}

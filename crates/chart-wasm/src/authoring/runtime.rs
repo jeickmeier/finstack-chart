@@ -2,23 +2,18 @@ use super::output::{_ExportOptions, _FigureRequest, _FigureSnapshot, _Output};
 use super::*;
 use chart_core::transaction::Transaction;
 use chart_export::host::{Editor, Runtime, Updates};
-handle!(_Runtime, _Runtime, Runtime);
+handle!(_Runtime, Runtime);
 #[wasm_bindgen]
 impl _Runtime {
     #[wasm_bindgen(constructor)]
     pub fn new(plot: &_Plot) -> Result<Self, JsError> {
-        let p = plot.get()?;
-        (Runtime::new(p)).map(Self::wrap).map_err(failure)
+        Runtime::new(plot.get()?).map(Self::wrap).map_err(failure)
     }
     pub fn external_view(&self) -> Result<Self, JsError> {
         self.get()?.external_view().map(Self::wrap).map_err(failure)
     }
     pub fn accept_from(&mut self, source: &Self) -> Result<String, JsError> {
-        self.inner
-            .as_mut()
-            .ok_or_else(disposed)?
-            .accept_from(source.get()?)
-            .map_err(failure)
+        self.get_mut()?.accept_from(source.get()?).map_err(failure)
     }
     pub fn command(
         &mut self,
@@ -26,9 +21,7 @@ impl _Runtime {
         input: &str,
         expected: Option<u64>,
     ) -> Result<String, JsError> {
-        self.inner
-            .as_mut()
-            .ok_or_else(disposed)?
+        self.get_mut()?
             .command(name, input, expected)
             .map_err(failure)
     }
@@ -44,9 +37,7 @@ impl _Runtime {
             .map(portable::decode)
             .transpose()
             .map_err(failure)?;
-        self.inner
-            .as_mut()
-            .ok_or_else(disposed)?
+        self.get_mut()?
             .named_query(name, input, gesture, stamp)
             .map_err(failure)
     }
@@ -63,17 +54,16 @@ impl _Runtime {
         self.get()?.state().map_err(failure)
     }
     pub fn semantics(&mut self) -> Result<String, JsError> {
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
-        (c.semantics()).map_err(failure)
+        self.get_mut()?.semantics().map_err(failure)
     }
     pub fn apply_plot(&mut self, plot: &_Plot, expected: u64) -> Result<bool, JsError> {
         let p = plot.get()?;
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
-        (c.apply_plot(p, expected)).map_err(failure)
+        self.get_mut()?.apply_plot(p, expected).map_err(failure)
     }
     pub fn restore_state(&mut self, input: &str, expected: u64) -> Result<(), JsError> {
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
-        (c.restore_state(input, expected)).map_err(failure)
+        self.get_mut()?
+            .restore_state(input, expected)
+            .map_err(failure)
     }
     pub fn act(
         &mut self,
@@ -81,8 +71,9 @@ impl _Runtime {
         origin: &str,
         expected: Option<u64>,
     ) -> Result<String, JsError> {
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
-        (c.act(input, origin, expected)).map_err(failure)
+        self.get_mut()?
+            .act(input, origin, expected)
+            .map_err(failure)
     }
     pub fn query(
         &mut self,
@@ -95,8 +86,9 @@ impl _Runtime {
             .map(portable::decode)
             .transpose()
             .map_err(failure)?;
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
-        (c.query(input, gesture, stamp)).map_err(failure)
+        self.get_mut()?
+            .query(input, gesture, stamp)
+            .map_err(failure)
     }
     pub fn request(
         &self,
@@ -115,17 +107,13 @@ impl _Runtime {
     ) -> Result<_FigureSnapshot, JsError> {
         let o = output.get()?;
         let p = options.get()?;
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
-        (c.present(o, p))
+        self.get_mut()?
+            .present(o, p)
             .map(_FigureSnapshot::wrap)
             .map_err(failure)
     }
     pub fn stream(&mut self, options: &_Component) -> Result<(), JsError> {
-        self.inner
-            .as_mut()
-            .ok_or_else(disposed)?
-            .stream(options.get()?)
-            .map_err(failure)
+        self.get_mut()?.stream(options.get()?).map_err(failure)
     }
     pub fn queue_status(&self) -> Result<String, JsError> {
         self.get()?.queue_status().map_err(failure)
@@ -137,12 +125,10 @@ impl _Runtime {
         self.get()?.pinned().map_err(failure)
     }
     pub fn commit_next(&mut self) -> Result<String, JsError> {
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
-        (c.commit_next()).map_err(failure)
+        self.get_mut()?.commit_next().map_err(failure)
     }
     pub fn reset_epoch(&mut self) -> Result<String, JsError> {
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
-        (c.reset_epoch()).map_err(failure)
+        self.get_mut()?.reset_epoch().map_err(failure)
     }
     pub fn transaction(&self) -> Result<_Updates, JsError> {
         self.get()?
@@ -152,26 +138,18 @@ impl _Runtime {
     }
     pub fn commit(&mut self, transaction: &_Transaction) -> Result<String, JsError> {
         let t = transaction.get()?;
-        let c = self.inner.as_mut().ok_or_else(disposed)?;
-        (c.commit(t)).map_err(failure)
+        self.get_mut()?.commit(t).map_err(failure)
     }
     pub fn enqueue(&mut self, transaction: &_Transaction) -> Result<String, JsError> {
-        self.inner
-            .as_mut()
-            .ok_or_else(disposed)?
-            .enqueue(transaction.get()?)
-            .map_err(failure)
+        self.get_mut()?.enqueue(transaction.get()?).map_err(failure)
     }
     pub fn dense(&self, frame: &_FigureSnapshot, options: &_Component) -> Result<String, JsError> {
-        let c = self.get()?;
-        let f = frame.get()?;
-        let o = options.get()?;
-        (c.dense(f, o)).map_err(failure)
+        self.get()?
+            .dense(frame.get()?, options.get()?)
+            .map_err(failure)
     }
     pub fn link_capture(&mut self, component: &_Component, event: &str) -> Result<String, JsError> {
-        self.inner
-            .as_mut()
-            .ok_or_else(disposed)?
+        self.get_mut()?
             .link_capture(component.get()?, event)
             .map_err(failure)
     }
@@ -180,9 +158,7 @@ impl _Runtime {
         component: &_Component,
         message: &str,
     ) -> Result<String, JsError> {
-        self.inner
-            .as_mut()
-            .ok_or_else(disposed)?
+        self.get_mut()?
             .link_resolve(component.get()?, message)
             .map_err(failure)
     }
@@ -192,7 +168,7 @@ impl _Runtime {
         }
     }
 }
-handle!(_Updates, _Updates, Updates);
+handle!(_Updates, Updates);
 #[wasm_bindgen]
 impl _Updates {
     pub fn id(&self, id: &str) -> Result<Self, JsError> {
@@ -242,7 +218,7 @@ impl _Updates {
         self.inner.take();
     }
 }
-handle!(_Transaction, _Transaction, Transaction);
+handle!(_Transaction, Transaction);
 #[wasm_bindgen]
 impl _Transaction {
     pub fn dispose(&mut self) {
@@ -250,7 +226,7 @@ impl _Transaction {
     }
 }
 
-handle!(_Editor, _Editor, Editor);
+handle!(_Editor, Editor);
 #[wasm_bindgen]
 impl _Editor {
     pub fn original(&self) -> Result<String, JsError> {

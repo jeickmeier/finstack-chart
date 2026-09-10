@@ -179,6 +179,9 @@ impl<I> Piecewise<I> {
             .collect::<ChartResult<_>>()?;
         Ok(Self { segments })
     }
+    pub(super) fn segments(&self) -> &[I] {
+        &self.segments
+    }
     /// Sample the selected segment at its locally normalized parameter.
     pub fn sample<T>(&self, t: f64) -> ChartResult<T>
     where

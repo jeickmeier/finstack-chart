@@ -85,10 +85,6 @@ impl FigureRequest {
     pub fn source(&self) -> &SnapshotHandle<StoreSnapshot> {
         &self.source
     }
-    /// Original state before explicit inclusion/full-domain policies.
-    pub fn state(&self) -> &ChartState {
-        &self.state
-    }
     /// Captured publication policy, including fonts, themes, dimensions and quality.
     pub fn profile(&self) -> &PublicationProfile {
         &self.profile

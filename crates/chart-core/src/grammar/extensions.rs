@@ -131,6 +131,8 @@ pub fn extension_input_space(
 /// portable JSON can only select an existing entry and never supplies executable code.
 #[derive(Clone, Default)]
 pub struct ExtensionRegistry {
+    pub(crate) interpolations: Arc<super::interpolation_extensions::InterpolationRegistrations>,
+    pub(crate) guides: Arc<super::guide_extensions::GuideRegistrations>,
     pub(crate) scales: Arc<super::scale_extensions::ScaleRegistrations>,
     stats: BTreeMap<(String, u64), Arc<dyn CustomStat>>,
     geoms: BTreeMap<(String, u64), Arc<dyn CustomGeom>>,
@@ -209,6 +211,8 @@ impl ExtensionRegistry {
     }
     pub(crate) fn validate_portable(&self, definition: &ChartDefinition) -> ChartResult<()> {
         self.validate_scale_selections(definition, true)?;
+        self.validate_guide_selections(definition, true)?;
+        self.validate_interpolation_selections(definition, true)?;
         for layer in &definition.layers {
             for (family, selection) in &layer.shape_protocols {
                 self.resolve_portable_shape(selection, *family)?;

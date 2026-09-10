@@ -1,6 +1,9 @@
 //! FIX-17 external-style implementation using only chart-core's supported public APIs.
 //! This example is shared by proof hosts; production core/export do not depend on it.
 pub mod authoring;
+pub mod guides;
+pub mod interpolate;
+pub mod scales;
 pub mod shapes;
 use chart_core::{data::*, grammar::*, layout::*, provenance::*, state::*, transaction::*, *};
 use std::{collections::BTreeMap, sync::Arc};
@@ -300,6 +303,9 @@ pub fn registry() -> ChartResult<Arc<ExtensionRegistry>> {
     registry.register_geom(Arc::new(HistogramBars { native: false }))?;
     registry.register_geom(Arc::new(HistogramBars { native: true }))?;
     shapes::register(&mut registry)?;
+    scales::register(&mut registry)?;
+    interpolate::register(&mut registry)?;
+    guides::register(&mut registry)?;
     Ok(Arc::new(registry))
 }
 /// Portable/native variants share the exact stat population, scale training and guides.

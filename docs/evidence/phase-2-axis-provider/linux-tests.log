@@ -1,0 +1,41 @@
+   Compiling chart-core v0.1.0 (/workspace/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 21.16s
+     Running tests/axis_guides.rs (target/debug/deps/axis_guides-7fbcd04664aec86b)
+
+running 5 tests
+test legacy_axis_wire_fields_round_trip_and_unknown_fields_still_reject ... ok
+test one_scale_drives_top_bottom_and_two_translated_same_side_guides ... ok
+test invalid_guide_identity_orientation_reference_and_work_reject_before_measurement ... ok
+test replacing_one_guide_scale_preserves_its_identity_and_other_guides ... ok
+test primary_builders_names_edits_and_version_eight_round_trips_retain_ownership ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/axis_providers.rs (target/debug/deps/axis_providers-9f5b5ca1e84604a7)
+
+running 6 tests
+test prepared_layer_coordinates_recover_exact_timestamp_and_category_values ... ok
+test optional_inverse_domain_fallback_and_formatter_context_are_independent ... ok
+test metadata_callback_outputs_and_aggregate_work_are_checked ... ok
+test exact_timestamps_categories_bands_and_empty_repeated_labels_survive_adapter ... ok
+test registrations_and_native_only_publication_fail_explicitly ... ok
+test shared_resolution_primary_wire_and_registry_snapshots_keep_one_scale_owner ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/ggplot_stages.rs (target/debug/deps/ggplot_stages-147556266a278d33)
+
+running 10 tests
+test logged_summary_projects_once_into_destination_geometry ... ok
+test inferred_multiple_discrete_fields_and_stat_override_use_exact_interactions ... ok
+test missing_discrete_values_and_float_group_keys_match_reference_partitions ... ok
+test source_expressions_and_reductions_use_registered_data_before_filters ... ok
+test after_stat_expressions_reduce_generated_populations_and_backtransform_log_values ... ok
+test after_scale_and_theme_expressions_preserve_defaults_overrides_and_old_snapshots ... ok
+test horizontal_histogram_and_column_defaults_reuse_stat_and_geometry_stages ... ok
+test shared_statistics_use_source_grouping_and_scale_context_once ... ok
+test scale_transforms_limits_and_oob_precede_statistics_while_coordinates_do_not ... ok
+test profile_provenance_grouping_and_revision_survive_primary_and_legacy_round_trips ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+

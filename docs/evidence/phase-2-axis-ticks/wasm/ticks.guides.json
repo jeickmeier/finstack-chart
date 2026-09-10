@@ -1,0 +1,229 @@
+{
+  "guides": [
+    {
+      "scope": [],
+      "spec": {
+        "id": "0",
+        "label_rotation": 0,
+        "profile": "D3_3_0_0",
+        "scale": "0",
+        "side": "Bottom",
+        "tick_format": {
+          "Labels": [
+            "zero",
+            "",
+            "mid",
+            "",
+            "",
+            "one"
+          ]
+        },
+        "tick_values": [
+          {
+            "Number": 0
+          },
+          {
+            "Number": 0.25
+          },
+          {
+            "Number": 0.5
+          },
+          {
+            "Number": 0.5
+          },
+          {
+            "Number": 0.75
+          },
+          {
+            "Number": 1
+          }
+        ],
+        "translation": [
+          0,
+          0
+        ],
+        "visible": true
+      },
+      "ticks": [
+        {
+          "label": "zero",
+          "position": 100,
+          "value": {
+            "Number": 0
+          }
+        },
+        {
+          "label": "",
+          "position": 200,
+          "value": {
+            "Number": 0.25
+          }
+        },
+        {
+          "label": "mid",
+          "position": 300,
+          "value": {
+            "Number": 0.5
+          }
+        },
+        {
+          "label": "",
+          "position": 300,
+          "value": {
+            "Number": 0.5
+          }
+        },
+        {
+          "label": "",
+          "position": 400,
+          "value": {
+            "Number": 0.75
+          }
+        },
+        {
+          "label": "one",
+          "position": 500,
+          "value": {
+            "Number": 1
+          }
+        }
+      ]
+    },
+    {
+      "scope": [],
+      "spec": {
+        "id": "1",
+        "label_rotation": 0,
+        "scale": "1",
+        "side": "Left",
+        "translation": [
+          0,
+          0
+        ],
+        "visible": false
+      },
+      "ticks": []
+    },
+    {
+      "scope": [],
+      "spec": {
+        "id": "3374",
+        "label_rotation": 0,
+        "profile": "D3_3_0_0",
+        "scale": "0",
+        "side": "Top",
+        "tick_format": {
+          "Registered": {
+            "operation": {
+              "id": "example.guide_format",
+              "version": "1"
+            },
+            "parameters": {
+              "mode": "Indexed"
+            }
+          }
+        },
+        "tick_values": [
+          {
+            "Number": 0
+          },
+          {
+            "Number": 0.5
+          },
+          {
+            "Number": 1
+          }
+        ],
+        "translation": [
+          0,
+          0
+        ],
+        "visible": true
+      },
+      "ticks": [
+        {
+          "label": "0:0",
+          "position": 100,
+          "value": {
+            "Number": 0
+          }
+        },
+        {
+          "label": "1:0.5",
+          "position": 300,
+          "value": {
+            "Number": 0.5
+          }
+        },
+        {
+          "label": "2:1",
+          "position": 500,
+          "value": {
+            "Number": 1
+          }
+        }
+      ]
+    },
+    {
+      "scope": [],
+      "spec": {
+        "id": "3375",
+        "label_rotation": 0,
+        "profile": "D3_3_0_0",
+        "scale": "0",
+        "side": "Bottom",
+        "tick_format": {
+          "Registered": {
+            "operation": {
+              "id": "example.guide_format",
+              "version": "1"
+            },
+            "parameters": {
+              "mode": "Same"
+            }
+          }
+        },
+        "tick_values": [
+          {
+            "Number": 0
+          },
+          {
+            "Number": 0.5
+          },
+          {
+            "Number": 1
+          }
+        ],
+        "translation": [
+          0,
+          32
+        ],
+        "visible": true
+      },
+      "ticks": [
+        {
+          "label": "same",
+          "position": 100,
+          "value": {
+            "Number": 0
+          }
+        },
+        {
+          "label": "same",
+          "position": 300,
+          "value": {
+            "Number": 0.5
+          }
+        },
+        {
+          "label": "same",
+          "position": 500,
+          "value": {
+            "Number": 1
+          }
+        }
+      ]
+    }
+  ],
+  "version": 1
+}

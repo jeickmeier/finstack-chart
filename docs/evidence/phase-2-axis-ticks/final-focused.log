@@ -1,0 +1,36 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 16.03s
+     Running tests/axis_guides.rs (target/axis-rust-proof/debug/deps/axis_guides-2ebfa3f9bb64c191)
+
+running 5 tests
+test legacy_axis_wire_fields_round_trip_and_unknown_fields_still_reject ... ok
+test one_scale_drives_top_bottom_and_two_translated_same_side_guides ... ok
+test invalid_guide_identity_orientation_reference_and_work_reject_before_measurement ... ok
+test replacing_one_guide_scale_preserves_its_identity_and_other_guides ... ok
+test primary_builders_names_edits_and_version_eight_round_trips_retain_ownership ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/axis_providers.rs (target/axis-rust-proof/debug/deps/axis_providers-7b22d97cd7a3532f)
+
+running 6 tests
+test prepared_layer_coordinates_recover_exact_timestamp_and_category_values ... ok
+test metadata_callback_outputs_and_aggregate_work_are_checked ... ok
+test optional_inverse_domain_fallback_and_formatter_context_are_independent ... ok
+test exact_timestamps_categories_bands_and_empty_repeated_labels_survive_adapter ... ok
+test registrations_and_native_only_publication_fail_explicitly ... ok
+test shared_resolution_primary_wire_and_registry_snapshots_keep_one_scale_owner ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/axis_ticks.rs (target/axis-rust-proof/debug/deps/axis_ticks-2d7f085cc71a275a)
+
+running 5 tests
+test registered_formatter_gets_full_semantic_context_and_failures_precede_callbacks ... ok
+test explicit_time_values_bypass_an_unbounded_automatic_interval_and_keep_exact_source_units ... ok
+test count_is_a_hint_and_explicit_values_preserve_order_occurrences_and_empty_labels ... ok
+test primary_controls_are_versioned_independent_resettable_and_portability_checked ... ok
+test pinned_axis_reference_preserves_all_selected_values_and_labels_in_both_device_profiles ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+

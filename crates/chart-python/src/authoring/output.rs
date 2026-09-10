@@ -3,7 +3,6 @@ use chart_export::{
     ExportJob, ExportLimits, ExportQueue, FigureRequest, FigureSnapshot, Output,
     host::{self, Options},
 };
-use pyo3::types::PyBytes;
 handle!(OptionsHandle, "_ExportOptions", Options);
 #[pymethods]
 impl OptionsHandle {
@@ -50,7 +49,7 @@ impl OutputHandle {
         portable::encode(&self.get()?.primary_font()).map_err(failure)
     }
     fn register_font(&mut self, py: Python<'_>, bytes: Vec<u8>) -> PyResult<String> {
-        let output = self.inner.as_mut().ok_or_else(disposed)?;
+        let output = self.get_mut()?;
         py.detach(|| {
             output
                 .register_font(bytes)
@@ -83,6 +82,10 @@ impl RequestHandle {
 handle!(FrameHandle, "_FigureSnapshot", FigureSnapshot);
 #[pymethods]
 impl FrameHandle {
+    fn guides(&self, py: Python<'_>) -> PyResult<String> {
+        let f = self.get()?;
+        py.detach(|| f.guides_json()).map_err(failure)
+    }
     fn scene(&self, py: Python<'_>) -> PyResult<String> {
         let f = self.get()?;
         py.detach(|| f.scene_json()).map_err(failure)
@@ -90,11 +93,10 @@ impl FrameHandle {
     fn manifest(&self) -> PyResult<String> {
         portable::encode(&self.get()?.metadata().manifest()).map_err(failure)
     }
-    fn export<'py>(&self, py: Python<'py>, format: &str) -> PyResult<Bound<'py, PyBytes>> {
+    fn export(&self, py: Python<'_>, format: &str) -> PyResult<Vec<u8>> {
         let f = self.get()?;
         let format = host::format(format).map_err(failure)?;
-        let bytes = py.detach(|| f.export(format)).map_err(failure)?.bytes;
-        Ok(PyBytes::new(py, &bytes))
+        Ok(py.detach(|| f.export(format)).map_err(failure)?.bytes)
     }
     fn dispose(&mut self) {
         self.inner.take();
@@ -138,20 +140,11 @@ impl JobHandle {
     fn cancel(&self) -> PyResult<bool> {
         Ok(self.get()?.cancellation().cancel())
     }
-    fn run<'py>(&mut self, py: Python<'py>) -> PyResult<Bound<'py, PyBytes>> {
+    fn run(&mut self, py: Python<'_>) -> PyResult<Vec<u8>> {
         let job = self.inner.take().ok_or_else(disposed)?;
-        let bytes = py.detach(|| job.run()).map_err(failure)?.bytes;
-        Ok(PyBytes::new(py, &bytes))
+        Ok(py.detach(|| job.run()).map_err(failure)?.bytes)
     }
     fn dispose(&mut self) {
         self.inner.take();
     }
-}
-pub(super) fn register(m: &Bound<'_, PyModule>) -> PyResult<()> {
-    m.add_class::<OptionsHandle>()?;
-    m.add_class::<OutputHandle>()?;
-    m.add_class::<RequestHandle>()?;
-    m.add_class::<FrameHandle>()?;
-    m.add_class::<QueueHandle>()?;
-    m.add_class::<JobHandle>()
 }

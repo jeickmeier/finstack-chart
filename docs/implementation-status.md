@@ -7,14 +7,59 @@ WP-05 is committed at `3cf1b33`; WP-06 at `f8657fb`; WP-07/08 at `fac148a`.
 WP-09/10 are committed at `c5ec829`; WP-11 at `a6fb2ea`; WP-12 at `63dbcc2`.
 Original reports retain the revision context from their evidence runs.
 
-## Phase 2 continuation through all packages — 8 September 2026
+## Interpolation handoff — 9 September 2026
 
-Owner authorized continuation through all steps of the Phase 2 plans. WP-S01–08 are now accepted and G-SHAPE passes for the retained typed profile. WP-AX01 provider integration is next. The active
-task is proceeding sequentially through prerequisites, preserving the earlier
-P2-00/GG-01 implementation. GG-00 and WP-P01–04 are COMPLETE for their package scope;
-G-PATH passes for the retained source snapshot. GG-02 is COMPLETE for its stage scope;
-CLR-01–03 are COMPLETE for reference and standalone color math. WP-IP01 is COMPLETE
-for the pinned contract/reference harness; WP-IP02–05 are COMPLETE for core and standalone host scope; repository and combined primary proofs pass.
+WP-IP06 is COMPLETE. Registered factories now feed shared interpolation, scale,
+color/legend/theme and Rust/Python/WASM consumers, with inspected native/SVG/PDF/PNG
+sampled frames and retained update/capture proofs. The
+[interpolation report](evidence/phase-2-interpolation-integration-2026-09-09.md) records
+commands, source identity, acceptance evidence and validation limits.
+
+WP-IP07 is PARTIAL: its 27-export/configuration verdict catalog, fresh reference replay,
+host/integration evidence and allocation/timing profile are complete, but WP-AX06 is a
+required unfinished prerequisite. G-INTERPOLATE remains NOT PASSED. WP-AX03–06 were
+not started by this assignment. The fresh repository check passed, including the
+previously stalled standalone WASM metadata check; that requalification item is resolved.
+
+| Lane | Remaining packages | Count | Next prerequisite action |
+| --- | --- | ---: | --- |
+| Axis | WP-AX03–06 | 4 | AX03 is ready; outside this interpolation assignment. |
+| Hierarchy | WP-H01–08 | 8 | H01 is ready. |
+| Interpolation | WP-IP07 final certification | 1 | Complete AX06, then qualify the axis transition consumer and final cross-lane gate. |
+| ggplot2 | GG-03–19 | 17 | Retain the listed prerequisite order. |
+| **Phase 2 total** | **30 remaining of 71; 41 accepted** | **30** | **No further package started in this task.** |
+
+Expanded WP-21/22/23, AP-09/G-AUTH, G-GGPLOT, G-PARITY and G4 remain separate open
+qualification work. The following axis handoff is retained as historical context.
+
+## Phase 2 axis handoff — 9 September 2026
+
+The owner narrowed the active assignment to finish WP-AX01 and WP-AX02, update the
+remaining-work list and stop before WP-AX03. Their integrated implementation and focused
+acceptance are complete; the [axis report](evidence/phase-2-axis-ticks-2026-09-09.md) records final repository validation and its limits. The D3 profile entry, checked
+providers and independent tick selection/formatting are covered. Full D3 axis geometry,
+components, transitions and certification remain open.
+
+The following is the remaining Phase 2 todo list after these two package acceptances:
+
+| Lane | Remaining packages | Count | Next prerequisite action |
+| --- | --- | --- | --- |
+| Axis | WP-AX03–06 | 4 | AX03 consumes accepted AX02; outside this assignment. |
+| Hierarchy | WP-H01–08 | 8 | H01 reference/contract harness is ready. |
+| Interpolation | WP-IP06–07 | 2 | IP06 integration; IP07 also requires AX06. |
+| ggplot2 | GG-03–19 | 17 | GG-03 and GG-06 have their listed prerequisites; retain each package's dependency order. |
+| **Phase 2 total** | **31 remaining of 71; 40 accepted after this handoff** | **31** | **Stop here; do not start another package in this task.** |
+
+The remaining standalone WASM core metadata check stalled after the other repository steps passed and is explicitly incomplete; fresh actual WASM runtime proofs pass. Retain this check as a requalification item.
+
+Expanded WP-21/22/23 requalification remains additional to those 31 packages. AP-09 /
+G-AUTH's existing native performance gate is also separate. Five of eight D3 lane gates
+pass; G-AXIS, G-HIERARCHY and G-INTERPOLATE remain open, alongside G-GGPLOT, G-PARITY
+and G4. Package details and evidence below remain authoritative; this list does not
+relax prerequisites or claim final production acceptance.
+
+Earlier accepted work remains recorded below: WP-S01–08/G-SHAPE, WP-P01–04/G-PATH,
+GG-00–02, the color/chromatic/scale lanes and WP-IP01–05.
 The [oracle entry report](evidence/phase-2-oracles-2026-09-08.md) records 643 ggplot2
 exports, 57 locked R sources, 32 reproducible records and 96 inspected artifacts.
 The [path acceptance report](evidence/phase-2-paths-2026-09-08.md) records 86 reference
@@ -141,9 +186,7 @@ Terminal SVG comparisons preserve control-coordinate differences no larger than
 5.684341886080802e-14 within the existing tolerance and rasterize identically.
 The remaining theme dash gap and two acceptance regressions are fixed without changing
 oracle expectations. G-SHAPE passes; G-PARITY, G4 and WP-21/22/23 remain open.
-Continue WP-AX01's bounded provider integration. Its existing identity slice now also
-has passing macOS Python and inspected native guide evidence. The owner's remaining
-Phase 2 scope continues in prerequisite order.
+WP-AX01/02 integration is recorded in the current axis handoff above. The owner's stop boundary is before WP-AX03.
 
 ## Phase 2 handoff verified; P2-00 integration contract delivered — 8 September 2026
 
@@ -913,8 +956,8 @@ by this assignment. Next interpolation package: **WP-IP01** after the accepted W
 | WP-IP03 — Structured values | COMPLETE | Core/hosts | 191 reference cases, target dispatch matrix, ownership and actual hosts pass | ITP-01/02/07 | Requires WP-IP02; color dispatch joins WP-IP04 in integration. |
 | WP-IP04 — Color interpolation | COMPLETE | Core/hosts | 106 reference cases, exact CSS, independent anchors and actual hosts pass | ITP-04 | Requires WP-IP02 and CLR-03; consumes the shared color engine. |
 | WP-IP05 — Transform and zoom interpolation | COMPLETE | Core/hosts | 17 zoom and 36 pinned browser cases plus actual hosts pass | ITP-05/06 | Requires WP-IP02. |
-| WP-IP06 — Portable and chart integration | NOT STARTED | Unassigned | None | ITP-07 | Requires WP-IP03/04/05, CLR-04, SP-04 and WP-16/19/20. |
-| WP-IP07 — Parity certification | NOT STARTED | Unassigned | None | ITP-01–08 | Requires WP-IP06, SP-07, WP-AX06, CLR-05 and CP-05; precedes WP-21/22/23. |
+| WP-IP06 — Portable and chart integration | COMPLETE | Core/hosts/publication | [Integration proof](evidence/phase-2-interpolation-integration-2026-09-09.md): registered factories, shared scale/mark/guide consumers, actual Rust/Python/WASM, three inspected native/publication states and retained updates | ITP-07 | Version 2 standalone / version 12 registered charts; native-only export rejection and registry snapshot lifetime qualified. |
+| WP-IP07 — Parity certification | PARTIAL | Cross-lane acceptance | [27-export verdicts](evidence/phase-2-interpolation-integration/verdict-catalog.md), fresh reference/host replay and [finite benchmark](evidence/phase-2-interpolation-integration/benchmark.md) | ITP-01–08 | WP-AX06 remains unmet; axis transition/interruption/reduced-motion/capture qualification blocks final certification and G-INTERPOLATE. |
 
 ## D3 path parity planning handoff
 
@@ -1239,8 +1282,8 @@ WP-21 additionally requires WP-AX06, and WP-22/23 include axis performance/relea
 
 | Package | State | Owner | Revision | Requirements | Evidence / next action |
 | --- | --- | --- | --- | --- | --- |
-| WP-AX01 — Guide contract and reference harness | IN PROGRESS | Core/hosts | WP-14 accepted; reference entry | AXIS-01, AXIS-07 | [372 actual-browser reference cases and complete 4-factory/10-method inventory repeat exactly](evidence/phase-2-axis-entry-2026-09-09.md). Identity, shared-scale guide resolution, primary builders/edits/name maps and version-8 migration implemented; five guide tests plus 39 existing core tests pass on Linux; actual Linux Python/WASM prove shared placement, named navigation, stable scale replacement and retained outputs. Strict positive types and macOS repository/workspace checks pass. Dedicated macOS Python and inspected native guide identity checks also pass; bounded provider integration remains open. |
-| WP-AX02 — Tick selection and formatting | NOT STARTED | Unassigned | — | AXIS-02, AXIS-03 | Requires WP-AX01, SP-03, SP-05, SP-06; consumes shared scale algorithms. |
+| WP-AX01 — Guide contract and reference harness | COMPLETE | Core/hosts | WP-14 accepted; reference entry | AXIS-01, AXIS-07 | [372 actual-browser reference cases and complete 4-factory/10-method inventory repeat exactly](evidence/phase-2-axis-entry-2026-09-09.md). Identity, shared-scale guide resolution, primary builders/edits/name maps and version-8 migration implemented; five guide tests plus 39 existing core tests pass on Linux; actual Linux Python/WASM prove shared placement, named navigation, stable scale replacement and retained outputs. Strict positive types and macOS repository/workspace checks pass. Dedicated macOS Python and inspected native guide identity checks pass. [Registered provider acceptance](evidence/phase-2-axis-provider-2026-09-09.md) passes 21 focused macOS/Linux tests, actual macOS/Linux Python and WASM, strict declarations and byte-identical publication output plus inspected native output. [Integrated acceptance](evidence/phase-2-axis-ticks-2026-09-09.md) completes the explicit profile entry and retains final regression/validation limits. Complete geometry remains AX03. |
+| WP-AX02 — Tick selection and formatting | COMPLETE | Core/hosts | Working tree over `51f2eda`; retained source hashes | AXIS-02, AXIS-03 | [Integrated acceptance](evidence/phase-2-axis-ticks-2026-09-09.md): 372 reference cases / 376 states per actual Rust/Python/WASM host, independent reset/selection/formatting, exact timestamps, registered callbacks, strict types, byte-identical publication and inspected native/SVG/PDF/PNG. 430 macOS and 430 Linux tests/doctests; final focused tests pass. Stop before AX03 as requested; aggregate-check limits remain explicit. |
 | WP-AX03 — Axis geometry and bounded layout | NOT STARTED | Unassigned | — | AXIS-04 | Requires WP-AX02. |
 | WP-AX04 — Styling and publication components | NOT STARTED | Unassigned | — | AXIS-05 | Requires WP-AX03. |
 | WP-AX05 — Axis updates and transitions | NOT STARTED | Unassigned | — | AXIS-06 | Requires WP-AX04, WP-15, WP-19, WP-IP02 and WP-IP05. |

@@ -1,0 +1,13 @@
+{
+  "accepted": true,
+  "scope": "AXIS-02 selection/formatting only; AXIS-04 geometry remains open",
+  "observations": "Native, PNG, external SVG and Poppler PDF inspected: five marks, complete indexed/blank/repeated labels, no clipping. Native records 15 paints and one layout. PDF embeds Noto Sans. External resvg 0.45.1 uses the supplied Noto Sans as fallback for the embedded ChartFont alias; no SVG source edits.",
+  "sha256": {
+    "native.png": "f2551a8f07e315fa7246e2c3358ce8b4581786313aa51f0b7eb80d6711f54874",
+    "native-paint.log": "b92e3683526116ce71aacb902486a584747cb2d434e0d24f65cb8f5254983cb0",
+    "rust/ticks.png": "db82e803ff2f9c3a413868357e2f43504b86a92be88fea44caeb46cacf8bebb2",
+    "svg.png": "15a7bf3f46e4ef031e285da57a32c64f581fb8557998c9ca1d79b71478fd3a9e",
+    "pdf.png": "24fc7d4dd084bcfd0249e38d58bfdc7367cabe6a6e39f45fdd182cc2661cd2c1",
+    "pdf-fonts.log": "bb74ffd0840e19afb4d1b9d61ad58ca9e69b4380dec593ca7b72c4fe126f6afa"
+  }
+}

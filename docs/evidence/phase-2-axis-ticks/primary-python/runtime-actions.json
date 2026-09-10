@@ -1,0 +1,1847 @@
+[
+  {
+    "name": "configure",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "1",
+        "viewport_changed": false
+      },
+      "event": {
+        "revision": "1",
+        "origin": "Control",
+        "durable": true,
+        "presentation_changed": false,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [],
+        "pinned": null,
+        "annotations": {},
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "1",
+          "follow": "0",
+          "hover": "0",
+          "focus": "0",
+          "pin": "0",
+          "selection": "0",
+          "visibility": "0",
+          "annotations": "0",
+          "gesture": "0",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "1",
+      "viewport_revision": "0",
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "configure-noop",
+    "result": {
+      "outcome": {
+        "changed": false,
+        "revision": "1",
+        "viewport_changed": false
+      },
+      "event": null
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [],
+        "pinned": null,
+        "annotations": {},
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "1",
+          "follow": "0",
+          "hover": "0",
+          "focus": "0",
+          "pin": "0",
+          "selection": "0",
+          "visibility": "0",
+          "annotations": "0",
+          "gesture": "0",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "1",
+      "viewport_revision": "0",
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "hover",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "2",
+        "viewport_changed": false
+      },
+      "event": {
+        "revision": "2",
+        "origin": "Pointer",
+        "durable": false,
+        "presentation_changed": false,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [],
+        "pinned": null,
+        "annotations": {},
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "1",
+          "follow": "0",
+          "hover": "1",
+          "focus": "0",
+          "pin": "0",
+          "selection": "0",
+          "visibility": "0",
+          "annotations": "0",
+          "gesture": "0",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "2",
+      "viewport_revision": "0",
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "hover-noop",
+    "result": {
+      "outcome": {
+        "changed": false,
+        "revision": "2",
+        "viewport_changed": false
+      },
+      "event": null
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [],
+        "pinned": null,
+        "annotations": {},
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "1",
+          "follow": "0",
+          "hover": "1",
+          "focus": "0",
+          "pin": "0",
+          "selection": "0",
+          "visibility": "0",
+          "annotations": "0",
+          "gesture": "0",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "2",
+      "viewport_revision": "0",
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "focus",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "3",
+        "viewport_changed": false
+      },
+      "event": {
+        "revision": "3",
+        "origin": "Keyboard",
+        "durable": false,
+        "presentation_changed": false,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [],
+        "pinned": null,
+        "annotations": {},
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "1",
+          "follow": "0",
+          "hover": "1",
+          "focus": "1",
+          "pin": "0",
+          "selection": "0",
+          "visibility": "0",
+          "annotations": "0",
+          "gesture": "0",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "3",
+      "viewport_revision": "0",
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "pin",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "4",
+        "viewport_changed": false
+      },
+      "event": {
+        "revision": "4",
+        "origin": "Control",
+        "durable": true,
+        "presentation_changed": false,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [],
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        },
+        "annotations": {},
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "2",
+          "follow": "0",
+          "hover": "1",
+          "focus": "1",
+          "pin": "1",
+          "selection": "0",
+          "visibility": "0",
+          "annotations": "0",
+          "gesture": "0",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "4",
+      "viewport_revision": "0",
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "select",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "5",
+        "viewport_changed": false
+      },
+      "event": {
+        "revision": "5",
+        "origin": "Control",
+        "durable": true,
+        "presentation_changed": false,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ],
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        },
+        "annotations": {},
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "3",
+          "follow": "0",
+          "hover": "1",
+          "focus": "1",
+          "pin": "1",
+          "selection": "1",
+          "visibility": "0",
+          "annotations": "0",
+          "gesture": "0",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "5",
+      "viewport_revision": "0",
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "stale",
+    "result": {
+      "error": "CHART_REVISION_CONFLICT"
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ],
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        },
+        "annotations": {},
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "3",
+          "follow": "0",
+          "hover": "1",
+          "focus": "1",
+          "pin": "1",
+          "selection": "1",
+          "visibility": "0",
+          "annotations": "0",
+          "gesture": "0",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "5",
+      "viewport_revision": "0",
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "begin-annotation",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "6",
+        "viewport_changed": false
+      },
+      "event": {
+        "revision": "6",
+        "origin": "Control",
+        "durable": false,
+        "presentation_changed": false,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ],
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        },
+        "annotations": {},
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "3",
+          "follow": "0",
+          "hover": "1",
+          "focus": "1",
+          "pin": "1",
+          "selection": "1",
+          "visibility": "0",
+          "annotations": "0",
+          "gesture": "1",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "6",
+      "viewport_revision": "0",
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "preview",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "7",
+        "viewport_changed": false
+      },
+      "event": {
+        "revision": "7",
+        "origin": "Control",
+        "durable": false,
+        "presentation_changed": true,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ],
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        },
+        "annotations": {},
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "3",
+          "follow": "0",
+          "hover": "1",
+          "focus": "1",
+          "pin": "1",
+          "selection": "1",
+          "visibility": "0",
+          "annotations": "0",
+          "gesture": "2",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "7",
+      "viewport_revision": "0",
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "cancel",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "8",
+        "viewport_changed": false
+      },
+      "event": {
+        "revision": "8",
+        "origin": "Control",
+        "durable": false,
+        "presentation_changed": true,
+        "cancellation": "CaptureLost"
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ],
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        },
+        "annotations": {},
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "3",
+          "follow": "0",
+          "hover": "1",
+          "focus": "1",
+          "pin": "1",
+          "selection": "1",
+          "visibility": "0",
+          "annotations": "0",
+          "gesture": "3",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "8",
+      "viewport_revision": "0",
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "begin-annotation-again",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "9",
+        "viewport_changed": false
+      },
+      "event": {
+        "revision": "9",
+        "origin": "Control",
+        "durable": false,
+        "presentation_changed": false,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ],
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        },
+        "annotations": {},
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "3",
+          "follow": "0",
+          "hover": "1",
+          "focus": "1",
+          "pin": "1",
+          "selection": "1",
+          "visibility": "0",
+          "annotations": "0",
+          "gesture": "4",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "9",
+      "viewport_revision": "0",
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "preview-again",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "10",
+        "viewport_changed": false
+      },
+      "event": {
+        "revision": "10",
+        "origin": "Control",
+        "durable": false,
+        "presentation_changed": true,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ],
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        },
+        "annotations": {},
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "3",
+          "follow": "0",
+          "hover": "1",
+          "focus": "1",
+          "pin": "1",
+          "selection": "1",
+          "visibility": "0",
+          "annotations": "0",
+          "gesture": "5",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "10",
+      "viewport_revision": "0",
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "commit",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "11",
+        "viewport_changed": false
+      },
+      "event": {
+        "revision": "11",
+        "origin": "Control",
+        "durable": true,
+        "presentation_changed": false,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ],
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        },
+        "annotations": {
+          "threshold": {
+            "id": "threshold",
+            "anchor": {
+              "Figure": {
+                "x": 0.7,
+                "y": 0.1
+              }
+            },
+            "text": {
+              "lines": [
+                [
+                  {
+                    "text": "Threshold",
+                    "font": null,
+                    "fallback": [],
+                    "weight": 400,
+                    "size": 1.0,
+                    "color": null,
+                    "language": "und",
+                    "direction": "LeftToRight",
+                    "tabular": false
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            },
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "priority": 0,
+            "collision": "Keep",
+            "callout": null,
+            "overflow": false
+          }
+        },
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "4",
+          "follow": "0",
+          "hover": "1",
+          "focus": "1",
+          "pin": "1",
+          "selection": "1",
+          "visibility": "0",
+          "annotations": "1",
+          "gesture": "6",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "11",
+      "viewport_revision": "0",
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "undo",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "12",
+        "viewport_changed": false
+      },
+      "event": {
+        "revision": "12",
+        "origin": "Control",
+        "durable": true,
+        "presentation_changed": true,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ],
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        },
+        "annotations": {},
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "5",
+          "follow": "0",
+          "hover": "1",
+          "focus": "1",
+          "pin": "1",
+          "selection": "1",
+          "visibility": "0",
+          "annotations": "2",
+          "gesture": "6",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "12",
+      "viewport_revision": "0",
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "redo",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "13",
+        "viewport_changed": false
+      },
+      "event": {
+        "revision": "13",
+        "origin": "Control",
+        "durable": true,
+        "presentation_changed": true,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ],
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        },
+        "annotations": {
+          "threshold": {
+            "id": "threshold",
+            "anchor": {
+              "Figure": {
+                "x": 0.7,
+                "y": 0.1
+              }
+            },
+            "text": {
+              "lines": [
+                [
+                  {
+                    "text": "Threshold",
+                    "font": null,
+                    "fallback": [],
+                    "weight": 400,
+                    "size": 1.0,
+                    "color": null,
+                    "language": "und",
+                    "direction": "LeftToRight",
+                    "tabular": false
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            },
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "priority": 0,
+            "collision": "Keep",
+            "callout": null,
+            "overflow": false
+          }
+        },
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "6",
+          "follow": "0",
+          "hover": "1",
+          "focus": "1",
+          "pin": "1",
+          "selection": "1",
+          "visibility": "0",
+          "annotations": "3",
+          "gesture": "6",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "13",
+      "viewport_revision": "0",
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "viewport",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "14",
+        "viewport_changed": true
+      },
+      "event": {
+        "revision": "14",
+        "origin": "Control",
+        "durable": true,
+        "presentation_changed": true,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "InspectHistory",
+        "legend_visible": true,
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ],
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        },
+        "annotations": {
+          "threshold": {
+            "id": "threshold",
+            "anchor": {
+              "Figure": {
+                "x": 0.7,
+                "y": 0.1
+              }
+            },
+            "text": {
+              "lines": [
+                [
+                  {
+                    "text": "Threshold",
+                    "font": null,
+                    "fallback": [],
+                    "weight": 400,
+                    "size": 1.0,
+                    "color": null,
+                    "language": "und",
+                    "direction": "LeftToRight",
+                    "tabular": false
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            },
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "priority": 0,
+            "collision": "Keep",
+            "callout": null,
+            "overflow": false
+          }
+        },
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "7",
+          "follow": "1",
+          "hover": "1",
+          "focus": "1",
+          "pin": "1",
+          "selection": "1",
+          "visibility": "0",
+          "annotations": "3",
+          "gesture": "6",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "14",
+      "viewport_revision": "1",
+      "viewport": {
+        "x": [
+          0.5,
+          1.5
+        ],
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "freeze",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "15",
+        "viewport_changed": false
+      },
+      "event": {
+        "revision": "15",
+        "origin": "Control",
+        "durable": true,
+        "presentation_changed": true,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FreezePresentation",
+        "legend_visible": true,
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ],
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        },
+        "annotations": {
+          "threshold": {
+            "id": "threshold",
+            "anchor": {
+              "Figure": {
+                "x": 0.7,
+                "y": 0.1
+              }
+            },
+            "text": {
+              "lines": [
+                [
+                  {
+                    "text": "Threshold",
+                    "font": null,
+                    "fallback": [],
+                    "weight": 400,
+                    "size": 1.0,
+                    "color": null,
+                    "language": "und",
+                    "direction": "LeftToRight",
+                    "tabular": false
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            },
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "priority": 0,
+            "collision": "Keep",
+            "callout": null,
+            "overflow": false
+          }
+        },
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "8",
+          "follow": "2",
+          "hover": "1",
+          "focus": "1",
+          "pin": "1",
+          "selection": "1",
+          "visibility": "0",
+          "annotations": "3",
+          "gesture": "6",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "15",
+      "viewport_revision": "1",
+      "viewport": {
+        "x": [
+          0.5,
+          1.5
+        ],
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "resume",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "16",
+        "viewport_changed": false
+      },
+      "event": {
+        "revision": "16",
+        "origin": "Control",
+        "durable": true,
+        "presentation_changed": true,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ],
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        },
+        "annotations": {
+          "threshold": {
+            "id": "threshold",
+            "anchor": {
+              "Figure": {
+                "x": 0.7,
+                "y": 0.1
+              }
+            },
+            "text": {
+              "lines": [
+                [
+                  {
+                    "text": "Threshold",
+                    "font": null,
+                    "fallback": [],
+                    "weight": 400,
+                    "size": 1.0,
+                    "color": null,
+                    "language": "und",
+                    "direction": "LeftToRight",
+                    "tabular": false
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            },
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "priority": 0,
+            "collision": "Keep",
+            "callout": null,
+            "overflow": false
+          }
+        },
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "9",
+          "follow": "3",
+          "hover": "1",
+          "focus": "1",
+          "pin": "1",
+          "selection": "1",
+          "visibility": "0",
+          "annotations": "3",
+          "gesture": "6",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "16",
+      "viewport_revision": "1",
+      "viewport": {
+        "x": [
+          0.5,
+          1.5
+        ],
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "legend",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "17",
+        "viewport_changed": false
+      },
+      "event": {
+        "revision": "17",
+        "origin": "Control",
+        "durable": true,
+        "presentation_changed": true,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": false,
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ],
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        },
+        "annotations": {
+          "threshold": {
+            "id": "threshold",
+            "anchor": {
+              "Figure": {
+                "x": 0.7,
+                "y": 0.1
+              }
+            },
+            "text": {
+              "lines": [
+                [
+                  {
+                    "text": "Threshold",
+                    "font": null,
+                    "fallback": [],
+                    "weight": 400,
+                    "size": 1.0,
+                    "color": null,
+                    "language": "und",
+                    "direction": "LeftToRight",
+                    "tabular": false
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            },
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "priority": 0,
+            "collision": "Keep",
+            "callout": null,
+            "overflow": false
+          }
+        },
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "10",
+          "follow": "3",
+          "hover": "1",
+          "focus": "1",
+          "pin": "1",
+          "selection": "1",
+          "visibility": "1",
+          "annotations": "3",
+          "gesture": "6",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "17",
+      "viewport_revision": "1",
+      "viewport": {
+        "x": [
+          0.5,
+          1.5
+        ],
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "linked",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "18",
+        "viewport_changed": true
+      },
+      "event": {
+        "revision": "18",
+        "origin": {
+          "Linked": "overview"
+        },
+        "durable": true,
+        "presentation_changed": true,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": false,
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ],
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        },
+        "annotations": {
+          "threshold": {
+            "id": "threshold",
+            "anchor": {
+              "Figure": {
+                "x": 0.7,
+                "y": 0.1
+              }
+            },
+            "text": {
+              "lines": [
+                [
+                  {
+                    "text": "Threshold",
+                    "font": null,
+                    "fallback": [],
+                    "weight": 400,
+                    "size": 1.0,
+                    "color": null,
+                    "language": "und",
+                    "direction": "LeftToRight",
+                    "tabular": false
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            },
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "priority": 0,
+            "collision": "Keep",
+            "callout": null,
+            "overflow": false
+          }
+        },
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "11",
+          "follow": "3",
+          "hover": "1",
+          "focus": "1",
+          "pin": "1",
+          "selection": "1",
+          "visibility": "1",
+          "annotations": "3",
+          "gesture": "6",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "18",
+      "viewport_revision": "2",
+      "viewport": {
+        "x": [
+          0.0,
+          2.0
+        ],
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "linked-echo",
+    "result": {
+      "outcome": {
+        "changed": false,
+        "revision": "18",
+        "viewport_changed": false
+      },
+      "event": null
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": false,
+        "selection": [
+          {
+            "epoch": "9007199254746001",
+            "layer": "9007199254742003",
+            "panel": null,
+            "identity": {
+              "Source": {
+                "dataset": "9007199254741001",
+                "key": "9007199254743001"
+              }
+            }
+          }
+        ],
+        "pinned": {
+          "epoch": "9007199254746001",
+          "layer": "9007199254742003",
+          "panel": null,
+          "identity": {
+            "Source": {
+              "dataset": "9007199254741001",
+              "key": "9007199254743001"
+            }
+          }
+        },
+        "annotations": {
+          "threshold": {
+            "id": "threshold",
+            "anchor": {
+              "Figure": {
+                "x": 0.7,
+                "y": 0.1
+              }
+            },
+            "text": {
+              "lines": [
+                [
+                  {
+                    "text": "Threshold",
+                    "font": null,
+                    "fallback": [],
+                    "weight": 400,
+                    "size": 1.0,
+                    "color": null,
+                    "language": "und",
+                    "direction": "LeftToRight",
+                    "tabular": false
+                  }
+                ]
+              ],
+              "line_spacing": 1.2,
+              "rotation": 0.0
+            },
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "priority": 0,
+            "collision": "Keep",
+            "callout": null,
+            "overflow": false
+          }
+        },
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "11",
+          "follow": "3",
+          "hover": "1",
+          "focus": "1",
+          "pin": "1",
+          "selection": "1",
+          "visibility": "1",
+          "annotations": "3",
+          "gesture": "6",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "18",
+      "viewport_revision": "2",
+      "viewport": {
+        "x": [
+          0.0,
+          2.0
+        ],
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  },
+  {
+    "name": "reset",
+    "result": {
+      "outcome": {
+        "changed": true,
+        "revision": "19",
+        "viewport_changed": true
+      },
+      "event": {
+        "revision": "19",
+        "origin": "Control",
+        "durable": true,
+        "presentation_changed": true,
+        "cancellation": null
+      }
+    },
+    "state": {
+      "interaction": {
+        "follow": "FollowLatest",
+        "legend_visible": true,
+        "selection": [],
+        "pinned": null,
+        "annotations": {},
+        "configuration": {
+          "max_targets": 4096,
+          "history_capacity": 2,
+          "manual_view_enters_history": true
+        },
+        "revisions": {
+          "durable": "12",
+          "follow": "3",
+          "hover": "2",
+          "focus": "2",
+          "pin": "2",
+          "selection": "2",
+          "visibility": "2",
+          "annotations": "4",
+          "gesture": "6",
+          "configuration": "1"
+        }
+      },
+      "version": 1,
+      "definition_revision": "0",
+      "state_revision": "19",
+      "viewport_revision": "3",
+      "viewport": {
+        "x": null,
+        "y": null
+      },
+      "hidden_layers": []
+    }
+  }
+]

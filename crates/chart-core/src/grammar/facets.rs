@@ -383,6 +383,7 @@ pub(crate) fn prepare_facets(
     }
     let mut result = PreparedChart {
         scale_registrations: compiler.extensions.scales.clone(),
+        guide_registrations: compiler.extensions.guides.clone(),
         definition: Arc::new(definition.clone()),
         source: source.clone(),
         state: state.clone(),

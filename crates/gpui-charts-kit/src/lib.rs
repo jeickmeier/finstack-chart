@@ -3,8 +3,8 @@ use chart_core::scene::Color;
 use chart_core::theme::ThemePatch;
 use chart_core::{ChartResult, Diagnostic, DiagnosticCode};
 use gpui_charts::{ChartInput, ChartView, NativeFont};
+use gpui_kit::Entity;
 use gpui_kit::component::{Theme, button::Button};
-use gpui_kit::{Context, Entity};
 
 fn color(c: gpui_kit::Hsla) -> ChartResult<Color> {
     let c: gpui_kit::Rgba = c.into();
@@ -56,16 +56,6 @@ pub fn chart_input(
     Ok(ChartInput::from_plot(plot, font)?.layout(
         chart_core::plot::layout_options().host_theme(theme_patch(theme)?.map_colors(Into::into)),
     ))
-}
-/// Apply a Kit snapshot at the host level; authored named/plot/layer tokens keep their precedence.
-pub fn apply_theme(
-    view: &mut ChartView,
-    theme: &Theme,
-    cx: &mut Context<ChartView>,
-) -> ChartResult<()> {
-    let mut r = view.layout_request().clone();
-    r.host_theme = theme_patch(theme)?.map_colors(Into::into);
-    view.set_layout(r, cx)
 }
 /// A real Kit control dispatching through the shared chart reducer. Recoverable errors stay on
 /// ChartView's existing diagnostic surface; the control creates no parallel interaction state.

@@ -101,6 +101,51 @@ pub(super) fn validate_specs(axes: &[AxisSpec], limits: crate::Limits) -> ChartR
 }
 
 pub(super) fn validate_style(a: &GuideStyle, limits: crate::Limits) -> ChartResult<()> {
+    if let Some(values) = &a.tick_values {
+        crate::limits::require_within(values.len() <= limits.max_items, "authored guide tick")?;
+    }
+    if let Some(arguments) = &a.tick_arguments {
+        arguments.validate(limits.max_text_bytes)?;
+    }
+    if a.tick_format.is_some()
+        && (a.number_format.is_some()
+            || a.numeric_format.is_some()
+            || a.time_format.is_some()
+            || a.guide_ticks.is_some())
+        || a.tick_values.is_some() && a.guide_ticks.is_some()
+    {
+        return Err(error(
+            DiagnosticCode::SchemaConflict,
+            "Guide value/formatter controls cannot conflict with coupled legacy labels or other formatters.",
+        ));
+    }
+    if let Some(format) = &a.tick_format {
+        match format {
+            GuideFormatter::Numeric(f) => {
+                f.prepare()?;
+            }
+            GuideFormatter::Time(f) => {
+                f.prepare(Calendar::new(CalendarZone::Utc)?)?;
+            }
+            GuideFormatter::Labels(labels) => {
+                crate::limits::require_within(
+                    labels.len() <= limits.max_items,
+                    "authored guide label",
+                )?;
+                let mut bytes = limits.max_text_bytes;
+                for label in labels {
+                    crate::limits::require_within(
+                        label.len() <= bytes,
+                        "explicit guide label byte",
+                    )?;
+                    bytes -= label.len();
+                }
+            }
+            GuideFormatter::Registered { parameters, .. } => {
+                crate::grammar::guide_extensions::validate_parameters(parameters)?;
+            }
+        }
+    }
     if !a.label_rotation.is_finite() || a.label_rotation.abs() > 360. {
         return Err(error(
             DiagnosticCode::Validation,
@@ -142,7 +187,7 @@ pub(super) fn validate_style(a: &GuideStyle, limits: crate::Limits) -> ChartResu
                 "Explicit custom labels cannot also request a numeric formatter.",
             ));
         }
-        if ticks.iter().any(|tick| tick.label.is_empty()) {
+        if a.profile == GuideProfile::LibraryV1 && ticks.iter().any(|tick| tick.label.is_empty()) {
             return Err(error(
                 DiagnosticCode::Validation,
                 "Custom guide labels must be nonempty.",
@@ -685,7 +730,7 @@ fn resolve_axis_inner(
         scale,
         ticks: vec![],
     };
-    axis.ticks = super::guide_ticks::resolve(&axis, &spec.guide, r)?;
+    axis.ticks = super::guide_ticks::resolve(chart, &axis, &spec.guide, r)?;
     Ok(axis)
 }
 

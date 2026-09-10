@@ -1029,6 +1029,20 @@ pub struct ChartDefinition {
 impl ChartDefinition {
     /// Minimum definition-envelope version required by its retained capabilities.
     pub fn wire_version(&self) -> u32 {
+        if super::interpolation_extensions::mapped_scales(self)
+            .any(crate::scales::MappedScaleSpec::has_registered_interpolation)
+        {
+            return 12;
+        }
+        if self
+            .axes
+            .iter()
+            .map(|axis| &axis.guide)
+            .chain(self.guides.iter().map(|guide| &guide.style))
+            .any(crate::layout::GuideStyle::uses_tick_configuration)
+        {
+            return 11;
+        }
         if self
             .axes
             .iter()

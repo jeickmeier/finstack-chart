@@ -41,6 +41,13 @@ macro_rules! handle {
             pub(super) fn get(&self) -> PyResult<&$ty> {
                 self.inner.as_ref().ok_or_else(disposed)
             }
+            #[allow(
+                dead_code,
+                reason = "Only mutable owners use this shared macro accessor."
+            )]
+            pub(super) fn get_mut(&mut self) -> PyResult<&mut $ty> {
+                self.inner.as_mut().ok_or_else(disposed)
+            }
             pub(super) fn wrap(inner: $ty) -> Self {
                 Self { inner: Some(inner) }
             }
@@ -276,18 +283,34 @@ pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_class::<ComponentHandle>()?;
     module.add_class::<DraftHandle>()?;
     module.add_class::<PlotHandle>()?;
-    data::register(module)?;
-    path::register(module)?;
-    shape_registry::register(module)?;
-    shape::register(module)?;
-    shape_radial::register(module)?;
-    shape_arc_pie::register(module)?;
-    shape_symbol::register(module)?;
-    shape_stack::register(module)?;
-    color::register(module)?;
-    interpolate::register(module)?;
-    time::register(module)?;
-    scale::register(module)?;
-    runtime::register(module)?;
-    output::register(module)
+    module.add_class::<data::ColumnHandle>()?;
+    module.add_class::<data::ColumnsHandle>()?;
+    module.add_class::<data::DataHandle>()?;
+    module.add_class::<data::FieldHandle>()?;
+    module.add_class::<path::PathHandle>()?;
+    module.add_class::<shape_registry::ShapeRegistryHandle>()?;
+    module.add_class::<shape::ShapeLineHandle>()?;
+    module.add_class::<shape::ShapeAreaHandle>()?;
+    module.add_class::<shape_radial::ShapeLineRadialHandle>()?;
+    module.add_class::<shape_radial::ShapeAreaRadialHandle>()?;
+    module.add_class::<shape_radial::ShapeLinkHandle>()?;
+    module.add_class::<shape_radial::ShapeLinkRadialHandle>()?;
+    module.add_class::<shape_arc_pie::ShapeArcHandle>()?;
+    module.add_class::<shape_arc_pie::ShapePieHandle>()?;
+    module.add_class::<shape_symbol::ShapeSymbolHandle>()?;
+    module.add_class::<shape_stack::ShapeStackHandle>()?;
+    module.add_class::<color::ColorHandle>()?;
+    module.add_class::<interpolate::InterpolatorHandle>()?;
+    module.add_class::<time::TimeScaleHandle>()?;
+    module.add_class::<scale::ScaleHandle>()?;
+    module.add_class::<runtime::EditorHandle>()?;
+    module.add_class::<runtime::RuntimeHandle>()?;
+    module.add_class::<runtime::UpdatesHandle>()?;
+    module.add_class::<runtime::TransactionHandle>()?;
+    module.add_class::<output::OptionsHandle>()?;
+    module.add_class::<output::OutputHandle>()?;
+    module.add_class::<output::RequestHandle>()?;
+    module.add_class::<output::FrameHandle>()?;
+    module.add_class::<output::QueueHandle>()?;
+    module.add_class::<output::JobHandle>()
 }

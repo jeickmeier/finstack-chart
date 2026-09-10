@@ -109,3 +109,54 @@ The [native example](../examples/chart-gallery/examples/extension_gallery.rs) sw
 between vector custom geometry and a native-only gradient painter; the
 [export example](../crates/chart-export/examples/extension_proof.rs) emits SVG/PDF/PNG.
 See [fixture commands](../fixtures/extensions/README.md) for executable checks.
+
+## Registered positional scales (AXIS-01)
+
+`ExtensionRegistry::register_scale` installs a versioned `CustomScale` factory. Its
+`ScaleProviderInput` supplies semantic space, eligible extent, destination range,
+explicit window/outside policy and hard limits. Return an immutable `PositionalScale`
+with domain/range/forward mapping and optional ticks, formatting, bands and inverse.
+Core checks values and budgets and shares the resolved mapping across marks and guides.
+Provider callbacks are trusted native code and must honor the supplied work limits.
+
+Use `scale_registered` with primary `coordinate_scale` and the plot's explicit
+extension registry; native-only registrations cannot serialize or publish headlessly.
+Version-10 definitions resolve installed operation IDs, never executable code from JSON.
+The actual external implementation is
+[`examples/custom-extension/src/scales.rs`](../examples/custom-extension/src/scales.rs).
+The [provider decision](adr/021-independent-axis-guides.md#registered-positional-provider-boundary)
+details exact timestamp/category preservation, registry snapshots and navigation limits.
+
+### Registered guide formatting
+
+`CustomGuideFormatter` declares a captured operation descriptor, validates bounded
+JSON parameters and formats `GuideFormatInput` with the exact selected value, index,
+complete selected list, parameters and limits. Register with
+`CoreExtensionRegistry::register_guide_formatter`. The selection and mapping preflight
+runs before callbacks; output obeys aggregate label-byte limits. Registrations are
+trusted native code and cannot be preempted. Prepared charts retain the registry snapshot.
+Portable versioned references require explicit code installation on load; native-only
+formatters reject serialization and headless publication. The
+[external formatter example](../examples/custom-extension/src/guides.rs) demonstrates
+the contract without depending on a host interpreter.
+
+## Registered interpolation factories
+
+`ExtensionRegistry::register_interpolation` installs a `CustomInterpolationFactory`
+with captured ID/version/portability. `InterpolationInput` supplies typed source/target
+values and bounded parameters; `compile` returns an owned `Sample<Value>` implementation.
+Compilation occurs during preparation, not once per mark. Native factory code must be
+pure, terminating and independent of mutable host state. Sampling validates finite `t`
+and the existing output value budgets. Missing/nonfinite numerical values retain the
+interpolation profile and cannot silently enter scene coordinates.
+
+Use `registry.interpolation_factory(operation, parameters)` for a checked selection and
+`between_with_registry` or registry-backed scale constructors for execution. Registered
+factories participate in piecewise, mapped colors/numeric aesthetics and time scales;
+copies and immutable scale changes retain registry snapshots. Native-only operations
+reject portable envelopes and publication before interpolation preparation. Registered
+interpolation/standalone-scale envelopes use version 2; mapped chart definitions use
+version 12. Builtin envelopes keep their existing versions. See
+[ADR-017](adr/017-shared-interpolation-values.md) for ownership and migration details and
+[the external example](../examples/custom-extension/src/interpolate.rs) for implementations
+that reuse the scalar and floating Lab kernels.

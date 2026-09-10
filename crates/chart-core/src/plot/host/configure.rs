@@ -249,6 +249,20 @@ impl Component {
                 _ => return Err(unsupported(method)),
             }),
             Kind::Axis(b) => Kind::Axis(match method {
+                "guide_profile" => scalar!(a, b, guide_profile),
+                "tick_arguments" => scalar!(a, b, tick_arguments),
+                "tick_format" => b.clone().tick_format(guide_formatter(a.one()?)?),
+                "tick_values" => b.clone().tick_values(
+                    a.one::<Option<Vec<Value>>>()?
+                        .map(|values| {
+                            values
+                                .iter()
+                                .map(scale_value)
+                                .collect::<ChartResult<Vec<_>>>()
+                        })
+                        .transpose()?,
+                ),
+
                 "numeric_format" => scalar!(a, b, numeric_format),
                 "time_format" => scalar!(a, b, time_format),
                 "oob" => scalar!(a, b, oob),
@@ -273,6 +287,20 @@ impl Component {
                 _ => return Err(unsupported(method)),
             }),
             Kind::Guide(b) => Kind::Guide(match method {
+                "guide_profile" => scalar!(a, b, guide_profile),
+                "tick_arguments" => scalar!(a, b, tick_arguments),
+                "tick_format" => b.clone().tick_format(guide_formatter(a.one()?)?),
+                "tick_values" => b.clone().tick_values(
+                    a.one::<Option<Vec<Value>>>()?
+                        .map(|values| {
+                            values
+                                .iter()
+                                .map(scale_value)
+                                .collect::<ChartResult<Vec<_>>>()
+                        })
+                        .transpose()?,
+                ),
+
                 "scale" => string!(a, b, scale),
                 "side" => scalar!(a, b, side),
                 "translate" => pair!(a, b, translate),
@@ -539,4 +567,16 @@ impl Component {
             Kind::Run(_) => return Err(unsupported(method)),
         }))
     }
+}
+
+// Registered formatter descriptors use the same exact-version host conversion as scales.
+fn guide_formatter(mut value: Value) -> ChartResult<Option<crate::layout::GuideFormatter>> {
+    if let Some(version) = value
+        .get_mut("Registered")
+        .and_then(|registered| registered.get_mut("operation"))
+        .and_then(|operation| operation.get_mut("version"))
+    {
+        *version = Value::String(exact_u64(version)?.to_string());
+    }
+    serde_json::from_value(value).map_err(|e| error(DiagnosticCode::Validation, e.to_string()))
 }

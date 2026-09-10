@@ -1,4 +1,4 @@
-import {Owned} from './authoring.cjs';
+import {Owned,ShapeRegistry} from './authoring.cjs';
 import {InterpolationInput,InterpolationResult,Interpolator,BinaryInterpolationFactory,NumericInterpolationFactory,ColorInterpolationFactory} from './interpolation.cjs';
 export type ScaleFamily='linear'|'log'|'pow'|'sqrt'|'symlog'|'identity'|'radial'|'ordinal'|'band'|'point'|'quantile'|'quantize'|'threshold'|'sequential'|'sequential_log'|'sequential_pow'|'sequential_sqrt'|'sequential_symlog'|'sequential_quantile'|'diverging'|'diverging_log'|'diverging_pow'|'diverging_sqrt'|'diverging_symlog'|'utc'|'local';
 export type ScaleTimeUnit='Seconds'|'Milliseconds'|'Microseconds'|'Nanoseconds';
@@ -26,17 +26,17 @@ export interface ScaleOptions {
 export interface InverseExtent {found:boolean;lower:ScaleArgument;upper:ScaleArgument;}
 export interface ScaleFormatOptions {count?:number;specifier?:string|null;pattern?:string|null;locale?:NumericLocale|TimeLocale;}
 export class StandaloneScale extends Owned {
-  constructor(family?:ScaleFamily,options?:ScaleOptions);
-  static from_json(text:string):StandaloneScale;
-  static fromJson(text:string):StandaloneScale;
-  static from_spec(spec:Readonly<Record<string,unknown>>):StandaloneScale;
-  static fromSpec(spec:Readonly<Record<string,unknown>>):StandaloneScale;
+  constructor(family?:ScaleFamily,options?:ScaleOptions & {registry?:ShapeRegistry});
+  static from_json(text:string,registry?:ShapeRegistry):StandaloneScale;
+  static fromJson(text:string,registry?:ShapeRegistry):StandaloneScale;
+  static from_spec(spec:Readonly<Record<string,unknown>>,registry?:ShapeRegistry):StandaloneScale;
+  static fromSpec(spec:Readonly<Record<string,unknown>>,registry?:ShapeRegistry):StandaloneScale;
   to_json():string;toJson():string;
   spec():Record<string,unknown>;
   mapped(training?:'Authored'|'Eligible'):Record<string,unknown>;
   copy():StandaloneScale;
   configure(options:ScaleOptions):StandaloneScale;
-  reconfigure(spec:Readonly<Record<string,unknown>>):StandaloneScale;
+  reconfigure(spec:Readonly<Record<string,unknown>>,registry?:ShapeRegistry):StandaloneScale;
   domain():ScaleArgument[];range():InterpolationResult[];
   map(value?:ScaleArgument):InterpolationResult;
   map_value(value?:ScaleArgument):Record<string,unknown>;mapValue(value?:ScaleArgument):Record<string,unknown>;

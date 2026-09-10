@@ -117,7 +117,7 @@ pub struct Editor(AnnotationEditor);
 impl Runtime {
     /// Capture an owned annotation editor through the shared primary policy builder.
     pub fn owned_editor(&self, component: &Component) -> ChartResult<Editor> {
-        self.editor(component).map(Editor)
+        component.annotation_editor(self.chart()?).map(Editor)
     }
 }
 impl Editor {

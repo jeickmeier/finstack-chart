@@ -1,0 +1,4830 @@
+[
+  {
+    "basis": "presented",
+    "view": "visible",
+    "selection": false,
+    "manifest": {
+      "compile_limits": {
+        "max_edges": 10001,
+        "max_filters": 64,
+        "max_groups": 10000,
+        "max_layers": 256,
+        "max_prepared_rows": 1000000,
+        "max_transforms": 256,
+        "max_vertices": 1000000
+      },
+      "datasets": [
+        {
+          "schema": {
+            "fields": [
+              {
+                "id": "1",
+                "kind": "Float64",
+                "label": null,
+                "name": "x",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "id": "2",
+                "kind": "Float64",
+                "label": null,
+                "name": "y",
+                "nullable": false,
+                "unit": null
+              }
+            ],
+            "version": "1"
+          },
+          "version": {
+            "dataset": "1031",
+            "revision": "0",
+            "schema_version": "1"
+          }
+        }
+      ],
+      "definition": {
+        "axes": [
+          {
+            "id": "0",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Bottom",
+            "title": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Time",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            },
+            "viewport": null,
+            "visible": true
+          },
+          {
+            "id": "1",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Left",
+            "title": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Value",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            },
+            "viewport": null,
+            "visible": true
+          }
+        ],
+        "figure": {
+          "annotations": [
+            {
+              "anchor": {
+                "Data": {
+                  "panel": null,
+                  "scales": {
+                    "x": "0",
+                    "y": "1"
+                  },
+                  "x": {
+                    "Number": 2.0
+                  },
+                  "y": {
+                    "Number": 4.0
+                  }
+                }
+              },
+              "callout": null,
+              "collision": "Keep",
+              "id": "peak",
+              "offset": [
+                0.0,
+                14.0
+              ],
+              "overflow": false,
+              "priority": 0,
+              "text": {
+                "line_spacing": 1.2,
+                "lines": [
+                  [
+                    {
+                      "color": null,
+                      "direction": "LeftToRight",
+                      "fallback": [],
+                      "font": null,
+                      "language": "und",
+                      "size": 1.0,
+                      "tabular": false,
+                      "text": "Peak",
+                      "weight": 400
+                    }
+                  ]
+                ],
+                "rotation": 0.0
+              }
+            }
+          ],
+          "caption": null,
+          "footnotes": [],
+          "insets": [],
+          "panel_letters": [],
+          "source_notes": [],
+          "subtitle": null,
+          "title": {
+            "line_spacing": 1.2,
+            "lines": [
+              [
+                {
+                  "color": null,
+                  "direction": "LeftToRight",
+                  "fallback": [],
+                  "font": null,
+                  "language": "und",
+                  "size": 1.0,
+                  "tabular": false,
+                  "text": "Primary parity",
+                  "weight": 400
+                }
+              ]
+            ],
+            "rotation": 0.0
+          },
+          "version": 1
+        },
+        "layers": [
+          {
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1031"
+            },
+            "facet": "Match",
+            "filters": [],
+            "geom": {
+              "Line": {
+                "connect_gaps": false,
+                "order": "X"
+              }
+            },
+            "id": "1032",
+            "inherit": false,
+            "invalid": "Exclude",
+            "mappings": {
+              "Source": {
+                "group": null,
+                "size": null,
+                "x": {
+                  "Field": "1"
+                },
+                "x2": null,
+                "y": {
+                  "Field": "2"
+                },
+                "y2": null
+              }
+            },
+            "position": "Identity",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "scope": "Group",
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "style": {
+              "color": {
+                "alpha": 255,
+                "blue": 150,
+                "green": 90,
+                "red": 35
+              },
+              "radius": 1.5,
+              "stroke_width": 1.5
+            }
+          },
+          {
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1031"
+            },
+            "facet": "Match",
+            "filters": [],
+            "geom": "Point",
+            "id": "1033",
+            "inherit": false,
+            "invalid": "Exclude",
+            "mappings": {
+              "Source": {
+                "group": null,
+                "size": null,
+                "x": {
+                  "Field": "1"
+                },
+                "x2": null,
+                "y": {
+                  "Field": "2"
+                },
+                "y2": null
+              }
+            },
+            "position": "Identity",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "scope": "Group",
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "style": {
+              "color": {
+                "alpha": 255,
+                "blue": 150,
+                "green": 90,
+                "red": 35
+              },
+              "radius": 3.0,
+              "stroke_width": 3.0
+            }
+          }
+        ],
+        "mappings": {
+          "group": null,
+          "size": null,
+          "x": null,
+          "x2": null,
+          "y": null,
+          "y2": null
+        },
+        "revision": "0",
+        "transforms": []
+      },
+      "fonts": [
+        {
+          "id": "1",
+          "revision": "0",
+          "sha256": "2ec33f84606cbaa0a1a944488e14f97faf2f6a25ecdd8354f5358f06da13c7d9"
+        },
+        {
+          "id": "2",
+          "revision": "0",
+          "sha256": "2ab1f6db00a0b73f1c919dc6fcaa21a5cc9710b06a8e3eda358c1089e3b99b8c"
+        },
+        {
+          "id": "3",
+          "revision": "0",
+          "sha256": "9d7ca88baa3826027c20fc4aa13258ff7b294b1273c6363d688a08045a74b683"
+        }
+      ],
+      "interaction_policy": {
+        "focus": false,
+        "hover": false,
+        "preview": false,
+        "selection": false
+      },
+      "origin_layout": {
+        "axes": [
+          {
+            "id": "0",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Bottom",
+            "viewport": null,
+            "visible": true
+          },
+          {
+            "id": "1",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Left",
+            "viewport": null,
+            "visible": true
+          }
+        ],
+        "bounds": {
+          "height": 260.0,
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "width": 400.0
+        },
+        "figure_bounds": null,
+        "font": {
+          "byte_len": "556216",
+          "id": "1",
+          "kind": "Font",
+          "revision": "0"
+        },
+        "font_size": 12.0,
+        "host_theme": {
+          "annotation": null,
+          "background": null,
+          "color_mode": null,
+          "dashes": null,
+          "focus": null,
+          "font_size": null,
+          "foreground": null,
+          "gap": null,
+          "gradient": null,
+          "grid": null,
+          "mark": null,
+          "padding": null,
+          "panel": null,
+          "selection": null,
+          "stroke_width": null,
+          "symbol": null,
+          "tick_length": null
+        },
+        "interaction_theme": {},
+        "label_gap": 4.0,
+        "limits": {
+          "max_items": 100000,
+          "max_path_commands": 1000000,
+          "max_resource_bytes": "67108864",
+          "max_resources": 256,
+          "max_text_bytes": 1048576,
+          "max_total_resource_bytes": "268435456"
+        },
+        "max_categories": 10000,
+        "max_ticks": 128,
+        "max_vertices": 1000000,
+        "minimum_plot": [
+          24.0,
+          24.0
+        ],
+        "output_theme": {
+          "annotation": null,
+          "background": null,
+          "color_mode": null,
+          "dashes": null,
+          "focus": null,
+          "font_size": null,
+          "foreground": null,
+          "gap": null,
+          "gradient": null,
+          "grid": null,
+          "mark": null,
+          "padding": null,
+          "panel": null,
+          "selection": null,
+          "stroke_width": null,
+          "symbol": null,
+          "tick_length": null
+        },
+        "padding": 8.0,
+        "revision": "0",
+        "target_ticks": 6,
+        "tick_length": 4.0,
+        "units": "Points"
+      },
+      "origin_scene": {
+        "definition": "0",
+        "layout": "0",
+        "state": "0",
+        "store": "0",
+        "viewport": "0"
+      },
+      "profile": {
+        "annotation_revision": "0",
+        "annotations": [],
+        "background": {
+          "alpha": 255,
+          "blue": 255,
+          "green": 255,
+          "red": 255
+        },
+        "dpi": 96,
+        "layout": {
+          "axes": [
+            {
+              "id": "0",
+              "label_rotation": 0.0,
+              "outside": "Extend",
+              "range": null,
+              "scale": "Auto",
+              "side": "Bottom",
+              "viewport": null,
+              "visible": true
+            },
+            {
+              "id": "1",
+              "label_rotation": 0.0,
+              "outside": "Extend",
+              "range": null,
+              "scale": "Auto",
+              "side": "Left",
+              "viewport": null,
+              "visible": true
+            }
+          ],
+          "bounds": {
+            "height": 260.0,
+            "origin": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "width": 400.0
+          },
+          "figure_bounds": null,
+          "font": {
+            "byte_len": "556216",
+            "id": "1",
+            "kind": "Font",
+            "revision": "0"
+          },
+          "font_size": 12.0,
+          "host_theme": {
+            "annotation": null,
+            "background": null,
+            "color_mode": null,
+            "dashes": null,
+            "focus": null,
+            "font_size": null,
+            "foreground": null,
+            "gap": null,
+            "gradient": null,
+            "grid": null,
+            "mark": null,
+            "padding": null,
+            "panel": null,
+            "selection": null,
+            "stroke_width": null,
+            "symbol": null,
+            "tick_length": null
+          },
+          "interaction_theme": {},
+          "label_gap": 4.0,
+          "limits": {
+            "max_items": 100000,
+            "max_path_commands": 1000000,
+            "max_resource_bytes": "67108864",
+            "max_resources": 256,
+            "max_text_bytes": 1048576,
+            "max_total_resource_bytes": "268435456"
+          },
+          "max_categories": 10000,
+          "max_ticks": 128,
+          "max_vertices": 1000000,
+          "minimum_plot": [
+            24.0,
+            24.0
+          ],
+          "output_theme": {
+            "annotation": null,
+            "background": null,
+            "color_mode": null,
+            "dashes": null,
+            "focus": null,
+            "font_size": null,
+            "foreground": null,
+            "gap": null,
+            "gradient": null,
+            "grid": null,
+            "mark": null,
+            "padding": null,
+            "panel": null,
+            "selection": null,
+            "stroke_width": null,
+            "symbol": null,
+            "tick_length": null
+          },
+          "padding": 8.0,
+          "revision": "0",
+          "target_ticks": 6,
+          "tick_length": 4.0,
+          "units": "Points"
+        },
+        "max_output_bytes": 67108864,
+        "max_raster_pixels": "32000000",
+        "page": {
+          "height": 260.0,
+          "width": 400.0
+        },
+        "precision": 0.01,
+        "text": "Preserve",
+        "view": "VisibleView"
+      },
+      "source_epoch": "1037",
+      "state": {
+        "active_gesture": null,
+        "committed_viewport": {
+          "x": null,
+          "y": null
+        },
+        "effective_annotations": [
+          {
+            "anchor": {
+              "Data": {
+                "panel": null,
+                "scales": {
+                  "x": "0",
+                  "y": "1"
+                },
+                "x": {
+                  "Number": 2.0
+                },
+                "y": {
+                  "Number": 4.0
+                }
+              }
+            },
+            "callout": null,
+            "collision": "Keep",
+            "id": "peak",
+            "offset": [
+              0.0,
+              14.0
+            ],
+            "overflow": false,
+            "priority": 0,
+            "text": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Peak",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            }
+          }
+        ],
+        "focus": null,
+        "hidden_layers": [],
+        "hover": [],
+        "interaction": {
+          "annotations": {},
+          "configuration": {
+            "history_capacity": 64,
+            "manual_view_enters_history": true,
+            "max_targets": 4096
+          },
+          "follow": "FollowLatest",
+          "legend_visible": true,
+          "pinned": null,
+          "revisions": {
+            "annotations": "0",
+            "configuration": "0",
+            "durable": "0",
+            "focus": "0",
+            "follow": "0",
+            "gesture": "0",
+            "hover": "0",
+            "pin": "0",
+            "selection": "0",
+            "visibility": "0"
+          },
+          "selection": []
+        },
+        "revision": "0",
+        "viewport": {
+          "x": null,
+          "y": null
+        },
+        "viewport_revision": "0",
+        "windows": {}
+      },
+      "store": "0",
+      "version": 1
+    }
+  },
+  {
+    "basis": "presented",
+    "view": "visible",
+    "selection": true,
+    "manifest": {
+      "compile_limits": {
+        "max_edges": 10001,
+        "max_filters": 64,
+        "max_groups": 10000,
+        "max_layers": 256,
+        "max_prepared_rows": 1000000,
+        "max_transforms": 256,
+        "max_vertices": 1000000
+      },
+      "datasets": [
+        {
+          "schema": {
+            "fields": [
+              {
+                "id": "1",
+                "kind": "Float64",
+                "label": null,
+                "name": "x",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "id": "2",
+                "kind": "Float64",
+                "label": null,
+                "name": "y",
+                "nullable": false,
+                "unit": null
+              }
+            ],
+            "version": "1"
+          },
+          "version": {
+            "dataset": "1031",
+            "revision": "0",
+            "schema_version": "1"
+          }
+        }
+      ],
+      "definition": {
+        "axes": [
+          {
+            "id": "0",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Bottom",
+            "title": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Time",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            },
+            "viewport": null,
+            "visible": true
+          },
+          {
+            "id": "1",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Left",
+            "title": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Value",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            },
+            "viewport": null,
+            "visible": true
+          }
+        ],
+        "figure": {
+          "annotations": [
+            {
+              "anchor": {
+                "Data": {
+                  "panel": null,
+                  "scales": {
+                    "x": "0",
+                    "y": "1"
+                  },
+                  "x": {
+                    "Number": 2.0
+                  },
+                  "y": {
+                    "Number": 4.0
+                  }
+                }
+              },
+              "callout": null,
+              "collision": "Keep",
+              "id": "peak",
+              "offset": [
+                0.0,
+                14.0
+              ],
+              "overflow": false,
+              "priority": 0,
+              "text": {
+                "line_spacing": 1.2,
+                "lines": [
+                  [
+                    {
+                      "color": null,
+                      "direction": "LeftToRight",
+                      "fallback": [],
+                      "font": null,
+                      "language": "und",
+                      "size": 1.0,
+                      "tabular": false,
+                      "text": "Peak",
+                      "weight": 400
+                    }
+                  ]
+                ],
+                "rotation": 0.0
+              }
+            }
+          ],
+          "caption": null,
+          "footnotes": [],
+          "insets": [],
+          "panel_letters": [],
+          "source_notes": [],
+          "subtitle": null,
+          "title": {
+            "line_spacing": 1.2,
+            "lines": [
+              [
+                {
+                  "color": null,
+                  "direction": "LeftToRight",
+                  "fallback": [],
+                  "font": null,
+                  "language": "und",
+                  "size": 1.0,
+                  "tabular": false,
+                  "text": "Primary parity",
+                  "weight": 400
+                }
+              ]
+            ],
+            "rotation": 0.0
+          },
+          "version": 1
+        },
+        "layers": [
+          {
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1031"
+            },
+            "facet": "Match",
+            "filters": [],
+            "geom": {
+              "Line": {
+                "connect_gaps": false,
+                "order": "X"
+              }
+            },
+            "id": "1032",
+            "inherit": false,
+            "invalid": "Exclude",
+            "mappings": {
+              "Source": {
+                "group": null,
+                "size": null,
+                "x": {
+                  "Field": "1"
+                },
+                "x2": null,
+                "y": {
+                  "Field": "2"
+                },
+                "y2": null
+              }
+            },
+            "position": "Identity",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "scope": "Group",
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "style": {
+              "color": {
+                "alpha": 255,
+                "blue": 150,
+                "green": 90,
+                "red": 35
+              },
+              "radius": 1.5,
+              "stroke_width": 1.5
+            }
+          },
+          {
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1031"
+            },
+            "facet": "Match",
+            "filters": [],
+            "geom": "Point",
+            "id": "1033",
+            "inherit": false,
+            "invalid": "Exclude",
+            "mappings": {
+              "Source": {
+                "group": null,
+                "size": null,
+                "x": {
+                  "Field": "1"
+                },
+                "x2": null,
+                "y": {
+                  "Field": "2"
+                },
+                "y2": null
+              }
+            },
+            "position": "Identity",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "scope": "Group",
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "style": {
+              "color": {
+                "alpha": 255,
+                "blue": 150,
+                "green": 90,
+                "red": 35
+              },
+              "radius": 3.0,
+              "stroke_width": 3.0
+            }
+          }
+        ],
+        "mappings": {
+          "group": null,
+          "size": null,
+          "x": null,
+          "x2": null,
+          "y": null,
+          "y2": null
+        },
+        "revision": "0",
+        "transforms": []
+      },
+      "fonts": [
+        {
+          "id": "1",
+          "revision": "0",
+          "sha256": "2ec33f84606cbaa0a1a944488e14f97faf2f6a25ecdd8354f5358f06da13c7d9"
+        },
+        {
+          "id": "2",
+          "revision": "0",
+          "sha256": "2ab1f6db00a0b73f1c919dc6fcaa21a5cc9710b06a8e3eda358c1089e3b99b8c"
+        },
+        {
+          "id": "3",
+          "revision": "0",
+          "sha256": "9d7ca88baa3826027c20fc4aa13258ff7b294b1273c6363d688a08045a74b683"
+        }
+      ],
+      "interaction_policy": {
+        "focus": false,
+        "hover": false,
+        "preview": false,
+        "selection": true
+      },
+      "origin_layout": {
+        "axes": [
+          {
+            "id": "0",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Bottom",
+            "viewport": null,
+            "visible": true
+          },
+          {
+            "id": "1",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Left",
+            "viewport": null,
+            "visible": true
+          }
+        ],
+        "bounds": {
+          "height": 260.0,
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "width": 400.0
+        },
+        "figure_bounds": null,
+        "font": {
+          "byte_len": "556216",
+          "id": "1",
+          "kind": "Font",
+          "revision": "0"
+        },
+        "font_size": 12.0,
+        "host_theme": {
+          "annotation": null,
+          "background": null,
+          "color_mode": null,
+          "dashes": null,
+          "focus": null,
+          "font_size": null,
+          "foreground": null,
+          "gap": null,
+          "gradient": null,
+          "grid": null,
+          "mark": null,
+          "padding": null,
+          "panel": null,
+          "selection": null,
+          "stroke_width": null,
+          "symbol": null,
+          "tick_length": null
+        },
+        "interaction_theme": {},
+        "label_gap": 4.0,
+        "limits": {
+          "max_items": 100000,
+          "max_path_commands": 1000000,
+          "max_resource_bytes": "67108864",
+          "max_resources": 256,
+          "max_text_bytes": 1048576,
+          "max_total_resource_bytes": "268435456"
+        },
+        "max_categories": 10000,
+        "max_ticks": 128,
+        "max_vertices": 1000000,
+        "minimum_plot": [
+          24.0,
+          24.0
+        ],
+        "output_theme": {
+          "annotation": null,
+          "background": null,
+          "color_mode": null,
+          "dashes": null,
+          "focus": null,
+          "font_size": null,
+          "foreground": null,
+          "gap": null,
+          "gradient": null,
+          "grid": null,
+          "mark": null,
+          "padding": null,
+          "panel": null,
+          "selection": null,
+          "stroke_width": null,
+          "symbol": null,
+          "tick_length": null
+        },
+        "padding": 8.0,
+        "revision": "0",
+        "target_ticks": 6,
+        "tick_length": 4.0,
+        "units": "Points"
+      },
+      "origin_scene": {
+        "definition": "0",
+        "layout": "0",
+        "state": "0",
+        "store": "0",
+        "viewport": "0"
+      },
+      "profile": {
+        "annotation_revision": "0",
+        "annotations": [],
+        "background": {
+          "alpha": 255,
+          "blue": 255,
+          "green": 255,
+          "red": 255
+        },
+        "dpi": 96,
+        "layout": {
+          "axes": [
+            {
+              "id": "0",
+              "label_rotation": 0.0,
+              "outside": "Extend",
+              "range": null,
+              "scale": "Auto",
+              "side": "Bottom",
+              "viewport": null,
+              "visible": true
+            },
+            {
+              "id": "1",
+              "label_rotation": 0.0,
+              "outside": "Extend",
+              "range": null,
+              "scale": "Auto",
+              "side": "Left",
+              "viewport": null,
+              "visible": true
+            }
+          ],
+          "bounds": {
+            "height": 260.0,
+            "origin": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "width": 400.0
+          },
+          "figure_bounds": null,
+          "font": {
+            "byte_len": "556216",
+            "id": "1",
+            "kind": "Font",
+            "revision": "0"
+          },
+          "font_size": 12.0,
+          "host_theme": {
+            "annotation": null,
+            "background": null,
+            "color_mode": null,
+            "dashes": null,
+            "focus": null,
+            "font_size": null,
+            "foreground": null,
+            "gap": null,
+            "gradient": null,
+            "grid": null,
+            "mark": null,
+            "padding": null,
+            "panel": null,
+            "selection": null,
+            "stroke_width": null,
+            "symbol": null,
+            "tick_length": null
+          },
+          "interaction_theme": {},
+          "label_gap": 4.0,
+          "limits": {
+            "max_items": 100000,
+            "max_path_commands": 1000000,
+            "max_resource_bytes": "67108864",
+            "max_resources": 256,
+            "max_text_bytes": 1048576,
+            "max_total_resource_bytes": "268435456"
+          },
+          "max_categories": 10000,
+          "max_ticks": 128,
+          "max_vertices": 1000000,
+          "minimum_plot": [
+            24.0,
+            24.0
+          ],
+          "output_theme": {
+            "annotation": null,
+            "background": null,
+            "color_mode": null,
+            "dashes": null,
+            "focus": null,
+            "font_size": null,
+            "foreground": null,
+            "gap": null,
+            "gradient": null,
+            "grid": null,
+            "mark": null,
+            "padding": null,
+            "panel": null,
+            "selection": null,
+            "stroke_width": null,
+            "symbol": null,
+            "tick_length": null
+          },
+          "padding": 8.0,
+          "revision": "0",
+          "target_ticks": 6,
+          "tick_length": 4.0,
+          "units": "Points"
+        },
+        "max_output_bytes": 67108864,
+        "max_raster_pixels": "32000000",
+        "page": {
+          "height": 260.0,
+          "width": 400.0
+        },
+        "precision": 0.01,
+        "text": "Preserve",
+        "view": "VisibleView"
+      },
+      "source_epoch": "1037",
+      "state": {
+        "active_gesture": null,
+        "committed_viewport": {
+          "x": null,
+          "y": null
+        },
+        "effective_annotations": [
+          {
+            "anchor": {
+              "Data": {
+                "panel": null,
+                "scales": {
+                  "x": "0",
+                  "y": "1"
+                },
+                "x": {
+                  "Number": 2.0
+                },
+                "y": {
+                  "Number": 4.0
+                }
+              }
+            },
+            "callout": null,
+            "collision": "Keep",
+            "id": "peak",
+            "offset": [
+              0.0,
+              14.0
+            ],
+            "overflow": false,
+            "priority": 0,
+            "text": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Peak",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            }
+          }
+        ],
+        "focus": null,
+        "hidden_layers": [],
+        "hover": [],
+        "interaction": {
+          "annotations": {},
+          "configuration": {
+            "history_capacity": 64,
+            "manual_view_enters_history": true,
+            "max_targets": 4096
+          },
+          "follow": "FollowLatest",
+          "legend_visible": true,
+          "pinned": null,
+          "revisions": {
+            "annotations": "0",
+            "configuration": "0",
+            "durable": "0",
+            "focus": "0",
+            "follow": "0",
+            "gesture": "0",
+            "hover": "0",
+            "pin": "0",
+            "selection": "0",
+            "visibility": "0"
+          },
+          "selection": []
+        },
+        "revision": "0",
+        "viewport": {
+          "x": null,
+          "y": null
+        },
+        "viewport_revision": "0",
+        "windows": {}
+      },
+      "store": "0",
+      "version": 1
+    }
+  },
+  {
+    "basis": "presented",
+    "view": "full_domain",
+    "selection": false,
+    "manifest": {
+      "compile_limits": {
+        "max_edges": 10001,
+        "max_filters": 64,
+        "max_groups": 10000,
+        "max_layers": 256,
+        "max_prepared_rows": 1000000,
+        "max_transforms": 256,
+        "max_vertices": 1000000
+      },
+      "datasets": [
+        {
+          "schema": {
+            "fields": [
+              {
+                "id": "1",
+                "kind": "Float64",
+                "label": null,
+                "name": "x",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "id": "2",
+                "kind": "Float64",
+                "label": null,
+                "name": "y",
+                "nullable": false,
+                "unit": null
+              }
+            ],
+            "version": "1"
+          },
+          "version": {
+            "dataset": "1031",
+            "revision": "0",
+            "schema_version": "1"
+          }
+        }
+      ],
+      "definition": {
+        "axes": [
+          {
+            "id": "0",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Bottom",
+            "title": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Time",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            },
+            "viewport": null,
+            "visible": true
+          },
+          {
+            "id": "1",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Left",
+            "title": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Value",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            },
+            "viewport": null,
+            "visible": true
+          }
+        ],
+        "figure": {
+          "annotations": [
+            {
+              "anchor": {
+                "Data": {
+                  "panel": null,
+                  "scales": {
+                    "x": "0",
+                    "y": "1"
+                  },
+                  "x": {
+                    "Number": 2.0
+                  },
+                  "y": {
+                    "Number": 4.0
+                  }
+                }
+              },
+              "callout": null,
+              "collision": "Keep",
+              "id": "peak",
+              "offset": [
+                0.0,
+                14.0
+              ],
+              "overflow": false,
+              "priority": 0,
+              "text": {
+                "line_spacing": 1.2,
+                "lines": [
+                  [
+                    {
+                      "color": null,
+                      "direction": "LeftToRight",
+                      "fallback": [],
+                      "font": null,
+                      "language": "und",
+                      "size": 1.0,
+                      "tabular": false,
+                      "text": "Peak",
+                      "weight": 400
+                    }
+                  ]
+                ],
+                "rotation": 0.0
+              }
+            }
+          ],
+          "caption": null,
+          "footnotes": [],
+          "insets": [],
+          "panel_letters": [],
+          "source_notes": [],
+          "subtitle": null,
+          "title": {
+            "line_spacing": 1.2,
+            "lines": [
+              [
+                {
+                  "color": null,
+                  "direction": "LeftToRight",
+                  "fallback": [],
+                  "font": null,
+                  "language": "und",
+                  "size": 1.0,
+                  "tabular": false,
+                  "text": "Primary parity",
+                  "weight": 400
+                }
+              ]
+            ],
+            "rotation": 0.0
+          },
+          "version": 1
+        },
+        "layers": [
+          {
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1031"
+            },
+            "facet": "Match",
+            "filters": [],
+            "geom": {
+              "Line": {
+                "connect_gaps": false,
+                "order": "X"
+              }
+            },
+            "id": "1032",
+            "inherit": false,
+            "invalid": "Exclude",
+            "mappings": {
+              "Source": {
+                "group": null,
+                "size": null,
+                "x": {
+                  "Field": "1"
+                },
+                "x2": null,
+                "y": {
+                  "Field": "2"
+                },
+                "y2": null
+              }
+            },
+            "position": "Identity",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "scope": "Group",
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "style": {
+              "color": {
+                "alpha": 255,
+                "blue": 150,
+                "green": 90,
+                "red": 35
+              },
+              "radius": 1.5,
+              "stroke_width": 1.5
+            }
+          },
+          {
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1031"
+            },
+            "facet": "Match",
+            "filters": [],
+            "geom": "Point",
+            "id": "1033",
+            "inherit": false,
+            "invalid": "Exclude",
+            "mappings": {
+              "Source": {
+                "group": null,
+                "size": null,
+                "x": {
+                  "Field": "1"
+                },
+                "x2": null,
+                "y": {
+                  "Field": "2"
+                },
+                "y2": null
+              }
+            },
+            "position": "Identity",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "scope": "Group",
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "style": {
+              "color": {
+                "alpha": 255,
+                "blue": 150,
+                "green": 90,
+                "red": 35
+              },
+              "radius": 3.0,
+              "stroke_width": 3.0
+            }
+          }
+        ],
+        "mappings": {
+          "group": null,
+          "size": null,
+          "x": null,
+          "x2": null,
+          "y": null,
+          "y2": null
+        },
+        "revision": "0",
+        "transforms": []
+      },
+      "fonts": [
+        {
+          "id": "1",
+          "revision": "0",
+          "sha256": "2ec33f84606cbaa0a1a944488e14f97faf2f6a25ecdd8354f5358f06da13c7d9"
+        },
+        {
+          "id": "2",
+          "revision": "0",
+          "sha256": "2ab1f6db00a0b73f1c919dc6fcaa21a5cc9710b06a8e3eda358c1089e3b99b8c"
+        },
+        {
+          "id": "3",
+          "revision": "0",
+          "sha256": "9d7ca88baa3826027c20fc4aa13258ff7b294b1273c6363d688a08045a74b683"
+        }
+      ],
+      "interaction_policy": {
+        "focus": false,
+        "hover": false,
+        "preview": false,
+        "selection": false
+      },
+      "origin_layout": {
+        "axes": [
+          {
+            "id": "0",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Bottom",
+            "viewport": null,
+            "visible": true
+          },
+          {
+            "id": "1",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Left",
+            "viewport": null,
+            "visible": true
+          }
+        ],
+        "bounds": {
+          "height": 260.0,
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "width": 400.0
+        },
+        "figure_bounds": null,
+        "font": {
+          "byte_len": "556216",
+          "id": "1",
+          "kind": "Font",
+          "revision": "0"
+        },
+        "font_size": 12.0,
+        "host_theme": {
+          "annotation": null,
+          "background": null,
+          "color_mode": null,
+          "dashes": null,
+          "focus": null,
+          "font_size": null,
+          "foreground": null,
+          "gap": null,
+          "gradient": null,
+          "grid": null,
+          "mark": null,
+          "padding": null,
+          "panel": null,
+          "selection": null,
+          "stroke_width": null,
+          "symbol": null,
+          "tick_length": null
+        },
+        "interaction_theme": {},
+        "label_gap": 4.0,
+        "limits": {
+          "max_items": 100000,
+          "max_path_commands": 1000000,
+          "max_resource_bytes": "67108864",
+          "max_resources": 256,
+          "max_text_bytes": 1048576,
+          "max_total_resource_bytes": "268435456"
+        },
+        "max_categories": 10000,
+        "max_ticks": 128,
+        "max_vertices": 1000000,
+        "minimum_plot": [
+          24.0,
+          24.0
+        ],
+        "output_theme": {
+          "annotation": null,
+          "background": null,
+          "color_mode": null,
+          "dashes": null,
+          "focus": null,
+          "font_size": null,
+          "foreground": null,
+          "gap": null,
+          "gradient": null,
+          "grid": null,
+          "mark": null,
+          "padding": null,
+          "panel": null,
+          "selection": null,
+          "stroke_width": null,
+          "symbol": null,
+          "tick_length": null
+        },
+        "padding": 8.0,
+        "revision": "0",
+        "target_ticks": 6,
+        "tick_length": 4.0,
+        "units": "Points"
+      },
+      "origin_scene": {
+        "definition": "0",
+        "layout": "0",
+        "state": "0",
+        "store": "0",
+        "viewport": "0"
+      },
+      "profile": {
+        "annotation_revision": "0",
+        "annotations": [],
+        "background": {
+          "alpha": 255,
+          "blue": 255,
+          "green": 255,
+          "red": 255
+        },
+        "dpi": 96,
+        "layout": {
+          "axes": [
+            {
+              "id": "0",
+              "label_rotation": 0.0,
+              "outside": "Extend",
+              "range": null,
+              "scale": "Auto",
+              "side": "Bottom",
+              "viewport": null,
+              "visible": true
+            },
+            {
+              "id": "1",
+              "label_rotation": 0.0,
+              "outside": "Extend",
+              "range": null,
+              "scale": "Auto",
+              "side": "Left",
+              "viewport": null,
+              "visible": true
+            }
+          ],
+          "bounds": {
+            "height": 260.0,
+            "origin": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "width": 400.0
+          },
+          "figure_bounds": null,
+          "font": {
+            "byte_len": "556216",
+            "id": "1",
+            "kind": "Font",
+            "revision": "0"
+          },
+          "font_size": 12.0,
+          "host_theme": {
+            "annotation": null,
+            "background": null,
+            "color_mode": null,
+            "dashes": null,
+            "focus": null,
+            "font_size": null,
+            "foreground": null,
+            "gap": null,
+            "gradient": null,
+            "grid": null,
+            "mark": null,
+            "padding": null,
+            "panel": null,
+            "selection": null,
+            "stroke_width": null,
+            "symbol": null,
+            "tick_length": null
+          },
+          "interaction_theme": {},
+          "label_gap": 4.0,
+          "limits": {
+            "max_items": 100000,
+            "max_path_commands": 1000000,
+            "max_resource_bytes": "67108864",
+            "max_resources": 256,
+            "max_text_bytes": 1048576,
+            "max_total_resource_bytes": "268435456"
+          },
+          "max_categories": 10000,
+          "max_ticks": 128,
+          "max_vertices": 1000000,
+          "minimum_plot": [
+            24.0,
+            24.0
+          ],
+          "output_theme": {
+            "annotation": null,
+            "background": null,
+            "color_mode": null,
+            "dashes": null,
+            "focus": null,
+            "font_size": null,
+            "foreground": null,
+            "gap": null,
+            "gradient": null,
+            "grid": null,
+            "mark": null,
+            "padding": null,
+            "panel": null,
+            "selection": null,
+            "stroke_width": null,
+            "symbol": null,
+            "tick_length": null
+          },
+          "padding": 8.0,
+          "revision": "0",
+          "target_ticks": 6,
+          "tick_length": 4.0,
+          "units": "Points"
+        },
+        "max_output_bytes": 67108864,
+        "max_raster_pixels": "32000000",
+        "page": {
+          "height": 260.0,
+          "width": 400.0
+        },
+        "precision": 0.01,
+        "text": "Preserve",
+        "view": "FullDomain"
+      },
+      "source_epoch": "1037",
+      "state": {
+        "active_gesture": null,
+        "committed_viewport": {
+          "x": null,
+          "y": null
+        },
+        "effective_annotations": [
+          {
+            "anchor": {
+              "Data": {
+                "panel": null,
+                "scales": {
+                  "x": "0",
+                  "y": "1"
+                },
+                "x": {
+                  "Number": 2.0
+                },
+                "y": {
+                  "Number": 4.0
+                }
+              }
+            },
+            "callout": null,
+            "collision": "Keep",
+            "id": "peak",
+            "offset": [
+              0.0,
+              14.0
+            ],
+            "overflow": false,
+            "priority": 0,
+            "text": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Peak",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            }
+          }
+        ],
+        "focus": null,
+        "hidden_layers": [],
+        "hover": [],
+        "interaction": {
+          "annotations": {},
+          "configuration": {
+            "history_capacity": 64,
+            "manual_view_enters_history": true,
+            "max_targets": 4096
+          },
+          "follow": "FollowLatest",
+          "legend_visible": true,
+          "pinned": null,
+          "revisions": {
+            "annotations": "0",
+            "configuration": "0",
+            "durable": "0",
+            "focus": "0",
+            "follow": "0",
+            "gesture": "0",
+            "hover": "0",
+            "pin": "0",
+            "selection": "0",
+            "visibility": "0"
+          },
+          "selection": []
+        },
+        "revision": "0",
+        "viewport": {
+          "x": null,
+          "y": null
+        },
+        "viewport_revision": "0",
+        "windows": {}
+      },
+      "store": "0",
+      "version": 1
+    }
+  },
+  {
+    "basis": "presented",
+    "view": "full_domain",
+    "selection": true,
+    "manifest": {
+      "compile_limits": {
+        "max_edges": 10001,
+        "max_filters": 64,
+        "max_groups": 10000,
+        "max_layers": 256,
+        "max_prepared_rows": 1000000,
+        "max_transforms": 256,
+        "max_vertices": 1000000
+      },
+      "datasets": [
+        {
+          "schema": {
+            "fields": [
+              {
+                "id": "1",
+                "kind": "Float64",
+                "label": null,
+                "name": "x",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "id": "2",
+                "kind": "Float64",
+                "label": null,
+                "name": "y",
+                "nullable": false,
+                "unit": null
+              }
+            ],
+            "version": "1"
+          },
+          "version": {
+            "dataset": "1031",
+            "revision": "0",
+            "schema_version": "1"
+          }
+        }
+      ],
+      "definition": {
+        "axes": [
+          {
+            "id": "0",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Bottom",
+            "title": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Time",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            },
+            "viewport": null,
+            "visible": true
+          },
+          {
+            "id": "1",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Left",
+            "title": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Value",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            },
+            "viewport": null,
+            "visible": true
+          }
+        ],
+        "figure": {
+          "annotations": [
+            {
+              "anchor": {
+                "Data": {
+                  "panel": null,
+                  "scales": {
+                    "x": "0",
+                    "y": "1"
+                  },
+                  "x": {
+                    "Number": 2.0
+                  },
+                  "y": {
+                    "Number": 4.0
+                  }
+                }
+              },
+              "callout": null,
+              "collision": "Keep",
+              "id": "peak",
+              "offset": [
+                0.0,
+                14.0
+              ],
+              "overflow": false,
+              "priority": 0,
+              "text": {
+                "line_spacing": 1.2,
+                "lines": [
+                  [
+                    {
+                      "color": null,
+                      "direction": "LeftToRight",
+                      "fallback": [],
+                      "font": null,
+                      "language": "und",
+                      "size": 1.0,
+                      "tabular": false,
+                      "text": "Peak",
+                      "weight": 400
+                    }
+                  ]
+                ],
+                "rotation": 0.0
+              }
+            }
+          ],
+          "caption": null,
+          "footnotes": [],
+          "insets": [],
+          "panel_letters": [],
+          "source_notes": [],
+          "subtitle": null,
+          "title": {
+            "line_spacing": 1.2,
+            "lines": [
+              [
+                {
+                  "color": null,
+                  "direction": "LeftToRight",
+                  "fallback": [],
+                  "font": null,
+                  "language": "und",
+                  "size": 1.0,
+                  "tabular": false,
+                  "text": "Primary parity",
+                  "weight": 400
+                }
+              ]
+            ],
+            "rotation": 0.0
+          },
+          "version": 1
+        },
+        "layers": [
+          {
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1031"
+            },
+            "facet": "Match",
+            "filters": [],
+            "geom": {
+              "Line": {
+                "connect_gaps": false,
+                "order": "X"
+              }
+            },
+            "id": "1032",
+            "inherit": false,
+            "invalid": "Exclude",
+            "mappings": {
+              "Source": {
+                "group": null,
+                "size": null,
+                "x": {
+                  "Field": "1"
+                },
+                "x2": null,
+                "y": {
+                  "Field": "2"
+                },
+                "y2": null
+              }
+            },
+            "position": "Identity",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "scope": "Group",
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "style": {
+              "color": {
+                "alpha": 255,
+                "blue": 150,
+                "green": 90,
+                "red": 35
+              },
+              "radius": 1.5,
+              "stroke_width": 1.5
+            }
+          },
+          {
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1031"
+            },
+            "facet": "Match",
+            "filters": [],
+            "geom": "Point",
+            "id": "1033",
+            "inherit": false,
+            "invalid": "Exclude",
+            "mappings": {
+              "Source": {
+                "group": null,
+                "size": null,
+                "x": {
+                  "Field": "1"
+                },
+                "x2": null,
+                "y": {
+                  "Field": "2"
+                },
+                "y2": null
+              }
+            },
+            "position": "Identity",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "scope": "Group",
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "style": {
+              "color": {
+                "alpha": 255,
+                "blue": 150,
+                "green": 90,
+                "red": 35
+              },
+              "radius": 3.0,
+              "stroke_width": 3.0
+            }
+          }
+        ],
+        "mappings": {
+          "group": null,
+          "size": null,
+          "x": null,
+          "x2": null,
+          "y": null,
+          "y2": null
+        },
+        "revision": "0",
+        "transforms": []
+      },
+      "fonts": [
+        {
+          "id": "1",
+          "revision": "0",
+          "sha256": "2ec33f84606cbaa0a1a944488e14f97faf2f6a25ecdd8354f5358f06da13c7d9"
+        },
+        {
+          "id": "2",
+          "revision": "0",
+          "sha256": "2ab1f6db00a0b73f1c919dc6fcaa21a5cc9710b06a8e3eda358c1089e3b99b8c"
+        },
+        {
+          "id": "3",
+          "revision": "0",
+          "sha256": "9d7ca88baa3826027c20fc4aa13258ff7b294b1273c6363d688a08045a74b683"
+        }
+      ],
+      "interaction_policy": {
+        "focus": false,
+        "hover": false,
+        "preview": false,
+        "selection": true
+      },
+      "origin_layout": {
+        "axes": [
+          {
+            "id": "0",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Bottom",
+            "viewport": null,
+            "visible": true
+          },
+          {
+            "id": "1",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Left",
+            "viewport": null,
+            "visible": true
+          }
+        ],
+        "bounds": {
+          "height": 260.0,
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "width": 400.0
+        },
+        "figure_bounds": null,
+        "font": {
+          "byte_len": "556216",
+          "id": "1",
+          "kind": "Font",
+          "revision": "0"
+        },
+        "font_size": 12.0,
+        "host_theme": {
+          "annotation": null,
+          "background": null,
+          "color_mode": null,
+          "dashes": null,
+          "focus": null,
+          "font_size": null,
+          "foreground": null,
+          "gap": null,
+          "gradient": null,
+          "grid": null,
+          "mark": null,
+          "padding": null,
+          "panel": null,
+          "selection": null,
+          "stroke_width": null,
+          "symbol": null,
+          "tick_length": null
+        },
+        "interaction_theme": {},
+        "label_gap": 4.0,
+        "limits": {
+          "max_items": 100000,
+          "max_path_commands": 1000000,
+          "max_resource_bytes": "67108864",
+          "max_resources": 256,
+          "max_text_bytes": 1048576,
+          "max_total_resource_bytes": "268435456"
+        },
+        "max_categories": 10000,
+        "max_ticks": 128,
+        "max_vertices": 1000000,
+        "minimum_plot": [
+          24.0,
+          24.0
+        ],
+        "output_theme": {
+          "annotation": null,
+          "background": null,
+          "color_mode": null,
+          "dashes": null,
+          "focus": null,
+          "font_size": null,
+          "foreground": null,
+          "gap": null,
+          "gradient": null,
+          "grid": null,
+          "mark": null,
+          "padding": null,
+          "panel": null,
+          "selection": null,
+          "stroke_width": null,
+          "symbol": null,
+          "tick_length": null
+        },
+        "padding": 8.0,
+        "revision": "0",
+        "target_ticks": 6,
+        "tick_length": 4.0,
+        "units": "Points"
+      },
+      "origin_scene": {
+        "definition": "0",
+        "layout": "0",
+        "state": "0",
+        "store": "0",
+        "viewport": "0"
+      },
+      "profile": {
+        "annotation_revision": "0",
+        "annotations": [],
+        "background": {
+          "alpha": 255,
+          "blue": 255,
+          "green": 255,
+          "red": 255
+        },
+        "dpi": 96,
+        "layout": {
+          "axes": [
+            {
+              "id": "0",
+              "label_rotation": 0.0,
+              "outside": "Extend",
+              "range": null,
+              "scale": "Auto",
+              "side": "Bottom",
+              "viewport": null,
+              "visible": true
+            },
+            {
+              "id": "1",
+              "label_rotation": 0.0,
+              "outside": "Extend",
+              "range": null,
+              "scale": "Auto",
+              "side": "Left",
+              "viewport": null,
+              "visible": true
+            }
+          ],
+          "bounds": {
+            "height": 260.0,
+            "origin": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "width": 400.0
+          },
+          "figure_bounds": null,
+          "font": {
+            "byte_len": "556216",
+            "id": "1",
+            "kind": "Font",
+            "revision": "0"
+          },
+          "font_size": 12.0,
+          "host_theme": {
+            "annotation": null,
+            "background": null,
+            "color_mode": null,
+            "dashes": null,
+            "focus": null,
+            "font_size": null,
+            "foreground": null,
+            "gap": null,
+            "gradient": null,
+            "grid": null,
+            "mark": null,
+            "padding": null,
+            "panel": null,
+            "selection": null,
+            "stroke_width": null,
+            "symbol": null,
+            "tick_length": null
+          },
+          "interaction_theme": {},
+          "label_gap": 4.0,
+          "limits": {
+            "max_items": 100000,
+            "max_path_commands": 1000000,
+            "max_resource_bytes": "67108864",
+            "max_resources": 256,
+            "max_text_bytes": 1048576,
+            "max_total_resource_bytes": "268435456"
+          },
+          "max_categories": 10000,
+          "max_ticks": 128,
+          "max_vertices": 1000000,
+          "minimum_plot": [
+            24.0,
+            24.0
+          ],
+          "output_theme": {
+            "annotation": null,
+            "background": null,
+            "color_mode": null,
+            "dashes": null,
+            "focus": null,
+            "font_size": null,
+            "foreground": null,
+            "gap": null,
+            "gradient": null,
+            "grid": null,
+            "mark": null,
+            "padding": null,
+            "panel": null,
+            "selection": null,
+            "stroke_width": null,
+            "symbol": null,
+            "tick_length": null
+          },
+          "padding": 8.0,
+          "revision": "0",
+          "target_ticks": 6,
+          "tick_length": 4.0,
+          "units": "Points"
+        },
+        "max_output_bytes": 67108864,
+        "max_raster_pixels": "32000000",
+        "page": {
+          "height": 260.0,
+          "width": 400.0
+        },
+        "precision": 0.01,
+        "text": "Preserve",
+        "view": "FullDomain"
+      },
+      "source_epoch": "1037",
+      "state": {
+        "active_gesture": null,
+        "committed_viewport": {
+          "x": null,
+          "y": null
+        },
+        "effective_annotations": [
+          {
+            "anchor": {
+              "Data": {
+                "panel": null,
+                "scales": {
+                  "x": "0",
+                  "y": "1"
+                },
+                "x": {
+                  "Number": 2.0
+                },
+                "y": {
+                  "Number": 4.0
+                }
+              }
+            },
+            "callout": null,
+            "collision": "Keep",
+            "id": "peak",
+            "offset": [
+              0.0,
+              14.0
+            ],
+            "overflow": false,
+            "priority": 0,
+            "text": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Peak",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            }
+          }
+        ],
+        "focus": null,
+        "hidden_layers": [],
+        "hover": [],
+        "interaction": {
+          "annotations": {},
+          "configuration": {
+            "history_capacity": 64,
+            "manual_view_enters_history": true,
+            "max_targets": 4096
+          },
+          "follow": "FollowLatest",
+          "legend_visible": true,
+          "pinned": null,
+          "revisions": {
+            "annotations": "0",
+            "configuration": "0",
+            "durable": "0",
+            "focus": "0",
+            "follow": "0",
+            "gesture": "0",
+            "hover": "0",
+            "pin": "0",
+            "selection": "0",
+            "visibility": "0"
+          },
+          "selection": []
+        },
+        "revision": "0",
+        "viewport": {
+          "x": null,
+          "y": null
+        },
+        "viewport_revision": "0",
+        "windows": {}
+      },
+      "store": "0",
+      "version": 1
+    }
+  },
+  {
+    "basis": "current",
+    "view": "visible",
+    "selection": false,
+    "manifest": {
+      "compile_limits": {
+        "max_edges": 10001,
+        "max_filters": 64,
+        "max_groups": 10000,
+        "max_layers": 256,
+        "max_prepared_rows": 1000000,
+        "max_transforms": 256,
+        "max_vertices": 1000000
+      },
+      "datasets": [
+        {
+          "schema": {
+            "fields": [
+              {
+                "id": "1",
+                "kind": "Float64",
+                "label": null,
+                "name": "x",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "id": "2",
+                "kind": "Float64",
+                "label": null,
+                "name": "y",
+                "nullable": false,
+                "unit": null
+              }
+            ],
+            "version": "1"
+          },
+          "version": {
+            "dataset": "1031",
+            "revision": "1",
+            "schema_version": "1"
+          }
+        }
+      ],
+      "definition": {
+        "axes": [
+          {
+            "id": "0",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Bottom",
+            "title": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Time",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            },
+            "viewport": null,
+            "visible": true
+          },
+          {
+            "id": "1",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Left",
+            "title": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Value",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            },
+            "viewport": null,
+            "visible": true
+          }
+        ],
+        "figure": {
+          "annotations": [
+            {
+              "anchor": {
+                "Data": {
+                  "panel": null,
+                  "scales": {
+                    "x": "0",
+                    "y": "1"
+                  },
+                  "x": {
+                    "Number": 2.0
+                  },
+                  "y": {
+                    "Number": 4.0
+                  }
+                }
+              },
+              "callout": null,
+              "collision": "Keep",
+              "id": "peak",
+              "offset": [
+                0.0,
+                14.0
+              ],
+              "overflow": false,
+              "priority": 0,
+              "text": {
+                "line_spacing": 1.2,
+                "lines": [
+                  [
+                    {
+                      "color": null,
+                      "direction": "LeftToRight",
+                      "fallback": [],
+                      "font": null,
+                      "language": "und",
+                      "size": 1.0,
+                      "tabular": false,
+                      "text": "Peak",
+                      "weight": 400
+                    }
+                  ]
+                ],
+                "rotation": 0.0
+              }
+            }
+          ],
+          "caption": null,
+          "footnotes": [],
+          "insets": [],
+          "panel_letters": [],
+          "source_notes": [],
+          "subtitle": null,
+          "title": {
+            "line_spacing": 1.2,
+            "lines": [
+              [
+                {
+                  "color": null,
+                  "direction": "LeftToRight",
+                  "fallback": [],
+                  "font": null,
+                  "language": "und",
+                  "size": 1.0,
+                  "tabular": false,
+                  "text": "Edited primary",
+                  "weight": 400
+                }
+              ]
+            ],
+            "rotation": 0.0
+          },
+          "version": 1
+        },
+        "layers": [
+          {
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1031"
+            },
+            "facet": "Match",
+            "filters": [],
+            "geom": {
+              "Line": {
+                "connect_gaps": false,
+                "order": "X"
+              }
+            },
+            "id": "1032",
+            "inherit": false,
+            "invalid": "Exclude",
+            "mappings": {
+              "Source": {
+                "group": null,
+                "size": null,
+                "x": {
+                  "Field": "1"
+                },
+                "x2": null,
+                "y": {
+                  "Field": "2"
+                },
+                "y2": null
+              }
+            },
+            "position": "Identity",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "scope": "Group",
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "style": {
+              "color": {
+                "alpha": 255,
+                "blue": 150,
+                "green": 90,
+                "red": 35
+              },
+              "radius": 1.5,
+              "stroke_width": 1.5
+            }
+          },
+          {
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1031"
+            },
+            "facet": "Match",
+            "filters": [],
+            "geom": "Point",
+            "id": "1033",
+            "inherit": false,
+            "invalid": "Exclude",
+            "mappings": {
+              "Source": {
+                "group": null,
+                "size": null,
+                "x": {
+                  "Field": "1"
+                },
+                "x2": null,
+                "y": {
+                  "Field": "2"
+                },
+                "y2": null
+              }
+            },
+            "position": "Identity",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "scope": "Group",
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "style": {
+              "color": {
+                "alpha": 255,
+                "blue": 150,
+                "green": 90,
+                "red": 35
+              },
+              "radius": 3.0,
+              "stroke_width": 3.0
+            }
+          }
+        ],
+        "mappings": {
+          "group": null,
+          "size": null,
+          "x": null,
+          "x2": null,
+          "y": null,
+          "y2": null
+        },
+        "revision": "1",
+        "transforms": []
+      },
+      "fonts": [
+        {
+          "id": "1",
+          "revision": "0",
+          "sha256": "2ec33f84606cbaa0a1a944488e14f97faf2f6a25ecdd8354f5358f06da13c7d9"
+        },
+        {
+          "id": "2",
+          "revision": "0",
+          "sha256": "2ab1f6db00a0b73f1c919dc6fcaa21a5cc9710b06a8e3eda358c1089e3b99b8c"
+        },
+        {
+          "id": "3",
+          "revision": "0",
+          "sha256": "9d7ca88baa3826027c20fc4aa13258ff7b294b1273c6363d688a08045a74b683"
+        }
+      ],
+      "interaction_policy": {
+        "focus": false,
+        "hover": false,
+        "preview": false,
+        "selection": false
+      },
+      "origin_layout": null,
+      "origin_scene": null,
+      "profile": {
+        "annotation_revision": "0",
+        "annotations": [],
+        "background": {
+          "alpha": 255,
+          "blue": 255,
+          "green": 255,
+          "red": 255
+        },
+        "dpi": 96,
+        "layout": {
+          "axes": [
+            {
+              "id": "0",
+              "label_rotation": 0.0,
+              "outside": "Extend",
+              "range": null,
+              "scale": "Auto",
+              "side": "Bottom",
+              "viewport": null,
+              "visible": true
+            },
+            {
+              "id": "1",
+              "label_rotation": 0.0,
+              "outside": "Extend",
+              "range": null,
+              "scale": "Auto",
+              "side": "Left",
+              "viewport": null,
+              "visible": true
+            }
+          ],
+          "bounds": {
+            "height": 260.0,
+            "origin": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "width": 400.0
+          },
+          "figure_bounds": null,
+          "font": {
+            "byte_len": "556216",
+            "id": "1",
+            "kind": "Font",
+            "revision": "0"
+          },
+          "font_size": 12.0,
+          "host_theme": {
+            "annotation": null,
+            "background": null,
+            "color_mode": null,
+            "dashes": null,
+            "focus": null,
+            "font_size": null,
+            "foreground": null,
+            "gap": null,
+            "gradient": null,
+            "grid": null,
+            "mark": null,
+            "padding": null,
+            "panel": null,
+            "selection": null,
+            "stroke_width": null,
+            "symbol": null,
+            "tick_length": null
+          },
+          "interaction_theme": {},
+          "label_gap": 4.0,
+          "limits": {
+            "max_items": 100000,
+            "max_path_commands": 1000000,
+            "max_resource_bytes": "67108864",
+            "max_resources": 256,
+            "max_text_bytes": 1048576,
+            "max_total_resource_bytes": "268435456"
+          },
+          "max_categories": 10000,
+          "max_ticks": 128,
+          "max_vertices": 1000000,
+          "minimum_plot": [
+            24.0,
+            24.0
+          ],
+          "output_theme": {
+            "annotation": null,
+            "background": null,
+            "color_mode": null,
+            "dashes": null,
+            "focus": null,
+            "font_size": null,
+            "foreground": null,
+            "gap": null,
+            "gradient": null,
+            "grid": null,
+            "mark": null,
+            "padding": null,
+            "panel": null,
+            "selection": null,
+            "stroke_width": null,
+            "symbol": null,
+            "tick_length": null
+          },
+          "padding": 8.0,
+          "revision": "0",
+          "target_ticks": 6,
+          "tick_length": 4.0,
+          "units": "Points"
+        },
+        "max_output_bytes": 67108864,
+        "max_raster_pixels": "32000000",
+        "page": {
+          "height": 260.0,
+          "width": 400.0
+        },
+        "precision": 0.01,
+        "text": "Preserve",
+        "view": "VisibleView"
+      },
+      "source_epoch": "1037",
+      "state": {
+        "active_gesture": null,
+        "committed_viewport": {
+          "x": null,
+          "y": null
+        },
+        "effective_annotations": [
+          {
+            "anchor": {
+              "Data": {
+                "panel": null,
+                "scales": {
+                  "x": "0",
+                  "y": "1"
+                },
+                "x": {
+                  "Number": 2.0
+                },
+                "y": {
+                  "Number": 4.0
+                }
+              }
+            },
+            "callout": null,
+            "collision": "Keep",
+            "id": "peak",
+            "offset": [
+              0.0,
+              14.0
+            ],
+            "overflow": false,
+            "priority": 0,
+            "text": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Peak",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            }
+          }
+        ],
+        "focus": null,
+        "hidden_layers": [],
+        "hover": [],
+        "interaction": {
+          "annotations": {},
+          "configuration": {
+            "history_capacity": 64,
+            "manual_view_enters_history": true,
+            "max_targets": 4096
+          },
+          "follow": "FollowLatest",
+          "legend_visible": true,
+          "pinned": null,
+          "revisions": {
+            "annotations": "0",
+            "configuration": "0",
+            "durable": "1",
+            "focus": "0",
+            "follow": "0",
+            "gesture": "0",
+            "hover": "0",
+            "pin": "0",
+            "selection": "1",
+            "visibility": "0"
+          },
+          "selection": [
+            {
+              "epoch": "1037",
+              "identity": {
+                "Source": {
+                  "dataset": "1031",
+                  "key": "1001"
+                }
+              },
+              "layer": "1033",
+              "panel": null
+            },
+            {
+              "epoch": "1037",
+              "identity": {
+                "Source": {
+                  "dataset": "1031",
+                  "key": "1002"
+                }
+              },
+              "layer": "1033",
+              "panel": null
+            },
+            {
+              "epoch": "1037",
+              "identity": {
+                "Source": {
+                  "dataset": "1031",
+                  "key": "1003"
+                }
+              },
+              "layer": "1033",
+              "panel": null
+            }
+          ]
+        },
+        "revision": "1",
+        "viewport": {
+          "x": null,
+          "y": null
+        },
+        "viewport_revision": "0",
+        "windows": {}
+      },
+      "store": "1",
+      "version": 1
+    }
+  },
+  {
+    "basis": "current",
+    "view": "visible",
+    "selection": true,
+    "manifest": {
+      "compile_limits": {
+        "max_edges": 10001,
+        "max_filters": 64,
+        "max_groups": 10000,
+        "max_layers": 256,
+        "max_prepared_rows": 1000000,
+        "max_transforms": 256,
+        "max_vertices": 1000000
+      },
+      "datasets": [
+        {
+          "schema": {
+            "fields": [
+              {
+                "id": "1",
+                "kind": "Float64",
+                "label": null,
+                "name": "x",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "id": "2",
+                "kind": "Float64",
+                "label": null,
+                "name": "y",
+                "nullable": false,
+                "unit": null
+              }
+            ],
+            "version": "1"
+          },
+          "version": {
+            "dataset": "1031",
+            "revision": "1",
+            "schema_version": "1"
+          }
+        }
+      ],
+      "definition": {
+        "axes": [
+          {
+            "id": "0",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Bottom",
+            "title": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Time",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            },
+            "viewport": null,
+            "visible": true
+          },
+          {
+            "id": "1",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Left",
+            "title": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Value",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            },
+            "viewport": null,
+            "visible": true
+          }
+        ],
+        "figure": {
+          "annotations": [
+            {
+              "anchor": {
+                "Data": {
+                  "panel": null,
+                  "scales": {
+                    "x": "0",
+                    "y": "1"
+                  },
+                  "x": {
+                    "Number": 2.0
+                  },
+                  "y": {
+                    "Number": 4.0
+                  }
+                }
+              },
+              "callout": null,
+              "collision": "Keep",
+              "id": "peak",
+              "offset": [
+                0.0,
+                14.0
+              ],
+              "overflow": false,
+              "priority": 0,
+              "text": {
+                "line_spacing": 1.2,
+                "lines": [
+                  [
+                    {
+                      "color": null,
+                      "direction": "LeftToRight",
+                      "fallback": [],
+                      "font": null,
+                      "language": "und",
+                      "size": 1.0,
+                      "tabular": false,
+                      "text": "Peak",
+                      "weight": 400
+                    }
+                  ]
+                ],
+                "rotation": 0.0
+              }
+            }
+          ],
+          "caption": null,
+          "footnotes": [],
+          "insets": [],
+          "panel_letters": [],
+          "source_notes": [],
+          "subtitle": null,
+          "title": {
+            "line_spacing": 1.2,
+            "lines": [
+              [
+                {
+                  "color": null,
+                  "direction": "LeftToRight",
+                  "fallback": [],
+                  "font": null,
+                  "language": "und",
+                  "size": 1.0,
+                  "tabular": false,
+                  "text": "Edited primary",
+                  "weight": 400
+                }
+              ]
+            ],
+            "rotation": 0.0
+          },
+          "version": 1
+        },
+        "layers": [
+          {
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1031"
+            },
+            "facet": "Match",
+            "filters": [],
+            "geom": {
+              "Line": {
+                "connect_gaps": false,
+                "order": "X"
+              }
+            },
+            "id": "1032",
+            "inherit": false,
+            "invalid": "Exclude",
+            "mappings": {
+              "Source": {
+                "group": null,
+                "size": null,
+                "x": {
+                  "Field": "1"
+                },
+                "x2": null,
+                "y": {
+                  "Field": "2"
+                },
+                "y2": null
+              }
+            },
+            "position": "Identity",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "scope": "Group",
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "style": {
+              "color": {
+                "alpha": 255,
+                "blue": 150,
+                "green": 90,
+                "red": 35
+              },
+              "radius": 1.5,
+              "stroke_width": 1.5
+            }
+          },
+          {
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1031"
+            },
+            "facet": "Match",
+            "filters": [],
+            "geom": "Point",
+            "id": "1033",
+            "inherit": false,
+            "invalid": "Exclude",
+            "mappings": {
+              "Source": {
+                "group": null,
+                "size": null,
+                "x": {
+                  "Field": "1"
+                },
+                "x2": null,
+                "y": {
+                  "Field": "2"
+                },
+                "y2": null
+              }
+            },
+            "position": "Identity",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "scope": "Group",
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "style": {
+              "color": {
+                "alpha": 255,
+                "blue": 150,
+                "green": 90,
+                "red": 35
+              },
+              "radius": 3.0,
+              "stroke_width": 3.0
+            }
+          }
+        ],
+        "mappings": {
+          "group": null,
+          "size": null,
+          "x": null,
+          "x2": null,
+          "y": null,
+          "y2": null
+        },
+        "revision": "1",
+        "transforms": []
+      },
+      "fonts": [
+        {
+          "id": "1",
+          "revision": "0",
+          "sha256": "2ec33f84606cbaa0a1a944488e14f97faf2f6a25ecdd8354f5358f06da13c7d9"
+        },
+        {
+          "id": "2",
+          "revision": "0",
+          "sha256": "2ab1f6db00a0b73f1c919dc6fcaa21a5cc9710b06a8e3eda358c1089e3b99b8c"
+        },
+        {
+          "id": "3",
+          "revision": "0",
+          "sha256": "9d7ca88baa3826027c20fc4aa13258ff7b294b1273c6363d688a08045a74b683"
+        }
+      ],
+      "interaction_policy": {
+        "focus": false,
+        "hover": false,
+        "preview": false,
+        "selection": true
+      },
+      "origin_layout": null,
+      "origin_scene": null,
+      "profile": {
+        "annotation_revision": "0",
+        "annotations": [],
+        "background": {
+          "alpha": 255,
+          "blue": 255,
+          "green": 255,
+          "red": 255
+        },
+        "dpi": 96,
+        "layout": {
+          "axes": [
+            {
+              "id": "0",
+              "label_rotation": 0.0,
+              "outside": "Extend",
+              "range": null,
+              "scale": "Auto",
+              "side": "Bottom",
+              "viewport": null,
+              "visible": true
+            },
+            {
+              "id": "1",
+              "label_rotation": 0.0,
+              "outside": "Extend",
+              "range": null,
+              "scale": "Auto",
+              "side": "Left",
+              "viewport": null,
+              "visible": true
+            }
+          ],
+          "bounds": {
+            "height": 260.0,
+            "origin": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "width": 400.0
+          },
+          "figure_bounds": null,
+          "font": {
+            "byte_len": "556216",
+            "id": "1",
+            "kind": "Font",
+            "revision": "0"
+          },
+          "font_size": 12.0,
+          "host_theme": {
+            "annotation": null,
+            "background": null,
+            "color_mode": null,
+            "dashes": null,
+            "focus": null,
+            "font_size": null,
+            "foreground": null,
+            "gap": null,
+            "gradient": null,
+            "grid": null,
+            "mark": null,
+            "padding": null,
+            "panel": null,
+            "selection": null,
+            "stroke_width": null,
+            "symbol": null,
+            "tick_length": null
+          },
+          "interaction_theme": {},
+          "label_gap": 4.0,
+          "limits": {
+            "max_items": 100000,
+            "max_path_commands": 1000000,
+            "max_resource_bytes": "67108864",
+            "max_resources": 256,
+            "max_text_bytes": 1048576,
+            "max_total_resource_bytes": "268435456"
+          },
+          "max_categories": 10000,
+          "max_ticks": 128,
+          "max_vertices": 1000000,
+          "minimum_plot": [
+            24.0,
+            24.0
+          ],
+          "output_theme": {
+            "annotation": null,
+            "background": null,
+            "color_mode": null,
+            "dashes": null,
+            "focus": null,
+            "font_size": null,
+            "foreground": null,
+            "gap": null,
+            "gradient": null,
+            "grid": null,
+            "mark": null,
+            "padding": null,
+            "panel": null,
+            "selection": null,
+            "stroke_width": null,
+            "symbol": null,
+            "tick_length": null
+          },
+          "padding": 8.0,
+          "revision": "0",
+          "target_ticks": 6,
+          "tick_length": 4.0,
+          "units": "Points"
+        },
+        "max_output_bytes": 67108864,
+        "max_raster_pixels": "32000000",
+        "page": {
+          "height": 260.0,
+          "width": 400.0
+        },
+        "precision": 0.01,
+        "text": "Preserve",
+        "view": "VisibleView"
+      },
+      "source_epoch": "1037",
+      "state": {
+        "active_gesture": null,
+        "committed_viewport": {
+          "x": null,
+          "y": null
+        },
+        "effective_annotations": [
+          {
+            "anchor": {
+              "Data": {
+                "panel": null,
+                "scales": {
+                  "x": "0",
+                  "y": "1"
+                },
+                "x": {
+                  "Number": 2.0
+                },
+                "y": {
+                  "Number": 4.0
+                }
+              }
+            },
+            "callout": null,
+            "collision": "Keep",
+            "id": "peak",
+            "offset": [
+              0.0,
+              14.0
+            ],
+            "overflow": false,
+            "priority": 0,
+            "text": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Peak",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            }
+          }
+        ],
+        "focus": null,
+        "hidden_layers": [],
+        "hover": [],
+        "interaction": {
+          "annotations": {},
+          "configuration": {
+            "history_capacity": 64,
+            "manual_view_enters_history": true,
+            "max_targets": 4096
+          },
+          "follow": "FollowLatest",
+          "legend_visible": true,
+          "pinned": null,
+          "revisions": {
+            "annotations": "0",
+            "configuration": "0",
+            "durable": "1",
+            "focus": "0",
+            "follow": "0",
+            "gesture": "0",
+            "hover": "0",
+            "pin": "0",
+            "selection": "1",
+            "visibility": "0"
+          },
+          "selection": [
+            {
+              "epoch": "1037",
+              "identity": {
+                "Source": {
+                  "dataset": "1031",
+                  "key": "1001"
+                }
+              },
+              "layer": "1033",
+              "panel": null
+            },
+            {
+              "epoch": "1037",
+              "identity": {
+                "Source": {
+                  "dataset": "1031",
+                  "key": "1002"
+                }
+              },
+              "layer": "1033",
+              "panel": null
+            },
+            {
+              "epoch": "1037",
+              "identity": {
+                "Source": {
+                  "dataset": "1031",
+                  "key": "1003"
+                }
+              },
+              "layer": "1033",
+              "panel": null
+            }
+          ]
+        },
+        "revision": "1",
+        "viewport": {
+          "x": null,
+          "y": null
+        },
+        "viewport_revision": "0",
+        "windows": {}
+      },
+      "store": "1",
+      "version": 1
+    }
+  },
+  {
+    "basis": "current",
+    "view": "full_domain",
+    "selection": false,
+    "manifest": {
+      "compile_limits": {
+        "max_edges": 10001,
+        "max_filters": 64,
+        "max_groups": 10000,
+        "max_layers": 256,
+        "max_prepared_rows": 1000000,
+        "max_transforms": 256,
+        "max_vertices": 1000000
+      },
+      "datasets": [
+        {
+          "schema": {
+            "fields": [
+              {
+                "id": "1",
+                "kind": "Float64",
+                "label": null,
+                "name": "x",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "id": "2",
+                "kind": "Float64",
+                "label": null,
+                "name": "y",
+                "nullable": false,
+                "unit": null
+              }
+            ],
+            "version": "1"
+          },
+          "version": {
+            "dataset": "1031",
+            "revision": "1",
+            "schema_version": "1"
+          }
+        }
+      ],
+      "definition": {
+        "axes": [
+          {
+            "id": "0",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Bottom",
+            "title": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Time",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            },
+            "viewport": null,
+            "visible": true
+          },
+          {
+            "id": "1",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Left",
+            "title": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Value",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            },
+            "viewport": null,
+            "visible": true
+          }
+        ],
+        "figure": {
+          "annotations": [
+            {
+              "anchor": {
+                "Data": {
+                  "panel": null,
+                  "scales": {
+                    "x": "0",
+                    "y": "1"
+                  },
+                  "x": {
+                    "Number": 2.0
+                  },
+                  "y": {
+                    "Number": 4.0
+                  }
+                }
+              },
+              "callout": null,
+              "collision": "Keep",
+              "id": "peak",
+              "offset": [
+                0.0,
+                14.0
+              ],
+              "overflow": false,
+              "priority": 0,
+              "text": {
+                "line_spacing": 1.2,
+                "lines": [
+                  [
+                    {
+                      "color": null,
+                      "direction": "LeftToRight",
+                      "fallback": [],
+                      "font": null,
+                      "language": "und",
+                      "size": 1.0,
+                      "tabular": false,
+                      "text": "Peak",
+                      "weight": 400
+                    }
+                  ]
+                ],
+                "rotation": 0.0
+              }
+            }
+          ],
+          "caption": null,
+          "footnotes": [],
+          "insets": [],
+          "panel_letters": [],
+          "source_notes": [],
+          "subtitle": null,
+          "title": {
+            "line_spacing": 1.2,
+            "lines": [
+              [
+                {
+                  "color": null,
+                  "direction": "LeftToRight",
+                  "fallback": [],
+                  "font": null,
+                  "language": "und",
+                  "size": 1.0,
+                  "tabular": false,
+                  "text": "Edited primary",
+                  "weight": 400
+                }
+              ]
+            ],
+            "rotation": 0.0
+          },
+          "version": 1
+        },
+        "layers": [
+          {
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1031"
+            },
+            "facet": "Match",
+            "filters": [],
+            "geom": {
+              "Line": {
+                "connect_gaps": false,
+                "order": "X"
+              }
+            },
+            "id": "1032",
+            "inherit": false,
+            "invalid": "Exclude",
+            "mappings": {
+              "Source": {
+                "group": null,
+                "size": null,
+                "x": {
+                  "Field": "1"
+                },
+                "x2": null,
+                "y": {
+                  "Field": "2"
+                },
+                "y2": null
+              }
+            },
+            "position": "Identity",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "scope": "Group",
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "style": {
+              "color": {
+                "alpha": 255,
+                "blue": 150,
+                "green": 90,
+                "red": 35
+              },
+              "radius": 1.5,
+              "stroke_width": 1.5
+            }
+          },
+          {
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1031"
+            },
+            "facet": "Match",
+            "filters": [],
+            "geom": "Point",
+            "id": "1033",
+            "inherit": false,
+            "invalid": "Exclude",
+            "mappings": {
+              "Source": {
+                "group": null,
+                "size": null,
+                "x": {
+                  "Field": "1"
+                },
+                "x2": null,
+                "y": {
+                  "Field": "2"
+                },
+                "y2": null
+              }
+            },
+            "position": "Identity",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "scope": "Group",
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "style": {
+              "color": {
+                "alpha": 255,
+                "blue": 150,
+                "green": 90,
+                "red": 35
+              },
+              "radius": 3.0,
+              "stroke_width": 3.0
+            }
+          }
+        ],
+        "mappings": {
+          "group": null,
+          "size": null,
+          "x": null,
+          "x2": null,
+          "y": null,
+          "y2": null
+        },
+        "revision": "1",
+        "transforms": []
+      },
+      "fonts": [
+        {
+          "id": "1",
+          "revision": "0",
+          "sha256": "2ec33f84606cbaa0a1a944488e14f97faf2f6a25ecdd8354f5358f06da13c7d9"
+        },
+        {
+          "id": "2",
+          "revision": "0",
+          "sha256": "2ab1f6db00a0b73f1c919dc6fcaa21a5cc9710b06a8e3eda358c1089e3b99b8c"
+        },
+        {
+          "id": "3",
+          "revision": "0",
+          "sha256": "9d7ca88baa3826027c20fc4aa13258ff7b294b1273c6363d688a08045a74b683"
+        }
+      ],
+      "interaction_policy": {
+        "focus": false,
+        "hover": false,
+        "preview": false,
+        "selection": false
+      },
+      "origin_layout": null,
+      "origin_scene": null,
+      "profile": {
+        "annotation_revision": "0",
+        "annotations": [],
+        "background": {
+          "alpha": 255,
+          "blue": 255,
+          "green": 255,
+          "red": 255
+        },
+        "dpi": 96,
+        "layout": {
+          "axes": [
+            {
+              "id": "0",
+              "label_rotation": 0.0,
+              "outside": "Extend",
+              "range": null,
+              "scale": "Auto",
+              "side": "Bottom",
+              "viewport": null,
+              "visible": true
+            },
+            {
+              "id": "1",
+              "label_rotation": 0.0,
+              "outside": "Extend",
+              "range": null,
+              "scale": "Auto",
+              "side": "Left",
+              "viewport": null,
+              "visible": true
+            }
+          ],
+          "bounds": {
+            "height": 260.0,
+            "origin": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "width": 400.0
+          },
+          "figure_bounds": null,
+          "font": {
+            "byte_len": "556216",
+            "id": "1",
+            "kind": "Font",
+            "revision": "0"
+          },
+          "font_size": 12.0,
+          "host_theme": {
+            "annotation": null,
+            "background": null,
+            "color_mode": null,
+            "dashes": null,
+            "focus": null,
+            "font_size": null,
+            "foreground": null,
+            "gap": null,
+            "gradient": null,
+            "grid": null,
+            "mark": null,
+            "padding": null,
+            "panel": null,
+            "selection": null,
+            "stroke_width": null,
+            "symbol": null,
+            "tick_length": null
+          },
+          "interaction_theme": {},
+          "label_gap": 4.0,
+          "limits": {
+            "max_items": 100000,
+            "max_path_commands": 1000000,
+            "max_resource_bytes": "67108864",
+            "max_resources": 256,
+            "max_text_bytes": 1048576,
+            "max_total_resource_bytes": "268435456"
+          },
+          "max_categories": 10000,
+          "max_ticks": 128,
+          "max_vertices": 1000000,
+          "minimum_plot": [
+            24.0,
+            24.0
+          ],
+          "output_theme": {
+            "annotation": null,
+            "background": null,
+            "color_mode": null,
+            "dashes": null,
+            "focus": null,
+            "font_size": null,
+            "foreground": null,
+            "gap": null,
+            "gradient": null,
+            "grid": null,
+            "mark": null,
+            "padding": null,
+            "panel": null,
+            "selection": null,
+            "stroke_width": null,
+            "symbol": null,
+            "tick_length": null
+          },
+          "padding": 8.0,
+          "revision": "0",
+          "target_ticks": 6,
+          "tick_length": 4.0,
+          "units": "Points"
+        },
+        "max_output_bytes": 67108864,
+        "max_raster_pixels": "32000000",
+        "page": {
+          "height": 260.0,
+          "width": 400.0
+        },
+        "precision": 0.01,
+        "text": "Preserve",
+        "view": "FullDomain"
+      },
+      "source_epoch": "1037",
+      "state": {
+        "active_gesture": null,
+        "committed_viewport": {
+          "x": null,
+          "y": null
+        },
+        "effective_annotations": [
+          {
+            "anchor": {
+              "Data": {
+                "panel": null,
+                "scales": {
+                  "x": "0",
+                  "y": "1"
+                },
+                "x": {
+                  "Number": 2.0
+                },
+                "y": {
+                  "Number": 4.0
+                }
+              }
+            },
+            "callout": null,
+            "collision": "Keep",
+            "id": "peak",
+            "offset": [
+              0.0,
+              14.0
+            ],
+            "overflow": false,
+            "priority": 0,
+            "text": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Peak",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            }
+          }
+        ],
+        "focus": null,
+        "hidden_layers": [],
+        "hover": [],
+        "interaction": {
+          "annotations": {},
+          "configuration": {
+            "history_capacity": 64,
+            "manual_view_enters_history": true,
+            "max_targets": 4096
+          },
+          "follow": "FollowLatest",
+          "legend_visible": true,
+          "pinned": null,
+          "revisions": {
+            "annotations": "0",
+            "configuration": "0",
+            "durable": "1",
+            "focus": "0",
+            "follow": "0",
+            "gesture": "0",
+            "hover": "0",
+            "pin": "0",
+            "selection": "1",
+            "visibility": "0"
+          },
+          "selection": [
+            {
+              "epoch": "1037",
+              "identity": {
+                "Source": {
+                  "dataset": "1031",
+                  "key": "1001"
+                }
+              },
+              "layer": "1033",
+              "panel": null
+            },
+            {
+              "epoch": "1037",
+              "identity": {
+                "Source": {
+                  "dataset": "1031",
+                  "key": "1002"
+                }
+              },
+              "layer": "1033",
+              "panel": null
+            },
+            {
+              "epoch": "1037",
+              "identity": {
+                "Source": {
+                  "dataset": "1031",
+                  "key": "1003"
+                }
+              },
+              "layer": "1033",
+              "panel": null
+            }
+          ]
+        },
+        "revision": "1",
+        "viewport": {
+          "x": null,
+          "y": null
+        },
+        "viewport_revision": "0",
+        "windows": {}
+      },
+      "store": "1",
+      "version": 1
+    }
+  },
+  {
+    "basis": "current",
+    "view": "full_domain",
+    "selection": true,
+    "manifest": {
+      "compile_limits": {
+        "max_edges": 10001,
+        "max_filters": 64,
+        "max_groups": 10000,
+        "max_layers": 256,
+        "max_prepared_rows": 1000000,
+        "max_transforms": 256,
+        "max_vertices": 1000000
+      },
+      "datasets": [
+        {
+          "schema": {
+            "fields": [
+              {
+                "id": "1",
+                "kind": "Float64",
+                "label": null,
+                "name": "x",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "id": "2",
+                "kind": "Float64",
+                "label": null,
+                "name": "y",
+                "nullable": false,
+                "unit": null
+              }
+            ],
+            "version": "1"
+          },
+          "version": {
+            "dataset": "1031",
+            "revision": "1",
+            "schema_version": "1"
+          }
+        }
+      ],
+      "definition": {
+        "axes": [
+          {
+            "id": "0",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Bottom",
+            "title": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Time",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            },
+            "viewport": null,
+            "visible": true
+          },
+          {
+            "id": "1",
+            "label_rotation": 0.0,
+            "outside": "Extend",
+            "range": null,
+            "scale": "Auto",
+            "side": "Left",
+            "title": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Value",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            },
+            "viewport": null,
+            "visible": true
+          }
+        ],
+        "figure": {
+          "annotations": [
+            {
+              "anchor": {
+                "Data": {
+                  "panel": null,
+                  "scales": {
+                    "x": "0",
+                    "y": "1"
+                  },
+                  "x": {
+                    "Number": 2.0
+                  },
+                  "y": {
+                    "Number": 4.0
+                  }
+                }
+              },
+              "callout": null,
+              "collision": "Keep",
+              "id": "peak",
+              "offset": [
+                0.0,
+                14.0
+              ],
+              "overflow": false,
+              "priority": 0,
+              "text": {
+                "line_spacing": 1.2,
+                "lines": [
+                  [
+                    {
+                      "color": null,
+                      "direction": "LeftToRight",
+                      "fallback": [],
+                      "font": null,
+                      "language": "und",
+                      "size": 1.0,
+                      "tabular": false,
+                      "text": "Peak",
+                      "weight": 400
+                    }
+                  ]
+                ],
+                "rotation": 0.0
+              }
+            }
+          ],
+          "caption": null,
+          "footnotes": [],
+          "insets": [],
+          "panel_letters": [],
+          "source_notes": [],
+          "subtitle": null,
+          "title": {
+            "line_spacing": 1.2,
+            "lines": [
+              [
+                {
+                  "color": null,
+                  "direction": "LeftToRight",
+                  "fallback": [],
+                  "font": null,
+                  "language": "und",
+                  "size": 1.0,
+                  "tabular": false,
+                  "text": "Edited primary",
+                  "weight": 400
+                }
+              ]
+            ],
+            "rotation": 0.0
+          },
+          "version": 1
+        },
+        "layers": [
+          {
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1031"
+            },
+            "facet": "Match",
+            "filters": [],
+            "geom": {
+              "Line": {
+                "connect_gaps": false,
+                "order": "X"
+              }
+            },
+            "id": "1032",
+            "inherit": false,
+            "invalid": "Exclude",
+            "mappings": {
+              "Source": {
+                "group": null,
+                "size": null,
+                "x": {
+                  "Field": "1"
+                },
+                "x2": null,
+                "y": {
+                  "Field": "2"
+                },
+                "y2": null
+              }
+            },
+            "position": "Identity",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "scope": "Group",
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "style": {
+              "color": {
+                "alpha": 255,
+                "blue": 150,
+                "green": 90,
+                "red": 35
+              },
+              "radius": 1.5,
+              "stroke_width": 1.5
+            }
+          },
+          {
+            "clip": "Plot",
+            "data": {
+              "Dataset": "1031"
+            },
+            "facet": "Match",
+            "filters": [],
+            "geom": "Point",
+            "id": "1033",
+            "inherit": false,
+            "invalid": "Exclude",
+            "mappings": {
+              "Source": {
+                "group": null,
+                "size": null,
+                "x": {
+                  "Field": "1"
+                },
+                "x2": null,
+                "y": {
+                  "Field": "2"
+                },
+                "y2": null
+              }
+            },
+            "position": "Identity",
+            "scales": {
+              "x": "0",
+              "y": "1"
+            },
+            "scope": "Group",
+            "statistic": {
+              "operation": {
+                "id": "chart.identity",
+                "version": "1"
+              },
+              "parameters": "Identity"
+            },
+            "style": {
+              "color": {
+                "alpha": 255,
+                "blue": 150,
+                "green": 90,
+                "red": 35
+              },
+              "radius": 3.0,
+              "stroke_width": 3.0
+            }
+          }
+        ],
+        "mappings": {
+          "group": null,
+          "size": null,
+          "x": null,
+          "x2": null,
+          "y": null,
+          "y2": null
+        },
+        "revision": "1",
+        "transforms": []
+      },
+      "fonts": [
+        {
+          "id": "1",
+          "revision": "0",
+          "sha256": "2ec33f84606cbaa0a1a944488e14f97faf2f6a25ecdd8354f5358f06da13c7d9"
+        },
+        {
+          "id": "2",
+          "revision": "0",
+          "sha256": "2ab1f6db00a0b73f1c919dc6fcaa21a5cc9710b06a8e3eda358c1089e3b99b8c"
+        },
+        {
+          "id": "3",
+          "revision": "0",
+          "sha256": "9d7ca88baa3826027c20fc4aa13258ff7b294b1273c6363d688a08045a74b683"
+        }
+      ],
+      "interaction_policy": {
+        "focus": false,
+        "hover": false,
+        "preview": false,
+        "selection": true
+      },
+      "origin_layout": null,
+      "origin_scene": null,
+      "profile": {
+        "annotation_revision": "0",
+        "annotations": [],
+        "background": {
+          "alpha": 255,
+          "blue": 255,
+          "green": 255,
+          "red": 255
+        },
+        "dpi": 96,
+        "layout": {
+          "axes": [
+            {
+              "id": "0",
+              "label_rotation": 0.0,
+              "outside": "Extend",
+              "range": null,
+              "scale": "Auto",
+              "side": "Bottom",
+              "viewport": null,
+              "visible": true
+            },
+            {
+              "id": "1",
+              "label_rotation": 0.0,
+              "outside": "Extend",
+              "range": null,
+              "scale": "Auto",
+              "side": "Left",
+              "viewport": null,
+              "visible": true
+            }
+          ],
+          "bounds": {
+            "height": 260.0,
+            "origin": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "width": 400.0
+          },
+          "figure_bounds": null,
+          "font": {
+            "byte_len": "556216",
+            "id": "1",
+            "kind": "Font",
+            "revision": "0"
+          },
+          "font_size": 12.0,
+          "host_theme": {
+            "annotation": null,
+            "background": null,
+            "color_mode": null,
+            "dashes": null,
+            "focus": null,
+            "font_size": null,
+            "foreground": null,
+            "gap": null,
+            "gradient": null,
+            "grid": null,
+            "mark": null,
+            "padding": null,
+            "panel": null,
+            "selection": null,
+            "stroke_width": null,
+            "symbol": null,
+            "tick_length": null
+          },
+          "interaction_theme": {},
+          "label_gap": 4.0,
+          "limits": {
+            "max_items": 100000,
+            "max_path_commands": 1000000,
+            "max_resource_bytes": "67108864",
+            "max_resources": 256,
+            "max_text_bytes": 1048576,
+            "max_total_resource_bytes": "268435456"
+          },
+          "max_categories": 10000,
+          "max_ticks": 128,
+          "max_vertices": 1000000,
+          "minimum_plot": [
+            24.0,
+            24.0
+          ],
+          "output_theme": {
+            "annotation": null,
+            "background": null,
+            "color_mode": null,
+            "dashes": null,
+            "focus": null,
+            "font_size": null,
+            "foreground": null,
+            "gap": null,
+            "gradient": null,
+            "grid": null,
+            "mark": null,
+            "padding": null,
+            "panel": null,
+            "selection": null,
+            "stroke_width": null,
+            "symbol": null,
+            "tick_length": null
+          },
+          "padding": 8.0,
+          "revision": "0",
+          "target_ticks": 6,
+          "tick_length": 4.0,
+          "units": "Points"
+        },
+        "max_output_bytes": 67108864,
+        "max_raster_pixels": "32000000",
+        "page": {
+          "height": 260.0,
+          "width": 400.0
+        },
+        "precision": 0.01,
+        "text": "Preserve",
+        "view": "FullDomain"
+      },
+      "source_epoch": "1037",
+      "state": {
+        "active_gesture": null,
+        "committed_viewport": {
+          "x": null,
+          "y": null
+        },
+        "effective_annotations": [
+          {
+            "anchor": {
+              "Data": {
+                "panel": null,
+                "scales": {
+                  "x": "0",
+                  "y": "1"
+                },
+                "x": {
+                  "Number": 2.0
+                },
+                "y": {
+                  "Number": 4.0
+                }
+              }
+            },
+            "callout": null,
+            "collision": "Keep",
+            "id": "peak",
+            "offset": [
+              0.0,
+              14.0
+            ],
+            "overflow": false,
+            "priority": 0,
+            "text": {
+              "line_spacing": 1.2,
+              "lines": [
+                [
+                  {
+                    "color": null,
+                    "direction": "LeftToRight",
+                    "fallback": [],
+                    "font": null,
+                    "language": "und",
+                    "size": 1.0,
+                    "tabular": false,
+                    "text": "Peak",
+                    "weight": 400
+                  }
+                ]
+              ],
+              "rotation": 0.0
+            }
+          }
+        ],
+        "focus": null,
+        "hidden_layers": [],
+        "hover": [],
+        "interaction": {
+          "annotations": {},
+          "configuration": {
+            "history_capacity": 64,
+            "manual_view_enters_history": true,
+            "max_targets": 4096
+          },
+          "follow": "FollowLatest",
+          "legend_visible": true,
+          "pinned": null,
+          "revisions": {
+            "annotations": "0",
+            "configuration": "0",
+            "durable": "1",
+            "focus": "0",
+            "follow": "0",
+            "gesture": "0",
+            "hover": "0",
+            "pin": "0",
+            "selection": "1",
+            "visibility": "0"
+          },
+          "selection": [
+            {
+              "epoch": "1037",
+              "identity": {
+                "Source": {
+                  "dataset": "1031",
+                  "key": "1001"
+                }
+              },
+              "layer": "1033",
+              "panel": null
+            },
+            {
+              "epoch": "1037",
+              "identity": {
+                "Source": {
+                  "dataset": "1031",
+                  "key": "1002"
+                }
+              },
+              "layer": "1033",
+              "panel": null
+            },
+            {
+              "epoch": "1037",
+              "identity": {
+                "Source": {
+                  "dataset": "1031",
+                  "key": "1003"
+                }
+              },
+              "layer": "1033",
+              "panel": null
+            }
+          ]
+        },
+        "revision": "1",
+        "viewport": {
+          "x": null,
+          "y": null
+        },
+        "viewport_revision": "0",
+        "windows": {}
+      },
+      "store": "1",
+      "version": 1
+    }
+  }
+]

@@ -50,13 +50,16 @@ pub(super) struct InputState {
     pub(super) focused: bool,
     pub(super) subscriptions: Vec<gpui::Subscription>,
 }
-fn local(position: gpui::Point<Pixels>, origin: gpui::Point<Pixels>) -> ChartResult<Point> {
+pub(super) fn local(
+    position: gpui::Point<Pixels>,
+    origin: gpui::Point<Pixels>,
+) -> ChartResult<Point> {
     Point::new(
         f64::from(f32::from(position.x - origin.x)),
         f64::from(f32::from(position.y - origin.y)),
     )
 }
-fn inside(rect: Rect, p: Point) -> bool {
+pub(super) fn inside(rect: Rect, p: Point) -> bool {
     p.x() >= rect.origin().x()
         && p.x() <= rect.max_x()
         && p.y() >= rect.origin().y()

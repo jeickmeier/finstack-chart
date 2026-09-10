@@ -436,6 +436,7 @@ class FigureRequest(_Owned):
     def manifest(self): return _decode(self._inner.manifest())
 
 class FigureSnapshot(_Owned):
+    def guides(self): return _decode(self._inner.guides())
     def scene(self): return _decode(self._inner.scene())
     def manifest(self): return _decode(self._inner.manifest())
     def export(self, format): return self._inner.export(format)

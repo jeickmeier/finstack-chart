@@ -81,6 +81,8 @@ enum Prepared {
 /// Immutable prepared scale shared by Rust, Python and WASM.
 #[derive(Clone, Debug)]
 pub struct StandaloneScale {
+    pub(crate) registrations:
+        std::sync::Arc<crate::grammar::interpolation_extensions::InterpolationRegistrations>,
     spec: StandaloneScaleSpec,
     prepared: Box<Prepared>,
 }
@@ -100,6 +102,21 @@ fn capability(operation: &str) -> crate::Diagnostic {
 impl StandaloneScale {
     /// Validate and prepare one configuration atomically.
     pub fn new(spec: StandaloneScaleSpec) -> ChartResult<Self> {
+        Self::new_with_registrations(spec, Default::default())
+    }
+    /// Prepare with an explicitly installed registry retained by copies and reconfiguration.
+    pub fn new_with_registry(
+        spec: StandaloneScaleSpec,
+        registry: &crate::grammar::ExtensionRegistry,
+    ) -> ChartResult<Self> {
+        Self::new_with_registrations(spec, registry.interpolations.clone())
+    }
+    pub(crate) fn new_with_registrations(
+        spec: StandaloneScaleSpec,
+        registrations: std::sync::Arc<
+            crate::grammar::interpolation_extensions::InterpolationRegistrations,
+        >,
+    ) -> ChartResult<Self> {
         use StandaloneScaleSpec as S;
         // Check the same aggregate wire budget for native and transported descriptors.
         let encoded = portable::encode(&spec)?;
@@ -131,11 +148,16 @@ impl StandaloneScale {
                     })
                     .transpose()?;
                 Prepared::Continuous {
-                    scale: ContinuousScale::new(s.clone())?,
+                    scale: ContinuousScale::new_with_registrations(
+                        s.clone(),
+                        registrations.clone(),
+                    )?,
                     inverse,
                 }
             }
-            S::Interpolated(s) => Prepared::Interpolated(InterpolatedScale::new(s.clone())?),
+            S::Interpolated(s) => Prepared::Interpolated(
+                InterpolatedScale::new_with_registrations(s.clone(), registrations.clone())?,
+            ),
             S::Ordinal(s) => {
                 for v in &s.range {
                     v.validate()?;
@@ -165,11 +187,15 @@ impl StandaloneScale {
                 }
                 Prepared::Threshold(ThresholdScale::new(s.clone())?)
             }
-            S::Time(s) => Prepared::Time(TimeScale::new(s.clone())?),
+            S::Time(s) => Prepared::Time(TimeScale::new_with_registrations(
+                s.clone(),
+                registrations.clone(),
+            )?),
         };
         let mut result = Self {
             spec,
             prepared: Box::new(prepared),
+            registrations,
         };
         // Preserve authored family while exposing normalized catalogs and parameters.
         match (&mut result.spec, &*result.prepared) {
@@ -192,22 +218,33 @@ impl StandaloneScale {
     }
     /// Prepare a replacement without mutating this scale.
     pub fn reconfigure(&self, spec: StandaloneScaleSpec) -> ChartResult<Self> {
-        Self::new(spec)
+        Self::new_with_registrations(spec, self.registrations.clone())
     }
     /// Strict bounded version-one transport.
     pub fn to_json(&self) -> ChartResult<String> {
+        self.spec
+            .validate_registrations(&self.registrations, true)?;
         portable::encode(&Wire {
-            version: 1,
+            version: self.spec.wire_version(),
             spec: self.spec.clone(),
         })
     }
     /// Reject unknown versions and descriptors before preparing any scale.
     pub fn from_json(text: &str) -> ChartResult<Self> {
+        Self::from_json_with_registry(text, &crate::grammar::ExtensionRegistry::new())
+    }
+    /// Decode a versioned scale only with explicitly installed portable factory versions.
+    pub fn from_json_with_registry(
+        text: &str,
+        registry: &crate::grammar::ExtensionRegistry,
+    ) -> ChartResult<Self> {
         let wire: Wire = portable::decode(text)?;
-        if wire.version != 1 {
+        if wire.version != wire.spec.wire_version() {
             return Err(capability("this descriptor version"));
         }
-        Self::new(wire.spec)
+        wire.spec
+            .validate_registrations(&registry.interpolations, true)?;
+        Self::new_with_registry(wire.spec, registry)
     }
     /// Pure lookup; implicit ordinal growth occurs only through explicit `train`.
     pub fn map(&self, input: ScaleInput) -> ChartResult<Value> {
@@ -311,7 +348,7 @@ impl StandaloneScale {
             }
             _ => return Err(capability("numeric nice")),
         };
-        Self::new(spec)
+        Self::new_with_registrations(spec, self.registrations.clone())
     }
     /// Explicit immutable ordinal training, preserving first-seen order.
     pub fn train(&self, keys: Vec<ScaleKey>) -> ChartResult<Self> {
@@ -324,7 +361,10 @@ impl StandaloneScale {
                 "Ordinal training exceeds its input budget.",
             ));
         }
-        Self::new(StandaloneScaleSpec::Ordinal(s.train(keys).spec().clone()))
+        Self::new_with_registrations(
+            StandaloneScaleSpec::Ordinal(s.train(keys).spec().clone()),
+            self.registrations.clone(),
+        )
     }
     /// Prepared numeric classifier cuts.
     pub fn thresholds(&self) -> ChartResult<Vec<Option<Number>>> {
@@ -455,5 +495,35 @@ impl StandaloneScale {
         };
         spec.validate_training()?;
         Ok(spec)
+    }
+}
+
+impl StandaloneScaleSpec {
+    /// Minimum standalone scale envelope version, preserving builtin version one.
+    pub fn wire_version(&self) -> u32 {
+        let registered = match self {
+            Self::Continuous(s) => s.factory.has_registration(),
+            Self::Time(s) => s.factory.has_registration(),
+            Self::Interpolated(s) => {
+                matches!(&s.output, ScaleRangeFunction::Interpolate(i) if i.has_registration())
+            }
+            _ => false,
+        };
+        if registered { 2 } else { 1 }
+    }
+    pub(crate) fn validate_registrations(
+        &self,
+        registry: &crate::grammar::interpolation_extensions::InterpolationRegistrations,
+        portable: bool,
+    ) -> ChartResult<()> {
+        match self {
+            Self::Continuous(s) => s.factory.validate_registration(registry, portable),
+            Self::Time(s) => s.factory.validate_registration(registry, portable),
+            Self::Interpolated(s) => match &s.output {
+                ScaleRangeFunction::Interpolate(i) => i.validate_registrations(registry, portable),
+                _ => Ok(()),
+            },
+            _ => Ok(()),
+        }
     }
 }

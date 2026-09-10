@@ -1,5 +1,6 @@
 //! Owned standalone operations, forwarding to canonical bounded core descriptors.
 use super::color::ColorHandle;
+use super::shape_registry::ShapeRegistryHandle;
 use super::{disposed, failure, handle};
 use chart_core::interpolate::{FactoryKind, InterpolationFactory, Interpolator, Value};
 use pyo3::prelude::*;
@@ -17,6 +18,30 @@ impl InterpolatorHandle {
         py.detach(|| Interpolator::from_json(&input))
             .map(Self::wrap)
             .map_err(failure)
+    }
+    #[staticmethod]
+    fn from_json_registered(
+        py: Python<'_>,
+        input: String,
+        registry: &ShapeRegistryHandle,
+    ) -> PyResult<Self> {
+        let registry = registry.get()?.clone();
+        py.detach(|| Interpolator::from_json_with_registry(&input, &registry))
+            .map(Self::wrap)
+            .map_err(failure)
+    }
+    #[staticmethod]
+    fn from_spec(py: Python<'_>, input: String, registry: &ShapeRegistryHandle) -> PyResult<Self> {
+        let registry = registry.get()?.clone();
+        py.detach(|| {
+            Interpolator::new_with_registry(chart_core::portable::decode(&input)?, &registry)
+        })
+        .map(Self::wrap)
+        .map_err(failure)
+    }
+    fn descriptor_json(&self, py: Python<'_>) -> PyResult<String> {
+        let f = self.get()?;
+        py.detach(|| f.descriptor_json()).map_err(failure)
     }
     fn to_json(&self, py: Python<'_>) -> PyResult<String> {
         let f = self.get()?;
@@ -105,7 +130,4 @@ impl InterpolatorHandle {
     fn dispose(&mut self) {
         self.inner.take();
     }
-}
-pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
-    module.add_class::<InterpolatorHandle>()
 }

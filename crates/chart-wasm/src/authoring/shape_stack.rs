@@ -1,9 +1,9 @@
+//! Owned stack layout adapter; numerical policy is canonical Rust.
 use super::shape_registry::_ShapeRegistry;
-// Owned stack layout adapter; numerical policy is canonical Rust.
 use super::{disposed, failure, handle};
 use chart_core::{portable, shape::Stack};
 use wasm_bindgen::prelude::*;
-handle!(_ShapeStack, _ShapeStack, Stack);
+handle!(_ShapeStack, Stack);
 #[wasm_bindgen]
 impl _ShapeStack {
     pub fn layout_registered_json(
