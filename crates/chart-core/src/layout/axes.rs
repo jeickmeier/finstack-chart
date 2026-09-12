@@ -10,6 +10,48 @@ pub(super) fn validate_specs(axes: &[AxisSpec], limits: crate::Limits) -> ChartR
     let mut ids = BTreeSet::new();
     for a in axes {
         validate_style(&a.guide, limits)?;
+        if let Some(values) = &a.continuous_limits {
+            crate::limits::require_within(
+                values.len() <= limits.max_items,
+                "continuous category limits",
+            )?;
+            if values.iter().any(|v| v.0.is_nan()) && values.len() != 2 {
+                return Err(error(
+                    DiagnosticCode::SchemaConflict,
+                    "Continuous category limits containing missing values require two endpoints.",
+                ));
+            }
+            if !matches!(
+                a.scale,
+                AxisScale::Auto | AxisScale::Band(_) | AxisScale::Point(_)
+            ) {
+                return Err(error(
+                    DiagnosticCode::UnsupportedCapability,
+                    "Continuous category limits require a reference band or point axis.",
+                ));
+            }
+        }
+        if let Some(expansion) = a.expansion {
+            expansion.expand(Bounds::new(0., 1.)?)?;
+            if !matches!(
+                a.scale,
+                AxisScale::Auto
+                    | AxisScale::Linear(_)
+                    | AxisScale::Duration(_)
+                    | AxisScale::Binned { .. }
+                    | AxisScale::Nonlinear { .. }
+                    | AxisScale::Band(_)
+                    | AxisScale::Point(_)
+                    | AxisScale::Utc { .. }
+                    | AxisScale::Date { .. }
+                    | AxisScale::Calendar { .. }
+            ) {
+                return Err(error(
+                    DiagnosticCode::UnsupportedCapability,
+                    "Reference expansion requires a linear, nonlinear, band, point or time axis.",
+                ));
+            }
+        }
         if !ids.insert(a.id) {
             return Err(error(
                 DiagnosticCode::SchemaConflict,
@@ -26,8 +68,12 @@ pub(super) fn validate_specs(axes: &[AxisSpec], limits: crate::Limits) -> ChartR
             source,
             factor,
             offset,
+            ref transform,
         } = a.scale
         {
+            if let Some(transform) = transform {
+                secondary_mapping(transform)?;
+            }
             if !factor.is_finite()
                 || factor == 0.
                 || !offset.is_finite()
@@ -52,13 +98,19 @@ pub(super) fn validate_specs(axes: &[AxisSpec], limits: crate::Limits) -> ChartR
             if !matches!(
                 primary.scale,
                 AxisScale::Auto
+                    | AxisScale::Band(_)
+                    | AxisScale::Point(_)
                     | AxisScale::Linear(_)
+                    | AxisScale::Duration(_)
                     | AxisScale::Numeric(_)
                     | AxisScale::Nonlinear { .. }
+                    | AxisScale::Utc { .. }
+                    | AxisScale::Date { .. }
+                    | AxisScale::Calendar { .. }
             ) {
                 return Err(error(
                     DiagnosticCode::SchemaConflict,
-                    "Secondary axes require a primary numeric scale directly.",
+                    "Secondary axes require a primary numeric, time or reference categorical scale directly.",
                 ));
             }
         }
@@ -73,7 +125,13 @@ pub(super) fn validate_specs(axes: &[AxisSpec], limits: crate::Limits) -> ChartR
             AxisScale::Numeric(spec) => {
                 NumericScale::new(spec.clone())?;
             }
-            AxisScale::Linear(domain) => {
+            AxisScale::Binned { spec, prepared } => {
+                spec.validate()?;
+                if let Some(prepared) = prepared {
+                    prepared.validate()?;
+                }
+            }
+            AxisScale::Linear(domain) | AxisScale::Duration(domain) => {
                 domain.resolve(None)?;
             }
             AxisScale::Nonlinear { transform, domain } => {
@@ -101,6 +159,18 @@ pub(super) fn validate_specs(axes: &[AxisSpec], limits: crate::Limits) -> ChartR
 }
 
 pub(super) fn validate_style(a: &GuideStyle, limits: crate::Limits) -> ChartResult<()> {
+    if let Some(components) = &a.components {
+        components.validate(limits)?;
+    }
+    if let Some(geometry) = &a.geometry {
+        geometry.validate()?;
+    }
+    if let Some(super::MinorBreaks::TimeWidth(width)) = &a.minor_breaks {
+        crate::limits::require_within(width.len() <= limits.max_text_bytes, "minor time width")?;
+    }
+    if let Some(super::MinorBreaks::Numeric(values)) = &a.minor_breaks {
+        crate::limits::require_within(values.len() <= limits.max_items, "authored minor break")?;
+    }
     if let Some(values) = &a.tick_values {
         crate::limits::require_within(values.len() <= limits.max_items, "authored guide tick")?;
     }
@@ -125,6 +195,9 @@ pub(super) fn validate_style(a: &GuideStyle, limits: crate::Limits) -> ChartResu
                 f.prepare()?;
             }
             GuideFormatter::Time(f) => {
+                f.prepare(Calendar::new(CalendarZone::Utc)?)?;
+            }
+            GuideFormatter::GgplotTime(f) => {
                 f.prepare(Calendar::new(CalendarZone::Utc)?)?;
             }
             GuideFormatter::Labels(labels) => {
@@ -299,6 +372,7 @@ fn resolve_axis_inner(
         source,
         factor,
         offset,
+        ref transform,
     } = spec.scale
     {
         if !factor.is_finite()
@@ -339,10 +413,55 @@ fn resolve_axis_inner(
         let mut primary = primary.clone();
         primary.visible = spec.visible;
         let resolved = resolve_axis_inner(chart, r, &primary, plot)?;
-        let (domain, view) = match &resolved.scale {
-            ResolvedScale::Linear(s) => (s.domain(), s.viewport()),
-            ResolvedScale::Numeric(s) => (s.domain(), s.viewport()),
-            ResolvedScale::Nonlinear(s) => (s.domain(), s.viewport()),
+        if matches!(
+            resolved.scale,
+            ResolvedScale::Utc(_) | ResolvedScale::Calendar(_)
+        ) {
+            return resolve_secondary_time(
+                chart,
+                r,
+                spec,
+                source,
+                factor,
+                offset,
+                transform.is_some(),
+                resolved,
+            );
+        }
+        if resolved.space.is_categorical()
+            && chart.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3
+        {
+            if factor != 1. || offset != 0. || transform.is_some() {
+                return Err(error(
+                    DiagnosticCode::UnsupportedCapability,
+                    "Discrete secondary axes require an identity transformation.",
+                ));
+            }
+            let range = match &resolved.scale {
+                ResolvedScale::Band(s) => s.range(),
+                ResolvedScale::Point(s) => s.range(),
+                ResolvedScale::Provider(s) => s.range(),
+                _ => unreachable!(),
+            };
+            let viewport = super::secondary_discrete::viewport(&resolved)?;
+            let mut axis = ResolvedAxis {
+                spec: spec.clone(),
+                space: ValueSpace::Data,
+                ticks: vec![],
+                scale: ResolvedScale::SecondaryDiscrete {
+                    source,
+                    primary: Box::new(resolved),
+                    range,
+                    viewport,
+                },
+            };
+            axis.ticks = super::guide_ticks::resolve(chart, &axis, &spec.guide, r)?;
+            return Ok(axis);
+        }
+        let (domain, view, range) = match &resolved.scale {
+            ResolvedScale::Linear(s) => (s.domain(), s.viewport(), s.range()),
+            ResolvedScale::Numeric(s) => (s.domain(), s.viewport(), s.range()),
+            ResolvedScale::Nonlinear(s) => (s.domain(), s.viewport(), s.range()),
             _ => {
                 return Err(error(
                     DiagnosticCode::SchemaConflict,
@@ -350,7 +469,21 @@ fn resolve_axis_inner(
                 ));
             }
         };
+        let conversion = transform
+            .as_deref()
+            .map(secondary_mapping)
+            .transpose()?
+            .map(Box::new);
         let convert = |v: f64| -> ChartResult<f64> {
+            let v = conversion
+                .as_ref()
+                .map_or(Ok(Some(v)), |s| s.map_finite(v))?
+                .ok_or_else(|| {
+                    error(
+                        DiagnosticCode::NumericalDomain,
+                        "Primary domain is outside the secondary transform's finite domain.",
+                    )
+                })?;
             let value = v.mul_add(factor, offset);
             if value.is_finite() {
                 Ok(value)
@@ -361,8 +494,23 @@ fn resolve_axis_inner(
                 ))
             }
         };
-        let domain = Bounds::new(convert(domain.start())?, convert(domain.end())?)?.distinct()?;
-        let view = Bounds::new(convert(view.start())?, convert(view.end())?)?.distinct()?;
+        let ggplot = chart.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3;
+        let convert_bounds = |bounds: Bounds| -> ChartResult<Bounds> {
+            let converted = Bounds::new(convert(bounds.start())?, convert(bounds.end())?)?;
+            if bounds.start() != bounds.end() && converted.start() == converted.end() {
+                return Err(error(
+                    DiagnosticCode::PrecisionLoss,
+                    "Secondary conversion collapses distinct primary endpoints.",
+                ));
+            }
+            Ok(converted)
+        };
+        let domain = convert_bounds(domain)?;
+        let view = convert_bounds(view)?;
+        if !ggplot {
+            domain.distinct()?;
+            view.distinct()?;
+        }
         let formatter = guide_formatter(spec, NumericFamily::Linear, view, r.target_ticks as f64)?;
         let ticks = resolved
             .ticks
@@ -383,12 +531,47 @@ fn resolve_axis_inner(
                 })
             })
             .collect::<ChartResult<_>>()?;
-        return Ok(ResolvedAxis {
+        let guide_inverse = if ggplot {
+            let mut secondary = Vec::with_capacity(1000);
+            let mut original = Vec::with_capacity(1000);
+            for i in 0..1000 {
+                let position = range.start() + (range.end() - range.start()) * (i as f64 / 999.);
+                let crate::composition::ScaleValue::Number(value) =
+                    resolved.invert_value(position)?
+                else {
+                    unreachable!()
+                };
+                secondary.push(convert(value)?.into());
+                original.push(value.into());
+            }
+            Some(Box::new(NumericScale::new(NumericScaleSpec {
+                domain: secondary,
+                range: original,
+                ..NumericScaleSpec::d3(NumericFamily::Linear)
+            })?))
+        } else {
+            None
+        };
+        let mut axis = ResolvedAxis {
             spec: spec.clone(),
             space: ValueSpace::Data,
-            scale: ResolvedScale::Secondary { source, domain },
+            scale: ResolvedScale::Secondary {
+                source,
+                domain,
+                view,
+                primary: Box::new(resolved),
+                conversion,
+                guide_inverse,
+                range,
+            },
             ticks,
-        });
+        };
+        if chart.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3
+            || spec.guide.uses_tick_configuration()
+        {
+            axis.ticks = super::guide_ticks::resolve(chart, &axis, &spec.guide, r)?;
+        }
+        return Ok(axis);
     }
     let empty = DomainContributions::default();
     let d = chart.scale_domains().get(&spec.id).unwrap_or(&empty);
@@ -429,7 +612,12 @@ fn resolve_axis_inner(
             Some(Bounds::new(*a, *b)?)
         }
         Some(AxisWindow::Timestamp(..)) if matches!(space, ValueSpace::Timestamp { .. }) => None,
-        Some(AxisWindow::Category { .. }) if matches!(space, ValueSpace::Categorical { .. }) => {
+        Some(AxisWindow::Category { .. })
+            if matches!(
+                space,
+                ValueSpace::Categorical { .. } | ValueSpace::NullableCategorical { .. }
+            ) =>
+        {
             None
         }
         Some(_) => {
@@ -449,17 +637,140 @@ fn resolve_axis_inner(
         }),
         _ => None,
     };
-    let family = match (&spec.scale, &space) {
-        (AxisScale::Auto, ValueSpace::Categorical { .. }) => {
-            AxisScale::Band(BandOptions::default())
+    if let AxisScale::Binned { spec: bins, .. } = &spec.scale {
+        let prepared = positional_bins(spec, &space)?;
+        let limits = prepared.panel_limits();
+        if limits.iter().any(|v| !v.0.is_finite()) {
+            if viewport.is_some() {
+                return Err(error(
+                    DiagnosticCode::UnsupportedCapability,
+                    "A finite viewport over unbounded positional bins requires retained infinite source geometry.",
+                ));
+            }
+            let mut axis = ResolvedAxis {
+                spec: spec.clone(),
+                space,
+                scale: ResolvedScale::Unbounded(crate::scales::GgplotUnboundedScale::new(
+                    limits,
+                    range,
+                    bins.transform,
+                    spec.outside,
+                )?),
+                ticks: vec![],
+            };
+            axis.ticks = super::guide_ticks::resolve(chart, &axis, &spec.guide, r)?;
+            return Ok(axis);
         }
+    }
+    let family = match (&spec.scale, &space) {
+        (
+            AxisScale::Auto,
+            ValueSpace::Categorical { .. } | ValueSpace::NullableCategorical { .. },
+        ) => AxisScale::Band(BandOptions::default()),
         (AxisScale::Auto, ValueSpace::Timestamp { .. }) => AxisScale::Utc {
             domain: None,
             interval: None,
         },
         (AxisScale::Auto, _) => AxisScale::Linear(ContinuousDomain::default()),
+        (AxisScale::Binned { spec: bins, .. }, _) => {
+            let prepared = positional_bins(spec, &space)?;
+            let raw = prepared
+                .panel_limits()
+                .map(|v| bins.transform.map_or(Ok(v.0), |t| t.inverse(v.0)))
+                .into_iter()
+                .collect::<ChartResult<Vec<_>>>()?;
+            let domain = ContinuousDomain::explicit(Bounds::new(raw[0], raw[1])?);
+            if let Some(transform) = bins.transform {
+                AxisScale::Nonlinear { transform, domain }
+            } else {
+                AxisScale::Linear(domain)
+            }
+        }
         (s, _) => s.clone(),
     };
+    if let Some(limits) = &spec.continuous_limits {
+        crate::limits::require_within(
+            limits.len() <= r.limits.max_items,
+            "continuous category limits",
+        )?;
+        if !matches!(family, AxisScale::Band(_) | AxisScale::Point(_)) {
+            return Err(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Continuous category limits require a reference band or point axis.",
+            ));
+        }
+        if window.is_some() {
+            return Err(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Continuous category limits cannot be combined with a categorical navigation window.",
+            ));
+        }
+    }
+    if spec.discrete.is_some()
+        && (!space.is_categorical() || !matches!(family, AxisScale::Band(_) | AxisScale::Point(_)))
+    {
+        return Err(error(
+            DiagnosticCode::SchemaConflict,
+            "Reference discrete policies require a band or point category axis.",
+        ));
+    }
+    let is_date = matches!(family, AxisScale::Date { .. });
+    let family = match family {
+        AxisScale::Date { domain } => AxisScale::Utc {
+            domain,
+            interval: None,
+        },
+        family => family,
+    };
+    // Character training in the pinned reference uses C collation. Keep source
+    // ordinals intact; only the resolved automatic domain changes order.
+    let mut family = family;
+    if chart.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3
+        && let ValueSpace::Categorical { categories } = &space
+    {
+        let domain = match &mut family {
+            AxisScale::Band(options) => Some(&mut options.domain),
+            AxisScale::Point(options) => Some(&mut options.domain),
+            _ => None,
+        };
+        if let Some(domain) = domain
+            && domain.is_none()
+            && spec.discrete.is_none()
+        {
+            let mut labels = categories.clone();
+            labels.sort_unstable();
+            *domain = Some(labels);
+        }
+    }
+    let expansion = spec.expansion.or_else(|| {
+        (is_date
+            || spec.continuous_limits.is_some()
+            || chart.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3)
+            .then(|| {
+                if matches!(family, AxisScale::Band(_) | AxisScale::Point(_)) {
+                    GgplotExpansion::discrete_default()
+                } else {
+                    GgplotExpansion::default()
+                }
+            })
+    });
+    if spec.expansion.is_some()
+        && !matches!(
+            family,
+            AxisScale::Linear(_)
+                | AxisScale::Duration(_)
+                | AxisScale::Nonlinear { .. }
+                | AxisScale::Band(_)
+                | AxisScale::Point(_)
+                | AxisScale::Utc { .. }
+                | AxisScale::Calendar { .. }
+        )
+    {
+        return Err(error(
+            DiagnosticCode::UnsupportedCapability,
+            "Reference expansion requires a linear, nonlinear, band, point or time axis.",
+        ));
+    }
     if (spec.number_format.is_some() || spec.numeric_format.is_some())
         && !matches!(
             space,
@@ -472,7 +783,10 @@ fn resolve_axis_inner(
         ));
     }
     if spec.time_format.is_some()
-        && !matches!(family, AxisScale::Utc { .. } | AxisScale::Calendar { .. })
+        && !matches!(
+            family,
+            AxisScale::Utc { .. } | AxisScale::Calendar { .. } | AxisScale::Duration(_)
+        )
     {
         return Err(error(
             DiagnosticCode::SchemaConflict,
@@ -525,16 +839,123 @@ fn resolve_axis_inner(
                 r.max_categories,
             )?)
         }
+        (family @ (AxisScale::Band(_) | AxisScale::Point(_)), category_space)
+            if matches!(category_space, ValueSpace::NullableCategorical { .. })
+                || spec.discrete.is_some() && category_space.is_categorical() =>
+        {
+            if viewport.is_some() || window.is_some() || spec.outside != OutsidePolicy::Extend {
+                return Err(error(
+                    DiagnosticCode::UnsupportedCapability,
+                    "Nullable positional categories currently require the automatic reference viewport.",
+                ));
+            }
+            let (limits, inner, outer, point) = match &family {
+                AxisScale::Band(options) => (
+                    options.domain.as_ref(),
+                    options.inner_padding,
+                    options.outer_padding,
+                    false,
+                ),
+                AxisScale::Point(options) => (options.domain.as_ref(), 1., options.padding, true),
+                _ => unreachable!(),
+            };
+            let keys = (0..category_space.category_count().unwrap())
+                .map(|i| match category_space.category_value(i as f64).unwrap() {
+                    crate::composition::ScaleValue::Category(value) => {
+                        crate::scales::ScaleKey::Text(value)
+                    }
+                    crate::composition::ScaleValue::MissingCategory => {
+                        crate::scales::ScaleKey::Null
+                    }
+                    _ => unreachable!(),
+                })
+                .collect::<Vec<_>>();
+            let mut policy = spec.discrete.as_deref().cloned().unwrap_or_default();
+            if let Some(limits) = limits {
+                if spec.discrete.is_some() {
+                    return Err(error(
+                        DiagnosticCode::SchemaConflict,
+                        "Reference discrete policies own their category limits.",
+                    ));
+                }
+                policy.limits = Some(
+                    limits
+                        .iter()
+                        .cloned()
+                        .map(crate::scales::ScaleKey::Text)
+                        .collect(),
+                );
+            }
+            if let Some(expansion) = spec.expansion {
+                policy.expansion = expansion;
+            }
+            let provider = policy
+                .train_with_continuous_limits(&keys, spec.continuous_limits.as_deref())?
+                .into_provider(range, inner, outer, point)?;
+            ResolvedScale::Provider(CheckedPositionalScale::new(
+                std::sync::Arc::new(provider),
+                ValueSpace::NullableCategorical { categories: vec![] },
+                r.limits,
+                r.max_categories,
+            )?)
+        }
+        (
+            family @ (AxisScale::D3Band(_) | AxisScale::D3Point(_)),
+            ValueSpace::NullableCategorical { categories },
+        ) => {
+            if viewport.is_some() || spec.outside != OutsidePolicy::Extend {
+                return Err(error(
+                    DiagnosticCode::UnsupportedCapability,
+                    "D3 category axes require category windows and extend behavior.",
+                ));
+            }
+            let labels = categories.iter().flatten().cloned().collect::<Vec<_>>();
+            match family {
+                AxisScale::D3Band(options) => {
+                    let mut scale = BandScale::resolve_d3(&labels, &options, range)?;
+                    if let Some(AxisWindow::Category { first, last }) = window {
+                        scale = scale.with_window(first, last)?;
+                    }
+                    ResolvedScale::Band(scale)
+                }
+                AxisScale::D3Point(options) => {
+                    let mut scale = PointScale::resolve_d3(&labels, &options, range)?;
+                    if let Some(AxisWindow::Category { first, last }) = window {
+                        scale = scale.with_window(first, last)?;
+                    }
+                    ResolvedScale::Point(scale)
+                }
+                _ => unreachable!(),
+            }
+        }
         (AxisScale::Numeric(options), ValueSpace::Data | ValueSpace::Transformed { .. }) => {
             let scale = NumericAxisScale::resolve(options, range, viewport, spec.outside)?;
 
             ResolvedScale::Numeric(scale)
         }
         (
-            AxisScale::Linear(options),
+            AxisScale::Linear(options) | AxisScale::Duration(options),
             ValueSpace::Data | ValueSpace::Transformed { .. } | ValueSpace::Scaled { .. },
         ) => {
-            let scale = LinearScale::resolve(extent, options, range, viewport, spec.outside)?;
+            let reference_viewport = match viewport {
+                Some(_) => None,
+                None => expansion
+                    .map(|e| {
+                        let limits = if options.explicit.is_none()
+                            && (options.nice || options.padding != 0.)
+                        {
+                            options.resolve(extent)?
+                        } else {
+                            options.trained_limits(extent)?
+                        };
+                        e.continuous_viewport(Bounds::new(limits.minimum(), limits.maximum())?)
+                    })
+                    .transpose()?,
+            };
+            let mut scale = LinearScale::resolve(extent, options, range, viewport, spec.outside)?;
+            if let Some(view) = reference_viewport {
+                scale = scale.with_reference_viewport(view);
+            }
 
             ResolvedScale::Linear(scale)
         }
@@ -551,18 +972,26 @@ fn resolve_axis_inner(
                 }
                 extent
                     .map(|e| -> ChartResult<crate::grammar::Extent> {
+                        let a = transform.inverse(e.minimum)?;
+                        let b = transform.inverse(e.maximum)?;
                         Ok(crate::grammar::Extent {
-                            minimum: transform.inverse(e.minimum)?,
-                            maximum: transform.inverse(e.maximum)?,
+                            minimum: a.min(b),
+                            maximum: a.max(b),
                         })
                     })
                     .transpose()?
-            } else if matches!(transform, ScaleTransform::Log { .. }) {
-                positive_extent(chart, spec)?
+            } else if matches!(transform, ScaleTransform::Log { .. } | ScaleTransform::Sqrt) {
+                eligible_transform_extent(chart, spec, transform)?
             } else {
                 extent
             };
-            let scale = NonlinearScale::resolve(
+            let reference_viewport = match viewport {
+                Some(_) => None,
+                None => expansion
+                    .map(|e| e.nonlinear_transformed_viewport(contribution, domain, transform))
+                    .transpose()?,
+            };
+            let mut scale = NonlinearScale::resolve(
                 contribution,
                 domain,
                 transform,
@@ -571,6 +1000,9 @@ fn resolve_axis_inner(
                 spec.outside,
             )?;
 
+            if let Some(view) = reference_viewport {
+                scale = scale.with_reference_transformed_viewport(view)?;
+            }
             ResolvedScale::Nonlinear(scale)
         }
         (
@@ -583,13 +1015,21 @@ fn resolve_axis_inner(
                     "Point scales use category domains without numeric viewport policies.",
                 ));
             }
-            let mut scale = match family {
-                AxisScale::Point(options) => PointScale::resolve(categories, &options, range)?,
-                AxisScale::D3Point(options) => PointScale::resolve_d3(categories, &options, range)?,
+            let mut scale = match &family {
+                AxisScale::Point(options) => PointScale::resolve(categories, options, range)?,
+                AxisScale::D3Point(options) => PointScale::resolve_d3(categories, options, range)?,
                 _ => unreachable!(),
             };
             if let Some(AxisWindow::Category { first, last }) = window {
                 scale = scale.with_window(first, last)?;
+            } else if let Some(expansion) =
+                expansion.filter(|_| matches!(family, AxisScale::Point(_)))
+            {
+                scale = scale.with_reference_expansion(
+                    expansion,
+                    spec.continuous_limits.as_deref(),
+                    categories,
+                )?;
             }
 
             ResolvedScale::Point(scale)
@@ -629,13 +1069,21 @@ fn resolve_axis_inner(
                     "Band scales use explicit category domains; numeric viewport/clamp/omit policies are unsupported.",
                 ));
             }
-            let mut scale = match family {
-                AxisScale::Band(options) => BandScale::resolve(categories, &options, range)?,
-                AxisScale::D3Band(options) => BandScale::resolve_d3(categories, &options, range)?,
+            let mut scale = match &family {
+                AxisScale::Band(options) => BandScale::resolve(categories, options, range)?,
+                AxisScale::D3Band(options) => BandScale::resolve_d3(categories, options, range)?,
                 _ => unreachable!(),
             };
             if let Some(AxisWindow::Category { first, last }) = window {
                 scale = scale.with_window(first, last)?;
+            } else if let Some(expansion) =
+                expansion.filter(|_| matches!(family, AxisScale::Band(_)))
+            {
+                scale = scale.with_reference_expansion(
+                    expansion,
+                    spec.continuous_limits.as_deref(),
+                    categories,
+                )?;
             }
 
             ResolvedScale::Band(scale)
@@ -664,8 +1112,13 @@ fn resolve_axis_inner(
                     })
                 })
                 .transpose()?;
-            let scale =
-                TimeAxisScale::resolve(options, range, time_window.or(viewport), spec.outside)?;
+            let scale = TimeAxisScale::resolve_reference(
+                options,
+                range,
+                time_window.or(viewport),
+                spec.outside,
+                expansion,
+            )?;
 
             ResolvedScale::Calendar(Box::new(scale))
         }
@@ -696,7 +1149,14 @@ fn resolve_axis_inner(
                         start: project::timestamp(e.minimum, *origin)?,
                         end: project::timestamp(e.maximum, *origin)?,
                     },
-                    None => TimeBounds { start: 0, end: 1 },
+                    None => TimeBounds {
+                        start: 0,
+                        end: if is_date {
+                            (ticks_per_second(representation.unit) * 86400) as i64
+                        } else {
+                            1
+                        },
+                    },
                 },
             };
             let viewport = viewport
@@ -707,15 +1167,28 @@ fn resolve_axis_inner(
                     })
                 })
                 .transpose()?;
-            let scale = UtcScale::new(
-                domain,
-                time_window.or(viewport),
-                representation.unit,
-                range,
-                spec.outside,
-            )?;
-
-            ResolvedScale::Utc(scale)
+            if expansion.is_some() {
+                ResolvedScale::Calendar(Box::new(TimeAxisScale::resolve_reference_unit(
+                    TimeScaleSpec {
+                        domain: vec![domain.start, domain.end],
+                        unit: representation.unit,
+                        ..Default::default()
+                    },
+                    range,
+                    time_window.or(viewport),
+                    spec.outside,
+                    expansion,
+                    if is_date { 86400. } else { 1. },
+                )?))
+            } else {
+                ResolvedScale::Utc(UtcScale::new(
+                    domain,
+                    time_window.or(viewport),
+                    representation.unit,
+                    range,
+                    spec.outside,
+                )?)
+            }
         }
         _ => {
             return Err(error(
@@ -747,9 +1220,10 @@ pub(super) fn resolve_axis(
 }
 
 // Domain training scans eligible post-position geometry, never the visible viewport.
-fn positive_extent(
+fn eligible_transform_extent(
     chart: &PreparedChart,
     axis: &AxisSpec,
+    transform: ScaleTransform,
 ) -> ChartResult<Option<crate::grammar::Extent>> {
     use crate::grammar::{Extent, PreparedGeometry};
     let mut extent: Option<Extent> = None;
@@ -779,11 +1253,11 @@ fn positive_extent(
             } else {
                 point.y()
             };
-            if value <= 0. {
+            if transform.forward(value)?.is_none() {
                 if baseline_dependent || authored.invalid == crate::data::InvalidPolicy::Strict {
                     return Err(error(
                         DiagnosticCode::NumericalDomain,
-                        "Log geometry requires positive coordinates and a valid declared interval baseline.",
+                        "Geometry coordinates and declared interval baselines must lie inside the scale transform domain.",
                     ));
                 }
                 return Ok(());
@@ -802,6 +1276,7 @@ fn positive_extent(
         };
         for mark in layer.marks() {
             match &mark.geometry {
+                PreparedGeometry::HierarchyNode(_) | PreparedGeometry::HierarchyLink { .. } => {}
                 PreparedGeometry::Point(p)
                 | PreparedGeometry::ShapePath { center: p, .. }
                 | PreparedGeometry::ShapePathRun { center: p, .. } => include(*p, false)?,
@@ -869,4 +1344,121 @@ pub(super) fn numeric_label(
     } else {
         Ok(default)
     }
+}
+
+#[expect(
+    clippy::too_many_arguments,
+    reason = "Existing secondary specification plus its resolved primary."
+)]
+fn resolve_secondary_time(
+    chart: &PreparedChart,
+    r: &LayoutRequest,
+    spec: &AxisSpec,
+    source: crate::ScaleId,
+    factor: f64,
+    offset: f64,
+    nonlinear: bool,
+    mut time: ResolvedAxis,
+) -> ChartResult<ResolvedAxis> {
+    if factor != 1. || nonlinear {
+        return Err(error(
+            DiagnosticCode::UnsupportedCapability,
+            "Date/datetime secondary guides support additive time offsets only.",
+        ));
+    }
+    let unit = match &time.scale {
+        ResolvedScale::Utc(s) => s.unit(),
+        ResolvedScale::Calendar(s) => s.unit(),
+        _ => unreachable!(),
+    };
+    let units = match unit {
+        crate::data::TimeUnit::Seconds => 1.,
+        crate::data::TimeUnit::Milliseconds => 1_000.,
+        crate::data::TimeUnit::Microseconds => 1_000_000.,
+        crate::data::TimeUnit::Nanoseconds => 1_000_000_000.,
+    };
+    let delta = offset
+        * units
+        * if matches!(time.spec.scale, AxisScale::Date { .. }) {
+            86400.
+        } else {
+            1.
+        };
+    if !delta.is_finite()
+        || delta.fract() != 0.
+        || !(-9_223_372_036_854_775_808. ..9_223_372_036_854_775_808.).contains(&delta)
+    {
+        return Err(error(
+            DiagnosticCode::PrecisionLoss,
+            "Secondary time offset must be representable in exact source timestamp units.",
+        ));
+    }
+    let delta = delta as i64;
+    time.scale = match &time.scale {
+        ResolvedScale::Utc(s) => ResolvedScale::Utc(s.shifted(delta)?),
+        ResolvedScale::Calendar(s) => ResolvedScale::Calendar(Box::new(s.shifted(delta)?)),
+        _ => unreachable!(),
+    };
+    if let ValueSpace::Timestamp { origin, .. } = &mut time.space {
+        *origin = origin.checked_add(delta).ok_or_else(|| {
+            error(
+                DiagnosticCode::PrecisionLoss,
+                "Secondary time origin exceeds the timestamp range.",
+            )
+        })?;
+    }
+    // Retain the primary Date/calendar family for shared guide selection while
+    // replacing all presentation with the independently authored secondary guide.
+    let family = match (&time.spec.scale, &time.scale) {
+        (AxisScale::Date { .. }, ResolvedScale::Calendar(s)) => AxisScale::Date {
+            domain: Some(s.domain()),
+        },
+        (_, ResolvedScale::Calendar(s)) => AxisScale::Calendar {
+            spec: s.spec().clone(),
+            interval: None,
+        },
+        (_, ResolvedScale::Utc(s)) => AxisScale::Utc {
+            domain: Some(s.domain()),
+            interval: None,
+        },
+        _ => unreachable!(),
+    };
+    time.spec = spec.clone();
+    time.spec.scale = family;
+    time.ticks.clear();
+    time.ticks = super::guide_ticks::resolve(chart, &time, &spec.guide, r)?;
+    Ok(ResolvedAxis {
+        spec: spec.clone(),
+        space: time.space.clone(),
+        ticks: time.ticks.clone(),
+        scale: ResolvedScale::SecondaryTime {
+            source,
+            axis: Box::new(time),
+        },
+    })
+}
+
+pub(super) fn positional_bins(
+    spec: &AxisSpec,
+    space: &ValueSpace,
+) -> ChartResult<std::sync::Arc<PreparedGgplotBinnedPosition>> {
+    if let ValueSpace::Scaled { scale, .. } = space
+        && scale.id == spec.id
+        && let Some(binned) = &scale.binned
+    {
+        return Ok(binned.clone());
+    }
+    let AxisScale::Binned {
+        spec: bins,
+        prepared,
+    } = &spec.scale
+    else {
+        return Err(error(
+            DiagnosticCode::SchemaConflict,
+            "This axis has no positional bin policy.",
+        ));
+    };
+    prepared
+        .clone()
+        .map_or_else(|| bins.train(&[]).map(std::sync::Arc::new), Ok)
 }

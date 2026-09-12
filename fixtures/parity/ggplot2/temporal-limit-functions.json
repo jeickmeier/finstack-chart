@@ -1,0 +1,4446 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "identity",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19723,
+          19732
+        ],
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "reverse",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19732,
+          19723
+        ],
+        "values": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "fixed",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19723,
+          19733
+        ],
+        "values": [
+          1,
+          2.58113883008419,
+          4.16227766016838,
+          5.7434164902525691
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "lower_zero",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19723,
+          19732
+        ],
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "missing_lower",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        }
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "empty",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        }
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "single",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19728
+        ],
+        "values": [
+          null,
+          null,
+          null,
+          4.5355339059327378
+        ],
+        "guide": {
+          "breaks": [
+            19728
+          ],
+          "labels": [
+            "2024-01-06"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "identity",
+      "inputs": [
+        19727,
+        19727
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19727,
+          19727
+        ],
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "guide": {
+          "breaks": [
+            19727
+          ],
+          "labels": [
+            "2024-01-05"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "reverse",
+      "inputs": [
+        19727,
+        19727
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19727,
+          19727
+        ],
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "guide": {
+          "breaks": [
+            19727
+          ],
+          "labels": [
+            "2024-01-05"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "fixed",
+      "inputs": [
+        19727,
+        19727
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19723,
+          19733
+        ],
+        "values": [
+          4.16227766016838,
+          4.16227766016838
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "lower_zero",
+      "inputs": [
+        19727,
+        19727
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19723,
+          19727
+        ],
+        "values": [
+          6,
+          6
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19724,
+            19725,
+            19726,
+            19727,
+            19728
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 02",
+            "Jan 03",
+            "Jan 04",
+            "Jan 05",
+            "Jan 06"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "missing_lower",
+      "inputs": [
+        19727,
+        19727
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        }
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "empty",
+      "inputs": [
+        19727,
+        19727
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        }
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "single",
+      "inputs": [
+        19727,
+        19727
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19727,
+            19727
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19728
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            19728
+          ],
+          "labels": [
+            "2024-01-06"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "identity",
+      "inputs": [
+        null,
+        19723,
+        19732
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19723,
+          19732
+        ],
+        "values": [
+          null,
+          1,
+          6
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "reverse",
+      "inputs": [
+        null,
+        19723,
+        19732
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19732,
+          19723
+        ],
+        "values": [
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "fixed",
+      "inputs": [
+        null,
+        19723,
+        19732
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19723,
+          19733
+        ],
+        "values": [
+          null,
+          1,
+          5.7434164902525691
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "lower_zero",
+      "inputs": [
+        null,
+        19723,
+        19732
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19723,
+          19732
+        ],
+        "values": [
+          null,
+          1,
+          6
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "missing_lower",
+      "inputs": [
+        null,
+        19723,
+        19732
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        }
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "empty",
+      "inputs": [
+        null,
+        19723,
+        19732
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        }
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "single",
+      "inputs": [
+        null,
+        19723,
+        19732
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723,
+            19732
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19728
+        ],
+        "values": [
+          null,
+          null,
+          4.5355339059327378
+        ],
+        "guide": {
+          "breaks": [
+            19728
+          ],
+          "labels": [
+            "2024-01-06"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "identity",
+      "inputs": [
+        null,
+        null
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          "Infinity",
+          "-Infinity"
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "reverse",
+      "inputs": [
+        null,
+        null
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "fixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19723,
+          19733
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "lower_zero",
+      "inputs": [
+        null,
+        null
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19723,
+          "-Infinity"
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "missing_lower",
+      "inputs": [
+        null,
+        null
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        }
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "empty",
+      "inputs": [
+        null,
+        null
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        }
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "single",
+      "inputs": [
+        null,
+        null
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19728
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            19728
+          ],
+          "labels": [
+            "2024-01-06"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "identity",
+      "inputs": [],
+      "seen": [],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "reverse",
+      "inputs": [],
+      "seen": [],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "fixed",
+      "inputs": [],
+      "seen": [],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "lower_zero",
+      "inputs": [],
+      "seen": [],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "missing_lower",
+      "inputs": [],
+      "seen": [],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "empty",
+      "inputs": [],
+      "seen": [],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "single",
+      "inputs": [],
+      "seen": [],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "fractional",
+      "control": "identity",
+      "inputs": [
+        19723.125,
+        19724.5,
+        19727.75
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19723.125,
+          19727.75
+        ],
+        "values": [
+          1,
+          3.7262487840313532,
+          6
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19724,
+            19725,
+            19726,
+            19727
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 02",
+            "Jan 03",
+            "Jan 04",
+            "Jan 05"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "fractional",
+      "control": "reverse",
+      "inputs": [
+        19723.125,
+        19724.5,
+        19727.75
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19727.75,
+          19723.125
+        ],
+        "values": [
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19724,
+            19725,
+            19726,
+            19727
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 02",
+            "Jan 03",
+            "Jan 04",
+            "Jan 05"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "fractional",
+      "control": "fixed",
+      "inputs": [
+        19723.125,
+        19724.5,
+        19727.75
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19723,
+          19733
+        ],
+        "values": [
+          1.5590169943749475,
+          2.9364916731037085,
+          4.4460121880225554
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "fractional",
+      "control": "lower_zero",
+      "inputs": [
+        19723.125,
+        19724.5,
+        19727.75
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19723,
+          19727.75
+        ],
+        "values": [
+          1.8111071056538126,
+          3.8097574347450816,
+          6
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19724,
+            19725,
+            19726,
+            19727
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 02",
+            "Jan 03",
+            "Jan 04",
+            "Jan 05"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "date",
+      "population": "fractional",
+      "control": "missing_lower",
+      "inputs": [
+        19723.125,
+        19724.5,
+        19727.75
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        }
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "fractional",
+      "control": "empty",
+      "inputs": [
+        19723.125,
+        19724.5,
+        19727.75
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        }
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "fractional",
+      "control": "single",
+      "inputs": [
+        19723.125,
+        19724.5,
+        19727.75
+      ],
+      "seen": [
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        },
+        {
+          "class": [
+            "Date"
+          ],
+          "values": [
+            19723.125,
+            19727.75
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          19728
+        ],
+        "values": [
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            19728
+          ],
+          "labels": [
+            "2024-01-06"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "identity",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "reverse",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067209,
+          1704067200
+        ],
+        "values": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "fixed",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067200,
+          1704067210
+        ],
+        "values": [
+          1,
+          2.58113883008419,
+          4.16227766016838,
+          5.7434164902525691
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "lower_zero",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "missing_lower",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        }
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "empty",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        }
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "single",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067205
+        ],
+        "values": [
+          null,
+          null,
+          null,
+          4.5355339059327378
+        ],
+        "guide": {
+          "breaks": [
+            1704067205
+          ],
+          "labels": [
+            "2024-01-01 00:00:05"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "identity",
+      "inputs": [
+        1704067204,
+        1704067204
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067204,
+          1704067204
+        ],
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "guide": {
+          "breaks": [
+            1704067204
+          ],
+          "labels": [
+            "2024-01-01 00:00:04"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "reverse",
+      "inputs": [
+        1704067204,
+        1704067204
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067204,
+          1704067204
+        ],
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "guide": {
+          "breaks": [
+            1704067204
+          ],
+          "labels": [
+            "2024-01-01 00:00:04"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "fixed",
+      "inputs": [
+        1704067204,
+        1704067204
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067200,
+          1704067210
+        ],
+        "values": [
+          4.16227766016838,
+          4.16227766016838
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "lower_zero",
+      "inputs": [
+        1704067204,
+        1704067204
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067200,
+          1704067204
+        ],
+        "values": [
+          6,
+          6
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067201,
+            1704067202,
+            1704067203,
+            1704067204
+          ],
+          "labels": [
+            "00",
+            "01",
+            "02",
+            "03",
+            "04"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "missing_lower",
+      "inputs": [
+        1704067204,
+        1704067204
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        }
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "empty",
+      "inputs": [
+        1704067204,
+        1704067204
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        }
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "single",
+      "inputs": [
+        1704067204,
+        1704067204
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067204,
+            1704067204
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067205
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            1704067205
+          ],
+          "labels": [
+            "2024-01-01 00:00:05"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "identity",
+      "inputs": [
+        null,
+        1704067200,
+        1704067209
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "values": [
+          null,
+          1,
+          6
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "reverse",
+      "inputs": [
+        null,
+        1704067200,
+        1704067209
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067209,
+          1704067200
+        ],
+        "values": [
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "fixed",
+      "inputs": [
+        null,
+        1704067200,
+        1704067209
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067200,
+          1704067210
+        ],
+        "values": [
+          null,
+          1,
+          5.7434164902525691
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "lower_zero",
+      "inputs": [
+        null,
+        1704067200,
+        1704067209
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "values": [
+          null,
+          1,
+          6
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "missing_lower",
+      "inputs": [
+        null,
+        1704067200,
+        1704067209
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        }
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "empty",
+      "inputs": [
+        null,
+        1704067200,
+        1704067209
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        }
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "single",
+      "inputs": [
+        null,
+        1704067200,
+        1704067209
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200,
+            1704067209
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067205
+        ],
+        "values": [
+          null,
+          null,
+          4.5355339059327378
+        ],
+        "guide": {
+          "breaks": [
+            1704067205
+          ],
+          "labels": [
+            "2024-01-01 00:00:05"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "identity",
+      "inputs": [
+        null,
+        null
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          "Infinity",
+          "-Infinity"
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "reverse",
+      "inputs": [
+        null,
+        null
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "fixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067200,
+          1704067210
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "lower_zero",
+      "inputs": [
+        null,
+        null
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067200,
+          "-Infinity"
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "missing_lower",
+      "inputs": [
+        null,
+        null
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        }
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "empty",
+      "inputs": [
+        null,
+        null
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        }
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "single",
+      "inputs": [
+        null,
+        null
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            "Infinity",
+            "-Infinity"
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067205
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            1704067205
+          ],
+          "labels": [
+            "2024-01-01 00:00:05"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "identity",
+      "inputs": [],
+      "seen": [],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "reverse",
+      "inputs": [],
+      "seen": [],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "fixed",
+      "inputs": [],
+      "seen": [],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "lower_zero",
+      "inputs": [],
+      "seen": [],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "missing_lower",
+      "inputs": [],
+      "seen": [],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "empty",
+      "inputs": [],
+      "seen": [],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "single",
+      "inputs": [],
+      "seen": [],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "fractional",
+      "control": "identity",
+      "inputs": [
+        1704067200.125,
+        1704067201.5,
+        1704067204.75
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067200.125,
+          1704067204.75
+        ],
+        "values": [
+          1,
+          3.7262487840313532,
+          6
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067201,
+            1704067202,
+            1704067203,
+            1704067204,
+            1704067205
+          ],
+          "labels": [
+            "00",
+            "01",
+            "02",
+            "03",
+            "04",
+            "05"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "fractional",
+      "control": "reverse",
+      "inputs": [
+        1704067200.125,
+        1704067201.5,
+        1704067204.75
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067204.75,
+          1704067200.125
+        ],
+        "values": [
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067201,
+            1704067202,
+            1704067203,
+            1704067204,
+            1704067205
+          ],
+          "labels": [
+            "00",
+            "01",
+            "02",
+            "03",
+            "04",
+            "05"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "fractional",
+      "control": "fixed",
+      "inputs": [
+        1704067200.125,
+        1704067201.5,
+        1704067204.75
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067200,
+          1704067210
+        ],
+        "values": [
+          1.5590169943749475,
+          2.9364916731037085,
+          4.4460121880225554
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "fractional",
+      "control": "lower_zero",
+      "inputs": [
+        1704067200.125,
+        1704067201.5,
+        1704067204.75
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067200,
+          1704067204.75
+        ],
+        "values": [
+          1.8111071056538126,
+          3.8097574347450816,
+          6
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067201,
+            1704067202,
+            1704067203,
+            1704067204,
+            1704067205
+          ],
+          "labels": [
+            "00",
+            "01",
+            "02",
+            "03",
+            "04",
+            "05"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "fractional",
+      "control": "missing_lower",
+      "inputs": [
+        1704067200.125,
+        1704067201.5,
+        1704067204.75
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        }
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "fractional",
+      "control": "empty",
+      "inputs": [
+        1704067200.125,
+        1704067201.5,
+        1704067204.75
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        }
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "fractional",
+      "control": "single",
+      "inputs": [
+        1704067200.125,
+        1704067201.5,
+        1704067204.75
+      ],
+      "seen": [
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        },
+        {
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "values": [
+            1704067200.125,
+            1704067204.75
+          ]
+        }
+      ],
+      "result": {
+        "limits": [
+          1704067205
+        ],
+        "values": [
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            1704067205
+          ],
+          "labels": [
+            "2024-01-01 00:00:05"
+          ]
+        }
+      }
+    }
+  ]
+}

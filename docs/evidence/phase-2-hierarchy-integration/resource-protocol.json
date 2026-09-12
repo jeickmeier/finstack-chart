@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "declared_before_measurement": true,
+  "scope": "HIR-08 component resource qualification; not PERF-01 through PERF-05",
+  "host_ownership": {
+    "nodes": 1000,
+    "warmup_cycles": 20,
+    "measured_cycles": 60,
+    "wasm_linear_memory_growth_after_warmup_max_bytes": 4194304,
+    "python_tracemalloc_retained_growth_after_warmup_max_bytes": 4194304,
+    "ownership": "Exact owned results survive input mutation, disposal and forced WASM memory growth; disposed handles reject; copied sessions retain independent state"
+  },
+  "component_timing": {
+    "warmup_samples": 10,
+    "measured_samples": 30,
+    "quantile": "nearest rank",
+    "sizes": [100, 1000],
+    "workloads": ["balanced-tree", "long-chain", "high-fanout", "skewed-pack", "resquarify-resize"],
+    "each_stage_p95_max_ms": {"100": 500, "1000": 5000},
+    "purpose": "Bound completion for these component workloads and provide measured stage distributions to WP-22; no interactive frame-rate or ingest-to-present claim",
+    "memory": "Record source/target/node/path/history counts and serialized metadata bytes; Rust weak-owner tests prove release. Allocator event counts and native presentation latency remain WP-22 instrumentation."
+  }
+}

@@ -106,6 +106,11 @@ impl RuntimeHandle {
             .map(RequestHandle::wrap)
             .map_err(failure)
     }
+    fn acknowledge_frame(&mut self, frame: &FrameHandle) -> PyResult<()> {
+        self.get_mut()?
+            .acknowledge_frame(frame.get()?)
+            .map_err(failure)
+    }
     fn present(
         &mut self,
         py: Python<'_>,

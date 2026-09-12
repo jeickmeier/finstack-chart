@@ -184,9 +184,15 @@ pub enum Primitive {
     },
 }
 
+mod guide;
+pub use guide::{GuideAnimation, GuideComponent, GuideRole, GuideTickIdentity};
+
 /// Primitive metadata, without assigning fake source targets to decoration.
 #[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub struct SceneItem {
+    /// Optional portable guide roles; decorative primitives have no data targets.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub guide: Option<GuideComponent>,
     /// Optional originating layer for diagnostic context.
     pub layer: Option<LayerId>,
     /// Explicit clip override; `None` means the scene bounds, not unbounded overflow.
@@ -266,6 +272,16 @@ impl Scene {
     }
     /// Minimum scene wire version required by the retained primitive capabilities.
     pub fn wire_version(&self) -> u32 {
+        if self
+            .items
+            .iter()
+            .any(|i| i.guide.as_ref().is_some_and(|g| g.animation.is_some()))
+        {
+            return 15;
+        }
+        if self.items.iter().any(|i| i.guide.is_some()) {
+            return 14;
+        }
         if self.items.iter().any(|i| matches!(&i.primitive, Primitive::ShapePath { dashes, .. } | Primitive::VectorPath { dashes, .. } if !dashes.is_empty())) {
             return 4;
         }
@@ -304,6 +320,9 @@ fn validate(
     let mut text_remaining = limits.max_text_bytes;
     let mut path_remaining = limits.max_path_commands;
     for item in items {
+        if let Some(guide) = &item.guide {
+            guide.validate(&mut text_remaining)?;
+        }
         let result = match &item.primitive {
             Primitive::NativePaint {
                 painter,

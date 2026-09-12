@@ -217,27 +217,50 @@ impl Session {
             "version":d.version(),"schema":d.schema(),"retention":d.retention(),
             "chunks":d.chunks().iter().map(|c|BatchWire::from_batch(c.batch())).collect::<Vec<_>>(),
         })).collect::<Vec<_>>();
-        let layers = prepared
-            .layers()
-            .iter()
-            .map(|l| {
-                json!({
+        let layer_semantics =
+            |l: &crate::grammar::PreparedLayer| -> ChartResult<serde_json::Value> {
+                let mut value = json!({
                     "id":l.id(),"visible":l.visible(),"domains":l.domains(),"rows":l.table().rows(),
                     "schema":l.table().schema(),"operations":l.table().operations(),
                     "color_legend":l.color_legend(),"invalid_geometry":l.invalid_geometry(),
                     "targets":l.marks().iter().flat_map(|m|m.targets.iter()).collect::<Vec<_>>(),
-                })
-            })
-            .collect::<Vec<_>>();
-        let panels = prepared.panels().iter().map(|p| json!({
-            "key":p.key,"row":p.row,"column":p.column,"scale_domains":p.chart.scale_domains(),
-            "layers":p.chart.layers().iter().map(|l| json!({
-                "id":l.id(),"visible":l.visible(),"domains":l.domains(),"rows":l.table().rows(),
-                "schema":l.table().schema(),"operations":l.table().operations(),
-                "color_legend":l.color_legend(),"invalid_geometry":l.invalid_geometry(),
-                "targets":l.marks().iter().flat_map(|m|m.targets.iter()).collect::<Vec<_>>(),
-            })).collect::<Vec<_>>(),
-        })).collect::<Vec<_>>();
+                });
+                if !l.paint_legends().is_empty()
+                    || l.marks().iter().any(|m| {
+                        !m.aesthetics.is_empty()
+                            || m.style.fill.is_some()
+                            || m.style.stroke.is_some()
+                            || m.style.alpha.is_some()
+                            || m.style.line_type.is_some()
+                            || m.style.units.is_some()
+                    })
+                {
+                    value["paint_legends"] = json!(l.paint_legends());
+                    value["styles"] = json!(l.marks().iter().map(|m| &m.style).collect::<Vec<_>>());
+                    value["aesthetics"] =
+                        json!(l.marks().iter().map(|m| &m.aesthetics).collect::<Vec<_>>());
+                    value["numeric_scales"] = json!(l.numeric_scales());
+                    value["value_scales"] = json!(l.value_scales());
+                }
+                if let Some(h) = l.hierarchy() {
+                    let nodes = h
+                        .hierarchy()
+                        .iter()?
+                        .map(|n| crate::hierarchy::NodeRecord::from_node(n, None))
+                        .collect::<ChartResult<Vec<_>>>()?;
+                    value["hierarchy"] = json!({"version":1,"recipe":h.recipe(),"source_keys":h.source_keys(),"nodes":nodes});
+                }
+                Ok(value)
+            };
+        let layers = prepared
+            .layers()
+            .iter()
+            .map(&layer_semantics)
+            .collect::<ChartResult<Vec<_>>>()?;
+        let panels = prepared.panels().iter().map(|p| {
+            let layers = p.chart.layers().iter().map(&layer_semantics).collect::<ChartResult<Vec<_>>>()?;
+            Ok(json!({"key":p.key,"row":p.row,"column":p.column,"scale_domains":p.chart.scale_domains(),"layers":layers}))
+        }).collect::<ChartResult<Vec<_>>>()?;
         let transforms=self.definition().transforms.iter().filter_map(|node|prepared.transform(node.id).map(|table|json!({"id":node.id,"rows":table.rows(),"schema":table.schema(),"operations":table.operations(),"space":table.space()}))).collect::<Vec<_>>();
         encode(
             &json!({"version":VERSION,"definition_revision":prepared.definition_revision(),"store_revision":data.revision(),"state":StateEnvelope::capture(self.definition(),self.state()),"datasets":datasets,"layers":layers,"panels":panels,"transforms":transforms}),

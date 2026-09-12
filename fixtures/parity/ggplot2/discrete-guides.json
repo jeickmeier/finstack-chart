@@ -1,0 +1,878 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "kind": "hue",
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "labels": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "auto",
+      "label_mode": "hidden",
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "labels": [],
+        "hidden": true
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "auto",
+      "label_mode": "explicit",
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "labels": [
+          "C",
+          "Z",
+          "A",
+          "C2"
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "auto",
+      "label_mode": "named",
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "labels": [
+          "aye",
+          "b",
+          "last",
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "auto",
+      "label_mode": "short",
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "labels": [
+          "first",
+          "second",
+          null,
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "selected",
+      "label_mode": "auto",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "c",
+          "a",
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "selected",
+      "label_mode": "hidden",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [],
+        "hidden": true
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "selected",
+      "label_mode": "explicit",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "C",
+          "A",
+          "Missing"
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "selected",
+      "label_mode": "named",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "last",
+          "aye",
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "selected",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "empty",
+      "label_mode": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "empty",
+      "label_mode": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "empty",
+      "label_mode": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "empty",
+      "label_mode": "named",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "empty",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "named",
+      "label_mode": "auto",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "Third",
+          "First",
+          "Missing"
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "named",
+      "label_mode": "hidden",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [],
+        "hidden": true
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "named",
+      "label_mode": "explicit",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "C",
+          "A",
+          "Missing"
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "named",
+      "label_mode": "named",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "last",
+          "aye",
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "hue",
+      "break_mode": "named",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "labels": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "auto",
+      "label_mode": "hidden",
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "labels": [],
+        "hidden": true
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "auto",
+      "label_mode": "explicit",
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "labels": [
+          "C",
+          "Z",
+          "A",
+          "C2"
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "auto",
+      "label_mode": "named",
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "labels": [
+          "aye",
+          "b",
+          "last",
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "auto",
+      "label_mode": "short",
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "labels": [
+          "first",
+          "second",
+          null,
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "selected",
+      "label_mode": "auto",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "c",
+          "a",
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "selected",
+      "label_mode": "hidden",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [],
+        "hidden": true
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "selected",
+      "label_mode": "explicit",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "C",
+          "A",
+          "Missing"
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "selected",
+      "label_mode": "named",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "last",
+          "aye",
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "selected",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "empty",
+      "label_mode": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "empty",
+      "label_mode": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "empty",
+      "label_mode": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "empty",
+      "label_mode": "named",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "empty",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "named",
+      "label_mode": "auto",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "Third",
+          "First",
+          "Missing"
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "named",
+      "label_mode": "hidden",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [],
+        "hidden": true
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "named",
+      "label_mode": "explicit",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "C",
+          "A",
+          "Missing"
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "named",
+      "label_mode": "named",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "last",
+          "aye",
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "manual",
+      "break_mode": "named",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "labels": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "auto",
+      "label_mode": "hidden",
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "labels": [],
+        "hidden": true
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "auto",
+      "label_mode": "explicit",
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "labels": [
+          "C",
+          "Z",
+          "A",
+          "C2"
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "auto",
+      "label_mode": "named",
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "labels": [
+          "aye",
+          "b",
+          "last",
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "auto",
+      "label_mode": "short",
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "labels": [
+          "first",
+          "second",
+          null,
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "selected",
+      "label_mode": "auto",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "c",
+          "a",
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "selected",
+      "label_mode": "hidden",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [],
+        "hidden": true
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "selected",
+      "label_mode": "explicit",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "C",
+          "A",
+          "Missing"
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "selected",
+      "label_mode": "named",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "last",
+          "aye",
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "selected",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "empty",
+      "label_mode": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "empty",
+      "label_mode": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "empty",
+      "label_mode": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "empty",
+      "label_mode": "named",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "empty",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "named",
+      "label_mode": "auto",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "Third",
+          "First",
+          "Missing"
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "named",
+      "label_mode": "hidden",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [],
+        "hidden": true
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "named",
+      "label_mode": "explicit",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "C",
+          "A",
+          "Missing"
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "named",
+      "label_mode": "named",
+      "result": {
+        "breaks": [
+          "c",
+          "a",
+          null
+        ],
+        "labels": [
+          "last",
+          "aye",
+          null
+        ],
+        "hidden": false
+      }
+    },
+    {
+      "kind": "identity",
+      "break_mode": "named",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    }
+  ]
+}

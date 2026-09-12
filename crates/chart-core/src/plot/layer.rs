@@ -21,16 +21,24 @@ pub struct LayerBuilder {
     pub(super) mappings: AesBuilder,
     pub(super) inherit: bool,
     pub(super) geom: Geom,
+    pub(super) hierarchy: Option<HierarchyRecipe<Mapping>>,
     pub(super) orientation: Option<Orientation>,
     pub(super) style: Style<crate::color::Paint>,
     numeric_scales: std::collections::BTreeMap<
         crate::grammar::NumericAesthetic,
         (NumericScaleInput, crate::scales::MappedScaleSpec),
     >,
+    value_scales: std::collections::BTreeMap<
+        ValueAesthetic,
+        (NumericScaleInput, crate::scales::MappedScaleSpec),
+    >,
+    aesthetic_values: std::collections::BTreeMap<ValueAesthetic, crate::interpolate::Value>,
     symbol: Option<(Option<Mapping>, SymbolEncoding)>,
     symbol_size_guide: Option<SymbolSizeGuide>,
     shape_protocols: std::collections::BTreeMap<ShapeFamily, ShapeOperation>,
     pub(super) explicit_size: bool,
+    pub(super) explicit_radius: bool,
+    pub(super) explicit_line_width: bool,
     pub(super) explicit_color: bool,
     pub(super) after_scale:
         std::collections::BTreeMap<AfterScaleAesthetic, Expression<AfterScaleRead>>,
@@ -63,13 +71,18 @@ impl LayerBuilder {
             mappings: AesBuilder::default(),
             inherit: true,
             geom,
+            hierarchy: None,
             orientation: None,
             style: Style::default(),
             numeric_scales: Default::default(),
+            value_scales: Default::default(),
+            aesthetic_values: Default::default(),
             symbol: None,
             symbol_size_guide: None,
             shape_protocols: Default::default(),
             explicit_size: false,
+            explicit_radius: false,
+            explicit_line_width: false,
             explicit_color: false,
             after_scale: Default::default(),
             histogram: None,
@@ -173,6 +186,62 @@ impl LayerBuilder {
     pub fn color(mut self, color: impl Into<crate::color::Paint>) -> Self {
         self.explicit_color = true;
         self.style.color = color.into();
+        self
+    }
+    /// Set a constant independent fill; this overrides any fill mapping.
+    pub fn fill(mut self, paint: impl Into<crate::color::Paint>) -> Self {
+        self.style.fill = Some(paint.into());
+        self
+    }
+    /// Set a constant independent outline; this overrides any stroke mapping.
+    pub fn stroke(mut self, paint: impl Into<crate::color::Paint>) -> Self {
+        self.style.stroke = Some(paint.into());
+        self
+    }
+    /// Set point radius without changing stroke width.
+    pub fn radius(mut self, value: f64) -> Self {
+        self.style.radius = value;
+        self.explicit_radius = true;
+        self
+    }
+    /// Set stroke width without changing point radius.
+    pub fn linewidth(mut self, value: f64) -> Self {
+        self.explicit_line_width = true;
+        self.style.stroke_width = value;
+        self
+    }
+    /// Set explicit physical units for point, symbol, stroke and text dimensions.
+    pub fn aesthetic_units(mut self, units: AestheticUnits) -> Self {
+        self.style.units = Some(units);
+        self
+    }
+    /// Set an independent constant line type.
+    pub fn line_type(mut self, line_type: LineType) -> Self {
+        self.style.line_type = Some(line_type);
+        self
+    }
+    /// Map line types or text channels through the common typed scale engine.
+    pub fn value_scale(
+        mut self,
+        target: ValueAesthetic,
+        input: impl Into<NumericScaleInput>,
+        scale: crate::scales::MappedScaleSpec,
+    ) -> Self {
+        self.value_scales.insert(target, (input.into(), scale));
+        self
+    }
+    /// Set a typed text or line-type constant, overriding its corresponding mapping.
+    pub fn aesthetic_value(
+        mut self,
+        target: ValueAesthetic,
+        value: crate::interpolate::Value,
+    ) -> Self {
+        self.aesthetic_values.insert(target, value);
+        self
+    }
+    /// Replace paint alpha independently of the paint's embedded alpha.
+    pub fn alpha(mut self, value: f64) -> Self {
+        self.style.alpha = Some(value);
         self
     }
     /// Map resolved group identities through an explicit named color scale.
@@ -444,6 +513,11 @@ impl LayerBuilder {
         } else {
             Layer::new(id, data.id, self.geom, mapped.resolve(data)?)
         };
+        layer.hierarchy = self
+            .hierarchy
+            .clone()
+            .map(|recipe| recipe.try_map_fields(|field| field.field(data)))
+            .transpose()?;
         layer.style = self.style;
         layer.after_scale = self.after_scale.clone();
         layer.symbol = self
@@ -473,6 +547,24 @@ impl LayerBuilder {
             layer.numeric_scales.insert(
                 *target,
                 crate::grammar::NumericEncoding {
+                    id: crate::ScaleId::new(fresh_id()?),
+                    input,
+                    scale: scale.clone(),
+                },
+            );
+        }
+        layer.aesthetic_values = self.aesthetic_values.clone();
+        for (target, (input, scale)) in &self.value_scales {
+            let input = match input {
+                NumericScaleInput::Source(input) if scale.categorical() => {
+                    ColorInput::Category(input.field(data)?)
+                }
+                NumericScaleInput::Source(input) => ColorInput::Numeric(input.resolve(data)?),
+                NumericScaleInput::Statistical(field) => ColorInput::Statistical(field.clone()),
+            };
+            layer.value_scales.insert(
+                *target,
+                NumericEncoding {
                     id: crate::ScaleId::new(fresh_id()?),
                     input,
                     scale: scale.clone(),
@@ -589,6 +681,11 @@ impl From<&str> for NumericScaleInput {
 impl From<super::Mapping> for NumericScaleInput {
     fn from(v: super::Mapping) -> Self {
         Self::Source(v)
+    }
+}
+impl From<crate::grammar::Expression<super::Mapping>> for NumericScaleInput {
+    fn from(value: crate::grammar::Expression<super::Mapping>) -> Self {
+        Self::Source(value.into())
     }
 }
 impl From<crate::grammar::StatField> for NumericScaleInput {
@@ -910,5 +1007,148 @@ impl LayerBuilder {
             }
         }
         self
+    }
+}
+
+/// Explicit hierarchy recipe with temporary primary source selectors.
+pub fn hierarchy(recipe: HierarchyRecipe<Mapping>) -> LayerBuilder {
+    let mut layer = LayerBuilder::new(Geom::Hierarchy);
+    layer.hierarchy = Some(recipe);
+    layer
+}
+fn hierarchy_default(
+    id: Mapping,
+    parent: Mapping,
+    layout: crate::hierarchy::LayoutSpec,
+    projection: HierarchyProjection,
+) -> LayerBuilder {
+    let mut layer = LayerBuilder::new(Geom::Hierarchy);
+    let identity = crate::HierarchyId::new(layer.id.as_ref().map_or(0, |id| id.get()));
+    layer.hierarchy = Some(HierarchyRecipe {
+        identity,
+        source: HierarchySource::Table {
+            id: Some(id),
+            parent: Some(parent),
+        },
+        aggregation: HierarchyAggregation::Count,
+        label: None,
+        order: HierarchyOrder::Input,
+        layout,
+        projection,
+        limits: crate::hierarchy::HierarchyLimits::default(),
+    });
+    layer
+}
+/// Panel-fitted tidy tree with caller-stable row identities.
+pub fn hierarchy_tree(id: impl Into<Mapping>, parent: impl Into<Mapping>) -> LayerBuilder {
+    hierarchy_default(
+        id.into(),
+        parent.into(),
+        crate::hierarchy::LayoutSpec::Tree {
+            options: Default::default(),
+            separation: None,
+        },
+        HierarchyProjection::Cartesian,
+    )
+}
+/// Panel-fitted dendrogram with leaf-aligned depth coordinates.
+pub fn hierarchy_cluster(id: impl Into<Mapping>, parent: impl Into<Mapping>) -> LayerBuilder {
+    hierarchy_default(
+        id.into(),
+        parent.into(),
+        crate::hierarchy::LayoutSpec::Cluster {
+            options: Default::default(),
+            separation: None,
+        },
+        HierarchyProjection::Cartesian,
+    )
+}
+/// Partition rectangles with equal depth steps (explicit aggregation can replace leaf count).
+pub fn hierarchy_icicle(id: impl Into<Mapping>, parent: impl Into<Mapping>) -> LayerBuilder {
+    hierarchy_default(
+        id.into(),
+        parent.into(),
+        crate::hierarchy::LayoutSpec::Partition(Default::default()),
+        HierarchyProjection::Cartesian,
+    )
+}
+/// Partition arcs with area-based depth bands and a 16-unit central hole.
+pub fn hierarchy_sunburst(id: impl Into<Mapping>, parent: impl Into<Mapping>) -> LayerBuilder {
+    hierarchy_icicle(id, parent).hierarchy_projection(HierarchyProjection::Sunburst {
+        inner_radius: 16.,
+        radius: HierarchyRadius::Area,
+    })
+}
+/// Panel-fitted treemap using default squarify and explicit leaf counts.
+pub fn hierarchy_treemap(id: impl Into<Mapping>, parent: impl Into<Mapping>) -> LayerBuilder {
+    hierarchy_default(
+        id.into(),
+        parent.into(),
+        crate::hierarchy::LayoutSpec::Treemap {
+            options: Default::default(),
+            history: true,
+            padding_sides: Default::default(),
+            padding: None,
+            tiler: None,
+        },
+        HierarchyProjection::Cartesian,
+    )
+}
+/// Panel-fitted circle packing; radius retains its layout meaning.
+pub fn hierarchy_pack(id: impl Into<Mapping>, parent: impl Into<Mapping>) -> LayerBuilder {
+    hierarchy_default(
+        id.into(),
+        parent.into(),
+        crate::hierarchy::LayoutSpec::Pack {
+            options: Default::default(),
+            radius: None,
+            padding: None,
+        },
+        HierarchyProjection::Cartesian,
+    )
+}
+impl LayerBuilder {
+    fn hierarchy_change(mut self, change: impl FnOnce(&mut HierarchyRecipe<Mapping>)) -> Self {
+        if let Some(recipe) = &mut self.hierarchy {
+            change(recipe);
+        } else {
+            self.failure = Some(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Hierarchy controls require a hierarchy layer.",
+            ));
+        }
+        self
+    }
+    /// Sum this source field, including own internal-node values.
+    pub fn hierarchy_value(self, field: impl Into<Mapping>) -> Self {
+        self.hierarchy_change(|r| r.aggregation = HierarchyAggregation::Sum(field.into()))
+    }
+    /// Supply any typed aggregation, including a registered Rust accessor.
+    pub fn hierarchy_aggregation(self, value: HierarchyAggregation<Mapping>) -> Self {
+        self.hierarchy_change(|r| r.aggregation = value)
+    }
+    /// Source label for semantic node inspection.
+    pub fn hierarchy_label(self, field: impl Into<Mapping>) -> Self {
+        self.hierarchy_change(|r| r.label = Some(field.into()))
+    }
+    /// Explicit topology fields, including slash paths with inferred ancestors.
+    pub fn hierarchy_source(self, value: HierarchySource<Mapping>) -> Self {
+        self.hierarchy_change(|r| r.source = value)
+    }
+    /// Replace all numerical layout controls; extent sizing remains panel-relative.
+    pub fn hierarchy_layout(self, value: crate::hierarchy::LayoutSpec) -> Self {
+        self.hierarchy_change(|r| r.layout = value)
+    }
+    /// Explicit Cartesian, horizontal, radial or sunburst projection.
+    pub fn hierarchy_projection(self, value: HierarchyProjection) -> Self {
+        self.hierarchy_change(|r| r.projection = value)
+    }
+    /// Stable sibling order before layout.
+    pub fn hierarchy_order(self, value: HierarchyOrder) -> Self {
+        self.hierarchy_change(|r| r.order = value)
+    }
+    /// Override node/depth/payload/work budgets.
+    pub fn hierarchy_limits(self, value: crate::hierarchy::HierarchyLimits) -> Self {
+        self.hierarchy_change(|r| r.limits = value)
     }
 }

@@ -42,7 +42,7 @@ run('python-primary',[sys.executable,ROOT/'scripts/bindings/authoring/python_pro
 run('wasm-primary-build',['cargo','build','-p','chart-wasm','--features','extension-proof','--target','wasm32-unknown-unknown','--locked'])
 wasm=output/'wasm-module'
 run('wasm-primary-generate',[cli,target/'wasm32-unknown-unknown/debug/chart_wasm.wasm','--target','nodejs','--out-dir',wasm])
-for file in ('authoring.cjs','authoring.d.cts','interpolation.cjs','interpolation.d.cts','scales.cjs','scales.d.cts','examples.cjs','examples.d.cts'):shutil.copy2(ROOT/'packages/wasm'/file,wasm/file)
+for file in ('authoring.cjs','authoring.d.cts','interpolation.cjs','interpolation.d.cts','scales.cjs','scales.d.cts','examples.cjs','examples.d.cts','hierarchy.cjs','hierarchy.d.cts'):shutil.copy2(ROOT/'packages/wasm'/file,wasm/file)
 run('wasm-primary',[node,'--expose-gc',ROOT/'scripts/bindings/authoring/wasm_proof.cjs',wasm,output/'wasm'])
 run('primary-compare',[sys.executable,ROOT/'scripts/bindings/authoring/compare.py',output])
 consumer=output/'typing';consumer.mkdir(exist_ok=True)
@@ -58,6 +58,159 @@ stages=output/'stages'
 run('stages-rust',['cargo','run','-p','chart-export','--example','ggplot_stage_proof','--locked','--',stages/'rust'])
 run('stages-python',[sys.executable,ROOT/'scripts/bindings/ggplot_stages.py',module,stages/'python'])
 run('stages-wasm',[node,ROOT/'scripts/bindings/ggplot_stages.cjs',wasm,stages/'wasm'])
+# GG-04 explicit R date/time patterns and multiline publication labels.
+formats=output/'ggplot-formats'
+run('formats-core',['cargo','test','-p','chart-core','--test','ggplot_time_formats','--locked'])
+run('formats-python',[sys.executable,ROOT/'scripts/bindings/ggplot_formats.py',module,formats/'python'])
+run('formats-wasm',[node,ROOT/'scripts/bindings/ggplot_formats.cjs',wasm,formats/'wasm'])
+assert json.loads((formats/'python/records.json').read_text()) == json.loads((formats/'wasm/records.json').read_text())
+src=(ROOT/'scripts/bindings/authoring/ggplot_formats_types.cts').read_text().replace('../../../target/ggplot-formats/wasm-module/','../wasm-module/')
+(consumer/'ggplot-formats.cts').write_text(src)
+run('typescript-formats',tsc+['--noEmit','--strict','--target','es2022','--lib','es2022,esnext.disposable','--module','nodenext',consumer/'ggplot-formats.cts'])
+run('python-formats-types',base+[ROOT/'scripts/bindings/authoring/ggplot_formats_typing.py'])
+# GG-04 exceptional limit populations and fractional binned counts.
+scale_limits=output/'ggplot-scale-limits'
+run('scale-limits-core',['cargo','test','-p','chart-core','--test','ggplot_binned_guides','--test','ggplot_degenerate_mapping','--locked'])
+run('scale-limits-python',[sys.executable,ROOT/'scripts/bindings/ggplot_scale_limits.py',module,scale_limits/'python'])
+run('scale-limits-wasm',[node,ROOT/'scripts/bindings/ggplot_scale_limits.cjs',wasm,scale_limits/'wasm'])
+assert json.loads((scale_limits/'python/records.json').read_text()) == json.loads((scale_limits/'wasm/records.json').read_text())
+for sample in ('infinite-limit','hidden-bins','fractional-bins'):
+    assert (scale_limits/'python'/f'{sample}.png').read_bytes() == (scale_limits/'wasm'/f'{sample}.png').read_bytes()
+# GG-04 positional bins include finite and unbounded reference panels.
+positional=output/'ggplot-positional'
+run('positional-core',['cargo','test','-p','chart-core','--test','ggplot_position_bins','--locked'])
+run('positional-python',[sys.executable,ROOT/'scripts/bindings/ggplot_position_bins.py',module,positional/'python'])
+run('positional-wasm',[node,ROOT/'scripts/bindings/ggplot_position_bins.cjs',wasm,positional/'wasm'])
+assert json.loads((positional/'python/records.json').read_text()) == json.loads((positional/'wasm/records.json').read_text())
+for sample in ('identity','sqrt','reverse','unbounded'):
+    name=sample+'-positional-bins.png'
+    assert (positional/'python'/name).read_bytes() == (positional/'wasm'/name).read_bytes()
+src=(ROOT/'scripts/bindings/authoring/ggplot_position_bins_types.cts').read_text().replace('../../../target/ggplot-positional/wasm-module/','../wasm-module/')
+(consumer/'ggplot-position-bins.cts').write_text(src)
+run('typescript-positional',tsc+['--noEmit','--strict','--target','es2022','--lib','es2022,esnext.disposable','--module','nodenext',consumer/'ggplot-position-bins.cts'])
+run('python-positional-types',base+[ROOT/'scripts/bindings/authoring/ggplot_position_bins_typing.py'])
+# GG-04 numeric and temporal minor selection shares core semantics across hosts.
+minor=output/'ggplot-minor'
+run('minor-core',['cargo','test','-p','chart-core','--test','ggplot_minor_breaks','--locked'])
+run('minor-python',[sys.executable,ROOT/'scripts/bindings/ggplot_minor_breaks.py',module,minor/'python'])
+run('minor-wasm',[node,ROOT/'scripts/bindings/ggplot_minor_breaks.cjs',wasm,minor/'wasm'])
+run('minor-compare',[sys.executable,ROOT/'scripts/bindings/ggplot_minor_compare.py',minor])
+src=(ROOT/'scripts/bindings/authoring/ggplot_minor_types.cts').read_text().replace('../../../target/ggplot-minor/wasm-module/','../wasm-module/')
+(consumer/'ggplot-minor.cts').write_text(src)
+run('typescript-minor',tsc+['--noEmit','--strict','--target','es2022','--lib','es2022,esnext.disposable','--module','nodenext',consumer/'ggplot-minor.cts'])
+run('python-minor-types',base+[ROOT/'scripts/bindings/authoring/ggplot_minor_typing.py'])
+# GG-04 category-index continuous limits and immutable population updates.
+discrete_limits=output/'ggplot-positional-limits'
+run('positional-limits-ranges',['cargo','test','-p','chart-core','--lib','category_index_ranges_match_reference_authored_limits','--locked'])
+run('positional-limits-core',['cargo','test','-p','chart-core','--test','ggplot_discrete_limits','--locked'])
+run('positional-limits-python',[sys.executable,ROOT/'scripts/bindings/ggplot_positional_limits.py',module,discrete_limits/'python'])
+run('positional-limits-wasm',[node,ROOT/'scripts/bindings/ggplot_positional_limits.cjs',wasm,discrete_limits/'wasm'])
+assert json.loads((discrete_limits/'python/records.json').read_text()) == json.loads((discrete_limits/'wasm/records.json').read_text())
+for sample in ('unused-levels','one-infinite-endpoint','undefined-positions','excluded-population'):
+    assert (discrete_limits/'python'/f'{sample}.png').read_bytes() == (discrete_limits/'wasm'/f'{sample}.png').read_bytes()
+src=(ROOT/'scripts/bindings/authoring/ggplot_discrete_limits_types.cts').read_text().replace('../../../target/ggplot-discrete-limits/wasm-module/','../wasm-module/')
+(consumer/'ggplot-discrete-limits.cts').write_text(src)
+run('typescript-discrete-limits',tsc+['--noEmit','--strict','--target','es2022','--lib','es2022,esnext.disposable','--module','nodenext',consumer/'ggplot-discrete-limits.cts'])
+run('python-discrete-limits-types',base+[ROOT/'scripts/bindings/authoring/ggplot_discrete_limits_typing.py'])
+nullable_discrete=output/'ggplot-discrete-null'
+run('discrete-null-core',['cargo','test','-p','chart-core','--test','ggplot_discrete_null','--test','ggplot_untrained_discrete','--locked'])
+run('discrete-null-python',[sys.executable,ROOT/'scripts/bindings/ggplot_discrete_null.py',module,nullable_discrete/'python'])
+run('discrete-null-wasm',[node,ROOT/'scripts/bindings/ggplot_discrete_null.cjs',wasm,nullable_discrete/'wasm'])
+assert json.loads((nullable_discrete/'python/records.json').read_text()) == json.loads((nullable_discrete/'wasm/records.json').read_text())
+for sample in ['authored-missing-first','factor-missing-middle','suppressed-missing','empty-palette','unpainted-categories','identity-missing-first']:
+    assert (nullable_discrete/'python'/f'{sample}.png').read_bytes() == (nullable_discrete/'wasm'/f'{sample}.png').read_bytes()
+
+nullable_position=output/'ggplot-discrete-position'
+run('discrete-position-core',['cargo','test','-p','chart-core','--test','ggplot_discrete_position','--locked'])
+run('discrete-position-python',[sys.executable,ROOT/'scripts/bindings/ggplot_discrete_position.py',module,nullable_position/'python'])
+run('discrete-position-wasm',[node,ROOT/'scripts/bindings/ggplot_discrete_position.cjs',wasm,nullable_position/'wasm'])
+assert json.loads((nullable_position/'python/records.json').read_text()) == json.loads((nullable_position/'wasm/records.json').read_text())
+for sample in ('True','False','expanded'):
+    for fmt in ('svg','pdf','png'):
+        assert (nullable_position/'python'/f'null-positions-{sample}.{fmt}').read_bytes() == (nullable_position/'wasm'/f'null-positions-{sample}.{fmt}').read_bytes()
+
+secondary_discrete=output/'ggplot-discrete-secondary'
+run('discrete-secondary-core',['cargo','test','-p','chart-core','--test','ggplot_discrete_secondary','--locked'])
+run('discrete-secondary-python',[sys.executable,ROOT/'scripts/bindings/ggplot_discrete_secondary.py',module,secondary_discrete/'python'])
+run('discrete-secondary-wasm',[node,ROOT/'scripts/bindings/ggplot_discrete_secondary.cjs',wasm,secondary_discrete/'wasm'])
+assert json.loads((secondary_discrete/'python/records.json').read_text()) == json.loads((secondary_discrete/'wasm/records.json').read_text())
+for sample in ('inherit','numeric','explicit'):
+    for fmt in ('svg','pdf','png'):
+        assert (secondary_discrete/'python'/f'discrete-secondary-{sample}.{fmt}').read_bytes() == (secondary_discrete/'wasm'/f'discrete-secondary-{sample}.{fmt}').read_bytes()
+
+position_palettes=output/'ggplot-discrete-position-palette'
+run('discrete-position-palette-core',['cargo','test','-p','chart-core','--test','ggplot_discrete_position_palette','--locked'])
+run('discrete-position-palette-python',[sys.executable,ROOT/'scripts/bindings/ggplot_discrete_position_palette.py',module,position_palettes/'python'])
+run('discrete-position-palette-wasm',[node,ROOT/'scripts/bindings/ggplot_discrete_position_palette.cjs',wasm,position_palettes/'wasm'])
+assert json.loads((position_palettes/'python/records.json').read_text()) == json.loads((position_palettes/'wasm/records.json').read_text())
+for sample in ('reverse','spread','repeated','nonfinite'):
+    for fmt in ('svg','pdf','png'):
+        assert (position_palettes/'python'/f'position-palette-{sample}.{fmt}').read_bytes() == (position_palettes/'wasm'/f'position-palette-{sample}.{fmt}').read_bytes()
+
+temporal_aesthetics=output/'ggplot-temporal-aesthetics'
+run('temporal-aesthetics-core',['cargo','test','-p','chart-core','--test','ggplot_temporal_aesthetics','--locked'])
+run('temporal-aesthetics-python',[sys.executable,ROOT/'scripts/bindings/ggplot_temporal_aesthetics.py',module,temporal_aesthetics/'python'])
+run('temporal-aesthetics-wasm',[node,ROOT/'scripts/bindings/ggplot_temporal_aesthetics.cjs',wasm,temporal_aesthetics/'wasm'])
+assert json.loads((temporal_aesthetics/'python/records.json').read_text()) == json.loads((temporal_aesthetics/'wasm/records.json').read_text())
+for sample in ('size','alpha','colour','fill'):
+    for fmt in ('svg','pdf','png'):
+        assert (temporal_aesthetics/'python'/f'temporal-{sample}.{fmt}').read_bytes() == (temporal_aesthetics/'wasm'/f'temporal-{sample}.{fmt}').read_bytes()
+
+run('temporal-precision-python',[sys.executable,ROOT/'scripts/bindings/ggplot_temporal_precision.py',module,temporal_aesthetics/'python'])
+run('temporal-precision-wasm',[node,ROOT/'scripts/bindings/ggplot_temporal_precision.cjs',wasm,temporal_aesthetics/'wasm'])
+assert json.loads((temporal_aesthetics/'python/precision-records.json').read_text()) == json.loads((temporal_aesthetics/'wasm/precision-records.json').read_text())
+
+run('temporal-guides-core',['cargo','test','-p','chart-core','--test','ggplot_temporal_guides','--locked'])
+run('temporal-guides-python',[sys.executable,ROOT/'scripts/bindings/ggplot_temporal_guides.py',module,temporal_aesthetics/'python'])
+run('temporal-guides-wasm',[node,ROOT/'scripts/bindings/ggplot_temporal_guides.cjs',wasm,temporal_aesthetics/'wasm'])
+assert json.loads((temporal_aesthetics/'python/guide-records.json').read_text()) == json.loads((temporal_aesthetics/'wasm/guide-records.json').read_text())
+for sample in ('date-short-default','datetime-short-width','date-constant-null_breaks'):
+    for fmt in ('svg','pdf','png'):
+        assert (temporal_aesthetics/'python'/f'{sample}.{fmt}').read_bytes() == (temporal_aesthetics/'wasm'/f'{sample}.{fmt}').read_bytes()
+
+discrete_limits=output/'ggplot-discrete-limits'
+run('discrete-limits-core',['cargo','test','-p','chart-extension-example','--test','discrete_limits','--locked'])
+run('discrete-limits-python',[sys.executable,ROOT/'scripts/bindings/ggplot_discrete_limits.py',module,discrete_limits/'python'])
+run('discrete-limits-wasm',[node,ROOT/'scripts/bindings/ggplot_discrete_limits.cjs',wasm,discrete_limits/'wasm'])
+assert json.loads((discrete_limits/'python/discrete-limit-records.json').read_text()) == json.loads((discrete_limits/'wasm/discrete-limit-records.json').read_text())
+for sample in ('discrete-reverse','discrete-fixed','identity-reverse','identity-fixed'):
+    for fmt in ('svg','pdf','png'):
+        assert (discrete_limits/'python'/f'{sample}.{fmt}').read_bytes() == (discrete_limits/'wasm'/f'{sample}.{fmt}').read_bytes()
+# Numeric callback limits retain raw vector arity and source-domain replacement.
+numeric_limits=output/'ggplot-numeric-limits'
+run('numeric-limits-core',['cargo','test','-p','chart-extension-example','--test','numeric_limits','--locked'])
+run('numeric-limits-python',[sys.executable,ROOT/'scripts/bindings/ggplot_numeric_limits.py',module,numeric_limits/'python'])
+run('numeric-limits-wasm',[node,ROOT/'scripts/bindings/ggplot_numeric_limits.cjs',wasm,numeric_limits/'wasm'])
+assert json.loads((numeric_limits/'python/numeric-limit-records.json').read_text()) == json.loads((numeric_limits/'wasm/numeric-limit-records.json').read_text())
+for family in ('continuous','binned','date','datetime'):
+    for control in ('reverse','fixed','single'):
+        for fmt in ('svg','pdf','png'):
+            assert (numeric_limits/'python'/f'{family}-{control}.{fmt}').read_bytes() == (numeric_limits/'wasm'/f'{family}-{control}.{fmt}').read_bytes()
+binned_styles=output/'ggplot-binned-styles'
+run('binned-styles-core',['cargo','test','-p','chart-core','--test','ggplot_binned_styles','--locked'])
+run('binned-styles-python',[sys.executable,ROOT/'scripts/bindings/ggplot_binned_styles.py',module,binned_styles/'python'])
+run('binned-styles-wasm',[node,ROOT/'scripts/bindings/ggplot_binned_styles.cjs',wasm,binned_styles/'wasm'])
+assert json.loads((binned_styles/'python/binned-style-records.json').read_text()) == json.loads((binned_styles/'wasm/binned-style-records.json').read_text())
+for sample in ('solid','hollow','linetype','brewer'):
+    for fmt in ('svg','pdf','png'):
+        assert (binned_styles/'python'/f'{sample}.{fmt}').read_bytes() == (binned_styles/'wasm'/f'{sample}.{fmt}').read_bytes()
+
+run('binned-numeric-core',['cargo','test','-p','chart-core','--test','ggplot_binned_numeric','--locked'])
+run('binned-numeric-python',[sys.executable,ROOT/'scripts/bindings/ggplot_binned_numeric.py',module,binned_styles/'python'])
+run('binned-numeric-wasm',[node,ROOT/'scripts/bindings/ggplot_binned_numeric.cjs',wasm,binned_styles/'wasm'])
+run('line-widths-python',[sys.executable,ROOT/'scripts/bindings/ggplot_line_widths.py',module,binned_styles/'python'])
+run('line-widths-wasm',[node,ROOT/'scripts/bindings/ggplot_line_widths.cjs',wasm,binned_styles/'wasm'])
+for record in ('binned-numeric-records.json','line-width-records.json'):
+    assert json.loads((binned_styles/'python'/record).read_text()) == json.loads((binned_styles/'wasm'/record).read_text())
+for sample in ('numeric-size','numeric-area','numeric-alpha','numeric-linewidth','width-segment','width-line','width-path','width-rect'):
+    for fmt in ('svg','pdf','png'):
+        assert (binned_styles/'python'/f'{sample}.{fmt}').read_bytes() == (binned_styles/'wasm'/f'{sample}.{fmt}').read_bytes()
+
+src=(ROOT/'scripts/bindings/authoring/ggplot_discrete_position_types.cts').read_text().replace('../../../target/ggplot-position-null/wasm-module/','../wasm-module/')
+(consumer/'ggplot-discrete-position.cts').write_text(src)
+run('typescript-discrete-position',tsc+['--noEmit','--strict','--target','es2022','--lib','es2022,esnext.disposable','--module','nodenext',consumer/'ggplot-discrete-position.cts'])
+run('python-discrete-position-types',base+[ROOT/'scripts/bindings/authoring/ggplot_discrete_position_typing.py'])
+
 src=(ROOT/'scripts/bindings/authoring/stages_types.cts').read_text().replace('../../../target/ggplot-stages/primary/wasm-module/','../wasm-module/')
 (consumer/'stages.cts').write_text(src)
 run('typescript-stages',tsc+['--noEmit','--strict','--target','es2022','--lib','es2022,esnext.disposable','--module','nodenext',consumer/'stages.cts'])
@@ -298,3 +451,66 @@ run('interpolation-integration-typescript',tsc+['--noEmit','--strict','--target'
 run('interpolation-integration-python-types',base+[ROOT/'scripts/bindings/authoring/interpolation_integration_typing.py'])
 invalid=run('interpolation-integration-python-types-invalid',base+[ROOT/'scripts/bindings/authoring/interpolation_integration_typing_invalid.py'],expected=1)
 assert 'Found 5 errors in 1 file' in invalid
+
+# AXIS-04/05 signed geometry, portable components and one retained publication route.
+axis_components=output/'axis-components'
+run('axis-components-core',['cargo','test','-p','chart-core','--test','axis_components','--test','axis_ticks','--locked'])
+run('axis-components-publication',['cargo','test','-p','chart-export','--test','axis_components','--locked'])
+run('axis-geometry-rust',['cargo','run','-p','chart-export','--example','axis_geometry_proof','--locked','--',output/'axis-geometry'])
+run('axis-components-rust',['cargo','run','-p','chart-export','--example','axis_component_proof','--locked','--',axis_components/'rust'])
+for host,extension,command,owner in [('python','py',[sys.executable],module),('wasm','cjs',[node],wasm)]:
+    run('axis-components-'+host,command+[ROOT/'scripts/bindings'/('axis_components.'+extension),owner,axis_components/host])
+run('axis-components-compare',[sys.executable,ROOT/'scripts/bindings/axis_components_compare.py',axis_components])
+# AX05 shares the core tick-join plan, explicit host samples and displayed capture.
+axis_transitions=output/'axis-transitions'
+run('axis-transitions-core',['cargo','test','-p','chart-core','--test','axis_transitions','--locked'])
+run('axis-transitions-publication',['cargo','test','-p','chart-export','--test','axis_transitions','--locked'])
+run('axis-transitions-rust',['cargo','run','-p','chart-export','--example','axis_transition_proof','--locked','--',axis_transitions/'rust'])
+for host,extension,command,owner in [('python','py',[sys.executable],module),('wasm','cjs',[node],wasm)]:
+    run('axis-transitions-'+host,command+[ROOT/'scripts/bindings'/('axis_transitions.'+extension),owner,axis_transitions/host])
+run('axis-transitions-compare',[sys.executable,ROOT/'scripts/bindings/axis_components_compare.py',axis_transitions,'transitions'])
+src=(ROOT/'scripts/bindings/authoring/axis_transition_types.cts').read_text().replace('../../../packages/wasm/','../wasm-module/')
+(consumer/'axis-transitions.cts').write_text(src)
+run('typescript-axis-transitions',tsc+['--noEmit','--strict','--target','es2022','--lib','es2022,esnext.disposable','--module','nodenext',consumer/'axis-transitions.cts'])
+run('python-axis-transitions-types',base+[ROOT/'scripts/bindings/authoring/axis_transition_typing.py'])
+
+# HIR-01 through HIR-08: one core session and chart recipe path in actual hosts.
+hierarchy=output/'hierarchy';hierarchy.mkdir(exist_ok=True)
+run('hierarchy-requests',[sys.executable,ROOT/'scripts/hierarchy/requests.py',hierarchy/'requests.json'])
+run('hierarchy-rust',['cargo','run','-p','chart-extension-example','--example','hierarchy_proof','--locked','--',hierarchy/'requests.json',hierarchy/'rust.json'])
+run('hierarchy-python',[sys.executable,ROOT/'scripts/bindings/hierarchy.py',hierarchy/'requests.json',hierarchy/'python.json',module])
+run('hierarchy-wasm',[node,ROOT/'scripts/bindings/hierarchy.cjs',wasm,hierarchy/'requests.json',hierarchy/'wasm.json'])
+run('hierarchy-compare',[sys.executable,ROOT/'scripts/hierarchy/compare.py',hierarchy/'rust.json',hierarchy/'python.json',hierarchy/'wasm.json'])
+run('hierarchy-padding-requests',[sys.executable,ROOT/'scripts/hierarchy/padding.py','requests',hierarchy/'padding-requests.json'])
+run('hierarchy-padding-rust',['cargo','run','-p','chart-extension-example','--example','hierarchy_proof','--locked','--',hierarchy/'padding-requests.json',hierarchy/'padding-rust.json'])
+run('hierarchy-padding-python',[sys.executable,ROOT/'scripts/bindings/hierarchy.py',hierarchy/'padding-requests.json',hierarchy/'padding-python.json',module])
+run('hierarchy-padding-wasm',[node,ROOT/'scripts/bindings/hierarchy.cjs',wasm,hierarchy/'padding-requests.json',hierarchy/'padding-wasm.json'])
+run('hierarchy-padding-compare',[sys.executable,ROOT/'scripts/hierarchy/padding.py','compare',hierarchy/'padding-rust.json',hierarchy/'padding-python.json',hierarchy/'padding-wasm.json'])
+run('hierarchy-control-requests',[sys.executable,ROOT/'scripts/hierarchy/controls.py','requests',hierarchy/'control-requests.json'])
+run('hierarchy-control-rust',['cargo','run','-p','chart-extension-example','--example','hierarchy_proof','--locked','--',hierarchy/'control-requests.json',hierarchy/'control-rust.json'])
+run('hierarchy-control-python',[sys.executable,ROOT/'scripts/bindings/hierarchy.py',hierarchy/'control-requests.json',hierarchy/'control-python.json',module])
+run('hierarchy-control-wasm',[node,ROOT/'scripts/bindings/hierarchy.cjs',wasm,hierarchy/'control-requests.json',hierarchy/'control-wasm.json'])
+run('hierarchy-control-compare',[sys.executable,ROOT/'scripts/hierarchy/controls.py','compare',hierarchy/'control-rust.json',hierarchy/'control-python.json',hierarchy/'control-wasm.json'])
+hierarchy_charts=hierarchy/'charts'
+run('hierarchy-chart-rust',['cargo','run','-p','chart-export','--example','hierarchy_chart_proof','--locked','--',hierarchy_charts/'rust'])
+for host,extension,command,owner in [('python','py',[sys.executable],module),('wasm','cjs',[node],wasm)]:
+    run('hierarchy-chart-'+host,command+[ROOT/'scripts/bindings'/('hierarchy_chart.'+extension),owner,hierarchy_charts/host])
+    run('hierarchy-updates-'+host,command+[ROOT/'scripts/bindings'/('hierarchy_updates.'+extension),owner,hierarchy/(host+'-updates.json')])
+    run('hierarchy-ownership-'+host,command+[ROOT/'scripts/bindings'/('hierarchy_ownership.'+extension),owner,hierarchy/(host+'-ownership.json')])
+run('hierarchy-updates-compare',[sys.executable,ROOT/'scripts/hierarchy/updates_compare.py',hierarchy/'python-updates.json',hierarchy/'wasm-updates.json'])
+run('hierarchy-chart-compare',[sys.executable,ROOT/'scripts/bindings/axis_components_compare.py',hierarchy_charts,'hierarchy'])
+src=(ROOT/'scripts/bindings/authoring/hierarchy_types.cts').read_text().replace('../../../packages/wasm/','../wasm-module/')
+(consumer/'hierarchy.cts').write_text(src)
+run('typescript-hierarchy',tsc+['--noEmit','--strict','--target','es2022','--lib','es2022,esnext.disposable','--module','nodenext',consumer/'hierarchy.cts'])
+run('python-hierarchy-types',base+[ROOT/'scripts/bindings/authoring/hierarchy_typing.py'])
+# GG-03: independent channels and reference glyphs use the same live host builds.
+aesthetics=output/'ggplot-aesthetics';aesthetics.mkdir(exist_ok=True)
+run('ggplot-aesthetics-rust',['cargo','run','-p','chart-export','--example','ggplot_aesthetics','--locked','--',aesthetics/'rust'])
+for host,extension,command,owner in [('python','py',[sys.executable],module),('wasm','cjs',[node],wasm)]:
+    run('ggplot-aesthetics-'+host,command+[ROOT/'scripts/bindings'/('ggplot_aesthetics.'+extension),owner,aesthetics/host])
+    run('ggplot-aesthetic-updates-'+host,command+[ROOT/'scripts/bindings'/('ggplot_aesthetic_updates.'+extension),owner,aesthetics/host/'updates.json'])
+run('ggplot-aesthetics-compare',[sys.executable,ROOT/'scripts/bindings/ggplot_aesthetic_compare.py',aesthetics/'rust',aesthetics/'python',aesthetics/'wasm',aesthetics/'comparison.json'])
+src=(ROOT/'scripts/bindings/authoring/ggplot_aesthetic_types.cts').read_text().replace('../../../packages/wasm/','../wasm-module/')
+(consumer/'ggplot-aesthetics.cts').write_text(src)
+run('typescript-ggplot-aesthetics',tsc+['--noEmit','--strict','--target','es2022','--lib','es2022,esnext.disposable','--module','nodenext',consumer/'ggplot-aesthetics.cts'])
+run('python-ggplot-aesthetics-types',base+[ROOT/'scripts/bindings/authoring/ggplot_aesthetic_typing.py'])

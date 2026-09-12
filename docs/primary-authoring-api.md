@@ -117,7 +117,7 @@ or a new row in its own feature package, including applicable host proofs.
 | A-FOUNDATION — geometry, scene, services, diagnostic, limits, grammar/prepared | Direct immutable typed values/helpers; geometry/resource/precision/capability limits on owning builder; retained structured diagnostics/inspection | AP-02/04/06; FIX-AUTH02 errors | QUALIFIED ([E1](evidence/primary-authoring-completion-2026-09-08.md)) |
 | A-RUNTIME — portable/{session,wire,input,stream,encoding,mod} | Typed Chart owns execution; portable Session forwards decode/encode boundaries; strict versions/exact values/state/receipts preserved | AP-01/07; FIX-AUTH01 legacy | QUALIFIED ([E3](evidence/primary-authoring-completion-2026-09-08.md)) |
 | A-NATIVE — gpui-charts native/view/paint and extensions | Retained native builder/input, font/painter resources, tooltip and controls, command/event/accessibility hooks, scheduling and presentation | AP-06; FIX-AUTH06 native | QUALIFIED ([E4](evidence/primary-authoring-completion-2026-09-08.md)) |
-| A-KIT — gpui-charts-kit | Optional theme/context adapter over same native destination | AP-06; FIX-AUTH06 kit | QUALIFIED ([E4](evidence/primary-authoring-completion-2026-09-08.md)) |
+| A-KIT — withdrawn Kit crate | No first-party Kit adapter crate; hosts map Kit tokens into `ThemePatch` / `ChartInput::from_plot` | AP-06; [ADR-023](adr/023-withdraw-optional-kit-crate.md) | WITHDRAWN (E4 Kit gallery observation remains historical) |
 | A-EXPORT — chart-export profile/fonts/request/snapshot/encode/jobs/svg/portable | Output destination and export_options; all page/view/text/DPI/background/precision/budget controls, capture bases/interactions, manifests/cancel/queue | AP-06; FIX-AUTH06 capture | QUALIFIED ([E4](evidence/primary-authoring-completion-2026-09-08.md)) |
 | A-PYTHON — chart-python | Host-native data/plot/components/runtime/results, exact ints/nulls, retained resources, errors/properties, detachment/disposal | AP-07; FIX-AUTH07 python | QUALIFIED ([E3](evidence/primary-authoring-completion-2026-09-08.md)) |
 | A-WASM — chart-wasm | Same core API via host-native builders, bigint/exact adapters, nullable fields, errors/properties and memory/disposal | AP-07; FIX-AUTH07 wasm | QUALIFIED ([E3](evidence/primary-authoring-completion-2026-09-08.md)) |
@@ -127,9 +127,9 @@ or a new row in its own feature package, including applicable host proofs.
 ## Future capability rows
 
 All D3/GG inventories referenced by the main plan remain authoritative. Their source
-kernels are not delivered by this refactor. The mapped shape/linetype/fill/alpha and
-size/linewidth separation requires GG-03, inferred grouping GG-02, manual/reference
-scale policies GG-04 and full guide composition GG-05. Mapped labels/math and advanced
+kernels are not delivered by this refactor. GG-03 extends the same builders with mapped
+shape/linetype/fill/alpha and size/linewidth separation; inferred grouping is GG-02,
+manual/reference scale policies GG-04 and full guide composition GG-05. Mapped labels/math and advanced
 coordinates require their respective GG packages. All other D3 color/interpolate/path/
 shape/hierarchy/scale families integrate in A-SCALE/A-COLOR/A-GEOM/A-FOUNDATION as they
 land. Every future package extends these primary builders, examples and applicable
@@ -456,3 +456,124 @@ interpolation wire/API defaults remain unchanged. The
 floating color and size scales, legends/themes, explicit transform/zoom frames, exact
 keys, updates and retained publication. Axis transition lifecycle certification remains
 with WP-AX05/06; this API supplies explicit samples without scheduling animation.
+
+## Positional guide geometry and components
+
+Axis and independent guide builders share `guide_geometry` / `guideGeometry` and
+`guide_components` / `guideComponents`. Geometry supports combined `tick_size`, separate
+inner/outer sizes, padding and an optional offset; `None`/`null` resets inherited controls.
+D3 profiles preserve semantic ticks by default. `GuideGeometry.labels` explicitly selects
+`Preserve`, `HideLabels` or `ThinTicks`; clipping of inward ticks is separate from cell
+overflow. `layout_options().device_scale(...)` supplies the output-unit offset policy.
+Native uses the window scale factor; PNG DPI does not silently change guide geometry.
+
+`GuideComponents` has `domain`, `ticks`, `labels` and `per_tick` fields. Line options are
+`visible`, `color`, `width` and `dashes`; label options are `visible`, `color`, `font_size`,
+`typography` and `rotation`. Typography is the existing portable RichRun record with
+supplied font/fallback/weight/size policy; its text is replaced by the selected label.
+Per-tick overrides specify an original selection `index`, optional combined `visible`,
+and independent `line` / `label` overrides. These settings never change the mapped data
+marks. Invalid dimensions, dashes, font policy or repeated style indices fail normally.
+
+Geometry requires wire version 13 and component styles require version 14. Older
+unconfigured definitions retain their earlier versions. `Frame.scene()` exposes
+optional guide component metadata and `Frame.guides()` retains complete selected values
+and labels, including hidden components. See [ADR-021](adr/021-independent-axis-guides.md)
+and the [component example](../examples/common/axis_component_fixtures.rs).
+
+## Axis transition sampling and displayed capture
+
+Native `ChartInput::guide_transition(Duration)` opts into timed guides; the default is
+immediate presentation. `ChartView::set_guide_transition` updates that duration. Native
+reduced motion completes the transition immediately while retaining tick identities.
+
+Rust and Python use `target.guide_transition(previous)` to obtain an owned
+`FigureTransition`; WASM uses `target.guideTransition(previous)`. All three expose
+`sample(fraction)` for finite fractions in `[0, 1]`. The result is an ordinary owned
+figure supporting scene, guide, presentation and SVG/PDF/PNG export. Interruption uses
+that sample as the previous figure. Plans and sampled figures retain resources after
+input handles are disposed; disposing the plan rejects subsequent sampling.
+
+```python
+plan = target.guide_transition(previous)
+mid = plan.sample(0.5)
+interrupted = next_target.guide_transition(mid)
+image = interrupted.sample(0.5).export("png")
+chart.acknowledge_frame(mid)  # Only if the chart still matches this target state.
+frozen = chart.request(output, export_options(900, 300).basis("displayed")).prepare()
+```
+
+Use the exact presented scene dimensions for `displayed` capture; resizing/reflow and
+full-domain capture reject with this basis. Default `presented` captures acknowledged
+inputs and reflows them at publication dimensions. `current` captures current inputs.
+`presentation()` returns retained lifecycle IDs, positions and opacities. Animated scene
+metadata uses scene wire v15; static definitions keep their earlier version. See the
+[three-state example](../examples/common/axis_transition_fixtures.rs) and
+[native clock/capture example](../examples/chart-gallery/examples/axis_transitions.rs).
+
+## Hierarchy authoring (HIR-07)
+
+`hierarchy_tree(id, parent)`, `hierarchy_cluster`, `hierarchy_icicle`,
+`hierarchy_sunburst`, `hierarchy_treemap` and `hierarchy_pack` create layers over a keyed
+source table. Rust also accepts owner-scoped field mappings; Python/WASM factories use
+field names and their value/label setters accept owned `Field` handles. The default
+aggregation counts leaves. Select `.hierarchy_value("value")` to sum each node's own
+value plus descendants, `.hierarchy_order(...)` for stable sorting and
+`.hierarchy_label(...)` for inspection labels. These layers need no x/y aesthetic.
+A pure hierarchy plot hides unused default axes. The generic `hierarchy(recipe)` takes
+explicit owner, source, aggregation, order, layout, projection and resource limits;
+`HierarchySource::Paths` (host descriptor `{"Paths":"path"}`) imputes missing ancestors.
+
+```python
+import finstack_chart as c
+
+data = c.Data.columns({
+    "id": ["root", "a", "b"],
+    "parent": [None, "root", "root"],
+    "value": [0., 1., 3.],
+}, keys=[101, 102, 103])
+plot = c.plot(data).layer(
+    c.hierarchy_treemap("id", "parent")
+     .hierarchy_value("value").hierarchy_label("id")
+).build()
+```
+
+`.hierarchy_layout` takes the canonical Tree/Cluster/Partition/Treemap/Pack descriptor.
+All standalone numeric controls are available, including registered separation, padding,
+radius and tiler operations. Destination extent is fitted to the panel; fixed tree node
+spacing remains in destination units. `.hierarchy_projection` selects Cartesian,
+horizontal, radial or sunburst with explicit inner radius and linear/area depth mapping.
+Circle radius is not area-scaled. Source color aesthetics and theme styling use the common
+pipeline. Labels are semantic inspection labels rather than an automatic collision/layout
+policy for visible node text.
+
+Python/WASM expose `Hierarchy` independently of charts, with version-1 input descriptors,
+node/traversal/search/sum/count/sort methods, layout/configuration, copy/subtree copy,
+strict snapshot round trips and independent packing helpers. IDs in descriptors are
+exact decimal strings. JavaScript includes snake_case and camelCase aliases. Registered
+callbacks are native implementations captured by an explicit registry; host functions are
+not per-node callbacks. See the public type declarations and [ADR-022](adr/022-hierarchy-topology-and-layout-history.md)
+for the full ownership and finite-value policy.
+
+Resquarify continuation requires retained history. Live/native consumers use the
+acknowledged frame; standalone publication can call
+`request.with_hierarchy_history(previous_frame)` in Python/WASM or pass the previous
+layout in Rust. A fresh request has fresh history. Immutable frames retain exact geometry,
+compact source membership and coherent scene identities after subsequent updates/disposal.
+Scene version 15 includes `hierarchies.snapshots`: node records, recipe, panel/inset scope,
+source keys once, per-node subtree ranges and history counts. Inspection uses painted paths
+(including sunburst holes), visits nodes before links and reports label/depth/height/value
+and member count. Zero-area nodes remain queryable in structural metadata.
+
+Treemap accessor precedence is explicit: `padding_sides` overrides `padding`, which
+overrides the numeric `options.padding_*` fields. For example,
+`{"Treemap":{"options":{},"history":False,"padding":{"Constant":1.},"padding_sides":{"Top":"Depth"}}}`
+uses depth as top padding and one unit on the remaining sides. `Inner`, `Top`, `Right`,
+`Bottom` and `Left` accept constants, fields, value/depth or registered accessors. An
+outer-padding operation assigns the four outer sides. Replace the immutable descriptor
+to reset controls; `Hierarchy.configuration()` returns normalized values and
+`effective_ratio` reports the clamped squarify/resquarify ratio. Tree/cluster node spacing
+and extent remain mutually exclusive. Constructor field selections live in the caller's
+`StratifyOptions`/input descriptor; changing or resetting them constructs a new topology.
+The [final hierarchy catalog](evidence/phase-2-hierarchy-integration/verdict-catalog.md)
+maps every D3 export, method, default and adaptation to executed evidence.

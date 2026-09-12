@@ -1,0 +1,265 @@
+{
+  "reference": "scales 1.4.0",
+  "cases": [
+    {
+      "kind": "solid",
+      "n": 0,
+      "values": [],
+      "warnings": []
+    },
+    {
+      "kind": "solid",
+      "n": 1,
+      "values": [
+        16
+      ],
+      "warnings": []
+    },
+    {
+      "kind": "solid",
+      "n": 6,
+      "values": [
+        16,
+        17,
+        15,
+        3,
+        7,
+        8
+      ],
+      "warnings": []
+    },
+    {
+      "kind": "solid",
+      "n": 7,
+      "values": [
+        16,
+        17,
+        15,
+        3,
+        7,
+        8,
+        null
+      ],
+      "warnings": [
+        "The shape palette can deal with a maximum of 6 discrete values because more\nthan 6 becomes difficult to discriminate\ni you have requested 7 values. Consider specifying shapes manually if you need\n  that many of them."
+      ]
+    },
+    {
+      "kind": "solid",
+      "n": 13,
+      "values": [
+        16,
+        17,
+        15,
+        3,
+        7,
+        8,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "warnings": [
+        "The shape palette can deal with a maximum of 6 discrete values because more\nthan 6 becomes difficult to discriminate\ni you have requested 13 values. Consider specifying shapes manually if you need\n  that many of them."
+      ]
+    },
+    {
+      "kind": "solid",
+      "n": 14,
+      "values": [
+        16,
+        17,
+        15,
+        3,
+        7,
+        8,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "warnings": [
+        "The shape palette can deal with a maximum of 6 discrete values because more\nthan 6 becomes difficult to discriminate\ni you have requested 14 values. Consider specifying shapes manually if you need\n  that many of them."
+      ]
+    },
+    {
+      "kind": "hollow",
+      "n": 0,
+      "values": [],
+      "warnings": []
+    },
+    {
+      "kind": "hollow",
+      "n": 1,
+      "values": [
+        1
+      ],
+      "warnings": []
+    },
+    {
+      "kind": "hollow",
+      "n": 6,
+      "values": [
+        1,
+        2,
+        0,
+        3,
+        7,
+        8
+      ],
+      "warnings": []
+    },
+    {
+      "kind": "hollow",
+      "n": 7,
+      "values": [
+        1,
+        2,
+        0,
+        3,
+        7,
+        8,
+        null
+      ],
+      "warnings": [
+        "The shape palette can deal with a maximum of 6 discrete values because more\nthan 6 becomes difficult to discriminate\ni you have requested 7 values. Consider specifying shapes manually if you need\n  that many of them."
+      ]
+    },
+    {
+      "kind": "hollow",
+      "n": 13,
+      "values": [
+        1,
+        2,
+        0,
+        3,
+        7,
+        8,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "warnings": [
+        "The shape palette can deal with a maximum of 6 discrete values because more\nthan 6 becomes difficult to discriminate\ni you have requested 13 values. Consider specifying shapes manually if you need\n  that many of them."
+      ]
+    },
+    {
+      "kind": "hollow",
+      "n": 14,
+      "values": [
+        1,
+        2,
+        0,
+        3,
+        7,
+        8,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "warnings": [
+        "The shape palette can deal with a maximum of 6 discrete values because more\nthan 6 becomes difficult to discriminate\ni you have requested 14 values. Consider specifying shapes manually if you need\n  that many of them."
+      ]
+    },
+    {
+      "kind": "linetype",
+      "n": 0,
+      "values": [],
+      "warnings": []
+    },
+    {
+      "kind": "linetype",
+      "n": 1,
+      "values": [
+        "solid"
+      ],
+      "warnings": []
+    },
+    {
+      "kind": "linetype",
+      "n": 6,
+      "values": [
+        "solid",
+        "22",
+        "42",
+        "44",
+        "13",
+        "1343"
+      ],
+      "warnings": []
+    },
+    {
+      "kind": "linetype",
+      "n": 7,
+      "values": [
+        "solid",
+        "22",
+        "42",
+        "44",
+        "13",
+        "1343",
+        "73"
+      ],
+      "warnings": []
+    },
+    {
+      "kind": "linetype",
+      "n": 13,
+      "values": [
+        "solid",
+        "22",
+        "42",
+        "44",
+        "13",
+        "1343",
+        "73",
+        "2262",
+        "12223242",
+        "F282",
+        "F4448444",
+        "224282F2",
+        "F1"
+      ],
+      "warnings": []
+    },
+    {
+      "kind": "linetype",
+      "n": 14,
+      "values": [
+        "solid",
+        "22",
+        "42",
+        "44",
+        "13",
+        "1343",
+        "73",
+        "2262",
+        "12223242",
+        "F282",
+        "F4448444",
+        "224282F2",
+        "F1",
+        null
+      ],
+      "warnings": [
+        "This manual palette can handle a maximum of 13 values. You have supplied 14"
+      ]
+    }
+  ]
+}

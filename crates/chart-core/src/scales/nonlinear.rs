@@ -5,6 +5,10 @@ use crate::grammar::Extent;
 #[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub enum ScaleTransform {
+    /// Negate values before statistics and reverse the trained positional direction.
+    Reverse,
+    /// Nonnegative square root; negative source values are ineligible.
+    Sqrt,
     /// Positive values, logarithm with finite base greater than one.
     Log {
         /// Logarithm base.
@@ -20,6 +24,7 @@ impl ScaleTransform {
     /// Validate authored parameters before reading data.
     pub fn validate(self) -> ChartResult<()> {
         let valid = match self {
+            Self::Reverse | Self::Sqrt => true,
             Self::Log { base } => base.is_finite() && base > 1.,
             Self::Symlog { threshold } => threshold.is_finite() && threshold > 0.,
         };
@@ -32,19 +37,20 @@ impl ScaleTransform {
             ))
         }
     }
-    /// Transform one finite value. Nonpositive logarithmic values are ineligible.
-    pub fn forward(self, x: f64) -> ChartResult<Option<f64>> {
-        self.validate()?;
-        if !x.is_finite() {
-            return Err(error(
-                DiagnosticCode::NumericalDomain,
-                "Nonlinear scale input must be finite.",
-            ));
-        }
-        let v = match self {
+    // Shared arithmetic for validated transforms. Identity aesthetic mapping
+    // retains IEEE exceptional results; positional forward applies its checks.
+    pub(super) fn forward_raw(self, x: f64) -> f64 {
+        match self {
+            Self::Reverse => -x,
+            Self::Sqrt => {
+                if x < 0. {
+                    return f64::NAN;
+                }
+                x.sqrt()
+            }
             Self::Log { base } => {
-                if x <= 0. {
-                    return Ok(None);
+                if x < 0. {
+                    return f64::NAN;
                 }
                 if base == 10. {
                     x.log10()
@@ -63,7 +69,28 @@ impl ScaleTransform {
                         x.abs().ln() - threshold.ln()
                     }
             }
-        };
+        }
+    }
+    pub(crate) fn viewport_inverse(self, value: f64) -> ChartResult<f64> {
+        self.inverse(if self == Self::Sqrt {
+            value.max(0.)
+        } else {
+            value
+        })
+    }
+    /// Transform one finite value. Nonpositive logarithmic values are ineligible.
+    pub fn forward(self, x: f64) -> ChartResult<Option<f64>> {
+        self.validate()?;
+        if !x.is_finite() {
+            return Err(error(
+                DiagnosticCode::NumericalDomain,
+                "Nonlinear scale input must be finite.",
+            ));
+        }
+        if matches!(self, Self::Sqrt) && x < 0. || matches!(self, Self::Log { .. }) && x <= 0. {
+            return Ok(None);
+        }
+        let v = self.forward_raw(x);
         if v.is_finite() && (x == 0. || v != 0. || matches!(self, Self::Log { .. })) {
             Ok(Some(v))
         } else {
@@ -71,6 +98,28 @@ impl ScaleTransform {
                 DiagnosticCode::PrecisionLoss,
                 "Nonlinear transform exceeds finite precision.",
             ))
+        }
+    }
+    pub(super) fn inverse_raw(self, v: f64) -> f64 {
+        match self {
+            Self::Reverse => -v,
+            Self::Sqrt => {
+                if v < 0. {
+                    f64::NAN
+                } else {
+                    v * v
+                }
+            }
+            Self::Log { base } => base.powf(v),
+            Self::Symlog { threshold } => {
+                let exp = v.abs().exp_m1();
+                v.signum()
+                    * if exp.is_finite() {
+                        exp * threshold
+                    } else {
+                        (v.abs() + threshold.ln()).exp()
+                    }
+            }
         }
     }
     /// Invert a finite transformed value, checking the representable output.
@@ -82,19 +131,17 @@ impl ScaleTransform {
                 "Nonlinear inverse input must be finite.",
             ));
         }
-        let x = match self {
-            Self::Log { base } => base.powf(v),
-            Self::Symlog { threshold } => {
-                let exp = v.abs().exp_m1();
-                v.signum()
-                    * if exp.is_finite() {
-                        exp * threshold
-                    } else {
-                        (v.abs() + threshold.ln()).exp()
-                    }
-            }
-        };
-        if x.is_finite() && (!matches!(self, Self::Log { .. }) || x > 0.) {
+        if self == Self::Sqrt && v < 0. {
+            return Err(error(
+                DiagnosticCode::NumericalDomain,
+                "Square-root inverse requires a nonnegative coordinate.",
+            ));
+        }
+        let x = self.inverse_raw(v);
+        if x.is_finite()
+            && (!matches!(self, Self::Log { .. }) || x > 0.)
+            && (self != Self::Sqrt || v == 0. || x > 0.)
+        {
             Ok(x)
         } else {
             Err(error(
@@ -127,7 +174,7 @@ impl NonlinearScale {
             transform.forward(v)?.ok_or_else(|| {
                 error(
                     DiagnosticCode::NumericalDomain,
-                    "Logarithmic domains and baselines must be positive.",
+                    "Domains and baselines must lie inside the scale transform domain.",
                 )
             })
         };
@@ -170,8 +217,8 @@ impl NonlinearScale {
                     }
                     let b = expand(bounds(Bounds::new(v.minimum, v.maximum)?)?)?;
                     Ok(Extent {
-                        minimum: b.start(),
-                        maximum: b.end(),
+                        minimum: b.minimum(),
+                        maximum: b.maximum(),
                     })
                 })
                 .transpose()?
@@ -185,8 +232,8 @@ impl NonlinearScale {
         let data = match options.explicit.filter(|b| b.start() != b.end()) {
             Some(b) => b,
             None => Bounds::new(
-                transform.inverse(domain.start())?,
-                transform.inverse(domain.end())?,
+                transform.viewport_inverse(domain.start())?,
+                transform.viewport_inverse(domain.end())?,
             )?,
         };
         let view = viewport.map(bounds).transpose()?.unwrap_or(domain);
@@ -198,11 +245,26 @@ impl NonlinearScale {
             inner,
         })
     }
+    pub(crate) fn with_reference_transformed_viewport(
+        mut self,
+        viewport: Bounds,
+    ) -> ChartResult<Self> {
+        self.inner = self.inner.with_reference_viewport(viewport);
+        self.viewport = Bounds::new(
+            self.transform.viewport_inverse(viewport.start())?,
+            self.transform.viewport_inverse(viewport.end())?,
+        )?;
+        Ok(self)
+    }
+    /// Exact visible window after transformation, including expansion outside the source domain.
+    pub fn transformed_viewport(&self) -> Bounds {
+        self.inner.viewport()
+    }
     /// Full domain in source units.
     pub fn domain(&self) -> Bounds {
         self.domain
     }
-    /// Visible domain in source units.
+    /// Valid source-unit portion of the visible domain; transformed expansion is retained separately.
     pub fn viewport(&self) -> Bounds {
         self.viewport
     }
@@ -214,7 +276,7 @@ impl NonlinearScale {
     pub fn transform(&self) -> ScaleTransform {
         self.transform
     }
-    /// Map an eligible value; log-invalid and explicitly omitted inputs return missing.
+    /// Map an eligible value; transform-invalid and explicitly omitted inputs return missing.
     pub fn map(&self, x: f64) -> ChartResult<Option<f64>> {
         match self.transform.forward(x)? {
             Some(v) => self.inner.map(v),
@@ -227,6 +289,14 @@ impl NonlinearScale {
     }
     /// Invert destination coordinates to source units.
     pub fn invert(&self, p: f64) -> ChartResult<f64> {
+        // Preserve the exact domain boundary through affine roundoff. Coordinates
+        // below the projected zero still fail the square-root inverse contract.
+        if self.transform == ScaleTransform::Sqrt
+            && self.inner.viewport().contains(0.)
+            && self.inner.map(0.)? == Some(p)
+        {
+            return Ok(0.);
+        }
         self.transform.inverse(self.inner.invert(p)?)
     }
     /// Bounded transformed-space numeric grid, labeled in source units.
@@ -234,6 +304,7 @@ impl NonlinearScale {
         self.inner
             .ticks(target, max_ticks)?
             .into_iter()
+            .filter(|t| self.transform != ScaleTransform::Sqrt || t.value >= 0.)
             .map(|t| {
                 let v = self.transform.inverse(t.value)?;
                 Ok(NumericTick {

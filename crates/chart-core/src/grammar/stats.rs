@@ -95,7 +95,24 @@ pub(crate) fn numeric_space(data: &DatasetSnapshot, value: &Numeric) -> ChartRes
             ));
         }
         scale.validate()?;
-        return Ok(scale.space(numeric_space(data, input)?));
+        let input = numeric_space(data, input)?;
+        scale.validate_input(&input)?;
+        if scale.timestamp.is_some() && scale.outside == ScaleOob::Keep {
+            // Censor/squish are bounded by the validated integer limits. Keeping
+            // observations requires a checked pass before Option-valued evaluation
+            // could otherwise confuse unrepresentable timestamps with missing data.
+            for row in data.rows() {
+                if let Some((value, origin)) = timestamp_value(row, value)
+                    && (i128::from(value) - i128::from(origin)).unsigned_abs() > 1_u128 << 53
+                {
+                    return Err(error(
+                        DiagnosticCode::PrecisionLoss,
+                        "Kept timestamp exceeds exact origin-relative precision.",
+                    ));
+                }
+            }
+        }
+        return Ok(scale.space(input));
     }
     let (id, timestamp) = match value {
         Numeric::Expression(expr) => {
@@ -211,8 +228,29 @@ fn field_error(id: FieldId, message: &str) -> Diagnostic {
     e.context.field = Some(id);
     e
 }
+fn timestamp_value(row: RowView<'_>, value: &Numeric) -> Option<(i64, i64)> {
+    match value {
+        Numeric::Timestamp { field, origin } => match row.value(*field)? {
+            ValueRef::Timestamp(value) => Some((value, *origin)),
+            _ => None,
+        },
+        Numeric::Scaled { input, scale } => {
+            let time = scale.timestamp.as_ref()?;
+            let (value, origin) = timestamp_value(row, input)?;
+            if time.origin != origin {
+                return None;
+            }
+            Some((time.project(value, scale.outside)?, origin))
+        }
+        _ => None,
+    }
+}
 pub(crate) fn number(row: RowView<'_>, value: &Numeric) -> Option<f64> {
-    let value = match value {
+    raw_number(row, value).filter(|v| v.is_finite())
+}
+// Nonpositional reference mappings retain source IEEE values until scale evaluation.
+pub(crate) fn raw_number(row: RowView<'_>, value: &Numeric) -> Option<f64> {
+    match value {
         Numeric::Expression(expr) => expr
             .evaluate(
                 1,
@@ -227,7 +265,18 @@ pub(crate) fn number(row: RowView<'_>, value: &Numeric) -> Option<f64> {
             )
             .ok()
             .and_then(|v| v[0].number()),
-        Numeric::Scaled { input, scale } => number(row, input).and_then(|v| scale.project(v)),
+        Numeric::Scaled { scale, .. } if scale.timestamp.is_some() => timestamp_value(row, value)
+            .and_then(|(value, origin)| {
+                let relative = i128::from(value) - i128::from(origin);
+                (relative.unsigned_abs() <= 1_u128 << 53).then_some(relative as f64)
+            }),
+        Numeric::Scaled { input, scale } => {
+            if let Some(bins) = &scale.binned {
+                bins.project_source(raw_number(row, input))
+            } else {
+                number(row, input).and_then(|v| scale.project(v))
+            }
+        }
         Numeric::Category(_) => None,
         Numeric::Literal(v) => Some(*v),
         Numeric::Field(id) => match row.value(*id)? {
@@ -243,8 +292,7 @@ pub(crate) fn number(row: RowView<'_>, value: &Numeric) -> Option<f64> {
                 .map(|v| v as f64),
             _ => None,
         },
-    };
-    value.filter(|v| v.is_finite())
+    }
 }
 pub(crate) fn filter_matches(row: RowView<'_>, filter: &SourceFilter) -> Option<bool> {
     number(row, &filter.value).map(|v| {

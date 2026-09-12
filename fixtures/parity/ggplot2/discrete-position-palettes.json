@@ -1,0 +1,8498 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "default",
+      "palette_values": [
+        1,
+        2,
+        3
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          1,
+          2,
+          3
+        ],
+        "range": [
+          0.40000000000000002,
+          3.6000000000000001
+        ],
+        "mapped": [
+          3,
+          null,
+          1,
+          2
+        ],
+        "positions": [
+          0.8125,
+          null,
+          0.18749999999999997,
+          0.5
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.18749999999999997,
+          0.5,
+          0.8125
+        ],
+        "secondary": {
+          "breaks": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.187,
+            0.5,
+            0.81200000000000006
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "reverse",
+      "palette_values": [
+        3,
+        2,
+        1
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          3,
+          2,
+          1
+        ],
+        "range": [
+          0.40000000000000002,
+          3.6000000000000001
+        ],
+        "mapped": [
+          1,
+          null,
+          3,
+          2
+        ],
+        "positions": [
+          0.18749999999999997,
+          null,
+          0.8125,
+          0.5
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.8125,
+          0.5,
+          0.18749999999999997
+        ],
+        "secondary": {
+          "breaks": [
+            3,
+            2,
+            1
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.81200000000000006,
+            0.5,
+            0.187
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "spread",
+      "palette_values": [
+        2,
+        4,
+        6
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          2,
+          4,
+          6
+        ],
+        "range": [
+          1.3999999999999999,
+          6.5999999999999996
+        ],
+        "mapped": [
+          6,
+          null,
+          2,
+          4
+        ],
+        "positions": [
+          0.88461538461538469,
+          null,
+          0.11538461538461542,
+          0.50000000000000011
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.11538461538461542,
+          0.50000000000000011,
+          0.88461538461538469
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            4,
+            6
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.115,
+            0.5,
+            0.88500000000000001
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "shifted",
+      "palette_values": [
+        5,
+        6,
+        7
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          5,
+          6,
+          7
+        ],
+        "range": [
+          4.4000000000000004,
+          7.5999999999999996
+        ],
+        "mapped": [
+          7,
+          null,
+          5,
+          6
+        ],
+        "positions": [
+          0.81250000000000011,
+          null,
+          0.18749999999999992,
+          0.5
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.18749999999999992,
+          0.5,
+          0.81250000000000011
+        ],
+        "secondary": {
+          "breaks": [
+            5,
+            6,
+            7
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.187,
+            0.5,
+            0.81299999999999994
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "fractional",
+      "palette_values": [
+        0.5,
+        1,
+        1.5
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          0.5,
+          1,
+          1.5
+        ],
+        "range": [
+          -0.099999999999999978,
+          2.1000000000000001
+        ],
+        "mapped": [
+          1.5,
+          null,
+          0.5,
+          1
+        ],
+        "positions": [
+          0.72727272727272729,
+          null,
+          0.27272727272727271,
+          0.5
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729
+        ],
+        "secondary": {
+          "breaks": [
+            0.5,
+            1,
+            1.5
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.27300000000000002,
+            0.5,
+            0.72699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "repeated",
+      "palette_values": [
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          2,
+          2,
+          2
+        ],
+        "range": [
+          1.3999999999999999,
+          2.6000000000000001
+        ],
+        "mapped": [
+          2,
+          null,
+          2,
+          2
+        ],
+        "positions": [
+          0.5,
+          null,
+          0.5,
+          0.5
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            2,
+            2
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "short",
+      "palette_values": [
+        2,
+        2
+      ],
+      "result": {
+        "error": "The `palette` function must return at least 3 values."
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "empty",
+      "palette_values": [],
+      "result": {
+        "error": "The `palette` function must return at least 3 values."
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "nonfinite",
+      "palette_values": [
+        null,
+        "Infinity",
+        "-Infinity"
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          null,
+          "Infinity",
+          "-Infinity"
+        ],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "mapped": [
+          "-Infinity",
+          null,
+          null,
+          "Infinity"
+        ],
+        "positions": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          null,
+          null,
+          null
+        ],
+        "secondary": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "default",
+      "palette_values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "palette": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [
+          3,
+          4,
+          1,
+          2
+        ],
+        "positions": [
+          0.61904761904761918,
+          0.85714285714285732,
+          0.14285714285714288,
+          0.38095238095238104
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "major_positions": [
+          0.14285714285714288,
+          0.38095238095238104,
+          0.61904761904761918,
+          0.85714285714285732
+        ],
+        "secondary": {
+          "breaks": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b",
+            null
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "reverse",
+      "palette_values": [
+        4,
+        3,
+        2,
+        1
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "palette": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [
+          2,
+          1,
+          4,
+          3
+        ],
+        "positions": [
+          0.38095238095238104,
+          0.14285714285714288,
+          0.85714285714285732,
+          0.61904761904761918
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "major_positions": [
+          0.85714285714285732,
+          0.61904761904761918,
+          0.38095238095238104,
+          0.14285714285714288
+        ],
+        "secondary": {
+          "breaks": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b",
+            null
+          ],
+          "positions": [
+            0.85699999999999998,
+            0.61899999999999999,
+            0.38100000000000001,
+            0.14299999999999999
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "spread",
+      "palette_values": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "palette": [
+          2,
+          4,
+          6,
+          8
+        ],
+        "range": [
+          1.3999999999999999,
+          8.5999999999999996
+        ],
+        "mapped": [
+          6,
+          8,
+          2,
+          4
+        ],
+        "positions": [
+          0.63888888888888895,
+          0.91666666666666674,
+          0.083333333333333356,
+          0.36111111111111116
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "major_positions": [
+          0.083333333333333356,
+          0.36111111111111116,
+          0.63888888888888895,
+          0.91666666666666674
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b",
+            null
+          ],
+          "positions": [
+            0.083000000000000004,
+            0.36099999999999999,
+            0.63900000000000001,
+            0.91700000000000004
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "shifted",
+      "palette_values": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "palette": [
+          5,
+          6,
+          7,
+          8
+        ],
+        "range": [
+          4.4000000000000004,
+          8.5999999999999996
+        ],
+        "mapped": [
+          7,
+          8,
+          5,
+          6
+        ],
+        "positions": [
+          0.61904761904761907,
+          0.85714285714285721,
+          0.14285714285714279,
+          0.38095238095238093
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "major_positions": [
+          0.14285714285714279,
+          0.38095238095238093,
+          0.61904761904761907,
+          0.85714285714285721
+        ],
+        "secondary": {
+          "breaks": [
+            5,
+            6,
+            7,
+            8
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b",
+            null
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "fractional",
+      "palette_values": [
+        0.5,
+        1,
+        1.5,
+        2
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "palette": [
+          0.5,
+          1,
+          1.5,
+          2
+        ],
+        "range": [
+          -0.099999999999999978,
+          2.6000000000000001
+        ],
+        "mapped": [
+          1.5,
+          2,
+          0.5,
+          1
+        ],
+        "positions": [
+          0.59259259259259256,
+          0.77777777777777779,
+          0.22222222222222221,
+          0.40740740740740744
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "major_positions": [
+          0.22222222222222221,
+          0.40740740740740744,
+          0.59259259259259256,
+          0.77777777777777779
+        ],
+        "secondary": {
+          "breaks": [
+            0.5,
+            1,
+            1.5,
+            2
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b",
+            null
+          ],
+          "positions": [
+            0.222,
+            0.40699999999999997,
+            0.59299999999999997,
+            0.77800000000000002
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "repeated",
+      "palette_values": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "palette": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "range": [
+          1.3999999999999999,
+          2.6000000000000001
+        ],
+        "mapped": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "positions": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "major_positions": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b",
+            null
+          ],
+          "positions": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "short",
+      "palette_values": [
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "empty",
+      "palette_values": [],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "nonfinite",
+      "palette_values": [
+        null,
+        "Infinity",
+        "-Infinity",
+        2
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "palette": [
+          null,
+          "Infinity",
+          "-Infinity",
+          2
+        ],
+        "range": [
+          2,
+          2
+        ],
+        "mapped": [
+          "-Infinity",
+          2,
+          null,
+          "Infinity"
+        ],
+        "positions": [
+          0.5,
+          0.5,
+          null,
+          0.5
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b",
+          null
+        ],
+        "major_positions": [
+          null,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "secondary": {
+          "error": "need at least two non-NA values to interpolate"
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "default",
+      "palette_values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [
+          2,
+          1,
+          3,
+          4
+        ],
+        "positions": [
+          0.38095238095238104,
+          0.14285714285714288,
+          0.61904761904761918,
+          0.85714285714285732
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.14285714285714288,
+          0.38095238095238104,
+          0.61904761904761918,
+          0.85714285714285732
+        ],
+        "secondary": {
+          "breaks": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "reverse",
+      "palette_values": [
+        4,
+        3,
+        2,
+        1
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [
+          3,
+          4,
+          2,
+          1
+        ],
+        "positions": [
+          0.61904761904761918,
+          0.85714285714285732,
+          0.38095238095238104,
+          0.14285714285714288
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.85714285714285732,
+          0.61904761904761918,
+          0.38095238095238104,
+          0.14285714285714288
+        ],
+        "secondary": {
+          "breaks": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.85699999999999998,
+            0.61899999999999999,
+            0.38100000000000001,
+            0.14299999999999999
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "spread",
+      "palette_values": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          2,
+          4,
+          6,
+          8
+        ],
+        "range": [
+          1.3999999999999999,
+          8.5999999999999996
+        ],
+        "mapped": [
+          4,
+          2,
+          6,
+          8
+        ],
+        "positions": [
+          0.36111111111111116,
+          0.083333333333333356,
+          0.63888888888888895,
+          0.91666666666666674
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.083333333333333356,
+          0.36111111111111116,
+          0.63888888888888895,
+          0.91666666666666674
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.083000000000000004,
+            0.36099999999999999,
+            0.63900000000000001,
+            0.91700000000000004
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "shifted",
+      "palette_values": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          5,
+          6,
+          7,
+          8
+        ],
+        "range": [
+          4.4000000000000004,
+          8.5999999999999996
+        ],
+        "mapped": [
+          6,
+          5,
+          7,
+          8
+        ],
+        "positions": [
+          0.38095238095238093,
+          0.14285714285714279,
+          0.61904761904761907,
+          0.85714285714285721
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.14285714285714279,
+          0.38095238095238093,
+          0.61904761904761907,
+          0.85714285714285721
+        ],
+        "secondary": {
+          "breaks": [
+            5,
+            6,
+            7,
+            8
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "fractional",
+      "palette_values": [
+        0.5,
+        1,
+        1.5,
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          0.5,
+          1,
+          1.5,
+          2
+        ],
+        "range": [
+          -0.099999999999999978,
+          2.6000000000000001
+        ],
+        "mapped": [
+          1,
+          0.5,
+          1.5,
+          2
+        ],
+        "positions": [
+          0.40740740740740744,
+          0.22222222222222221,
+          0.59259259259259256,
+          0.77777777777777779
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.22222222222222221,
+          0.40740740740740744,
+          0.59259259259259256,
+          0.77777777777777779
+        ],
+        "secondary": {
+          "breaks": [
+            0.5,
+            1,
+            1.5,
+            2
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.222,
+            0.40699999999999997,
+            0.59299999999999997,
+            0.77800000000000002
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "repeated",
+      "palette_values": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "range": [
+          1.3999999999999999,
+          2.6000000000000001
+        ],
+        "mapped": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "positions": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "short",
+      "palette_values": [
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "empty",
+      "palette_values": [],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "nonfinite",
+      "palette_values": [
+        null,
+        "Infinity",
+        "-Infinity",
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          null,
+          "Infinity",
+          "-Infinity",
+          2
+        ],
+        "range": [
+          2,
+          2
+        ],
+        "mapped": [
+          "Infinity",
+          null,
+          "-Infinity",
+          2
+        ],
+        "positions": [
+          0.5,
+          null,
+          0.5,
+          0.5
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          null,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "secondary": {
+          "error": "need at least two non-NA values to interpolate"
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "default",
+      "palette_values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [
+          2,
+          1,
+          3,
+          4
+        ],
+        "positions": [
+          0.38095238095238104,
+          0.14285714285714288,
+          0.61904761904761918,
+          0.85714285714285732
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.14285714285714288,
+          0.38095238095238104,
+          0.61904761904761918,
+          0.85714285714285732
+        ],
+        "secondary": {
+          "breaks": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "reverse",
+      "palette_values": [
+        4,
+        3,
+        2,
+        1
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [
+          3,
+          4,
+          2,
+          1
+        ],
+        "positions": [
+          0.61904761904761918,
+          0.85714285714285732,
+          0.38095238095238104,
+          0.14285714285714288
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.85714285714285732,
+          0.61904761904761918,
+          0.38095238095238104,
+          0.14285714285714288
+        ],
+        "secondary": {
+          "breaks": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.85699999999999998,
+            0.61899999999999999,
+            0.38100000000000001,
+            0.14299999999999999
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "spread",
+      "palette_values": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          2,
+          4,
+          6,
+          8
+        ],
+        "range": [
+          1.3999999999999999,
+          8.5999999999999996
+        ],
+        "mapped": [
+          4,
+          2,
+          6,
+          8
+        ],
+        "positions": [
+          0.36111111111111116,
+          0.083333333333333356,
+          0.63888888888888895,
+          0.91666666666666674
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.083333333333333356,
+          0.36111111111111116,
+          0.63888888888888895,
+          0.91666666666666674
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.083000000000000004,
+            0.36099999999999999,
+            0.63900000000000001,
+            0.91700000000000004
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "shifted",
+      "palette_values": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          5,
+          6,
+          7,
+          8
+        ],
+        "range": [
+          4.4000000000000004,
+          8.5999999999999996
+        ],
+        "mapped": [
+          6,
+          5,
+          7,
+          8
+        ],
+        "positions": [
+          0.38095238095238093,
+          0.14285714285714279,
+          0.61904761904761907,
+          0.85714285714285721
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.14285714285714279,
+          0.38095238095238093,
+          0.61904761904761907,
+          0.85714285714285721
+        ],
+        "secondary": {
+          "breaks": [
+            5,
+            6,
+            7,
+            8
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "fractional",
+      "palette_values": [
+        0.5,
+        1,
+        1.5,
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          0.5,
+          1,
+          1.5,
+          2
+        ],
+        "range": [
+          -0.099999999999999978,
+          2.6000000000000001
+        ],
+        "mapped": [
+          1,
+          0.5,
+          1.5,
+          2
+        ],
+        "positions": [
+          0.40740740740740744,
+          0.22222222222222221,
+          0.59259259259259256,
+          0.77777777777777779
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.22222222222222221,
+          0.40740740740740744,
+          0.59259259259259256,
+          0.77777777777777779
+        ],
+        "secondary": {
+          "breaks": [
+            0.5,
+            1,
+            1.5,
+            2
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.222,
+            0.40699999999999997,
+            0.59299999999999997,
+            0.77800000000000002
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "repeated",
+      "palette_values": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "range": [
+          1.3999999999999999,
+          2.6000000000000001
+        ],
+        "mapped": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "positions": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "short",
+      "palette_values": [
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "empty",
+      "palette_values": [],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "mixed",
+      "inputs": [
+        "b",
+        null,
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "nonfinite",
+      "palette_values": [
+        null,
+        "Infinity",
+        "-Infinity",
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          null,
+          "Infinity",
+          "-Infinity",
+          2
+        ],
+        "range": [
+          2,
+          2
+        ],
+        "mapped": [
+          "Infinity",
+          null,
+          "-Infinity",
+          2
+        ],
+        "positions": [
+          0.5,
+          null,
+          0.5,
+          0.5
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          null,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "secondary": {
+          "error": "need at least two non-NA values to interpolate"
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "default",
+      "palette_values": [
+        1,
+        2,
+        3
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          1,
+          2,
+          3
+        ],
+        "range": [
+          0.40000000000000002,
+          3.6000000000000001
+        ],
+        "mapped": [
+          3,
+          1,
+          2
+        ],
+        "positions": [
+          0.8125,
+          0.18749999999999997,
+          0.5
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.18749999999999997,
+          0.5,
+          0.8125
+        ],
+        "secondary": {
+          "breaks": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.187,
+            0.5,
+            0.81200000000000006
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "reverse",
+      "palette_values": [
+        3,
+        2,
+        1
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          3,
+          2,
+          1
+        ],
+        "range": [
+          0.40000000000000002,
+          3.6000000000000001
+        ],
+        "mapped": [
+          1,
+          3,
+          2
+        ],
+        "positions": [
+          0.18749999999999997,
+          0.8125,
+          0.5
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.8125,
+          0.5,
+          0.18749999999999997
+        ],
+        "secondary": {
+          "breaks": [
+            3,
+            2,
+            1
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.81200000000000006,
+            0.5,
+            0.187
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "spread",
+      "palette_values": [
+        2,
+        4,
+        6
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          2,
+          4,
+          6
+        ],
+        "range": [
+          1.3999999999999999,
+          6.5999999999999996
+        ],
+        "mapped": [
+          6,
+          2,
+          4
+        ],
+        "positions": [
+          0.88461538461538469,
+          0.11538461538461542,
+          0.50000000000000011
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.11538461538461542,
+          0.50000000000000011,
+          0.88461538461538469
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            4,
+            6
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.115,
+            0.5,
+            0.88500000000000001
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "shifted",
+      "palette_values": [
+        5,
+        6,
+        7
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          5,
+          6,
+          7
+        ],
+        "range": [
+          4.4000000000000004,
+          7.5999999999999996
+        ],
+        "mapped": [
+          7,
+          5,
+          6
+        ],
+        "positions": [
+          0.81250000000000011,
+          0.18749999999999992,
+          0.5
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.18749999999999992,
+          0.5,
+          0.81250000000000011
+        ],
+        "secondary": {
+          "breaks": [
+            5,
+            6,
+            7
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.187,
+            0.5,
+            0.81299999999999994
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "fractional",
+      "palette_values": [
+        0.5,
+        1,
+        1.5
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          0.5,
+          1,
+          1.5
+        ],
+        "range": [
+          -0.099999999999999978,
+          2.1000000000000001
+        ],
+        "mapped": [
+          1.5,
+          0.5,
+          1
+        ],
+        "positions": [
+          0.72727272727272729,
+          0.27272727272727271,
+          0.5
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729
+        ],
+        "secondary": {
+          "breaks": [
+            0.5,
+            1,
+            1.5
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.27300000000000002,
+            0.5,
+            0.72699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "repeated",
+      "palette_values": [
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          2,
+          2,
+          2
+        ],
+        "range": [
+          1.3999999999999999,
+          2.6000000000000001
+        ],
+        "mapped": [
+          2,
+          2,
+          2
+        ],
+        "positions": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            2,
+            2
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "short",
+      "palette_values": [
+        2,
+        2
+      ],
+      "result": {
+        "error": "The `palette` function must return at least 3 values."
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "empty",
+      "palette_values": [],
+      "result": {
+        "error": "The `palette` function must return at least 3 values."
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "nonfinite",
+      "palette_values": [
+        null,
+        "Infinity",
+        "-Infinity"
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          null,
+          "Infinity",
+          "-Infinity"
+        ],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "mapped": [
+          "-Infinity",
+          null,
+          "Infinity"
+        ],
+        "positions": [
+          null,
+          null,
+          null
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          null,
+          null,
+          null
+        ],
+        "secondary": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "default",
+      "palette_values": [
+        1,
+        2,
+        3
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          1,
+          2,
+          3
+        ],
+        "range": [
+          0.40000000000000002,
+          3.6000000000000001
+        ],
+        "mapped": [
+          3,
+          1,
+          2
+        ],
+        "positions": [
+          0.8125,
+          0.18749999999999997,
+          0.5
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.18749999999999997,
+          0.5,
+          0.8125
+        ],
+        "secondary": {
+          "breaks": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.187,
+            0.5,
+            0.81200000000000006
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "reverse",
+      "palette_values": [
+        3,
+        2,
+        1
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          3,
+          2,
+          1
+        ],
+        "range": [
+          0.40000000000000002,
+          3.6000000000000001
+        ],
+        "mapped": [
+          1,
+          3,
+          2
+        ],
+        "positions": [
+          0.18749999999999997,
+          0.8125,
+          0.5
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.8125,
+          0.5,
+          0.18749999999999997
+        ],
+        "secondary": {
+          "breaks": [
+            3,
+            2,
+            1
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.81200000000000006,
+            0.5,
+            0.187
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "spread",
+      "palette_values": [
+        2,
+        4,
+        6
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          2,
+          4,
+          6
+        ],
+        "range": [
+          1.3999999999999999,
+          6.5999999999999996
+        ],
+        "mapped": [
+          6,
+          2,
+          4
+        ],
+        "positions": [
+          0.88461538461538469,
+          0.11538461538461542,
+          0.50000000000000011
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.11538461538461542,
+          0.50000000000000011,
+          0.88461538461538469
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            4,
+            6
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.115,
+            0.5,
+            0.88500000000000001
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "shifted",
+      "palette_values": [
+        5,
+        6,
+        7
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          5,
+          6,
+          7
+        ],
+        "range": [
+          4.4000000000000004,
+          7.5999999999999996
+        ],
+        "mapped": [
+          7,
+          5,
+          6
+        ],
+        "positions": [
+          0.81250000000000011,
+          0.18749999999999992,
+          0.5
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.18749999999999992,
+          0.5,
+          0.81250000000000011
+        ],
+        "secondary": {
+          "breaks": [
+            5,
+            6,
+            7
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.187,
+            0.5,
+            0.81299999999999994
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "fractional",
+      "palette_values": [
+        0.5,
+        1,
+        1.5
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          0.5,
+          1,
+          1.5
+        ],
+        "range": [
+          -0.099999999999999978,
+          2.1000000000000001
+        ],
+        "mapped": [
+          1.5,
+          0.5,
+          1
+        ],
+        "positions": [
+          0.72727272727272729,
+          0.27272727272727271,
+          0.5
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729
+        ],
+        "secondary": {
+          "breaks": [
+            0.5,
+            1,
+            1.5
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.27300000000000002,
+            0.5,
+            0.72699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "repeated",
+      "palette_values": [
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          2,
+          2,
+          2
+        ],
+        "range": [
+          1.3999999999999999,
+          2.6000000000000001
+        ],
+        "mapped": [
+          2,
+          2,
+          2
+        ],
+        "positions": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            2,
+            2
+          ],
+          "labels": [
+            "NA",
+            "a",
+            "b"
+          ],
+          "positions": [
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "short",
+      "palette_values": [
+        2,
+        2
+      ],
+      "result": {
+        "error": "The `palette` function must return at least 3 values."
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "empty",
+      "palette_values": [],
+      "result": {
+        "error": "The `palette` function must return at least 3 values."
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "nonfinite",
+      "palette_values": [
+        null,
+        "Infinity",
+        "-Infinity"
+      ],
+      "result": {
+        "limits": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "palette": [
+          null,
+          "Infinity",
+          "-Infinity"
+        ],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "mapped": [
+          "-Infinity",
+          null,
+          "Infinity"
+        ],
+        "positions": [
+          null,
+          null,
+          null
+        ],
+        "breaks": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "labels": [
+          "NA",
+          "a",
+          "b"
+        ],
+        "major_positions": [
+          null,
+          null,
+          null
+        ],
+        "secondary": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "default",
+      "palette_values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [
+          2,
+          3,
+          4
+        ],
+        "positions": [
+          0.38095238095238104,
+          0.61904761904761918,
+          0.85714285714285732
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.14285714285714288,
+          0.38095238095238104,
+          0.61904761904761918,
+          0.85714285714285732
+        ],
+        "secondary": {
+          "breaks": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "reverse",
+      "palette_values": [
+        4,
+        3,
+        2,
+        1
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [
+          3,
+          2,
+          1
+        ],
+        "positions": [
+          0.61904761904761918,
+          0.38095238095238104,
+          0.14285714285714288
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.85714285714285732,
+          0.61904761904761918,
+          0.38095238095238104,
+          0.14285714285714288
+        ],
+        "secondary": {
+          "breaks": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.85699999999999998,
+            0.61899999999999999,
+            0.38100000000000001,
+            0.14299999999999999
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "spread",
+      "palette_values": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          2,
+          4,
+          6,
+          8
+        ],
+        "range": [
+          1.3999999999999999,
+          8.5999999999999996
+        ],
+        "mapped": [
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          0.36111111111111116,
+          0.63888888888888895,
+          0.91666666666666674
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.083333333333333356,
+          0.36111111111111116,
+          0.63888888888888895,
+          0.91666666666666674
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.083000000000000004,
+            0.36099999999999999,
+            0.63900000000000001,
+            0.91700000000000004
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "shifted",
+      "palette_values": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          5,
+          6,
+          7,
+          8
+        ],
+        "range": [
+          4.4000000000000004,
+          8.5999999999999996
+        ],
+        "mapped": [
+          6,
+          7,
+          8
+        ],
+        "positions": [
+          0.38095238095238093,
+          0.61904761904761907,
+          0.85714285714285721
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.14285714285714279,
+          0.38095238095238093,
+          0.61904761904761907,
+          0.85714285714285721
+        ],
+        "secondary": {
+          "breaks": [
+            5,
+            6,
+            7,
+            8
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "fractional",
+      "palette_values": [
+        0.5,
+        1,
+        1.5,
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          0.5,
+          1,
+          1.5,
+          2
+        ],
+        "range": [
+          -0.099999999999999978,
+          2.6000000000000001
+        ],
+        "mapped": [
+          1,
+          1.5,
+          2
+        ],
+        "positions": [
+          0.40740740740740744,
+          0.59259259259259256,
+          0.77777777777777779
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.22222222222222221,
+          0.40740740740740744,
+          0.59259259259259256,
+          0.77777777777777779
+        ],
+        "secondary": {
+          "breaks": [
+            0.5,
+            1,
+            1.5,
+            2
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.222,
+            0.40699999999999997,
+            0.59299999999999997,
+            0.77800000000000002
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "repeated",
+      "palette_values": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "range": [
+          1.3999999999999999,
+          2.6000000000000001
+        ],
+        "mapped": [
+          2,
+          2,
+          2
+        ],
+        "positions": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "short",
+      "palette_values": [
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "empty",
+      "palette_values": [],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "nonfinite",
+      "palette_values": [
+        null,
+        "Infinity",
+        "-Infinity",
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          null,
+          "Infinity",
+          "-Infinity",
+          2
+        ],
+        "range": [
+          2,
+          2
+        ],
+        "mapped": [
+          "Infinity",
+          "-Infinity",
+          2
+        ],
+        "positions": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          null,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "secondary": {
+          "error": "need at least two non-NA values to interpolate"
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "default",
+      "palette_values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [
+          2,
+          3,
+          4
+        ],
+        "positions": [
+          0.38095238095238104,
+          0.61904761904761918,
+          0.85714285714285732
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.14285714285714288,
+          0.38095238095238104,
+          0.61904761904761918,
+          0.85714285714285732
+        ],
+        "secondary": {
+          "breaks": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "reverse",
+      "palette_values": [
+        4,
+        3,
+        2,
+        1
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [
+          3,
+          2,
+          1
+        ],
+        "positions": [
+          0.61904761904761918,
+          0.38095238095238104,
+          0.14285714285714288
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.85714285714285732,
+          0.61904761904761918,
+          0.38095238095238104,
+          0.14285714285714288
+        ],
+        "secondary": {
+          "breaks": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.85699999999999998,
+            0.61899999999999999,
+            0.38100000000000001,
+            0.14299999999999999
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "spread",
+      "palette_values": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          2,
+          4,
+          6,
+          8
+        ],
+        "range": [
+          1.3999999999999999,
+          8.5999999999999996
+        ],
+        "mapped": [
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          0.36111111111111116,
+          0.63888888888888895,
+          0.91666666666666674
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.083333333333333356,
+          0.36111111111111116,
+          0.63888888888888895,
+          0.91666666666666674
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.083000000000000004,
+            0.36099999999999999,
+            0.63900000000000001,
+            0.91700000000000004
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "shifted",
+      "palette_values": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          5,
+          6,
+          7,
+          8
+        ],
+        "range": [
+          4.4000000000000004,
+          8.5999999999999996
+        ],
+        "mapped": [
+          6,
+          7,
+          8
+        ],
+        "positions": [
+          0.38095238095238093,
+          0.61904761904761907,
+          0.85714285714285721
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.14285714285714279,
+          0.38095238095238093,
+          0.61904761904761907,
+          0.85714285714285721
+        ],
+        "secondary": {
+          "breaks": [
+            5,
+            6,
+            7,
+            8
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "fractional",
+      "palette_values": [
+        0.5,
+        1,
+        1.5,
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          0.5,
+          1,
+          1.5,
+          2
+        ],
+        "range": [
+          -0.099999999999999978,
+          2.6000000000000001
+        ],
+        "mapped": [
+          1,
+          1.5,
+          2
+        ],
+        "positions": [
+          0.40740740740740744,
+          0.59259259259259256,
+          0.77777777777777779
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.22222222222222221,
+          0.40740740740740744,
+          0.59259259259259256,
+          0.77777777777777779
+        ],
+        "secondary": {
+          "breaks": [
+            0.5,
+            1,
+            1.5,
+            2
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.222,
+            0.40699999999999997,
+            0.59299999999999997,
+            0.77800000000000002
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "repeated",
+      "palette_values": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "range": [
+          1.3999999999999999,
+          2.6000000000000001
+        ],
+        "mapped": [
+          2,
+          2,
+          2
+        ],
+        "positions": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "short",
+      "palette_values": [
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "empty",
+      "palette_values": [],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "finite",
+      "inputs": [
+        "b",
+        "NA",
+        "a"
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "nonfinite",
+      "palette_values": [
+        null,
+        "Infinity",
+        "-Infinity",
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          null,
+          "Infinity",
+          "-Infinity",
+          2
+        ],
+        "range": [
+          2,
+          2
+        ],
+        "mapped": [
+          "Infinity",
+          "-Infinity",
+          2
+        ],
+        "positions": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          null,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "secondary": {
+          "error": "need at least two non-NA values to interpolate"
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "default",
+      "palette_values": [],
+      "result": {
+        "limits": [],
+        "palette": [],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "mapped": [
+          null,
+          null
+        ],
+        "positions": [
+          null,
+          null
+        ],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "reverse",
+      "palette_values": [],
+      "result": {
+        "limits": [],
+        "palette": [],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "mapped": [
+          null,
+          null
+        ],
+        "positions": [
+          null,
+          null
+        ],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "spread",
+      "palette_values": [],
+      "result": {
+        "limits": [],
+        "palette": [],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "mapped": [
+          null,
+          null
+        ],
+        "positions": [
+          null,
+          null
+        ],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "shifted",
+      "palette_values": [],
+      "result": {
+        "limits": [],
+        "palette": [],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "mapped": [
+          null,
+          null
+        ],
+        "positions": [
+          null,
+          null
+        ],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "fractional",
+      "palette_values": [],
+      "result": {
+        "limits": [],
+        "palette": [],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "mapped": [
+          null,
+          null
+        ],
+        "positions": [
+          null,
+          null
+        ],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "repeated",
+      "palette_values": [],
+      "result": {
+        "limits": [],
+        "palette": [],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "mapped": [
+          null,
+          null
+        ],
+        "positions": [
+          null,
+          null
+        ],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "short",
+      "palette_values": [],
+      "result": {
+        "limits": [],
+        "palette": [],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "mapped": [
+          null,
+          null
+        ],
+        "positions": [
+          null,
+          null
+        ],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "empty",
+      "palette_values": [],
+      "result": {
+        "limits": [],
+        "palette": [],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "mapped": [
+          null,
+          null
+        ],
+        "positions": [
+          null,
+          null
+        ],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "nonfinite",
+      "palette_values": [],
+      "result": {
+        "limits": [],
+        "palette": [],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "mapped": [
+          null,
+          null
+        ],
+        "positions": [
+          null,
+          null
+        ],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "default",
+      "palette_values": [
+        1
+      ],
+      "result": {
+        "limits": [
+          null
+        ],
+        "palette": [
+          1
+        ],
+        "range": [
+          0.40000000000000002,
+          1.6000000000000001
+        ],
+        "mapped": [
+          1,
+          1
+        ],
+        "positions": [
+          0.49999999999999989,
+          0.49999999999999989
+        ],
+        "breaks": [
+          null
+        ],
+        "labels": [
+          null
+        ],
+        "major_positions": [
+          0.49999999999999989
+        ],
+        "secondary": {
+          "breaks": [
+            1
+          ],
+          "labels": [
+            null
+          ],
+          "positions": [
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "reverse",
+      "palette_values": [
+        1
+      ],
+      "result": {
+        "limits": [
+          null
+        ],
+        "palette": [
+          1
+        ],
+        "range": [
+          0.40000000000000002,
+          1.6000000000000001
+        ],
+        "mapped": [
+          1,
+          1
+        ],
+        "positions": [
+          0.49999999999999989,
+          0.49999999999999989
+        ],
+        "breaks": [
+          null
+        ],
+        "labels": [
+          null
+        ],
+        "major_positions": [
+          0.49999999999999989
+        ],
+        "secondary": {
+          "breaks": [
+            1
+          ],
+          "labels": [
+            null
+          ],
+          "positions": [
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "spread",
+      "palette_values": [
+        2
+      ],
+      "result": {
+        "limits": [
+          null
+        ],
+        "palette": [
+          2
+        ],
+        "range": [
+          1.3999999999999999,
+          2.6000000000000001
+        ],
+        "mapped": [
+          2,
+          2
+        ],
+        "positions": [
+          0.5,
+          0.5
+        ],
+        "breaks": [
+          null
+        ],
+        "labels": [
+          null
+        ],
+        "major_positions": [
+          0.5
+        ],
+        "secondary": {
+          "breaks": [
+            2
+          ],
+          "labels": [
+            null
+          ],
+          "positions": [
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "shifted",
+      "palette_values": [
+        5
+      ],
+      "result": {
+        "limits": [
+          null
+        ],
+        "palette": [
+          5
+        ],
+        "range": [
+          4.4000000000000004,
+          5.5999999999999996
+        ],
+        "mapped": [
+          5,
+          5
+        ],
+        "positions": [
+          0.5,
+          0.5
+        ],
+        "breaks": [
+          null
+        ],
+        "labels": [
+          null
+        ],
+        "major_positions": [
+          0.5
+        ],
+        "secondary": {
+          "breaks": [
+            5
+          ],
+          "labels": [
+            null
+          ],
+          "positions": [
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "fractional",
+      "palette_values": [
+        0.5
+      ],
+      "result": {
+        "limits": [
+          null
+        ],
+        "palette": [
+          0.5
+        ],
+        "range": [
+          -0.099999999999999978,
+          1.1000000000000001
+        ],
+        "mapped": [
+          0.5,
+          0.5
+        ],
+        "positions": [
+          0.49999999999999989,
+          0.49999999999999989
+        ],
+        "breaks": [
+          null
+        ],
+        "labels": [
+          null
+        ],
+        "major_positions": [
+          0.49999999999999989
+        ],
+        "secondary": {
+          "breaks": [
+            0.5
+          ],
+          "labels": [
+            null
+          ],
+          "positions": [
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "repeated",
+      "palette_values": [
+        2
+      ],
+      "result": {
+        "limits": [
+          null
+        ],
+        "palette": [
+          2
+        ],
+        "range": [
+          1.3999999999999999,
+          2.6000000000000001
+        ],
+        "mapped": [
+          2,
+          2
+        ],
+        "positions": [
+          0.5,
+          0.5
+        ],
+        "breaks": [
+          null
+        ],
+        "labels": [
+          null
+        ],
+        "major_positions": [
+          0.5
+        ],
+        "secondary": {
+          "breaks": [
+            2
+          ],
+          "labels": [
+            null
+          ],
+          "positions": [
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "short",
+      "palette_values": [],
+      "result": {
+        "error": "The `palette` function must return at least 1 values."
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "empty",
+      "palette_values": [],
+      "result": {
+        "error": "The `palette` function must return at least 1 values."
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "nonfinite",
+      "palette_values": [
+        null
+      ],
+      "result": {
+        "limits": [
+          null
+        ],
+        "palette": [
+          null
+        ],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "mapped": [
+          null,
+          null
+        ],
+        "positions": [
+          null,
+          null
+        ],
+        "breaks": [
+          null
+        ],
+        "labels": [
+          null
+        ],
+        "major_positions": [
+          null
+        ],
+        "secondary": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "default",
+      "palette_values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [
+          1,
+          1
+        ],
+        "positions": [
+          0.14285714285714288,
+          0.14285714285714288
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.14285714285714288,
+          0.38095238095238104,
+          0.61904761904761918,
+          0.85714285714285732
+        ],
+        "secondary": {
+          "breaks": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "reverse",
+      "palette_values": [
+        4,
+        3,
+        2,
+        1
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [
+          4,
+          4
+        ],
+        "positions": [
+          0.85714285714285732,
+          0.85714285714285732
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.85714285714285732,
+          0.61904761904761918,
+          0.38095238095238104,
+          0.14285714285714288
+        ],
+        "secondary": {
+          "breaks": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.85699999999999998,
+            0.61899999999999999,
+            0.38100000000000001,
+            0.14299999999999999
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "spread",
+      "palette_values": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          2,
+          4,
+          6,
+          8
+        ],
+        "range": [
+          1.3999999999999999,
+          8.5999999999999996
+        ],
+        "mapped": [
+          2,
+          2
+        ],
+        "positions": [
+          0.083333333333333356,
+          0.083333333333333356
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.083333333333333356,
+          0.36111111111111116,
+          0.63888888888888895,
+          0.91666666666666674
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.083000000000000004,
+            0.36099999999999999,
+            0.63900000000000001,
+            0.91700000000000004
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "shifted",
+      "palette_values": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          5,
+          6,
+          7,
+          8
+        ],
+        "range": [
+          4.4000000000000004,
+          8.5999999999999996
+        ],
+        "mapped": [
+          5,
+          5
+        ],
+        "positions": [
+          0.14285714285714279,
+          0.14285714285714279
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.14285714285714279,
+          0.38095238095238093,
+          0.61904761904761907,
+          0.85714285714285721
+        ],
+        "secondary": {
+          "breaks": [
+            5,
+            6,
+            7,
+            8
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "fractional",
+      "palette_values": [
+        0.5,
+        1,
+        1.5,
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          0.5,
+          1,
+          1.5,
+          2
+        ],
+        "range": [
+          -0.099999999999999978,
+          2.6000000000000001
+        ],
+        "mapped": [
+          0.5,
+          0.5
+        ],
+        "positions": [
+          0.22222222222222221,
+          0.22222222222222221
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.22222222222222221,
+          0.40740740740740744,
+          0.59259259259259256,
+          0.77777777777777779
+        ],
+        "secondary": {
+          "breaks": [
+            0.5,
+            1,
+            1.5,
+            2
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.222,
+            0.40699999999999997,
+            0.59299999999999997,
+            0.77800000000000002
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "repeated",
+      "palette_values": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "range": [
+          1.3999999999999999,
+          2.6000000000000001
+        ],
+        "mapped": [
+          2,
+          2
+        ],
+        "positions": [
+          0.5,
+          0.5
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "short",
+      "palette_values": [
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "empty",
+      "palette_values": [],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "nonfinite",
+      "palette_values": [
+        null,
+        "Infinity",
+        "-Infinity",
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          null,
+          "Infinity",
+          "-Infinity",
+          2
+        ],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "mapped": [
+          null,
+          null
+        ],
+        "positions": [
+          null,
+          null
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "secondary": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "default",
+      "palette_values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [
+          1,
+          1
+        ],
+        "positions": [
+          0.14285714285714288,
+          0.14285714285714288
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.14285714285714288,
+          0.38095238095238104,
+          0.61904761904761918,
+          0.85714285714285732
+        ],
+        "secondary": {
+          "breaks": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "reverse",
+      "palette_values": [
+        4,
+        3,
+        2,
+        1
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [
+          4,
+          4
+        ],
+        "positions": [
+          0.85714285714285732,
+          0.85714285714285732
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.85714285714285732,
+          0.61904761904761918,
+          0.38095238095238104,
+          0.14285714285714288
+        ],
+        "secondary": {
+          "breaks": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.85699999999999998,
+            0.61899999999999999,
+            0.38100000000000001,
+            0.14299999999999999
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "spread",
+      "palette_values": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          2,
+          4,
+          6,
+          8
+        ],
+        "range": [
+          1.3999999999999999,
+          8.5999999999999996
+        ],
+        "mapped": [
+          2,
+          2
+        ],
+        "positions": [
+          0.083333333333333356,
+          0.083333333333333356
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.083333333333333356,
+          0.36111111111111116,
+          0.63888888888888895,
+          0.91666666666666674
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.083000000000000004,
+            0.36099999999999999,
+            0.63900000000000001,
+            0.91700000000000004
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "shifted",
+      "palette_values": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          5,
+          6,
+          7,
+          8
+        ],
+        "range": [
+          4.4000000000000004,
+          8.5999999999999996
+        ],
+        "mapped": [
+          5,
+          5
+        ],
+        "positions": [
+          0.14285714285714279,
+          0.14285714285714279
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.14285714285714279,
+          0.38095238095238093,
+          0.61904761904761907,
+          0.85714285714285721
+        ],
+        "secondary": {
+          "breaks": [
+            5,
+            6,
+            7,
+            8
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "fractional",
+      "palette_values": [
+        0.5,
+        1,
+        1.5,
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          0.5,
+          1,
+          1.5,
+          2
+        ],
+        "range": [
+          -0.099999999999999978,
+          2.6000000000000001
+        ],
+        "mapped": [
+          0.5,
+          0.5
+        ],
+        "positions": [
+          0.22222222222222221,
+          0.22222222222222221
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.22222222222222221,
+          0.40740740740740744,
+          0.59259259259259256,
+          0.77777777777777779
+        ],
+        "secondary": {
+          "breaks": [
+            0.5,
+            1,
+            1.5,
+            2
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.222,
+            0.40699999999999997,
+            0.59299999999999997,
+            0.77800000000000002
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "repeated",
+      "palette_values": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "range": [
+          1.3999999999999999,
+          2.6000000000000001
+        ],
+        "mapped": [
+          2,
+          2
+        ],
+        "positions": [
+          0.5,
+          0.5
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "short",
+      "palette_values": [
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "empty",
+      "palette_values": [],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "missing",
+      "inputs": [
+        null,
+        null
+      ],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "nonfinite",
+      "palette_values": [
+        null,
+        "Infinity",
+        "-Infinity",
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          null,
+          "Infinity",
+          "-Infinity",
+          2
+        ],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "mapped": [
+          null,
+          null
+        ],
+        "positions": [
+          null,
+          null
+        ],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "secondary": {
+          "error": "'from' must be a finite number"
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "default",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "reverse",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "spread",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "shifted",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "fractional",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "repeated",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "short",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "empty",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": false,
+      "palette_name": "nonfinite",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "default",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "reverse",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "spread",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "shifted",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "fractional",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "repeated",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "short",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "empty",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "auto",
+      "limits": null,
+      "na_translate": true,
+      "palette_name": "nonfinite",
+      "palette_values": [],
+      "result": {
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "range": [
+          -0.59999999999999998,
+          1.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [],
+        "labels": [],
+        "major_positions": [],
+        "secondary": {
+          "breaks": [],
+          "labels": [],
+          "positions": []
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "default",
+      "palette_values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.14285714285714288,
+          0.38095238095238104,
+          0.61904761904761918,
+          0.85714285714285732
+        ],
+        "secondary": {
+          "breaks": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "reverse",
+      "palette_values": [
+        4,
+        3,
+        2,
+        1
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.85714285714285732,
+          0.61904761904761918,
+          0.38095238095238104,
+          0.14285714285714288
+        ],
+        "secondary": {
+          "breaks": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.85699999999999998,
+            0.61899999999999999,
+            0.38100000000000001,
+            0.14299999999999999
+          ]
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "spread",
+      "palette_values": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          2,
+          4,
+          6,
+          8
+        ],
+        "range": [
+          1.3999999999999999,
+          8.5999999999999996
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.083333333333333356,
+          0.36111111111111116,
+          0.63888888888888895,
+          0.91666666666666674
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.083000000000000004,
+            0.36099999999999999,
+            0.63900000000000001,
+            0.91700000000000004
+          ]
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "shifted",
+      "palette_values": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          5,
+          6,
+          7,
+          8
+        ],
+        "range": [
+          4.4000000000000004,
+          8.5999999999999996
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.14285714285714279,
+          0.38095238095238093,
+          0.61904761904761907,
+          0.85714285714285721
+        ],
+        "secondary": {
+          "breaks": [
+            5,
+            6,
+            7,
+            8
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "fractional",
+      "palette_values": [
+        0.5,
+        1,
+        1.5,
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          0.5,
+          1,
+          1.5,
+          2
+        ],
+        "range": [
+          -0.099999999999999978,
+          2.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.22222222222222221,
+          0.40740740740740744,
+          0.59259259259259256,
+          0.77777777777777779
+        ],
+        "secondary": {
+          "breaks": [
+            0.5,
+            1,
+            1.5,
+            2
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.222,
+            0.40699999999999997,
+            0.59299999999999997,
+            0.77800000000000002
+          ]
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "repeated",
+      "palette_values": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "range": [
+          1.3999999999999999,
+          2.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "short",
+      "palette_values": [
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "empty",
+      "palette_values": [],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": false,
+      "palette_name": "nonfinite",
+      "palette_values": [
+        null,
+        "Infinity",
+        "-Infinity",
+        2
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "default",
+      "palette_values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.14285714285714288,
+          0.38095238095238104,
+          0.61904761904761918,
+          0.85714285714285732
+        ],
+        "secondary": {
+          "breaks": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "reverse",
+      "palette_values": [
+        4,
+        3,
+        2,
+        1
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "range": [
+          0.40000000000000002,
+          4.5999999999999996
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.85714285714285732,
+          0.61904761904761918,
+          0.38095238095238104,
+          0.14285714285714288
+        ],
+        "secondary": {
+          "breaks": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.85699999999999998,
+            0.61899999999999999,
+            0.38100000000000001,
+            0.14299999999999999
+          ]
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "spread",
+      "palette_values": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          2,
+          4,
+          6,
+          8
+        ],
+        "range": [
+          1.3999999999999999,
+          8.5999999999999996
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.083333333333333356,
+          0.36111111111111116,
+          0.63888888888888895,
+          0.91666666666666674
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.083000000000000004,
+            0.36099999999999999,
+            0.63900000000000001,
+            0.91700000000000004
+          ]
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "shifted",
+      "palette_values": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          5,
+          6,
+          7,
+          8
+        ],
+        "range": [
+          4.4000000000000004,
+          8.5999999999999996
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.14285714285714279,
+          0.38095238095238093,
+          0.61904761904761907,
+          0.85714285714285721
+        ],
+        "secondary": {
+          "breaks": [
+            5,
+            6,
+            7,
+            8
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.14299999999999999,
+            0.38100000000000001,
+            0.61899999999999999,
+            0.85699999999999998
+          ]
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "fractional",
+      "palette_values": [
+        0.5,
+        1,
+        1.5,
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          0.5,
+          1,
+          1.5,
+          2
+        ],
+        "range": [
+          -0.099999999999999978,
+          2.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.22222222222222221,
+          0.40740740740740744,
+          0.59259259259259256,
+          0.77777777777777779
+        ],
+        "secondary": {
+          "breaks": [
+            0.5,
+            1,
+            1.5,
+            2
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.222,
+            0.40699999999999997,
+            0.59299999999999997,
+            0.77800000000000002
+          ]
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "repeated",
+      "palette_values": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "limits": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "palette": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "range": [
+          1.3999999999999999,
+          2.6000000000000001
+        ],
+        "mapped": [],
+        "positions": [],
+        "breaks": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "labels": [
+          null,
+          "b",
+          "NA",
+          "a"
+        ],
+        "major_positions": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "secondary": {
+          "breaks": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "labels": [
+            null,
+            "b",
+            "NA",
+            "a"
+          ],
+          "positions": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "short",
+      "palette_values": [
+        2,
+        2,
+        2
+      ],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "empty",
+      "palette_values": [],
+      "result": {
+        "error": "The `palette` function must return at least 4 values."
+      }
+    },
+    {
+      "population": "empty",
+      "inputs": [],
+      "limits_name": "authored",
+      "limits": [
+        null,
+        "b",
+        "NA",
+        "a"
+      ],
+      "na_translate": true,
+      "palette_name": "nonfinite",
+      "palette_values": [
+        null,
+        "Infinity",
+        "-Infinity",
+        2
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    }
+  ]
+}

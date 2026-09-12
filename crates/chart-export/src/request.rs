@@ -24,6 +24,7 @@ pub struct FigureRequest {
     pub(crate) interaction: InteractionCapture,
     pub(crate) origin_scene: Option<SceneStamp>,
     pub(crate) origin_layout: Option<chart_core::layout::LayoutRequest>,
+    pub(crate) displayed_layout: Option<Arc<chart_core::layout::LaidOutChart>>,
     pub(crate) compile_limits: chart_core::grammar::CompileLimits,
 }
 impl FigureRequest {
@@ -50,6 +51,7 @@ impl FigureRequest {
             extensions: Arc::new(ExtensionRegistry::new()),
             origin_scene: None,
             origin_layout: None,
+            displayed_layout: None,
             compile_limits: Default::default(),
         })
     }
@@ -61,6 +63,12 @@ impl FigureRequest {
     /// Retain known immutable extension implementations for the later worker.
     pub fn with_extensions(mut self, extensions: Arc<ExtensionRegistry>) -> Self {
         self.extensions = extensions;
+        self
+    }
+    /// Continue stateful hierarchy tiling from an immutable previous destination layout.
+    /// Only compact history rows are retained; the previous scene and source are not pinned.
+    pub fn with_hierarchy_history(mut self, previous: &chart_core::layout::LaidOutChart) -> Self {
+        self.profile.layout = self.profile.layout.with_hierarchy_history(previous);
         self
     }
     /// Label a request derived from an actually presented scene. Public source/definition
@@ -81,6 +89,31 @@ impl FigureRequest {
         self.origin_layout = Some(layout);
         self
     }
+    /// Freeze the exact displayed primitives and guide sample at one point per scene unit.
+    /// The page must match the captured viewport. This explicit capture keeps all painted
+    /// state and bypasses reflow, theme changes and full-domain layout; annotations/background
+    /// from the publication profile may still be added. Use ordinary capture for a fresh layout.
+    pub fn with_displayed_layout(
+        mut self,
+        layout: Arc<chart_core::layout::LaidOutChart>,
+    ) -> ChartResult<Self> {
+        self = self.with_origin_scene(layout.scene().stamp())?;
+        let bounds = layout.scene().bounds();
+        if self.profile.view != crate::ViewMode::VisibleView
+            || bounds.origin().x() != 0.
+            || bounds.origin().y() != 0.
+            || self.profile.page.width() != bounds.width()
+            || self.profile.page.height() != bounds.height()
+        {
+            return Err(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Displayed capture requires the original viewport dimensions and VisibleView; choose ordinary capture for reflow.",
+            ));
+        }
+        self.interaction = InteractionCapture::ALL;
+        self.displayed_layout = Some(layout);
+        Ok(self)
+    }
     /// Original immutable source; later source retention does not mutate this handle.
     pub fn source(&self) -> &SnapshotHandle<StoreSnapshot> {
         &self.source
@@ -97,7 +130,7 @@ impl FigureRequest {
     pub fn manifest(&self) -> ChartResult<Value> {
         let data = self.source.get()?;
         Ok(
-            json!({"version":1,"origin_scene":self.origin_scene,"origin_layout":self.origin_layout,"definition":self.definition,"source_epoch":data.epoch(),"store":data.revision(),"datasets":data.datasets().map(|d|json!({"version":d.version(),"schema":d.schema()})).collect::<Vec<_>>(),"state":state_manifest(&self.definition,&self.state),"interaction_policy":self.interaction,"profile":self.profile,"compile_limits":self.compile_limits,"fonts":self.fonts.iter().map(|f|json!({"id":f.descriptor.id,"revision":f.descriptor.revision,"sha256":f.hash})).collect::<Vec<_>>() }),
+            json!({"version":1,"displayed":displayed_manifest(self.displayed_layout.as_deref()),"origin_scene":self.origin_scene,"origin_layout":self.origin_layout,"definition":self.definition,"source_epoch":data.epoch(),"store":data.revision(),"datasets":data.datasets().map(|d|json!({"version":d.version(),"schema":d.schema()})).collect::<Vec<_>>(),"state":state_manifest(&self.definition,&self.state),"interaction_policy":self.interaction,"profile":self.profile,"compile_limits":self.compile_limits,"fonts":self.fonts.iter().map(|f|json!({"id":f.descriptor.id,"revision":f.descriptor.revision,"sha256":f.hash})).collect::<Vec<_>>() }),
         )
     }
     pub(crate) fn charge(&self) -> ChartResult<(usize, usize)> {
@@ -141,6 +174,10 @@ pub(crate) fn state_manifest(definition: &ChartDefinition, state: &ChartState) -
 impl Reproducibility {
     /// Emit captured definition/state/profile, exact revisions/font hashes and dependency identities.
     pub fn manifest(&self) -> Value {
-        json!({"version":1,"engines":self.engines,"stamp":self.stamp,"origin_scene":self.origin_scene,"origin_layout":self.origin_layout,"definition":self.definition,"source_epoch":self.source_epoch,"datasets":self.datasets,"state":state_manifest(&self.definition,&self.captured_state),"effective_state":state_manifest(&self.definition,&self.effective_state),"interaction_policy":self.interaction,"fonts":self.fonts.iter().map(|f:&FontManifest|json!({"id":f.id,"revision":f.revision,"sha256":f.sha256})).collect::<Vec<_>>(),"profile":self.profile,"compile_limits":self.compile_limits})
+        json!({"version":1,"displayed":displayed_manifest(self.displayed_layout.as_deref()),"engines":self.engines,"stamp":self.stamp,"origin_scene":self.origin_scene,"origin_layout":self.origin_layout,"definition":self.definition,"source_epoch":self.source_epoch,"datasets":self.datasets,"state":state_manifest(&self.definition,&self.captured_state),"effective_state":state_manifest(&self.definition,&self.effective_state),"interaction_policy":self.interaction,"fonts":self.fonts.iter().map(|f:&FontManifest|json!({"id":f.id,"revision":f.revision,"sha256":f.sha256})).collect::<Vec<_>>(),"profile":self.profile,"compile_limits":self.compile_limits})
     }
+}
+
+fn displayed_manifest(layout: Option<&chart_core::layout::LaidOutChart>) -> Value {
+    layout.map_or(Value::Null,|l|json!({"unit_policy":"one scene unit per point","scene":l.scene().items(),"guides":l.guide_presentation()}))
 }

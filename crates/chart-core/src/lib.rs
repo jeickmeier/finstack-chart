@@ -42,6 +42,8 @@ pub mod diagnostic;
 pub mod editing;
 pub mod geometry;
 pub mod grammar;
+/// Immutable bounded topology and standalone hierarchy algorithms.
+pub mod hierarchy;
 pub mod identity;
 pub mod ingestion;
 pub mod inspection;
@@ -89,15 +91,18 @@ pub mod prelude {
         TransformHandle, TransformRef, aes, after_scale_expr, annotation_edit, area, axis_guide,
         bars, bin, bin_aes, callout, caption, categorical, cells, color_continuous, color_discrete,
         color_mapped, column, count, custom_stat, dodge, facet_grid, facet_wrap, filter, fit,
-        footnote, from_theme, histogram, identity_stat, inset, jitter, labels, layout_options,
-        legend, line, link, nullable_timestamps, number_format, ohlc, panel_letter, plot, points,
-        rectangle, render_options, ribbon, rich_text, rule, scale_aes, scale_band, scale_band_d3,
-        scale_calendar, scale_linear, scale_log, scale_numeric, scale_point, scale_point_d3,
-        scale_registered, scale_session, scale_symlog, scale_utc, shape_arc, shape_area,
-        shape_area_radial, shape_line, shape_line_radial, shape_link, shape_link_horizontal,
-        shape_link_radial, shape_link_vertical, shape_pie, shape_stack, shape_symbol, source_expr,
-        source_note, stack, stat_aes, stream_options, style, subtitle, summary, text_run,
-        text_style, theme, time_value, timestamps, title, transform, volume, x_axis, y_axis,
+        footnote, from_theme, hierarchy, hierarchy_cluster, hierarchy_icicle, hierarchy_pack,
+        hierarchy_sunburst, hierarchy_tree, hierarchy_treemap, histogram, identity_stat, inset,
+        jitter, labels, layout_options, legend, line, link, nullable_timestamps, number_format,
+        ohlc, panel_letter, plot, points, rectangle, render_options, ribbon, rich_text, rule,
+        scale_aes, scale_band, scale_band_d3, scale_binned, scale_calendar, scale_date,
+        scale_duration, scale_linear, scale_log, scale_numeric, scale_point, scale_point_d3,
+        scale_registered, scale_reverse, scale_session, scale_sqrt, scale_symlog, scale_utc,
+        shape_arc, shape_area, shape_area_radial, shape_line, shape_line_radial, shape_link,
+        shape_link_horizontal, shape_link_radial, shape_link_vertical, shape_pie, shape_stack,
+        shape_symbol, source_expr, source_note, stack, stat_aes, stream_options, style, subtitle,
+        summary, text_run, text_style, theme, time_value, timestamps, title, transform, volume,
+        x_axis, y_axis,
     };
     pub use crate::plot::{VectorPathBuilder, vector_path};
     pub use crate::runtime::Chart;
@@ -119,8 +124,8 @@ pub mod typography;
 pub use diagnostic::{ChartResult, Diagnostic, DiagnosticCode, DiagnosticContext, Severity};
 pub use geometry::{Point, Rect};
 pub use identity::{
-    AggregateId, DatasetId, DerivedId, FieldId, GuideId, LayerId, ResourceId, Revision, RowKey,
-    ScaleId, SceneStamp, SchemaVersion, SourceEpoch, TransformId,
+    AggregateId, DatasetId, DerivedId, FieldId, GuideId, HierarchyId, HierarchyNodeId, LayerId,
+    ResourceId, Revision, RowKey, ScaleId, SceneStamp, SchemaVersion, SourceEpoch, TransformId,
 };
 pub use limits::Limits;
 

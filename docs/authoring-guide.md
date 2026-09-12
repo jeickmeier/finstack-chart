@@ -42,13 +42,27 @@ generated reductions use the prepared layer population. After-stat expressions r
 back-transformed generated coordinates and their result receives the positional scale
 once. These explicit population rules adapt expression evaluation to the owned-data API.
 
-Post-scale expressions read the same snapshot of resolved aesthetics, with size and
-color outputs currently supported. Size output requires point/rule geometry. For
+Post-scale expressions read the same snapshot of resolved aesthetics, with size,
+color, fill, stroke, alpha and linewidth outputs. Size output requires point/rule geometry. For
 example, `points().after_scale(scale_aes().size(after_scale_expr(AfterScaleAesthetic::Size)
 * 2.))` doubles the resolved size. `from_theme(ThemeRead::Accent)` reads
 `theme().geometry(...)` tokens. The default geometry theme uses point size 1.5 and
-line width 0.5; explicitly authored sizes/colors take precedence. Additional independent
-fill/stroke/alpha/shape/linewidth mappings and physical size/area semantics belong to GG-03.
+line width 0.5; explicitly authored sizes/colors take precedence.
+
+Map independent paints with `aes().fill("inside").stroke("outline")`; optional
+`fill_scale` and `stroke_scale` names reuse existing color scale builders. Layer
+`fill`, `stroke` and `alpha` constants override those mappings. `radius` and `linewidth`
+are separate constants; `shape_value(NumericAesthetic::AreaSize, "area")` maps an
+equivalent circle area, while legacy `aes().size(...)` continues mapping radius.
+Use `numeric_scale` for a transformed numeric mapping and `value_scale` for typed
+linetype or text channels. Text channels are retained for GG-08 text geometry.
+`Alpha` replaces embedded paint alpha; `Opacity` retains its multiplication behavior.
+`aesthetic_units(AestheticUnits::Millimeters)` or `Points` converts dimensions at
+the destination boundary; absent units preserve destination units. Reference point
+glyphs use `shape_symbol().symbol_kind(SymbolKind::Ggplot(21))` for codes 0–25.
+Codes 21–25 admit independent fill and outline, 0–14 are open, and 15–20 use the
+outline/color as their solid paint, matching R's glyph convention. Reference palette,
+default size-scale and full guide policies remain GG-04/05.
 
 ## Data and layers
 
@@ -171,8 +185,9 @@ worker threads remain outside core.
 
 A supplied `NativeFont::from_bytes(...)` plus `ChartInput::from_plot(...)` mounts a static
 plot. `ChartInput::from_chart(...)` adopts an existing live Chart. Input builders accept
-layout/density, tooltip, controls, command/event and accessibility hooks. Kit's
-`gpui_charts_kit::chart_input` applies a Kit theme to this same destination. Retain the
+layout/density, tooltip, controls, command/event and accessibility hooks. A Kit host
+copies semantic colors into `ThemePatch` and passes them through `layout_options().host_theme`
+on this same destination; the composition gallery shows the recipe. Retain the
 `ChartView` entity; do not rebuild a plot on every render.
 
 ```rust

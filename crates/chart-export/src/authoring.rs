@@ -24,11 +24,13 @@ impl ExportArtifact {
 /// Which coherent live inputs to acquire, independently of projection and interaction policy.
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq, serde::Deserialize)]
 pub enum CaptureBasis {
-    /// Exact last acknowledged scene; rejects before first presentation.
+    /// Last acknowledged inputs, reflowed at publication size; rejects before first presentation.
     #[default]
     Presented,
     /// Current committed definition/data/state, including before first presentation.
     Current,
+    /// Exact displayed geometry, including an in-flight guide sample; page size must match.
+    Displayed,
 }
 /// Typed optional publication settings; physical page dimensions are always explicit.
 #[derive(Clone)]
@@ -232,6 +234,9 @@ impl Output {
         options: ExportOptions,
     ) -> ChartResult<FigureRequest> {
         let mut profile = options.profile(self.primary)?;
+        if let Some(previous) = chart.reducer().presented() {
+            profile.layout = profile.layout.with_hierarchy_history(previous);
+        }
         match options.basis {
             CaptureBasis::Current => FigureRequest::new(
                 chart.definition().clone(),
@@ -245,7 +250,7 @@ impl Output {
                 r.with_extensions(chart.extensions().clone())
                     .with_compile_limits(chart.compile_limits())
             }),
-            CaptureBasis::Presented => {
+            CaptureBasis::Presented | CaptureBasis::Displayed => {
                 let scene = chart.reducer().presented().ok_or_else(|| error(DiagnosticCode::UnsupportedCapability, "Presented capture requires an acknowledged frame; select Current before first presentation."))?;
                 if let Some(layout) = chart.painted_layout() {
                     let (bounds, units, font) = (
@@ -260,6 +265,7 @@ impl Output {
                     profile.layout.figure_bounds = None;
                     options.layout.apply(&mut profile.layout);
                 }
+                profile.layout = profile.layout.with_hierarchy_history(scene);
                 let mut request = FigureRequest::new(
                     scene.prepared().definition().clone(),
                     scene.prepared().source().clone(),
@@ -276,6 +282,9 @@ impl Output {
                 .with_origin_scene(scene.scene().stamp())?;
                 if let Some(layout) = chart.painted_layout() {
                     request = request.with_origin_layout(layout.clone());
+                }
+                if options.basis == CaptureBasis::Displayed {
+                    request = request.with_displayed_layout(scene.clone())?;
                 }
                 Ok(request)
             }

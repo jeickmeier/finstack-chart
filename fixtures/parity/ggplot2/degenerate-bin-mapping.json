@@ -1,0 +1,8608 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#132B43",
+          "#193753",
+          "#2C5D86",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          -1,
+          0,
+          1,
+          2,
+          4,
+          4,
+          10,
+          20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#132B43",
+          "#193753",
+          "#2C5D86",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          4,
+          4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#132B43",
+          "#193753",
+          "#2C5D86",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#132B43",
+          "#193753",
+          "#2C5D86",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [
+          0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#28547A",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          -1,
+          0,
+          1,
+          2,
+          4,
+          4,
+          10,
+          20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#28547A",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          4,
+          4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#28547A",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#28547A",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0,
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#132B43",
+          "#275277",
+          "#3C7CB0",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          0,
+          1,
+          1.4142135623731,
+          2,
+          2,
+          3.16227766016838,
+          4.47213595499958
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#132B43",
+          "#275277",
+          "#3C7CB0",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          2,
+          2
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#132B43",
+          "#275277",
+          "#3C7CB0",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#132B43",
+          "#275277",
+          "#3C7CB0",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [
+          0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0,
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#306591",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          0,
+          1,
+          1.4142135623731,
+          2,
+          2,
+          3.16227766016838,
+          4.47213595499958
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#306591",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          2,
+          2
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#306591",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#306591",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "error": "'from' must be a finite number"
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.301029995663981,
+          0.602059991327962,
+          0.602059991327962,
+          1,
+          1.30102999566398
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          "-Infinity"
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "-Infinity"
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          "-Infinity"
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [
+          "-Infinity"
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0,
+          0.477121254719662,
+          1,
+          1.47712125471966
+        ],
+        "labels": [
+          "1",
+          "3",
+          "10",
+          "30"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#3A78AB",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.301029995663981,
+          0.602059991327962,
+          0.602059991327962,
+          1,
+          1.30102999566398
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#3A78AB",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#3A78AB",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#3A78AB",
+          "#56B1F7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          -0,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#56B1F7",
+          "#4FA2E3",
+          "#3A78AA",
+          "#132B43",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          1,
+          -0,
+          -1,
+          -2,
+          -4,
+          -4,
+          -10,
+          -20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#56B1F7",
+          "#4FA2E3",
+          "#3A78AA",
+          "#132B43",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          -4,
+          -4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#56B1F7",
+          "#4FA2E3",
+          "#3A78AA",
+          "#132B43",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#56B1F7",
+          "#4FA2E3",
+          "#3A78AA",
+          "#132B43",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          -0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          -0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          -0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [
+          -0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          -0,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#56B1F7",
+          "#3E81B7",
+          "#132B43",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          1,
+          -0,
+          -1,
+          -2,
+          -4,
+          -4,
+          -10,
+          -20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#56B1F7",
+          "#3E81B7",
+          "#132B43",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          -4,
+          -4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#56B1F7",
+          "#3E81B7",
+          "#132B43",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#56B1F7",
+          "#3E81B7",
+          "#132B43",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "identity",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          -1,
+          0,
+          1,
+          4,
+          10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "identity",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          -1,
+          0,
+          1,
+          2,
+          4,
+          4,
+          10,
+          20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          -1,
+          0,
+          1,
+          4,
+          10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "identity",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          4,
+          4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          -1,
+          0,
+          1,
+          4,
+          10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "identity",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          -1,
+          0,
+          1,
+          4,
+          10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "identity",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          -1,
+          0,
+          1,
+          4,
+          10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "identity",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          -1,
+          0,
+          1,
+          4,
+          10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "identity",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          -1,
+          0,
+          1,
+          4,
+          10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "identity",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [
+          0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          -1,
+          0,
+          1,
+          4,
+          10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          -1,
+          0,
+          1,
+          4,
+          10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          -1,
+          0,
+          1,
+          4,
+          10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          -1,
+          0,
+          1,
+          4,
+          10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          -1,
+          0,
+          1,
+          4,
+          10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          -1,
+          0,
+          1,
+          4,
+          10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          -1,
+          0,
+          1,
+          2,
+          4,
+          4,
+          10,
+          20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          -1,
+          0,
+          1,
+          4,
+          10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          4,
+          4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          -1,
+          0,
+          1,
+          4,
+          10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          -1,
+          0,
+          1,
+          4,
+          10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0,
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          0,
+          1,
+          2,
+          3.16227766016838,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          0,
+          1,
+          1.4142135623731,
+          2,
+          2,
+          3.16227766016838,
+          4.47213595499958
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          0,
+          1,
+          2,
+          3.16227766016838,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          2,
+          2
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          0,
+          1,
+          2,
+          3.16227766016838,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          0,
+          1,
+          2,
+          3.16227766016838,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          0,
+          1,
+          2,
+          3.16227766016838,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          0,
+          1,
+          2,
+          3.16227766016838,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          0,
+          1,
+          2,
+          3.16227766016838,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [
+          0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          0,
+          1,
+          2,
+          3.16227766016838,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          0,
+          1,
+          2,
+          3.16227766016838,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          0,
+          1,
+          2,
+          3.16227766016838,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          0,
+          1,
+          2,
+          3.16227766016838,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          0,
+          1,
+          2,
+          3.16227766016838,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0,
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          0,
+          1,
+          2,
+          3.16227766016838,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          0,
+          1,
+          1.4142135623731,
+          2,
+          2,
+          3.16227766016838,
+          4.47213595499958
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          0,
+          1,
+          2,
+          3.16227766016838,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          2,
+          2
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          0,
+          1,
+          2,
+          3.16227766016838,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          0,
+          1,
+          2,
+          3.16227766016838,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "log10",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "error": "'from' must be a finite number"
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.602059991327962,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "log10",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.301029995663981,
+          0.602059991327962,
+          0.602059991327962,
+          1,
+          1.30102999566398
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.602059991327962,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "log10",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.602059991327962,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "log10",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.602059991327962,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "log10",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          "-Infinity"
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.602059991327962,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "log10",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "-Infinity"
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.602059991327962,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "log10",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          "-Infinity"
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.602059991327962,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "log10",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [
+          "-Infinity"
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.602059991327962,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.602059991327962,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.602059991327962,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.602059991327962,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.602059991327962,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0,
+          0.477121254719662,
+          1,
+          1.47712125471966
+        ],
+        "labels": [
+          "1",
+          "3",
+          "10",
+          "30"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.602059991327962,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.301029995663981,
+          0.602059991327962,
+          0.602059991327962,
+          1,
+          1.30102999566398
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.602059991327962,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.602059991327962,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.602059991327962,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "reverse",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          -0,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          1,
+          -0,
+          -1,
+          -4,
+          -10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "reverse",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          1,
+          -0,
+          -1,
+          -2,
+          -4,
+          -4,
+          -10,
+          -20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          1,
+          -0,
+          -1,
+          -4,
+          -10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "reverse",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          -4,
+          -4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          1,
+          -0,
+          -1,
+          -4,
+          -10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "reverse",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          1,
+          -0,
+          -1,
+          -4,
+          -10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "reverse",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          -0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          1,
+          -0,
+          -1,
+          -4,
+          -10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "reverse",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          -0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          1,
+          -0,
+          -1,
+          -4,
+          -10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "reverse",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          -0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          1,
+          -0,
+          -1,
+          -4,
+          -10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "reverse",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [
+          -0
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          1,
+          -0,
+          -1,
+          -4,
+          -10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          1,
+          -0,
+          -1,
+          -4,
+          -10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          1,
+          -0,
+          -1,
+          -4,
+          -10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          1,
+          -0,
+          -1,
+          -4,
+          -10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "4"
+        ],
+        "visible": [
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          1,
+          -0,
+          -1,
+          -4,
+          -10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          -0,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          1,
+          -0,
+          -1,
+          -4,
+          -10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          1,
+          -0,
+          -1,
+          -2,
+          -4,
+          -4,
+          -10,
+          -20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          1,
+          -0,
+          -1,
+          -4,
+          -10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          -4,
+          -4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          1,
+          -0,
+          -1,
+          -4,
+          -10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "identity",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          1,
+          -0,
+          -1,
+          -4,
+          -10,
+          null
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "identity",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#1B3A57",
+          "#1B3A57",
+          "#1B3A57",
+          "#2A5A82",
+          "#4D9FDE",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "identity",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          -1,
+          0,
+          1,
+          2,
+          4,
+          4,
+          10,
+          20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#16314B",
+          "#265075",
+          "#4186BD",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "identity",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          4,
+          4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#1F4364",
+          "#1F4364",
+          "#1F4364",
+          "#1F4364",
+          "#4186BD",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "identity",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "identity",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "labels": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "identity",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          -1,
+          0,
+          1,
+          2,
+          4,
+          4,
+          10,
+          20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "identity",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          4,
+          4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "identity",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        "labels": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          -1,
+          0,
+          1,
+          2,
+          4,
+          4,
+          10,
+          20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          4,
+          4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#183550",
+          "#183550",
+          "#183550",
+          "#265176",
+          "#4C9DDC",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          -1,
+          0,
+          1,
+          2,
+          4,
+          4,
+          10,
+          20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#214667",
+          "#3E81B7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          4,
+          4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#1D3F5E",
+          "#1D3F5E",
+          "#1D3F5E",
+          "#1D3F5E",
+          "#3E81B7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0,
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#22496C",
+          "#22496C",
+          "#3A78AB",
+          "#51A7EA",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          0,
+          1,
+          1.4142135623731,
+          2,
+          2,
+          3.16227766016838,
+          4.47213595499958
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#1D3E5D",
+          "#1D3E5D",
+          "#35709F",
+          "#4996D3",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          2,
+          2
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#275277",
+          "#275277",
+          "#275277",
+          "#4996D3",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "labels": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          0,
+          1,
+          1.4142135623731,
+          2,
+          2,
+          3.16227766016838,
+          4.47213595499958
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          2,
+          2
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "labels": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          0,
+          1,
+          1.4142135623731,
+          2,
+          2,
+          3.16227766016838,
+          4.47213595499958
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          2,
+          2
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#1B3B59",
+          "#1B3B59",
+          "#2D5F8A",
+          "#4FA3E4",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          0,
+          1,
+          1.4142135623731,
+          2,
+          2,
+          3.16227766016838,
+          4.47213595499958
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#275379",
+          "#438AC3",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          2,
+          2
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#214769",
+          "#214769",
+          "#214769",
+          "#438AC3",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "log10",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "error": "'from' must be a finite number"
+      },
+      "mapping": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "log10",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.301029995663981,
+          0.602059991327962,
+          0.602059991327962,
+          1,
+          1.30102999566398
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "log10",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "log10",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "log10",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          "-Infinity"
+        ],
+        "labels": [
+          "0"
+        ],
+        "visible": [
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "log10",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.301029995663981,
+          0.602059991327962,
+          0.602059991327962,
+          1,
+          1.30102999566398
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "log10",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "log10",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.301029995663981,
+          0.602059991327962,
+          0.602059991327962,
+          1,
+          1.30102999566398
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0,
+          0.477121254719662,
+          1
+        ],
+        "labels": [
+          "1",
+          "3",
+          "10"
+        ],
+        "visible": [
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#22486A",
+          "#438BC4",
+          "#438BC4",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.301029995663981,
+          0.602059991327962,
+          0.602059991327962,
+          1,
+          1.30102999566398
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#30648F",
+          "#4894D0",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#265075",
+          "#265075",
+          "#4894D0",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "reverse",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          -0,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#4D9FDE",
+          "#4D9FDE",
+          "#4D9FDE",
+          "#3B7BAF",
+          "#1B3A57",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "reverse",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          1,
+          -0,
+          -1,
+          -2,
+          -4,
+          -4,
+          -10,
+          -20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#52AAED",
+          "#52AAED",
+          "#4B9BDA",
+          "#265075",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "reverse",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          -4,
+          -4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#4894D0",
+          "#4894D0",
+          "#4894D0",
+          "#265075",
+          "#265075",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "reverse",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "reverse",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          -0,
+          -0,
+          -0,
+          -0,
+          -0
+        ],
+        "labels": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "reverse",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          1,
+          -0,
+          -1,
+          -2,
+          -4,
+          -4,
+          -10,
+          -20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "reverse",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          -4,
+          -4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "reverse",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          -4,
+          -4,
+          -4,
+          -4,
+          -4
+        ],
+        "labels": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          1,
+          -0,
+          -1,
+          -2,
+          -4,
+          -4,
+          -10,
+          -20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          -4,
+          -4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "#4085BC",
+          "#1B3C59",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          1,
+          -0,
+          -1,
+          -2,
+          -4,
+          -4,
+          -10,
+          -20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#52A9EC",
+          "#52A9EC",
+          "#52A9EC",
+          "#28547A",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          -4,
+          -4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#4A99D6",
+          "#4A99D6",
+          "#4A99D6",
+          "#28547A",
+          "#28547A",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_nice",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "identity",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          1.66666666666667,
+          3.33333333333333,
+          5,
+          6.66666666666667,
+          8.33333333333333
+        ],
+        "labels": [
+          "1.666667",
+          "3.333333",
+          "5.000000",
+          "6.666667",
+          "8.333333"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#183550",
+          "#183550",
+          "#183550",
+          "#2D5F89",
+          "#50A5E7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "identity",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          -1,
+          0,
+          1,
+          2,
+          4,
+          4,
+          10,
+          20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#16314B",
+          "#265075",
+          "#4186BD",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "identity",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          4,
+          4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#1F4364",
+          "#1F4364",
+          "#1F4364",
+          "#1F4364",
+          "#4186BD",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "identity",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "identity",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "labels": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "identity",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          -1,
+          0,
+          1,
+          2,
+          4,
+          4,
+          10,
+          20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "identity",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          4,
+          4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "identity",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        "labels": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          -1,
+          0,
+          1,
+          2,
+          4,
+          4,
+          10,
+          20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          4,
+          4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          2.5,
+          4,
+          5.5,
+          7,
+          8.5
+        ],
+        "labels": [
+          "2.5",
+          "4.0",
+          "5.5",
+          "7.0",
+          "8.5"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#183550",
+          "#183550",
+          "#183550",
+          "#22496C",
+          "#50A5E7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          -1,
+          0,
+          1,
+          2,
+          4,
+          4,
+          10,
+          20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#214667",
+          "#3E81B7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          4,
+          4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#1D3F5E",
+          "#1D3F5E",
+          "#1D3F5E",
+          "#1D3F5E",
+          "#3E81B7",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          1.29099444873581,
+          1.82574185835055,
+          2.23606797749979,
+          2.58198889747161,
+          2.88675134594813
+        ],
+        "labels": [
+          "1.666667",
+          "3.333333",
+          "5.000000",
+          "6.666667",
+          "8.333333"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#1F4464",
+          "#1F4464",
+          "#3C7EB2",
+          "#53ABEE",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          0,
+          1,
+          1.4142135623731,
+          2,
+          2,
+          3.16227766016838,
+          4.47213595499958
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#1D3E5D",
+          "#1D3E5D",
+          "#35709F",
+          "#4996D3",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          2,
+          2
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#275277",
+          "#275277",
+          "#275277",
+          "#4996D3",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "labels": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          0,
+          1,
+          1.4142135623731,
+          2,
+          2,
+          3.16227766016838,
+          4.47213595499958
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          2,
+          2
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "sqrt",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "labels": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          0,
+          1,
+          1.4142135623731,
+          2,
+          2,
+          3.16227766016838,
+          4.47213595499958
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          2,
+          2
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          1.58113883008419,
+          2,
+          2.34520787991171,
+          2.64575131106459,
+          2.91547594742265
+        ],
+        "labels": [
+          "2.5",
+          "4.0",
+          "5.5",
+          "7.0",
+          "8.5"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#1B3B59",
+          "#1B3B59",
+          "#2A5880",
+          "#52A9EC",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          0,
+          1,
+          1.4142135623731,
+          2,
+          2,
+          3.16227766016838,
+          4.47213595499958
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#275379",
+          "#438AC3",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          2,
+          2
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#214769",
+          "#214769",
+          "#214769",
+          "#438AC3",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "log10",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0.221848749616356,
+          0.522878745280338,
+          0.698970004336019,
+          0.823908740944319,
+          0.920818753952375
+        ],
+        "labels": [
+          "1.666667",
+          "3.333333",
+          "5.000000",
+          "6.666667",
+          "8.333333"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "log10",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.301029995663981,
+          0.602059991327962,
+          0.602059991327962,
+          1,
+          1.30102999566398
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "log10",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "log10",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "log10",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          "-Infinity",
+          "-Infinity",
+          "-Infinity",
+          "-Infinity",
+          "-Infinity"
+        ],
+        "labels": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "log10",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.301029995663981,
+          0.602059991327962,
+          0.602059991327962,
+          1,
+          1.30102999566398
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "log10",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "log10",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.301029995663981,
+          0.602059991327962,
+          0.602059991327962,
+          1,
+          1.30102999566398
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          0.397940008672038,
+          0.602059991327962,
+          0.740362689494244,
+          0.845098040014257,
+          0.929418925714293
+        ],
+        "labels": [
+          "2.5",
+          "4.0",
+          "5.5",
+          "7.0",
+          "8.5"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#1F4363",
+          "#336A98",
+          "#53ACF0",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          "NaN",
+          "-Infinity",
+          0,
+          0.301029995663981,
+          0.602059991327962,
+          0.602059991327962,
+          1,
+          1.30102999566398
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#30648F",
+          "#4894D0",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#265075",
+          "#265075",
+          "#4894D0",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "grey50",
+          "grey50",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "reverse",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          -1.66666666666667,
+          -3.33333333333333,
+          -5,
+          -6.66666666666667,
+          -8.33333333333333
+        ],
+        "labels": [
+          "1.666667",
+          "3.333333",
+          "5.000000",
+          "6.666667",
+          "8.333333"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "#3875A7",
+          "#183550",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "reverse",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          1,
+          -0,
+          -1,
+          -2,
+          -4,
+          -4,
+          -10,
+          -20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#52AAED",
+          "#52AAED",
+          "#4B9BDA",
+          "#265075",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "reverse",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          -4,
+          -4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#4894D0",
+          "#4894D0",
+          "#4894D0",
+          "#265075",
+          "#265075",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "reverse",
+      "limits": [
+        0,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "reverse",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          -0,
+          -0,
+          -0,
+          -0,
+          -0
+        ],
+        "labels": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "reverse",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          1,
+          -0,
+          -1,
+          -2,
+          -4,
+          -4,
+          -10,
+          -20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "reverse",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          -4,
+          -4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "reverse",
+      "limits": [
+        0,
+        0
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          -4,
+          -4,
+          -4,
+          -4,
+          -4
+        ],
+        "labels": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          1,
+          -0,
+          -1,
+          -2,
+          -4,
+          -4,
+          -10,
+          -20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false
+        ]
+      },
+      "mapping": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          -4,
+          -4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "auto",
+      "guide": {
+        "breaks": [
+          -2.5,
+          -4,
+          -5.5,
+          -7,
+          -8.5
+        ],
+        "labels": [
+          "2.5",
+          "4.0",
+          "5.5",
+          "7.0",
+          "8.5"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "#3875A7",
+          "#183550",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "explicit",
+      "guide": {
+        "breaks": [
+          1,
+          -0,
+          -1,
+          -2,
+          -4,
+          -4,
+          -10,
+          -20
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "4",
+          "4",
+          "10",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#52A9EC",
+          "#52A9EC",
+          "#52A9EC",
+          "#28547A",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "single",
+      "guide": {
+        "breaks": [
+          -4,
+          -4
+        ],
+        "labels": [
+          "4",
+          "4"
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      },
+      "mapping": {
+        "values": [
+          "#4A99D6",
+          "#4A99D6",
+          "#4A99D6",
+          "#28547A",
+          "#28547A",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "kind": "binned_equal",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "mode": "empty",
+      "guide": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      },
+      "mapping": {
+        "values": [
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50"
+        ]
+      }
+    }
+  ]
+}

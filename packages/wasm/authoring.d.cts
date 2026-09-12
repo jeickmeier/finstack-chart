@@ -1,3 +1,4 @@
+import type {HierarchyLayout,HierarchyLimits,HierarchyOperation} from './hierarchy.cjs';
 // Primary CommonJS proof adapter. Source identities and revisions remain exact strings in core result records.
 import type {StandaloneScale,CalendarInterval,NumericLocale,TimeLocale} from './scales.cjs';
 export * from './interpolation.cjs';
@@ -109,6 +110,7 @@ export class ScaleAes extends Component {
  private readonly _family: "ScaleAes";
  size(value: ScaleExpression): this;
  color(value: ScaleExpression): this;
+ fill(value:ScaleExpression):this; stroke(value:ScaleExpression):this; alpha(value:ScaleExpression):this; linewidth(value:ScaleExpression):this;
 }
 export function source_expr(field: string | Field | Options): SourceExpression;
 export function sourceExpr(field: string | Field | Options): SourceExpression;
@@ -116,8 +118,8 @@ export function stat_expr(field: string | Options): StatExpression;
 export function statExpr(field: string | Options): StatExpression;
 export function bin_expr(field: string): BinExpression;
 export function binExpr(field: string): BinExpression;
-export function after_scale_expr(aesthetic: 'Size' | 'Color'): ScaleExpression;
-export function afterScaleExpr(aesthetic: 'Size' | 'Color'): ScaleExpression;
+export function after_scale_expr(aesthetic: 'Size' | 'Color' | 'Fill' | 'Stroke' | 'Alpha' | 'LineWidth'): ScaleExpression;
+export function afterScaleExpr(aesthetic: 'Size' | 'Color' | 'Fill' | 'Stroke' | 'Alpha' | 'LineWidth'): ScaleExpression;
 export function from_theme(token: 'Ink' | 'Paper' | 'Accent' | 'PointSize' | 'LineWidth'): ScaleExpression;
 export function fromTheme(token: 'Ink' | 'Paper' | 'Accent' | 'PointSize' | 'LineWidth'): ScaleExpression;
 export function scale_aes(): ScaleAes;
@@ -134,15 +136,49 @@ export class Aes extends Component {
   size(value: MappingValue | SourceExpression): this;
   group(value: MappingValue): this;
   color(value: MappingValue): this;
+  fill(value: MappingValue): this;
+  stroke(value: MappingValue): this;
+  shape(value: MappingValue): this;
+  linetype(value: MappingValue): this;
+  alpha(value: MappingValue): this;
+  linewidth(value: MappingValue): this;
+  fill_scale(name: string): this; fillScale(name: string): this;
+  stroke_scale(name: string): this; strokeScale(name: string): this;
   group_all(): this;
   groupAll(): this;
   color_scale(name: string): this;
   colorScale(name: string): this;
 }
 
-export type NumericAesthetic = 'Size'|'Opacity'|'StrokeWidth'|'AreaSize'|'Angle'|'Radius'|'InnerRadius'|'OuterRadius'|'StartAngle'|'EndAngle'|'PadAngle'|'PadRadius'|'CornerRadius'|'PieValue';
-export type ShapeChannel = 'AreaSize'|'Angle'|'Radius'|'InnerRadius'|'OuterRadius'|'StartAngle'|'EndAngle'|'PadAngle'|'PadRadius'|'CornerRadius'|'PieValue';
+export type NumericAesthetic = 'Size'|'Opacity'|'Alpha'|'StrokeWidth'|'AreaSize'|'Angle'|'Radius'|'InnerRadius'|'OuterRadius'|'StartAngle'|'EndAngle'|'PadAngle'|'PadRadius'|'CornerRadius'|'PieValue';
+export type ShapeChannel = NumericAesthetic;
+export type ValueAesthetic = 'Shape'|'LineType'|'Label'|'FontFamily'|'FontFace'|'TextSize'|'TextAngle'|'HJust'|'VJust'|'LineHeight';
+export type LineType = 'Blank'|'Solid'|'Dashed'|'Dotted'|'DotDash'|'LongDash'|'TwoDash'|{Custom:number};
+export type AestheticUnits = 'Destination'|'Millimeters'|'Points';
 export class Layer extends Component {
+  fill(value:Color):this; stroke(value:Color):this;
+  radius(value:number):this; linewidth(value:number):this; alpha(value:number):this;
+  line_type(value:LineType):this; lineType(value:LineType):this;
+  aesthetic_units(units:AestheticUnits):this; aestheticUnits(units:AestheticUnits):this;
+  aesthetic_value(target:ValueAesthetic,value:Options):this; aestheticValue(target:ValueAesthetic,value:Options):this;
+  value_scale(target:ValueAesthetic,source:string|number|Field|SourceExpression|Options,scale:StandaloneScale|Options):this;
+  valueScale(target:ValueAesthetic,source:string|number|Field|SourceExpression|Options,scale:StandaloneScale|Options):this;
+  hierarchy_value(field:string|Field):this;
+  hierarchyValue(field:string|Field):this;
+  hierarchy_label(field:string|Field):this;
+  hierarchyLabel(field:string|Field):this;
+  hierarchy_source(source:HierarchySource):this;
+  hierarchySource(source:HierarchySource):this;
+  hierarchy_aggregation(aggregation:HierarchyAggregation):this;
+  hierarchyAggregation(aggregation:HierarchyAggregation):this;
+  hierarchy_layout(layout:HierarchyLayout):this;
+  hierarchyLayout(layout:HierarchyLayout):this;
+  hierarchy_projection(projection:HierarchyProjection):this;
+  hierarchyProjection(projection:HierarchyProjection):this;
+  hierarchy_order(order:HierarchyOrder):this;
+  hierarchyOrder(order:HierarchyOrder):this;
+  hierarchy_limits(limits:HierarchyLimits):this;
+  hierarchyLimits(limits:HierarchyLimits):this;
   shape_protocol(family:ShapeFamily,selection:ShapeOperation):this;
   shapeProtocol(family:ShapeFamily,selection:ShapeOperation):this;
  shape_value(target:ShapeChannel,source:string|number|Field|SourceExpression|Options):this;
@@ -195,7 +231,7 @@ export class Layer extends Component {
   geometry(name: string, version: number | bigint, parameters: JSONValue): this;
   symbolKind(kind:SymbolKind):Layer;
   symbolSize(size:number):Layer;
-  symbolPaint(paint:'Auto'|'Fill'|'Stroke'):Layer;
+  symbolPaint(paint:'Auto'|'Fill'|'Stroke'|'FillStroke'|'ColorFill'|'ColorFillStroke'):Layer;
   symbolTypes(field:string|Field,domain:readonly string[],palette:readonly SymbolKind[]):Layer;
   symbolGroups(domain:readonly string[],palette:readonly SymbolKind[]):Layer;
   symbolMissing(kind:SymbolKind|null):Layer;
@@ -302,17 +338,34 @@ export class Scale extends Component {
   interval(value: Options): this;
 }
 
+export interface GuideLineStyle {visible?:boolean|null;color?:Color|null;width?:number|null;dashes?:readonly number[]|null;}
+export interface GuideTextStyle {typography?:Options|null;rotation?:number|null;visible?:boolean|null;color?:Color|null;font_size?:number|null;}
+export interface GuideTickStyle {index?:number;visible?:boolean|null;line?:GuideLineStyle;label?:GuideTextStyle;}
+export interface GuideComponents {domain?:GuideLineStyle;ticks?:GuideLineStyle;labels?:GuideTextStyle;per_tick?:readonly GuideTickStyle[];}
+export interface GuideGeometry {inner?:number|null;outer?:number|null;padding?:number|null;offset?:number|null;labels?:'Preserve'|'HideLabels'|'ThinTicks'|null;overflow?:'Visible'|'Clip';clip_ticks?:boolean;}
 export type GuideProfile = 'LibraryV1' | 'D3_3_0_0';
-export interface GuideTickArguments {count?:number|null;specifier?:string|null;interval?:CalendarInterval|null;}
+export interface GuideTickArguments {count?:number|null;specifier?:string|null;interval?:CalendarInterval|null;seconds?:number|null;time_width?:CalendarInterval|null;width?:string|null;}
 export type GuideFormatter = {Labels:ReadonlyArray<string>} |
  {Numeric:{specifier:string;locale?:NumericLocale}} |
  {Time:{pattern?:string|null;locale?:TimeLocale}} |
+ {GgplotTime:{pattern:string;locale?:TimeLocale|null}} |
  {Registered:{operation:{id:string;version:number|bigint|string};parameters:JSONValue}};
 
 export class Axis extends Component {
+ expansion(policy:GgplotExpansion|null):this;
+ discrete_policy(policy:Options|null):this; discretePolicy(policy:Options|null):this;
+ continuous_limits(values:ReadonlyArray<number|boolean|Options>|null):this; continuousLimits(values:ReadonlyArray<number|boolean|Options>|null):this;
  guide_profile(profile:GuideProfile):this; guideProfile(profile:GuideProfile):this;
+ guide_components(components:GuideComponents|null):this; guideComponents(components:GuideComponents|null):this;
+ guide_geometry(geometry:GuideGeometry|null):this; guideGeometry(geometry:GuideGeometry|null):this;
+ tick_size(size:number):this; tickSize(size:number):this;
+ tick_size_inner(size:number):this; tickSizeInner(size:number):this;
+ tick_size_outer(size:number):this; tickSizeOuter(size:number):this;
+ tick_padding(padding:number):this; tickPadding(padding:number):this;
+ tick_offset(offset:number|null):this; tickOffset(offset:number|null):this;
  tick_arguments(arguments_:GuideTickArguments|null):this; tickArguments(arguments_:GuideTickArguments|null):this;
  tick_values(values:ReadonlyArray<ScaleValue>|null):this; tickValues(values:ReadonlyArray<ScaleValue>|null):this;
+ minor_breaks(policy:MinorBreaks|null):this; minorBreaks(policy:MinorBreaks|null):this;
  tick_format(format:GuideFormatter|null):this; tickFormat(format:GuideFormatter|null):this;
 
  numeric_format(value:{specifier:string;locale?:NumericLocale}):this;numericFormat(value:{specifier:string;locale?:NumericLocale}):this;
@@ -337,6 +390,8 @@ export class Axis extends Component {
   format(value: NumberFormat): this;
   ticks(values: ReadonlyArray<readonly [ScaleValue, string]>): this;
   secondary(source: string, factor: number, offset: number): this;
+  secondary_transform(source: string, transform: StandaloneScale | Options): this;
+  secondaryTransform(source: string, transform: StandaloneScale | Options): this;
 }
 
 export class ColorScale extends Component {
@@ -543,6 +598,7 @@ export class NumberFormat extends Component {
 }
 
 export class LayoutOptions extends Component {
+ device_scale(scale:number|null):this; deviceScale(scale:number|null):this;
   private readonly _family: "LayoutOptions";
   font_size(value: number): this;
   fontSize(value: number): this;
@@ -650,7 +706,11 @@ export function filter(field: string | number | Field | SourceExpression | Optio
 export function transform(name: string, stat: Stat): Transform;
 export function scale_linear(): Scale;
 export function scaleLinear(): Scale;
+export function scale_binned(spec: Options): Scale;
+export function scaleBinned(spec: Options): Scale;
 export function scale_log(base: number): Scale;
+export function scale_reverse(): Scale;
+export function scale_sqrt(): Scale;
 export function scaleLog(base: number): Scale;
 export function scale_symlog(threshold: number): Scale;
 export function scaleSymlog(threshold: number): Scale;
@@ -659,13 +719,25 @@ export function scaleBand(): Scale;
 export function scale_point(): Scale;
 export function scalePoint(): Scale;
 export function scale_utc(): Scale;
+export function scale_date(): Scale;
+export const scaleDate: typeof scale_date;
+export function scale_duration(): Scale;
+export const scaleDuration: typeof scale_duration;
 export function scaleUtc(): Scale;
 export function scale_session(calendar: Options): Scale;
 export function scaleSession(calendar: Options): Scale;
 export class Guide extends Component {
  guide_profile(profile:GuideProfile):this; guideProfile(profile:GuideProfile):this;
+ guide_components(components:GuideComponents|null):this; guideComponents(components:GuideComponents|null):this;
+ guide_geometry(geometry:GuideGeometry|null):this; guideGeometry(geometry:GuideGeometry|null):this;
+ tick_size(size:number):this; tickSize(size:number):this;
+ tick_size_inner(size:number):this; tickSizeInner(size:number):this;
+ tick_size_outer(size:number):this; tickSizeOuter(size:number):this;
+ tick_padding(padding:number):this; tickPadding(padding:number):this;
+ tick_offset(offset:number|null):this; tickOffset(offset:number|null):this;
  tick_arguments(arguments_:GuideTickArguments|null):this; tickArguments(arguments_:GuideTickArguments|null):this;
  tick_values(values:ReadonlyArray<ScaleValue>|null):this; tickValues(values:ReadonlyArray<ScaleValue>|null):this;
+ minor_breaks(policy:MinorBreaks|null):this; minorBreaks(policy:MinorBreaks|null):this;
  tick_format(format:GuideFormatter|null):this; tickFormat(format:GuideFormatter|null):this;
 
  private readonly _family: "Guide";
@@ -817,7 +889,7 @@ export class ExportOptions extends Owned {
  maxOutputBytes(value: number): this;
  background(value: Color): this;
  interaction(value: Options): this;
- basis(value: 'presented' | 'current' | 'Presented' | 'Current'): this;
+ basis(value: 'presented' | 'current' | 'Presented' | 'Current' | 'displayed' | 'Displayed'): this;
  view(value: 'visible' | 'full_domain' | 'VisibleView' | 'FullDomain'): this;
  text(value: 'preserve' | 'outline' | 'Preserve' | 'Outline'): this;
  layout(value: LayoutOptions): this;
@@ -825,10 +897,16 @@ export class ExportOptions extends Owned {
 export function export_options(width: number, height: number, unit?: 'pt' | 'mm'): ExportOptions;
 export function exportOptions(width: number, height: number, unit?: 'pt' | 'mm'): ExportOptions;
 export class FigureRequest extends Owned {
+  with_hierarchy_history(previous:FigureSnapshot):FigureRequest;
+  withHierarchyHistory(previous:FigureSnapshot):FigureRequest;
  prepare(): FigureSnapshot;
  manifest(): Record<string, unknown>;
 }
+export class FigureTransition extends Owned { sample(fraction: number): FigureSnapshot; }
 export class FigureSnapshot extends Owned {
+ guide_transition(previous: FigureSnapshot): FigureTransition;
+ guideTransition(previous: FigureSnapshot): FigureTransition;
+ presentation(): Record<string, unknown>[];
  guides(): Record<string, unknown>;
  scene(): Record<string, unknown>;
  manifest(): Record<string, unknown>;
@@ -922,6 +1000,8 @@ export class Chart extends Owned {
  zoom(x: number, y: number, factor: number, options?: NavigationOptions): WindowResult;
  pan(dx: number, dy: number, options?: NavigationOptions): WindowResult;
  range(axis: string, window: string | Options, options?: QueryOptions & {panel?: Panel | null}): WindowResult;
+ acknowledge_frame(frame: FigureSnapshot): void;
+ acknowledgeFrame(frame: FigureSnapshot): void;
  present(output: Output, options: ExportOptions): FigureSnapshot;
  request(output: Output, options: ExportOptions): FigureRequest;
  stream(options: StreamOptions): this;
@@ -1063,7 +1143,7 @@ export function shape_pie():Layer;
 export const shapeArc:typeof shape_arc;
 export const shapePie:typeof shape_pie;
 
-export type SymbolKind='Circle'|'Cross'|'Diamond'|'Square'|'Star'|'Triangle'|'Wye'|'Plus'|'Times'|'X'|'Asterisk'|'Diamond2'|'Square2'|'Triangle2';
+export type SymbolKind='Circle'|'Cross'|'Diamond'|'Square'|'Star'|'Triangle'|'Wye'|'Plus'|'Times'|'X'|'Asterisk'|'Diamond2'|'Square2'|'Triangle2'|{Ggplot:number};
 export interface ShapeSymbolConfig {kind?:SymbolKind;size?:number;digits?:number|null;limits?:ShapeLimits;}
 export class ShapeSymbol extends Owned {
  generateRegistered(registry:ShapeRegistry,selection:ShapeOperation):Path;
@@ -1145,3 +1225,28 @@ export function shape_link(curve: CurveSpec): Layer;
 export const shapeLink: typeof shape_link;
 
 export {ShapeRegistry as ExtensionRegistry};
+export * from './hierarchy.cjs';
+
+export type HierarchySource = {Table:{id:string|null;parent:string|null}}|{Paths:string};
+export type HierarchyAggregation = 'Count'|{Sum:string}|{Registered:HierarchyOperation};
+export type HierarchyOrder = 'Input'|'ValueAscending'|'ValueDescending'|{Registered:HierarchyOperation};
+export type HierarchyProjection = 'Cartesian'|'Horizontal'|'Radial'|{Sunburst:{inner_radius:number;radius:'Linear'|'Area'}};
+export interface HierarchyRecipe {identity:string;source:HierarchySource;aggregation:HierarchyAggregation;label:string|null;layout:HierarchyLayout;order?:HierarchyOrder;projection?:HierarchyProjection;limits?:HierarchyLimits;}
+export function hierarchy(recipe:HierarchyRecipe):Layer;
+export function hierarchy_tree(id:string,parent:string):Layer;
+export function hierarchy_cluster(id:string,parent:string):Layer;
+export function hierarchy_icicle(id:string,parent:string):Layer;
+export function hierarchy_sunburst(id:string,parent:string):Layer;
+export function hierarchy_treemap(id:string,parent:string):Layer;
+export function hierarchy_pack(id:string,parent:string):Layer;
+
+export const hierarchyTree:typeof hierarchy_tree;
+export const hierarchyCluster:typeof hierarchy_cluster;
+export const hierarchyIcicle:typeof hierarchy_icicle;
+export const hierarchySunburst:typeof hierarchy_sunburst;
+export const hierarchyTreemap:typeof hierarchy_treemap;
+export const hierarchyPack:typeof hierarchy_pack;
+
+export type MinorBreaks = "Automatic" | "Hidden" | {Numeric: ReadonlyArray<number | Options>} | {TimeWidth:string} | {Timestamps:ReadonlyArray<Options|null>};
+
+export interface GgplotExpansion {mult:ReadonlyArray<number>;add:ReadonlyArray<number>; }

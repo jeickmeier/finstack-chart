@@ -43,6 +43,16 @@ pub enum AxisScale {
     Auto,
     /// Linear domain precedence/baseline/padding/nice policy.
     Linear(ContinuousDomain),
+    /// Reference elapsed-time scale over numeric seconds, with unbounded-hour labels.
+    Duration(ContinuousDomain),
+    /// Reference bin indices before statistics, mapped back to intervals for geometry.
+    Binned {
+        /// Authored shared bin and guide policy.
+        spec: Box<crate::scales::GgplotBinnedPosition>,
+        /// Execution-local shared population state; authoring normally omits it.
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        prepared: Option<std::sync::Arc<crate::scales::PreparedGgplotBinnedPosition>>,
+    },
     /// D3-compatible authored numeric knots and range, projected into destination units.
     Numeric(crate::scales::NumericScaleSpec),
     /// Explicitly registered numeric-output provider; never implies inversion.
@@ -65,14 +75,17 @@ pub enum AxisScale {
     D3Point(crate::scales::PointSpec),
     /// Supplied active sessions compressed into contiguous time.
     Session(SessionCalendar),
-    /// Alternate-unit guide over another numeric axis; cannot bind layer coordinates.
+    /// Guide over numeric/time units, or an identity duplicate of reference categories.
     Secondary {
-        /// Existing primary numeric scale identity.
+        /// Existing primary scale identity; secondary guides cannot bind layer coordinates.
         source: ScaleId,
         /// Finite nonzero unit multiplier.
         factor: f64,
-        /// Finite unit offset.
+        /// Finite unit offset; datetime uses seconds and Date uses days.
         offset: f64,
+        /// Optional strictly monotone shared numeric transform before the affine conversion.
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        transform: Option<Box<crate::scales::NumericScaleSpec>>,
     },
     /// Stable labels with optional exact explicit domain/order.
     Band(BandOptions),
@@ -85,6 +98,11 @@ pub enum AxisScale {
         /// Explicit calendar interval, or automatic density selection.
         interval: Option<crate::scales::CalendarInterval>,
     },
+    /// Reference Date policy over exact UTC timestamps, with expansion in days.
+    Date {
+        /// Exact source-unit endpoints; absent derives post-stat endpoints.
+        domain: Option<TimeBounds>,
+    },
     /// UTC integer domain and optional calendar tick interval.
     Utc {
         /// Exact source-unit endpoints; absent derives post-stat endpoints.
@@ -96,6 +114,15 @@ pub enum AxisScale {
 /// Presentation shared by default and independently identified positional guides.
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 pub struct GuideStyle {
+    /// Independent reference minor candidates (wire v19); no minor tick paint is implied.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub minor_breaks: Option<super::MinorBreaks>,
+    /// Independent component paint, visibility and per-tick overrides (wire v14).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub components: Option<super::GuideComponents>,
+    /// Independent signed geometry and explicit layout policies (wire v13).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub geometry: Option<super::GuideGeometry>,
     /// Explicit guide presentation policy, independent of scale/population semantics (wire v11).
     #[serde(default, skip_serializing_if = "GuideProfile::is_legacy")]
     pub profile: GuideProfile,
@@ -144,6 +171,9 @@ impl GuideStyle {
 impl Default for GuideStyle {
     fn default() -> Self {
         Self {
+            minor_breaks: None,
+            components: None,
+            geometry: None,
             profile: GuideProfile::LibraryV1,
             tick_arguments: None,
             tick_values: None,
@@ -214,6 +244,18 @@ impl std::ops::DerefMut for AxisSpec {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct AxisSpec {
+    /// Reference continuous limits for category-index expansion. Numeric vectors
+    /// use their range; vectors with missing endpoints require exactly two values.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub continuous_limits: Option<Vec<crate::interpolate::Number>>,
+    /// Reference factor, nullable limit and guide policy for a categorical axis.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub discrete: Option<Box<crate::scales::GgplotDiscretePosition>>,
+    /// Reference expansion of numeric transformed limits or categorical index limits.
+    /// Absence selects the ggplot profile default or the library's existing policy.
+    /// An explicit viewport takes precedence without changing trained limits.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub expansion: Option<crate::scales::GgplotExpansion>,
     /// Explicit coordinate-only transform override; absence follows the canonical profile.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub scale_stage: Option<crate::grammar::ScaleStage>,
@@ -252,6 +294,9 @@ impl AxisSpec {
     pub fn new(id: ScaleId, side: AxisSide) -> Self {
         Self {
             id,
+            expansion: None,
+            continuous_limits: None,
+            discrete: None,
             population_oob: None,
             scale_stage: None,
             side,
@@ -266,6 +311,13 @@ impl AxisSpec {
 /// Explicit bounded layout request; all dimensions share the destination units.
 #[derive(serde::Serialize, Clone, Debug)]
 pub struct LayoutRequest {
+    /// Explicitly captured history; compatible layouts reuse rows without retaining old scenes.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub hierarchy_scope: Vec<super::GuideScope>,
+    /// Immutable owned resquarify seed rows by destination and layer.
+    pub hierarchy_history: Arc<Vec<super::HierarchyHistoryEntry>>,
+    /// Explicit host device scale; absent uses the D3 headless offset of 0.5.
+    pub device_scale: Option<f64>,
     /// Host tokens, preceding named theme and plot overrides.
     pub host_theme: crate::theme::ThemePatch<crate::color::Paint>,
     /// Explicit applicable interaction styling by layer.
@@ -314,7 +366,10 @@ impl LayoutRequest {
     /// Two automatic primary axes, explicit destination font, four-pass bounded solving.
     pub fn new(bounds: Rect, units: Units, font: ResourceDescriptor) -> Self {
         Self {
+            hierarchy_scope: vec![],
+            hierarchy_history: Arc::new(vec![]),
             bounds,
+            device_scale: None,
             host_theme: crate::theme::ThemePatch::default(),
             interaction_theme: BTreeMap::new(),
             output_theme: crate::theme::ThemePatch::default(),
@@ -343,6 +398,8 @@ impl LayoutRequest {
 /// Concrete scale exposes only its valid inversion/category capabilities.
 #[derive(Clone, Debug)]
 pub enum ResolvedScale {
+    /// Reference numeric limits with infinite endpoints and finite destination mapping.
+    Unbounded(crate::scales::GgplotUnboundedScale),
     /// One checked immutable provider shared by all guides on this scale.
     Provider(crate::scales::CheckedPositionalScale),
     /// Numeric mapping/inversion in calculation space.
@@ -361,6 +418,34 @@ pub enum ResolvedScale {
         source: ScaleId,
         /// Alternate-unit represented domain.
         domain: Bounds,
+        /// Visible alternate-unit endpoints, inherited from the primary viewport.
+        view: Bounds,
+        /// Retained primary mapping used to position independently selected guide values.
+        primary: Box<ResolvedAxis>,
+        /// Prepared optional nonlinear or piecewise alternate-unit mapping.
+        conversion: Option<Box<crate::scales::NumericScale>>,
+        /// Reference inverse sampled at 1000 primary positions, for guide placement only.
+        guide_inverse: Option<Box<crate::scales::NumericScale>>,
+        /// Primary destination range used by reference normalized guide rounding.
+        range: Bounds,
+    },
+    /// Guide-only identity duplicate of a reference categorical scale.
+    SecondaryDiscrete {
+        /// Source primary scale identity.
+        source: ScaleId,
+        /// Retained category mapping and independent primary labels.
+        primary: Box<ResolvedAxis>,
+        /// Finite source viewport in mapped category units.
+        viewport: Bounds,
+        /// Destination bounds used for reference guide rounding.
+        range: Bounds,
+    },
+    /// Guide-only translated Date/datetime range sharing the primary time mapping.
+    SecondaryTime {
+        /// Source primary scale identity.
+        source: ScaleId,
+        /// Shifted time mapping and calendar selection policy.
+        axis: Box<ResolvedAxis>,
     },
     /// Exact label lookup and band extent; no numeric inverse.
     Band(BandScale),
@@ -394,6 +479,9 @@ pub struct ResolvedAxis {
 /// One retained guide referencing an independently owned positional scale.
 #[derive(Clone, Debug)]
 pub struct ResolvedGuide {
+    /// Retained minor candidates, independent of major label thinning.
+    pub minor_ticks: Vec<super::MinorGuideTick>,
+    pub(super) tick_indices: Vec<usize>,
     /// Stable identity, shared scale, placement and presentation.
     pub spec: GuideSpec,
     /// Original semantic values and final destination positions/labels.
@@ -412,6 +500,9 @@ pub enum LayoutStatus {
 /// One coherent immutable layout, retaining the exact prepared/stat/source snapshot.
 #[derive(Clone, Debug)]
 pub struct LaidOutChart {
+    pub(crate) hierarchies: BTreeMap<crate::LayerId, super::ResolvedHierarchy>,
+    pub(super) guide_frames: BTreeMap<crate::GuideId, super::GuideTransitionFrame>,
+    pub(super) guide_presentation: Option<Arc<super::guide_animation::Presentation>>,
     pub(crate) paint_themes: BTreeMap<crate::LayerId, crate::theme::ThemePatch>,
     pub(crate) interactions: BTreeMap<usize, crate::grammar::GeometryInteraction>,
     pub(crate) insets: Vec<LaidOutInset>,
@@ -457,6 +548,9 @@ impl LaidOutChart {
     /// Owned semantic guide snapshots from this exact layout, including facet/inset scopes.
     /// Values and labels are captured together; no inverse mapping or relayout occurs.
     pub fn guide_snapshots(&self) -> Vec<super::GuideSnapshot> {
+        if let Some(presentation) = &self.guide_presentation {
+            return presentation.snapshots.clone();
+        }
         fn visit(
             chart: &LaidOutChart,
             scope: &mut Vec<super::GuideScope>,
@@ -466,6 +560,7 @@ impl LaidOutChart {
                 scope: scope.clone(),
                 spec: guide.spec.clone(),
                 ticks: guide.ticks.clone(),
+                minor_ticks: guide.minor_ticks.clone(),
             }));
             for panel in &chart.panels {
                 scope.push(super::GuideScope::Panel(panel.key.clone()));
@@ -559,13 +654,107 @@ pub struct CustomGuideTick {
 }
 
 impl ResolvedAxis {
+    /// Guide-specific mapping; ggplot2 secondary axes sample their inverse and round
+    /// normalized positions to three decimals, independently of exact semantic mapping.
+    pub fn guide_value_position(
+        &self,
+        value: &crate::composition::ScaleValue,
+    ) -> crate::ChartResult<Option<f64>> {
+        if let (
+            ResolvedScale::Secondary {
+                primary,
+                guide_inverse: Some(inverse),
+                range,
+                ..
+            },
+            crate::composition::ScaleValue::Number(v),
+        ) = (&self.scale, value)
+        {
+            let original = inverse.map_finite(*v)?.ok_or_else(|| {
+                crate::scales::error(
+                    crate::DiagnosticCode::NumericalDomain,
+                    "Secondary guide inverse is not finite.",
+                )
+            })?;
+            return primary
+                .map_value(&crate::composition::ScaleValue::Number(original))?
+                .map(|position| {
+                    let fraction = (position - range.start()) / (range.end() - range.start());
+                    let fraction = (fraction * 1000.).round_ties_even() / 1000.;
+                    let position = range.start() + (range.end() - range.start()) * fraction;
+                    if position.is_finite() {
+                        Ok(position)
+                    } else {
+                        Err(crate::scales::error(
+                            crate::DiagnosticCode::PrecisionLoss,
+                            "Secondary guide position exceeds finite range.",
+                        ))
+                    }
+                })
+                .transpose();
+        }
+        if let (
+            ResolvedScale::SecondaryDiscrete {
+                range, viewport, ..
+            },
+            crate::composition::ScaleValue::Number(value),
+        ) = (&self.scale, value)
+        {
+            return self
+                .map_value(&crate::composition::ScaleValue::Number(*value))?
+                .map(|_| {
+                    let fraction =
+                        (*value - viewport.start()) / (viewport.end() - viewport.start());
+                    let fraction = (fraction * 1000.).round_ties_even() / 1000.;
+                    let position = range.start() * (1. - fraction) + range.end() * fraction;
+                    if position.is_finite() {
+                        Ok(position)
+                    } else {
+                        Err(crate::scales::error(
+                            crate::DiagnosticCode::PrecisionLoss,
+                            "Discrete secondary guide position exceeds finite range.",
+                        ))
+                    }
+                })
+                .transpose();
+        }
+        self.map_value(value)
+    }
+
     /// Map a semantic value through its actual numeric/category/time capability.
     pub fn map_value(&self, v: &crate::composition::ScaleValue) -> crate::ChartResult<Option<f64>> {
         match (&self.scale, v) {
+            (
+                ResolvedScale::SecondaryDiscrete { primary, .. },
+                crate::composition::ScaleValue::Number(value),
+            ) => super::secondary_discrete::position(primary, *value),
             (ResolvedScale::Provider(s), value) => s.map(value),
+            (ResolvedScale::SecondaryTime { axis, .. }, value) => axis.map_value(value),
+            (ResolvedScale::Unbounded(s), crate::composition::ScaleValue::Number(v)) => s.map(*v),
             (ResolvedScale::Linear(s), crate::composition::ScaleValue::Number(v)) => s.map(*v),
             (ResolvedScale::Numeric(s), crate::composition::ScaleValue::Number(v)) => s.map(*v),
             (ResolvedScale::Nonlinear(s), crate::composition::ScaleValue::Number(v)) => s.map(*v),
+            (
+                ResolvedScale::Secondary {
+                    primary,
+                    conversion,
+                    ..
+                },
+                crate::composition::ScaleValue::Number(v),
+            ) => {
+                let AxisScale::Secondary { factor, offset, .. } = self.spec.scale else {
+                    unreachable!()
+                };
+                let value = (v - offset) / factor;
+                let value = conversion
+                    .as_ref()
+                    .map_or(Ok(value), |s| s.invert_unbounded(value))?;
+                primary.map_value(&crate::composition::ScaleValue::Number(value))
+            }
+            (
+                ResolvedScale::Band(_) | ResolvedScale::Point(_),
+                crate::composition::ScaleValue::MissingCategory,
+            ) => Ok(None),
             (ResolvedScale::Band(s), crate::composition::ScaleValue::Category(v)) => s.center(v),
             (ResolvedScale::Point(s), crate::composition::ScaleValue::Category(v)) => s.center(v),
             (ResolvedScale::Utc(s), crate::composition::ScaleValue::Timestamp { value, unit })

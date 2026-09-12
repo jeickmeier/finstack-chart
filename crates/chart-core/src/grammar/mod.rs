@@ -58,6 +58,9 @@ mod after_scale;
 mod stack_position;
 pub use after_scale::*;
 mod colors;
+mod style_channels;
+pub(crate) use style_channels::reference_linewidth;
+pub use style_channels::{AestheticUnits, LineType, ValueAesthetic};
 mod numeric_aesthetics;
 mod radial_shapes;
 mod shape_encoding;
@@ -77,6 +80,13 @@ pub(crate) mod positions;
 mod shape_extensions;
 pub use orientation::Orientation;
 pub(crate) mod guide_extensions;
+pub(crate) mod hierarchy;
+pub use hierarchy::{
+    HierarchyAggregation, HierarchyOrder, HierarchyProjection, HierarchyRadius, HierarchyRecipe,
+    HierarchySource, PreparedHierarchy,
+};
+pub(crate) mod hierarchy_extensions;
+pub use hierarchy_extensions::{CustomHierarchyOperation, HierarchyScalar};
 pub(crate) mod interpolation_extensions;
 pub use interpolation_extensions::{CustomInterpolationFactory, InterpolationInput};
 mod prepared;
@@ -115,3 +125,6 @@ fn error(code: DiagnosticCode, message: impl Into<String>) -> Diagnostic {
 
 mod symbols;
 pub use symbols::{SymbolEncoding, SymbolLegend, SymbolLegendEntry, SymbolSizeGuide};
+
+mod scale_limit_extensions;
+pub use scale_limit_extensions::{CustomScaleLimits, ScaleLimitsInput, ScaleLimitsOperation};

@@ -1,0 +1,4200 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          1,
+          10
+        ],
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          1,
+          10
+        ],
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          1,
+          10
+        ],
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          1,
+          10
+        ],
+        "breaks": [
+          -1,
+          0,
+          0.1,
+          1,
+          5,
+          10,
+          20,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "-1.0",
+          "0.0",
+          "0.1",
+          "1.0",
+          "5.0",
+          "10.0",
+          "20.0",
+          "Inf",
+          null,
+          null
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          1,
+          10
+        ],
+        "breaks": [
+          -1,
+          0,
+          0.1,
+          1,
+          5,
+          10,
+          20,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          1,
+          10
+        ],
+        "breaks": [
+          -1,
+          0,
+          0.1,
+          1,
+          5,
+          10,
+          20,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5",
+          "L6",
+          "L7",
+          "L8",
+          "L9",
+          "L10"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          1,
+          10
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          1,
+          10
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          1,
+          10
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          0.8,
+          8.4
+        ],
+        "breaks": [
+          0,
+          2,
+          4,
+          6,
+          8
+        ],
+        "labels": [
+          "0",
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          0.8,
+          8.4
+        ],
+        "breaks": [
+          0,
+          2,
+          4,
+          6,
+          8
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          0.8,
+          8.4
+        ],
+        "breaks": [
+          0,
+          2,
+          4,
+          6,
+          8
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          0.8,
+          8.4
+        ],
+        "breaks": [
+          -1,
+          0,
+          0.1,
+          1,
+          5,
+          10,
+          20,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "-1.0",
+          "0.0",
+          "0.1",
+          "1.0",
+          "5.0",
+          "10.0",
+          "20.0",
+          "Inf",
+          null,
+          null
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          0.8,
+          8.4
+        ],
+        "breaks": [
+          -1,
+          0,
+          0.1,
+          1,
+          5,
+          10,
+          20,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          0.8,
+          8.4
+        ],
+        "breaks": [
+          -1,
+          0,
+          0.1,
+          1,
+          5,
+          10,
+          20,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5",
+          "L6",
+          "L7",
+          "L8",
+          "L9",
+          "L10"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "empty",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          0.8,
+          8.4
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "empty",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          0.8,
+          8.4
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "empty",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          0.8,
+          8.4
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          4,
+          4
+        ],
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "4"
+        ],
+        "hidden": false,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          4,
+          4
+        ],
+        "breaks": [
+          4
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          4,
+          4
+        ],
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "4"
+        ],
+        "hidden": false,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          4,
+          4
+        ],
+        "breaks": [
+          4
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          4,
+          4
+        ],
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "4"
+        ],
+        "hidden": false,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          4,
+          4
+        ],
+        "breaks": [
+          4
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          1,
+          3.16227766016838
+        ],
+        "breaks": [
+          0,
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          1,
+          3.16227766016838
+        ],
+        "breaks": [
+          0,
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          1,
+          3.16227766016838
+        ],
+        "breaks": [
+          0,
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          1,
+          3.16227766016838
+        ],
+        "breaks": [
+          null,
+          0,
+          0.316227766016838,
+          1,
+          2.23606797749979,
+          3.16227766016838,
+          4.47213595499958,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          null,
+          "0.0",
+          "0.1",
+          "1.0",
+          "5.0",
+          "10.0",
+          "20.0",
+          "Inf",
+          null,
+          null
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          1,
+          3.16227766016838
+        ],
+        "breaks": [
+          null,
+          0,
+          0.316227766016838,
+          1,
+          2.23606797749979,
+          3.16227766016838,
+          4.47213595499958,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          1,
+          3.16227766016838
+        ],
+        "breaks": [
+          null,
+          0,
+          0.316227766016838,
+          1,
+          2.23606797749979,
+          3.16227766016838,
+          4.47213595499958,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5",
+          "L6",
+          "L7",
+          "L8",
+          "L9",
+          "L10"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          1,
+          3.16227766016838
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          1,
+          3.16227766016838
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          1,
+          3.16227766016838
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "breaks": [
+          0,
+          1.4142135623731,
+          2,
+          2.44948974278318,
+          2.82842712474619
+        ],
+        "labels": [
+          "0",
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "breaks": [
+          0,
+          1.4142135623731,
+          2,
+          2.44948974278318,
+          2.82842712474619
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "breaks": [
+          0,
+          1.4142135623731,
+          2,
+          2.44948974278318,
+          2.82842712474619
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "breaks": [
+          null,
+          0,
+          0.316227766016838,
+          1,
+          2.23606797749979,
+          3.16227766016838,
+          4.47213595499958,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          null,
+          "0.0",
+          "0.1",
+          "1.0",
+          "5.0",
+          "10.0",
+          "20.0",
+          "Inf",
+          null,
+          null
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "breaks": [
+          null,
+          0,
+          0.316227766016838,
+          1,
+          2.23606797749979,
+          3.16227766016838,
+          4.47213595499958,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "breaks": [
+          null,
+          0,
+          0.316227766016838,
+          1,
+          2.23606797749979,
+          3.16227766016838,
+          4.47213595499958,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5",
+          "L6",
+          "L7",
+          "L8",
+          "L9",
+          "L10"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "empty",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "empty",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "empty",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          2,
+          2
+        ],
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "4"
+        ],
+        "hidden": false,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          2,
+          2
+        ],
+        "breaks": [
+          2
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          2,
+          2
+        ],
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "4"
+        ],
+        "hidden": false,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          2,
+          2
+        ],
+        "breaks": [
+          2
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          2,
+          2
+        ],
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "4"
+        ],
+        "hidden": false,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          2,
+          2
+        ],
+        "breaks": [
+          2
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "breaks": [
+          0,
+          0.477121254719662,
+          1,
+          1.47712125471966
+        ],
+        "labels": [
+          "1",
+          "3",
+          "10",
+          "30"
+        ],
+        "hidden": false,
+        "visible": [
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "breaks": [
+          0,
+          0.477121254719662,
+          1,
+          1.47712125471966
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          "-Infinity",
+          -1,
+          0,
+          0.698970004336019,
+          1,
+          1.30102999566398,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          null,
+          "0.0",
+          "0.1",
+          "1.0",
+          "5.0",
+          "10.0",
+          "20.0",
+          "Inf",
+          null,
+          null
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          "-Infinity",
+          -1,
+          0,
+          0.698970004336019,
+          1,
+          1.30102999566398,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          "-Infinity",
+          -1,
+          0,
+          0.698970004336019,
+          1,
+          1.30102999566398,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5",
+          "L6",
+          "L7",
+          "L8",
+          "L9",
+          "L10"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "breaks": [
+          -0.301029995663981,
+          0,
+          0.477121254719662,
+          0.698970004336019,
+          1
+        ],
+        "labels": [
+          "0.5",
+          "1.0",
+          "3.0",
+          "5.0",
+          "10.0"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "breaks": [
+          -0.301029995663981,
+          0,
+          0.477121254719662,
+          0.698970004336019,
+          1
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "breaks": [
+          -0.301029995663981,
+          0,
+          0.477121254719662,
+          0.698970004336019,
+          1
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "breaks": [
+          null,
+          "-Infinity",
+          -1,
+          0,
+          0.698970004336019,
+          1,
+          1.30102999566398,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          null,
+          "0.0",
+          "0.1",
+          "1.0",
+          "5.0",
+          "10.0",
+          "20.0",
+          "Inf",
+          null,
+          null
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "breaks": [
+          null,
+          "-Infinity",
+          -1,
+          0,
+          0.698970004336019,
+          1,
+          1.30102999566398,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "breaks": [
+          null,
+          "-Infinity",
+          -1,
+          0,
+          0.698970004336019,
+          1,
+          1.30102999566398,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5",
+          "L6",
+          "L7",
+          "L8",
+          "L9",
+          "L10"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "empty",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "empty",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "empty",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "4"
+        ],
+        "hidden": false,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "4"
+        ],
+        "hidden": false,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "4"
+        ],
+        "hidden": false,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          -0,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          -0,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          -0,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          1,
+          -0,
+          -0.1,
+          -1,
+          -5,
+          -10,
+          -20,
+          "-Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "-1.0",
+          "0.0",
+          "0.1",
+          "1.0",
+          "5.0",
+          "10.0",
+          "20.0",
+          "Inf",
+          null,
+          null
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          1,
+          -0,
+          -0.1,
+          -1,
+          -5,
+          -10,
+          -20,
+          "-Infinity",
+          null,
+          null
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          1,
+          -0,
+          -0.1,
+          -1,
+          -5,
+          -10,
+          -20,
+          "-Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5",
+          "L6",
+          "L7",
+          "L8",
+          "L9",
+          "L10"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          -10,
+          -1
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          -10,
+          -1
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          -10,
+          -1
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          -8.4,
+          -0.8
+        ],
+        "breaks": [
+          -0,
+          -2,
+          -4,
+          -6,
+          -8
+        ],
+        "labels": [
+          "0",
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          -8.4,
+          -0.8
+        ],
+        "breaks": [
+          -0,
+          -2,
+          -4,
+          -6,
+          -8
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          -8.4,
+          -0.8
+        ],
+        "breaks": [
+          -0,
+          -2,
+          -4,
+          -6,
+          -8
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          -8.4,
+          -0.8
+        ],
+        "breaks": [
+          1,
+          -0,
+          -0.1,
+          -1,
+          -5,
+          -10,
+          -20,
+          "-Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "-1.0",
+          "0.0",
+          "0.1",
+          "1.0",
+          "5.0",
+          "10.0",
+          "20.0",
+          "Inf",
+          null,
+          null
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          -8.4,
+          -0.8
+        ],
+        "breaks": [
+          1,
+          -0,
+          -0.1,
+          -1,
+          -5,
+          -10,
+          -20,
+          "-Infinity",
+          null,
+          null
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          -8.4,
+          -0.8
+        ],
+        "breaks": [
+          1,
+          -0,
+          -0.1,
+          -1,
+          -5,
+          -10,
+          -20,
+          "-Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5",
+          "L6",
+          "L7",
+          "L8",
+          "L9",
+          "L10"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "empty",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          -8.4,
+          -0.8
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "empty",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          -8.4,
+          -0.8
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "empty",
+      "label_mode": "explicit",
+      "result": {
+        "domain": [
+          -8.4,
+          -0.8
+        ],
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          -4,
+          -4
+        ],
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "4"
+        ],
+        "hidden": false,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          -4,
+          -4
+        ],
+        "breaks": [
+          -4
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          -4,
+          -4
+        ],
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "4"
+        ],
+        "hidden": false,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          -4,
+          -4
+        ],
+        "breaks": [
+          -4
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "auto",
+      "result": {
+        "domain": [
+          -4,
+          -4
+        ],
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "4"
+        ],
+        "hidden": false,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "hidden",
+      "result": {
+        "domain": [
+          -4,
+          -4
+        ],
+        "breaks": [
+          -4
+        ],
+        "labels": [],
+        "hidden": true,
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "count": 3,
+      "result": {
+        "domain": [
+          0.8,
+          8.4
+        ],
+        "breaks": [
+          0,
+          4,
+          8
+        ],
+        "labels": [
+          "0",
+          "4",
+          "8"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        1,
+        1000
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "count": 3,
+      "result": {
+        "domain": [
+          1,
+          1000
+        ],
+        "breaks": [
+          0,
+          500,
+          1000
+        ],
+        "labels": [
+          "0",
+          "500",
+          "1000"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "count": 7,
+      "result": {
+        "domain": [
+          0.8,
+          8.4
+        ],
+        "breaks": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "limits": [
+        1,
+        1000
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "count": 7,
+      "result": {
+        "domain": [
+          1,
+          1000
+        ],
+        "breaks": [
+          0,
+          200,
+          400,
+          600,
+          800,
+          1000
+        ],
+        "labels": [
+          "0",
+          "200",
+          "400",
+          "600",
+          "800",
+          "1000"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "count": 3,
+      "result": {
+        "domain": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "breaks": [
+          0,
+          2,
+          2.82842712474619
+        ],
+        "labels": [
+          "0",
+          "4",
+          "8"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        1,
+        1000
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "count": 3,
+      "result": {
+        "domain": [
+          1,
+          31.6227766016838
+        ],
+        "breaks": [
+          0,
+          22.3606797749979,
+          31.6227766016838
+        ],
+        "labels": [
+          "0",
+          "500",
+          "1000"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "count": 7,
+      "result": {
+        "domain": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "breaks": [
+          0,
+          1,
+          1.4142135623731,
+          1.73205080756888,
+          2,
+          2.23606797749979,
+          2.44948974278318,
+          2.64575131106459,
+          2.82842712474619
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "limits": [
+        1,
+        1000
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "count": 7,
+      "result": {
+        "domain": [
+          1,
+          31.6227766016838
+        ],
+        "breaks": [
+          0,
+          14.142135623731,
+          20,
+          24.4948974278318,
+          28.2842712474619,
+          31.6227766016838
+        ],
+        "labels": [
+          "0",
+          "200",
+          "400",
+          "600",
+          "800",
+          "1000"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "count": 3,
+      "result": {
+        "domain": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "breaks": [
+          -1,
+          0,
+          1
+        ],
+        "labels": [
+          "0.1",
+          "1.0",
+          "10.0"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        1,
+        1000
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "count": 3,
+      "result": {
+        "domain": [
+          0,
+          3
+        ],
+        "breaks": [
+          0,
+          2
+        ],
+        "labels": [
+          "1",
+          "100"
+        ],
+        "hidden": false,
+        "visible": [
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "count": 7,
+      "result": {
+        "domain": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "breaks": [
+          -0.154901959985743,
+          0,
+          0.301029995663981,
+          0.477121254719662,
+          0.698970004336019,
+          0.845098040014257,
+          1
+        ],
+        "labels": [
+          "0.7",
+          "1.0",
+          "2.0",
+          "3.0",
+          "5.0",
+          "7.0",
+          "10.0"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "limits": [
+        1,
+        1000
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "count": 7,
+      "result": {
+        "domain": [
+          0,
+          3
+        ],
+        "breaks": [
+          0,
+          0.477121254719662,
+          1,
+          1.47712125471966,
+          2,
+          2.47712125471966,
+          3,
+          3.47712125471966
+        ],
+        "labels": [
+          "1",
+          "3",
+          "10",
+          "30",
+          "100",
+          "300",
+          "1000",
+          "3000"
+        ],
+        "hidden": false,
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "count": 3,
+      "result": {
+        "domain": [
+          -8.4,
+          -0.8
+        ],
+        "breaks": [
+          -0,
+          -4,
+          -8
+        ],
+        "labels": [
+          "0",
+          "4",
+          "8"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        1,
+        1000
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "count": 3,
+      "result": {
+        "domain": [
+          -1000,
+          -1
+        ],
+        "breaks": [
+          -0,
+          -500,
+          -1000
+        ],
+        "labels": [
+          "0",
+          "500",
+          "1000"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        0.8,
+        8.4
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "count": 7,
+      "result": {
+        "domain": [
+          -8.4,
+          -0.8
+        ],
+        "breaks": [
+          -0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7,
+          -8
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "limits": [
+        1,
+        1000
+      ],
+      "break_mode": "auto",
+      "label_mode": "auto",
+      "count": 7,
+      "result": {
+        "domain": [
+          -1000,
+          -1
+        ],
+        "breaks": [
+          -0,
+          -200,
+          -400,
+          -600,
+          -800,
+          -1000
+        ],
+        "labels": [
+          "0",
+          "200",
+          "400",
+          "600",
+          "800",
+          "1000"
+        ],
+        "hidden": false,
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    }
+  ]
+}

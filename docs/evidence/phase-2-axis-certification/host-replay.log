@@ -1,0 +1,16 @@
+RUN axis_providers python
+PASS Python provider: exact noninjective mark and guide positions, v10 registration, invalid versions/parameters, native-only rejection, copied registry and retained request after disposal, SVG/PDF/PNG.
+RUN axis_providers wasm
+PASS WASM provider: exact noninjective mark and guide positions, v10 registration, invalid versions/parameters, native-only rejection, copied registry and retained request after disposal, SVG/PDF/PNG.
+RUN axis_ticks python
+PASS Python AX02: 372 reference cases / 376 states, exact values/order/labels, independent resets, typed timestamps above 2^53, v11 registry round trip and retained SVG/PDF/PNG.
+RUN axis_ticks wasm
+PASS WASM AX02: 372 reference cases / 376 states, exact values/order/labels, independent resets, typed timestamps above 2^53, v11 registry round trip and retained SVG/PDF/PNG.
+RUN axis_components python
+PASS Python AX04: v14 styles/roles, owned input, invalid/reset controls, text/outline SVG/PDF/PNG at 300/600 DPI.
+RUN axis_components wasm
+PASS WASM AX04: v14 styles/roles, owned input, invalid/reset controls, text/outline SVG/PDF/PNG at 300/600 DPI.
+RUN interpolation_integration python
+PASS IP06 Python: registered/piecewise/time factories, v2/v12, native-only rejection, three retained frames, four update/fresh PNG comparisons and disposal.
+RUN interpolation_integration wasm
+PASS IP06 WASM: registered/piecewise/time factories, v2/v12, native-only rejection, three retained frames, four update/fresh PNG comparisons and disposal.

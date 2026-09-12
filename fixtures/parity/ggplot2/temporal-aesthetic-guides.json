@@ -1,0 +1,4603 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "kind": "date",
+      "population": "short",
+      "control": "default",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          19723,
+          19726
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19724,
+            19725,
+            19726,
+            19727
+          ],
+          "labels": [
+            "Dec 31",
+            "Jan 01",
+            "Jan 02",
+            "Jan 03",
+            "Jan 04",
+            "Jan 05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "short",
+      "control": "null_breaks",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          19723,
+          19726
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "short",
+      "control": "empty_breaks",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          19723,
+          19726
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "short",
+      "control": "explicit_breaks",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          19723,
+          19726
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19725,
+            19728
+          ],
+          "labels": [
+            "2023-12-31",
+            "2024-01-01",
+            "2024-01-03",
+            "2024-01-06"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "short",
+      "control": "null_labels",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          19723,
+          19726
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19724,
+            19725,
+            19726,
+            19727
+          ],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "short",
+      "control": "explicit_labels",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          19723,
+          19726
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19725,
+            19728
+          ],
+          "labels": [
+            "Before",
+            "Start",
+            "Two",
+            "After"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "short",
+      "control": "bad_labels",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "date",
+      "population": "short",
+      "control": "width",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          19723,
+          19726
+        ],
+        "guide": {
+          "breaks": [
+            19724,
+            19726,
+            19728
+          ],
+          "labels": [
+            "2024-01-02",
+            "2024-01-04",
+            "2024-01-06"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "short",
+      "control": "format",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          19723,
+          19726
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19724,
+            19725,
+            19726,
+            19727
+          ],
+          "labels": [
+            "2023-12-31",
+            "2024-01-01",
+            "2024-01-02",
+            "2024-01-03",
+            "2024-01-04",
+            "2024-01-05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "short",
+      "control": "count_two",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          19723,
+          19726
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "short",
+      "control": "limits",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "result": {
+        "values": [
+          3.0412414523193152,
+          3.8867513459481287,
+          4.5355339059327378,
+          5.0824829046386304
+        ],
+        "limits": [
+          19722,
+          19728
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19724,
+            19725,
+            19726,
+            19727,
+            19728
+          ],
+          "labels": [
+            "Dec 31",
+            "Jan 01",
+            "Jan 02",
+            "Jan 03",
+            "Jan 04",
+            "Jan 05",
+            "Jan 06"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "short",
+      "control": "partial_limits",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "result": {
+        "values": [
+          1,
+          3.2360679774997898,
+          4.16227766016838,
+          4.872983346207417
+        ],
+        "limits": [
+          19723,
+          19728
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19724,
+            19725,
+            19726,
+            19727,
+            19728
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 02",
+            "Jan 03",
+            "Jan 04",
+            "Jan 05",
+            "Jan 06"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "short",
+      "control": "hidden_guide",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          19723,
+          19726
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19724,
+            19725,
+            19726,
+            19727
+          ],
+          "labels": [
+            "Dec 31",
+            "Jan 01",
+            "Jan 02",
+            "Jan 03",
+            "Jan 04",
+            "Jan 05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "default",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "null_breaks",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "empty_breaks",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "explicit_breaks",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19725,
+            19728
+          ],
+          "labels": [
+            "2023-12-31",
+            "2024-01-01",
+            "2024-01-03",
+            "2024-01-06"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "null_labels",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "explicit_labels",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19725,
+            19728
+          ],
+          "labels": [
+            "Before",
+            "Start",
+            "Two",
+            "After"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "bad_labels",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "width",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19724,
+            19726,
+            19728,
+            19730,
+            19732,
+            19734
+          ],
+          "labels": [
+            "2024-01-02",
+            "2024-01-04",
+            "2024-01-06",
+            "2024-01-08",
+            "2024-01-10",
+            "2024-01-12"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "format",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "2024-01-01",
+            "2024-01-03",
+            "2024-01-05",
+            "2024-01-07",
+            "2024-01-09",
+            "2024-01-11"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "count_two",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19730,
+            19737
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 08",
+            "Jan 15"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "limits",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "values": [
+          3.0412414523193152,
+          3.8867513459481287,
+          5.5643546458763842,
+          null
+        ],
+        "limits": [
+          19722,
+          19728
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19724,
+            19725,
+            19726,
+            19727,
+            19728
+          ],
+          "labels": [
+            "Dec 31",
+            "Jan 01",
+            "Jan 02",
+            "Jan 03",
+            "Jan 04",
+            "Jan 05",
+            "Jan 06"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "partial_limits",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "values": [
+          1,
+          3.2360679774997898,
+          5.4721359549995796,
+          null
+        ],
+        "limits": [
+          19723,
+          19728
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19724,
+            19725,
+            19726,
+            19727,
+            19728
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 02",
+            "Jan 03",
+            "Jan 04",
+            "Jan 05",
+            "Jan 06"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "control": "hidden_guide",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "default",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          19727,
+          19727
+        ],
+        "guide": {
+          "breaks": [
+            19727
+          ],
+          "labels": [
+            "2024-01-05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "null_breaks",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          19727,
+          19727
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "empty_breaks",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          19727,
+          19727
+        ],
+        "guide": {
+          "breaks": [
+            19727
+          ],
+          "labels": [
+            "2024-01-05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "explicit_breaks",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          19727,
+          19727
+        ],
+        "guide": {
+          "breaks": [
+            19727
+          ],
+          "labels": [
+            "2024-01-05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "null_labels",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          19727,
+          19727
+        ],
+        "guide": {
+          "breaks": [
+            19727
+          ],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "explicit_labels",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "bad_labels",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "width",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          19727,
+          19727
+        ],
+        "guide": {
+          "breaks": [
+            19727
+          ],
+          "labels": [
+            "2024-01-05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "format",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          19727,
+          19727
+        ],
+        "guide": {
+          "breaks": [
+            19727
+          ],
+          "labels": [
+            "2024-01-05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "count_two",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          19727,
+          19727
+        ],
+        "guide": {
+          "breaks": [
+            19727
+          ],
+          "labels": [
+            "2024-01-05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "limits",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "values": [
+          5.5643546458763842,
+          5.5643546458763842,
+          5.5643546458763842
+        ],
+        "limits": [
+          19722,
+          19728
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19724,
+            19725,
+            19726,
+            19727,
+            19728
+          ],
+          "labels": [
+            "Dec 31",
+            "Jan 01",
+            "Jan 02",
+            "Jan 03",
+            "Jan 04",
+            "Jan 05",
+            "Jan 06"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "partial_limits",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          1
+        ],
+        "limits": [
+          19727,
+          19728
+        ],
+        "guide": {
+          "breaks": [
+            19725,
+            19726,
+            19727,
+            19728,
+            19729,
+            19730
+          ],
+          "labels": [
+            "Jan 03",
+            "Jan 04",
+            "Jan 05",
+            "Jan 06",
+            "Jan 07",
+            "Jan 08"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "control": "hidden_guide",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          19727,
+          19727
+        ],
+        "guide": {
+          "breaks": [
+            19727
+          ],
+          "labels": [
+            "2024-01-05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "default",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "null_breaks",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "empty_breaks",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "explicit_breaks",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19725,
+            19728
+          ],
+          "labels": [
+            "2023-12-31",
+            "2024-01-01",
+            "2024-01-03",
+            "2024-01-06"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "null_labels",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "explicit_labels",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19725,
+            19728
+          ],
+          "labels": [
+            "Before",
+            "Start",
+            "Two",
+            "After"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "bad_labels",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "width",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19724,
+            19726,
+            19728,
+            19730,
+            19732,
+            19734
+          ],
+          "labels": [
+            "2024-01-02",
+            "2024-01-04",
+            "2024-01-06",
+            "2024-01-08",
+            "2024-01-10",
+            "2024-01-12"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "format",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "2024-01-01",
+            "2024-01-03",
+            "2024-01-05",
+            "2024-01-07",
+            "2024-01-09",
+            "2024-01-11"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "count_two",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19730,
+            19737
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 08",
+            "Jan 15"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "limits",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "values": [
+          null,
+          3.0412414523193152,
+          5.5643546458763842,
+          null,
+          null
+        ],
+        "limits": [
+          19722,
+          19728
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19724,
+            19725,
+            19726,
+            19727,
+            19728
+          ],
+          "labels": [
+            "Dec 31",
+            "Jan 01",
+            "Jan 02",
+            "Jan 03",
+            "Jan 04",
+            "Jan 05",
+            "Jan 06"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "partial_limits",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          5.4721359549995796,
+          null,
+          null
+        ],
+        "limits": [
+          19723,
+          19728
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19724,
+            19725,
+            19726,
+            19727,
+            19728
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 02",
+            "Jan 03",
+            "Jan 04",
+            "Jan 05",
+            "Jan 06"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "control": "hidden_guide",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "default",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "null_breaks",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "limits": [
+          "Infinity",
+          "-Infinity"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "empty_breaks",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "limits": [
+          "Infinity",
+          "-Infinity"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "explicit_breaks",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "limits": [
+          "Infinity",
+          "-Infinity"
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19725,
+            19728
+          ],
+          "labels": [
+            "2023-12-31",
+            "2024-01-01",
+            "2024-01-03",
+            "2024-01-06"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "null_labels",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "explicit_labels",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "limits": [
+          "Infinity",
+          "-Infinity"
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19725,
+            19728
+          ],
+          "labels": [
+            "Before",
+            "Start",
+            "Two",
+            "After"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "bad_labels",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "width",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "format",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "count_two",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "limits",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "limits": [
+          19722,
+          19728
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19724,
+            19725,
+            19726,
+            19727,
+            19728
+          ],
+          "labels": [
+            "Dec 31",
+            "Jan 01",
+            "Jan 02",
+            "Jan 03",
+            "Jan 04",
+            "Jan 05",
+            "Jan 06"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "partial_limits",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'to' must be a finite number"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "control": "hidden_guide",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "limits": [
+          "Infinity",
+          "-Infinity"
+        ],
+        "guide": {
+          "error": "'from' must be a finite number"
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "default",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "null_breaks",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "empty_breaks",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "explicit_breaks",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "null_labels",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "explicit_labels",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "error": "`breaks` and `labels` have different lengths."
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "bad_labels",
+      "inputs": [],
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "width",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "format",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "count_two",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "limits",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          19722,
+          19728
+        ],
+        "guide": {
+          "breaks": [
+            19722,
+            19723,
+            19724,
+            19725,
+            19726,
+            19727,
+            19728
+          ],
+          "labels": [
+            "Dec 31",
+            "Jan 01",
+            "Jan 02",
+            "Jan 03",
+            "Jan 04",
+            "Jan 05",
+            "Jan 06"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "partial_limits",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "control": "hidden_guide",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "short",
+      "control": "default",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067202,
+        1704067203
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067203
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067201,
+            1704067202,
+            1704067203
+          ],
+          "labels": [
+            "00",
+            "01",
+            "02",
+            "03"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "short",
+      "control": "null_breaks",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067202,
+        1704067203
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067203
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "short",
+      "control": "empty_breaks",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067202,
+        1704067203
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067203
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "short",
+      "control": "explicit_breaks",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067202,
+        1704067203
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067203
+        ],
+        "guide": {
+          "breaks": [
+            1704067199,
+            1704067200,
+            1704067202,
+            1704067205
+          ],
+          "labels": [
+            "2023-12-31 23:59:59",
+            "2024-01-01 00:00:00",
+            "2024-01-01 00:00:02",
+            "2024-01-01 00:00:05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "short",
+      "control": "null_labels",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067202,
+        1704067203
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067203
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067201,
+            1704067202,
+            1704067203
+          ],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "short",
+      "control": "explicit_labels",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067202,
+        1704067203
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067203
+        ],
+        "guide": {
+          "breaks": [
+            1704067199,
+            1704067200,
+            1704067202,
+            1704067205
+          ],
+          "labels": [
+            "Before",
+            "Start",
+            "Two",
+            "After"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "short",
+      "control": "bad_labels",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067202,
+        1704067203
+      ],
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "short",
+      "control": "width",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067202,
+        1704067203
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067203
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204
+          ],
+          "labels": [
+            "2024-01-01 00:00:00",
+            "2024-01-01 00:00:02",
+            "2024-01-01 00:00:04"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "short",
+      "control": "format",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067202,
+        1704067203
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067203
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067201,
+            1704067202,
+            1704067203
+          ],
+          "labels": [
+            "00:00:00",
+            "00:00:01",
+            "00:00:02",
+            "00:00:03"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "short",
+      "control": "count_two",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067202,
+        1704067203
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067203
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "short",
+      "control": "limits",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067202,
+        1704067203
+      ],
+      "result": {
+        "values": [
+          3.0412414523193152,
+          3.8867513459481287,
+          4.5355339059327378,
+          5.0824829046386304
+        ],
+        "limits": [
+          1704067199,
+          1704067205
+        ],
+        "guide": {
+          "breaks": [
+            1704067199,
+            1704067200,
+            1704067201,
+            1704067202,
+            1704067203,
+            1704067204,
+            1704067205
+          ],
+          "labels": [
+            "59",
+            "00",
+            "01",
+            "02",
+            "03",
+            "04",
+            "05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "short",
+      "control": "partial_limits",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067202,
+        1704067203
+      ],
+      "result": {
+        "values": [
+          1,
+          3.2360679774997898,
+          4.16227766016838,
+          4.872983346207417
+        ],
+        "limits": [
+          1704067200,
+          1704067205
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067201,
+            1704067202,
+            1704067203,
+            1704067204,
+            1704067205
+          ],
+          "labels": [
+            "00",
+            "01",
+            "02",
+            "03",
+            "04",
+            "05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "short",
+      "control": "hidden_guide",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067202,
+        1704067203
+      ],
+      "result": {
+        "values": [
+          1,
+          3.8867513459481287,
+          5.0824829046386304,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067203
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067201,
+            1704067202,
+            1704067203
+          ],
+          "labels": [
+            "00",
+            "01",
+            "02",
+            "03"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "default",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "null_breaks",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "empty_breaks",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "explicit_breaks",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067199,
+            1704067200,
+            1704067202,
+            1704067205
+          ],
+          "labels": [
+            "2023-12-31 23:59:59",
+            "2024-01-01 00:00:00",
+            "2024-01-01 00:00:02",
+            "2024-01-01 00:00:05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "null_labels",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "explicit_labels",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067199,
+            1704067200,
+            1704067202,
+            1704067205
+          ],
+          "labels": [
+            "Before",
+            "Start",
+            "Two",
+            "After"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "bad_labels",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "width",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210,
+            1704067212
+          ],
+          "labels": [
+            "2024-01-01 00:00:00",
+            "2024-01-01 00:00:02",
+            "2024-01-01 00:00:04",
+            "2024-01-01 00:00:06",
+            "2024-01-01 00:00:08",
+            "2024-01-01 00:00:10",
+            "2024-01-01 00:00:12"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "format",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00:00:00",
+            "00:00:02",
+            "00:00:04",
+            "00:00:06",
+            "00:00:08",
+            "00:00:10"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "count_two",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067205,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "05",
+            "10"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "limits",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          3.0412414523193152,
+          3.8867513459481287,
+          5.5643546458763842,
+          null
+        ],
+        "limits": [
+          1704067199,
+          1704067205
+        ],
+        "guide": {
+          "breaks": [
+            1704067199,
+            1704067200,
+            1704067201,
+            1704067202,
+            1704067203,
+            1704067204,
+            1704067205
+          ],
+          "labels": [
+            "59",
+            "00",
+            "01",
+            "02",
+            "03",
+            "04",
+            "05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "partial_limits",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          1,
+          3.2360679774997898,
+          5.4721359549995796,
+          null
+        ],
+        "limits": [
+          1704067200,
+          1704067205
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067201,
+            1704067202,
+            1704067203,
+            1704067204,
+            1704067205
+          ],
+          "labels": [
+            "00",
+            "01",
+            "02",
+            "03",
+            "04",
+            "05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "control": "hidden_guide",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "default",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          1704067204,
+          1704067204
+        ],
+        "guide": {
+          "breaks": [
+            1704067204
+          ],
+          "labels": [
+            "2024-01-01 00:00:04"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "null_breaks",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          1704067204,
+          1704067204
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "empty_breaks",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          1704067204,
+          1704067204
+        ],
+        "guide": {
+          "breaks": [
+            1704067204
+          ],
+          "labels": [
+            "2024-01-01 00:00:04"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "explicit_breaks",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          1704067204,
+          1704067204
+        ],
+        "guide": {
+          "breaks": [
+            1704067204
+          ],
+          "labels": [
+            "2024-01-01 00:00:04"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "null_labels",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          1704067204,
+          1704067204
+        ],
+        "guide": {
+          "breaks": [
+            1704067204
+          ],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "explicit_labels",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "bad_labels",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "width",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          1704067204,
+          1704067204
+        ],
+        "guide": {
+          "breaks": [
+            1704067204
+          ],
+          "labels": [
+            "2024-01-01 00:00:04"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "format",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          1704067204,
+          1704067204
+        ],
+        "guide": {
+          "breaks": [
+            1704067204
+          ],
+          "labels": [
+            "00:00:04"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "count_two",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          1704067204,
+          1704067204
+        ],
+        "guide": {
+          "breaks": [
+            1704067204
+          ],
+          "labels": [
+            "2024-01-01 00:00:04"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "limits",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "values": [
+          5.5643546458763842,
+          5.5643546458763842,
+          5.5643546458763842
+        ],
+        "limits": [
+          1704067199,
+          1704067205
+        ],
+        "guide": {
+          "breaks": [
+            1704067199,
+            1704067200,
+            1704067201,
+            1704067202,
+            1704067203,
+            1704067204,
+            1704067205
+          ],
+          "labels": [
+            "59",
+            "00",
+            "01",
+            "02",
+            "03",
+            "04",
+            "05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "partial_limits",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          1
+        ],
+        "limits": [
+          1704067204,
+          1704067205
+        ],
+        "guide": {
+          "breaks": [
+            1704067204,
+            1704067205,
+            1704067206
+          ],
+          "labels": [
+            "04",
+            "05",
+            "06"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "control": "hidden_guide",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "limits": [
+          1704067204,
+          1704067204
+        ],
+        "guide": {
+          "breaks": [
+            1704067204
+          ],
+          "labels": [
+            "2024-01-01 00:00:04"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "default",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "null_breaks",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "empty_breaks",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "explicit_breaks",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067199,
+            1704067200,
+            1704067202,
+            1704067205
+          ],
+          "labels": [
+            "2023-12-31 23:59:59",
+            "2024-01-01 00:00:00",
+            "2024-01-01 00:00:02",
+            "2024-01-01 00:00:05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "null_labels",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "explicit_labels",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067199,
+            1704067200,
+            1704067202,
+            1704067205
+          ],
+          "labels": [
+            "Before",
+            "Start",
+            "Two",
+            "After"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "bad_labels",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "width",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210,
+            1704067212
+          ],
+          "labels": [
+            "2024-01-01 00:00:00",
+            "2024-01-01 00:00:02",
+            "2024-01-01 00:00:04",
+            "2024-01-01 00:00:06",
+            "2024-01-01 00:00:08",
+            "2024-01-01 00:00:10",
+            "2024-01-01 00:00:12"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "format",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00:00:00",
+            "00:00:02",
+            "00:00:04",
+            "00:00:06",
+            "00:00:08",
+            "00:00:10"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "count_two",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067205,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "05",
+            "10"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "limits",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          null,
+          3.0412414523193152,
+          5.5643546458763842,
+          null,
+          null
+        ],
+        "limits": [
+          1704067199,
+          1704067205
+        ],
+        "guide": {
+          "breaks": [
+            1704067199,
+            1704067200,
+            1704067201,
+            1704067202,
+            1704067203,
+            1704067204,
+            1704067205
+          ],
+          "labels": [
+            "59",
+            "00",
+            "01",
+            "02",
+            "03",
+            "04",
+            "05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "partial_limits",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          5.4721359549995796,
+          null,
+          null
+        ],
+        "limits": [
+          1704067200,
+          1704067205
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067201,
+            1704067202,
+            1704067203,
+            1704067204,
+            1704067205
+          ],
+          "labels": [
+            "00",
+            "01",
+            "02",
+            "03",
+            "04",
+            "05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "control": "hidden_guide",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "default",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "null_breaks",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "limits": [
+          "Infinity",
+          "-Infinity"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "empty_breaks",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "limits": [
+          "Infinity",
+          "-Infinity"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "explicit_breaks",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "limits": [
+          "Infinity",
+          "-Infinity"
+        ],
+        "guide": {
+          "breaks": [
+            1704067199,
+            1704067200,
+            1704067202,
+            1704067205
+          ],
+          "labels": [
+            "2023-12-31 23:59:59",
+            "2024-01-01 00:00:00",
+            "2024-01-01 00:00:02",
+            "2024-01-01 00:00:05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "null_labels",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "explicit_labels",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "limits": [
+          "Infinity",
+          "-Infinity"
+        ],
+        "guide": {
+          "breaks": [
+            1704067199,
+            1704067200,
+            1704067202,
+            1704067205
+          ],
+          "labels": [
+            "Before",
+            "Start",
+            "Two",
+            "After"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "bad_labels",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "width",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "format",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "count_two",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "limits",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "limits": [
+          1704067199,
+          1704067205
+        ],
+        "guide": {
+          "breaks": [
+            1704067199,
+            1704067200,
+            1704067201,
+            1704067202,
+            1704067203,
+            1704067204,
+            1704067205
+          ],
+          "labels": [
+            "59",
+            "00",
+            "01",
+            "02",
+            "03",
+            "04",
+            "05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "partial_limits",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'to' must be a finite number"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "control": "hidden_guide",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "limits": [
+          "Infinity",
+          "-Infinity"
+        ],
+        "guide": {
+          "error": "'from' must be a finite number"
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "default",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "null_breaks",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "empty_breaks",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "explicit_breaks",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "null_labels",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": null
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "explicit_labels",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "error": "`breaks` and `labels` have different lengths."
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "bad_labels",
+      "inputs": [],
+      "result": {
+        "error": "`breaks` and `labels` must have the same length."
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "width",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "format",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "count_two",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "limits",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          1704067199,
+          1704067205
+        ],
+        "guide": {
+          "breaks": [
+            1704067199,
+            1704067200,
+            1704067201,
+            1704067202,
+            1704067203,
+            1704067204,
+            1704067205
+          ],
+          "labels": [
+            "59",
+            "00",
+            "01",
+            "02",
+            "03",
+            "04",
+            "05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "partial_limits",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "control": "hidden_guide",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    }
+  ]
+}

@@ -19,10 +19,41 @@ pub struct ScalarInterpolator {
 }
 #[derive(Clone, Debug)]
 enum Kernel {
-    Number { a: f64, b: f64, round: bool },
-    Basis { controls: Vec<f64>, closed: bool },
+    Power {
+        a: f64,
+        b: f64,
+        exponent: f64,
+        absolute: bool,
+    },
+    Number {
+        a: f64,
+        b: f64,
+        round: bool,
+    },
+    Basis {
+        controls: Vec<f64>,
+        closed: bool,
+    },
 }
 impl ScalarInterpolator {
+    /// Power of the normalized parameter followed by affine range interpolation.
+    /// Negative bases with fractional exponents yield NaN unless absolute is selected.
+    pub fn power(a: f64, b: f64, exponent: f64, absolute: bool) -> ChartResult<Self> {
+        if ![a, b, exponent].iter().all(|v| v.is_finite()) {
+            return Err(super::error(
+                crate::DiagnosticCode::NumericalDomain,
+                "Power range parameters must be finite.",
+            ));
+        }
+        Ok(Self {
+            kernel: Kernel::Power {
+                a,
+                b,
+                exponent,
+                absolute,
+            },
+        })
+    }
     /// Weighted binary64 interpolation, including IEEE exceptional endpoint values.
     pub fn number(a: f64, b: f64) -> Self {
         Self {
@@ -62,6 +93,12 @@ impl ScalarInterpolator {
     }
     pub(super) fn evaluate(&self, t: f64) -> f64 {
         match &self.kernel {
+            Kernel::Power {
+                a,
+                b,
+                exponent,
+                absolute,
+            } => a + (b - a) * pxfm::f_pow(if *absolute { t.abs() } else { t }, *exponent),
             Kernel::Number { a, b, round } => {
                 let v = number(*a, *b, t);
                 if *round { js_round(v) } else { v }

@@ -53,6 +53,10 @@ impl Component {
                 Kind::ScaleAes(match method {
                     "size" => a.clone().size(expr.clone()),
                     "color" => a.clone().color(expr.clone()),
+                    "fill" => a.clone().fill(expr.clone()),
+                    "stroke" => a.clone().stroke(expr.clone()),
+                    "alpha" => a.clone().alpha(expr.clone()),
+                    "linewidth" => a.clone().linewidth(expr.clone()),
                     _ => return Err(unsupported(method)),
                 })
             }

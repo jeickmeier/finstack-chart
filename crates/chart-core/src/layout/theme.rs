@@ -69,6 +69,7 @@ pub(super) fn apply(
     let mut decoration = |mut primitive: Primitive, clip: Option<Rect>| {
         monochrome(&mut primitive, t.color_mode);
         items.push(SceneItem {
+            guide: None,
             layer: None,
             clip,
             primitive,
@@ -170,14 +171,37 @@ pub(super) fn apply(
                 .iter()
                 .find(|l| l.id == id)
         });
-        let mapped = authored.is_some_and(|l| l.color.is_some());
-        let mapped_size = authored.is_some_and(|l| match &l.mappings {
-            crate::grammar::Mappings::Source(a) => {
-                a.size.is_some()
-                    || (l.inherit && chart.prepared.definition().mappings.size.is_some())
-            }
-            crate::grammar::Mappings::Binned(a) => a.size.is_some(),
-            crate::grammar::Mappings::Statistical(a) => a.size.is_some(),
+        let mapped = authored.is_some_and(|l| {
+            l.color.is_some()
+                || !l.paint_scales.is_empty()
+                || l.style.fill.is_some()
+                || l.style.stroke.is_some()
+                || l.style.alpha.is_some()
+                || l.numeric_scales
+                    .contains_key(&crate::grammar::NumericAesthetic::Alpha)
+                || l.after_scale.keys().any(|a| {
+                    matches!(
+                        a,
+                        crate::grammar::AfterScaleAesthetic::Color
+                            | crate::grammar::AfterScaleAesthetic::Fill
+                            | crate::grammar::AfterScaleAesthetic::Stroke
+                            | crate::grammar::AfterScaleAesthetic::Alpha
+                    )
+                })
+        });
+        let mapped_size = authored.is_some_and(|l| {
+            l.numeric_scales
+                .contains_key(&crate::grammar::NumericAesthetic::StrokeWidth)
+                || l.after_scale
+                    .contains_key(&crate::grammar::AfterScaleAesthetic::LineWidth)
+                || match &l.mappings {
+                    crate::grammar::Mappings::Source(a) => {
+                        a.size.is_some()
+                            || (l.inherit && chart.prepared.definition().mappings.size.is_some())
+                    }
+                    crate::grammar::Mappings::Binned(a) => a.size.is_some(),
+                    crate::grammar::Mappings::Statistical(a) => a.size.is_some(),
+                }
         });
         let explicit_width = item.layer.and_then(|id| {
             let authored = chart
@@ -261,7 +285,18 @@ pub(super) fn apply(
                 fill: *fill,
             };
         }
-        if let Some(dashes) = local.dashes.as_ref().filter(|d| !d.is_empty()) {
+        let mapped_line_type = authored.is_some_and(|l| {
+            l.style.line_type.is_some()
+                || l.value_scales
+                    .contains_key(&crate::grammar::ValueAesthetic::LineType)
+                || l.aesthetic_values
+                    .contains_key(&crate::grammar::ValueAesthetic::LineType)
+        });
+        if let Some(dashes) = local
+            .dashes
+            .as_ref()
+            .filter(|d| !d.is_empty() && !mapped_line_type)
+        {
             let path = match &item.primitive {
                 Primitive::Rule { from, to, stroke } => Some((
                     vec![PathCommand::MoveTo(*from), PathCommand::LineTo(*to)],

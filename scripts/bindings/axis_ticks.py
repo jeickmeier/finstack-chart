@@ -11,6 +11,8 @@ options=c.export_options(600.,400.).dpi(72).basis('current')
 def formatter(mode,name='example.guide_format',version=1):
  return {'Registered':{'operation':{'id':name,'version':version},'parameters':{'mode':mode}}}
 def configure(axis,config):
+ for source,method in [('tickSize','tick_size'),('tickSizeInner','tick_size_inner'),('tickSizeOuter','tick_size_outer'),('tickPadding','tick_padding'),('offset','tick_offset')]:
+  if source in config:axis=getattr(axis,method)(config[source])
  if 'arguments' in config:
   args=config['arguments'];axis=axis.tick_arguments({'count':args[0] if args else None,'specifier':args[1] if len(args)>1 else None})
  if 'interval' in config:
@@ -34,17 +36,21 @@ for profile in json.loads((ROOT/'fixtures/axes/reference.json').read_text())['pr
    owned=c.StandaloneScale(kind.lower(),domain=domain,**{k:s[k] for k in ['base','constant','exponent'] if k in s});scale=c.scale_numeric(owned)
   axis=axis.scale(scale)
   if 'range' in s:axis=axis.range(*s['range'])
+  elif kind=='Identity':axis=axis.range(*domain)
   axis=configure(axis,case['config'])
   for index,state in enumerate(case['states']):
    if index:axis=configure(axis,case['config']['reset'])
    builder=c.plot(data).with_registry(registry).aes(c.aes().x('value' if horizontal else 'other').y('other' if horizontal else 'value')).layer(c.points())
    p=(builder.x_axis(axis) if horizontal else builder.y_axis(axis)).build()
-   wire=p.to_json();assert json.loads(wire)['version']==11
-   frame=output.request(p,options).prepare()
+   wire=p.to_json();assert json.loads(wire)['version']==(13 if any(k in case['config'] for k in ['tickSize','tickSizeInner','tickSizeOuter','tickPadding','offset']) else 11)
+   frame=output.request(p,options.layout(c.layout_options().device_scale(profile['device_scale']))).prepare()
    guides=[g for g in frame.guides()['guides'] if g['spec'].get('profile')=='D3_3_0_0'];assert len(guides)==1
    actual=[{'value':t['value'],'label':t['label']} for t in guides[0]['ticks']]
    expected=[{'value':{'Category':t['value']} if kind in ['Band','Point'] else {'Timestamp':{'value':str(t['value']['Timestamp']),'unit':'Milliseconds'}} if kind=='Utc' else {'Number':t['value']},'label':t['text']['label']} for t in state['ticks']]
    assert actual==expected,(case['id'],index,actual,expected)
+   for tick,reference in zip(guides[0]['ticks'],state['ticks']):
+    coordinate=float(reference['attributes']['transform'].removeprefix('translate(').removesuffix(')').split(',')[0 if horizontal else 1])
+    assert abs(tick['position']-coordinate)<=1e-9,(case['id'],tick,coordinate)
    records.append({'case':case['id'],'state':index,'ticks':actual})
    frame.dispose();p.dispose()
   if owned:owned.dispose()
@@ -77,6 +83,12 @@ p=(c.plot(data).with_registry(registry).aes(c.aes().x('x').y('y')).layer(c.point
  .guide(c.axis_guide('top','x').side('Top').guide_profile('D3_3_0_0').tick_values([0.,.5,1.]).tick_format(formatter('Indexed')))
  .guide(c.axis_guide('lower','x').side('Bottom').translate(0.,32.).guide_profile('D3_3_0_0').tick_values([0.,.5,1.]).tick_format(formatter('Same')))
  .title(c.title('Independent values and labels')).build())
+# Authored fixture IDs are independent of the preceding reference-corpus allocations.
+descriptor=json.loads(p.to_json())
+for index,name in enumerate(['top','lower']):
+ descriptor['definition']['guides'][index]['id']=str(1026+index)
+ descriptor['guides'][name]=str(1026+index)
+p.dispose();p=c.Plot.from_json(json.dumps(descriptor),registry)
 wire=p.to_json();loaded=c.Plot.from_json(wire,registry);assert loaded.to_json()==wire
 request=output.request(p,options);registry.dispose();p.dispose();frame=request.prepare()
 (out/'ticks.plot.json').write_text(wire);(out/'ticks.guides.json').write_text(json.dumps(frame.guides(),indent=2));(out/'ticks.scene.json').write_text(json.dumps(frame.scene()))

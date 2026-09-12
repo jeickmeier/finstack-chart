@@ -1,5 +1,5 @@
 {
-  "scope": "WP-IP07 independent certification evidence; package and G-INTERPOLATE remain OPEN until WP-AX06",
+  "scope": "WP-IP07 complete for ADR-017 typed profile; all standalone evidence plus qualified WP-AX06 consumer lifecycle",
   "exports": [
     {
       "export": "interpolate",
@@ -847,5 +847,6 @@
     "RejectZoomView": "Zoom centers must be finite and widths positive finite.",
     "owned_samples": "Each sample is captured before the next invocation; D3 mutable output identity is not copied into the typed API.",
     "coercion": "Only explicit bounded primitive numeric conversions; no prototypes or callbacks."
-  }
+  },
+  "axis_consumer": "docs/evidence/phase-2-axis-certification-2026-09-09.md"
 }

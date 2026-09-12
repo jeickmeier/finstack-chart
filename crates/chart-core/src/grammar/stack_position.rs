@@ -194,6 +194,7 @@ pub(super) fn emit(
             };
             include_geometry(&mut prepared.domains, &geometry);
             Arc::make_mut(&mut prepared.marks).push(PreparedMark {
+                aesthetics: Default::default(),
                 geometry,
                 targets: std::mem::take(targets),
                 group: stack.groups[group].clone(),

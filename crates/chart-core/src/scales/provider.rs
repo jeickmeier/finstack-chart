@@ -13,25 +13,103 @@ pub struct GuideTickArguments {
     pub specifier: Option<String>,
     /// Explicit calendar interval in place of a numeric density hint.
     pub interval: Option<CalendarInterval>,
+    /// Fixed elapsed seconds aligned to the Unix epoch (ggplot2 breaks_width policy).
+    /// Calendar widths and automatic density remain separate choices.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub seconds: Option<f64>,
+    /// Reference width string, such as "0.5 sec", "2 weeks", or "1 month".
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub width: Option<String>,
+    /// Reference width progression from the lower local boundary, without field filtering.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub time_width: Option<CalendarInterval>,
 }
 impl GuideTickArguments {
     /// Check argument shape and work bounds before invoking a provider.
     pub fn validate(&self, max_bytes: usize) -> ChartResult<()> {
         if self.count.is_some_and(|n| !n.is_finite())
-            || (self.count.is_some() && self.interval.is_some())
+            || [
+                self.count.is_some(),
+                self.interval.is_some(),
+                self.seconds.is_some(),
+                self.time_width.is_some(),
+                self.width.is_some(),
+            ]
+            .into_iter()
+            .filter(|v| *v)
+            .count()
+                > 1
+            || self.seconds.is_some_and(|v| !v.is_finite() || v <= 0.)
         {
             return Err(error(
                 DiagnosticCode::Validation,
-                "Tick arguments require one finite count or calendar interval.",
+                "Tick arguments require one finite count, calendar interval, fixed-second width, or reference time width.",
             ));
         }
         if let Some(interval) = self.interval {
             interval.validate()?;
         }
+        if let Some(width) = self.time_width {
+            super::ggplot_time::validate_width(width)?;
+        }
         crate::limits::require_within(
-            self.specifier.as_ref().is_none_or(|s| s.len() <= max_bytes),
+            [&self.specifier, &self.width]
+                .into_iter()
+                .flatten()
+                .all(|s| s.len() <= max_bytes),
             "provider tick argument byte",
-        )
+        )?;
+        if let Some(width) = &self.width {
+            super::ggplot_time::parse_width(width)?;
+        }
+        Ok(())
+    }
+    pub(crate) fn resolve_width(mut self, elapsed: bool, date: bool) -> ChartResult<Self> {
+        use super::{
+            CalendarUnit,
+            ggplot_time::{parse_width, width_seconds},
+        };
+        if let Some(width) = self.width.take() {
+            let (unit, count, extra) = parse_width(&width)?;
+            if extra && !elapsed && unit != CalendarUnit::Second {
+                return Err(error(
+                    DiagnosticCode::Validation,
+                    "Calendar width strings require a single unit and optional multiplier.",
+                ));
+            }
+            if elapsed || unit == CalendarUnit::Second {
+                self.seconds = Some(width_seconds(unit, count)?);
+            } else {
+                let step = count.floor();
+                if step < 1. {
+                    return Err(error(
+                        DiagnosticCode::NumericalDomain,
+                        "Reference calendar width truncates to a zero sequence step.",
+                    ));
+                }
+                if step > i32::MAX as f64 {
+                    return Err(error(
+                        DiagnosticCode::ResourceLimit,
+                        "Reference calendar width exceeds the signed sequence-step bound.",
+                    ));
+                }
+                if count.fract() != 0.
+                    && (unit == CalendarUnit::Minute || date && unit == CalendarUnit::Day)
+                {
+                    // R rounds the lower bound at the fractional width, then its
+                    // character sequence truncates the progression multiplier.
+                    self.width = Some(width);
+                } else if unit == CalendarUnit::Minute {
+                    self.seconds = Some(width_seconds(unit, step)?);
+                } else {
+                    self.time_width = Some(CalendarInterval {
+                        unit,
+                        step: step as u32,
+                    });
+                }
+            }
+        }
+        Ok(self)
     }
 }
 
@@ -60,6 +138,25 @@ pub trait PositionalScale: Send + Sync {
     /// Optional band-start/rounding capability.
     fn band(&self) -> Option<ProviderBand> {
         None
+    }
+    /// Optional raw category coordinate, before projection; unknown/missing values are absent.
+    fn category_coordinate(&self, _value: &ScaleValue) -> ChartResult<Option<f64>> {
+        Err(error(
+            DiagnosticCode::UnsupportedCapability,
+            "This provider has no reference category coordinates.",
+        ))
+    }
+    /// Optional reference viewport in numeric category units, for duplicate guides.
+    fn category_viewport(&self) -> Option<[crate::interpolate::Number; 2]> {
+        None
+    }
+    /// Map an explicit numeric minor candidate in a categorical scale's mapped units.
+    /// Providers without this capability reject; major category mapping is separate.
+    fn category_minor(&self, _value: f64) -> ChartResult<Option<f64>> {
+        Err(error(
+            DiagnosticCode::UnsupportedCapability,
+            "This positional provider has no numeric categorical minor mapping.",
+        ))
     }
     /// Optional automatic ticks. `None` falls back to the retained domain order.
     fn ticks(
@@ -150,7 +247,11 @@ impl CheckedPositionalScale {
                 ValueSpace::Data | ValueSpace::Transformed { .. } | ValueSpace::Scaled { .. },
                 ScaleValue::Number(n),
             ) => n.is_finite(),
-            (ValueSpace::Categorical { .. }, ScaleValue::Category(_)) => true,
+            (
+                ValueSpace::Categorical { .. } | ValueSpace::NullableCategorical { .. },
+                ScaleValue::Category(_),
+            ) => true,
+            (ValueSpace::NullableCategorical { .. }, ScaleValue::MissingCategory) => true,
             (ValueSpace::Timestamp { representation, .. }, ScaleValue::Timestamp { unit, .. }) => {
                 representation.unit == *unit
             }
@@ -197,6 +298,24 @@ impl CheckedPositionalScale {
     pub fn band(&self) -> Option<ProviderBand> {
         self.band
     }
+    pub(crate) fn category_coordinate(&self, value: &ScaleValue) -> ChartResult<Option<f64>> {
+        self.provider.category_coordinate(value)
+    }
+    /// Retained reference viewport, when the provider owns categorical spacing.
+    pub(crate) fn category_viewport(&self) -> Option<[crate::interpolate::Number; 2]> {
+        self.provider.category_viewport()
+    }
+    /// Map and validate an explicit categorical minor candidate into the finite range.
+    pub fn category_minor(&self, value: f64) -> ChartResult<Option<f64>> {
+        let position = self.provider.category_minor(value)?;
+        if position.is_some_and(|v| !v.is_finite()) {
+            return Err(error(
+                DiagnosticCode::PrecisionLoss,
+                "Provider minor mapping returned a nonfinite position.",
+            ));
+        }
+        Ok(position.filter(|v| self.range.contains(*v)))
+    }
     /// Map a category's full band for shared position adjustments such as dodge.
     pub fn band_extent(&self, value: &ScaleValue) -> ChartResult<Option<Bounds>> {
         let band = self.band.ok_or_else(|| {
@@ -212,8 +331,15 @@ impl CheckedPositionalScale {
     /// Report optional inversion independently of categorical lookup.
     pub fn capabilities(&self) -> ScaleCapabilities {
         ScaleCapabilities {
-            numeric_inverse: self.inverse && !matches!(self.space, ValueSpace::Categorical { .. }),
-            category_lookup: matches!(self.space, ValueSpace::Categorical { .. }),
+            numeric_inverse: self.inverse
+                && !matches!(
+                    self.space,
+                    ValueSpace::Categorical { .. } | ValueSpace::NullableCategorical { .. }
+                ),
+            category_lookup: matches!(
+                self.space,
+                ValueSpace::Categorical { .. } | ValueSpace::NullableCategorical { .. }
+            ),
         }
     }
     fn raw_map(&self, value: &ScaleValue) -> ChartResult<Option<f64>> {
@@ -300,6 +426,7 @@ impl CheckedPositionalScale {
                     .unwrap_or_else(|| match value {
                         ScaleValue::Number(n) => crate::number::ecmascript(*n),
                         ScaleValue::Category(label) => label.clone(),
+                        ScaleValue::MissingCategory => "NA".into(),
                         ScaleValue::Timestamp { value, .. } => value.to_string(),
                     });
                 crate::limits::require_within(

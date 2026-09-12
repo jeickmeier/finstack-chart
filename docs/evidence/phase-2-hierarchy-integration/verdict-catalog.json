@@ -1,0 +1,1783 @@
+{
+  "version": 1,
+  "date": "2026-09-10",
+  "reference": "d3-hierarchy 3.1.2",
+  "boundary": "Complete finite typed capability surface with explicit native/portable adaptations in ADR-022; no JS object coercion or DOM/runtime emulation.",
+  "gate": "G-HIERARCHY",
+  "verdict": "PASS",
+  "rows": [
+    {
+      "surface": "Node",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::node",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [
+        "node",
+        "operations-all"
+      ],
+      "adaptation": "Checked immutable Rust values; owned Python/WASM descriptors/results."
+    },
+    {
+      "surface": "cluster",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::{cluster,cluster_with}",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [
+        "cluster-balanced-74",
+        "cluster-balanced-75",
+        "cluster-balanced-76",
+        "cluster-balanced-77",
+        "cluster-balanced-78",
+        "cluster-balanced-79",
+        "cluster-asymmetric-80",
+        "cluster-asymmetric-81",
+        "cluster-asymmetric-82",
+        "cluster-asymmetric-83",
+        "cluster-asymmetric-84",
+        "cluster-asymmetric-85",
+        "cluster-singleton-86",
+        "cluster-singleton-87",
+        "cluster-singleton-88",
+        "cluster-singleton-89",
+        "cluster-singleton-90",
+        "cluster-singleton-91",
+        "cluster-two-92",
+        "cluster-two-93",
+        "cluster-two-94",
+        "cluster-two-95",
+        "cluster-two-96",
+        "cluster-two-97",
+        "cluster-zero-98",
+        "cluster-zero-99",
+        "cluster-zero-100",
+        "cluster-zero-101",
+        "cluster-zero-102",
+        "cluster-zero-103",
+        "cluster-wide-104",
+        "cluster-wide-105",
+        "cluster-wide-106",
+        "cluster-wide-107",
+        "cluster-wide-108",
+        "cluster-wide-109",
+        "cluster-skew-110",
+        "cluster-skew-111",
+        "cluster-skew-112",
+        "cluster-skew-113",
+        "cluster-skew-114",
+        "cluster-skew-115",
+        "random-cluster-size-0",
+        "random-cluster-nodeSize-0",
+        "random-cluster-size-1",
+        "random-cluster-nodeSize-1",
+        "random-cluster-size-2",
+        "random-cluster-nodeSize-2",
+        "random-cluster-size-3",
+        "random-cluster-nodeSize-3",
+        "random-cluster-size-4",
+        "random-cluster-nodeSize-4",
+        "random-cluster-size-5",
+        "random-cluster-nodeSize-5",
+        "random-cluster-size-6",
+        "random-cluster-nodeSize-6",
+        "random-cluster-size-7",
+        "random-cluster-nodeSize-7",
+        "random-cluster-size-8",
+        "random-cluster-nodeSize-8",
+        "random-cluster-size-9",
+        "random-cluster-nodeSize-9",
+        "random-cluster-size-10",
+        "random-cluster-nodeSize-10",
+        "random-cluster-size-11",
+        "random-cluster-nodeSize-11",
+        "random-cluster-size-12",
+        "random-cluster-nodeSize-12",
+        "random-cluster-size-13",
+        "random-cluster-nodeSize-13",
+        "random-cluster-size-14",
+        "random-cluster-nodeSize-14",
+        "random-cluster-size-15",
+        "random-cluster-nodeSize-15",
+        "random-cluster-size-16",
+        "random-cluster-nodeSize-16",
+        "random-cluster-size-17",
+        "random-cluster-nodeSize-17",
+        "random-cluster-size-18",
+        "random-cluster-nodeSize-18",
+        "random-cluster-size-19",
+        "random-cluster-nodeSize-19",
+        "random-cluster-size-20",
+        "random-cluster-nodeSize-20",
+        "random-cluster-size-21",
+        "random-cluster-nodeSize-21",
+        "random-cluster-size-22",
+        "random-cluster-nodeSize-22",
+        "random-cluster-size-23",
+        "random-cluster-nodeSize-23",
+        "random-cluster-size-24",
+        "random-cluster-nodeSize-24",
+        "random-cluster-size-25",
+        "random-cluster-nodeSize-25",
+        "random-cluster-size-26",
+        "random-cluster-nodeSize-26",
+        "random-cluster-size-27",
+        "random-cluster-nodeSize-27",
+        "random-cluster-size-28",
+        "random-cluster-nodeSize-28",
+        "random-cluster-size-29",
+        "random-cluster-nodeSize-29",
+        "random-cluster-size-30",
+        "random-cluster-nodeSize-30",
+        "random-cluster-size-31",
+        "random-cluster-nodeSize-31",
+        "random-cluster-size-32",
+        "random-cluster-nodeSize-32",
+        "random-cluster-size-33",
+        "random-cluster-nodeSize-33",
+        "random-cluster-size-34",
+        "random-cluster-nodeSize-34",
+        "random-cluster-size-35",
+        "random-cluster-nodeSize-35",
+        "random-cluster-size-36",
+        "random-cluster-nodeSize-36",
+        "random-cluster-size-37",
+        "random-cluster-nodeSize-37",
+        "random-cluster-size-38",
+        "random-cluster-nodeSize-38",
+        "random-cluster-size-39",
+        "random-cluster-nodeSize-39",
+        "random-cluster-size-40",
+        "random-cluster-nodeSize-40",
+        "random-cluster-size-41",
+        "random-cluster-nodeSize-41",
+        "random-cluster-size-42",
+        "random-cluster-nodeSize-42",
+        "random-cluster-size-43",
+        "random-cluster-nodeSize-43",
+        "random-cluster-size-44",
+        "random-cluster-nodeSize-44",
+        "random-cluster-size-45",
+        "random-cluster-nodeSize-45",
+        "random-cluster-size-46",
+        "random-cluster-nodeSize-46",
+        "random-cluster-size-47",
+        "random-cluster-nodeSize-47",
+        "random-cluster-size-48",
+        "random-cluster-nodeSize-48",
+        "random-cluster-size-49",
+        "random-cluster-nodeSize-49",
+        "random-cluster-size-50",
+        "random-cluster-nodeSize-50",
+        "random-cluster-size-51",
+        "random-cluster-nodeSize-51",
+        "random-cluster-size-52",
+        "random-cluster-nodeSize-52",
+        "random-cluster-size-53",
+        "random-cluster-nodeSize-53",
+        "random-cluster-size-54",
+        "random-cluster-nodeSize-54",
+        "random-cluster-size-55",
+        "random-cluster-nodeSize-55",
+        "random-cluster-size-56",
+        "random-cluster-nodeSize-56",
+        "random-cluster-size-57",
+        "random-cluster-nodeSize-57",
+        "random-cluster-size-58",
+        "random-cluster-nodeSize-58",
+        "random-cluster-size-59",
+        "random-cluster-nodeSize-59",
+        "random-cluster-size-60",
+        "random-cluster-nodeSize-60",
+        "random-cluster-size-61",
+        "random-cluster-nodeSize-61",
+        "random-cluster-size-62",
+        "random-cluster-nodeSize-62",
+        "random-cluster-size-63",
+        "random-cluster-nodeSize-63"
+      ],
+      "adaptation": "Checked immutable Rust values; owned Python/WASM descriptors/results."
+    },
+    {
+      "surface": "hierarchy",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::{from_nested,with_children,from_grouped}",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [
+        "nested-balanced",
+        "nested-asymmetric",
+        "nested-singleton",
+        "nested-two",
+        "nested-zero",
+        "nested-wide",
+        "nested-skew",
+        "custom-iterable",
+        "ordered-grouped"
+      ],
+      "adaptation": "Checked immutable Rust values; owned Python/WASM descriptors/results."
+    },
+    {
+      "surface": "pack",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::{pack,pack_with}",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [
+        "pack-balanced-378",
+        "pack-balanced-379",
+        "pack-balanced-380",
+        "pack-balanced-381",
+        "pack-balanced-382",
+        "pack-balanced-383",
+        "pack-balanced-384",
+        "pack-asymmetric-385",
+        "pack-asymmetric-386",
+        "pack-asymmetric-387",
+        "pack-asymmetric-388",
+        "pack-asymmetric-389",
+        "pack-asymmetric-390",
+        "pack-asymmetric-391",
+        "pack-singleton-392",
+        "pack-singleton-393",
+        "pack-singleton-394",
+        "pack-singleton-395",
+        "pack-singleton-396",
+        "pack-singleton-397",
+        "pack-singleton-398",
+        "pack-two-399",
+        "pack-two-400",
+        "pack-two-401",
+        "pack-two-402",
+        "pack-two-403",
+        "pack-two-404",
+        "pack-two-405",
+        "pack-zero-406",
+        "pack-zero-407",
+        "pack-zero-408",
+        "pack-zero-409",
+        "pack-zero-410",
+        "pack-zero-411",
+        "pack-zero-412",
+        "pack-wide-413",
+        "pack-wide-414",
+        "pack-wide-415",
+        "pack-wide-416",
+        "pack-wide-417",
+        "pack-wide-418",
+        "pack-wide-419",
+        "pack-skew-420",
+        "pack-skew-421",
+        "pack-skew-422",
+        "pack-skew-423",
+        "pack-skew-424",
+        "pack-skew-425",
+        "pack-skew-426",
+        "random-pack-0-false",
+        "random-pack-0-true",
+        "random-pack-1-false",
+        "random-pack-1-true",
+        "random-pack-2-false",
+        "random-pack-2-true",
+        "random-pack-3-false",
+        "random-pack-3-true",
+        "random-pack-4-false",
+        "random-pack-4-true",
+        "random-pack-5-false",
+        "random-pack-5-true",
+        "random-pack-6-false",
+        "random-pack-6-true",
+        "random-pack-7-false",
+        "random-pack-7-true",
+        "random-pack-8-false",
+        "random-pack-8-true",
+        "random-pack-9-false",
+        "random-pack-9-true",
+        "random-pack-10-false",
+        "random-pack-10-true",
+        "random-pack-11-false",
+        "random-pack-11-true",
+        "random-pack-12-false",
+        "random-pack-12-true",
+        "random-pack-13-false",
+        "random-pack-13-true",
+        "random-pack-14-false",
+        "random-pack-14-true",
+        "random-pack-15-false",
+        "random-pack-15-true",
+        "random-pack-16-false",
+        "random-pack-16-true",
+        "random-pack-17-false",
+        "random-pack-17-true",
+        "random-pack-18-false",
+        "random-pack-18-true",
+        "random-pack-19-false",
+        "random-pack-19-true",
+        "random-pack-20-false",
+        "random-pack-20-true",
+        "random-pack-21-false",
+        "random-pack-21-true",
+        "random-pack-22-false",
+        "random-pack-22-true",
+        "random-pack-23-false",
+        "random-pack-23-true",
+        "random-pack-24-false",
+        "random-pack-24-true",
+        "random-pack-25-false",
+        "random-pack-25-true",
+        "random-pack-26-false",
+        "random-pack-26-true",
+        "random-pack-27-false",
+        "random-pack-27-true",
+        "random-pack-28-false",
+        "random-pack-28-true",
+        "random-pack-29-false",
+        "random-pack-29-true",
+        "random-pack-30-false",
+        "random-pack-30-true",
+        "random-pack-31-false",
+        "random-pack-31-true"
+      ],
+      "adaptation": "Checked immutable Rust values; owned Python/WASM descriptors/results."
+    },
+    {
+      "surface": "packEnclose",
+      "verdict": "PASS",
+      "core_api": "pack_enclose",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [
+        "enclose-empty",
+        "enclose-one",
+        "enclose-two",
+        "enclose-contained",
+        "enclose-coincident",
+        "enclose-triangle",
+        "enclose-near-collinear",
+        "random-enclose-0",
+        "random-enclose-1",
+        "random-enclose-2",
+        "random-enclose-3",
+        "random-enclose-4",
+        "random-enclose-5",
+        "random-enclose-6",
+        "random-enclose-7",
+        "random-enclose-8",
+        "random-enclose-9",
+        "random-enclose-10",
+        "random-enclose-11",
+        "random-enclose-12",
+        "random-enclose-13",
+        "random-enclose-14",
+        "random-enclose-15",
+        "random-enclose-16",
+        "random-enclose-17",
+        "random-enclose-18",
+        "random-enclose-19",
+        "random-enclose-20",
+        "random-enclose-21",
+        "random-enclose-22",
+        "random-enclose-23",
+        "random-enclose-24",
+        "random-enclose-25",
+        "random-enclose-26",
+        "random-enclose-27",
+        "random-enclose-28",
+        "random-enclose-29",
+        "random-enclose-30",
+        "random-enclose-31"
+      ],
+      "adaptation": "Checked immutable Rust values; owned Python/WASM descriptors/results."
+    },
+    {
+      "surface": "packSiblings",
+      "verdict": "PASS",
+      "core_api": "pack_siblings",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [
+        "siblings-empty",
+        "siblings-one",
+        "siblings-two",
+        "siblings-three",
+        "siblings-zero",
+        "siblings-unequal",
+        "siblings-many",
+        "random-siblings-0",
+        "random-siblings-1",
+        "random-siblings-2",
+        "random-siblings-3",
+        "random-siblings-4",
+        "random-siblings-5",
+        "random-siblings-6",
+        "random-siblings-7",
+        "random-siblings-8",
+        "random-siblings-9",
+        "random-siblings-10",
+        "random-siblings-11",
+        "random-siblings-12",
+        "random-siblings-13",
+        "random-siblings-14",
+        "random-siblings-15",
+        "random-siblings-16",
+        "random-siblings-17",
+        "random-siblings-18",
+        "random-siblings-19",
+        "random-siblings-20",
+        "random-siblings-21",
+        "random-siblings-22",
+        "random-siblings-23",
+        "random-siblings-24",
+        "random-siblings-25",
+        "random-siblings-26",
+        "random-siblings-27",
+        "random-siblings-28",
+        "random-siblings-29",
+        "random-siblings-30",
+        "random-siblings-31"
+      ],
+      "adaptation": "Checked immutable Rust values; owned Python/WASM descriptors/results."
+    },
+    {
+      "surface": "partition",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::partition",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [
+        "partition-balanced-116",
+        "partition-balanced-117",
+        "partition-balanced-118",
+        "partition-balanced-119",
+        "partition-balanced-120",
+        "partition-balanced-121",
+        "partition-asymmetric-122",
+        "partition-asymmetric-123",
+        "partition-asymmetric-124",
+        "partition-asymmetric-125",
+        "partition-asymmetric-126",
+        "partition-asymmetric-127",
+        "partition-singleton-128",
+        "partition-singleton-129",
+        "partition-singleton-130",
+        "partition-singleton-131",
+        "partition-singleton-132",
+        "partition-singleton-133",
+        "partition-two-134",
+        "partition-two-135",
+        "partition-two-136",
+        "partition-two-137",
+        "partition-two-138",
+        "partition-two-139",
+        "partition-zero-140",
+        "partition-zero-141",
+        "partition-zero-142",
+        "partition-zero-143",
+        "partition-zero-144",
+        "partition-zero-145",
+        "partition-wide-146",
+        "partition-wide-147",
+        "partition-wide-148",
+        "partition-wide-149",
+        "partition-wide-150",
+        "partition-wide-151",
+        "partition-skew-152",
+        "partition-skew-153",
+        "partition-skew-154",
+        "partition-skew-155",
+        "partition-skew-156",
+        "partition-skew-157"
+      ],
+      "adaptation": "Checked immutable Rust values; owned Python/WASM descriptors/results."
+    },
+    {
+      "surface": "stratify",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::{stratify,stratify_with,from_paths}",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [
+        "table-shuffled",
+        "table-anonymous",
+        "table-duplicateLeaves",
+        "table-ambiguous",
+        "table-missing",
+        "table-multiple",
+        "table-noRoot",
+        "table-cycle",
+        "table-empty",
+        "table-nullParent",
+        "table-emptyParent",
+        "table-large",
+        "path-impute",
+        "path-root",
+        "path-slashes",
+        "path-double",
+        "path-escape",
+        "path-backslashes",
+        "path-single",
+        "path-duplicates",
+        "path-empty"
+      ],
+      "adaptation": "Checked immutable Rust values; owned Python/WASM descriptors/results."
+    },
+    {
+      "surface": "tree",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::{tree,tree_with}",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [
+        "tree-balanced-32",
+        "tree-balanced-33",
+        "tree-balanced-34",
+        "tree-balanced-35",
+        "tree-balanced-36",
+        "tree-balanced-37",
+        "tree-asymmetric-38",
+        "tree-asymmetric-39",
+        "tree-asymmetric-40",
+        "tree-asymmetric-41",
+        "tree-asymmetric-42",
+        "tree-asymmetric-43",
+        "tree-singleton-44",
+        "tree-singleton-45",
+        "tree-singleton-46",
+        "tree-singleton-47",
+        "tree-singleton-48",
+        "tree-singleton-49",
+        "tree-two-50",
+        "tree-two-51",
+        "tree-two-52",
+        "tree-two-53",
+        "tree-two-54",
+        "tree-two-55",
+        "tree-zero-56",
+        "tree-zero-57",
+        "tree-zero-58",
+        "tree-zero-59",
+        "tree-zero-60",
+        "tree-zero-61",
+        "tree-wide-62",
+        "tree-wide-63",
+        "tree-wide-64",
+        "tree-wide-65",
+        "tree-wide-66",
+        "tree-wide-67",
+        "tree-skew-68",
+        "tree-skew-69",
+        "tree-skew-70",
+        "tree-skew-71",
+        "tree-skew-72",
+        "tree-skew-73",
+        "random-tree-size-0",
+        "random-tree-nodeSize-0",
+        "random-tree-size-1",
+        "random-tree-nodeSize-1",
+        "random-tree-size-2",
+        "random-tree-nodeSize-2",
+        "random-tree-size-3",
+        "random-tree-nodeSize-3",
+        "random-tree-size-4",
+        "random-tree-nodeSize-4",
+        "random-tree-size-5",
+        "random-tree-nodeSize-5",
+        "random-tree-size-6",
+        "random-tree-nodeSize-6",
+        "random-tree-size-7",
+        "random-tree-nodeSize-7",
+        "random-tree-size-8",
+        "random-tree-nodeSize-8",
+        "random-tree-size-9",
+        "random-tree-nodeSize-9",
+        "random-tree-size-10",
+        "random-tree-nodeSize-10",
+        "random-tree-size-11",
+        "random-tree-nodeSize-11",
+        "random-tree-size-12",
+        "random-tree-nodeSize-12",
+        "random-tree-size-13",
+        "random-tree-nodeSize-13",
+        "random-tree-size-14",
+        "random-tree-nodeSize-14",
+        "random-tree-size-15",
+        "random-tree-nodeSize-15",
+        "random-tree-size-16",
+        "random-tree-nodeSize-16",
+        "random-tree-size-17",
+        "random-tree-nodeSize-17",
+        "random-tree-size-18",
+        "random-tree-nodeSize-18",
+        "random-tree-size-19",
+        "random-tree-nodeSize-19",
+        "random-tree-size-20",
+        "random-tree-nodeSize-20",
+        "random-tree-size-21",
+        "random-tree-nodeSize-21",
+        "random-tree-size-22",
+        "random-tree-nodeSize-22",
+        "random-tree-size-23",
+        "random-tree-nodeSize-23",
+        "random-tree-size-24",
+        "random-tree-nodeSize-24",
+        "random-tree-size-25",
+        "random-tree-nodeSize-25",
+        "random-tree-size-26",
+        "random-tree-nodeSize-26",
+        "random-tree-size-27",
+        "random-tree-nodeSize-27",
+        "random-tree-size-28",
+        "random-tree-nodeSize-28",
+        "random-tree-size-29",
+        "random-tree-nodeSize-29",
+        "random-tree-size-30",
+        "random-tree-nodeSize-30",
+        "random-tree-size-31",
+        "random-tree-nodeSize-31",
+        "random-tree-size-32",
+        "random-tree-nodeSize-32",
+        "random-tree-size-33",
+        "random-tree-nodeSize-33",
+        "random-tree-size-34",
+        "random-tree-nodeSize-34",
+        "random-tree-size-35",
+        "random-tree-nodeSize-35",
+        "random-tree-size-36",
+        "random-tree-nodeSize-36",
+        "random-tree-size-37",
+        "random-tree-nodeSize-37",
+        "random-tree-size-38",
+        "random-tree-nodeSize-38",
+        "random-tree-size-39",
+        "random-tree-nodeSize-39",
+        "random-tree-size-40",
+        "random-tree-nodeSize-40",
+        "random-tree-size-41",
+        "random-tree-nodeSize-41",
+        "random-tree-size-42",
+        "random-tree-nodeSize-42",
+        "random-tree-size-43",
+        "random-tree-nodeSize-43",
+        "random-tree-size-44",
+        "random-tree-nodeSize-44",
+        "random-tree-size-45",
+        "random-tree-nodeSize-45",
+        "random-tree-size-46",
+        "random-tree-nodeSize-46",
+        "random-tree-size-47",
+        "random-tree-nodeSize-47",
+        "random-tree-size-48",
+        "random-tree-nodeSize-48",
+        "random-tree-size-49",
+        "random-tree-nodeSize-49",
+        "random-tree-size-50",
+        "random-tree-nodeSize-50",
+        "random-tree-size-51",
+        "random-tree-nodeSize-51",
+        "random-tree-size-52",
+        "random-tree-nodeSize-52",
+        "random-tree-size-53",
+        "random-tree-nodeSize-53",
+        "random-tree-size-54",
+        "random-tree-nodeSize-54",
+        "random-tree-size-55",
+        "random-tree-nodeSize-55",
+        "random-tree-size-56",
+        "random-tree-nodeSize-56",
+        "random-tree-size-57",
+        "random-tree-nodeSize-57",
+        "random-tree-size-58",
+        "random-tree-nodeSize-58",
+        "random-tree-size-59",
+        "random-tree-nodeSize-59",
+        "random-tree-size-60",
+        "random-tree-nodeSize-60",
+        "random-tree-size-61",
+        "random-tree-nodeSize-61",
+        "random-tree-size-62",
+        "random-tree-nodeSize-62",
+        "random-tree-size-63",
+        "random-tree-nodeSize-63"
+      ],
+      "adaptation": "Checked immutable Rust values; owned Python/WASM descriptors/results."
+    },
+    {
+      "surface": "treemap",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::{treemap,treemap_with,treemap_with_history}",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [
+        "treemap-treemapBinary-326",
+        "treemap-treemapBinary-327",
+        "treemap-treemapBinary-328",
+        "treemap-treemapBinary-329",
+        "treemap-treemapBinary-330",
+        "treemap-treemapBinary-331",
+        "treemap-treemapBinary-332",
+        "treemap-treemapBinary-333",
+        "treemap-treemapDice-334",
+        "treemap-treemapDice-335",
+        "treemap-treemapDice-336",
+        "treemap-treemapDice-337",
+        "treemap-treemapDice-338",
+        "treemap-treemapDice-339",
+        "treemap-treemapDice-340",
+        "treemap-treemapDice-341",
+        "treemap-treemapSlice-342",
+        "treemap-treemapSlice-343",
+        "treemap-treemapSlice-344",
+        "treemap-treemapSlice-345",
+        "treemap-treemapSlice-346",
+        "treemap-treemapSlice-347",
+        "treemap-treemapSlice-348",
+        "treemap-treemapSlice-349",
+        "treemap-treemapSliceDice-350",
+        "treemap-treemapSliceDice-351",
+        "treemap-treemapSliceDice-352",
+        "treemap-treemapSliceDice-353",
+        "treemap-treemapSliceDice-354",
+        "treemap-treemapSliceDice-355",
+        "treemap-treemapSliceDice-356",
+        "treemap-treemapSliceDice-357",
+        "treemap-treemapSquarify-358",
+        "treemap-treemapSquarify-359",
+        "treemap-treemapSquarify-360",
+        "treemap-treemapSquarify-361",
+        "treemap-treemapSquarify-362",
+        "treemap-treemapSquarify-363",
+        "treemap-treemapSquarify-364",
+        "treemap-treemapSquarify-365",
+        "treemap-treemapResquarify-366",
+        "treemap-treemapResquarify-367",
+        "treemap-treemapResquarify-368",
+        "treemap-treemapResquarify-369",
+        "treemap-treemapResquarify-370",
+        "treemap-treemapResquarify-371",
+        "treemap-treemapResquarify-372",
+        "treemap-treemapResquarify-373",
+        "custom-tiler",
+        "resquarify-1",
+        "resquarify-1.618033988749895",
+        "resquarify-3",
+        "resquarify-topology-rebuilds"
+      ],
+      "adaptation": "Checked immutable Rust values; owned Python/WASM descriptors/results."
+    },
+    {
+      "surface": "treemapBinary",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::tile_children / Tiler::Binary",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [
+        "treemapBinary-balanced-158",
+        "treemapBinary-balanced-159",
+        "treemapBinary-balanced-160",
+        "treemapBinary-balanced-161",
+        "treemapBinary-asymmetric-162",
+        "treemapBinary-asymmetric-163",
+        "treemapBinary-asymmetric-164",
+        "treemapBinary-asymmetric-165",
+        "treemapBinary-singleton-166",
+        "treemapBinary-singleton-167",
+        "treemapBinary-singleton-168",
+        "treemapBinary-singleton-169",
+        "treemapBinary-two-170",
+        "treemapBinary-two-171",
+        "treemapBinary-two-172",
+        "treemapBinary-two-173",
+        "treemapBinary-zero-174",
+        "treemapBinary-zero-175",
+        "treemapBinary-zero-176",
+        "treemapBinary-zero-177",
+        "treemapBinary-wide-178",
+        "treemapBinary-wide-179",
+        "treemapBinary-wide-180",
+        "treemapBinary-wide-181",
+        "treemapBinary-skew-182",
+        "treemapBinary-skew-183",
+        "treemapBinary-skew-184",
+        "treemapBinary-skew-185",
+        "treemap-treemapBinary-326",
+        "treemap-treemapBinary-327",
+        "treemap-treemapBinary-328",
+        "treemap-treemapBinary-329",
+        "treemap-treemapBinary-330",
+        "treemap-treemapBinary-331",
+        "treemap-treemapBinary-332",
+        "treemap-treemapBinary-333",
+        "resquarify-1",
+        "resquarify-1.618033988749895",
+        "resquarify-3",
+        "resquarify-topology-rebuilds"
+      ],
+      "adaptation": "Checked immutable Rust values; owned Python/WASM descriptors/results."
+    },
+    {
+      "surface": "treemapDice",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::tile_children / Tiler::Dice",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [
+        "treemapDice-balanced-186",
+        "treemapDice-balanced-187",
+        "treemapDice-balanced-188",
+        "treemapDice-balanced-189",
+        "treemapDice-asymmetric-190",
+        "treemapDice-asymmetric-191",
+        "treemapDice-asymmetric-192",
+        "treemapDice-asymmetric-193",
+        "treemapDice-singleton-194",
+        "treemapDice-singleton-195",
+        "treemapDice-singleton-196",
+        "treemapDice-singleton-197",
+        "treemapDice-two-198",
+        "treemapDice-two-199",
+        "treemapDice-two-200",
+        "treemapDice-two-201",
+        "treemapDice-zero-202",
+        "treemapDice-zero-203",
+        "treemapDice-zero-204",
+        "treemapDice-zero-205",
+        "treemapDice-wide-206",
+        "treemapDice-wide-207",
+        "treemapDice-wide-208",
+        "treemapDice-wide-209",
+        "treemapDice-skew-210",
+        "treemapDice-skew-211",
+        "treemapDice-skew-212",
+        "treemapDice-skew-213",
+        "treemap-treemapDice-334",
+        "treemap-treemapDice-335",
+        "treemap-treemapDice-336",
+        "treemap-treemapDice-337",
+        "treemap-treemapDice-338",
+        "treemap-treemapDice-339",
+        "treemap-treemapDice-340",
+        "treemap-treemapDice-341",
+        "resquarify-1",
+        "resquarify-1.618033988749895",
+        "resquarify-3",
+        "resquarify-topology-rebuilds"
+      ],
+      "adaptation": "Checked immutable Rust values; owned Python/WASM descriptors/results."
+    },
+    {
+      "surface": "treemapResquarify",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::tile_children / Tiler::Resquarify",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [
+        "treemapResquarify-balanced-298",
+        "treemapResquarify-balanced-299",
+        "treemapResquarify-balanced-300",
+        "treemapResquarify-balanced-301",
+        "treemapResquarify-asymmetric-302",
+        "treemapResquarify-asymmetric-303",
+        "treemapResquarify-asymmetric-304",
+        "treemapResquarify-asymmetric-305",
+        "treemapResquarify-singleton-306",
+        "treemapResquarify-singleton-307",
+        "treemapResquarify-singleton-308",
+        "treemapResquarify-singleton-309",
+        "treemapResquarify-two-310",
+        "treemapResquarify-two-311",
+        "treemapResquarify-two-312",
+        "treemapResquarify-two-313",
+        "treemapResquarify-zero-314",
+        "treemapResquarify-zero-315",
+        "treemapResquarify-zero-316",
+        "treemapResquarify-zero-317",
+        "treemapResquarify-wide-318",
+        "treemapResquarify-wide-319",
+        "treemapResquarify-wide-320",
+        "treemapResquarify-wide-321",
+        "treemapResquarify-skew-322",
+        "treemapResquarify-skew-323",
+        "treemapResquarify-skew-324",
+        "treemapResquarify-skew-325",
+        "treemap-treemapResquarify-366",
+        "treemap-treemapResquarify-367",
+        "treemap-treemapResquarify-368",
+        "treemap-treemapResquarify-369",
+        "treemap-treemapResquarify-370",
+        "treemap-treemapResquarify-371",
+        "treemap-treemapResquarify-372",
+        "treemap-treemapResquarify-373",
+        "resquarify-1",
+        "resquarify-1.618033988749895",
+        "resquarify-3",
+        "resquarify-topology-rebuilds"
+      ],
+      "adaptation": "Checked immutable Rust values; owned Python/WASM descriptors/results."
+    },
+    {
+      "surface": "treemapSlice",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::tile_children / Tiler::Slice",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [
+        "treemapSlice-balanced-214",
+        "treemapSlice-balanced-215",
+        "treemapSlice-balanced-216",
+        "treemapSlice-balanced-217",
+        "treemapSlice-asymmetric-218",
+        "treemapSlice-asymmetric-219",
+        "treemapSlice-asymmetric-220",
+        "treemapSlice-asymmetric-221",
+        "treemapSlice-singleton-222",
+        "treemapSlice-singleton-223",
+        "treemapSlice-singleton-224",
+        "treemapSlice-singleton-225",
+        "treemapSlice-two-226",
+        "treemapSlice-two-227",
+        "treemapSlice-two-228",
+        "treemapSlice-two-229",
+        "treemapSlice-zero-230",
+        "treemapSlice-zero-231",
+        "treemapSlice-zero-232",
+        "treemapSlice-zero-233",
+        "treemapSlice-wide-234",
+        "treemapSlice-wide-235",
+        "treemapSlice-wide-236",
+        "treemapSlice-wide-237",
+        "treemapSlice-skew-238",
+        "treemapSlice-skew-239",
+        "treemapSlice-skew-240",
+        "treemapSlice-skew-241",
+        "treemap-treemapSlice-342",
+        "treemap-treemapSlice-343",
+        "treemap-treemapSlice-344",
+        "treemap-treemapSlice-345",
+        "treemap-treemapSlice-346",
+        "treemap-treemapSlice-347",
+        "treemap-treemapSlice-348",
+        "treemap-treemapSlice-349",
+        "resquarify-1",
+        "resquarify-1.618033988749895",
+        "resquarify-3",
+        "resquarify-topology-rebuilds"
+      ],
+      "adaptation": "Checked immutable Rust values; owned Python/WASM descriptors/results."
+    },
+    {
+      "surface": "treemapSliceDice",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::tile_children / Tiler::SliceDice",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [
+        "treemapSliceDice-balanced-242",
+        "treemapSliceDice-balanced-243",
+        "treemapSliceDice-balanced-244",
+        "treemapSliceDice-balanced-245",
+        "treemapSliceDice-asymmetric-246",
+        "treemapSliceDice-asymmetric-247",
+        "treemapSliceDice-asymmetric-248",
+        "treemapSliceDice-asymmetric-249",
+        "treemapSliceDice-singleton-250",
+        "treemapSliceDice-singleton-251",
+        "treemapSliceDice-singleton-252",
+        "treemapSliceDice-singleton-253",
+        "treemapSliceDice-two-254",
+        "treemapSliceDice-two-255",
+        "treemapSliceDice-two-256",
+        "treemapSliceDice-two-257",
+        "treemapSliceDice-zero-258",
+        "treemapSliceDice-zero-259",
+        "treemapSliceDice-zero-260",
+        "treemapSliceDice-zero-261",
+        "treemapSliceDice-wide-262",
+        "treemapSliceDice-wide-263",
+        "treemapSliceDice-wide-264",
+        "treemapSliceDice-wide-265",
+        "treemapSliceDice-skew-266",
+        "treemapSliceDice-skew-267",
+        "treemapSliceDice-skew-268",
+        "treemapSliceDice-skew-269",
+        "treemap-treemapSliceDice-350",
+        "treemap-treemapSliceDice-351",
+        "treemap-treemapSliceDice-352",
+        "treemap-treemapSliceDice-353",
+        "treemap-treemapSliceDice-354",
+        "treemap-treemapSliceDice-355",
+        "treemap-treemapSliceDice-356",
+        "treemap-treemapSliceDice-357",
+        "resquarify-1",
+        "resquarify-1.618033988749895",
+        "resquarify-3",
+        "resquarify-topology-rebuilds"
+      ],
+      "adaptation": "Checked immutable Rust values; owned Python/WASM descriptors/results."
+    },
+    {
+      "surface": "treemapSquarify",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::tile_children / Tiler::Squarify",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [
+        "treemapSquarify-balanced-270",
+        "treemapSquarify-balanced-271",
+        "treemapSquarify-balanced-272",
+        "treemapSquarify-balanced-273",
+        "treemapSquarify-asymmetric-274",
+        "treemapSquarify-asymmetric-275",
+        "treemapSquarify-asymmetric-276",
+        "treemapSquarify-asymmetric-277",
+        "treemapSquarify-singleton-278",
+        "treemapSquarify-singleton-279",
+        "treemapSquarify-singleton-280",
+        "treemapSquarify-singleton-281",
+        "treemapSquarify-two-282",
+        "treemapSquarify-two-283",
+        "treemapSquarify-two-284",
+        "treemapSquarify-two-285",
+        "treemapSquarify-zero-286",
+        "treemapSquarify-zero-287",
+        "treemapSquarify-zero-288",
+        "treemapSquarify-zero-289",
+        "treemapSquarify-wide-290",
+        "treemapSquarify-wide-291",
+        "treemapSquarify-wide-292",
+        "treemapSquarify-wide-293",
+        "treemapSquarify-skew-294",
+        "treemapSquarify-skew-295",
+        "treemapSquarify-skew-296",
+        "treemapSquarify-skew-297",
+        "treemap-treemapSquarify-358",
+        "treemap-treemapSquarify-359",
+        "treemap-treemapSquarify-360",
+        "treemap-treemapSquarify-361",
+        "treemap-treemapSquarify-362",
+        "treemap-treemapSquarify-363",
+        "treemap-treemapSquarify-364",
+        "treemap-treemapSquarify-365",
+        "resquarify-1",
+        "resquarify-1.618033988749895",
+        "resquarify-3",
+        "resquarify-topology-rebuilds"
+      ],
+      "adaptation": "Checked immutable Rust values; owned Python/WASM descriptors/results."
+    },
+    {
+      "surface": "node.Symbol(Symbol.iterator)",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::iter / descendants (breadth first)",
+      "evidence": [
+        "standalone-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [
+        "operations-all"
+      ],
+      "adaptation": "Traversal records expose node/index/root context. Native closures run in Rust; portable predicates/accessors use fields or versioned Rust registrations. Subtree copy clears coordinates/history and shares immutable native payloads; host values are owned."
+    },
+    {
+      "surface": "node.ancestors",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::ancestors",
+      "evidence": [
+        "standalone-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [
+        "operations-all"
+      ],
+      "adaptation": "Traversal records expose node/index/root context. Native closures run in Rust; portable predicates/accessors use fields or versioned Rust registrations. Subtree copy clears coordinates/history and shares immutable native payloads; host values are owned."
+    },
+    {
+      "surface": "node.copy",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::copy_subtree(new owner)",
+      "evidence": [
+        "standalone-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [
+        "operations-all"
+      ],
+      "adaptation": "Traversal records expose node/index/root context. Native closures run in Rust; portable predicates/accessors use fields or versioned Rust registrations. Subtree copy clears coordinates/history and shares immutable native payloads; host values are owned."
+    },
+    {
+      "surface": "node.count",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::count",
+      "evidence": [
+        "standalone-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [
+        "operations-all"
+      ],
+      "adaptation": "Traversal records expose node/index/root context. Native closures run in Rust; portable predicates/accessors use fields or versioned Rust registrations. Subtree copy clears coordinates/history and shares immutable native payloads; host values are owned."
+    },
+    {
+      "surface": "node.descendants",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::descendants",
+      "evidence": [
+        "standalone-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [
+        "operations-all"
+      ],
+      "adaptation": "Traversal records expose node/index/root context. Native closures run in Rust; portable predicates/accessors use fields or versioned Rust registrations. Subtree copy clears coordinates/history and shares immutable native payloads; host values are owned."
+    },
+    {
+      "surface": "node.each",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::visit(BreadthFirst)",
+      "evidence": [
+        "standalone-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [
+        "operations-all"
+      ],
+      "adaptation": "Traversal records expose node/index/root context. Native closures run in Rust; portable predicates/accessors use fields or versioned Rust registrations. Subtree copy clears coordinates/history and shares immutable native payloads; host values are owned."
+    },
+    {
+      "surface": "node.eachAfter",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::visit(PostOrder)",
+      "evidence": [
+        "standalone-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [
+        "operations-all"
+      ],
+      "adaptation": "Traversal records expose node/index/root context. Native closures run in Rust; portable predicates/accessors use fields or versioned Rust registrations. Subtree copy clears coordinates/history and shares immutable native payloads; host values are owned."
+    },
+    {
+      "surface": "node.eachBefore",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::visit(PreOrder)",
+      "evidence": [
+        "standalone-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [
+        "operations-all"
+      ],
+      "adaptation": "Traversal records expose node/index/root context. Native closures run in Rust; portable predicates/accessors use fields or versioned Rust registrations. Subtree copy clears coordinates/history and shares immutable native payloads; host values are owned."
+    },
+    {
+      "surface": "node.find",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::find / FindRegistered / Find(field,value)",
+      "evidence": [
+        "standalone-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [
+        "operations-all"
+      ],
+      "adaptation": "Traversal records expose node/index/root context. Native closures run in Rust; portable predicates/accessors use fields or versioned Rust registrations. Subtree copy clears coordinates/history and shares immutable native payloads; host values are owned."
+    },
+    {
+      "surface": "node.leaves",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::leaves",
+      "evidence": [
+        "standalone-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [
+        "operations-all"
+      ],
+      "adaptation": "Traversal records expose node/index/root context. Native closures run in Rust; portable predicates/accessors use fields or versioned Rust registrations. Subtree copy clears coordinates/history and shares immutable native payloads; host values are owned."
+    },
+    {
+      "surface": "node.links",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::links",
+      "evidence": [
+        "standalone-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [
+        "operations-all"
+      ],
+      "adaptation": "Traversal records expose node/index/root context. Native closures run in Rust; portable predicates/accessors use fields or versioned Rust registrations. Subtree copy clears coordinates/history and shares immutable native payloads; host values are owned."
+    },
+    {
+      "surface": "node.path",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::path",
+      "evidence": [
+        "standalone-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [
+        "operations-all"
+      ],
+      "adaptation": "Traversal records expose node/index/root context. Native closures run in Rust; portable predicates/accessors use fields or versioned Rust registrations. Subtree copy clears coordinates/history and shares immutable native payloads; host values are owned."
+    },
+    {
+      "surface": "node.sort",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::sort",
+      "evidence": [
+        "standalone-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [
+        "operations-all"
+      ],
+      "adaptation": "Traversal records expose node/index/root context. Native closures run in Rust; portable predicates/accessors use fields or versioned Rust registrations. Subtree copy clears coordinates/history and shares immutable native payloads; host values are owned."
+    },
+    {
+      "surface": "node.sum",
+      "verdict": "PASS",
+      "core_api": "Hierarchy::sum",
+      "evidence": [
+        "standalone-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [
+        "operations-all"
+      ],
+      "adaptation": "Traversal records expose node/index/root context. Native closures run in Rust; portable predicates/accessors use fields or versioned Rust registrations. Subtree copy clears coordinates/history and shares immutable native payloads; host values are owned."
+    },
+    {
+      "surface": "stratify.id",
+      "verdict": "PASS",
+      "core_api": "StratifyOptions::{id_field,parent_field,path_field} / Hierarchy::stratify_with",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Read/write/reset the caller-owned constructor descriptor; construction consumes it. Field selectors replace portable functions; native ID/parent accessors receive source/index/all-rows. Path takes precedence and resetting to None restores ID/parent mode.",
+      "reference_default": {
+        "callable": true
+      }
+    },
+    {
+      "surface": "stratify.parentId",
+      "verdict": "PASS",
+      "core_api": "StratifyOptions::{id_field,parent_field,path_field} / Hierarchy::stratify_with",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Read/write/reset the caller-owned constructor descriptor; construction consumes it. Field selectors replace portable functions; native ID/parent accessors receive source/index/all-rows. Path takes precedence and resetting to None restores ID/parent mode.",
+      "reference_default": {
+        "callable": true
+      }
+    },
+    {
+      "surface": "stratify.path",
+      "verdict": "PASS",
+      "core_api": "StratifyOptions::{id_field,parent_field,path_field} / Hierarchy::stratify_with",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Read/write/reset the caller-owned constructor descriptor; construction consumes it. Field selectors replace portable functions; native ID/parent accessors receive source/index/all-rows. Path takes precedence and resetting to None restores ID/parent mode.",
+      "reference_default": null
+    },
+    {
+      "surface": "tree.nodeSize",
+      "verdict": "PASS",
+      "core_api": "TreeOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs.",
+      "reference_default": null
+    },
+    {
+      "surface": "tree.separation",
+      "verdict": "PASS",
+      "core_api": "TreeOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs.",
+      "reference_default": {
+        "callable": true
+      }
+    },
+    {
+      "surface": "tree.size",
+      "verdict": "PASS",
+      "core_api": "TreeOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs.",
+      "reference_default": [
+        1,
+        1
+      ]
+    },
+    {
+      "surface": "cluster.nodeSize",
+      "verdict": "PASS",
+      "core_api": "ClusterOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs.",
+      "reference_default": null
+    },
+    {
+      "surface": "cluster.separation",
+      "verdict": "PASS",
+      "core_api": "ClusterOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs.",
+      "reference_default": {
+        "callable": true
+      }
+    },
+    {
+      "surface": "cluster.size",
+      "verdict": "PASS",
+      "core_api": "ClusterOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs.",
+      "reference_default": [
+        1,
+        1
+      ]
+    },
+    {
+      "surface": "partition.padding",
+      "verdict": "PASS",
+      "core_api": "PartitionOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs.",
+      "reference_default": 0
+    },
+    {
+      "surface": "partition.round",
+      "verdict": "PASS",
+      "core_api": "PartitionOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs.",
+      "reference_default": false
+    },
+    {
+      "surface": "partition.size",
+      "verdict": "PASS",
+      "core_api": "PartitionOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs.",
+      "reference_default": [
+        1,
+        1
+      ]
+    },
+    {
+      "surface": "pack.padding",
+      "verdict": "PASS",
+      "core_api": "PackOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs.",
+      "reference_default": {
+        "callable": true,
+        "sample": 0
+      }
+    },
+    {
+      "surface": "pack.radius",
+      "verdict": "PASS",
+      "core_api": "PackOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs.",
+      "reference_default": null
+    },
+    {
+      "surface": "pack.size",
+      "verdict": "PASS",
+      "core_api": "PackOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs.",
+      "reference_default": [
+        1,
+        1
+      ]
+    },
+    {
+      "surface": "treemap.padding",
+      "verdict": "PASS",
+      "core_api": "TreemapOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs. Per-side accessors override global padding, which overrides numeric options. Outer assigns Top/Right/Bottom/Left; padding() readback corresponds to Inner and paddingOuter() to Top as in D3.",
+      "reference_default": {
+        "callable": true,
+        "sample": 0
+      }
+    },
+    {
+      "surface": "treemap.paddingBottom",
+      "verdict": "PASS",
+      "core_api": "TreemapOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs. Per-side accessors override global padding, which overrides numeric options. Outer assigns Top/Right/Bottom/Left; padding() readback corresponds to Inner and paddingOuter() to Top as in D3.",
+      "reference_default": {
+        "callable": true,
+        "sample": 0
+      }
+    },
+    {
+      "surface": "treemap.paddingInner",
+      "verdict": "PASS",
+      "core_api": "TreemapOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs. Per-side accessors override global padding, which overrides numeric options. Outer assigns Top/Right/Bottom/Left; padding() readback corresponds to Inner and paddingOuter() to Top as in D3.",
+      "reference_default": {
+        "callable": true,
+        "sample": 0
+      }
+    },
+    {
+      "surface": "treemap.paddingLeft",
+      "verdict": "PASS",
+      "core_api": "TreemapOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs. Per-side accessors override global padding, which overrides numeric options. Outer assigns Top/Right/Bottom/Left; padding() readback corresponds to Inner and paddingOuter() to Top as in D3.",
+      "reference_default": {
+        "callable": true,
+        "sample": 0
+      }
+    },
+    {
+      "surface": "treemap.paddingOuter",
+      "verdict": "PASS",
+      "core_api": "TreemapOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs. Per-side accessors override global padding, which overrides numeric options. Outer assigns Top/Right/Bottom/Left; padding() readback corresponds to Inner and paddingOuter() to Top as in D3.",
+      "reference_default": {
+        "callable": true,
+        "sample": 0
+      }
+    },
+    {
+      "surface": "treemap.paddingRight",
+      "verdict": "PASS",
+      "core_api": "TreemapOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs. Per-side accessors override global padding, which overrides numeric options. Outer assigns Top/Right/Bottom/Left; padding() readback corresponds to Inner and paddingOuter() to Top as in D3.",
+      "reference_default": {
+        "callable": true,
+        "sample": 0
+      }
+    },
+    {
+      "surface": "treemap.paddingTop",
+      "verdict": "PASS",
+      "core_api": "TreemapOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs. Per-side accessors override global padding, which overrides numeric options. Outer assigns Top/Right/Bottom/Left; padding() readback corresponds to Inner and paddingOuter() to Top as in D3.",
+      "reference_default": {
+        "callable": true,
+        "sample": 0
+      }
+    },
+    {
+      "surface": "treemap.round",
+      "verdict": "PASS",
+      "core_api": "TreemapOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs.",
+      "reference_default": false
+    },
+    {
+      "surface": "treemap.size",
+      "verdict": "PASS",
+      "core_api": "TreemapOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs.",
+      "reference_default": [
+        1,
+        1
+      ]
+    },
+    {
+      "surface": "treemap.tile",
+      "verdict": "PASS",
+      "core_api": "TreemapOptions / LayoutSpec / HierarchySession::query(Configuration)",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Replace an immutable layout descriptor to set/reset controls; configuration returns normalized owned values. Callables use native traits or registered operations with checked outputs.",
+      "reference_default": {
+        "callable": true
+      }
+    },
+    {
+      "surface": "treemapSquarify.ratio",
+      "verdict": "PASS",
+      "core_api": "Tiler::{Squarify,Resquarify}(ratio) / Tiler::ratio / Configuration.effective_ratio",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Finite authored ratio is retained; effective ratio readback clamps to max(1, ratio). Golden ratio default; replacement creates the configured tiler."
+    },
+    {
+      "surface": "treemapResquarify.ratio",
+      "verdict": "PASS",
+      "core_api": "Tiler::{Squarify,Resquarify}(ratio) / Tiler::ratio / Configuration.effective_ratio",
+      "evidence": [
+        "controls-compare.log",
+        "padding-compare.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Finite authored ratio is retained; effective ratio readback clamps to max(1, ratio). Golden ratio default; replacement creates the configured tiler."
+    },
+    {
+      "surface": "FIX-H01-A",
+      "verdict": "PASS",
+      "core_api": "Nested/grouped/table/path/native iterable construction",
+      "evidence": [
+        "standalone-compare.log",
+        "topology-controls.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Shared chart-core engine. H08 component evidence hands workloads to WP-22; global PERF-01\u201305 and final release gates remain open."
+    },
+    {
+      "surface": "FIX-H01-B",
+      "verdict": "PASS",
+      "core_api": "Operations, callback context and independent subtree ownership",
+      "evidence": [
+        "standalone-compare.log",
+        "python-ownership.log",
+        "wasm-ownership.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Shared chart-core engine. H08 component evidence hands workloads to WP-22; global PERF-01\u201305 and final release gates remain open."
+    },
+    {
+      "surface": "FIX-H01-C",
+      "verdict": "PASS",
+      "core_api": "Tidy tree/cluster and all spacing/separation controls",
+      "evidence": [
+        "standalone-compare.log",
+        "controls-compare.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Shared chart-core engine. H08 component evidence hands workloads to WP-22; global PERF-01\u201305 and final release gates remain open."
+    },
+    {
+      "surface": "FIX-H01-D",
+      "verdict": "PASS",
+      "core_api": "Partition, own values, rounding/padding and radial projection",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Shared chart-core engine. H08 component evidence hands workloads to WP-22; global PERF-01\u201305 and final release gates remain open."
+    },
+    {
+      "surface": "FIX-H01-E",
+      "verdict": "PASS",
+      "core_api": "Six tilers, padding, ratios, custom tiler and resquarify histories",
+      "evidence": [
+        "standalone-compare.log",
+        "padding-compare.log",
+        "controls-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Shared chart-core engine. H08 component evidence hands workloads to WP-22; global PERF-01\u201305 and final release gates remain open."
+    },
+    {
+      "surface": "FIX-H01-F",
+      "verdict": "PASS",
+      "core_api": "Packing, helpers, radii, padding, containment and finite degenerate policies",
+      "evidence": [
+        "standalone-compare.log",
+        "export-tests.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Shared chart-core engine. H08 component evidence hands workloads to WP-22; global PERF-01\u201305 and final release gates remain open."
+    },
+    {
+      "surface": "FIX-H01-G",
+      "verdict": "PASS",
+      "core_api": "Typed hosts, native inspection, SVG/PDF/PNG, facets/targets/holes",
+      "evidence": [
+        "chart-compare.log",
+        "python-typing.log",
+        "wasm-typing.log",
+        "export-tests.log",
+        "native-build.log"
+      ],
+      "case_ids": [],
+      "adaptation": "Shared chart-core engine. H08 component evidence hands workloads to WP-22; global PERF-01\u201305 and final release gates remain open."
+    },
+    {
+      "surface": "FIX-H01-H",
+      "verdict": "PASS",
+      "core_api": "Update/replay, compact membership, disposal and bounded component workloads",
+      "evidence": [
+        "updates-compare.log",
+        "export-tests.log",
+        "python-ownership.json",
+        "wasm-ownership.json",
+        "component-benchmark.json"
+      ],
+      "case_ids": [],
+      "adaptation": "Shared chart-core engine. H08 component evidence hands workloads to WP-22; global PERF-01\u201305 and final release gates remain open."
+    }
+  ],
+  "open_release_gates": [
+    "WP-21",
+    "WP-22/PERF-01\u201305",
+    "WP-23",
+    "G-GGPLOT",
+    "G-PARITY",
+    "G4"
+  ]
+}

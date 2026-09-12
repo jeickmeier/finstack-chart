@@ -227,6 +227,14 @@ impl ActionReducer {
                         .dataset(*dataset)
                         .is_ok_and(|d| d.row(*key).is_some()),
                     TargetIdentity::Aggregate { dataset, .. } => snapshot.dataset(*dataset).is_ok(),
+                    TargetIdentity::HierarchyNode { dataset, node, .. } => {
+                        snapshot.dataset(*dataset).is_ok_and(|data| match node {
+                            crate::hierarchy::HierarchyTargetKey::Source(key) => {
+                                data.row(*key).is_some()
+                            }
+                            crate::hierarchy::HierarchyTargetKey::Synthetic(_) => true,
+                        })
+                    }
                     TargetIdentity::Derived { datasets, .. } => {
                         datasets.iter().all(|id| snapshot.dataset(*id).is_ok())
                     }
@@ -508,7 +516,7 @@ impl ActionReducer {
         chart.prepared().source().get()?;
         if selectable && let Some(source) = &self.current_source {
             let source = source.get()?;
-            if targets.iter().any(|t| t.epoch != source.epoch() || matches!(t.identity, TargetIdentity::Source { dataset, key } if !source.dataset(dataset).is_ok_and(|d| d.row(key).is_some()))) {
+            if targets.iter().any(|t| t.epoch != source.epoch() || matches!(t.identity, TargetIdentity::Source { dataset, key } | TargetIdentity::HierarchyNode { dataset, node: crate::hierarchy::HierarchyTargetKey::Source(key), .. } if !source.dataset(dataset).is_ok_and(|d| d.row(key).is_some()))) {
                 return Err(error(DiagnosticCode::Validation, "Selection target was evicted from current data; historical inspection does not restore an active selection."));
             }
         }
@@ -1101,6 +1109,10 @@ fn validate_targets(targets: &[MarkTarget], maximum: usize) -> ChartResult<()> {
     for t in targets {
         let mut bytes = match &t.identity {
             TargetIdentity::Source { .. } => 0,
+            TargetIdentity::HierarchyNode { node, .. } => match node {
+                crate::hierarchy::HierarchyTargetKey::Source(_) => 0,
+                crate::hierarchy::HierarchyTargetKey::Synthetic(path) => path.len(),
+            },
             TargetIdentity::Aggregate { group, .. } => group.len(),
             TargetIdentity::Derived {
                 model, datasets, ..
@@ -1174,7 +1186,7 @@ fn validate_annotation(d: &ChartDefinition, a: &Annotation) -> ChartResult<()> {
                 let value = |v: &ScaleValue| match v {
                     ScaleValue::Number(v) => v.is_finite(),
                     ScaleValue::Category(s) => s.len() <= 8192,
-                    ScaleValue::Timestamp { .. } => true,
+                    ScaleValue::Timestamp { .. } | ScaleValue::MissingCategory => true,
                 };
                 let ids: BTreeSet<_> = if d.axes.is_empty() {
                     [crate::ScaleId::new(0), crate::ScaleId::new(1)]

@@ -83,6 +83,9 @@ fn checked(mapping: Mapping, space: ValueSpace) -> ChartResult<CheckedPositional
 fn optional_inverse_domain_fallback_and_formatter_context_are_independent() {
     let scale = checked(Mapping::default(), ValueSpace::Data).unwrap();
     let args = GuideTickArguments {
+        seconds: None,
+        time_width: None,
+        width: None,
         count: Some(2.5),
         specifier: Some("context".into()),
         interval: None,
@@ -631,5 +634,51 @@ fn prepared_layer_coordinates_recover_exact_timestamp_and_category_values() {
         assert_eq!(axis.map(value, &layer_space).unwrap(), Some(expected));
         assert!(axis.map(0.5, &layer_space).is_err());
         assert!(axis.map(f64::INFINITY, &layer_space).is_err());
+    }
+}
+
+#[test]
+fn categorical_minor_capability_rejects_nonfinite_output_and_clips_to_range() {
+    assert_eq!(
+        checked(Mapping::default(), ValueSpace::Data)
+            .unwrap()
+            .category_minor(1.)
+            .unwrap_err()
+            .code,
+        DiagnosticCode::UnsupportedCapability
+    );
+    struct Minor;
+    impl PositionalScale for Minor {
+        fn domain(&self) -> &[ScaleValue] {
+            &[]
+        }
+        fn range(&self) -> Bounds {
+            Bounds::new(100., 0.).unwrap()
+        }
+        fn map(&self, _: &ScaleValue) -> ChartResult<Option<f64>> {
+            Ok(None)
+        }
+        fn category_minor(&self, value: f64) -> ChartResult<Option<f64>> {
+            Ok(Some(value))
+        }
+    }
+    let scale = CheckedPositionalScale::new(
+        Arc::new(Minor),
+        ValueSpace::NullableCategorical { categories: vec![] },
+        Limits::default(),
+        16,
+    )
+    .unwrap();
+    for value in [0., 20., 100.] {
+        assert_eq!(scale.category_minor(value).unwrap(), Some(value));
+    }
+    for value in [-1., 101.] {
+        assert_eq!(scale.category_minor(value).unwrap(), None);
+    }
+    for value in [f64::NAN, f64::INFINITY, f64::NEG_INFINITY] {
+        assert_eq!(
+            scale.category_minor(value).unwrap_err().code,
+            DiagnosticCode::PrecisionLoss
+        );
     }
 }

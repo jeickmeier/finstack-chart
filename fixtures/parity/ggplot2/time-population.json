@@ -1,0 +1,101 @@
+{
+  "reference": "ggplot2 4.0.3",
+  "cases": [
+    {
+      "kind": "datetime",
+      "policy": "censor",
+      "input": [
+        -2,
+        0,
+        0.5,
+        4,
+        "NA"
+      ],
+      "mean": 0.25
+    },
+    {
+      "kind": "datetime",
+      "policy": "squish",
+      "input": [
+        -2,
+        0,
+        0.5,
+        4,
+        "NA"
+      ],
+      "mean": 0.375
+    },
+    {
+      "kind": "datetime",
+      "policy": "keep",
+      "input": [
+        -2,
+        0,
+        0.5,
+        4,
+        "NA"
+      ],
+      "mean": 0.625
+    },
+    {
+      "kind": "datetime",
+      "policy": "coordinate",
+      "input": [
+        -2,
+        0,
+        0.5,
+        4,
+        "NA"
+      ],
+      "mean": 0.625
+    },
+    {
+      "kind": "date",
+      "policy": "censor",
+      "input": [
+        -2,
+        0,
+        0.5,
+        4,
+        "NA"
+      ],
+      "mean": 0.25
+    },
+    {
+      "kind": "date",
+      "policy": "squish",
+      "input": [
+        -2,
+        0,
+        0.5,
+        4,
+        "NA"
+      ],
+      "mean": 0.375
+    },
+    {
+      "kind": "date",
+      "policy": "keep",
+      "input": [
+        -2,
+        0,
+        0.5,
+        4,
+        "NA"
+      ],
+      "mean": 0.625
+    },
+    {
+      "kind": "date",
+      "policy": "coordinate",
+      "input": [
+        -2,
+        0,
+        0.5,
+        4,
+        "NA"
+      ],
+      "mean": 0.625
+    }
+  ]
+}

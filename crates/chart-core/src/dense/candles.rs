@@ -281,6 +281,7 @@ pub(super) fn prepare(
                     chart.scene().bounds()
                 });
                 items.push(SceneItem {
+                    guide: None,
                     layer: Some(layer.id()),
                     clip,
                     primitive: Primitive::Rule {
@@ -313,6 +314,7 @@ pub(super) fn prepare(
                     }
                 };
                 items.push(SceneItem {
+                    guide: None,
                     layer: Some(layer.id()),
                     clip,
                     primitive: body,

@@ -7,8 +7,11 @@ mod authoring;
 mod paint;
 pub use paint::Paint;
 mod convert;
+pub(crate) mod d65;
 mod format;
 mod parse;
+mod r_parse;
+pub use r_parse::{R_DEFAULT_PALETTE, parse_r, parse_r_with_palette};
 mod scalar;
 pub(crate) mod trig;
 

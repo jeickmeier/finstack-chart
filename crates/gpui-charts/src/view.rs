@@ -1,4 +1,5 @@
 mod edit;
+mod guide_animation;
 mod host;
 mod input;
 mod scheduling;
@@ -34,6 +35,7 @@ pub struct NativeMetrics {
 }
 /// Validated, owned input for a native chart mount. Construct before creating the GPUI entity.
 pub struct ChartInput {
+    guide_duration: std::time::Duration,
     chart: chart_core::runtime::Chart,
     prepared: Arc<PreparedChart>,
     font: NativeFont,
@@ -77,6 +79,7 @@ impl ChartInput {
             font.descriptor(),
         );
         Ok(Self {
+            guide_duration: std::time::Duration::ZERO,
             chart,
             prepared,
             font,
@@ -144,6 +147,7 @@ pub struct PresentedCapture {
 /// One retained chart entity with bounded pane/overlay elements and one cached native frame.
 /// Datasets are supplied as immutable snapshots, never recreated inside Render.
 pub struct ChartView {
+    guide_animation: guide_animation::AnimationState,
     chart: chart_core::runtime::Chart,
     prepared: Arc<PreparedChart>,
     font: NativeFont,
@@ -167,6 +171,7 @@ impl ChartView {
     /// Mount an already validated input; no source preparation or fallible work is hidden here.
     pub fn new(input: ChartInput, cx: &mut Context<Self>) -> Self {
         let ChartInput {
+            guide_duration,
             chart,
             prepared,
             font,
@@ -179,6 +184,10 @@ impl ChartView {
         } = input;
         let scheduling = scheduling::Scheduling::new(chart.extensions().clone());
         Self {
+            guide_animation: guide_animation::AnimationState {
+                duration: guide_duration,
+                ..Default::default()
+            },
             scheduling,
             chart,
             prepared,
@@ -533,8 +542,14 @@ impl ChartView {
     pub fn metrics(&self) -> NativeMetrics {
         self.metrics
     }
-    fn prepaint(&mut self, bounds: Bounds<Pixels>, window: &Window) -> Option<Rc<NativeFrame>> {
+    fn prepaint(
+        &mut self,
+        bounds: Bounds<Pixels>,
+        window: &Window,
+        reduced_motion: bool,
+    ) -> Option<Rc<NativeFrame>> {
         if self.chart.reducer().frozen_scene().is_some() {
+            self.guide_animation.running = None;
             let frame = self.frame.clone()?;
             if frame.bounds == bounds {
                 return Some(frame);
@@ -581,7 +596,14 @@ impl ChartView {
             Arc::as_ptr(&self.prepared) as usize,
         );
         if self.attempted.as_ref() == Some(&key) {
-            return self.cached.clone();
+            return match self.sample_guide_animation(window, reduced_motion) {
+                Ok(frame) => Some(frame),
+                Err(e) => {
+                    self.last_error = Some(e);
+                    self.guide_animation.running = None;
+                    self.frame.clone()
+                }
+            };
         }
         self.attempted = Some(key);
         self.metrics.layout_attempts = self.metrics.layout_attempts.saturating_add(1);
@@ -589,9 +611,13 @@ impl ChartView {
         let result = revision.and_then(|revision| {
             self.request.revision = revision;
             self.attempted = Some((bounds, revision, Arc::as_ptr(&self.prepared) as usize));
+            let request = self.chart.reducer().presented().map_or_else(
+                || self.request.clone(),
+                |previous| self.request.clone().with_hierarchy_history(previous),
+            );
             NativeFrame::prepare(
                 self.prepared.clone(),
-                self.request.clone(),
+                request,
                 &self.font,
                 &self.painters,
                 &self.density,
@@ -603,8 +629,15 @@ impl ChartView {
             Ok(mut frame) => {
                 frame.job = self.scheduling.prepared_token;
                 self.last_error = None;
-                self.cached = Some(Rc::new(frame));
-                self.cached.clone()
+                match self.begin_guide_animation(Rc::new(frame), window, reduced_motion) {
+                    Ok(frame) => Some(frame),
+                    Err(e) => {
+                        self.last_error = Some(e);
+                        self.guide_animation.running = None;
+                        self.cached = self.frame.clone();
+                        self.frame.clone()
+                    }
+                }
             }
             Err(e) => {
                 self.last_error = Some(e);
@@ -695,7 +728,10 @@ impl Render for ChartView {
                 prepaint
                     .update(cx, |this, cx| {
                         let before = this.last_error.clone();
-                        let frame = this.prepaint(bounds, window);
+                        let frame = this.prepaint(bounds, window, cx.reduce_motion());
+                        if this.guide_animation.running.is_some() {
+                            window.request_animation_frame();
+                        }
                         if this.last_error != before {
                             let weak = cx.entity().downgrade();
                             window.on_next_frame(move |_, cx| {

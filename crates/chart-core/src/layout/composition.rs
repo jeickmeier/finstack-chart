@@ -254,6 +254,14 @@ pub(super) fn finish(
         prepared.layers.retain(|l| inset.layers.contains(&l.id()));
         prepared.panels.clear();
         let mut request = r.clone();
+        if let Some(panel) = &inset.panel {
+            request
+                .hierarchy_scope
+                .push(super::GuideScope::Panel(panel.clone()));
+        }
+        request
+            .hierarchy_scope
+            .push(super::GuideScope::Inset(inset.id.clone()));
         request.bounds = bounds;
         request.figure_bounds = Some(bounds);
         request.minimum_plot = (8., 8.);
@@ -295,7 +303,13 @@ pub(super) fn finish(
                 .iter()
                 .map(|(i, v)| (i + items.len(), v.clone())),
         );
-        items.extend_from_slice(view.scene.items());
+        let scope = format!("inset:{}", inset.id);
+        items.extend(view.scene.items().iter().cloned().map(|mut item| {
+            if let Some(guide) = &mut item.guide {
+                guide.scope.insert(0, scope.clone());
+            }
+            item
+        }));
         chart.targets.extend_from_slice(&view.targets);
         chart.item_panels.extend(std::iter::repeat_n(
             inset.panel.clone(),
@@ -323,6 +337,7 @@ pub(super) fn finish(
             r.limits.max_path_commands,
         )?;
         items.push(SceneItem {
+            guide: None,
             layer: None,
             clip: Some(if a.overflow { r.bounds } else { clip }),
             primitive: Primitive::VectorPath {
@@ -408,6 +423,7 @@ pub(super) fn finish(
                     )?
                 };
                 items.push(SceneItem {
+                    guide: None,
                     layer: None,
                     clip: Some(clip),
                     primitive: Primitive::Rule {

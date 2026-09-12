@@ -129,6 +129,10 @@ fn data(name: &str, values: [f64; 2]) -> Data {
 }
 fn quantile_plot(a: Data, b: Data) -> Plot {
     let scale = MappedScaleSpec {
+        resolved_numeric_limits: None,
+        limits_function: None,
+        guide: None,
+        ggplot: None,
         catalog: None,
         function: ScaleFunctionSpec::Classifier(ClassifierSpec {
             domain: ClassifierDomain::Quantile(vec![]),
@@ -231,6 +235,10 @@ fn corrected_shared_quantile_population_matches_fresh_batch_and_ignores_zoom() {
 #[test]
 fn post_stat_training_and_exact_integer_threshold_keys_reach_the_chart() {
     let quantile = |range| MappedScaleSpec {
+        resolved_numeric_limits: None,
+        limits_function: None,
+        guide: None,
+        ggplot: None,
         catalog: None,
         function: ScaleFunctionSpec::Classifier(ClassifierSpec {
             domain: ClassifierDomain::Quantile(vec![]),

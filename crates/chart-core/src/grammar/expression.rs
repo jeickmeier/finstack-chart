@@ -47,8 +47,14 @@ impl ExpressionValue {
             _ => None,
         }
     }
-    fn numeric(value: f64) -> Self {
-        if value.is_finite() {
+    pub(super) fn number_with_infinite(&self, allow_infinite: bool) -> Option<f64> {
+        match self {
+            Self::Number(v) if v.is_finite() || allow_infinite && v.is_infinite() => Some(*v),
+            _ => None,
+        }
+    }
+    fn numeric_with_infinite(value: f64, allow_infinite: bool) -> Self {
+        if value.is_finite() || allow_infinite && value.is_infinite() {
             Self::Number(value)
         } else {
             Self::Missing(ExpressionType::Number)
@@ -385,7 +391,19 @@ impl<R> Expression<R> {
         read_type: impl FnMut(&R) -> ChartResult<ExpressionType>,
         read: impl FnMut(&R, usize) -> ExpressionValue,
     ) -> ChartResult<Vec<ExpressionValue>> {
-        let mut columns = self.evaluate_columns(rows, limits, read_type, read)?;
+        let mut columns = self.evaluate_columns(rows, limits, read_type, read, false)?;
+        Ok(std::mem::take(&mut columns[self.output]))
+    }
+    // The ggplot paint stage keeps infinite scalar aesthetics through arithmetic.
+    // NaN remains typed missing; the existing checked evaluator is unchanged.
+    pub(super) fn evaluate_reference(
+        &self,
+        rows: usize,
+        limits: ExpressionLimits,
+        read_type: impl FnMut(&R) -> ChartResult<ExpressionType>,
+        read: impl FnMut(&R, usize) -> ExpressionValue,
+    ) -> ChartResult<Vec<ExpressionValue>> {
+        let mut columns = self.evaluate_columns(rows, limits, read_type, read, true)?;
         Ok(std::mem::take(&mut columns[self.output]))
     }
     fn evaluate_columns(
@@ -394,6 +412,7 @@ impl<R> Expression<R> {
         limits: ExpressionLimits,
         mut read_type: impl FnMut(&R) -> ChartResult<ExpressionType>,
         mut read: impl FnMut(&R, usize) -> ExpressionValue,
+        allow_infinite: bool,
     ) -> ChartResult<Vec<Vec<ExpressionValue>>> {
         use ExpressionNode as N;
         self.validate(limits, &mut read_type)?;
@@ -425,7 +444,12 @@ impl<R> Expression<R> {
                 remove_missing,
             } = node
             {
-                Some(reduce(*op, &columns[*input], *remove_missing))
+                Some(reduce(
+                    *op,
+                    &columns[*input],
+                    *remove_missing,
+                    allow_infinite,
+                ))
             } else {
                 None
             };
@@ -452,15 +476,20 @@ impl<R> Expression<R> {
                             ));
                         }
                         match value {
-                            ExpressionValue::Number(v) => ExpressionValue::numeric(v),
+                            ExpressionValue::Number(v) => {
+                                ExpressionValue::numeric_with_infinite(v, allow_infinite)
+                            }
                             _ => value,
                         }
                     }
                     N::Literal(_) => literal.as_ref().expect("literal prepared").clone(),
-                    N::Unary { op, input } => unary(*op, &columns[*input][row]),
-                    N::Binary { op, left, right } => {
-                        binary(*op, &columns[*left][row], &columns[*right][row])
-                    }
+                    N::Unary { op, input } => unary(*op, &columns[*input][row], allow_infinite),
+                    N::Binary { op, left, right } => binary(
+                        *op,
+                        &columns[*left][row],
+                        &columns[*right][row],
+                        allow_infinite,
+                    ),
                     N::Select { condition, yes, no } => match columns[*condition][row] {
                         ExpressionValue::Boolean(true) => columns[*yes][row].clone(),
                         ExpressionValue::Boolean(false) => columns[*no][row].clone(),
@@ -518,7 +547,7 @@ impl<R> Expression<R> {
         self
     }
 }
-fn unary(op: ExpressionUnary, input: &ExpressionValue) -> ExpressionValue {
+fn unary(op: ExpressionUnary, input: &ExpressionValue, allow_infinite: bool) -> ExpressionValue {
     use ExpressionUnary as U;
     use ExpressionValue as V;
     if op == U::IsMissing {
@@ -530,25 +559,29 @@ fn unary(op: ExpressionUnary, input: &ExpressionValue) -> ExpressionValue {
             _ => V::Missing(ExpressionType::Boolean),
         };
     }
-    let Some(v) = input.number() else {
+    let Some(v) = input.number_with_infinite(allow_infinite) else {
         return V::Missing(ExpressionType::Number);
     };
-    V::numeric(match op {
-        U::Negate => -v,
-        U::Abs => v.abs(),
-        U::Sqrt => v.sqrt(),
-        U::Log => v.ln(),
-        U::Log10 => v.log10(),
-        U::Exp => v.exp(),
-        U::Floor => v.floor(),
-        U::Ceil => v.ceil(),
-        U::Not | U::IsMissing => unreachable!(),
-    })
+    V::numeric_with_infinite(
+        match op {
+            U::Negate => -v,
+            U::Abs => v.abs(),
+            U::Sqrt => v.sqrt(),
+            U::Log => v.ln(),
+            U::Log10 => v.log10(),
+            U::Exp => v.exp(),
+            U::Floor => v.floor(),
+            U::Ceil => v.ceil(),
+            U::Not | U::IsMissing => unreachable!(),
+        },
+        allow_infinite,
+    )
 }
 fn binary(
     op: ExpressionBinary,
     left: &ExpressionValue,
     right: &ExpressionValue,
+    allow_infinite: bool,
 ) -> ExpressionValue {
     use ExpressionBinary as B;
     use ExpressionValue as V;
@@ -579,6 +612,13 @@ fn binary(
         B::Concat => ExpressionType::Text,
         _ => ExpressionType::Number,
     };
+    // R's power identities hold even for missing operands (NA^0 and 1^NA).
+    if allow_infinite
+        && op == B::Power
+        && (matches!(right, V::Number(v) if *v == 0.) || matches!(left, V::Number(v) if *v == 1.))
+    {
+        return V::Number(1.);
+    }
     if matches!(left, V::Missing(_)) || matches!(right, V::Missing(_)) {
         return V::Missing(kind);
     }
@@ -588,25 +628,32 @@ fn binary(
     if let (B::Concat, V::Text(a), V::Text(b)) = (op, left, right) {
         return V::Text(format!("{a}{b}"));
     }
-    let (Some(a), Some(b)) = (left.number(), right.number()) else {
+    let (Some(a), Some(b)) = (
+        left.number_with_infinite(allow_infinite),
+        right.number_with_infinite(allow_infinite),
+    ) else {
         return V::Missing(kind);
     };
     if op == B::Less {
         return V::Boolean(a < b);
     }
-    V::numeric(match op {
-        B::Add => a + b,
-        B::Subtract => a - b,
-        B::Multiply => a * b,
-        B::Divide => a / b,
-        B::Power => a.powf(b),
-        _ => unreachable!("validated scalar operation"),
-    })
+    V::numeric_with_infinite(
+        match op {
+            B::Add => a + b,
+            B::Subtract => a - b,
+            B::Multiply => a * b,
+            B::Divide => a / b,
+            B::Power => a.powf(b),
+            _ => unreachable!("validated scalar operation"),
+        },
+        allow_infinite,
+    )
 }
 fn reduce(
     op: ExpressionReduce,
     values: &[ExpressionValue],
     remove_missing: bool,
+    allow_infinite: bool,
 ) -> ExpressionValue {
     use ExpressionReduce as R;
     use ExpressionValue as V;
@@ -614,7 +661,7 @@ fn reduce(
     let mut minimum = f64::INFINITY;
     let mut maximum = f64::NEG_INFINITY;
     for value in values {
-        let Some(v) = value.number() else {
+        let Some(v) = value.number_with_infinite(allow_infinite) else {
             if !remove_missing {
                 return V::Missing(ExpressionType::Number);
             }
@@ -624,18 +671,32 @@ fn reduce(
         minimum = minimum.min(v);
         maximum = maximum.max(v);
     }
-    V::numeric(match op {
-        R::Count => count as f64,
-        R::Sum => super::statistics::sum(values.iter().filter_map(ExpressionValue::number))
-            .unwrap_or(f64::NAN),
-        R::Mean if count > 0 => {
-            super::statistics::mean(values.iter().filter_map(ExpressionValue::number), count)
-                .unwrap_or(f64::NAN)
-        }
-        R::Min => minimum,
-        R::Max => maximum,
-        R::Mean => f64::NAN,
-    })
+    V::numeric_with_infinite(
+        match op {
+            R::Count => count as f64,
+            R::Sum | R::Mean
+                if allow_infinite && (minimum == f64::NEG_INFINITY || maximum == f64::INFINITY) =>
+            {
+                if minimum == f64::NEG_INFINITY && maximum == f64::INFINITY {
+                    f64::NAN
+                } else if minimum == f64::NEG_INFINITY {
+                    minimum
+                } else {
+                    maximum
+                }
+            }
+            R::Sum => super::statistics::sum(values.iter().filter_map(ExpressionValue::number))
+                .unwrap_or(f64::NAN),
+            R::Mean if count > 0 => {
+                super::statistics::mean(values.iter().filter_map(ExpressionValue::number), count)
+                    .unwrap_or(f64::NAN)
+            }
+            R::Min => minimum,
+            R::Max => maximum,
+            R::Mean => f64::NAN,
+        },
+        allow_infinite,
+    )
 }
 macro_rules! arithmetic {
     ($trait:ident,$method:ident,$op:ident) => {
@@ -667,7 +728,7 @@ impl<R: Clone> Expression<R> {
         read_type: impl FnMut(&R) -> ChartResult<ExpressionType>,
         read: impl FnMut(&R, usize) -> ExpressionValue,
     ) -> ChartResult<Self> {
-        let columns = self.evaluate_columns(rows, limits, read_type, read)?;
+        let columns = self.evaluate_columns(rows, limits, read_type, read, false)?;
         let mut result = self.clone();
         for node in &mut result.nodes {
             if let ExpressionNode::Reduce {
@@ -676,7 +737,8 @@ impl<R: Clone> Expression<R> {
                 remove_missing,
             } = node
             {
-                *node = ExpressionNode::Literal(reduce(*op, &columns[*input], *remove_missing));
+                *node =
+                    ExpressionNode::Literal(reduce(*op, &columns[*input], *remove_missing, false));
             }
         }
         Ok(result)

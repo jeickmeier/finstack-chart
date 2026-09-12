@@ -1,8 +1,11 @@
 //! FIX-17 external-style implementation using only chart-core's supported public APIs.
 //! This example is shared by proof hosts; production core/export do not depend on it.
 pub mod authoring;
+pub mod discrete_limits;
 pub mod guides;
+pub mod hierarchy;
 pub mod interpolate;
+pub mod numeric_limits;
 pub mod scales;
 pub mod shapes;
 use chart_core::{data::*, grammar::*, layout::*, provenance::*, state::*, transaction::*, *};
@@ -299,6 +302,8 @@ impl CustomGeom for HistogramBars {
 /// Explicit host installation of known code. JSON alone never performs this registration.
 pub fn registry() -> ChartResult<Arc<ExtensionRegistry>> {
     let mut registry = ExtensionRegistry::new();
+    discrete_limits::register(&mut registry)?;
+    numeric_limits::register(&mut registry)?;
     registry.register_stat(Arc::new(DensityHistogram))?;
     registry.register_geom(Arc::new(HistogramBars { native: false }))?;
     registry.register_geom(Arc::new(HistogramBars { native: true }))?;
@@ -306,6 +311,7 @@ pub fn registry() -> ChartResult<Arc<ExtensionRegistry>> {
     scales::register(&mut registry)?;
     interpolate::register(&mut registry)?;
     guides::register(&mut registry)?;
+    hierarchy::register(&mut registry)?;
     Ok(Arc::new(registry))
 }
 /// Portable/native variants share the exact stat population, scale training and guides.

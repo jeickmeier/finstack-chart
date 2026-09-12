@@ -72,7 +72,7 @@ remain available. No package version bump or publication is part of the refactor
 - [Changelog](CHANGELOG.md) and [migration guide](docs/authoring-guide.md#migration-from-low-level-entry-points) describe compatibility.
 
 `chart-core` owns shared semantics; `chart-export` owns publication; `gpui-charts` owns
-native integration; `gpui-charts-kit` is optional. Standalone scales, colors, geometry,
+native integration. Optional GPUI Kit examples live in the gallery. Standalone scales, colors, geometry,
 inspection and resource protocols remain in their specialist modules. Rust is canonical
 for all hosts. Read [AGENTS.md](AGENTS.md) and [AI development](docs/ai-development.md)
 before contributing. Every new capability must extend a primary component or add a new

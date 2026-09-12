@@ -1,6 +1,6 @@
 use super::*;
 use chart_export::{
-    ExportJob, ExportLimits, ExportQueue, FigureRequest, FigureSnapshot, Output,
+    ExportJob, ExportLimits, ExportQueue, FigureRequest, FigureSnapshot, FigureTransition, Output,
     host::{self, Options},
 };
 
@@ -63,6 +63,14 @@ impl _Output {
 handle!(_FigureRequest, FigureRequest);
 #[wasm_bindgen]
 impl _FigureRequest {
+    pub fn with_hierarchy_history(&self, previous: &_FigureSnapshot) -> Result<Self, JsError> {
+        Ok(Self::wrap(
+            self.get()?
+                .clone()
+                .with_hierarchy_history(previous.get()?.layout()),
+        ))
+    }
+
     pub fn prepare(&self) -> Result<_FigureSnapshot, JsError> {
         self.get()?
             .prepare()
@@ -82,6 +90,18 @@ impl _FigureRequest {
 handle!(_FigureSnapshot, FigureSnapshot);
 #[wasm_bindgen]
 impl _FigureSnapshot {
+    pub fn guide_transition(
+        &self,
+        previous: &_FigureSnapshot,
+    ) -> Result<_FigureTransition, JsError> {
+        self.get()?
+            .guide_transition(previous.get()?)
+            .map(_FigureTransition::wrap)
+            .map_err(failure)
+    }
+    pub fn presentation(&self) -> Result<String, JsError> {
+        self.get()?.presentation_json().map_err(failure)
+    }
     pub fn guides(&self) -> Result<String, JsError> {
         self.get()?.guides_json().map_err(failure)
     }
@@ -139,6 +159,20 @@ impl _ExportJob {
     pub fn run(&mut self) -> Result<Vec<u8>, JsError> {
         let job = self.inner.take().ok_or_else(disposed)?;
         Ok(job.run().map_err(failure)?.bytes)
+    }
+    pub fn dispose(&mut self) {
+        self.inner.take();
+    }
+}
+
+handle!(_FigureTransition, FigureTransition);
+#[wasm_bindgen]
+impl _FigureTransition {
+    pub fn sample(&self, fraction: f64) -> Result<_FigureSnapshot, JsError> {
+        self.get()?
+            .sample(fraction)
+            .map(_FigureSnapshot::wrap)
+            .map_err(failure)
     }
     pub fn dispose(&mut self) {
         self.inner.take();

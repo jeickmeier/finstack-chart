@@ -1,0 +1,16 @@
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.55s
+     Running `target/axis-rust-proof/debug/examples/axis_provider_proof docs/evidence/phase-2-axis-certification/axis_providers/rust`
+PASS Rust provider: v10 registered round trip, immutable request, SVG/PDF/PNG publication.
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.02s
+     Running `target/axis-rust-proof/debug/examples/axis_tick_proof docs/evidence/phase-2-axis-certification/axis_ticks/rust`
+PASS Rust AX02: v11 primary round trip, independent labels/values, retained guides and SVG/PDF/PNG.
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.12s
+     Running `target/axis-rust-proof/debug/examples/axis_component_proof docs/evidence/phase-2-axis-certification/axis_components/rust`
+PASS AX04: v14 round trip, retained component roles and text/outline SVG/PDF/PNG at 300/600 DPI.
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.63s
+     Running `target/axis-rust-proof/debug/examples/interpolation_proof docs/evidence/phase-2-axis-certification/interpolation_integration/rust`
+PASS Rust IP06: three v12 registered ramp/transform/zoom frames, retained SVG/PDF/PNG.

@@ -108,6 +108,11 @@ pub enum ValueSpace {
         /// Labels in retained source order; never dictionary codes or source identities.
         categories: Vec<String>,
     },
+    /// Nullable category identities; null is distinct from the text label `NA`.
+    NullableCategorical {
+        /// Layer-local retained identities addressed by checked geometry ordinals.
+        categories: Vec<Option<String>>,
+    },
     /// Numeric source units or a generated count.
     Data,
     /// Relative ticks, preserving the exact source timestamp representation and origin.
@@ -125,6 +130,43 @@ pub enum ValueSpace {
         /// Exact operation and parameters.
         transform: NumericTransform,
     },
+}
+
+impl ValueSpace {
+    pub(crate) fn is_categorical(&self) -> bool {
+        matches!(
+            self,
+            Self::Categorical { .. } | Self::NullableCategorical { .. }
+        )
+    }
+    pub(crate) fn category_count(&self) -> Option<usize> {
+        match self {
+            Self::Categorical { categories } => Some(categories.len()),
+            Self::NullableCategorical { categories } => Some(categories.len()),
+            _ => None,
+        }
+    }
+    pub(crate) fn category_value(&self, ordinal: f64) -> Option<crate::composition::ScaleValue> {
+        if !ordinal.is_finite()
+            || ordinal < 0.
+            || ordinal.fract() != 0.
+            || ordinal >= self.category_count()? as f64
+        {
+            return None;
+        }
+        Some(match self {
+            Self::Categorical { categories } => {
+                crate::composition::ScaleValue::Category(categories[ordinal as usize].clone())
+            }
+            Self::NullableCategorical { categories } => {
+                categories[ordinal as usize].clone().map_or(
+                    crate::composition::ScaleValue::MissingCategory,
+                    crate::composition::ScaleValue::Category,
+                )
+            }
+            _ => return None,
+        })
+    }
 }
 
 /// Exact generated schema field kind.
@@ -349,6 +391,15 @@ pub struct DomainContributions {
 /// Portable prepared geometry, explicitly in calculation/data units, never pixels.
 #[derive(Clone, Debug, PartialEq)]
 pub enum PreparedGeometry {
+    /// Deferred hierarchy occurrence; numerical layout follows destination panel allocation.
+    HierarchyNode(crate::hierarchy::NodeHandle),
+    /// Deferred derived hierarchy edge, separate from source node identity.
+    HierarchyLink {
+        /// Parent occurrence.
+        parent: crate::hierarchy::NodeHandle,
+        /// Child occurrence.
+        child: crate::hierarchy::NodeHandle,
+    },
     /// Destination-unit radial run or edge translated to one data-space center.
     ShapePathRun {
         /// Explicit fill or stroke policy.
@@ -432,6 +483,8 @@ pub enum PreparedGeometry {
 /// Geometry and semantic provenance, separate from source payloads.
 #[derive(Clone, Debug, PartialEq)]
 pub struct PreparedMark {
+    /// Resolved text and line-type channels, retained independently of geometry and provenance.
+    pub aesthetics: BTreeMap<super::ValueAesthetic, crate::interpolate::Value>,
     /// Numeric geometry to be projected by the later scale/layout stage.
     pub geometry: PreparedGeometry,
     /// One target per line vertex; one target per point/rule/rectangle.
@@ -458,9 +511,13 @@ pub struct PreparedTarget<'a> {
 /// One prepared layer in paint order.
 #[derive(Clone, Debug)]
 pub struct PreparedLayer {
+    pub(crate) hierarchy: Option<Arc<super::PreparedHierarchy>>,
     pub(crate) shape_protocols: super::shape_extensions::ResolvedShapes,
     pub(crate) orientation: super::Orientation,
     pub(crate) interactions: BTreeMap<usize, super::GeometryInteraction>,
+    pub(crate) numeric_scales: BTreeMap<super::NumericAesthetic, super::NumericEncoding>,
+    pub(crate) value_scales: BTreeMap<super::ValueAesthetic, super::NumericEncoding>,
+    pub(crate) paint_legends: BTreeMap<super::PaintAesthetic, crate::scales::ColorLegend>,
     pub(crate) color_legend: Option<crate::scales::ColorLegend>,
     pub(crate) symbol_legends: Vec<super::SymbolLegend>,
     pub(crate) position: super::Position,
@@ -470,10 +527,16 @@ pub struct PreparedLayer {
     pub(crate) table: Arc<PreparedTable>,
     pub(crate) marks: Arc<Vec<PreparedMark>>,
     pub(crate) domains: DomainContributions,
+    // Source-catalog ordinals retained for scale training when paint omits a mark.
+    pub(crate) unpainted_categories: Option<Box<[std::collections::BTreeSet<usize>; 2]>>,
     pub(crate) invalid_geometry: usize,
     pub(crate) visible: bool,
 }
 impl PreparedLayer {
+    /// Prepared hierarchy topology, values and compact membership, without pixel coordinates.
+    pub fn hierarchy(&self) -> Option<&Arc<super::PreparedHierarchy>> {
+        self.hierarchy.as_ref()
+    }
     /// Independent-axis direction retained for destination bar/dodge geometry.
     pub fn orientation(&self) -> super::Orientation {
         self.orientation
@@ -485,6 +548,18 @@ impl PreparedLayer {
     /// Exact categorical types and evaluated area-size guide samples.
     pub fn symbol_legends(&self) -> &[super::SymbolLegend] {
         &self.symbol_legends
+    }
+    /// Exact trained numeric scales for guide sampling and inspection.
+    pub fn numeric_scales(&self) -> &BTreeMap<super::NumericAesthetic, super::NumericEncoding> {
+        &self.numeric_scales
+    }
+    /// Exact trained text and line-type scales for guide sampling and inspection.
+    pub fn value_scales(&self) -> &BTreeMap<super::ValueAesthetic, super::NumericEncoding> {
+        &self.value_scales
+    }
+    /// Independent fill and stroke legends evaluated through each mark's exact scale.
+    pub fn paint_legends(&self) -> &BTreeMap<super::PaintAesthetic, crate::scales::ColorLegend> {
+        &self.paint_legends
     }
     /// Exact color identity, palette and domain metadata.
     pub fn color_legend(&self) -> Option<&crate::scales::ColorLegend> {

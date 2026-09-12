@@ -135,10 +135,17 @@ impl Index {
         let mut keyboard = vec![];
         for mut group in groups {
             group.sort_by_key(|i| {
-                candidates[*i]
-                    .custom
-                    .as_ref()
-                    .map_or(*i as u64, |c| c.keyboard_order)
+                let candidate = &candidates[*i];
+                (
+                    !matches!(
+                        candidate.hit.target,
+                        crate::provenance::Target::HierarchyNode { .. }
+                    ),
+                    candidate
+                        .custom
+                        .as_ref()
+                        .map_or(*i as u64, |c| c.keyboard_order),
+                )
             });
             for i in group {
                 let c = &candidates[i];

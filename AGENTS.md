@@ -15,8 +15,9 @@ extensions and versioned Python/WASM proofs. The status ledger owns remaining sc
 ## Project Structure & Module Organization
 
 `chart-core` owns shared semantics; `chart-export` owns headless publication;
-`gpui-charts` owns native integration; `gpui-charts-kit` is optional. Python/WASM
-packages are executable proof adapters. Recipes and bindings must share the core engine.
+`gpui-charts` owns native integration. Optional GPUI Kit examples live in the
+gallery, not a library crate. Python/WASM packages are executable proof adapters.
+Recipes and bindings must share the core engine.
 Keep GPUI/interpreter/browser objects, compulsory I/O, system fonts, finance engines
 and mandatory threading outside core. Export must not require a GPUI event loop.
 Record dependency identity and consequential choices in `docs/adr/`; dated migration

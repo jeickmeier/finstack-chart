@@ -137,6 +137,20 @@ impl InterpolationFactory {
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "operation", deny_unknown_fields)]
 pub enum InterpolationSpec {
+    /// Version-three numeric power range used by radius/area style policies.
+    PowerRange {
+        /// Affine output range after exponentiation.
+        range: [Number; 2],
+        /// Finite exponent; one gives radius/width interpolation, half gives area sizing.
+        exponent: Number,
+        /// Take the absolute normalized parameter before exponentiation.
+        absolute: bool,
+    },
+    /// Version-three ggplot2 palette using the shared color/catalog/spline owners.
+    GgplotPalette {
+        /// Portable palette recipe; scales supply normalized positions.
+        spec: crate::scales::chromatic::ggplot::PaletteSpec,
+    },
     /// Version-one named chromatic evaluator, independent of domain normalization.
     Chromatic {
         /// Stable catalog identity and reversal.
@@ -225,6 +239,8 @@ pub struct Interpolator {
 }
 #[derive(Debug)]
 enum Compiled {
+    PowerRange(ScalarInterpolator),
+    GgplotPalette(crate::scales::chromatic::ggplot::PaletteRamp),
     Chromatic(crate::scales::chromatic::ChromaticRamp),
     Scalar(ScalarInterpolator),
     Hue(HueInterpolator),
@@ -332,10 +348,12 @@ impl Interpolator {
         parameter(t)?;
         match self.compiled.as_ref() {
             Compiled::Registered(f) => f.sample(t),
+            Compiled::GgplotPalette(f) => palette_value(f, t),
             Compiled::Chromatic(f) => f
                 .evaluate(t)
                 .map(|c| Value::Color(crate::color::Paint::from(c).value())),
             Compiled::Scalar(f) => f.sample(t).map(Value::number),
+            Compiled::PowerRange(f) => Ok(power_value(f.evaluate(t))),
             Compiled::Hue(f) => f.sample(t).map(Value::number),
             Compiled::Color(f) => f.sample(t).map(Value::Text),
             Compiled::Value(f) => f.sample(t),
@@ -351,10 +369,12 @@ impl Interpolator {
     // the public finite-parameter animation contract; reuse the already compiled kernels.
     pub(crate) fn scale_sample(&self, t: f64) -> ChartResult<Value> {
         match self.compiled.as_ref() {
+            Compiled::GgplotPalette(f) => palette_value(f, t),
             Compiled::Chromatic(f) => f
                 .evaluate_scale(t)
                 .map(|c| Value::Color(crate::color::Paint::from(c).value())),
             Compiled::Scalar(f) => Ok(Value::number(f.evaluate(t))),
+            Compiled::PowerRange(f) => Ok(power_value(f.evaluate(t))),
             Compiled::Color(f) => f.scale_color(t).map(|v| Value::Text(v.format_rgb())),
             Compiled::Value(f) => Ok(f.scale_sample(t)),
             Compiled::Piecewise(f) => {
@@ -364,8 +384,20 @@ impl Interpolator {
             _ => self.sample(t),
         }
     }
+    pub(crate) fn scale_optional_color(&self, t: f64) -> ChartResult<Option<ColorValue>> {
+        match self.compiled.as_ref() {
+            Compiled::GgplotPalette(f) => {
+                Ok(f.sample(t)?.map(|c| crate::color::Paint::from(c).value()))
+            }
+            _ => self.scale_color(t).map(Some),
+        }
+    }
     pub(crate) fn scale_color(&self, t: f64) -> ChartResult<ColorValue> {
         match self.compiled.as_ref() {
+            Compiled::GgplotPalette(f) => f
+                .sample(t)?
+                .map(|c| crate::color::Paint::from(c).value())
+                .ok_or_else(not_color),
             Compiled::Chromatic(f) => f
                 .evaluate_scale(t)
                 .map(|c| crate::color::Paint::from(c).value()),
@@ -397,6 +429,10 @@ impl Interpolator {
     pub fn sample_color(&self, t: f64) -> ChartResult<ColorValue> {
         parameter(t)?;
         match self.compiled.as_ref() {
+            Compiled::GgplotPalette(f) => f
+                .sample(t)?
+                .map(|c| crate::color::Paint::from(c).value())
+                .ok_or_else(not_color),
             Compiled::Registered(f) => match f.sample(t)? {
                 Value::Color(value) => Ok(value),
                 Value::Text(text) => crate::color::parse(&text)?.ok_or_else(not_color),
@@ -452,6 +488,18 @@ impl Sample<Value> for Interpolator {
         self.sample(t)
     }
 }
+fn power_value(v: f64) -> Value {
+    if v.is_nan() {
+        Value::Missing
+    } else {
+        Value::number(v)
+    }
+}
+fn palette_value(f: &crate::scales::chromatic::ggplot::PaletteRamp, t: f64) -> ChartResult<Value> {
+    Ok(f.sample(t)?.map_or(Value::Null, |c| {
+        Value::Color(crate::color::Paint::from(c).value())
+    }))
+}
 fn not_color() -> crate::Diagnostic {
     error(
         DiagnosticCode::UnsupportedCapability,
@@ -472,6 +520,16 @@ fn compile(
     registrations: &crate::grammar::interpolation_extensions::InterpolationRegistrations,
 ) -> ChartResult<Compiled> {
     Ok(match spec {
+        InterpolationSpec::PowerRange {
+            range,
+            exponent,
+            absolute,
+        } => Compiled::PowerRange(ScalarInterpolator::power(
+            range[0].0, range[1].0, exponent.0, *absolute,
+        )?),
+        InterpolationSpec::GgplotPalette { spec } => {
+            Compiled::GgplotPalette(crate::scales::chromatic::ggplot::PaletteRamp::new(spec)?)
+        }
         InterpolationSpec::Chromatic { spec } => {
             Compiled::Chromatic(crate::scales::chromatic::ChromaticRamp::new(*spec)?)
         }
@@ -593,7 +651,13 @@ fn compile(
 impl InterpolationSpec {
     /// Minimum standalone envelope version; builtins retain version one.
     pub fn wire_version(&self) -> u32 {
-        if self.has_registration() { 2 } else { 1 }
+        if matches!(self, Self::GgplotPalette { .. } | Self::PowerRange { .. }) {
+            3
+        } else if self.has_registration() {
+            2
+        } else {
+            1
+        }
     }
     /// Whether the descriptor requires an explicitly installed factory.
     pub fn has_registration(&self) -> bool {

@@ -73,7 +73,9 @@ class ArcParameters(TypedDict):
     corner_radius: float
     pad_radius: float | None
 
-SymbolKind: TypeAlias = Literal['Circle','Cross','Diamond','Square','Star','Triangle','Wye','Plus','Times','X','Asterisk','Diamond2','Square2','Triangle2']
+class _GgplotShape(TypedDict):
+    Ggplot: int
+SymbolKind: TypeAlias = Literal['Circle','Cross','Diamond','Square','Star','Triangle','Wye','Plus','Times','X','Asterisk','Diamond2','Square2','Triangle2'] | _GgplotShape
 class ShapeSymbolConfig(TypedDict, total=False):
     kind: SymbolKind
     size: float

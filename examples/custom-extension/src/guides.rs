@@ -51,6 +51,7 @@ impl CustomGuideFormatter for Formatter {
         let value = match input.value {
             ScaleValue::Number(n) => n.to_string(),
             ScaleValue::Category(label) => label.clone(),
+            ScaleValue::MissingCategory => "NA".into(),
             ScaleValue::Timestamp { value, .. } => value.to_string(),
         };
         Ok(match mode {

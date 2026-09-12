@@ -216,6 +216,13 @@ fn navigate_axis(
 ) -> ChartResult<AxisWindow> {
     let horizontal = axis.spec.side.horizontal();
     let (domain, view, range) = match &axis.scale {
+        ResolvedScale::Unbounded(_) => {
+            return Err(Diagnostic::error(
+                DiagnosticCode::UnsupportedCapability,
+                "Unbounded reference ranges do not support finite pan/zoom inversion.",
+                "Choose finite scale limits before navigating.",
+            ));
+        }
         ResolvedScale::Provider(_) => {
             return Err(Diagnostic::error(
                 DiagnosticCode::UnsupportedCapability,
@@ -259,7 +266,9 @@ fn navigate_axis(
                 action,
             );
         }
-        ResolvedScale::Secondary { .. } => {
+        ResolvedScale::Secondary { .. }
+        | ResolvedScale::SecondaryTime { .. }
+        | ResolvedScale::SecondaryDiscrete { .. } => {
             return Err(error(
                 "Guide-only secondary axes navigate through their primary axis.",
             ));

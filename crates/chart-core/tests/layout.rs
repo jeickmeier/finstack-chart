@@ -953,6 +953,7 @@ fn wp11_portable_log_axis_and_secondary_units_use_shared_projection() {
     };
     let mut secondary = AxisSpec::new(ScaleId::new(8), AxisSide::Right);
     secondary.scale = AxisScale::Secondary {
+        transform: None,
         source: YS,
         factor: 1.8,
         offset: 32.,

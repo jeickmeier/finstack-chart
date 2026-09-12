@@ -89,3 +89,19 @@ WP-IP07 cannot close until the WP-AX03–06 chain supplies the shared axis trans
 interruption, reduced-motion and capture evidence. That work remains with its existing
 owners and is not implemented by this interpolation assignment. Expanded WP-21/22/23,
 G-AUTH, G-PARITY, G-GGPLOT and G4 remain separate ledger gates.
+
+
+## Final WP-IP07 certification — axis consumer completed
+
+[WP-AX06](phase-2-axis-certification-2026-09-09.md) now passes. The final shared scalar/
+transform consumer executes 125 D3 timed samples and 75 matching Rust/Python/WASM
+artifacts; actual native interruption/reduced motion/disposal and retained moving-frame
+export pass. The current interpolation integration replay passes 18 three-host artifact
+comparisons and update/fresh/ownership cases. Final validation passes 449 macOS and
+448 Linux tests/doctests plus the complete repository check.
+
+Combined with the existing 27-export/configuration verdict catalog, pinned source replay,
+registered integration and finite allocation/timing profile above, this closes WP-IP07
+and G-INTERPOLATE for ADR-017's typed profile. The earlier open-prerequisite statements
+record the original handoff and are superseded by this section. Global release/performance
+and G-PARITY/G4 gates remain separate; axis paint counts are not native FPS proof.

@@ -72,21 +72,7 @@ impl Paint {
             .strip_prefix('#')
             .filter(|h| matches!(h.len(), 6 | 8) && h.is_ascii())
         {
-            let channel = |i| {
-                u8::from_str_radix(&hex[i..i + 2], 16).map_err(|_| {
-                    super::error(
-                        crate::DiagnosticCode::Validation,
-                        "Invalid hexadecimal color.",
-                    )
-                })
-            };
-            return Ok(Color {
-                red: channel(0)?,
-                green: channel(2)?,
-                blue: channel(4)?,
-                alpha: if hex.len() == 8 { channel(6)? } else { 255 },
-            }
-            .into());
+            return hex_bytes(hex).map(Into::into);
         }
         super::color(css)?.map(Into::into).ok_or_else(|| {
             super::error(
@@ -111,4 +97,41 @@ impl<'de> serde::Deserialize<'de> for Paint {
             Wire::Css(css) => Self::from_css(&css).map_err(|e| serde::de::Error::custom(e.message)),
         }
     }
+}
+
+pub(super) fn hex_bytes(hex: &str) -> crate::ChartResult<Color> {
+    let digits = hex.as_bytes();
+    let invalid = || {
+        super::error(
+            crate::DiagnosticCode::Validation,
+            "Invalid hexadecimal color.",
+        )
+    };
+    if !matches!(digits.len(), 3 | 4 | 6 | 8) || !digits.iter().all(u8::is_ascii_hexdigit) {
+        return Err(invalid());
+    }
+    let nibble = |i: usize| {
+        char::from(digits[i])
+            .to_digit(16)
+            .map(|v| v as u8)
+            .ok_or_else(invalid)
+    };
+    let short = digits.len() <= 4;
+    let channel = |i: usize| -> crate::ChartResult<u8> {
+        if short {
+            Ok(nibble(i)? * 17)
+        } else {
+            Ok(nibble(i * 2)? * 16 + nibble(i * 2 + 1)?)
+        }
+    };
+    Ok(Color {
+        red: channel(0)?,
+        green: channel(1)?,
+        blue: channel(2)?,
+        alpha: if matches!(digits.len(), 4 | 8) {
+            channel(3)?
+        } else {
+            255
+        },
+    })
 }

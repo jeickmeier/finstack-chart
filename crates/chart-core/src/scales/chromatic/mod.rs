@@ -1,6 +1,8 @@
 //! Pinned named schemes and interpolators, sharing the core color/interpolation math.
 //! Tables and catalog recipes are adapted from d3-scale-chromatic 3.1.0; see LICENSE.
 mod data;
+pub mod ggplot;
+mod ggplot_data;
 use crate::{ChartResult, Diagnostic, DiagnosticCode, scene::Color};
 pub use data::{InterpolatorId, SchemeId};
 use serde::{Deserialize, Serialize};

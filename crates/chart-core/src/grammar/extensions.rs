@@ -131,6 +131,8 @@ pub fn extension_input_space(
 /// portable JSON can only select an existing entry and never supplies executable code.
 #[derive(Clone, Default)]
 pub struct ExtensionRegistry {
+    pub(crate) limits_function: Arc<super::scale_limit_extensions::ScaleLimitRegistrations>,
+    pub(crate) hierarchies: Arc<super::hierarchy_extensions::HierarchyRegistrations>,
     pub(crate) interpolations: Arc<super::interpolation_extensions::InterpolationRegistrations>,
     pub(crate) guides: Arc<super::guide_extensions::GuideRegistrations>,
     pub(crate) scales: Arc<super::scale_extensions::ScaleRegistrations>,
@@ -210,6 +212,7 @@ impl ExtensionRegistry {
         self.stats.get(&(operation.id.clone(),operation.version.get())).map(Arc::as_ref).ok_or_else(||error(DiagnosticCode::UnsupportedCapability,format!("Extension {} version {} is not registered; install a known implementation or use a builtin.",operation.id,operation.version.get())))
     }
     pub(crate) fn validate_portable(&self, definition: &ChartDefinition) -> ChartResult<()> {
+        self.validate_portable_hierarchies(definition)?;
         self.validate_scale_selections(definition, true)?;
         self.validate_guide_selections(definition, true)?;
         self.validate_interpolation_selections(definition, true)?;
@@ -392,7 +395,10 @@ pub(crate) fn custom_schema(
     Ok(fields)
 }
 fn validate_custom_space(space: &ValueSpace, kind: GeneratedKind) -> ChartResult<()> {
-    if matches!(space, ValueSpace::Categorical { .. }) != (kind == GeneratedKind::Categorical)
+    if matches!(
+        space,
+        ValueSpace::Categorical { .. } | ValueSpace::NullableCategorical { .. }
+    ) != (kind == GeneratedKind::Categorical)
         || (kind == GeneratedKind::UInt64 && !matches!(space, ValueSpace::Data))
     {
         return Err(error(
@@ -424,6 +430,26 @@ fn validate_custom_space(space: &ValueSpace, kind: GeneratedKind) -> ChartResult
                         "Custom timestamps require bounded explicit timezone metadata.",
                     ));
                 }
+                return Ok(());
+            }
+            ValueSpace::NullableCategorical { categories } => {
+                if depth != 0
+                    || categories.iter().collect::<BTreeSet<_>>().len() != categories.len()
+                {
+                    return Err(error(
+                        DiagnosticCode::SchemaConflict,
+                        "Nullable category catalogs must be unique and untransformed.",
+                    ));
+                }
+                crate::limits::require_within(
+                    categories.len() <= 4096
+                        && categories
+                            .iter()
+                            .flatten()
+                            .fold(0usize, |n, s| n.saturating_add(s.len()))
+                            <= 65536,
+                    "nullable category metadata",
+                )?;
                 return Ok(());
             }
             ValueSpace::Categorical { categories } => {

@@ -6,7 +6,9 @@ use super::{
 use crate::grammar::{PreparedChart, PreparedGeometry, ValueSpace};
 use crate::limits::require_within;
 use crate::scales::*;
-use crate::scene::{Color, Primitive, Scene, SceneItem, Stroke};
+use crate::scene::{
+    Color, GuideComponent, GuideRole, GuideTickIdentity, PathCommand, Primitive, Scene, SceneItem,
+};
 use crate::services::{TextMeasurer, TextMetrics, TextRequest, measure_text, validate_text};
 use crate::{
     ChartResult, Diagnostic, DiagnosticCode, GuideId, Point, Rect, ScaleId, SceneStamp, Severity,
@@ -36,6 +38,33 @@ pub(super) fn text_request<'a>(r: &'a LayoutRequest, text: &'a str) -> TextReque
     }
 }
 fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
+    require_within(
+        r.hierarchy_history.len() <= r.limits.max_items && r.hierarchy_scope.len() <= 32,
+        "hierarchy history scope",
+    )?;
+    let mut history_members = 0usize;
+    let mut history_scopes = std::collections::BTreeSet::new();
+    for entry in r.hierarchy_history.iter() {
+        if !history_scopes.insert((&entry.scope, entry.layer)) {
+            return Err(error(
+                DiagnosticCode::Validation,
+                "Hierarchy history contains a duplicate destination scope.",
+            ));
+        }
+        history_members = history_members.saturating_add(entry.history.membership_count());
+        require_within(
+            entry.scope.len() <= 32 && history_members <= r.max_vertices,
+            "hierarchy retained history member",
+        )?;
+    }
+    if r.device_scale
+        .is_some_and(|scale| !scale.is_finite() || scale <= 0.)
+    {
+        return Err(error(
+            DiagnosticCode::Validation,
+            "Device scale must be finite and positive.",
+        ));
+    }
     require_within(r.axes.len() <= 4, "independent axis count (four)")?;
     if !(2..=128).contains(&r.target_ticks)
         || !(2..=4096).contains(&r.max_ticks)
@@ -93,6 +122,10 @@ fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
                 ));
             }
             for space in [&d.x_space, &d.y_space].into_iter().flatten() {
+                if let ValueSpace::NullableCategorical { categories } = space {
+                    require_within(categories.len() <= r.max_categories, "trained category")?;
+                    charge_categories(&categories.iter().flatten().cloned().collect::<Vec<_>>())?;
+                }
                 if let ValueSpace::Categorical { categories } = space {
                     require_within(categories.len() <= r.max_categories, "trained category")?;
                     charge_categories(categories)?;
@@ -111,6 +144,15 @@ fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
     for l in chart.layers().iter().filter(|l| l.visible()) {
         for m in l.marks() {
             let n = super::work::vertices(&m.geometry);
+            if matches!(
+                m.geometry,
+                PreparedGeometry::HierarchyNode(_) | PreparedGeometry::HierarchyLink { .. }
+            ) {
+                // Arc/circle/rectangle/link lowering emits at most sixteen bounded commands.
+                require_within(16 <= paths, "hierarchy potential path command")?;
+                paths -= 16;
+            }
+
             // Omission can split a line into at most one singleton per input vertex.
             let count = if matches!(
                 m.geometry,
@@ -174,6 +216,10 @@ fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
         .collect::<ChartResult<BTreeMap<_, _>>>()?;
     for guide in resolve_guides(chart, &scales, r)?.values() {
         if guide.spec.visible {
+            if guide.spec.profile == GuideProfile::D3_3_0_0 || guide.spec.geometry.is_some() {
+                require_within(paths >= 4, "guide domain path command")?;
+                paths -= 4;
+            }
             potential_items = potential_items
                 .checked_add(1 + guide.ticks.len() * 2)
                 .ok_or_else(|| {
@@ -194,52 +240,145 @@ fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
 #[derive(Clone)]
 struct Label {
     tick: GuideTick,
+    index: usize,
+    identity: GuideTickIdentity,
     metrics: TextMetrics,
     rich: Option<super::text::Block>,
+    font_size: f64,
+    visible: bool,
+    line_style: GuideLineStyle,
+    text_style: GuideTextStyle,
+}
+fn exposed(spec: &GuideStyle) -> bool {
+    spec.profile != GuideProfile::LibraryV1 || spec.geometry.is_some() || spec.components.is_some()
+}
+fn component(spec: &GuideSpec, role: GuideRole, label: Option<&Label>) -> Option<GuideComponent> {
+    exposed(&spec.style).then(|| GuideComponent {
+        animation: None,
+        scope: vec![],
+        guide: spec.id,
+        role,
+        side: spec.side,
+        tick: label.map(|l| l.identity.clone()),
+        index: label.map(|l| l.index),
+        label: label.map(|l| l.tick.label.clone()),
+    })
 }
 fn measure_guides(
     axes: &BTreeMap<GuideId, ResolvedGuide>,
     r: &LayoutRequest,
     measurer: &dyn TextMeasurer,
 ) -> ChartResult<BTreeMap<GuideId, Vec<Label>>> {
-    // Aggregate per-pass text budget is checked for all candidates before host callbacks.
+    // Charge logical component metadata as well as displayed text before callbacks.
     let mut remaining = r.limits.max_text_bytes;
     for a in axes.values() {
         for t in &a.ticks {
-            require_within(t.label.len() <= remaining, "layout measured text byte")?;
-            remaining -= t.label.len();
+            let bytes = if exposed(&a.spec.style) {
+                t.label
+                    .len()
+                    .saturating_mul(3)
+                    .saturating_add(match &t.value {
+                        crate::composition::ScaleValue::Category(s) => s.len().saturating_mul(2),
+                        _ => 0,
+                    })
+            } else {
+                t.label.len()
+            };
+            require_within(
+                bytes <= remaining,
+                "layout measured guide and metadata byte",
+            )?;
+            remaining -= bytes;
         }
     }
     let mut labels = BTreeMap::new();
     for (id, a) in axes {
+        let components = a.spec.components.clone().unwrap_or_default();
+        let overrides = components.overrides();
+        let mut occurrences = BTreeMap::<String, usize>::new();
         let mut measured = vec![];
-        for t in &a.ticks {
-            if t.label.is_empty() {
+        for (index, t) in a.ticks.iter().enumerate() {
+            let key = if matches!(t.value, crate::composition::ScaleValue::Number(n) if n == 0.) {
+                "number:zero".to_owned()
+            } else {
+                serde_json::to_string(&t.value)
+                    .map_err(|_| error(DiagnosticCode::Validation, "Invalid guide identity."))?
+            };
+            let occurrence = occurrences.entry(key).or_default();
+            let identity = GuideTickIdentity {
+                value: t.value.clone(),
+                occurrence: *occurrence,
+            };
+            *occurrence += 1;
+            let (visible, line_style, text_style) = components.tick(overrides.get(&index).copied());
+            let mut guide_request = r.clone();
+            guide_request.font_size =
+                text_style
+                    .font_size
+                    .unwrap_or(if a.spec.profile == GuideProfile::D3_3_0_0 {
+                        10.
+                    } else {
+                        r.font_size
+                    });
+            let r = &guide_request;
+            if t.label.is_empty() || !visible || text_style.visible == Some(false) {
                 measured.push(Label {
                     tick: t.clone(),
+                    index,
+                    identity,
                     metrics: TextMetrics::new(0., 0., 0.)?,
                     rich: None,
+                    font_size: r.font_size,
+                    visible,
+                    line_style,
+                    text_style,
                 });
                 continue;
             }
-            let rich = if a.spec.typography.is_some() || a.spec.label_rotation != 0. {
-                let mut run = a
-                    .spec
-                    .typography
-                    .clone()
+            let typography = text_style
+                .typography
+                .as_ref()
+                .or(a.spec.typography.as_ref());
+            let rotation = text_style.rotation.unwrap_or(a.spec.label_rotation);
+            let font_size = r.font_size * typography.map_or(1., |run| run.size);
+            let rich = if typography.is_some() || rotation != 0. {
+                let mut run = typography
+                    .cloned()
                     .unwrap_or_else(|| crate::typography::RichRun::new(""));
-                run.text = t.label.clone();
+                run.text.clear();
+                if let Some(color) = text_style.color {
+                    run.color = Some(color);
+                }
                 Some(super::text::measure(
                     &crate::typography::RichText {
-                        lines: vec![vec![run]],
+                        lines: t
+                            .label
+                            .split('\n')
+                            .map(|line| {
+                                let mut run = run.clone();
+                                run.text = line.into();
+                                vec![run]
+                            })
+                            .collect(),
                         line_spacing: 1.2,
-                        rotation: a.spec.label_rotation,
+                        rotation,
                     },
                     r,
                     measurer,
                     r.host_theme
                         .foreground
                         .map(crate::color::Paint::resolve)
+                        .unwrap_or(INK),
+                )?)
+            } else if t.label.contains('\n') {
+                Some(super::text::plain_lines(
+                    &t.label,
+                    r,
+                    measurer,
+                    text_style
+                        .color
+                        .map(crate::color::Paint::resolve)
+                        .or_else(|| r.host_theme.foreground.map(crate::color::Paint::resolve))
                         .unwrap_or(INK),
                 )?)
             } else {
@@ -252,8 +391,14 @@ fn measure_guides(
             };
             measured.push(Label {
                 tick: t.clone(),
+                index,
+                identity,
                 metrics,
                 rich,
+                font_size,
+                visible,
+                line_style,
+                text_style,
             });
         }
         labels.insert(*id, measured);
@@ -271,6 +416,16 @@ fn margins(
     for (id, a) in axes {
         if !a.spec.visible {
             continue;
+        }
+        let geometry = super::guide_geometry::Geometry::resolve(&a.spec.style, r);
+        if a.spec.profile == GuideProfile::D3_3_0_0 || a.spec.geometry.is_some() {
+            let (side, outward) = match a.spec.side {
+                AxisSide::Left => (0, -a.spec.translation[0]),
+                AxisSide::Right => (1, a.spec.translation[0]),
+                AxisSide::Top => (2, -a.spec.translation[1]),
+                AxisSide::Bottom => (3, a.spec.translation[1]),
+            };
+            m[side] = m[side].max(r.padding + geometry.outer.max(0.) + outward.max(0.));
         }
         for l in &labels[id] {
             let w = l.metrics.width();
@@ -295,8 +450,14 @@ fn margins(
                 AxisSide::Top => -a.spec.translation[1],
                 AxisSide::Bottom => a.spec.translation[1],
             };
-            m[side] = m[side]
-                .max(r.padding + r.tick_length + r.label_gap + size + title + outward.max(0.));
+            m[side] = m[side].max(
+                r.padding
+                    + geometry
+                        .outer
+                        .max(geometry.spacing() + size + title)
+                        .max(0.)
+                    + outward.max(0.),
+            );
             if a.spec.side.horizontal() {
                 m[0] = m[0].max(r.padding + w / 2.);
                 m[1] = m[1].max(r.padding + w / 2.);
@@ -322,12 +483,46 @@ fn plot(r: &LayoutRequest, m: [f64; 4]) -> ChartResult<Option<Rect>> {
     )?))
 }
 fn label_geometry(
-    side: AxisSide,
+    spec: &GuideSpec,
     l: &Label,
     p: Rect,
     r: &LayoutRequest,
 ) -> ChartResult<(Point, Rect, Point, Point)> {
+    let side = spec.side;
+    let geometry = super::guide_geometry::Geometry::resolve(&spec.style, r);
     let v = l.tick.position;
+    if spec.profile == GuideProfile::D3_3_0_0 || spec.geometry.is_some() {
+        let anchor = super::guide_geometry::point(side, v, geometry.spacing(), p)?;
+        let dy = match side {
+            AxisSide::Bottom => 0.71,
+            AxisSide::Top => 0.,
+            _ => 0.32,
+        };
+        let size = l.font_size;
+        let x = match side {
+            AxisSide::Top | AxisSide::Bottom => anchor.x() - l.metrics.width() / 2.,
+            AxisSide::Left => anchor.x() - l.metrics.width(),
+            AxisSide::Right => anchor.x(),
+        };
+        let baseline = anchor.y() + dy * size;
+        let top = if l.rich.is_some() && l.tick.label.contains('\n') {
+            // Multiline blocks align as a whole outside horizontal axes and around
+            // the tick center on vertical axes, independent of the line count.
+            match side {
+                AxisSide::Bottom => anchor.y(),
+                AxisSide::Top => anchor.y() - l.metrics.height(),
+                _ => anchor.y() - l.metrics.height() / 2.,
+            }
+        } else {
+            baseline - l.metrics.ascent()
+        };
+        return Ok((
+            Point::new(x, baseline)?,
+            Rect::new(x, top, l.metrics.width(), l.metrics.height())?,
+            super::guide_geometry::point(side, v, 0., p)?,
+            super::guide_geometry::point(side, v, geometry.inner, p)?,
+        ));
+    }
     let w = l.metrics.width();
     let h = l.metrics.height();
     let gap = r.tick_length + r.label_gap;
@@ -376,6 +571,25 @@ fn overlaps(a: Rect, b: Rect, gap: f64) -> bool {
         && a.origin().y() < b.max_y() + gap
         && b.origin().y() < a.max_y() + gap
 }
+fn styled_line(primitive: Primitive, style: &GuideLineStyle) -> Primitive {
+    match (primitive, style.dashes.as_deref()) {
+        (Primitive::Path { commands, stroke }, Some(dashes)) if !dashes.is_empty() => {
+            Primitive::DashedPath {
+                commands,
+                stroke,
+                dashes: dashes.to_vec(),
+            }
+        }
+        (Primitive::Rule { from, to, stroke }, Some(dashes)) if !dashes.is_empty() => {
+            Primitive::DashedPath {
+                commands: vec![PathCommand::MoveTo(from), PathCommand::LineTo(to)],
+                stroke,
+                dashes: dashes.to_vec(),
+            }
+        }
+        (primitive, _) => primitive,
+    }
+}
 fn guides(
     scales: &BTreeMap<ScaleId, ResolvedAxis>,
     axes: &mut BTreeMap<GuideId, ResolvedGuide>,
@@ -386,10 +600,16 @@ fn guides(
 ) -> ChartResult<bool> {
     let mut pressure = false;
     let mut placed = vec![];
+    let color = r
+        .host_theme
+        .foreground
+        .map(crate::color::Paint::resolve)
+        .unwrap_or(INK);
     for (id, a) in axes {
         if !a.spec.visible {
             continue;
         }
+        let components = a.spec.components.clone().unwrap_or_default();
         let p = Rect::new(
             p.origin().x() + a.spec.translation[0],
             p.origin().y() + a.spec.translation[1],
@@ -408,91 +628,115 @@ fn guides(
                 Point::new(p.max_x(), p.max_y())?,
             ),
         };
-        out.push(
-            SceneItem {
-                layer: None,
-                clip: None,
-                primitive: Primitive::Rule {
-                    from,
-                    to,
-                    stroke: Stroke {
-                        color: r
-                            .host_theme
-                            .foreground
-                            .map(crate::color::Paint::resolve)
-                            .unwrap_or(INK),
-                        width: 1.,
-                    },
+        let geometry = super::guide_geometry::Geometry::resolve(&a.spec.style, r);
+        let clip = (geometry.overflow == GuideOverflow::Clip).then_some(r.bounds);
+        if components.domain.visible != Some(false) {
+            let stroke = components.domain.stroke(color);
+            let primitive = if a.spec.profile == GuideProfile::D3_3_0_0 || a.spec.geometry.is_some()
+            {
+                Primitive::Path {
+                    commands: super::guide_geometry::domain(
+                        &a.spec,
+                        super::guide_geometry::range(&scales[&a.spec.scale], scales),
+                        p,
+                        geometry,
+                    )?,
+                    stroke,
+                }
+            } else {
+                Primitive::Rule { from, to, stroke }
+            };
+            out.push(
+                SceneItem {
+                    guide: component(&a.spec, GuideRole::Domain, None),
+                    layer: None,
+                    clip,
+                    primitive: styled_line(primitive, &components.domain),
                 },
-            },
-            vec![],
-            r,
-        )?;
+                vec![],
+                r,
+            )?;
+        }
         a.ticks.clear();
+        a.tick_indices.clear();
         let mut seen = BTreeSet::new();
         for l in &labels[id] {
-            let (origin, bounds, from, to) = label_geometry(a.spec.side, l, p, r)?;
+            let (origin, bounds, from, to) = label_geometry(&a.spec, l, p, r)?;
             let along = if a.spec.side.horizontal() {
                 l.tick.position >= p.origin().x() && l.tick.position <= p.max_x()
             } else {
                 l.tick.position >= p.origin().y() && l.tick.position <= p.max_y()
             };
-            if a.spec.profile == GuideProfile::LibraryV1
-                && (!along
-                    || !l.tick.label.is_empty()
-                        && (!inside(bounds, r.bounds)
-                            || placed.iter().any(|b| overlaps(bounds, *b, r.label_gap))
-                            || !seen.insert(l.tick.label.clone())))
-            {
+            let shown_label =
+                l.visible && l.text_style.visible != Some(false) && !l.tick.label.is_empty();
+            let collision = !along
+                || shown_label
+                    && (!inside(bounds, r.bounds)
+                        || placed.iter().any(|b| overlaps(bounds, *b, r.label_gap))
+                        || !seen.insert(l.tick.label.clone()));
+            let hide_label = collision && geometry.labels == GuideLabelPolicy::HideLabels;
+            if collision {
                 pressure = true;
-                continue;
+                if geometry.labels == GuideLabelPolicy::ThinTicks {
+                    continue;
+                }
             }
-            if !l.tick.label.is_empty() {
+            if shown_label && !hide_label {
                 placed.push(bounds);
             }
             a.ticks.push(l.tick.clone());
-            out.push(
-                SceneItem {
-                    layer: None,
-                    clip: None,
-                    primitive: Primitive::Rule {
-                        from,
-                        to,
-                        stroke: Stroke {
-                            color: r
-                                .host_theme
-                                .foreground
-                                .map(crate::color::Paint::resolve)
-                                .unwrap_or(INK),
-                            width: 1.,
-                        },
+            a.tick_indices.push(l.index);
+            if !l.visible {
+                continue;
+            }
+            if l.line_style.visible != Some(false) {
+                out.push(
+                    SceneItem {
+                        guide: component(&a.spec, GuideRole::Line, Some(l)),
+                        layer: None,
+                        clip: if geometry.clip_ticks { Some(p) } else { clip },
+                        primitive: styled_line(
+                            Primitive::Rule {
+                                from,
+                                to,
+                                stroke: l.line_style.stroke(color),
+                            },
+                            &l.line_style,
+                        ),
                     },
-                },
-                vec![],
-                r,
-            )?;
-            if l.tick.label.is_empty() {
+                    vec![],
+                    r,
+                )?;
+            }
+            if !shown_label || hide_label {
                 continue;
             }
             if let Some(block) = &l.rich {
-                for item in block.items_at(bounds.origin().x(), bounds.origin().y(), r.bounds)? {
+                for mut item in
+                    block.items_at(bounds.origin().x(), bounds.origin().y(), r.bounds)?
+                {
+                    if exposed(&a.spec.style) {
+                        item.clip = clip;
+                    }
+                    item.guide = component(&a.spec, GuideRole::Label, Some(l));
                     out.push(item, vec![], r)?;
                 }
             } else {
                 out.push(
                     SceneItem {
+                        guide: component(&a.spec, GuideRole::Label, Some(l)),
                         layer: None,
-                        clip: None,
+                        clip,
                         primitive: Primitive::Text {
                             origin,
                             text: l.tick.label.clone(),
                             font: r.font.id,
-                            font_size: r.font_size,
-                            color: r
-                                .host_theme
-                                .foreground
+                            font_size: l.font_size,
+                            color: l
+                                .text_style
+                                .color
                                 .map(crate::color::Paint::resolve)
-                                .unwrap_or(INK),
+                                .unwrap_or(color),
                         },
                     },
                     vec![],
@@ -517,6 +761,7 @@ fn compact(
     if m.width() <= r.bounds.width() && m.height() <= r.bounds.height() {
         out.push(
             SceneItem {
+                guide: None,
                 layer: None,
                 clip: None,
                 primitive: Primitive::Text {
@@ -646,6 +891,14 @@ fn resolve_guides(
         guides.insert(
             spec.id,
             ResolvedGuide {
+                minor_ticks: super::minor_breaks::resolve(
+                    chart,
+                    axis,
+                    &spec.style,
+                    &axis.ticks,
+                    r,
+                )?,
+                tick_indices: (0..axis.ticks.len()).collect(),
                 spec,
                 ticks: axis.ticks.clone(),
             },
@@ -655,24 +908,57 @@ fn resolve_guides(
         let axis = axes
             .get(&spec.scale)
             .ok_or_else(|| error(DiagnosticCode::MissingResource, "Guide scale is absent."))?;
-        let mut ticks = super::guide_ticks::resolve(chart, axis, &spec.style, r)?;
-        let offset = spec.translation[usize::from(!spec.side.horizontal())];
-        for tick in &mut ticks {
-            tick.position += offset;
-            if !tick.position.is_finite() {
-                return Err(error(
-                    DiagnosticCode::PrecisionLoss,
-                    "Guide translation exceeds finite positions.",
-                ));
-            }
-        }
+        let ticks = super::guide_ticks::resolve(chart, axis, &spec.style, r)?;
         guides.insert(
             spec.id,
             ResolvedGuide {
+                minor_ticks: super::minor_breaks::resolve(chart, axis, &spec.style, &ticks, r)?,
+                tick_indices: (0..ticks.len()).collect(),
                 spec: spec.clone(),
                 ticks,
             },
         );
+    }
+    for guide in guides.values_mut() {
+        let geometry = super::guide_geometry::Geometry::resolve(&guide.spec.style, r);
+        let shift = guide.spec.translation[usize::from(!guide.spec.side.horizontal())];
+        for tick in &mut guide.minor_ticks {
+            tick.position += shift + geometry.offset;
+            if !tick.position.is_finite() {
+                return Err(error(
+                    DiagnosticCode::PrecisionLoss,
+                    "Minor guide geometry exceeds finite positions.",
+                ));
+            }
+        }
+        for tick in &mut guide.ticks {
+            if guide.spec.profile == GuideProfile::D3_3_0_0 {
+                let axis = &axes[&guide.spec.scale];
+                let position = match (&axis.scale, &tick.value) {
+                    (ResolvedScale::Provider(scale), value) => {
+                        scale.guide_position(value, geometry.offset)?
+                    }
+                    (
+                        ResolvedScale::Band(scale),
+                        crate::composition::ScaleValue::Category(value),
+                    ) => scale.guide_position(value, geometry.offset)?,
+                    _ => Some(tick.position),
+                };
+                tick.position = position.ok_or_else(|| {
+                    error(
+                        DiagnosticCode::SchemaConflict,
+                        "Retained guide tick lost its mapping.",
+                    )
+                })?;
+            }
+            tick.position += shift + geometry.offset;
+            if !tick.position.is_finite() {
+                return Err(error(
+                    DiagnosticCode::PrecisionLoss,
+                    "Guide geometry exceeds finite positions.",
+                ));
+            }
+        }
     }
     Ok(guides)
 }
@@ -759,7 +1045,7 @@ pub(super) fn solve_panels(
         }
         if pass + 1 == MAX_LAYOUT_PASSES {
             for w in &mut work {
-                w.diagnostics.push(pressure("Margin solver reached its four-pass cap; labels are deterministically thinned to fit."));
+                w.diagnostics.push(pressure("Margin solver reached its four-pass cap; each guide retains its declared preservation/adaptive and overflow policies."));
             }
             break;
         }
@@ -775,7 +1061,7 @@ pub(super) fn solve_panels(
             });
             let status = if output.items.is_empty() || !has_population { LayoutStatus::NoData } else { LayoutStatus::Ready };
             if guides(&w.axes, &mut w.guides, &w.labels, p, request, &mut output)? {
-                w.diagnostics.push(pressure("Overlapping, duplicate or out-of-figure tick labels were deterministically thinned."));
+                w.diagnostics.push(pressure("Overlapping, duplicate or out-of-figure tick labels were encountered; each guide applied its declared preservation/adaptive policy."));
             }
             for (id,title) in &w.titles {
                 let axis=&w.guides[id];
@@ -794,7 +1080,7 @@ pub(super) fn solve_panels(
         } else {
             w.axes.clear();
             w.guides.clear();
-            let mut output = Output {items: vec![],targets:vec![],omitted:0,interactions:Default::default()};
+            let mut output = Output {hierarchies:Default::default(),items: vec![],targets:vec![],omitted:0,interactions:Default::default()};
             compact("Not enough space",request,measurer,&mut output)?;
             w.diagnostics.push(pressure("Bounds and destination text metrics cannot accommodate the minimum useful plot."));
             (output,LayoutStatus::NoSpace)
@@ -807,7 +1093,8 @@ pub(super) fn solve_panels(
         for (id, axis) in &mut w.axes {
             if let Some(guide)=w.guides.get(&GuideId::new(id.get())) {axis.ticks.clone_from(&guide.ticks);}
         }
-        Ok(LaidOutChart {guides:w.guides,paint_themes:BTreeMap::new(),interactions:output.interactions,insets:vec![],prepared:w.prepared,scene,plot:w.plot,axes:w.axes,
+        let guide_frames = if let Some(plot) = w.plot {super::guide_animation::initial_frames(&w.guides,&w.axes,plot,request)?} else {BTreeMap::new()};
+        Ok(LaidOutChart {hierarchies:output.hierarchies,guide_frames,guide_presentation:None,guides:w.guides,paint_themes:BTreeMap::new(),interactions:output.interactions,insets:vec![],prepared:w.prepared,scene,plot:w.plot,axes:w.axes,
             item_panels: vec![None; output.targets.len()], panels: vec![],
             targets:output.targets,diagnostics:w.diagnostics,status,passes:w.passes})
     }).collect()

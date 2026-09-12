@@ -371,5 +371,9 @@ impl RichText {
 
 mod numeric_format;
 pub use numeric_format::*;
+mod ggplot_format;
+pub use ggplot_format::ggplot_numeric_labels;
+mod ggplot_duration;
+pub use ggplot_duration::ggplot_duration_labels;
 
 pub use crate::scales::{TimeFormat, TimeFormatter, TimeLocale};

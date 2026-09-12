@@ -100,6 +100,11 @@ impl _Runtime {
             .map(_FigureRequest::wrap)
             .map_err(failure)
     }
+    pub fn acknowledge_frame(&mut self, frame: &_FigureSnapshot) -> Result<(), JsError> {
+        self.get_mut()?
+            .acknowledge_frame(frame.get()?)
+            .map_err(failure)
+    }
     pub fn present(
         &mut self,
         output: &_Output,

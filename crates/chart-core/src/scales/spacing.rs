@@ -63,6 +63,12 @@ impl<K: Clone> PointSpec<K> {
         }
     }
 }
+#[derive(Clone, Copy, Debug, PartialEq)]
+enum ReferenceSpacing {
+    Finite(Bounds),
+    Unbounded([crate::interpolate::Number; 2]),
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub(crate) struct Spacing {
     pub(crate) range: Bounds,
@@ -70,10 +76,11 @@ pub(crate) struct Spacing {
     inner: f64,
     outer: f64,
     align: f64,
-    round: bool,
+    pub(super) round: bool,
     compatibility: ScaleCompatibility,
     point: bool,
     denominator: f64,
+    reference_view: Option<ReferenceSpacing>,
     start: f64,
     step: f64,
     bandwidth: f64,
@@ -111,6 +118,7 @@ impl Spacing {
             compatibility,
             point,
             denominator,
+            reference_view: None,
             start: 0.,
             step: 0.,
             bandwidth: 0.,
@@ -150,6 +158,103 @@ impl Spacing {
         }
         Ok(value)
     }
+    pub(crate) fn with_reference_expansion(
+        self,
+        expansion: super::GgplotExpansion,
+        limits: Option<&[crate::interpolate::Number]>,
+        continuous: Option<[crate::interpolate::Number; 2]>,
+    ) -> ChartResult<Self> {
+        let view = expansion.discrete_position_viewport(self.count, continuous, limits)?;
+        self.with_reference_viewport(view)
+    }
+    pub(crate) fn with_reference_viewport(
+        mut self,
+        view: [crate::interpolate::Number; 2],
+    ) -> ChartResult<Self> {
+        self.reference_view = Some(if view.iter().all(|v| v.0.is_finite()) {
+            ReferenceSpacing::Finite(Bounds::new(view[0].0, view[1].0)?)
+        } else {
+            ReferenceSpacing::Unbounded(view)
+        });
+        Ok(self)
+    }
+    pub(crate) fn reference_viewport(&self) -> Option<[crate::interpolate::Number; 2]> {
+        match self.reference_view {
+            Some(ReferenceSpacing::Finite(view)) => Some([
+                crate::interpolate::Number(view.start()),
+                crate::interpolate::Number(view.end()),
+            ]),
+            Some(ReferenceSpacing::Unbounded(limits)) => Some(limits),
+            None => None,
+        }
+    }
+    pub(crate) fn reference_extent(&self, value: f64) -> ChartResult<Option<Bounds>> {
+        let view = self.reference_viewport().ok_or_else(|| {
+            error(
+                DiagnosticCode::UnsupportedCapability,
+                "Materialized position palettes require reference spacing.",
+            )
+        })?;
+        let half = if self.point {
+            0.
+        } else {
+            (1. - self.inner) / 2.
+        };
+        let a = super::ggplot_unbounded::reference_position(view, self.range, value - half)?;
+        let b = super::ggplot_unbounded::reference_position(view, self.range, value + half)?;
+        a.zip(b).map(|(a, b)| Bounds::new(a, b)).transpose()
+    }
+    pub(crate) fn reference_minor(&self, value: f64) -> ChartResult<Option<f64>> {
+        let limits = self.reference_viewport().ok_or_else(|| {
+            error(
+                DiagnosticCode::UnsupportedCapability,
+                "Numeric categorical minors require reference category spacing.",
+            )
+        })?;
+        if !value.is_finite() || value < limits[0].0 || value > limits[1].0 {
+            return Ok(None);
+        }
+        super::ggplot_unbounded::reference_position(limits, self.range, value)
+    }
+    fn reference_map(&self, view: Bounds, value: f64) -> ChartResult<f64> {
+        super::ggplot_unbounded::reference_position(
+            [
+                crate::interpolate::Number(view.start()),
+                crate::interpolate::Number(view.end()),
+            ],
+            self.range,
+            value,
+        )?
+        .ok_or_else(|| {
+            error(
+                DiagnosticCode::PrecisionLoss,
+                "Finite category reference coordinate is undefined.",
+            )
+        })
+    }
+    pub(crate) fn supports_lookup(&self) -> bool {
+        !matches!(self.reference_view, Some(ReferenceSpacing::Unbounded(_)))
+    }
+    pub(crate) fn center(&self, i: usize) -> ChartResult<Option<f64>> {
+        if let Some(ReferenceSpacing::Unbounded(limits)) = self.reference_view {
+            return super::ggplot_unbounded::reference_position(limits, self.range, 1. + i as f64);
+        }
+        self.finite_center(i).map(Some)
+    }
+    pub(crate) fn extent(&self, i: usize) -> ChartResult<Option<Bounds>> {
+        if let Some(ReferenceSpacing::Unbounded(limits)) = self.reference_view {
+            let center = 1. + i as f64;
+            let half = if self.point {
+                0.
+            } else {
+                (1. - self.inner) / 2.
+            };
+            let a = super::ggplot_unbounded::reference_position(limits, self.range, center - half)?;
+            let b = super::ggplot_unbounded::reference_position(limits, self.range, center + half)?;
+            return a.zip(b).map(|(a, b)| Bounds::new(a, b)).transpose();
+        }
+        self.finite_extent(i).map(Some)
+    }
     pub(crate) fn resize(&self, n: usize) -> ChartResult<Self> {
         Self::new(
             n,
@@ -165,7 +270,15 @@ impl Spacing {
             self.point,
         )
     }
-    pub(crate) fn extent(&self, i: usize) -> ChartResult<Bounds> {
+    fn finite_extent(&self, i: usize) -> ChartResult<Bounds> {
+        if let Some(ReferenceSpacing::Finite(view)) = self.reference_view {
+            let center = 1. + i as f64;
+            let half = (1. - self.inner) / 2.;
+            return Bounds::new(
+                self.reference_map(view, center - half)?,
+                self.reference_map(view, center + half)?,
+            );
+        }
         if self.compatibility == ScaleCompatibility::D3 {
             let index = if self.range.end() < self.range.start() {
                 self.count - 1 - i
@@ -195,7 +308,10 @@ impl Spacing {
             )
         }
     }
-    pub(crate) fn center(&self, i: usize) -> ChartResult<f64> {
+    fn finite_center(&self, i: usize) -> ChartResult<f64> {
+        if let Some(ReferenceSpacing::Finite(view)) = self.reference_view {
+            return self.reference_map(view, 1. + i as f64);
+        }
         if self.compatibility == ScaleCompatibility::Legacy {
             let t = if self.point && self.count == 1 {
                 0.5
@@ -204,7 +320,7 @@ impl Spacing {
             };
             super::linear::interpolate(self.range, t)
         } else {
-            let e = self.extent(i)?;
+            let e = self.finite_extent(i)?;
             Ok(e.minimum() + self.bandwidth * 0.5)
         }
     }
@@ -218,8 +334,20 @@ impl Spacing {
         Ok(self.count > 0 && self.range.contains(p))
     }
     pub(crate) fn band_at(&self, p: f64) -> ChartResult<Option<usize>> {
-        if !self.validate_position(p)? {
+        if !self.validate_position(p)? || !self.supports_lookup() {
             return Ok(None);
+        }
+        if let Some(ReferenceSpacing::Finite(view)) = self.reference_view {
+            if view.start() == view.end() {
+                return Ok((p == self.finite_center(0)?).then_some(0));
+            }
+            let value = super::linear::interpolate(view, super::linear::fraction(self.range, p)?)?;
+            let slot = value - 1. + (1. - self.inner) / 2.;
+            if slot < 0. {
+                return Ok(None);
+            }
+            let i = (slot.floor() as usize).min(self.count - 1);
+            return Ok(self.finite_extent(i)?.contains(p).then_some(i));
         }
         if self.compatibility == ScaleCompatibility::Legacy {
             let slot = super::linear::fraction(self.range, p)? * self.denominator - self.outer;
@@ -228,12 +356,14 @@ impl Spacing {
             }
             let i = slot.floor() as usize;
             if i >= self.count {
-                return Ok((p == self.extent(self.count - 1)?.end()).then_some(self.count - 1));
+                return Ok(
+                    (p == self.finite_extent(self.count - 1)?.end()).then_some(self.count - 1)
+                );
             }
             return Ok((slot - i as f64 <= 1. - self.inner).then_some(i));
         }
         if self.step == 0. {
-            return Ok(self.extent(0)?.contains(p).then_some(0));
+            return Ok(self.finite_extent(0)?.contains(p).then_some(0));
         }
         let slot = ((p - self.start) / self.step).floor();
         if slot < 0. {
@@ -245,13 +375,13 @@ impl Spacing {
         } else {
             physical
         };
-        Ok(self.extent(i)?.contains(p).then_some(i))
+        Ok(self.finite_extent(i)?.contains(p).then_some(i))
     }
     pub(crate) fn point_at(&self, p: f64) -> ChartResult<Option<usize>> {
-        if !self.validate_position(p)? {
+        if !self.validate_position(p)? || !self.supports_lookup() {
             return Ok(None);
         }
-        if self.center(0)? == self.center(self.count - 1)? {
+        if self.finite_center(0)? == self.finite_center(self.count - 1)? {
             return Ok(Some(0));
         }
         // Binary search the prepared centers; use the original normalized distance for
@@ -261,7 +391,7 @@ impl Spacing {
         let mut hi = self.count;
         while lo < hi {
             let mid = lo + (hi - lo) / 2;
-            let center = self.center(mid)?;
+            let center = self.finite_center(mid)?;
             if if reverse { center > p } else { center < p } {
                 lo = mid + 1;
             } else {
@@ -269,7 +399,7 @@ impl Spacing {
             }
         }
         let distance = |i| -> ChartResult<f64> {
-            let c = self.center(i)?;
+            let c = self.finite_center(i)?;
             Ok(if self.compatibility == ScaleCompatibility::Legacy {
                 (super::linear::fraction(self.range, c)? - super::linear::fraction(self.range, p)?)
                     .abs()
@@ -301,6 +431,16 @@ impl Spacing {
     }
 
     pub(crate) fn step(&self) -> f64 {
+        if !self.supports_lookup() {
+            return 0.;
+        }
+        if let Some(ReferenceSpacing::Finite(view)) = self.reference_view {
+            return if view.start() == view.end() {
+                0.
+            } else {
+                ((self.range.end() - self.range.start()) / (view.end() - view.start())).abs()
+            };
+        }
         if self.compatibility == ScaleCompatibility::D3 {
             self.step
         } else {
@@ -374,6 +514,7 @@ impl<K: Ord + Clone> CategoryScale<K> {
             .get(key)
             .map(|&i| self.spacing.center(i))
             .transpose()
+            .map(Option::flatten)
     }
     /// Edges oriented with the authored range.
     pub fn extent(&self, key: &K) -> ChartResult<Option<Bounds>> {
@@ -381,6 +522,7 @@ impl<K: Ord + Clone> CategoryScale<K> {
             .get(key)
             .map(|&i| self.spacing.extent(i))
             .transpose()
+            .map(Option::flatten)
     }
     /// Nonnegative interval between starts.
     pub fn step(&self) -> f64 {
@@ -390,4 +532,18 @@ impl<K: Ord + Clone> CategoryScale<K> {
     pub fn bandwidth(&self) -> f64 {
         self.spacing.bandwidth()
     }
+}
+
+/// Numeric positions trained by observed categories, independent of retained levels.
+pub(crate) fn observed_extent(
+    indices: impl Iterator<Item = usize>,
+    has_observations: bool,
+) -> Option<[crate::interpolate::Number; 2]> {
+    use crate::interpolate::Number;
+    let mut indices = indices;
+    let Some(first) = indices.next() else {
+        return has_observations.then_some([Number(f64::INFINITY), Number(f64::NEG_INFINITY)]);
+    };
+    let (low, high) = indices.fold((first, first), |(low, high), i| (low.min(i), high.max(i)));
+    Some([Number(1. + low as f64), Number(1. + high as f64)])
 }

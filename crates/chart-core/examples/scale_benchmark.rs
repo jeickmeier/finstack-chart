@@ -65,6 +65,10 @@ fn main() -> ChartResult<()> {
             .map(|i| Some(Number(((i * 65537) % samples) as f64)))
             .collect();
         let mapped = MappedScaleSpec {
+            resolved_numeric_limits: None,
+            limits_function: None,
+            guide: None,
+            ggplot: None,
             catalog: None,
             function: ScaleFunctionSpec::Classifier(ClassifierSpec {
                 domain: ClassifierDomain::Quantile(vec![]),

@@ -54,7 +54,8 @@ fn profile_provenance_grouping_and_revision_survive_primary_and_legacy_round_tri
     let wire = gg.to_json().unwrap();
     assert_eq!(Plot::from_json(&wire).unwrap().to_json().unwrap(), wire);
     let mut value: serde_json::Value = serde_json::from_str(&wire).unwrap();
-    assert_eq!(value["version"], 3);
+    // GG-04 adds a retained, population-trained default hue scale.
+    assert_eq!(value["version"], 17);
     value["profile"] = "LibraryV1".into();
     assert!(Plot::from_json(&value.to_string()).is_err());
     let changed = gg.edit().profile(Profile::LibraryV1).build().unwrap();
@@ -86,7 +87,7 @@ fn profile_provenance_grouping_and_revision_survive_primary_and_legacy_round_tri
             .all(|m| m.group == GroupValue::All)
     );
     let normalized = chart_core::portable::ChartEnvelope {
-        version: 3,
+        version: 17,
         definition: gg.definition().clone(),
     };
     normalized.validate().unwrap();

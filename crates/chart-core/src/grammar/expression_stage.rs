@@ -84,12 +84,23 @@ fn layer(
     for filter in &mut layer.filters {
         f(&mut filter.value)?;
     }
-    if let Some(ColorEncoding {
-        input: ColorInput::Numeric(n),
-        ..
-    }) = &mut layer.color
+    for encoding in layer
+        .color
+        .iter_mut()
+        .chain(layer.paint_scales.values_mut())
     {
-        f(n)?;
+        if let ColorInput::Numeric(n) = &mut encoding.input {
+            f(n)?;
+        }
+    }
+    for encoding in layer
+        .numeric_scales
+        .values_mut()
+        .chain(layer.value_scales.values_mut())
+    {
+        if let ColorInput::Numeric(n) = &mut encoding.input {
+            f(n)?;
+        }
     }
     Ok(())
 }
@@ -187,9 +198,12 @@ pub(super) fn has_expressions(d: &ChartDefinition) -> bool {
                 || l.grammar.as_ref().is_some_and(|g| has_aes(&g.source))
                 || has_stat(&l.statistic)
                 || l.filters.iter().any(|f| has_numeric(&f.value))
-                || l.color
-                    .as_ref()
-                    .is_some_and(|c| matches!(&c.input,ColorInput::Numeric(n) if has_numeric(n)))
+                || super::colors::encodings(l)
+                    .any(|c| matches!(&c.input,ColorInput::Numeric(n) if has_numeric(n)))
+                || l.numeric_scales
+                    .values()
+                    .chain(l.value_scales.values())
+                    .any(|c| matches!(&c.input,ColorInput::Numeric(n) if has_numeric(n)))
         })
         || d.transforms.iter().any(|t| {
             has_stat(&t.statistic)

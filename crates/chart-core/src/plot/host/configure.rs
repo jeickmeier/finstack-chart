@@ -74,11 +74,45 @@ impl Component {
                 "size" => b.clone().size(a.mapping()?),
                 "group" => b.clone().group(a.mapping()?),
                 "color" => b.clone().color(a.mapping()?),
+                "fill" => b.clone().fill(a.mapping()?),
+                "stroke" => b.clone().stroke(a.mapping()?),
+                "shape" => b.clone().shape(a.mapping()?),
+                "linetype" => b.clone().linetype(a.mapping()?),
+                "alpha" => b.clone().alpha(a.mapping()?),
+                "linewidth" => b.clone().linewidth(a.mapping()?),
+                "fill_scale" => string!(a, b, fill_scale),
+                "stroke_scale" => string!(a, b, stroke_scale),
                 "group_all" => empty!(a, b, group_all),
                 "color_scale" => string!(a, b, color_scale),
                 _ => return Err(unsupported(method)),
             }),
             Kind::Layer(b) => Kind::Layer(match method {
+                "hierarchy_value" => b.clone().hierarchy_value(a.mapping()?),
+                "hierarchy_label" => b.clone().hierarchy_label(a.mapping()?),
+                "hierarchy_layout" => scalar!(a, b, hierarchy_layout),
+                "hierarchy_projection" => scalar!(a, b, hierarchy_projection),
+                "hierarchy_order" => scalar!(a, b, hierarchy_order),
+                "hierarchy_limits" => scalar!(a, b, hierarchy_limits),
+                "hierarchy_aggregation" => {
+                    use crate::grammar::HierarchyAggregation as A;
+                    b.clone()
+                        .hierarchy_aggregation(match a.one::<A<String>>()? {
+                            A::Count => A::Count,
+                            A::Sum(name) => A::Sum(name.into()),
+                            A::Registered(op) => A::Registered(op),
+                        })
+                }
+                "hierarchy_source" => {
+                    use crate::grammar::HierarchySource as S;
+                    b.clone().hierarchy_source(match a.one::<S<String>>()? {
+                        S::Paths(name) => S::Paths(name.into()),
+                        S::Table { id, parent } => S::Table {
+                            id: id.map(Into::into),
+                            parent: parent.map(Into::into),
+                        },
+                    })
+                }
+
                 "symbol_kind" => scalar!(a, b, symbol_kind),
                 "symbol_size" => scalar!(a, b, symbol_size),
                 "symbol_paint" => scalar!(a, b, symbol_paint),
@@ -117,6 +151,22 @@ impl Component {
                     let input = numeric_input(&a.0[1])?;
                     b.clone().numeric_scale(a.at(0)?, input, a.at(2)?)
                 }
+                "value_scale" => {
+                    a.count(3)?;
+                    b.clone()
+                        .value_scale(a.at(0)?, numeric_input(&a.0[1])?, a.at(2)?)
+                }
+                "aesthetic_value" => {
+                    a.count(2)?;
+                    b.clone().aesthetic_value(a.at(0)?, a.at(1)?)
+                }
+                "aesthetic_units" => scalar!(a, b, aesthetic_units),
+                "line_type" => scalar!(a, b, line_type),
+                "radius" => scalar!(a, b, radius),
+                "linewidth" => scalar!(a, b, linewidth),
+                "alpha" => scalar!(a, b, alpha),
+                "fill" => b.clone().fill(a.color()?),
+                "stroke" => b.clone().stroke(a.color()?),
                 "orientation" => scalar!(a, b, orientation),
                 "name" => string!(a, b, name),
                 "from_transform" => string!(a, b, from_transform),
@@ -249,8 +299,37 @@ impl Component {
                 _ => return Err(unsupported(method)),
             }),
             Kind::Axis(b) => Kind::Axis(match method {
+                "expansion" => scalar!(a, b, expansion),
+                "discrete_policy" => scalar!(a, b, discrete_policy),
+                "continuous_limits" => {
+                    let values = a
+                        .one::<Option<Vec<Value>>>()?
+                        .map(|values| {
+                            values
+                                .into_iter()
+                                .map(|value| match value {
+                                    Value::Bool(value) => {
+                                        Ok(crate::interpolate::Number(if value { 1. } else { 0. }))
+                                    }
+                                    value => serde_json::from_value(value).map_err(|e| {
+                                        error(DiagnosticCode::Validation, e.to_string())
+                                    }),
+                                })
+                                .collect::<ChartResult<Vec<_>>>()
+                        })
+                        .transpose()?;
+                    b.clone().continuous_limits(values)
+                }
                 "guide_profile" => scalar!(a, b, guide_profile),
+                "guide_components" => scalar!(a, b, guide_components),
+                "guide_geometry" => scalar!(a, b, guide_geometry),
+                "tick_size" => scalar!(a, b, tick_size),
+                "tick_size_inner" => scalar!(a, b, tick_size_inner),
+                "tick_size_outer" => scalar!(a, b, tick_size_outer),
+                "tick_padding" => scalar!(a, b, tick_padding),
+                "tick_offset" => scalar!(a, b, tick_offset),
                 "tick_arguments" => scalar!(a, b, tick_arguments),
+                "minor_breaks" => scalar!(a, b, minor_breaks),
                 "tick_format" => b.clone().tick_format(guide_formatter(a.one()?)?),
                 "tick_values" => b.clone().tick_values(
                     a.one::<Option<Vec<Value>>>()?
@@ -284,11 +363,23 @@ impl Component {
                     a.count(3)?;
                     b.clone().secondary(a.at::<String>(0)?, a.at(1)?, a.at(2)?)
                 }
+                "secondary_transform" => {
+                    a.count(2)?;
+                    b.clone().secondary_transform(a.at::<String>(0)?, a.at(1)?)
+                }
                 _ => return Err(unsupported(method)),
             }),
             Kind::Guide(b) => Kind::Guide(match method {
                 "guide_profile" => scalar!(a, b, guide_profile),
+                "guide_components" => scalar!(a, b, guide_components),
+                "guide_geometry" => scalar!(a, b, guide_geometry),
+                "tick_size" => scalar!(a, b, tick_size),
+                "tick_size_inner" => scalar!(a, b, tick_size_inner),
+                "tick_size_outer" => scalar!(a, b, tick_size_outer),
+                "tick_padding" => scalar!(a, b, tick_padding),
+                "tick_offset" => scalar!(a, b, tick_offset),
                 "tick_arguments" => scalar!(a, b, tick_arguments),
+                "minor_breaks" => scalar!(a, b, minor_breaks),
                 "tick_format" => b.clone().tick_format(guide_formatter(a.one()?)?),
                 "tick_values" => b.clone().tick_values(
                     a.one::<Option<Vec<Value>>>()?
@@ -512,6 +603,7 @@ impl Component {
                 _ => return Err(unsupported(method)),
             }),
             Kind::Layout(b) => Kind::Layout(match method {
+                "device_scale" => scalar!(a, b, device_scale),
                 "font_size" => scalar!(a, b, font_size),
                 "padding" => scalar!(a, b, padding),
                 "minimum_plot" => scalar!(a, b, minimum_plot),

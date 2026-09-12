@@ -1,4 +1,5 @@
 //! Indexed inspection and selection of the exact immutable presented scene.
+mod hierarchy;
 mod index;
 mod selection;
 use crate::grammar::Geom;
@@ -143,6 +144,7 @@ impl Inspector {
         for data in presented.prepared().source().get()?.datasets() {
             data.prepare_lookup();
         }
+        let hierarchy_values = hierarchy::HierarchyValues::new(&presented)?;
         let mut candidates = vec![];
         let mut remaining_shape_vertices = 1_000_000;
         let mut paint_group = None;
@@ -238,7 +240,11 @@ impl Inspector {
                     .iter()
                     .zip(targets)
                     .map(|(p, target)| InspectedTarget {
-                        values: vec![],
+                        values: hierarchy_values.get(
+                            &presented.item_panels()[index],
+                            layer,
+                            target,
+                        ),
                         selection: crate::grammar::SelectionPolicy::AtomicTarget,
                         panel: presented.item_panels()[index].clone(),
                         layer,

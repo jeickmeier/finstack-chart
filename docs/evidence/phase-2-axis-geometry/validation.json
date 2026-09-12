@@ -1,0 +1,17 @@
+{
+  "revision": "a6caa39e8e50d5100f0af0ff59d342f4cae4b6ec",
+  "macos_tests": 437,
+  "core_axis_geometry_tests": 7,
+  "reference_cases": 372,
+  "reference_states": 376,
+  "reference_tolerance": 1e-09,
+  "actual_hosts": [
+    "Rust",
+    "Python 3.14.6",
+    "Node 24.14.0 / WASM"
+  ],
+  "native_inspection": "native.png, retina window at device scale 2; host supplies window scale factor",
+  "native_expected": "Signed inward ticks, reversed range, negative top padding, three repeated lower labels and translated zero-size guide match the declared geometry.",
+  "export_inspection": "Rust PNG, supplied-font external SVG renderer and Poppler PDF inspection passed; negative top padding deliberately places labels across domain path.",
+  "scope": "AXIS-04 only; component styling, transitions and final platform/publication certification remain AX04-06."
+}

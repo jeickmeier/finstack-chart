@@ -132,6 +132,26 @@ impl Inspector {
                     input.revision.get()
                 )
             }
+            Target::HierarchyNode {
+                hierarchy,
+                node,
+                input,
+                membership,
+            } => {
+                if source.dataset(input.dataset)?.version() != *input {
+                    return Err(invalid(
+                        "Hierarchy description requires its exact input revision.",
+                    ));
+                }
+                member_count = Some(membership.members().len());
+                format!(
+                    "Hierarchy {} node {:?}; {} source members; input revision {}",
+                    hierarchy.get(),
+                    node,
+                    membership.members().len(),
+                    input.revision.get()
+                )
+            }
             Target::Derived {
                 id,
                 model,

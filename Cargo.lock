@@ -976,7 +976,6 @@ dependencies = [
  "chart-export",
  "chart-extension-example",
  "gpui-charts",
- "gpui-charts-kit",
  "gpui-kit",
  "gpui-pre",
  "gpui-pre-platform",
@@ -2455,15 +2454,6 @@ dependencies = [
  "gpui-pre",
  "serde_json",
  "ttf-parser",
-]
-
-[[package]]
-name = "gpui-charts-kit"
-version = "0.1.0"
-dependencies = [
- "chart-core",
- "gpui-charts",
- "gpui-kit",
 ]
 
 [[package]]

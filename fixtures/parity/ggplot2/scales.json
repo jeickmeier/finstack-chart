@@ -1,0 +1,5550 @@
+{
+  "reference": "ggplot2 4.0.3 / scales 1.4.0 / R 4.6.1 r90187",
+  "cases": [
+    {
+      "id": "continuous  censor",
+      "kind": "continuous",
+      "args": {
+        "limits": null,
+        "oob": "censor"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          7
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#28547A",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous  censor_any",
+      "kind": "continuous",
+      "args": {
+        "limits": null,
+        "oob": "censor_any"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          7
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#28547A",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous  squish",
+      "kind": "continuous",
+      "args": {
+        "limits": null,
+        "oob": "squish"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          7
+        ],
+        "mapped": [
+          "grey50",
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#28547A",
+          "#56B1F7",
+          "#56B1F7",
+          "#56B1F7",
+          "#56B1F7",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous  squish_any",
+      "kind": "continuous",
+      "args": {
+        "limits": null,
+        "oob": "squish_any"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          7
+        ],
+        "mapped": [
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#28547A",
+          "#56B1F7",
+          "#56B1F7",
+          "#56B1F7",
+          "#56B1F7",
+          "#56B1F7",
+          "grey50"
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous  keep",
+      "kind": "continuous",
+      "args": {
+        "limits": null,
+        "oob": "keep"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          7
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#28547A",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous  squish_infinite",
+      "kind": "continuous",
+      "args": {
+        "limits": null,
+        "oob": "squish_infinite"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          7
+        ],
+        "mapped": [
+          "#132B43",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#28547A",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50",
+          "#56B1F7",
+          "grey50"
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous 0:10 censor",
+      "kind": "continuous",
+      "args": {
+        "limits": [0, 10],
+        "oob": "censor"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          10
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#142C45",
+          "#193753",
+          "#265075",
+          "#4186BD",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous 0:10 censor_any",
+      "kind": "continuous",
+      "args": {
+        "limits": [0, 10],
+        "oob": "censor_any"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          10
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#142C45",
+          "#193753",
+          "#265075",
+          "#4186BD",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous 0:10 squish",
+      "kind": "continuous",
+      "args": {
+        "limits": [0, 10],
+        "oob": "squish"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          10
+        ],
+        "mapped": [
+          "grey50",
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#142C45",
+          "#193753",
+          "#265075",
+          "#4186BD",
+          "#56B1F7",
+          "#56B1F7",
+          "#56B1F7",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous 0:10 squish_any",
+      "kind": "continuous",
+      "args": {
+        "limits": [0, 10],
+        "oob": "squish_any"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          10
+        ],
+        "mapped": [
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#142C45",
+          "#193753",
+          "#265075",
+          "#4186BD",
+          "#56B1F7",
+          "#56B1F7",
+          "#56B1F7",
+          "#56B1F7",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous 0:10 keep",
+      "kind": "continuous",
+      "args": {
+        "limits": [0, 10],
+        "oob": "keep"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          10
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#142C45",
+          "#193753",
+          "#265075",
+          "#4186BD",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous 0:10 squish_infinite",
+      "kind": "continuous",
+      "args": {
+        "limits": [0, 10],
+        "oob": "squish_infinite"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          10
+        ],
+        "mapped": [
+          "#132B43",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#142C45",
+          "#193753",
+          "#265075",
+          "#4186BD",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "#56B1F7",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous NA:10 censor",
+      "kind": "continuous",
+      "args": {
+        "limits": ["NA", 10],
+        "oob": "censor"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          10
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#214667",
+          "#3E81B7",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous NA:10 censor_any",
+      "kind": "continuous",
+      "args": {
+        "limits": ["NA", 10],
+        "oob": "censor_any"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          10
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#214667",
+          "#3E81B7",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous NA:10 squish",
+      "kind": "continuous",
+      "args": {
+        "limits": ["NA", 10],
+        "oob": "squish"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          10
+        ],
+        "mapped": [
+          "grey50",
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#214667",
+          "#3E81B7",
+          "#56B1F7",
+          "#56B1F7",
+          "#56B1F7",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous NA:10 squish_any",
+      "kind": "continuous",
+      "args": {
+        "limits": ["NA", 10],
+        "oob": "squish_any"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          10
+        ],
+        "mapped": [
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#214667",
+          "#3E81B7",
+          "#56B1F7",
+          "#56B1F7",
+          "#56B1F7",
+          "#56B1F7",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous NA:10 keep",
+      "kind": "continuous",
+      "args": {
+        "limits": ["NA", 10],
+        "oob": "keep"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          10
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#214667",
+          "#3E81B7",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous NA:10 squish_infinite",
+      "kind": "continuous",
+      "args": {
+        "limits": ["NA", 10],
+        "oob": "squish_infinite"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          10
+        ],
+        "mapped": [
+          "#132B43",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#214667",
+          "#3E81B7",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "#56B1F7",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous 0:NA censor",
+      "kind": "continuous",
+      "args": {
+        "limits": [0, "NA"],
+        "oob": "censor"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          7
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#142D45",
+          "#1C3C5A",
+          "#2E618B",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2,
+          4,
+          6,
+          8
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous 0:NA censor_any",
+      "kind": "continuous",
+      "args": {
+        "limits": [0, "NA"],
+        "oob": "censor_any"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          7
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#142D45",
+          "#1C3C5A",
+          "#2E618B",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2,
+          4,
+          6,
+          8
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous 0:NA squish",
+      "kind": "continuous",
+      "args": {
+        "limits": [0, "NA"],
+        "oob": "squish"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          7
+        ],
+        "mapped": [
+          "grey50",
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#142D45",
+          "#1C3C5A",
+          "#2E618B",
+          "#56B1F7",
+          "#56B1F7",
+          "#56B1F7",
+          "#56B1F7",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2,
+          4,
+          6,
+          8
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous 0:NA squish_any",
+      "kind": "continuous",
+      "args": {
+        "limits": [0, "NA"],
+        "oob": "squish_any"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          7
+        ],
+        "mapped": [
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#132B43",
+          "#142D45",
+          "#1C3C5A",
+          "#2E618B",
+          "#56B1F7",
+          "#56B1F7",
+          "#56B1F7",
+          "#56B1F7",
+          "#56B1F7",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2,
+          4,
+          6,
+          8
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous 0:NA keep",
+      "kind": "continuous",
+      "args": {
+        "limits": [0, "NA"],
+        "oob": "keep"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          7
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#142D45",
+          "#1C3C5A",
+          "#2E618B",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2,
+          4,
+          6,
+          8
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "continuous 0:NA squish_infinite",
+      "kind": "continuous",
+      "args": {
+        "limits": [0, "NA"],
+        "oob": "squish_infinite"
+      },
+      "train": [
+        1,
+        3,
+        7,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          7
+        ],
+        "mapped": [
+          "#132B43",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#142D45",
+          "#1C3C5A",
+          "#2E618B",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50",
+          "#56B1F7",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2,
+          4,
+          6,
+          8
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "transform log10",
+      "kind": "transformed",
+      "args": {
+        "transform": "log10"
+      },
+      "train": [
+        0.1,
+        1,
+        10,
+        100
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          -1,
+          2
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#28547A",
+          "#326997",
+          "#3B7AAD",
+          "#3E81B7",
+          "#458FCA",
+          "#56B1F7",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          -1,
+          0,
+          1,
+          2
+        ]
+      },
+      "warnings": [
+        "NaNs produced",
+        "log-10 transformation introduced infinite values."
+      ]
+    },
+    {
+      "id": "transform sqrt",
+      "kind": "transformed",
+      "args": {
+        "transform": "sqrt"
+      },
+      "train": [
+        0.1,
+        1,
+        10,
+        100
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0.316227766016838,
+          10
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "#132B43",
+          "#17334E",
+          "#1C3C5B",
+          "#22486A",
+          "#254F73",
+          "#2E618B",
+          "#56B1F7",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          5,
+          7.07106781186548,
+          8.66025403784439,
+          10
+        ]
+      },
+      "warnings": [
+        "NaNs produced",
+        "sqrt transformation introduced infinite values."
+      ]
+    },
+    {
+      "id": "transform reverse",
+      "kind": "transformed",
+      "args": {
+        "transform": "reverse"
+      },
+      "train": [
+        0.1,
+        1,
+        10,
+        100
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -10,
+        -1,
+        0,
+        0.1,
+        1,
+        3,
+        7,
+        10,
+        20,
+        100,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          -100,
+          -0.1
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "#56B1F7",
+          "#55B0F5",
+          "#54ADF1",
+          "#51A7E9",
+          "#4FA2E3",
+          "#4894D0",
+          "#132B43",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          -0,
+          -25,
+          -50,
+          -75,
+          -100
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "discrete TRUE TRUE TRUE",
+      "kind": "discrete",
+      "args": {
+        "drop": true,
+        "na_translate": true,
+        "levels": ["c", "b", "a"]
+      },
+      "train": [
+        "b",
+        "a",
+        "b",
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        "unknown",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "b",
+          "a",
+          {
+            "number": "NA"
+          }
+        ],
+        "mapped": [
+          "#00BFC4",
+          "#F8766D",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          "b",
+          "a",
+          {
+            "number": "NA"
+          }
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "discrete TRUE TRUE FALSE",
+      "kind": "discrete",
+      "args": {
+        "drop": true,
+        "na_translate": true,
+        "levels": null
+      },
+      "train": [
+        "b",
+        "a",
+        "b",
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        "unknown",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          {
+            "number": "NA"
+          }
+        ],
+        "mapped": [
+          "#F8766D",
+          "#00BFC4",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          "a",
+          "b",
+          {
+            "number": "NA"
+          }
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "discrete TRUE FALSE TRUE",
+      "kind": "discrete",
+      "args": {
+        "drop": true,
+        "na_translate": false,
+        "levels": ["c", "b", "a"]
+      },
+      "train": [
+        "b",
+        "a",
+        "b",
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        "unknown",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "b",
+          "a"
+        ],
+        "mapped": [
+          "#00BFC4",
+          "#F8766D",
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          "b",
+          "a"
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "discrete TRUE FALSE FALSE",
+      "kind": "discrete",
+      "args": {
+        "drop": true,
+        "na_translate": false,
+        "levels": null
+      },
+      "train": [
+        "b",
+        "a",
+        "b",
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        "unknown",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b"
+        ],
+        "mapped": [
+          "#F8766D",
+          "#00BFC4",
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          "a",
+          "b"
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "discrete FALSE TRUE TRUE",
+      "kind": "discrete",
+      "args": {
+        "drop": false,
+        "na_translate": true,
+        "levels": ["c", "b", "a"]
+      },
+      "train": [
+        "b",
+        "a",
+        "b",
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        "unknown",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "c",
+          "b",
+          "a",
+          {
+            "number": "NA"
+          }
+        ],
+        "mapped": [
+          "#619CFF",
+          "#00BA38",
+          "#F8766D",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          "c",
+          "b",
+          "a",
+          {
+            "number": "NA"
+          }
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "discrete FALSE TRUE FALSE",
+      "kind": "discrete",
+      "args": {
+        "drop": false,
+        "na_translate": true,
+        "levels": null
+      },
+      "train": [
+        "b",
+        "a",
+        "b",
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        "unknown",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          {
+            "number": "NA"
+          }
+        ],
+        "mapped": [
+          "#F8766D",
+          "#00BFC4",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          "a",
+          "b",
+          {
+            "number": "NA"
+          }
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "discrete FALSE FALSE TRUE",
+      "kind": "discrete",
+      "args": {
+        "drop": false,
+        "na_translate": false,
+        "levels": ["c", "b", "a"]
+      },
+      "train": [
+        "b",
+        "a",
+        "b",
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        "unknown",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "c",
+          "b",
+          "a"
+        ],
+        "mapped": [
+          "#619CFF",
+          "#00BA38",
+          "#F8766D",
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          "c",
+          "b",
+          "a"
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "discrete FALSE FALSE FALSE",
+      "kind": "discrete",
+      "args": {
+        "drop": false,
+        "na_translate": false,
+        "levels": null
+      },
+      "train": [
+        "b",
+        "a",
+        "b",
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        "unknown",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b"
+        ],
+        "mapped": [
+          "#F8766D",
+          "#00BFC4",
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          "a",
+          "b"
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "manual TRUE ",
+      "kind": "manual",
+      "args": {
+        "named": true,
+        "limits": null,
+        "values": ["red", "blue"]
+      },
+      "train": [
+        "a",
+        "c",
+        "b"
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b"
+        ],
+        "mapped": [
+          "blue",
+          "red",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          "a",
+          "b"
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "manual TRUE b:a",
+      "kind": "manual",
+      "args": {
+        "named": true,
+        "limits": ["b", "a"],
+        "values": ["red", "blue"]
+      },
+      "train": [
+        "a",
+        "c",
+        "b"
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "b",
+          "a"
+        ],
+        "mapped": [
+          "blue",
+          "red",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          "b",
+          "a"
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "manual FALSE ",
+      "kind": "manual",
+      "args": {
+        "named": false,
+        "limits": null,
+        "values": ["red", "blue"]
+      },
+      "train": [
+        "a",
+        "c",
+        "b"
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "error": "Insufficient values in manual scale. 3 needed but only 2 provided."
+      },
+      "warnings": []
+    },
+    {
+      "id": "manual FALSE b:a",
+      "kind": "manual",
+      "args": {
+        "named": false,
+        "limits": ["b", "a"],
+        "values": ["red", "blue"]
+      },
+      "train": [
+        "a",
+        "c",
+        "b"
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "b",
+          "a"
+        ],
+        "mapped": [
+          "blue",
+          "red",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          "b",
+          "a"
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "sizing size ",
+      "kind": "sizing",
+      "args": {
+        "kind": "size",
+        "limits": null
+      },
+      "train": [
+        1,
+        4,
+        9,
+        16
+      ],
+      "input": [
+        0,
+        1,
+        4,
+        9,
+        16,
+        20,
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          16
+        ],
+        "mapped": [
+          {
+            "number": "NA"
+          },
+          1,
+          3.23606797749979,
+          4.65148371670111,
+          6,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          0,
+          4,
+          8,
+          12,
+          16
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "sizing size 0:16",
+      "kind": "sizing",
+      "args": {
+        "kind": "size",
+        "limits": [0, 16]
+      },
+      "train": [
+        1,
+        4,
+        9,
+        16
+      ],
+      "input": [
+        0,
+        1,
+        4,
+        9,
+        16,
+        20,
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          16
+        ],
+        "mapped": [
+          1,
+          2.25,
+          3.5,
+          4.75,
+          6,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          0,
+          4,
+          8,
+          12,
+          16
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "sizing size_area ",
+      "kind": "sizing",
+      "args": {
+        "kind": "size_area",
+        "limits": null
+      },
+      "train": [
+        1,
+        4,
+        9,
+        16
+      ],
+      "input": [
+        0,
+        1,
+        4,
+        9,
+        16,
+        20,
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          16
+        ],
+        "mapped": [
+          {
+            "number": "NA"
+          },
+          1.5,
+          3,
+          4.5,
+          6,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          0,
+          4,
+          8,
+          12,
+          16
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "sizing size_area 0:16",
+      "kind": "sizing",
+      "args": {
+        "kind": "size_area",
+        "limits": [0, 16]
+      },
+      "train": [
+        1,
+        4,
+        9,
+        16
+      ],
+      "input": [
+        0,
+        1,
+        4,
+        9,
+        16,
+        20,
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          16
+        ],
+        "mapped": [
+          0,
+          1.5,
+          3,
+          4.5,
+          6,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          0,
+          4,
+          8,
+          12,
+          16
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "sizing radius ",
+      "kind": "sizing",
+      "args": {
+        "kind": "radius",
+        "limits": null
+      },
+      "train": [
+        1,
+        4,
+        9,
+        16
+      ],
+      "input": [
+        0,
+        1,
+        4,
+        9,
+        16,
+        20,
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          16
+        ],
+        "mapped": [
+          {
+            "number": "NA"
+          },
+          1,
+          2,
+          3.66666666666667,
+          6,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          0,
+          4,
+          8,
+          12,
+          16
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "sizing radius 0:16",
+      "kind": "sizing",
+      "args": {
+        "kind": "radius",
+        "limits": [0, 16]
+      },
+      "train": [
+        1,
+        4,
+        9,
+        16
+      ],
+      "input": [
+        0,
+        1,
+        4,
+        9,
+        16,
+        20,
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          16
+        ],
+        "mapped": [
+          1,
+          1.3125,
+          2.25,
+          3.8125,
+          6,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          0,
+          4,
+          8,
+          12,
+          16
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "sizing alpha ",
+      "kind": "sizing",
+      "args": {
+        "kind": "alpha",
+        "limits": null
+      },
+      "train": [
+        1,
+        4,
+        9,
+        16
+      ],
+      "input": [
+        0,
+        1,
+        4,
+        9,
+        16,
+        20,
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          16
+        ],
+        "mapped": [
+          {
+            "number": "NA"
+          },
+          0.1,
+          0.28,
+          0.58,
+          1,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          0,
+          4,
+          8,
+          12,
+          16
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "sizing alpha 0:16",
+      "kind": "sizing",
+      "args": {
+        "kind": "alpha",
+        "limits": [0, 16]
+      },
+      "train": [
+        1,
+        4,
+        9,
+        16
+      ],
+      "input": [
+        0,
+        1,
+        4,
+        9,
+        16,
+        20,
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          16
+        ],
+        "mapped": [
+          0.1,
+          0.15625,
+          0.325,
+          0.60625,
+          1,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          0,
+          4,
+          8,
+          12,
+          16
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "sizing linewidth ",
+      "kind": "sizing",
+      "args": {
+        "kind": "linewidth",
+        "limits": null
+      },
+      "train": [
+        1,
+        4,
+        9,
+        16
+      ],
+      "input": [
+        0,
+        1,
+        4,
+        9,
+        16,
+        20,
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          16
+        ],
+        "mapped": [
+          {
+            "number": "NA"
+          },
+          1,
+          2,
+          3.66666666666667,
+          6,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          0,
+          4,
+          8,
+          12,
+          16
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "sizing linewidth 0:16",
+      "kind": "sizing",
+      "args": {
+        "kind": "linewidth",
+        "limits": [0, 16]
+      },
+      "train": [
+        1,
+        4,
+        9,
+        16
+      ],
+      "input": [
+        0,
+        1,
+        4,
+        9,
+        16,
+        20,
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          16
+        ],
+        "mapped": [
+          1,
+          1.3125,
+          2.25,
+          3.8125,
+          6,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          0,
+          4,
+          8,
+          12,
+          16
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned  TRUE nice",
+      "kind": "binned",
+      "args": {
+        "limits": null,
+        "right": true,
+        "mode": "nice",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          7
+        ],
+        "mapped": [
+          "grey50",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#22496C",
+          "#2D5F89",
+          "#448DC6",
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned  TRUE equal",
+      "kind": "binned",
+      "args": {
+        "limits": null,
+        "right": true,
+        "mode": "equal",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          6.7
+        ],
+        "mapped": [
+          "grey50",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#22496C",
+          "#3875A7",
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          2.11666666666667,
+          3.03333333333333,
+          3.95,
+          4.86666666666667,
+          5.78333333333333
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned  TRUE fixed",
+      "kind": "binned",
+      "args": {
+        "limits": null,
+        "right": true,
+        "mode": "fixed",
+        "breaks": [2, 4, 6],
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          6.7
+        ],
+        "mapped": [
+          "grey50",
+          "#17344F",
+          "#17344F",
+          "#17344F",
+          "#17344F",
+          "#17344F",
+          "#275379",
+          "#275379",
+          "#4084BB",
+          "#51A8EA",
+          "#51A8EA",
+          "#51A8EA",
+          "#51A8EA",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          2,
+          4,
+          6
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned  TRUE outside",
+      "kind": "binned",
+      "args": {
+        "limits": null,
+        "right": true,
+        "mode": "outside",
+        "breaks": [-1, 2, 4, 9],
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          6.7
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "#17344F",
+          "#275379",
+          "#275379",
+          "#448DC7",
+          "#448DC7",
+          "#448DC7",
+          "#448DC7",
+          "#448DC7",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          -1,
+          2,
+          4,
+          9
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned  TRUE none",
+      "kind": "binned",
+      "args": {
+        "limits": null,
+        "right": true,
+        "mode": "none",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          6.7
+        ],
+        "mapped": [
+          "grey50",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": []
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned  FALSE nice",
+      "kind": "binned",
+      "args": {
+        "limits": null,
+        "right": false,
+        "mode": "nice",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1,
+          7
+        ],
+        "mapped": [
+          "grey50",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#22496C",
+          "#2D5F89",
+          "#3875A7",
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned  FALSE equal",
+      "kind": "binned",
+      "args": {
+        "limits": null,
+        "right": false,
+        "mode": "equal",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          6.7
+        ],
+        "mapped": [
+          "grey50",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#22496C",
+          "#3875A7",
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          2.11666666666667,
+          3.03333333333333,
+          3.95,
+          4.86666666666667,
+          5.78333333333333
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned  FALSE fixed",
+      "kind": "binned",
+      "args": {
+        "limits": null,
+        "right": false,
+        "mode": "fixed",
+        "breaks": [2, 4, 6],
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          6.7
+        ],
+        "mapped": [
+          "grey50",
+          "#17344F",
+          "#17344F",
+          "#17344F",
+          "#17344F",
+          "#275379",
+          "#275379",
+          "#4084BB",
+          "#51A8EA",
+          "#51A8EA",
+          "#51A8EA",
+          "#51A8EA",
+          "#51A8EA",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          2,
+          4,
+          6
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned  FALSE outside",
+      "kind": "binned",
+      "args": {
+        "limits": null,
+        "right": false,
+        "mode": "outside",
+        "breaks": [-1, 2, 4, 9],
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          6.7
+        ],
+        "mapped": [
+          "grey50",
+          "#17344F",
+          "#17344F",
+          "#17344F",
+          "#17344F",
+          "#275379",
+          "#275379",
+          "#448DC7",
+          "#448DC7",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          -1,
+          2,
+          4,
+          9
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned  FALSE none",
+      "kind": "binned",
+      "args": {
+        "limits": null,
+        "right": false,
+        "mode": "none",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          6.7
+        ],
+        "mapped": [
+          "grey50",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": []
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned 0:8 TRUE nice",
+      "kind": "binned",
+      "args": {
+        "limits": [0, 8],
+        "right": true,
+        "mode": "nice",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#1B3A57",
+          "#1B3A57",
+          "#1B3A57",
+          "#1B3A57",
+          "#1B3A57",
+          "#2A5A82",
+          "#2A5A82",
+          "#3B7BAF",
+          "#4D9FDE",
+          "#4D9FDE",
+          "#4D9FDE",
+          "#4D9FDE",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2,
+          4,
+          6,
+          8
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned 0:8 TRUE equal",
+      "kind": "binned",
+      "args": {
+        "limits": [0, 8],
+        "right": true,
+        "mode": "equal",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#22496C",
+          "#2D5F89",
+          "#2D5F89",
+          "#448DC6",
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          1.33333333333333,
+          2.66666666666667,
+          4,
+          5.33333333333333,
+          6.66666666666667
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned 0:8 TRUE fixed",
+      "kind": "binned",
+      "args": {
+        "limits": [0, 8],
+        "right": true,
+        "mode": "fixed",
+        "breaks": [2, 4, 6],
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#1B3A57",
+          "#1B3A57",
+          "#1B3A57",
+          "#1B3A57",
+          "#1B3A57",
+          "#2A5A82",
+          "#2A5A82",
+          "#3B7BAF",
+          "#4D9FDE",
+          "#4D9FDE",
+          "#4D9FDE",
+          "#4D9FDE",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          2,
+          4,
+          6
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned 0:8 TRUE outside",
+      "kind": "binned",
+      "args": {
+        "limits": [0, 8],
+        "right": true,
+        "mode": "outside",
+        "breaks": [-1, 2, 4, 9],
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "#1B3A57",
+          "#1B3A57",
+          "#1B3A57",
+          "#2A5A82",
+          "#2A5A82",
+          "#448DC6",
+          "#448DC6",
+          "#448DC6",
+          "#448DC6",
+          "#448DC6",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          -1,
+          2,
+          4,
+          9
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned 0:8 TRUE none",
+      "kind": "binned",
+      "args": {
+        "limits": [0, 8],
+        "right": true,
+        "mode": "none",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": []
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned 0:8 FALSE nice",
+      "kind": "binned",
+      "args": {
+        "limits": [0, 8],
+        "right": false,
+        "mode": "nice",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#1B3A57",
+          "#1B3A57",
+          "#1B3A57",
+          "#1B3A57",
+          "#2A5A82",
+          "#2A5A82",
+          "#3B7BAF",
+          "#4D9FDE",
+          "#4D9FDE",
+          "#4D9FDE",
+          "#4D9FDE",
+          "#4D9FDE",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          0,
+          2,
+          4,
+          6,
+          8
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned 0:8 FALSE equal",
+      "kind": "binned",
+      "args": {
+        "limits": [0, 8],
+        "right": false,
+        "mode": "equal",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#22496C",
+          "#2D5F89",
+          "#3875A7",
+          "#448DC6",
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          1.33333333333333,
+          2.66666666666667,
+          4,
+          5.33333333333333,
+          6.66666666666667
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned 0:8 FALSE fixed",
+      "kind": "binned",
+      "args": {
+        "limits": [0, 8],
+        "right": false,
+        "mode": "fixed",
+        "breaks": [2, 4, 6],
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#1B3A57",
+          "#1B3A57",
+          "#1B3A57",
+          "#1B3A57",
+          "#2A5A82",
+          "#2A5A82",
+          "#3B7BAF",
+          "#4D9FDE",
+          "#4D9FDE",
+          "#4D9FDE",
+          "#4D9FDE",
+          "#4D9FDE",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          2,
+          4,
+          6
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned 0:8 FALSE outside",
+      "kind": "binned",
+      "args": {
+        "limits": [0, 8],
+        "right": false,
+        "mode": "outside",
+        "breaks": [-1, 2, 4, 9],
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#1B3A57",
+          "#1B3A57",
+          "#1B3A57",
+          "#1B3A57",
+          "#2A5A82",
+          "#2A5A82",
+          "#448DC6",
+          "#448DC6",
+          "#448DC6",
+          "#448DC6",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          -1,
+          2,
+          4,
+          9
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned 0:8 FALSE none",
+      "kind": "binned",
+      "args": {
+        "limits": [0, 8],
+        "right": false,
+        "mode": "none",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": []
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned NA:8 TRUE nice",
+      "kind": "binned",
+      "args": {
+        "limits": ["NA", 8],
+        "right": true,
+        "mode": "nice",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#17324C",
+          "#17324C",
+          "#17324C",
+          "#17324C",
+          "#17324C",
+          "#234B6E",
+          "#234B6E",
+          "#3772A3",
+          "#4B9BDA",
+          "#4B9BDA",
+          "#4B9BDA",
+          "#4B9BDA",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          2,
+          4,
+          6,
+          8
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned NA:8 TRUE equal",
+      "kind": "binned",
+      "args": {
+        "limits": ["NA", 8],
+        "right": true,
+        "mode": "equal",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#22496C",
+          "#2D5F89",
+          "#448DC6",
+          "#448DC6",
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          2.33333333333333,
+          3.46666666666667,
+          4.6,
+          5.73333333333333,
+          6.86666666666667
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned NA:8 TRUE fixed",
+      "kind": "binned",
+      "args": {
+        "limits": ["NA", 8],
+        "right": true,
+        "mode": "fixed",
+        "breaks": [2, 4, 6],
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#17324C",
+          "#17324C",
+          "#17324C",
+          "#17324C",
+          "#17324C",
+          "#234B6E",
+          "#234B6E",
+          "#3772A3",
+          "#4B9BDA",
+          "#4B9BDA",
+          "#4B9BDA",
+          "#4B9BDA",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          2,
+          4,
+          6
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned NA:8 TRUE outside",
+      "kind": "binned",
+      "args": {
+        "limits": ["NA", 8],
+        "right": true,
+        "mode": "outside",
+        "breaks": [-1, 2, 4, 9],
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "#17324C",
+          "#234B6E",
+          "#234B6E",
+          "#4187BE",
+          "#4187BE",
+          "#4187BE",
+          "#4187BE",
+          "#4187BE",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          -1,
+          2,
+          4,
+          9
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned NA:8 TRUE none",
+      "kind": "binned",
+      "args": {
+        "limits": ["NA", 8],
+        "right": true,
+        "mode": "none",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": []
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned NA:8 FALSE nice",
+      "kind": "binned",
+      "args": {
+        "limits": ["NA", 8],
+        "right": false,
+        "mode": "nice",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#17324C",
+          "#17324C",
+          "#17324C",
+          "#17324C",
+          "#234B6E",
+          "#234B6E",
+          "#3772A3",
+          "#4B9BDA",
+          "#4B9BDA",
+          "#4B9BDA",
+          "#4B9BDA",
+          "#4B9BDA",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          2,
+          4,
+          6,
+          8
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned NA:8 FALSE equal",
+      "kind": "binned",
+      "args": {
+        "limits": ["NA", 8],
+        "right": false,
+        "mode": "equal",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#183550",
+          "#22496C",
+          "#2D5F89",
+          "#448DC6",
+          "#448DC6",
+          "#50A5E7",
+          "#50A5E7",
+          "#50A5E7",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          2.33333333333333,
+          3.46666666666667,
+          4.6,
+          5.73333333333333,
+          6.86666666666667
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned NA:8 FALSE fixed",
+      "kind": "binned",
+      "args": {
+        "limits": ["NA", 8],
+        "right": false,
+        "mode": "fixed",
+        "breaks": [2, 4, 6],
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#17324C",
+          "#17324C",
+          "#17324C",
+          "#17324C",
+          "#234B6E",
+          "#234B6E",
+          "#3772A3",
+          "#4B9BDA",
+          "#4B9BDA",
+          "#4B9BDA",
+          "#4B9BDA",
+          "#4B9BDA",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          2,
+          4,
+          6
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned NA:8 FALSE outside",
+      "kind": "binned",
+      "args": {
+        "limits": ["NA", 8],
+        "right": false,
+        "mode": "outside",
+        "breaks": [-1, 2, 4, 9],
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#17324C",
+          "#17324C",
+          "#17324C",
+          "#17324C",
+          "#234B6E",
+          "#234B6E",
+          "#4187BE",
+          "#4187BE",
+          "#4187BE",
+          "#4187BE",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": [
+          -1,
+          2,
+          4,
+          9
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "binned NA:8 FALSE none",
+      "kind": "binned",
+      "args": {
+        "limits": ["NA", 8],
+        "right": false,
+        "mode": "none",
+        "breaks": null,
+        "n": 5
+      },
+      "train": [
+        1.2,
+        3,
+        6.7
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        -1,
+        0,
+        1,
+        1.2,
+        2,
+        3,
+        4,
+        6,
+        6.7,
+        7,
+        8,
+        9,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          1.2,
+          8
+        ],
+        "mapped": [
+          "grey50",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50",
+          "grey50"
+        ],
+        "breaks": []
+      },
+      "warnings": []
+    },
+    {
+      "id": "ordinal size 0",
+      "kind": "ordinal",
+      "args": {
+        "kind": "size"
+      },
+      "train": [],
+      "input": [
+        "a",
+        "b",
+        "c",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "mapped": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": []
+      },
+      "warnings": []
+    },
+    {
+      "id": "ordinal size 1",
+      "kind": "ordinal",
+      "args": {
+        "kind": "size"
+      },
+      "train": [
+        "a"
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "a"
+        ],
+        "mapped": [
+          2,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          "a"
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "ordinal size 3",
+      "kind": "ordinal",
+      "args": {
+        "kind": "size"
+      },
+      "train": [
+        "a",
+        "b",
+        "c"
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c"
+        ],
+        "mapped": [
+          2,
+          4.47213595499958,
+          6,
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "ordinal alpha 0",
+      "kind": "ordinal",
+      "args": {
+        "kind": "alpha"
+      },
+      "train": [],
+      "input": [
+        "a",
+        "b",
+        "c",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "mapped": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": []
+      },
+      "warnings": []
+    },
+    {
+      "id": "ordinal alpha 1",
+      "kind": "ordinal",
+      "args": {
+        "kind": "alpha"
+      },
+      "train": [
+        "a"
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "a"
+        ],
+        "mapped": [
+          0.1,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          "a"
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "ordinal alpha 3",
+      "kind": "ordinal",
+      "args": {
+        "kind": "alpha"
+      },
+      "train": [
+        "a",
+        "b",
+        "c"
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c"
+        ],
+        "mapped": [
+          0.1,
+          0.55,
+          1,
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "ordinal linewidth 0",
+      "kind": "ordinal",
+      "args": {
+        "kind": "linewidth"
+      },
+      "train": [],
+      "input": [
+        "a",
+        "b",
+        "c",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "mapped": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": []
+      },
+      "warnings": []
+    },
+    {
+      "id": "ordinal linewidth 1",
+      "kind": "ordinal",
+      "args": {
+        "kind": "linewidth"
+      },
+      "train": [
+        "a"
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "a"
+        ],
+        "mapped": [
+          2,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          "a"
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "ordinal linewidth 3",
+      "kind": "ordinal",
+      "args": {
+        "kind": "linewidth"
+      },
+      "train": [
+        "a",
+        "b",
+        "c"
+      ],
+      "input": [
+        "a",
+        "b",
+        "c",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c"
+        ],
+        "mapped": [
+          2,
+          4,
+          6,
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "constant censor",
+      "kind": "continuous",
+      "args": {
+        "limits": [3, 3],
+        "oob": "censor"
+      },
+      "train": [
+        3,
+        3
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        0,
+        3,
+        7,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          3,
+          3
+        ],
+        "mapped": [
+          "#336A98",
+          "grey50",
+          "#336A98",
+          "grey50",
+          "#336A98",
+          "grey50"
+        ],
+        "breaks": [
+          3
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "constant squish",
+      "kind": "continuous",
+      "args": {
+        "limits": [3, 3],
+        "oob": "squish"
+      },
+      "train": [
+        3,
+        3
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        0,
+        3,
+        7,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          3,
+          3
+        ],
+        "mapped": [
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50"
+        ],
+        "breaks": [
+          3
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "constant keep",
+      "kind": "continuous",
+      "args": {
+        "limits": [3, 3],
+        "oob": "keep"
+      },
+      "train": [
+        3,
+        3
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        0,
+        3,
+        7,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          3,
+          3
+        ],
+        "mapped": [
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "#336A98",
+          "grey50"
+        ],
+        "breaks": [
+          3
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "constant-bin TRUE",
+      "kind": "binned",
+      "args": {
+        "limits": [3, 3],
+        "right": true,
+        "mode": "none",
+        "n": 5
+      },
+      "train": [
+        3,
+        3
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        0,
+        3,
+        7,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          3,
+          3
+        ],
+        "mapped": [
+          "#336A98"
+        ],
+        "breaks": []
+      },
+      "warnings": []
+    },
+    {
+      "id": "constant-bin FALSE",
+      "kind": "binned",
+      "args": {
+        "limits": [3, 3],
+        "right": false,
+        "mode": "none",
+        "n": 5
+      },
+      "train": [
+        3,
+        3
+      ],
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        0,
+        3,
+        7,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          3,
+          3
+        ],
+        "mapped": [
+          "#336A98"
+        ],
+        "breaks": []
+      },
+      "warnings": []
+    }
+  ]
+}

@@ -182,14 +182,12 @@ pub(crate) fn mapped_scales(
             .numeric_scales
             .values()
             .map(|encoding| &encoding.scale)
+            .chain(layer.value_scales.values().map(|encoding| &encoding.scale))
             .chain(
-                layer
-                    .color
-                    .as_ref()
-                    .and_then(|encoding| match &encoding.scale {
-                        crate::scales::ColorScale::Mapped { scale, .. } => Some(scale),
-                        _ => None,
-                    }),
+                super::colors::encodings(layer).filter_map(|encoding| match &encoding.scale {
+                    crate::scales::ColorScale::Mapped { scale, .. } => Some(scale),
+                    _ => None,
+                }),
             )
     })
 }
@@ -208,6 +206,9 @@ impl ExtensionRegistry {
         portable: bool,
     ) -> ChartResult<()> {
         for scale in mapped_scales(definition) {
+            if let Some(call) = &scale.limits_function {
+                self.limits_function.validate(call, portable)?;
+            }
             scale.validate_interpolations(&self.interpolations, portable)?;
         }
         Ok(())

@@ -3,6 +3,72 @@ pub(super) struct LayerContext<'a> {
     pub axes: &'a BTreeMap<String, ScaleId>,
     pub color_ids: &'a mut BTreeMap<String, ScaleId>,
     pub color_scales: &'a BTreeMap<String, ColorScale<crate::color::Paint>>,
+    pub ggplot_numeric_ids:
+        &'a mut BTreeMap<(crate::grammar::NumericAesthetic, crate::FieldId), ScaleId>,
+    pub ggplot_style_ids:
+        &'a mut BTreeMap<(crate::grammar::ValueAesthetic, crate::FieldId), ScaleId>,
+}
+pub(super) fn temporal_guide(
+    spec: &mut crate::scales::MappedScaleSpec,
+    input: &crate::grammar::ColorInput,
+    data: &Data,
+) -> ChartResult<()> {
+    use crate::{
+        grammar::{ColorInput, Numeric},
+        scales::*,
+    };
+    if spec.guide.is_some() {
+        return Ok(());
+    }
+    if let ColorInput::Numeric(Numeric::Timestamp { field, origin }) = input {
+        let (_, column) = data.batch.schema().field(*field).ok_or_else(|| {
+            error(
+                DiagnosticCode::MissingResource,
+                "Timestamp guide field is absent.",
+            )
+        })?;
+        if let crate::data::FieldKind::Timestamp(kind) = &column.kind {
+            spec.timestamp_normalization(*origin, kind.unit, false)?;
+            spec.guide = Some(Box::new(GgplotScaleGuide::Temporal(GgplotTemporalGuide {
+                origin: *origin,
+                unit: kind.unit,
+                zone: CalendarZone::Utc,
+                arguments: Default::default(),
+            })));
+        }
+    }
+    Ok(())
+}
+
+pub(super) fn default_numeric_scale(
+    kind: crate::scales::GgplotNumericPalette,
+    input: &crate::grammar::ColorInput,
+    data: &Data,
+) -> ChartResult<crate::scales::MappedScaleSpec> {
+    let mut scale = crate::scales::ggplot_numeric_default(kind)?;
+    temporal_guide(&mut scale, input, data)?;
+    Ok(scale)
+}
+
+pub(super) fn default_value_scale(
+    target: crate::grammar::ValueAesthetic,
+) -> ChartResult<crate::scales::MappedScaleSpec> {
+    use crate::{grammar::ValueAesthetic as V, scales::*};
+    let palette = match target {
+        V::Shape => GgplotDiscretePalette::Shape { solid: true },
+        V::LineType => GgplotDiscretePalette::LineType,
+        _ => unreachable!("reference discrete style"),
+    };
+    MappedScaleSpec::authored(ScaleFunctionSpec::Ordinal(OrdinalSpec::default())).with_ggplot(
+        GgplotScalePolicy::Discrete {
+            empty_population: false,
+            limits: None,
+            levels: None,
+            drop: true,
+            na_translate: true,
+            palette,
+        },
+    )
 }
 impl LayerContext<'_> {
     pub fn apply(
@@ -13,15 +79,175 @@ impl LayerContext<'_> {
         mapping: &AesBuilder,
         data: &Data,
     ) -> ChartResult<()> {
+        if definition.profile() != Profile::Ggplot2_4_0_3
+            && (mapping.shape.is_some()
+                || mapping.linetype.is_some()
+                || mapping.alpha.is_some()
+                || mapping.linewidth.is_some())
+        {
+            return Err(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Automatic reference style mappings require the ggplot profile; use an explicit value scale with other profiles.",
+            ));
+        }
         if definition.profile() == Profile::Ggplot2_4_0_3 {
+            use crate::grammar::ValueAesthetic as V;
+            for (target, input) in [(V::Shape, &mapping.shape), (V::LineType, &mapping.linetype)] {
+                let Some(input) = input else { continue };
+                if (target == V::Shape && layer.geom != crate::grammar::Geom::Point)
+                    || (target == V::LineType
+                        && matches!(
+                            layer.geom,
+                            crate::grammar::Geom::Point | crate::grammar::Geom::ShapeSymbol { .. }
+                        ))
+                {
+                    continue;
+                }
+                if layer.value_scales.contains_key(&target)
+                    || layer.aesthetic_values.contains_key(&target)
+                    || (target == V::LineType && layer.style.line_type.is_some())
+                {
+                    continue;
+                }
+                let field = input.field(data)?;
+                if !data.batch.schema().field(field).is_some_and(|(_, f)| {
+                    matches!(
+                        f.kind,
+                        crate::data::FieldKind::Categorical
+                            | crate::data::FieldKind::Utf8
+                            | crate::data::FieldKind::Boolean
+                    )
+                }) {
+                    return Err(error(
+                        DiagnosticCode::SchemaConflict,
+                        "Default shape and linetype scales require discrete fields.",
+                    ));
+                }
+                let id = match self.ggplot_style_ids.entry((target, field)) {
+                    std::collections::btree_map::Entry::Occupied(e) => *e.get(),
+                    std::collections::btree_map::Entry::Vacant(e) => {
+                        *e.insert(ScaleId::new(fresh_id()?))
+                    }
+                };
+                layer.value_scales.insert(
+                    target,
+                    crate::grammar::NumericEncoding {
+                        id,
+                        input: ColorInput::Category(field),
+                        scale: default_value_scale(target)?,
+                    },
+                );
+            }
+            use crate::grammar::NumericAesthetic as N;
+            for (target, kind, input, constant) in [
+                (
+                    N::Alpha,
+                    crate::scales::GgplotNumericPalette::Alpha,
+                    &mapping.alpha,
+                    layer.style.alpha.is_some(),
+                ),
+                (
+                    N::StrokeWidth,
+                    crate::scales::GgplotNumericPalette::Linewidth,
+                    &mapping.linewidth,
+                    builder.explicit_line_width,
+                ),
+            ] {
+                let Some(input) = input else { continue };
+                if constant || layer.numeric_scales.contains_key(&target) {
+                    continue;
+                }
+                let field = input.field(data)?;
+                let categorical = data.batch.schema().field(field).is_some_and(|(_, f)| {
+                    matches!(
+                        f.kind,
+                        crate::data::FieldKind::Categorical
+                            | crate::data::FieldKind::Utf8
+                            | crate::data::FieldKind::Boolean
+                    )
+                });
+                let id = match self.ggplot_numeric_ids.entry((target, field)) {
+                    std::collections::btree_map::Entry::Occupied(e) => *e.get(),
+                    std::collections::btree_map::Entry::Vacant(e) => {
+                        *e.insert(ScaleId::new(fresh_id()?))
+                    }
+                };
+                let input = if categorical {
+                    ColorInput::Category(field)
+                } else {
+                    ColorInput::Numeric(input.resolve(data)?)
+                };
+                let scale = if categorical {
+                    crate::scales::ggplot_numeric_ordinal(kind)?
+                } else {
+                    default_numeric_scale(kind, &input, data)?
+                };
+                layer
+                    .numeric_scales
+                    .insert(target, crate::grammar::NumericEncoding { id, input, scale });
+            }
             let mut source = mapping.resolve(data)?;
             if mapping.all_groups {
                 source = source.grouped(crate::grammar::Grouping::All);
+            }
+            if matches!(layer.geom, crate::grammar::Geom::Point)
+                && !builder.explicit_size
+                && !builder.explicit_radius
+                && !layer
+                    .numeric_scales
+                    .contains_key(&crate::grammar::NumericAesthetic::Size)
+                && let Some(
+                    input @ (crate::grammar::Numeric::Field(field)
+                    | crate::grammar::Numeric::Category(field)
+                    | crate::grammar::Numeric::Timestamp { field, .. }),
+                ) = &source.size
+            {
+                let id = if let Some(id) = self
+                    .ggplot_numeric_ids
+                    .get(&(crate::grammar::NumericAesthetic::Size, *field))
+                {
+                    *id
+                } else {
+                    let id = ScaleId::new(fresh_id()?);
+                    self.ggplot_numeric_ids
+                        .insert((crate::grammar::NumericAesthetic::Size, *field), id);
+                    id
+                };
+                let categorical = data
+                    .batch
+                    .schema()
+                    .field(*field)
+                    .is_some_and(|(_, column)| {
+                        matches!(
+                            column.kind,
+                            crate::data::FieldKind::Categorical
+                                | crate::data::FieldKind::Utf8
+                                | crate::data::FieldKind::Boolean
+                        )
+                    });
+                let input = if categorical {
+                    ColorInput::Category(*field)
+                } else {
+                    ColorInput::Numeric(input.clone())
+                };
+                let scale = if categorical {
+                    crate::scales::ggplot_numeric_ordinal(
+                        crate::scales::GgplotNumericPalette::Size,
+                    )?
+                } else {
+                    default_numeric_scale(crate::scales::GgplotNumericPalette::Size, &input, data)?
+                };
+                layer.numeric_scales.insert(
+                    crate::grammar::NumericAesthetic::Size,
+                    crate::grammar::NumericEncoding { id, input, scale },
+                );
             }
             if let Mappings::Source(aes) = &mut layer.mappings {
                 *aes = source.clone();
             }
             layer.grammar = Some(crate::grammar::LayerGrammar {
+                default_radius: builder.explicit_radius.then_some(false),
+                default_line_width: builder.explicit_line_width.then_some(false),
                 default_size: !builder.explicit_size,
                 default_color: !builder.explicit_color,
                 source,
@@ -76,21 +302,46 @@ impl LayerContext<'_> {
                 input: input.clone(),
                 scale: scale.clone(),
             });
-        } else if let Some(color) = &mapping.color {
+        }
+        for (channel, color, named_scale) in [
+            (None, &mapping.color, &mapping.color_scale),
+            (
+                Some(crate::grammar::PaintAesthetic::Fill),
+                &mapping.fill,
+                &mapping.fill_scale,
+            ),
+            (
+                Some(crate::grammar::PaintAesthetic::Stroke),
+                &mapping.stroke,
+                &mapping.stroke_scale,
+            ),
+        ] {
+            if channel.is_none() && builder.generated_color.is_some() {
+                continue;
+            }
+            let Some(color) = color else {
+                continue;
+            };
             let field = color.field(data)?;
             let (_, column) =
                 data.batch.schema().field(field).ok_or_else(|| {
                     error(DiagnosticCode::MissingResource, "Color field is absent.")
                 })?;
-            let scale_name = mapping.color_scale.as_deref().unwrap_or(&column.name);
+            let automatic_name = match channel {
+                None => column.name.clone(),
+                Some(crate::grammar::PaintAesthetic::Fill) => format!("fill:{}", column.name),
+                Some(crate::grammar::PaintAesthetic::Stroke) => format!("stroke:{}", column.name),
+            };
+            let scale_name = named_scale.as_deref().unwrap_or(&automatic_name);
             let explicit = self.color_scales.get(scale_name);
-            if mapping.color_scale.is_some() && explicit.is_none() {
+            if named_scale.is_some() && explicit.is_none() {
                 return Err(error(
                     DiagnosticCode::MissingResource,
                     format!("No color scale named '{scale_name}'."),
                 ));
             }
-            if explicit.is_none()
+            if definition.profile() != Profile::Ggplot2_4_0_3
+                && explicit.is_none()
                 && matches!(
                     column.kind,
                     crate::data::FieldKind::Float64 | crate::data::FieldKind::Timestamp(_)
@@ -108,7 +359,19 @@ impl LayerContext<'_> {
                 self.color_ids.insert(scale_name.to_owned(), id);
                 id
             };
-            let scale = explicit.cloned().unwrap_or_else(default_color_scale);
+            let scale = if let Some(explicit) = explicit {
+                explicit.clone()
+            } else if definition.profile() == Profile::Ggplot2_4_0_3 {
+                crate::scales::ggplot_color_default(matches!(
+                    column.kind,
+                    crate::data::FieldKind::Float64
+                        | crate::data::FieldKind::Int64
+                        | crate::data::FieldKind::UInt64
+                        | crate::data::FieldKind::Timestamp(_)
+                ))?
+            } else {
+                default_color_scale()
+            };
             let input = if matches!(layer.mappings, Mappings::Source(_)) {
                 if !scale.is_categorical() {
                     ColorInput::Numeric(color.resolve(data)?)
@@ -127,12 +390,24 @@ impl LayerContext<'_> {
                     "Generated layers must map color to their group or an explicit generated field.",
                 ));
             };
-            layer.color = Some(ColorEncoding {
+            let mut scale = scale;
+            if explicit.is_none()
+                && definition.profile() == Profile::Ggplot2_4_0_3
+                && let crate::scales::ColorScale::Mapped { scale, .. } = &mut scale
+            {
+                temporal_guide(scale, &input, data)?;
+            }
+            let encoding = ColorEncoding {
                 id,
                 title: Some(column.name.clone()),
                 input,
                 scale,
-            });
+            };
+            if let Some(channel) = channel {
+                layer.paint_scales.insert(channel, encoding);
+            } else {
+                layer.color = Some(encoding);
+            }
         }
         Ok(())
     }

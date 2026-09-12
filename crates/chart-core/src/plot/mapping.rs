@@ -161,10 +161,18 @@ pub struct AesBuilder {
     pub(super) low: Option<Mapping>,
     pub(super) high: Option<Mapping>,
     pub(super) size: Option<Mapping>,
+    pub(super) shape: Option<Mapping>,
+    pub(super) alpha: Option<Mapping>,
+    pub(super) linewidth: Option<Mapping>,
+    pub(super) linetype: Option<Mapping>,
     pub(super) group: Option<Mapping>,
     pub(super) all_groups: bool,
     pub(super) color: Option<Mapping>,
     pub(super) color_scale: Option<String>,
+    pub(super) fill: Option<Mapping>,
+    pub(super) fill_scale: Option<String>,
+    pub(super) stroke: Option<Mapping>,
+    pub(super) stroke_scale: Option<String>,
 }
 /// Begin source-stage mappings; constants belong on layer/style builders.
 ///
@@ -214,6 +222,18 @@ impl AesBuilder {
         self.color_scale = Some(name.into());
         self
     }
+    /// Select the fill scale independently of the source field and outline scale.
+    pub fn fill_scale(mut self, name: impl Into<String>) -> Self {
+        self.fill_scale = Some(name.into());
+        self
+    }
+    /// Select the outline scale independently of the source field and fill scale.
+    pub fn stroke_scale(mut self, name: impl Into<String>) -> Self {
+        self.stroke_scale = Some(name.into());
+        self
+    }
+    mapping_methods!(alpha => "Map reference alpha coverage under the ggplot profile.", linewidth => "Map reference line width under the ggplot profile.");
+    mapping_methods!(fill => "Map interior paint independently.", stroke => "Map outline and line paint independently.", shape => "Map discrete reference point shapes under the ggplot profile.", linetype => "Map discrete reference line patterns under the ggplot profile.");
     mapping_methods!(x => "Map the horizontal coordinate.", y => "Map the vertical coordinate.", x2 => "Map a second horizontal endpoint.", y2 => "Map a second vertical endpoint/baseline or OHLC close.", low => "Map the supplied OHLC low.", high => "Map the supplied OHLC high.", size => "Map baseline point-radius/stroke-width units.", color => "Map source values to a named color scale; does not implicitly group lines.");
     pub(super) fn merged(&self, base: &Self, inherit: bool) -> Self {
         if !inherit {
@@ -221,7 +241,25 @@ impl AesBuilder {
         }
         let mut result = self.clone();
         macro_rules! inherit { ($($name:ident),*) => { $(if result.$name.is_none() { result.$name = base.$name.clone(); })* }; }
-        inherit!(x, y, x2, y2, low, high, size, color, color_scale);
+        inherit!(
+            x,
+            y,
+            x2,
+            y2,
+            low,
+            high,
+            size,
+            shape,
+            alpha,
+            linewidth,
+            linetype,
+            color,
+            color_scale,
+            fill,
+            fill_scale,
+            stroke,
+            stroke_scale
+        );
         if result.group.is_none() && !result.all_groups && result.grouping.is_none() {
             result.grouping = base.grouping.clone();
             result.group = base.group.clone();
@@ -287,6 +325,43 @@ pub fn from_theme(
     crate::grammar::Expression::read(crate::grammar::AfterScaleRead::Theme(token))
 }
 impl AfterScaleAesBuilder {
+    /// Derive an independent interior paint from the pre-modifier scale snapshot.
+    pub fn fill(
+        mut self,
+        expr: crate::grammar::Expression<crate::grammar::AfterScaleRead>,
+    ) -> Self {
+        self.mappings
+            .insert(crate::grammar::AfterScaleAesthetic::Fill, expr);
+        self
+    }
+    /// Derive an independent outline paint from the pre-modifier scale snapshot.
+    pub fn stroke(
+        mut self,
+        expr: crate::grammar::Expression<crate::grammar::AfterScaleRead>,
+    ) -> Self {
+        self.mappings
+            .insert(crate::grammar::AfterScaleAesthetic::Stroke, expr);
+        self
+    }
+    /// Derive replacement alpha from the pre-modifier scale snapshot.
+    pub fn alpha(
+        mut self,
+        expr: crate::grammar::Expression<crate::grammar::AfterScaleRead>,
+    ) -> Self {
+        self.mappings
+            .insert(crate::grammar::AfterScaleAesthetic::Alpha, expr);
+        self
+    }
+    /// Derive independent linewidth from the pre-modifier scale snapshot.
+    pub fn linewidth(
+        mut self,
+        expr: crate::grammar::Expression<crate::grammar::AfterScaleRead>,
+    ) -> Self {
+        self.mappings
+            .insert(crate::grammar::AfterScaleAesthetic::LineWidth, expr);
+        self
+    }
+
     /// Set point/rule size from a numeric expression.
     pub fn size(
         mut self,

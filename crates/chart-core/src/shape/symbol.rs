@@ -9,6 +9,8 @@ use std::f64::consts::{PI, TAU};
 /// The thirteen distinct built-in symbol geometries, separate from legacy radius marks.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub enum SymbolKind {
+    /// R point-shape code zero through 25, sized by equivalent circle area.
+    Ggplot(u8),
     /// Filled circle with area equal to the requested size.
     #[default]
     Circle,
@@ -78,11 +80,51 @@ pub enum SymbolPaint {
     Fill,
     /// Stroked geometry, including the circle in the stroke palette.
     Stroke,
+    /// Independent interior and outline paints.
+    FillStroke,
+    /// Reference solid symbol using the color channel for its interior only.
+    ColorFill,
+    /// Reference solid symbol using the color channel for both interior and outline.
+    ColorFillStroke,
 }
 impl SymbolPaint {
+    /// Whether this resolved policy paints the path interior.
+    pub fn fills(self) -> bool {
+        matches!(
+            self,
+            Self::Fill | Self::FillStroke | Self::ColorFill | Self::ColorFillStroke
+        )
+    }
+    /// Whether this resolved policy paints the outline.
+    pub fn strokes(self) -> bool {
+        matches!(
+            self,
+            Self::Stroke | Self::FillStroke | Self::ColorFillStroke
+        )
+    }
+    /// Whether the reference uses the color channel in place of the fill channel.
+    pub fn color_fill(self) -> bool {
+        matches!(self, Self::ColorFill | Self::ColorFillStroke)
+    }
     /// Resolve topology-dependent painting before geometry submission.
     pub fn resolve(self, kind: SymbolKind) -> ChartResult<Self> {
+        if matches!(kind, SymbolKind::Ggplot(value) if value > 25) {
+            return Err(super::invalid(
+                "Ggplot point shape must be an integer from zero through 25.",
+            ));
+        }
         match self {
+            Self::Auto if matches!(kind, SymbolKind::Ggplot(_)) => {
+                let SymbolKind::Ggplot(value) = kind else {
+                    unreachable!()
+                };
+                Ok(match value {
+                    0..=14 => Self::Stroke,
+                    15..=18 => Self::ColorFill,
+                    19..=20 => Self::ColorFillStroke,
+                    _ => Self::FillStroke,
+                })
+            }
             Self::Auto => Ok(
                 if matches!(
                     kind,
@@ -131,6 +173,7 @@ impl SymbolDraw for SymbolKind {
     fn draw(&self, c: &mut Path, size: f64) -> ChartResult<()> {
         size_valid(size)?;
         match self {
+            Self::Ggplot(code) => super::ggplot_symbol::draw(*code, c, size),
             Self::Circle => {
                 let r = (size / PI).sqrt();
                 c.move_to(r, 0.)?;
@@ -313,6 +356,11 @@ impl Symbol {
     /// Validate a deserialized configuration independently of invocation.
     pub fn validate(&self) -> ChartResult<()> {
         size_valid(self.size)?;
+        if matches!(self.kind, SymbolKind::Ggplot(value) if value > 25) {
+            return Err(super::invalid(
+                "Ggplot point shape must be an integer from zero through 25.",
+            ));
+        }
         precision(self.digits)?;
         Ok(())
     }

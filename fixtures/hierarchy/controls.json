@@ -1,0 +1,242 @@
+{
+  "tree": [
+    {
+      "size": [
+        1,
+        1
+      ],
+      "nodeSize": null
+    },
+    {
+      "size": null,
+      "nodeSize": [
+        2,
+        3
+      ]
+    },
+    {
+      "size": [
+        8,
+        4
+      ],
+      "nodeSize": null
+    }
+  ],
+  "cluster": [
+    {
+      "size": [
+        1,
+        1
+      ],
+      "nodeSize": null
+    },
+    {
+      "size": null,
+      "nodeSize": [
+        2,
+        3
+      ]
+    },
+    {
+      "size": [
+        8,
+        4
+      ],
+      "nodeSize": null
+    }
+  ],
+  "stratify": {
+    "path": null
+  },
+  "pack": {
+    "radius": null
+  },
+  "setters": [
+    {
+      "factory": "stratify",
+      "method": "id",
+      "set": "same callable",
+      "reset": "callable"
+    },
+    {
+      "factory": "stratify",
+      "method": "parentId",
+      "set": "same callable",
+      "reset": "callable"
+    },
+    {
+      "factory": "stratify",
+      "method": "path",
+      "set": "same callable",
+      "reset": null
+    },
+    {
+      "factory": "tree",
+      "method": "nodeSize",
+      "set": [
+        7,
+        9
+      ],
+      "reset": null
+    },
+    {
+      "factory": "tree",
+      "method": "separation",
+      "set": "same callable",
+      "reset": "callable"
+    },
+    {
+      "factory": "tree",
+      "method": "size",
+      "set": [
+        7,
+        9
+      ],
+      "reset": [
+        1,
+        1
+      ]
+    },
+    {
+      "factory": "cluster",
+      "method": "nodeSize",
+      "set": [
+        7,
+        9
+      ],
+      "reset": null
+    },
+    {
+      "factory": "cluster",
+      "method": "separation",
+      "set": "same callable",
+      "reset": "callable"
+    },
+    {
+      "factory": "cluster",
+      "method": "size",
+      "set": [
+        7,
+        9
+      ],
+      "reset": [
+        1,
+        1
+      ]
+    },
+    {
+      "factory": "partition",
+      "method": "padding",
+      "set": 4,
+      "reset": 0
+    },
+    {
+      "factory": "partition",
+      "method": "round",
+      "set": true,
+      "reset": false
+    },
+    {
+      "factory": "partition",
+      "method": "size",
+      "set": [
+        7,
+        9
+      ],
+      "reset": [
+        1,
+        1
+      ]
+    },
+    {
+      "factory": "pack",
+      "method": "padding",
+      "set": 4,
+      "reset": "callable"
+    },
+    {
+      "factory": "pack",
+      "method": "radius",
+      "set": "same callable",
+      "reset": null
+    },
+    {
+      "factory": "pack",
+      "method": "size",
+      "set": [
+        7,
+        9
+      ],
+      "reset": [
+        1,
+        1
+      ]
+    },
+    {
+      "factory": "treemap",
+      "method": "padding",
+      "set": 4,
+      "reset": "callable"
+    },
+    {
+      "factory": "treemap",
+      "method": "paddingBottom",
+      "set": 4,
+      "reset": "callable"
+    },
+    {
+      "factory": "treemap",
+      "method": "paddingInner",
+      "set": 4,
+      "reset": "callable"
+    },
+    {
+      "factory": "treemap",
+      "method": "paddingLeft",
+      "set": 4,
+      "reset": "callable"
+    },
+    {
+      "factory": "treemap",
+      "method": "paddingOuter",
+      "set": 4,
+      "reset": "callable"
+    },
+    {
+      "factory": "treemap",
+      "method": "paddingRight",
+      "set": 4,
+      "reset": "callable"
+    },
+    {
+      "factory": "treemap",
+      "method": "paddingTop",
+      "set": 4,
+      "reset": "callable"
+    },
+    {
+      "factory": "treemap",
+      "method": "round",
+      "set": true,
+      "reset": false
+    },
+    {
+      "factory": "treemap",
+      "method": "size",
+      "set": [
+        7,
+        9
+      ],
+      "reset": [
+        1,
+        1
+      ]
+    },
+    {
+      "factory": "treemap",
+      "method": "tile",
+      "set": "same callable",
+      "reset": "callable"
+    }
+  ]
+}

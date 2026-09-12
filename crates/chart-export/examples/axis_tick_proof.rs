@@ -8,7 +8,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let output = Output::new(
         include_bytes!("../../../fixtures/capability/fonts/NotoSans-Regular.ttf").as_slice(),
     )?;
-    let plot = fixtures::figure()?;
+    let authored = fixtures::figure()?;
+    // Fix authored fixture identities independently of earlier process allocations.
+    let mut descriptor: serde_json::Value = serde_json::from_str(&authored.to_json()?)?;
+    for (index, name) in ["top", "lower"].into_iter().enumerate() {
+        let id = (1026 + index).to_string();
+        descriptor["definition"]["guides"][index]["id"] = id.clone().into();
+        descriptor["guides"][name] = id.into();
+    }
+    let plot = chart_core::plot::Plot::from_json_with_extensions(
+        &descriptor.to_string(),
+        chart_extension_example::registry()?,
+    )?;
     let wire = plot.to_json()?;
     assert_eq!(plot.definition().wire_version(), 11);
     let loaded = chart_core::plot::Plot::from_json_with_extensions(

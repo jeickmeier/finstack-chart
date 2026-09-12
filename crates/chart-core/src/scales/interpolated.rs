@@ -14,10 +14,78 @@ use crate::{
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 
+/// ggplot2 rescaling after transformation and before range interpolation.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Serialize, Deserialize)]
+pub enum GgplotRescaler {
+    /// Normalize the trained extent, mapping a numerically constant extent to 0.5.
+    #[default]
+    Range,
+    /// Divide by the transformed upper limit, preserving zero as zero.
+    Maximum,
+    /// Symmetric extent around the supplied transformed-space midpoint.
+    Midpoint(Number),
+}
+impl GgplotRescaler {
+    pub(super) fn parameter(self, x: f64, a: f64, b: f64) -> f64 {
+        let zero = super::ggplot::zero_range(a, b);
+        match self {
+            Self::Range if zero => 0.5,
+            Self::Range => (x - a) / (b - a),
+            Self::Maximum => x / b,
+            Self::Midpoint(_) if zero => 0.5,
+            Self::Midpoint(mid) => {
+                let extent = (a - mid.0).abs().max((b - mid.0).abs());
+                if extent == 0. {
+                    0.5
+                } else {
+                    (x - mid.0) / (2. * extent) + 0.5
+                }
+            }
+        }
+    }
+}
+/// Reference datetime arithmetic over offsets from an exact timestamp origin.
+#[derive(Clone, Copy, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct GgplotTimestampNormalization {
+    /// Exact source origin, in the declared unit.
+    #[serde(with = "crate::portable::signed")]
+    pub origin: i64,
+    /// Source unit; palette arithmetic uses absolute seconds as in POSIXct.
+    pub unit: crate::data::TimeUnit,
+    /// Reference Date arithmetic uses absolute days; datetime uses seconds.
+    #[serde(default, skip_serializing_if = "is_false")]
+    pub date: bool,
+}
+fn is_false(value: &bool) -> bool {
+    !*value
+}
+impl GgplotTimestampNormalization {
+    pub(super) fn absolute(self, offset: f64) -> f64 {
+        let factor =
+            super::utc::ticks_per_second(self.unit) as f64 * if self.date { 86400. } else { 1. };
+        self.origin as f64 / factor + offset / factor
+    }
+}
 /// Domain-to-parameter configuration. These families have no general numeric inverse.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub enum NormalizationSpec {
+    /// ggplot2 transformed extent with an independently selected rescaling function.
+    Ggplot {
+        /// Shared numeric transform family.
+        family: NumericFamily,
+        /// Raw data-space endpoints.
+        domain: [Number; 2],
+        /// Negate transformed values; trained raw endpoints follow reversed orientation.
+        #[serde(default)]
+        reverse: bool,
+        /// Rescaling policy, independent of the range palette.
+        rescaler: GgplotRescaler,
+        /// Optional timestamp representation, independent of guide visibility.
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        timestamp: Option<GgplotTimestampNormalization>,
+    },
     /// Transform two endpoints, then normalize to zero and one.
     Sequential {
         /// Shared linear/log/pow/symlog family.
@@ -80,8 +148,25 @@ pub struct ScaleNormalizer {
 impl ScaleNormalizer {
     /// Validate configuration and prepare shared transformed endpoints or sorted samples.
     pub fn new(spec: NormalizationSpec) -> ChartResult<Self> {
+        if matches!(spec,NormalizationSpec::Ggplot{rescaler:GgplotRescaler::Midpoint(Number(m)),..} if !m.is_finite())
+        {
+            return Err(error(
+                DiagnosticCode::NumericalDomain,
+                "Scale midpoint must be finite.",
+            ));
+        }
+
+        if matches!(spec, NormalizationSpec::Ggplot { timestamp: Some(_), family, reverse, rescaler, .. }
+            if family != NumericFamily::Linear || reverse || rescaler != GgplotRescaler::Range)
+        {
+            return Err(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Timestamp normalization requires a linear extent rescaler.",
+            ));
+        }
         let (domain, family, diverging) = match &spec {
-            NormalizationSpec::Sequential { family, domain, .. } => {
+            NormalizationSpec::Sequential { family, domain, .. }
+            | NormalizationSpec::Ggplot { family, domain, .. } => {
                 (domain.to_vec(), Some(*family), false)
             }
             NormalizationSpec::Diverging { family, domain, .. } => {
@@ -120,7 +205,22 @@ impl ScaleNormalizer {
         let negative = domain.first().is_some_and(|v| v.0 < 0.);
         let transformed: Vec<_> = domain
             .iter()
-            .map(|v| family.map_or(v.0, |f| transform(f, negative, v.0, false)))
+            .map(|v| {
+                if let NormalizationSpec::Ggplot {
+                    family,
+                    reverse,
+                    timestamp,
+                    ..
+                } = spec
+                {
+                    timestamp.map_or_else(
+                        || super::ggplot_continuous_guide::forward(family, reverse, v.0),
+                        |context| context.absolute(v.0),
+                    )
+                } else {
+                    family.map_or(v.0, |f| transform(f, negative, v.0, false))
+                }
+            })
             .collect();
         let mut factors = [0.; 2];
         if family.is_some() {
@@ -152,6 +252,7 @@ impl ScaleNormalizer {
     fn tick_family(&self) -> ChartResult<NumericFamily> {
         match self.spec {
             NormalizationSpec::Sequential { family, .. }
+            | NormalizationSpec::Ggplot { family, .. }
             | NormalizationSpec::Diverging { family, .. } => Ok(family),
             NormalizationSpec::Quantile { .. } => Err(error(
                 DiagnosticCode::UnsupportedCapability,
@@ -161,6 +262,13 @@ impl ScaleNormalizer {
     }
     /// Unthinned data-space ticks; empirical rank scales expose `quantiles` instead.
     pub fn ticks(&self, count: f64, budget: usize) -> ChartResult<Vec<f64>> {
+        if let NormalizationSpec::Ggplot { family, domain, .. } = self.spec {
+            return if let NumericFamily::Log { base } = family {
+                super::ggplot_breaks_log(domain.map(|v| v.0), count, base, budget)
+            } else {
+                super::ggplot_breaks_extended(domain.map(|v| v.0), count, budget)
+            };
+        }
         self.tick_family()?.ticks(&self.domain, count, budget)
     }
     /// Independent inferred tick labels, including transformed-family log suppression.
@@ -185,7 +293,8 @@ impl ScaleNormalizer {
         };
         let mut spec = self.spec.clone();
         match &mut spec {
-            NormalizationSpec::Sequential { domain, .. } => *domain = [Number(a), Number(b)],
+            NormalizationSpec::Sequential { domain, .. }
+            | NormalizationSpec::Ggplot { domain, .. } => *domain = [Number(a), Number(b)],
             NormalizationSpec::Diverging { domain, .. } => {
                 domain[0] = Number(a);
                 domain[2] = Number(b);
@@ -198,6 +307,23 @@ impl ScaleNormalizer {
     pub fn parameter(&self, input: Option<f64>) -> Option<f64> {
         let x = input.filter(|x| !x.is_nan())?;
         let (t, clamp) = match self.spec {
+            NormalizationSpec::Ggplot {
+                family,
+                rescaler,
+                reverse,
+                timestamp,
+                ..
+            } => (
+                rescaler.parameter(
+                    timestamp.map_or_else(
+                        || super::ggplot_continuous_guide::forward(family, reverse, x),
+                        |context| context.absolute(x),
+                    ),
+                    self.transformed[0],
+                    self.transformed[1],
+                ),
+                false,
+            ),
             NormalizationSpec::Sequential { family, clamp, .. } => {
                 let t = if self.factors[0] == 0. {
                     0.5
@@ -225,6 +351,12 @@ impl ScaleNormalizer {
             }
         };
         Some(if clamp { t.clamp(0., 1.) } else { t })
+    }
+    pub(super) fn reference_parameter(&self, value: f64) -> f64 {
+        let NormalizationSpec::Ggplot { rescaler, .. } = self.spec else {
+            unreachable!("reference parameter requires reference normalization")
+        };
+        rescaler.parameter(value, self.transformed[0], self.transformed[1])
     }
     /// Reuse the common native sampling contract for any owned output type.
     pub fn map_with<T>(
@@ -365,7 +497,7 @@ impl InterpolatedScale {
                 "A color scale requires a color interpolator.",
             )
         })?;
-        output.scale_color(0.)?;
+        output.scale_optional_color(0.)?;
         Ok(())
     }
     pub(super) fn validate_numeric_output(&self) -> ChartResult<()> {
@@ -381,6 +513,22 @@ impl InterpolatedScale {
     /// Shared prepared normalization and population queries.
     pub fn normalizer(&self) -> &ScaleNormalizer {
         &self.normalization
+    }
+    /// The containing reference population policy owns exceptional transformed
+    /// limits that cannot always be recovered through its raw-domain inverse.
+    pub(super) fn set_reference_bounds(&mut self, bounds: [f64; 2]) {
+        debug_assert!(matches!(
+            self.spec.normalization,
+            NormalizationSpec::Ggplot { .. }
+        ));
+        let bounds = match self.spec.normalization {
+            NormalizationSpec::Ggplot {
+                timestamp: Some(context),
+                ..
+            } => bounds.map(|v| context.absolute(v)),
+            _ => bounds,
+        };
+        self.normalization.transformed = bounds.to_vec();
     }
     /// Unthinned data-space candidates; rank scales have quantiles instead.
     pub fn ticks(&self, count: f64, budget: usize) -> ChartResult<Vec<f64>> {
@@ -408,6 +556,9 @@ impl InterpolatedScale {
             Some(t) => self.sample(t),
         }
     }
+    pub(super) fn sample_parameter(&self, t: f64) -> ChartResult<Value> {
+        self.sample(t)
+    }
     fn sample(&self, t: f64) -> ChartResult<Value> {
         self.output
             .as_ref()
@@ -426,13 +577,12 @@ impl InterpolatedScale {
                     "Identity output is not a color interpolator.",
                 )
             })?
-            .scale_color(t)
-            .map(Some)
+            .scale_optional_color(t)
     }
     /// Reference range getter: endpoint/center samples or one sample per rank observation.
     pub fn range(&self) -> ChartResult<Vec<Value>> {
         let count = match self.spec.normalization {
-            NormalizationSpec::Sequential { .. } => 2,
+            NormalizationSpec::Sequential { .. } | NormalizationSpec::Ggplot { .. } => 2,
             NormalizationSpec::Diverging { .. } => 3,
             NormalizationSpec::Quantile { .. } => self.normalization.domain.len(),
         };

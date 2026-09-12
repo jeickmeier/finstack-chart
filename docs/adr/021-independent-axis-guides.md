@@ -1,6 +1,6 @@
 # ADR-021: Independent positional guides over retained scales
 
-Status: ACCEPTED for WP-AX01 and WP-AX02. Complete D3 geometry, components and transitions remain open. Date: 9 September 2026. Requirements: AXIS-01/07, AUT-01/04,
+Status: ACCEPTED for WP-AX01–05. Date: 9 September 2026. Requirements: AXIS-01–07, AUT-01/04,
 FIX-19. This conforms to the [axis plan](../impl_plans/d3-axis-parity-plan.md) and
 amends the one-guide-per-side restriction in [ADR-005](005-foundational-scales-and-layout.md).
 
@@ -39,7 +39,7 @@ existing identity. Additional guides require definition/primary envelope version
 versions 1–7 remain readable and are emitted when no new capability is retained. Core,
 Python and WASM syntax dispatch use the same builders.
 
-The checked provider and independent selection/formatting policy are implemented. Independent inner/outer geometry, component metadata/styling and timed transitions retain their WP-AX03–06 obligations. G-AXIS remains open. Existing adaptive collision thinning remains the legacy policy.
+The checked provider, independent selection/formatting, geometry, component styling and timed transitions are implemented. WP-AX06 owns cumulative certification. Existing adaptive collision thinning remains the legacy policy.
 
 ## Registered positional provider boundary
 
@@ -114,3 +114,86 @@ headless `Frame.guides()` expose coherent configuration and semantic ticks, with
 and inset scope paths and exact timestamp strings. This separate version-1 observation
 envelope preserves the historical scene serialization. It supplies selection metadata;
 component identities and transitions remain WP-AX04/05.
+
+## Signed destination geometry
+
+WP-AX03 adds optional `GuideGeometry` in definition/primary wire version 13. Optional
+inner/outer lengths, padding and offset inherit profile defaults; finite signed values
+are valid. D3 defaults are 6/6/3 and offset 0.5 for an absent or unit device scale, zero
+for device scale above one. Native supplies `Window::scale_factor`; primary headless
+`LayoutOptions::device_scale` supplies an explicit policy independent of raster DPI.
+LibraryV1 retains its prior geometry and adaptive thinning when no new controls exist.
+
+Domain paths use resolved range endpoints, including custom/reversed ranges. Band/point
+centering consumes the retained band's existing extent and rounding, adjusted for the
+profile offset; marks keep the unmodified mapping. Translation is applied once to guide
+positions and the orthogonal baseline. Offset does not affect training or data marks.
+D3 plain label defaults use size 10, measured by the supplied destination service.
+
+`Preserve`, `HideLabels` and `ThinTicks` distinguish semantic tick preservation from
+adaptive presentation. Empty/repeated labels retain ticks. Explicit figure-cell overflow
+and tick-grid clipping are independent; all primitives still obey the outer scene bounds.
+Finite/work/path validation precedes destination callbacks and immutable failed layouts
+preserve prior scenes. Shared facets and resize consume the same geometry kernel.
+The [geometry evidence](../evidence/phase-2-axis-geometry-2026-09-09.md) records the pinned
+reference replay and inspected native/publication examples.
+
+## Portable components and typography
+
+WP-AX04 adds `GuideComponents` in definition/primary wire version 14. Domain, default
+tick lines and default labels have independent optional overrides. A bounded `per_tick`
+list addresses original selected indices before hiding/thinning; duplicate indices reject.
+Missing values inherit the whole-guide component, profile and destination theme. Line
+widths/dashes reuse the scene's validated stroke/dash contract. Authored color inputs
+resolve at the common paint boundary. Label size, optional `RichRun` typography and
+rotation use the existing supplied-font/shaping service; no destination reimplements
+styles. Per-tick font resources, fallback, weight and run scale inherit through the
+same rich-run contract. Global guide visibility still controls margin/painting; hiding
+a component does not change scale training or selected values.
+
+D3-profile or explicitly configured guides retain `SceneItem::guide` metadata. It carries
+independent guide identity, panel/inset scope, side, domain/line/label role, original
+selection index, logical label and value-plus-occurrence identity. Equal signed zeros
+share an occurrence counter. Decorative items keep empty data-target lists. Scenes with
+these roles use version 14; unconfigured LibraryV1 scenes omit the optional field and
+retain their earlier version/output. Hand-authored Rust scene items add `guide: None`.
+
+SVG text output groups consecutive components into addressable `axis` and `tick`
+groups with logical values, occurrence/index and labels. Domain paths, tick `line`
+elements and labels carry classes/roles. Rich runs use positioned outline groups.
+Outline SVG keeps the same structure and logical metadata: it takes positioned glyph
+fragments from the already retained usvg tree, using usvg's pinned XML reader, and feeds
+them through the same component writer. Empty/transparent text may have no glyph path
+but retains an explicit logical group. This adds no parser/renderer dependency and no
+second shaping route. PDF/native/PNG consume the same resolved scene styles. External
+CSS edits affect only the exported SVG. Full selection, including hidden components,
+remains observable in the coherent guide snapshots.
+
+The [component evidence](../evidence/phase-2-axis-components-2026-09-09.md) records
+three-host versioned style/typography proofs and inspected native/vector/high-DPI output.
+
+## Timed guides and exact displayed capture
+
+Core `GuideTransitionPlan` compiles bounded enter/update/exit joins keyed by the new
+raw scale projection, including duplicate first-match behavior and retained lifecycle
+IDs. `LayoutGuideTransition` applies sampled geometry and opacity to existing scene
+primitives, retaining facet/inset scopes and empty decoration targets. Shared scalar
+and transform interpolators own numeric sampling. Host clocks remain outside core.
+Interruption starts existing nodes from the displayed sample; new nodes use the prior
+target scale. Side replacement and incompatible resources use immediate replacement.
+Final primitives equal fresh target layout; lifecycle IDs survive final presentation.
+
+Native opts in with a duration, uses GPUI reduced motion, cancels on disposal/frozen
+interaction, and acknowledges only painted frames. Portable FigureTransition owns its
+inputs and samples explicit fractions without relayout. Optional Scene v15 animation
+metadata adds tick lifecycle identity and continuous opacity; static scene versions and
+primary authoring envelope versions do not change. Native resolves continuous primitive
+alpha, while SVG/PDF use tick group opacity; overlap raster compositing is renderer
+specific and no pixel-identical cross-renderer claim follows from semantic parity.
+
+Displayed capture freezes the acknowledged scene at its current dimensions, including
+exits and fractional opacity, and retains fonts/extensions after the view is disposed.
+One scene unit equals one publication point. Reflow, full-domain or different-size
+capture must use the existing input-based Presented/Current policy. Host
+`acknowledge_frame` checks definition/source/view/visibility/annotation identity before
+admitting an explicit sample, preventing stale handles from replacing presented truth.

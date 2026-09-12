@@ -170,7 +170,7 @@ class Component extends Owned {
     else if(name==='symbol_types'&&args.length===3&&args[0] instanceof Field)next=t._inner.symbol_types_field(args[0]._inner,encode(args[1]),encode(args[2]));
     else if(name==='shape_value'&&args.length===2){const [target,source]=args;if(source instanceof Field)next=t._inner.shape_value_field(encode(target),source._inner);else if(source instanceof Component)next=t._inner.shape_value_expression(encode(target),source._inner);else next=t._inner.set(name,shapeEncode(args));}
     else if(['shape_protocol','arc_parameters','radial_parameters','pie_angles','symbol_size','symbol_size_guide'].includes(name))next=t._inner.set(name,shapeEncode(args));
-    else if(name==='numeric_scale'&&args.length===3){const [target,source,scale]=args,descriptor=scale instanceof module.exports.StandaloneScale?scale.mapped():scale;if(source instanceof Field)next=t._inner.numeric_scale_field(encode(target),source._inner,encode(descriptor));else if(source instanceof Component)next=t._inner.numeric_scale_expression(encode(target),source._inner,encode(descriptor));else next=t._inner.set(name,encode([target,source,descriptor]));}
+    else if(['numeric_scale','value_scale'].includes(name)&&args.length===3){const [target,source,scale]=args,descriptor=scale instanceof module.exports.StandaloneScale?scale.mapped():scale;if(source instanceof Field)next=t._inner[name+'_field'](encode(target),source._inner,encode(descriptor));else if(source instanceof Component)next=t._inner[name+'_expression'](encode(target),source._inner,encode(descriptor));else next=t._inner.set(name,encode([target,source,descriptor]));}
     else next=t._inner.set(name,encode(args));
     return new t.constructor(next);
   });}
@@ -335,10 +335,17 @@ class ExportOptions extends Owned {
 }
 const export_options=(width,height,unit='pt')=>new ExportOptions(new native._ExportOptions(width,height,unit));
 class FigureRequest extends Owned {
+  with_hierarchy_history(previous){return new FigureRequest(this._inner.with_hierarchy_history(previous._inner));}
   prepare(){return new FigureSnapshot(this._inner.prepare());}
   manifest(){return decode(this._inner.manifest());}
 }
+class FigureTransition extends Owned {
+  sample(fraction){return new FigureSnapshot(this._inner.sample(fraction));}
+}
 class FigureSnapshot extends Owned {
+  guide_transition(previous){return new FigureTransition(this._inner.guide_transition(previous._inner));}
+  guideTransition(previous){return this.guide_transition(previous);}
+  presentation(){return decode(this._inner.presentation());}
   guides(){return decode(this._inner.guides());}
   scene(){return decode(this._inner.scene());}
   manifest(){return decode(this._inner.manifest());}
@@ -416,6 +423,8 @@ class Chart extends Owned {
   act(action,{origin='Programmatic',expected}={}){return decode(this._inner.act(encode(action),encode(origin),expected===undefined?undefined:integer(expected)));}
   query(operation,{gesture=false,stamp}={}){return decode(this._inner.query(encode(operation),gesture,stamp===undefined?undefined:encode(stamp)));}
   request(output,options){return new FigureRequest(this._inner.request(output._inner,options._inner));}
+  acknowledge_frame(frame){this._inner.acknowledge_frame(frame._inner);}
+  acknowledgeFrame(frame){this.acknowledge_frame(frame);}
   present(output,options){return new FigureSnapshot(this._inner.present(output._inner,options._inner));}
   stream(options){this._inner.stream(options._inner);return this;}
   stream_status(){return decode(this._inner.stream_status());}
@@ -430,8 +439,8 @@ class Chart extends Owned {
   link_capture(component,event){return decode(this._inner.link_capture(component._inner,encode(event)));}
   link_resolve(component,message){return decode(this._inner.link_resolve(component._inner,encode(message)));}
 }
-const families = {"SourceExpression":"source_expr","StatExpression":"stat_expr","BinExpression":"bin_expr","ScaleExpression":"after_scale_expr from_theme","ScaleAes":"scale_aes","Aes": "aes", "Layer": "points line area ribbon shape_line shape_area shape_line_radial shape_area_radial shape_link shape_link_horizontal shape_link_vertical shape_link_radial shape_arc shape_pie shape_symbol bars volume ohlc rule rectangle cells histogram", "Stat": "identity_stat bin count summary fit custom_stat", "StatAes": "stat_aes", "BinAes": "bin_aes", "Position": "stack shape_stack dodge jitter", "Filter": "filter", "Transform": "transform", "Scale": "scale_linear scale_log scale_symlog scale_band scale_point scale_utc scale_session", "Axis": "x_axis y_axis", "Guide": "axis_guide", "ColorScale": "color_discrete color_continuous", "Legend": "legend", "Facet": "facet_wrap facet_grid", "Style": "style", "Theme": "theme", "TextStyle": "text_style", "TextRun": "text_run", "RichText": "rich_text", "Title": "title", "Subtitle": "subtitle", "Caption": "caption", "SourceNote": "source_note", "Footnote": "footnote", "Labels": "labels", "Callout": "callout", "PanelLetter": "panel_letter", "Inset": "inset", "NumberFormat": "number_format", "LayoutOptions": "layout_options", "RenderOptions": "render_options", "StreamOptions": "stream_options", "AnnotationEdit": "annotation_edit", "Link": "link"};
-module.exports={ShapeLineRadial,ShapeAreaRadial,ShapeLink,ShapeLinkRadial,point_radial,pointRadial:point_radial,ShapeStack,ShapeSymbol,ShapeRegistry,ShapeLine,ShapeArea,ShapeArc,ShapePie,ColorValue,color,ChartError,LegacyChart:native.Chart,Path,VectorPath,path,path_round,vector_path,Editor,Column,Data,Field,Component,PlotBuilder,PlotEdit,Plot,Chart,Output,ExportOptions,FigureRequest,FigureSnapshot,ExportQueue,ExportJob,Updates,Transaction,column,categorical,timestamps,plot,export_options};
+const families = {"SourceExpression":"source_expr","StatExpression":"stat_expr","BinExpression":"bin_expr","ScaleExpression":"after_scale_expr from_theme","ScaleAes":"scale_aes","Aes": "aes", "Layer": "points line area ribbon hierarchy hierarchy_tree hierarchy_cluster hierarchy_icicle hierarchy_sunburst hierarchy_treemap hierarchy_pack shape_line shape_area shape_line_radial shape_area_radial shape_link shape_link_horizontal shape_link_vertical shape_link_radial shape_arc shape_pie shape_symbol bars volume ohlc rule rectangle cells histogram", "Stat": "identity_stat bin count summary fit custom_stat", "StatAes": "stat_aes", "BinAes": "bin_aes", "Position": "stack shape_stack dodge jitter", "Filter": "filter", "Transform": "transform", "Scale": "scale_linear scale_binned scale_reverse scale_sqrt scale_log scale_symlog scale_band scale_point scale_utc scale_date scale_duration scale_session", "Axis": "x_axis y_axis", "Guide": "axis_guide", "ColorScale": "color_discrete color_continuous", "Legend": "legend", "Facet": "facet_wrap facet_grid", "Style": "style", "Theme": "theme", "TextStyle": "text_style", "TextRun": "text_run", "RichText": "rich_text", "Title": "title", "Subtitle": "subtitle", "Caption": "caption", "SourceNote": "source_note", "Footnote": "footnote", "Labels": "labels", "Callout": "callout", "PanelLetter": "panel_letter", "Inset": "inset", "NumberFormat": "number_format", "LayoutOptions": "layout_options", "RenderOptions": "render_options", "StreamOptions": "stream_options", "AnnotationEdit": "annotation_edit", "Link": "link"};
+module.exports={ShapeLineRadial,ShapeAreaRadial,ShapeLink,ShapeLinkRadial,point_radial,pointRadial:point_radial,ShapeStack,ShapeSymbol,ShapeRegistry,ShapeLine,ShapeArea,ShapeArc,ShapePie,ColorValue,color,ChartError,LegacyChart:native.Chart,Path,VectorPath,path,path_round,vector_path,Editor,Column,Data,Field,Component,PlotBuilder,PlotEdit,Plot,Chart,Output,ExportOptions,FigureRequest,FigureSnapshot,FigureTransition,ExportQueue,ExportJob,Updates,Transaction,column,categorical,timestamps,plot,export_options};
 for(const [family,names] of Object.entries(families)) {
   const Type=class extends Component {};
   Object.defineProperty(Type,'name',{value:family});
@@ -453,6 +462,8 @@ module.exports.color_mapped=(name,scale,training='Authored')=>{if(!(scale instan
 
 // One registry identity; retain the established shape-specific spelling.
 module.exports.ExtensionRegistry=ShapeRegistry;
+
+Object.assign(module.exports,require('./hierarchy.cjs')(native,Owned,ShapeRegistry));
 
 // Host-native camelCase aliases retain the documented snake_case compatibility spellings.
 const camel = name => name.replace(/_([a-z])/g,(_,c)=>c.toUpperCase());

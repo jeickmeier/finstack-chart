@@ -1,5 +1,9 @@
 # D3 hierarchy parity — review and delivery plan
 
+Execution update, 10 September 2026: H01–08/G-HIERARCHY are accepted in the
+[final evidence](../evidence/phase-2-hierarchy-integration-2026-09-10.md). The dated
+planning findings below describe the original baseline; the ledger owns current status.
+
 Phase 2 coordination: [combined implementation plan](phase-2-parity-implementation-plan.md).
 This document retains its detailed inventory and package ownership; the combined plan
 owns cross-lane scheduling and ggplot2 integration.

@@ -208,6 +208,36 @@ impl Runtime {
         )?;
         Ok(figure)
     }
+    /// Acknowledge an explicitly rendered immutable frame; existing runtime fences reject stale inputs.
+    pub fn acknowledge_frame(&mut self, figure: &FigureSnapshot) -> ChartResult<()> {
+        let current = self.chart()?;
+        let prepared = figure.layout().prepared();
+        let source = prepared.source().get()?;
+        let latest = current.source();
+        let latest = latest.get()?;
+        if prepared.definition() != current.definition()
+            || source.epoch() != latest.epoch()
+            || source.revision() != latest.revision()
+            || prepared.state().viewport_revision() != current.state().viewport_revision()
+            || current
+                .definition()
+                .layers
+                .iter()
+                .any(|l| prepared.state().is_visible(l.id) != current.state().is_visible(l.id))
+            || prepared.state().annotations(current.definition())
+                != current.state().annotations(current.definition())
+        {
+            return Err(error(
+                DiagnosticCode::RevisionConflict,
+                "Sampled frame no longer matches the current definition, source or geometry state.",
+            ));
+        }
+        self.get_mut()?.runtime_mut().acknowledge_paint_with_layout(
+            figure.layout().clone(),
+            &figure.metadata().effective_state,
+            &figure.metadata().profile.layout,
+        )
+    }
     /// Configure the existing owned ingestion queue without committing it.
     pub fn stream(&mut self, options: &Component) -> ChartResult<()> {
         self.get_mut()?

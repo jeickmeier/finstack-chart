@@ -150,7 +150,7 @@ pub(super) fn apply(
     };
     let mut legends = vec![];
     if let Some(s) = &layer.symbol {
-        let inputs = super::colors::read_inputs(&s.input, data, table, rows, limits, None)?;
+        let inputs = super::colors::read_inputs(&s.input, data, table, rows, limits, None, false)?;
         let catalog: BTreeMap<_, _> = s
             .domain
             .iter()
@@ -197,7 +197,7 @@ pub(super) fn apply(
         let scale = crate::scales::MappedScale::for_numbers_with_registry(
             encoding
                 .scale
-                .trained_population(samples.get(&encoding.id))?,
+                .trained_population(samples.get(&encoding.id), registry)?,
             registry,
         )?;
         let entries = g

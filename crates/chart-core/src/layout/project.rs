@@ -26,18 +26,13 @@ impl ResolvedAxis {
     pub fn map(&self, value: f64, layer_space: &ValueSpace) -> ChartResult<Option<f64>> {
         if let ResolvedScale::Provider(scale) = &self.scale {
             let semantic = match layer_space {
-                ValueSpace::Categorical { categories } => {
-                    if !value.is_finite()
-                        || value < 0.
-                        || value.fract() != 0.
-                        || value >= categories.len() as f64
-                    {
-                        return Err(error(
+                space if space.is_categorical() => {
+                    space.category_value(value).ok_or_else(|| {
+                        error(
                             DiagnosticCode::PrecisionLoss,
                             "Category ordinal does not address its provider catalog.",
-                        ));
-                    }
-                    crate::composition::ScaleValue::Category(categories[value as usize].clone())
+                        )
+                    })?
                 }
                 ValueSpace::Timestamp {
                     representation,
@@ -57,6 +52,9 @@ impl ResolvedAxis {
             return scale.map(&semantic);
         }
         match (&self.scale, layer_space) {
+            (ResolvedScale::Unbounded(scale), space) if space == &self.space => {
+                scale.map_transformed(value)
+            }
             (ResolvedScale::Nonlinear(scale), ValueSpace::Scaled { scale: stage, .. })
                 if layer_space == &self.space && stage.transform == Some(scale.transform()) =>
             {
@@ -88,23 +86,19 @@ impl ResolvedAxis {
                     origin,
                 },
             ) if representation.unit == scale.unit() => scale.map(timestamp(value, *origin)?),
-            (
-                ResolvedScale::Band(_) | ResolvedScale::Point(_),
-                ValueSpace::Categorical { categories },
-            ) => {
-                if !value.is_finite()
-                    || value < 0.
-                    || value.fract() != 0.
-                    || value >= categories.len() as f64
-                {
-                    return Err(error(
+            (ResolvedScale::Band(_) | ResolvedScale::Point(_), space) if space.is_categorical() => {
+                let category = space.category_value(value).ok_or_else(|| {
+                    error(
                         DiagnosticCode::PrecisionLoss,
                         "Category ordinal does not address its layer catalog.",
-                    ));
-                }
+                    )
+                })?;
+                let crate::composition::ScaleValue::Category(label) = category else {
+                    return Ok(None);
+                };
                 match &self.scale {
-                    ResolvedScale::Band(scale) => scale.center(&categories[value as usize]),
-                    ResolvedScale::Point(scale) => scale.center(&categories[value as usize]),
+                    ResolvedScale::Band(scale) => scale.center(&label),
+                    ResolvedScale::Point(scale) => scale.center(&label),
                     _ => unreachable!(),
                 }
             }
@@ -117,6 +111,7 @@ impl ResolvedAxis {
 }
 
 pub(super) struct Output {
+    pub hierarchies: BTreeMap<crate::LayerId, super::ResolvedHierarchy>,
     pub interactions: BTreeMap<usize, crate::grammar::GeometryInteraction>,
     pub items: Vec<SceneItem>,
     pub targets: Vec<Vec<Target>>,
@@ -145,6 +140,7 @@ pub(super) fn project(
     request: &LayoutRequest,
 ) -> ChartResult<Output> {
     let mut out = Output {
+        hierarchies: BTreeMap::new(),
         interactions: BTreeMap::new(),
         items: vec![],
         targets: vec![],
@@ -156,6 +152,10 @@ pub(super) fn project(
             .layers
             .iter()
             .find(|l| l.id == layer.id());
+        if definition.is_some_and(|l| l.geom == crate::grammar::Geom::Hierarchy) {
+            super::hierarchy::project(layer, plot, request, &mut out)?;
+            continue;
+        }
         let shape = definition.and_then(|l| match l.geom {
             crate::grammar::Geom::ShapeLine { curve, .. } => Some((curve, false)),
             crate::grammar::Geom::ShapeArea { curve, .. } => Some((curve, true)),
@@ -199,18 +199,21 @@ pub(super) fn project(
                         } else {
                             (&x.scale, xspace, p.x())
                         };
-                        let ValueSpace::Categorical { categories } = space else {
-                            return Err(error(
+                        let category = space.category_value(value).ok_or_else(|| {
+                            error(
                                 DiagnosticCode::SchemaConflict,
-                                "Dodge requires resolved categorical bands.",
-                            ));
-                        };
-                        let category = &categories[value as usize];
+                                "Dodge requires checked categorical bands.",
+                            )
+                        })?;
                         let bounds = match axis {
-                            ResolvedScale::Band(scale) => scale.extent(category)?,
-                            ResolvedScale::Provider(scale) => scale.band_extent(
-                                &crate::composition::ScaleValue::Category(category.clone()),
-                            )?,
+                            ResolvedScale::Band(scale) => {
+                                if let crate::composition::ScaleValue::Category(label) = &category {
+                                    scale.extent(label)?
+                                } else {
+                                    None
+                                }
+                            }
+                            ResolvedScale::Provider(scale) => scale.band_extent(&category)?,
                             _ => {
                                 return Err(error(
                                     DiagnosticCode::SchemaConflict,
@@ -245,16 +248,71 @@ pub(super) fn project(
                 Ok(Some(Point::new(a, b)?))
             };
 
+            let mut style = mark.style;
+            if let PreparedGeometry::ShapePath { paint, .. }
+            | PreparedGeometry::ShapePathRun { paint, .. } = &mark.geometry
+            {
+                if paint.color_fill() {
+                    style.fill = Some(style.stroke.unwrap_or(style.color));
+                }
+                if *paint == crate::shape::SymbolPaint::ColorFill {
+                    style.stroke = None;
+                }
+            }
+            let factor = style
+                .units
+                .unwrap_or(crate::grammar::AestheticUnits::Destination)
+                .factor(request.units);
+            style.radius *= factor;
+            style.stroke_width *= factor;
+            if chart.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3
+                && style.units.is_none()
+                && definition.is_some_and(|l| l.geom.reference_linewidth())
+            {
+                style.stroke_width =
+                    crate::grammar::reference_linewidth(style.stroke_width, request.units);
+            }
+            if chart.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3
+                && definition.is_some_and(|l| {
+                    l.geom == crate::grammar::Geom::Point
+                        && !l
+                            .grammar
+                            .as_ref()
+                            .is_some_and(|g| g.default_radius == Some(false))
+                })
+            {
+                // R's point stroke parameter is twice its physical outline width.
+                style.stroke_width *= 0.5;
+                if style.stroke_width == 0. {
+                    // The reference PDF device preserves a zero-width point outline
+                    // as a 0.01 big-point hairline. Keep that physical width across hosts.
+                    style.stroke_width = 0.01
+                        * if request.units == crate::services::Units::LogicalPixels {
+                            96. / 72.
+                        } else {
+                            1.
+                        };
+                }
+            }
             let stroke = Stroke {
-                color: mark.style.color,
-                width: mark.style.stroke_width,
+                color: style.color,
+                width: style.stroke_width,
             };
-            let item = |primitive| SceneItem {
-                layer: Some(layer.id()),
-                clip,
-                primitive,
+            let item = |primitive| -> ChartResult<SceneItem> {
+                Ok(SceneItem {
+                    guide: None,
+                    layer: Some(layer.id()),
+                    clip,
+                    primitive: independent_paints(primitive, style, mark.targets.len())?,
+                })
             };
             match &mark.geometry {
+                PreparedGeometry::HierarchyNode(_) | PreparedGeometry::HierarchyLink { .. } => {
+                    return Err(error(
+                        DiagnosticCode::Validation,
+                        "Deferred hierarchy geometry has no hierarchy recipe.",
+                    ));
+                }
                 PreparedGeometry::ShapePath {
                     paint,
                     center,
@@ -275,8 +333,14 @@ pub(super) fn project(
                         _ => unreachable!("shape path"),
                     };
                     if let Some(center) = point(*center, &mark.targets[0], 0.)? {
-                        let map =
-                            crate::path::Affine::new([1., 0., 0., 1., center.x(), center.y()])?;
+                        let map = crate::path::Affine::new([
+                            factor,
+                            0.,
+                            0.,
+                            factor,
+                            center.x(),
+                            center.y(),
+                        ])?;
                         let geometry =
                             geometry.transformed(map, 0.01, request.limits.max_path_commands)?;
                         let anchors = local_anchors
@@ -291,15 +355,13 @@ pub(super) fn project(
                                 item(Primitive::ShapePath {
                                     dashes: vec![],
                                     geometry,
-                                    fill: (*paint == crate::shape::SymbolPaint::Fill)
-                                        .then_some(mark.style.color),
-                                    stroke: (*paint == crate::shape::SymbolPaint::Stroke)
-                                        .then_some(Stroke {
-                                            width: mark.style.stroke_width,
-                                            color: mark.style.color,
-                                        }),
+                                    fill: paint.fills().then_some(style.color),
+                                    stroke: paint.strokes().then_some(Stroke {
+                                        width: style.stroke_width,
+                                        color: style.color,
+                                    }),
                                     anchors,
-                                }),
+                                })?,
                                 mark.targets.clone(),
                                 request,
                             )?;
@@ -329,8 +391,8 @@ pub(super) fn project(
                         out.push(
                             item(Primitive::FilledPath {
                                 commands,
-                                fill: mark.style.color,
-                            }),
+                                fill: style.color,
+                            })?,
                             mark.targets.clone(),
                             request,
                         )?;
@@ -358,8 +420,8 @@ pub(super) fn project(
                                 )?,
                                 painter: painter.clone(),
                                 parameters: parameters.clone(),
-                                fill: mark.style.color,
-                            }),
+                                fill: style.color,
+                            })?,
                             mark.targets.clone(),
                             request,
                         )?;
@@ -414,10 +476,10 @@ pub(super) fn project(
                                     item(Primitive::ShapePath {
                                         dashes: vec![],
                                         geometry,
-                                        fill: Some(mark.style.color),
+                                        fill: Some(style.color),
                                         stroke: None,
                                         anchors: std::mem::take(anchors),
-                                    }),
+                                    })?,
                                     std::mem::take(targets),
                                     request,
                                 )?;
@@ -435,7 +497,7 @@ pub(super) fn project(
                                     from: lo[0],
                                     to: hi[0],
                                     stroke,
-                                }),
+                                })?,
                                 std::mem::take(targets),
                                 request,
                             )?;
@@ -462,8 +524,8 @@ pub(super) fn project(
                         out.push(
                             item(Primitive::FilledPath {
                                 commands,
-                                fill: mark.style.color,
-                            }),
+                                fill: style.color,
+                            })?,
                             std::mem::take(targets),
                             request,
                         )?;
@@ -524,7 +586,7 @@ pub(super) fn project(
                                         fill: None,
                                         stroke: Some(stroke),
                                         anchors: run.clone(),
-                                    }),
+                                    })?,
                                     std::mem::take(targets),
                                     request,
                                 )?;
@@ -556,7 +618,7 @@ pub(super) fn project(
                                 stroke,
                             }
                         };
-                        out.push(item(primitive), std::mem::take(targets), request)?;
+                        out.push(item(primitive)?, std::mem::take(targets), request)?;
                         run.clear();
                         Ok(())
                     };
@@ -592,7 +654,7 @@ pub(super) fn project(
                                             (b.x() - a.x()).abs(),
                                             *width,
                                         )?,
-                                        fill: mark.style.color,
+                                        fill: style.color,
                                     }
                                 }
                             } else if a.y() == b.y() {
@@ -609,10 +671,10 @@ pub(super) fn project(
                                         *width,
                                         (b.y() - a.y()).abs(),
                                     )?,
-                                    fill: mark.style.color,
+                                    fill: style.color,
                                 }
                             };
-                        out.push(item(primitive), mark.targets.clone(), request)?;
+                        out.push(item(primitive)?, mark.targets.clone(), request)?;
                     } else {
                         out.omitted += 1;
                     }
@@ -622,9 +684,9 @@ pub(super) fn project(
                         out.push(
                             item(Primitive::Point {
                                 center,
-                                radius: mark.style.radius,
-                                fill: mark.style.color,
-                            }),
+                                radius: style.radius,
+                                fill: style.color,
+                            })?,
                             mark.targets.clone(),
                             request,
                         )?;
@@ -661,7 +723,7 @@ pub(super) fn project(
                                         fill: None,
                                         stroke: Some(stroke),
                                         anchors: vec![from, to],
-                                    }),
+                                    })?,
                                     vec![mark.targets[0].clone(), mark.targets[0].clone()],
                                     request,
                                 )?;
@@ -678,10 +740,10 @@ pub(super) fn project(
                                     (to.x() - from.x()).abs(),
                                     (to.y() - from.y()).abs(),
                                 )?,
-                                fill: mark.style.color,
+                                fill: style.color,
                             }
                         };
-                        out.push(item(primitive), mark.targets.clone(), request)?;
+                        out.push(item(primitive)?, mark.targets.clone(), request)?;
                     } else {
                         out.omitted += 1;
                     }
@@ -722,4 +784,168 @@ pub(super) fn project(
         }
     }
     Ok(out)
+}
+
+/// Apply independent paints after geometry projection, retaining the existing path engine.
+fn independent_paints(
+    mut primitive: Primitive,
+    style: crate::grammar::Style,
+    target_count: usize,
+) -> ChartResult<Primitive> {
+    if style.fill.is_none() && style.stroke.is_none() && style.line_type.is_none() {
+        return Ok(primitive);
+    }
+    let outline = style.stroke.map(|color| Stroke {
+        color,
+        width: style.stroke_width,
+    });
+    if let Some(line_type) = style.line_type {
+        let dashes = line_type.pattern(style.stroke_width)?;
+        let stroke_visible = line_type != crate::grammar::LineType::Blank;
+        match primitive {
+            Primitive::Rule { from, to, stroke } => {
+                let mut path = crate::path::Path::new();
+                path.move_to(from.x(), from.y())?;
+                path.line_to(to.x(), to.y())?;
+                let anchors = if target_count == 1 {
+                    vec![Point::new(
+                        from.x().midpoint(to.x()),
+                        from.y().midpoint(to.y()),
+                    )?]
+                } else {
+                    vec![from, to]
+                };
+                return Ok(Primitive::ShapePath {
+                    geometry: path.geometry(),
+                    fill: None,
+                    stroke: stroke_visible.then_some(outline.unwrap_or(stroke)),
+                    dashes,
+                    anchors,
+                });
+            }
+            Primitive::Path {
+                ref commands,
+                stroke,
+            } => {
+                return Ok(Primitive::ShapePath {
+                    geometry: crate::path::PathGeometry::from_beziers(commands)?,
+                    fill: None,
+                    stroke: stroke_visible.then_some(outline.unwrap_or(stroke)),
+                    dashes,
+                    anchors: command_anchors(commands, target_count),
+                });
+            }
+            Primitive::ShapePath { ref mut dashes, .. }
+            | Primitive::VectorPath { ref mut dashes, .. } => {
+                *dashes = line_type.pattern(style.stroke_width)?;
+            }
+            _ => {}
+        }
+    }
+    match &mut primitive {
+        Primitive::ShapePath { fill, stroke, .. } | Primitive::VectorPath { fill, stroke, .. } => {
+            if fill.is_some()
+                && let Some(value) = style.fill
+            {
+                *fill = Some(value);
+            }
+            if let Some(value) = outline {
+                *stroke = Some(value);
+            }
+            if style.line_type == Some(crate::grammar::LineType::Blank) {
+                *stroke = None;
+            }
+        }
+        Primitive::Rule { stroke, .. } | Primitive::Path { stroke, .. } => {
+            if let Some(value) = outline {
+                *stroke = value;
+            }
+        }
+        Primitive::Point {
+            center,
+            radius,
+            fill,
+        } if outline.is_some() => {
+            let mut path = crate::path::Path::new();
+            path.arc(
+                [center.x(), center.y()],
+                *radius,
+                0.,
+                std::f64::consts::TAU,
+                false,
+            )?;
+            path.close_path()?;
+            return Ok(Primitive::ShapePath {
+                geometry: path.geometry(),
+                fill: Some(style.fill.unwrap_or(*fill)),
+                stroke: outline
+                    .filter(|_| style.line_type != Some(crate::grammar::LineType::Blank)),
+                dashes: style
+                    .line_type
+                    .map(|l| l.pattern(style.stroke_width))
+                    .transpose()?
+                    .unwrap_or_default(),
+                anchors: vec![*center],
+            });
+        }
+        Primitive::Rectangle { bounds, fill } if outline.is_some() => {
+            let mut path = crate::path::Path::new();
+            path.rect(
+                bounds.origin().x(),
+                bounds.origin().y(),
+                bounds.width(),
+                bounds.height(),
+            )?;
+            return Ok(Primitive::ShapePath {
+                geometry: path.geometry(),
+                fill: Some(style.fill.unwrap_or(*fill)),
+                stroke: outline
+                    .filter(|_| style.line_type != Some(crate::grammar::LineType::Blank)),
+                dashes: style
+                    .line_type
+                    .map(|l| l.pattern(style.stroke_width))
+                    .transpose()?
+                    .unwrap_or_default(),
+                anchors: vec![Point::new(
+                    bounds.origin().x() + bounds.width() / 2.,
+                    bounds.origin().y() + bounds.height() / 2.,
+                )?],
+            });
+        }
+        Primitive::FilledPath { commands, fill } if outline.is_some() => {
+            return Ok(Primitive::ShapePath {
+                anchors: command_anchors(commands, target_count),
+                geometry: crate::path::PathGeometry::from_beziers(commands)?,
+                fill: Some(style.fill.unwrap_or(*fill)),
+                stroke: outline
+                    .filter(|_| style.line_type != Some(crate::grammar::LineType::Blank)),
+                dashes: style
+                    .line_type
+                    .map(|l| l.pattern(style.stroke_width))
+                    .transpose()?
+                    .unwrap_or_default(),
+            });
+        }
+        Primitive::Point { fill, .. }
+        | Primitive::Rectangle { fill, .. }
+        | Primitive::FilledPath { fill, .. }
+        | Primitive::NativePaint { fill, .. } => {
+            if let Some(value) = style.fill {
+                *fill = value;
+            }
+        }
+        _ => {}
+    }
+    Ok(primitive)
+}
+
+fn command_anchors(commands: &[PathCommand], count: usize) -> Vec<Point> {
+    commands
+        .iter()
+        .filter_map(|c| match c {
+            PathCommand::MoveTo(p) | PathCommand::LineTo(p) => Some(*p),
+            _ => None,
+        })
+        .take(count)
+        .collect()
 }

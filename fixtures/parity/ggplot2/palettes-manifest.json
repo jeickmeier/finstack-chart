@@ -1,0 +1,22 @@
+{
+  "owner": "GG-04",
+  "reference": "ggplot2 4.0.3 / scales 1.4.0 / viridisLite 0.4.3 / R 4.6.1 r90187",
+  "cases": 766,
+  "shared_d3_seed_tables": {
+    "A": "Magma",
+    "B": "Inferno",
+    "C": "Plasma",
+    "D": "Viridis"
+  },
+  "comparison": "Exact RGBA bytes for every captured sample",
+  "files": {
+    "tools/reference/r/palettes.R": "b2fb7cbe378e8762b5c0f6c8ba67f87c097fc8bfd98cafe252b65d2535fc983c",
+    "tools/reference/r/palette_records.py": "9510a8a309f24915632047ce65f64a25e34d10a9e3f4f482bdf1eb54eea99a75",
+    "tools/reference/r/run.py": "48593eda8f1bd8ac0fa93ef37ab2e0294f333dc05ba10f52a8297a43e16eb0e4",
+    "tools/reference/r/renv.lock": "cf48fbd065d8367d6e127b7f3bb6c726a9aca0baa466546daed4852d1a5ed5b2",
+    "fixtures/parity/ggplot2/palettes.json": "0622368eedaa9d2a15a1a13e85aa2ae681ecd73c70e0105bdc4d8453b39e4611",
+    "fixtures/parity/ggplot2/sources.json": "dc5887c368b49b8c0cad6a3a94d4e81ab1a4a4e0c1096c56326e0d5c16942085",
+    "crates/chart-core/src/scales/chromatic/ggplot_data.rs": "6b0e771d0226a374555378bf63604a2045c3caf78d68b04b6dd591288bc9e333",
+    "crates/chart-core/src/scales/chromatic/VIRIDIS-LICENSE": "9b9343b09dfbcbcf799e233f99ae44f8e2743a068235141cfe3f4657a1a86611"
+  }
+}

@@ -1,0 +1,9021 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "palette": "solid",
+      "population": "spaced",
+      "control": "default",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          17,
+          3
+        ],
+        "limits": [
+          0,
+          10
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "spaced",
+      "control": "explicit",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          15,
+          7
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            3,
+            5,
+            7,
+            9
+          ],
+          "labels": [
+            "1",
+            "3",
+            "5",
+            "7",
+            "9"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "spaced",
+      "control": "empty_breaks",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          16
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "spaced",
+      "control": "null_breaks",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          16
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "spaced",
+      "control": "count_eight",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          3,
+          null
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7,
+          8,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "labels": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "spaced",
+      "control": "count_sixteen",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          16,
+          17,
+          null,
+          null
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7,
+          8,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0.52941176470588236,
+            1.0588235294117647,
+            1.5882352941176472,
+            2.1176470588235294,
+            2.6470588235294117,
+            3.1764705882352944,
+            3.7058823529411766,
+            4.2352941176470589,
+            4.7647058823529411,
+            5.2941176470588234,
+            5.8235294117647056,
+            6.3529411764705888,
+            6.882352941176471,
+            7.4117647058823533,
+            7.9411764705882355,
+            8.4705882352941178
+          ],
+          "labels": [
+            "0.5294118",
+            "1.0588235",
+            "1.5882353",
+            "2.1176471",
+            "2.6470588",
+            "3.1764706",
+            "3.7058824",
+            "4.2352941",
+            "4.7647059",
+            "5.2941176",
+            "5.8235294",
+            "6.3529412",
+            "6.8823529",
+            "7.4117647",
+            "7.9411765",
+            "8.4705882"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "spaced",
+      "control": "left",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          17,
+          3
+        ],
+        "limits": [
+          0,
+          10
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "spaced",
+      "control": "limits",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          16,
+          17,
+          7,
+          8
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7,
+          8
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "spaced",
+      "control": "partial_limits",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          3,
+          7
+        ],
+        "limits": [
+          0,
+          5
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "constant",
+      "control": "default",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          16
+        ],
+        "limits": [
+          3.9500000000000002,
+          4.0499999999999998
+        ],
+        "palette": [
+          16
+        ],
+        "guide": {
+          "breaks": [
+            3.9500000000000002,
+            4.0499999999999998
+          ],
+          "labels": [
+            "3.95",
+            "4.05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "constant",
+      "control": "explicit",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "error": "'x' must be numeric"
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "constant",
+      "control": "empty_breaks",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          16
+        ],
+        "limits": [
+          4,
+          4
+        ],
+        "palette": [
+          16
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "constant",
+      "control": "null_breaks",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          16
+        ],
+        "limits": [
+          4,
+          4
+        ],
+        "palette": [
+          16
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "constant",
+      "control": "count_eight",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          16
+        ],
+        "limits": [
+          3.9500000000000002,
+          4.0499999999999998
+        ],
+        "palette": [
+          16
+        ],
+        "guide": {
+          "breaks": [
+            3.9500000000000002,
+            4.0499999999999998
+          ],
+          "labels": [
+            "3.95",
+            "4.05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "constant",
+      "control": "count_sixteen",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          16
+        ],
+        "limits": [
+          3.9500000000000002,
+          4.0499999999999998
+        ],
+        "palette": [
+          16
+        ],
+        "guide": {
+          "breaks": [
+            3.9500000000000002,
+            4.0499999999999998
+          ],
+          "labels": [
+            "3.95",
+            "4.05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "constant",
+      "control": "left",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          16
+        ],
+        "limits": [
+          3.9500000000000002,
+          4.0499999999999998
+        ],
+        "palette": [
+          16
+        ],
+        "guide": {
+          "breaks": [
+            3.9500000000000002,
+            4.0499999999999998
+          ],
+          "labels": [
+            "3.95",
+            "4.05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "constant",
+      "control": "limits",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          7,
+          7,
+          7
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7,
+          8
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "constant",
+      "control": "partial_limits",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          16
+        ],
+        "limits": [
+          4,
+          5
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3
+        ],
+        "guide": {
+          "breaks": [
+            4,
+            4.25,
+            4.5,
+            4.75,
+            5
+          ],
+          "labels": [
+            "4.00",
+            "4.25",
+            "4.50",
+            "4.75",
+            "5.00"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "missing",
+      "control": "default",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          16,
+          17,
+          null,
+          3
+        ],
+        "limits": [
+          0,
+          10
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "missing",
+      "control": "explicit",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          16,
+          15,
+          null,
+          7
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            3,
+            5,
+            7,
+            9
+          ],
+          "labels": [
+            "1",
+            "3",
+            "5",
+            "7",
+            "9"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "missing",
+      "control": "empty_breaks",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          16,
+          16,
+          null,
+          16
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          16
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "missing",
+      "control": "null_breaks",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          16,
+          16,
+          null,
+          16
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          16
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "missing",
+      "control": "count_eight",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          16,
+          3,
+          null,
+          null
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7,
+          8,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "labels": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "missing",
+      "control": "count_sixteen",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          16,
+          null,
+          null,
+          null
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7,
+          8,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0.52941176470588236,
+            1.0588235294117647,
+            1.5882352941176472,
+            2.1176470588235294,
+            2.6470588235294117,
+            3.1764705882352944,
+            3.7058823529411766,
+            4.2352941176470589,
+            4.7647058823529411,
+            5.2941176470588234,
+            5.8235294117647056,
+            6.3529411764705888,
+            6.882352941176471,
+            7.4117647058823533,
+            7.9411764705882355,
+            8.4705882352941178
+          ],
+          "labels": [
+            "0.5294118",
+            "1.0588235",
+            "1.5882353",
+            "2.1176471",
+            "2.6470588",
+            "3.1764706",
+            "3.7058824",
+            "4.2352941",
+            "4.7647059",
+            "5.2941176",
+            "5.8235294",
+            "6.3529412",
+            "6.8823529",
+            "7.4117647",
+            "7.9411765",
+            "8.4705882"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "missing",
+      "control": "left",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          16,
+          17,
+          null,
+          3
+        ],
+        "limits": [
+          0,
+          10
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "missing",
+      "control": "limits",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          16,
+          7,
+          null,
+          8
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7,
+          8
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "missing",
+      "control": "partial_limits",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          16,
+          3,
+          null,
+          7
+        ],
+        "limits": [
+          0,
+          5
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "all_missing",
+      "control": "default",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "all_missing",
+      "control": "explicit",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "all_missing",
+      "control": "empty_breaks",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "all_missing",
+      "control": "null_breaks",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "all_missing",
+      "control": "count_eight",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "all_missing",
+      "control": "count_sixteen",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "all_missing",
+      "control": "left",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "all_missing",
+      "control": "limits",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7,
+          8
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "all_missing",
+      "control": "partial_limits",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "empty",
+      "control": "default",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "empty",
+      "control": "explicit",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "empty",
+      "control": "empty_breaks",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "empty",
+      "control": "null_breaks",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "empty",
+      "control": "count_eight",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "empty",
+      "control": "count_sixteen",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "empty",
+      "control": "left",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "empty",
+      "control": "limits",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7,
+          8
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "empty",
+      "control": "partial_limits",
+      "inputs": [],
+      "result": {
+        "error": "replacement has length zero"
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "many",
+      "control": "default",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          17,
+          17,
+          17,
+          17,
+          17,
+          15,
+          15,
+          15,
+          15,
+          15,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3
+        ],
+        "guide": {
+          "breaks": [
+            5,
+            10,
+            15
+          ],
+          "labels": [
+            "5",
+            "10",
+            "15"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "many",
+      "control": "explicit",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          17,
+          17,
+          15,
+          15,
+          3,
+          3,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7,
+          8
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            3,
+            5,
+            7,
+            9
+          ],
+          "labels": [
+            "1",
+            "3",
+            "5",
+            "7",
+            "9"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "many",
+      "control": "empty_breaks",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          16
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "many",
+      "control": "null_breaks",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          16
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "many",
+      "control": "count_eight",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          16,
+          17,
+          17,
+          15,
+          15,
+          3,
+          3,
+          7,
+          7,
+          7,
+          8,
+          8,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7,
+          8,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            2.2222222222222223,
+            4.4444444444444446,
+            6.666666666666667,
+            8.8888888888888893,
+            11.111111111111111,
+            13.333333333333334,
+            15.555555555555557,
+            17.777777777777779
+          ],
+          "labels": [
+            "2.222222",
+            "4.444444",
+            "6.666667",
+            "8.888889",
+            "11.111111",
+            "13.333333",
+            "15.555556",
+            "17.777778"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "many",
+      "control": "count_sixteen",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          17,
+          15,
+          3,
+          7,
+          8,
+          8,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7,
+          8,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            1.1764705882352942,
+            2.3529411764705883,
+            3.5294117647058822,
+            4.7058823529411766,
+            5.882352941176471,
+            7.0588235294117645,
+            8.2352941176470598,
+            9.4117647058823533,
+            10.588235294117647,
+            11.764705882352942,
+            12.941176470588236,
+            14.117647058823529,
+            15.294117647058824,
+            16.47058823529412,
+            17.647058823529413,
+            18.823529411764707
+          ],
+          "labels": [
+            "1.176471",
+            "2.352941",
+            "3.529412",
+            "4.705882",
+            "5.882353",
+            "7.058824",
+            "8.235294",
+            "9.411765",
+            "10.588235",
+            "11.764706",
+            "12.941176",
+            "14.117647",
+            "15.294118",
+            "16.470588",
+            "17.647059",
+            "18.823529"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "many",
+      "control": "left",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          16,
+          16,
+          16,
+          17,
+          17,
+          17,
+          17,
+          17,
+          15,
+          15,
+          15,
+          15,
+          15,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3
+        ],
+        "guide": {
+          "breaks": [
+            5,
+            10,
+            15
+          ],
+          "labels": [
+            "5",
+            "10",
+            "15"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "many",
+      "control": "limits",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          16,
+          17,
+          15,
+          3,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7,
+          8
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "solid",
+      "population": "many",
+      "control": "partial_limits",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          16,
+          16,
+          17,
+          15,
+          3,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        "limits": [
+          0,
+          5
+        ],
+        "palette": [
+          16,
+          17,
+          15,
+          3,
+          7
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "spaced",
+      "control": "default",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          2,
+          3
+        ],
+        "limits": [
+          0,
+          10
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "spaced",
+      "control": "explicit",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          0,
+          7
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            3,
+            5,
+            7,
+            9
+          ],
+          "labels": [
+            "1",
+            "3",
+            "5",
+            "7",
+            "9"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "spaced",
+      "control": "empty_breaks",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "spaced",
+      "control": "null_breaks",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "spaced",
+      "control": "count_eight",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          3,
+          null
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7,
+          8,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "labels": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "spaced",
+      "control": "count_sixteen",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          1,
+          2,
+          null,
+          null
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7,
+          8,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0.52941176470588236,
+            1.0588235294117647,
+            1.5882352941176472,
+            2.1176470588235294,
+            2.6470588235294117,
+            3.1764705882352944,
+            3.7058823529411766,
+            4.2352941176470589,
+            4.7647058823529411,
+            5.2941176470588234,
+            5.8235294117647056,
+            6.3529411764705888,
+            6.882352941176471,
+            7.4117647058823533,
+            7.9411764705882355,
+            8.4705882352941178
+          ],
+          "labels": [
+            "0.5294118",
+            "1.0588235",
+            "1.5882353",
+            "2.1176471",
+            "2.6470588",
+            "3.1764706",
+            "3.7058824",
+            "4.2352941",
+            "4.7647059",
+            "5.2941176",
+            "5.8235294",
+            "6.3529412",
+            "6.8823529",
+            "7.4117647",
+            "7.9411765",
+            "8.4705882"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "spaced",
+      "control": "left",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          2,
+          3
+        ],
+        "limits": [
+          0,
+          10
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "spaced",
+      "control": "limits",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          1,
+          2,
+          7,
+          8
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7,
+          8
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "spaced",
+      "control": "partial_limits",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          3,
+          7
+        ],
+        "limits": [
+          0,
+          5
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "constant",
+      "control": "default",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          1
+        ],
+        "limits": [
+          3.9500000000000002,
+          4.0499999999999998
+        ],
+        "palette": [
+          1
+        ],
+        "guide": {
+          "breaks": [
+            3.9500000000000002,
+            4.0499999999999998
+          ],
+          "labels": [
+            "3.95",
+            "4.05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "constant",
+      "control": "explicit",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "error": "'x' must be numeric"
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "constant",
+      "control": "empty_breaks",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          1
+        ],
+        "limits": [
+          4,
+          4
+        ],
+        "palette": [
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "constant",
+      "control": "null_breaks",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          1
+        ],
+        "limits": [
+          4,
+          4
+        ],
+        "palette": [
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "constant",
+      "control": "count_eight",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          1
+        ],
+        "limits": [
+          3.9500000000000002,
+          4.0499999999999998
+        ],
+        "palette": [
+          1
+        ],
+        "guide": {
+          "breaks": [
+            3.9500000000000002,
+            4.0499999999999998
+          ],
+          "labels": [
+            "3.95",
+            "4.05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "constant",
+      "control": "count_sixteen",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          1
+        ],
+        "limits": [
+          3.9500000000000002,
+          4.0499999999999998
+        ],
+        "palette": [
+          1
+        ],
+        "guide": {
+          "breaks": [
+            3.9500000000000002,
+            4.0499999999999998
+          ],
+          "labels": [
+            "3.95",
+            "4.05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "constant",
+      "control": "left",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          1
+        ],
+        "limits": [
+          3.9500000000000002,
+          4.0499999999999998
+        ],
+        "palette": [
+          1
+        ],
+        "guide": {
+          "breaks": [
+            3.9500000000000002,
+            4.0499999999999998
+          ],
+          "labels": [
+            "3.95",
+            "4.05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "constant",
+      "control": "limits",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          7,
+          7,
+          7
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7,
+          8
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "constant",
+      "control": "partial_limits",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          1
+        ],
+        "limits": [
+          4,
+          5
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3
+        ],
+        "guide": {
+          "breaks": [
+            4,
+            4.25,
+            4.5,
+            4.75,
+            5
+          ],
+          "labels": [
+            "4.00",
+            "4.25",
+            "4.50",
+            "4.75",
+            "5.00"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "missing",
+      "control": "default",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          2,
+          null,
+          3
+        ],
+        "limits": [
+          0,
+          10
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "missing",
+      "control": "explicit",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          0,
+          null,
+          7
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            3,
+            5,
+            7,
+            9
+          ],
+          "labels": [
+            "1",
+            "3",
+            "5",
+            "7",
+            "9"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "missing",
+      "control": "empty_breaks",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          1,
+          null,
+          1
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "missing",
+      "control": "null_breaks",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          1,
+          null,
+          1
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "missing",
+      "control": "count_eight",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          3,
+          null,
+          null
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7,
+          8,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "labels": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "missing",
+      "control": "count_sixteen",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          null,
+          null,
+          null
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7,
+          8,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0.52941176470588236,
+            1.0588235294117647,
+            1.5882352941176472,
+            2.1176470588235294,
+            2.6470588235294117,
+            3.1764705882352944,
+            3.7058823529411766,
+            4.2352941176470589,
+            4.7647058823529411,
+            5.2941176470588234,
+            5.8235294117647056,
+            6.3529411764705888,
+            6.882352941176471,
+            7.4117647058823533,
+            7.9411764705882355,
+            8.4705882352941178
+          ],
+          "labels": [
+            "0.5294118",
+            "1.0588235",
+            "1.5882353",
+            "2.1176471",
+            "2.6470588",
+            "3.1764706",
+            "3.7058824",
+            "4.2352941",
+            "4.7647059",
+            "5.2941176",
+            "5.8235294",
+            "6.3529412",
+            "6.8823529",
+            "7.4117647",
+            "7.9411765",
+            "8.4705882"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "missing",
+      "control": "left",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          2,
+          null,
+          3
+        ],
+        "limits": [
+          0,
+          10
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "missing",
+      "control": "limits",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          7,
+          null,
+          8
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7,
+          8
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "missing",
+      "control": "partial_limits",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          3,
+          null,
+          7
+        ],
+        "limits": [
+          0,
+          5
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "all_missing",
+      "control": "default",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "all_missing",
+      "control": "explicit",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "all_missing",
+      "control": "empty_breaks",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "all_missing",
+      "control": "null_breaks",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "all_missing",
+      "control": "count_eight",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "all_missing",
+      "control": "count_sixteen",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "all_missing",
+      "control": "left",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "all_missing",
+      "control": "limits",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7,
+          8
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "all_missing",
+      "control": "partial_limits",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "empty",
+      "control": "default",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "empty",
+      "control": "explicit",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "empty",
+      "control": "empty_breaks",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "empty",
+      "control": "null_breaks",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "empty",
+      "control": "count_eight",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "empty",
+      "control": "count_sixteen",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "empty",
+      "control": "left",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "empty",
+      "control": "limits",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7,
+          8
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "empty",
+      "control": "partial_limits",
+      "inputs": [],
+      "result": {
+        "error": "replacement has length zero"
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "many",
+      "control": "default",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3
+        ],
+        "guide": {
+          "breaks": [
+            5,
+            10,
+            15
+          ],
+          "labels": [
+            "5",
+            "10",
+            "15"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "many",
+      "control": "explicit",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          2,
+          2,
+          0,
+          0,
+          3,
+          3,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7,
+          8
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            3,
+            5,
+            7,
+            9
+          ],
+          "labels": [
+            "1",
+            "3",
+            "5",
+            "7",
+            "9"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "many",
+      "control": "empty_breaks",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "many",
+      "control": "null_breaks",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          1
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "many",
+      "control": "count_eight",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          1,
+          2,
+          2,
+          0,
+          0,
+          3,
+          3,
+          7,
+          7,
+          7,
+          8,
+          8,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7,
+          8,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            2.2222222222222223,
+            4.4444444444444446,
+            6.666666666666667,
+            8.8888888888888893,
+            11.111111111111111,
+            13.333333333333334,
+            15.555555555555557,
+            17.777777777777779
+          ],
+          "labels": [
+            "2.222222",
+            "4.444444",
+            "6.666667",
+            "8.888889",
+            "11.111111",
+            "13.333333",
+            "15.555556",
+            "17.777778"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "many",
+      "control": "count_sixteen",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          2,
+          0,
+          3,
+          7,
+          8,
+          8,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7,
+          8,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            1.1764705882352942,
+            2.3529411764705883,
+            3.5294117647058822,
+            4.7058823529411766,
+            5.882352941176471,
+            7.0588235294117645,
+            8.2352941176470598,
+            9.4117647058823533,
+            10.588235294117647,
+            11.764705882352942,
+            12.941176470588236,
+            14.117647058823529,
+            15.294117647058824,
+            16.47058823529412,
+            17.647058823529413,
+            18.823529411764707
+          ],
+          "labels": [
+            "1.176471",
+            "2.352941",
+            "3.529412",
+            "4.705882",
+            "5.882353",
+            "7.058824",
+            "8.235294",
+            "9.411765",
+            "10.588235",
+            "11.764706",
+            "12.941176",
+            "14.117647",
+            "15.294118",
+            "16.470588",
+            "17.647059",
+            "18.823529"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "many",
+      "control": "left",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3
+        ],
+        "guide": {
+          "breaks": [
+            5,
+            10,
+            15
+          ],
+          "labels": [
+            "5",
+            "10",
+            "15"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "many",
+      "control": "limits",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          1,
+          2,
+          0,
+          3,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7,
+          8
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "hollow",
+      "population": "many",
+      "control": "partial_limits",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          1,
+          1,
+          2,
+          0,
+          3,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        "limits": [
+          0,
+          5
+        ],
+        "palette": [
+          1,
+          2,
+          0,
+          3,
+          7
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "spaced",
+      "control": "default",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "22",
+          "44"
+        ],
+        "limits": [
+          0,
+          10
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44"
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "spaced",
+      "control": "explicit",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "42",
+          "13"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13"
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            3,
+            5,
+            7,
+            9
+          ],
+          "labels": [
+            "1",
+            "3",
+            "5",
+            "7",
+            "9"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "spaced",
+      "control": "empty_breaks",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "solid",
+          "solid"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "solid"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "spaced",
+      "control": "null_breaks",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "solid",
+          "solid"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "solid"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "spaced",
+      "control": "count_eight",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "44",
+          "12223242"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13",
+          "1343",
+          "73",
+          "2262",
+          "12223242"
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "labels": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "spaced",
+      "control": "count_sixteen",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "22",
+          "2262",
+          null
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13",
+          "1343",
+          "73",
+          "2262",
+          "12223242",
+          "F282",
+          "F4448444",
+          "224282F2",
+          "F1",
+          null,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0.52941176470588236,
+            1.0588235294117647,
+            1.5882352941176472,
+            2.1176470588235294,
+            2.6470588235294117,
+            3.1764705882352944,
+            3.7058823529411766,
+            4.2352941176470589,
+            4.7647058823529411,
+            5.2941176470588234,
+            5.8235294117647056,
+            6.3529411764705888,
+            6.882352941176471,
+            7.4117647058823533,
+            7.9411764705882355,
+            8.4705882352941178
+          ],
+          "labels": [
+            "0.5294118",
+            "1.0588235",
+            "1.5882353",
+            "2.1176471",
+            "2.6470588",
+            "3.1764706",
+            "3.7058824",
+            "4.2352941",
+            "4.7647059",
+            "5.2941176",
+            "5.8235294",
+            "6.3529412",
+            "6.8823529",
+            "7.4117647",
+            "7.9411765",
+            "8.4705882"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "spaced",
+      "control": "left",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "22",
+          "44"
+        ],
+        "limits": [
+          0,
+          10
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44"
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "spaced",
+      "control": "limits",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "22",
+          "13",
+          "1343"
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13",
+          "1343"
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "spaced",
+      "control": "partial_limits",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "44",
+          "13"
+        ],
+        "limits": [
+          0,
+          5
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13"
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "constant",
+      "control": "default",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "solid"
+        ],
+        "limits": [
+          3.9500000000000002,
+          4.0499999999999998
+        ],
+        "palette": [
+          "solid"
+        ],
+        "guide": {
+          "breaks": [
+            3.9500000000000002,
+            4.0499999999999998
+          ],
+          "labels": [
+            "3.95",
+            "4.05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "constant",
+      "control": "explicit",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "error": "'x' must be numeric"
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "constant",
+      "control": "empty_breaks",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "solid"
+        ],
+        "limits": [
+          4,
+          4
+        ],
+        "palette": [
+          "solid"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "constant",
+      "control": "null_breaks",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "solid"
+        ],
+        "limits": [
+          4,
+          4
+        ],
+        "palette": [
+          "solid"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "constant",
+      "control": "count_eight",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "solid"
+        ],
+        "limits": [
+          3.9500000000000002,
+          4.0499999999999998
+        ],
+        "palette": [
+          "solid"
+        ],
+        "guide": {
+          "breaks": [
+            3.9500000000000002,
+            4.0499999999999998
+          ],
+          "labels": [
+            "3.95",
+            "4.05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "constant",
+      "control": "count_sixteen",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "solid"
+        ],
+        "limits": [
+          3.9500000000000002,
+          4.0499999999999998
+        ],
+        "palette": [
+          "solid"
+        ],
+        "guide": {
+          "breaks": [
+            3.9500000000000002,
+            4.0499999999999998
+          ],
+          "labels": [
+            "3.95",
+            "4.05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "constant",
+      "control": "left",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "solid"
+        ],
+        "limits": [
+          3.9500000000000002,
+          4.0499999999999998
+        ],
+        "palette": [
+          "solid"
+        ],
+        "guide": {
+          "breaks": [
+            3.9500000000000002,
+            4.0499999999999998
+          ],
+          "labels": [
+            "3.95",
+            "4.05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "constant",
+      "control": "limits",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          "13",
+          "13",
+          "13"
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13",
+          "1343"
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "constant",
+      "control": "partial_limits",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "solid"
+        ],
+        "limits": [
+          4,
+          5
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44"
+        ],
+        "guide": {
+          "breaks": [
+            4,
+            4.25,
+            4.5,
+            4.75,
+            5
+          ],
+          "labels": [
+            "4.00",
+            "4.25",
+            "4.50",
+            "4.75",
+            "5.00"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "missing",
+      "control": "default",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          "solid",
+          "22",
+          null,
+          "44"
+        ],
+        "limits": [
+          0,
+          10
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44"
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "missing",
+      "control": "explicit",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          "solid",
+          "42",
+          null,
+          "13"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13"
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            3,
+            5,
+            7,
+            9
+          ],
+          "labels": [
+            "1",
+            "3",
+            "5",
+            "7",
+            "9"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "missing",
+      "control": "empty_breaks",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          "solid",
+          "solid",
+          null,
+          "solid"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "solid"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "missing",
+      "control": "null_breaks",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          "solid",
+          "solid",
+          null,
+          "solid"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "solid"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "missing",
+      "control": "count_eight",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          "solid",
+          "44",
+          null,
+          "12223242"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13",
+          "1343",
+          "73",
+          "2262",
+          "12223242"
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "labels": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "missing",
+      "control": "count_sixteen",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          "solid",
+          "2262",
+          null,
+          null
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13",
+          "1343",
+          "73",
+          "2262",
+          "12223242",
+          "F282",
+          "F4448444",
+          "224282F2",
+          "F1",
+          null,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0.52941176470588236,
+            1.0588235294117647,
+            1.5882352941176472,
+            2.1176470588235294,
+            2.6470588235294117,
+            3.1764705882352944,
+            3.7058823529411766,
+            4.2352941176470589,
+            4.7647058823529411,
+            5.2941176470588234,
+            5.8235294117647056,
+            6.3529411764705888,
+            6.882352941176471,
+            7.4117647058823533,
+            7.9411764705882355,
+            8.4705882352941178
+          ],
+          "labels": [
+            "0.5294118",
+            "1.0588235",
+            "1.5882353",
+            "2.1176471",
+            "2.6470588",
+            "3.1764706",
+            "3.7058824",
+            "4.2352941",
+            "4.7647059",
+            "5.2941176",
+            "5.8235294",
+            "6.3529412",
+            "6.8823529",
+            "7.4117647",
+            "7.9411765",
+            "8.4705882"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "missing",
+      "control": "left",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          "solid",
+          "22",
+          null,
+          "44"
+        ],
+        "limits": [
+          0,
+          10
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44"
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "missing",
+      "control": "limits",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          "solid",
+          "13",
+          null,
+          "1343"
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13",
+          "1343"
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "missing",
+      "control": "partial_limits",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          "solid",
+          "44",
+          null,
+          "13"
+        ],
+        "limits": [
+          0,
+          5
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13"
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "all_missing",
+      "control": "default",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "all_missing",
+      "control": "explicit",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "all_missing",
+      "control": "empty_breaks",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "all_missing",
+      "control": "null_breaks",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "all_missing",
+      "control": "count_eight",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "all_missing",
+      "control": "count_sixteen",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "all_missing",
+      "control": "left",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "all_missing",
+      "control": "limits",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13",
+          "1343"
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "all_missing",
+      "control": "partial_limits",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "empty",
+      "control": "default",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "empty",
+      "control": "explicit",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "empty",
+      "control": "empty_breaks",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "empty",
+      "control": "null_breaks",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "empty",
+      "control": "count_eight",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "empty",
+      "control": "count_sixteen",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "empty",
+      "control": "left",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "empty",
+      "control": "limits",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13",
+          "1343"
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "empty",
+      "control": "partial_limits",
+      "inputs": [],
+      "result": {
+        "error": "replacement has length zero"
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "many",
+      "control": "default",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "22",
+          "22",
+          "22",
+          "22",
+          "22",
+          "42",
+          "42",
+          "42",
+          "42",
+          "42",
+          "44",
+          "44",
+          "44",
+          "44",
+          "44"
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44"
+        ],
+        "guide": {
+          "breaks": [
+            5,
+            10,
+            15
+          ],
+          "labels": [
+            "5",
+            "10",
+            "15"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "many",
+      "control": "explicit",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "22",
+          "22",
+          "42",
+          "42",
+          "44",
+          "44",
+          "13",
+          "13",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343"
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13",
+          "1343"
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            3,
+            5,
+            7,
+            9
+          ],
+          "labels": [
+            "1",
+            "3",
+            "5",
+            "7",
+            "9"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "many",
+      "control": "empty_breaks",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid"
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          "solid"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "many",
+      "control": "null_breaks",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid"
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          "solid"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "many",
+      "control": "count_eight",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "solid",
+          "22",
+          "22",
+          "42",
+          "42",
+          "44",
+          "44",
+          "13",
+          "13",
+          "13",
+          "1343",
+          "1343",
+          "73",
+          "73",
+          "2262",
+          "2262",
+          "12223242",
+          "12223242",
+          "12223242"
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13",
+          "1343",
+          "73",
+          "2262",
+          "12223242"
+        ],
+        "guide": {
+          "breaks": [
+            2.2222222222222223,
+            4.4444444444444446,
+            6.666666666666667,
+            8.8888888888888893,
+            11.111111111111111,
+            13.333333333333334,
+            15.555555555555557,
+            17.777777777777779
+          ],
+          "labels": [
+            "2.222222",
+            "4.444444",
+            "6.666667",
+            "8.888889",
+            "11.111111",
+            "13.333333",
+            "15.555556",
+            "17.777778"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "many",
+      "control": "count_sixteen",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13",
+          "1343",
+          "1343",
+          "73",
+          "2262",
+          "12223242",
+          "F282",
+          "F4448444",
+          "224282F2",
+          "224282F2",
+          "F1",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13",
+          "1343",
+          "73",
+          "2262",
+          "12223242",
+          "F282",
+          "F4448444",
+          "224282F2",
+          "F1",
+          null,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            1.1764705882352942,
+            2.3529411764705883,
+            3.5294117647058822,
+            4.7058823529411766,
+            5.882352941176471,
+            7.0588235294117645,
+            8.2352941176470598,
+            9.4117647058823533,
+            10.588235294117647,
+            11.764705882352942,
+            12.941176470588236,
+            14.117647058823529,
+            15.294117647058824,
+            16.47058823529412,
+            17.647058823529413,
+            18.823529411764707
+          ],
+          "labels": [
+            "1.176471",
+            "2.352941",
+            "3.529412",
+            "4.705882",
+            "5.882353",
+            "7.058824",
+            "8.235294",
+            "9.411765",
+            "10.588235",
+            "11.764706",
+            "12.941176",
+            "14.117647",
+            "15.294118",
+            "16.470588",
+            "17.647059",
+            "18.823529"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "many",
+      "control": "left",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "solid",
+          "22",
+          "22",
+          "22",
+          "22",
+          "22",
+          "42",
+          "42",
+          "42",
+          "42",
+          "42",
+          "44",
+          "44",
+          "44",
+          "44",
+          "44",
+          "44"
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44"
+        ],
+        "guide": {
+          "breaks": [
+            5,
+            10,
+            15
+          ],
+          "labels": [
+            "5",
+            "10",
+            "15"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "many",
+      "control": "limits",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343",
+          "1343"
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13",
+          "1343"
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "linetype",
+      "population": "many",
+      "control": "partial_limits",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "solid",
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13",
+          "13",
+          "13",
+          "13",
+          "13",
+          "13",
+          "13",
+          "13",
+          "13",
+          "13",
+          "13",
+          "13",
+          "13",
+          "13",
+          "13",
+          "13"
+        ],
+        "limits": [
+          0,
+          5
+        ],
+        "palette": [
+          "solid",
+          "22",
+          "42",
+          "44",
+          "13"
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "spaced",
+      "control": "default",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "#EFF3FF",
+          "#EFF3FF",
+          "#BDD7E7",
+          "#2171B5"
+        ],
+        "limits": [
+          0,
+          10
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#BDD7E7",
+          "#6BAED6",
+          "#2171B5"
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "spaced",
+      "control": "explicit",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "#EFF3FF",
+          "#EFF3FF",
+          "#6BAED6",
+          "#08519C"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#BDD7E7",
+          "#6BAED6",
+          "#3182BD",
+          "#08519C"
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            3,
+            5,
+            7,
+            9
+          ],
+          "labels": [
+            "1",
+            "3",
+            "5",
+            "7",
+            "9"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "spaced",
+      "control": "empty_breaks",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "#DEEBF7"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "spaced",
+      "control": "null_breaks",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "#DEEBF7"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "spaced",
+      "control": "count_eight",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "#F7FBFF",
+          "#F7FBFF",
+          "#9ECAE1",
+          "#08306B"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "#F7FBFF",
+          "#DEEBF7",
+          "#C6DBEF",
+          "#9ECAE1",
+          "#6BAED6",
+          "#4292C6",
+          "#2171B5",
+          "#08519C",
+          "#08306B"
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "labels": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "spaced",
+      "control": "count_sixteen",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "#F7FBFF",
+          "#DEEBF7",
+          "#08519C",
+          "grey50"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "#F7FBFF",
+          "#DEEBF7",
+          "#C6DBEF",
+          "#9ECAE1",
+          "#6BAED6",
+          "#4292C6",
+          "#2171B5",
+          "#08519C",
+          "#08306B",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0.52941176470588236,
+            1.0588235294117647,
+            1.5882352941176472,
+            2.1176470588235294,
+            2.6470588235294117,
+            3.1764705882352944,
+            3.7058823529411766,
+            4.2352941176470589,
+            4.7647058823529411,
+            5.2941176470588234,
+            5.8235294117647056,
+            6.3529411764705888,
+            6.882352941176471,
+            7.4117647058823533,
+            7.9411764705882355,
+            8.4705882352941178
+          ],
+          "labels": [
+            "0.5294118",
+            "1.0588235",
+            "1.5882353",
+            "2.1176471",
+            "2.6470588",
+            "3.1764706",
+            "3.7058824",
+            "4.2352941",
+            "4.7647059",
+            "5.2941176",
+            "5.8235294",
+            "6.3529412",
+            "6.8823529",
+            "7.4117647",
+            "7.9411765",
+            "8.4705882"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "spaced",
+      "control": "left",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "#EFF3FF",
+          "#EFF3FF",
+          "#BDD7E7",
+          "#2171B5"
+        ],
+        "limits": [
+          0,
+          10
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#BDD7E7",
+          "#6BAED6",
+          "#2171B5"
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "spaced",
+      "control": "limits",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "#EFF3FF",
+          "#C6DBEF",
+          "#3182BD",
+          "#08519C"
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#C6DBEF",
+          "#9ECAE1",
+          "#6BAED6",
+          "#3182BD",
+          "#08519C"
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "spaced",
+      "control": "partial_limits",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "result": {
+        "values": [
+          "#EFF3FF",
+          "#EFF3FF",
+          "#3182BD",
+          "#08519C"
+        ],
+        "limits": [
+          0,
+          5
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#BDD7E7",
+          "#6BAED6",
+          "#3182BD",
+          "#08519C"
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "constant",
+      "control": "default",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7"
+        ],
+        "limits": [
+          3.9500000000000002,
+          4.0499999999999998
+        ],
+        "palette": [
+          "#DEEBF7"
+        ],
+        "guide": {
+          "breaks": [
+            3.9500000000000002,
+            4.0499999999999998
+          ],
+          "labels": [
+            "3.95",
+            "4.05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "constant",
+      "control": "explicit",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "error": "'x' must be numeric"
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "constant",
+      "control": "empty_breaks",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7"
+        ],
+        "limits": [
+          4,
+          4
+        ],
+        "palette": [
+          "#DEEBF7"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "constant",
+      "control": "null_breaks",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7"
+        ],
+        "limits": [
+          4,
+          4
+        ],
+        "palette": [
+          "#DEEBF7"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "constant",
+      "control": "count_eight",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7"
+        ],
+        "limits": [
+          3.9500000000000002,
+          4.0499999999999998
+        ],
+        "palette": [
+          "#DEEBF7"
+        ],
+        "guide": {
+          "breaks": [
+            3.9500000000000002,
+            4.0499999999999998
+          ],
+          "labels": [
+            "3.95",
+            "4.05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "constant",
+      "control": "count_sixteen",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7"
+        ],
+        "limits": [
+          3.9500000000000002,
+          4.0499999999999998
+        ],
+        "palette": [
+          "#DEEBF7"
+        ],
+        "guide": {
+          "breaks": [
+            3.9500000000000002,
+            4.0499999999999998
+          ],
+          "labels": [
+            "3.95",
+            "4.05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "constant",
+      "control": "left",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7"
+        ],
+        "limits": [
+          3.9500000000000002,
+          4.0499999999999998
+        ],
+        "palette": [
+          "#DEEBF7"
+        ],
+        "guide": {
+          "breaks": [
+            3.9500000000000002,
+            4.0499999999999998
+          ],
+          "labels": [
+            "3.95",
+            "4.05"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "constant",
+      "control": "limits",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          "#3182BD",
+          "#3182BD",
+          "#3182BD"
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#C6DBEF",
+          "#9ECAE1",
+          "#6BAED6",
+          "#3182BD",
+          "#08519C"
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "constant",
+      "control": "partial_limits",
+      "inputs": [
+        4,
+        4,
+        4
+      ],
+      "result": {
+        "values": [
+          "#EFF3FF",
+          "#EFF3FF",
+          "#EFF3FF"
+        ],
+        "limits": [
+          4,
+          5
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#BDD7E7",
+          "#6BAED6",
+          "#2171B5"
+        ],
+        "guide": {
+          "breaks": [
+            4,
+            4.25,
+            4.5,
+            4.75,
+            5
+          ],
+          "labels": [
+            "4.00",
+            "4.25",
+            "4.50",
+            "4.75",
+            "5.00"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "missing",
+      "control": "default",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          "grey50",
+          "#EFF3FF",
+          "#BDD7E7",
+          "grey50",
+          "#2171B5"
+        ],
+        "limits": [
+          0,
+          10
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#BDD7E7",
+          "#6BAED6",
+          "#2171B5"
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "missing",
+      "control": "explicit",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          "grey50",
+          "#EFF3FF",
+          "#6BAED6",
+          "grey50",
+          "#08519C"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#BDD7E7",
+          "#6BAED6",
+          "#3182BD",
+          "#08519C"
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            3,
+            5,
+            7,
+            9
+          ],
+          "labels": [
+            "1",
+            "3",
+            "5",
+            "7",
+            "9"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "missing",
+      "control": "empty_breaks",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          "grey50",
+          "#DEEBF7",
+          "#DEEBF7",
+          "grey50",
+          "#DEEBF7"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "#DEEBF7"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "missing",
+      "control": "null_breaks",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          "grey50",
+          "#DEEBF7",
+          "#DEEBF7",
+          "grey50",
+          "#DEEBF7"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "#DEEBF7"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "missing",
+      "control": "count_eight",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          "grey50",
+          "#F7FBFF",
+          "#9ECAE1",
+          "grey50",
+          "#08306B"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "#F7FBFF",
+          "#DEEBF7",
+          "#C6DBEF",
+          "#9ECAE1",
+          "#6BAED6",
+          "#4292C6",
+          "#2171B5",
+          "#08519C",
+          "#08306B"
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "labels": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "missing",
+      "control": "count_sixteen",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          "grey50",
+          "#F7FBFF",
+          "#08519C",
+          "grey50",
+          "grey50"
+        ],
+        "limits": [
+          0,
+          9
+        ],
+        "palette": [
+          "#F7FBFF",
+          "#DEEBF7",
+          "#C6DBEF",
+          "#9ECAE1",
+          "#6BAED6",
+          "#4292C6",
+          "#2171B5",
+          "#08519C",
+          "#08306B",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0.52941176470588236,
+            1.0588235294117647,
+            1.5882352941176472,
+            2.1176470588235294,
+            2.6470588235294117,
+            3.1764705882352944,
+            3.7058823529411766,
+            4.2352941176470589,
+            4.7647058823529411,
+            5.2941176470588234,
+            5.8235294117647056,
+            6.3529411764705888,
+            6.882352941176471,
+            7.4117647058823533,
+            7.9411764705882355,
+            8.4705882352941178
+          ],
+          "labels": [
+            "0.5294118",
+            "1.0588235",
+            "1.5882353",
+            "2.1176471",
+            "2.6470588",
+            "3.1764706",
+            "3.7058824",
+            "4.2352941",
+            "4.7647059",
+            "5.2941176",
+            "5.8235294",
+            "6.3529412",
+            "6.8823529",
+            "7.4117647",
+            "7.9411765",
+            "8.4705882"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "missing",
+      "control": "left",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          "grey50",
+          "#EFF3FF",
+          "#BDD7E7",
+          "grey50",
+          "#2171B5"
+        ],
+        "limits": [
+          0,
+          10
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#BDD7E7",
+          "#6BAED6",
+          "#2171B5"
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "missing",
+      "control": "limits",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          "grey50",
+          "#EFF3FF",
+          "#3182BD",
+          "grey50",
+          "#08519C"
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#C6DBEF",
+          "#9ECAE1",
+          "#6BAED6",
+          "#3182BD",
+          "#08519C"
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "missing",
+      "control": "partial_limits",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "result": {
+        "values": [
+          "grey50",
+          "#EFF3FF",
+          "#3182BD",
+          "grey50",
+          "#08519C"
+        ],
+        "limits": [
+          0,
+          5
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#BDD7E7",
+          "#6BAED6",
+          "#3182BD",
+          "#08519C"
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "all_missing",
+      "control": "default",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "all_missing",
+      "control": "explicit",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "all_missing",
+      "control": "empty_breaks",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "all_missing",
+      "control": "null_breaks",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "all_missing",
+      "control": "count_eight",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "all_missing",
+      "control": "count_sixteen",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "all_missing",
+      "control": "left",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "all_missing",
+      "control": "limits",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          "grey50",
+          "grey50"
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#C6DBEF",
+          "#9ECAE1",
+          "#6BAED6",
+          "#3182BD",
+          "#08519C"
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "all_missing",
+      "control": "partial_limits",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "empty",
+      "control": "default",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "empty",
+      "control": "explicit",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "empty",
+      "control": "empty_breaks",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "empty",
+      "control": "null_breaks",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "empty",
+      "control": "count_eight",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "empty",
+      "control": "count_sixteen",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "empty",
+      "control": "left",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          0,
+          1
+        ],
+        "palette": [],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "empty",
+      "control": "limits",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#C6DBEF",
+          "#9ECAE1",
+          "#6BAED6",
+          "#3182BD",
+          "#08519C"
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "empty",
+      "control": "partial_limits",
+      "inputs": [],
+      "result": {
+        "error": "replacement has length zero"
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "many",
+      "control": "default",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "#EFF3FF",
+          "#EFF3FF",
+          "#EFF3FF",
+          "#EFF3FF",
+          "#EFF3FF",
+          "#EFF3FF",
+          "#BDD7E7",
+          "#BDD7E7",
+          "#BDD7E7",
+          "#BDD7E7",
+          "#BDD7E7",
+          "#6BAED6",
+          "#6BAED6",
+          "#6BAED6",
+          "#6BAED6",
+          "#6BAED6",
+          "#2171B5",
+          "#2171B5",
+          "#2171B5",
+          "#2171B5",
+          "#2171B5"
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#BDD7E7",
+          "#6BAED6",
+          "#2171B5"
+        ],
+        "guide": {
+          "breaks": [
+            5,
+            10,
+            15
+          ],
+          "labels": [
+            "5",
+            "10",
+            "15"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "many",
+      "control": "explicit",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "#EFF3FF",
+          "#EFF3FF",
+          "#C6DBEF",
+          "#C6DBEF",
+          "#9ECAE1",
+          "#9ECAE1",
+          "#6BAED6",
+          "#6BAED6",
+          "#3182BD",
+          "#3182BD",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C"
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#C6DBEF",
+          "#9ECAE1",
+          "#6BAED6",
+          "#3182BD",
+          "#08519C"
+        ],
+        "guide": {
+          "breaks": [
+            1,
+            3,
+            5,
+            7,
+            9
+          ],
+          "labels": [
+            "1",
+            "3",
+            "5",
+            "7",
+            "9"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "many",
+      "control": "empty_breaks",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7"
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          "#DEEBF7"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "many",
+      "control": "null_breaks",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#DEEBF7"
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          "#DEEBF7"
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "many",
+      "control": "count_eight",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "#F7FBFF",
+          "#F7FBFF",
+          "#F7FBFF",
+          "#DEEBF7",
+          "#DEEBF7",
+          "#C6DBEF",
+          "#C6DBEF",
+          "#9ECAE1",
+          "#9ECAE1",
+          "#6BAED6",
+          "#6BAED6",
+          "#6BAED6",
+          "#4292C6",
+          "#4292C6",
+          "#2171B5",
+          "#2171B5",
+          "#08519C",
+          "#08519C",
+          "#08306B",
+          "#08306B",
+          "#08306B"
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          "#F7FBFF",
+          "#DEEBF7",
+          "#C6DBEF",
+          "#9ECAE1",
+          "#6BAED6",
+          "#4292C6",
+          "#2171B5",
+          "#08519C",
+          "#08306B"
+        ],
+        "guide": {
+          "breaks": [
+            2.2222222222222223,
+            4.4444444444444446,
+            6.666666666666667,
+            8.8888888888888893,
+            11.111111111111111,
+            13.333333333333334,
+            15.555555555555557,
+            17.777777777777779
+          ],
+          "labels": [
+            "2.222222",
+            "4.444444",
+            "6.666667",
+            "8.888889",
+            "11.111111",
+            "13.333333",
+            "15.555556",
+            "17.777778"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "many",
+      "control": "count_sixteen",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "#F7FBFF",
+          "#F7FBFF",
+          "#DEEBF7",
+          "#C6DBEF",
+          "#9ECAE1",
+          "#6BAED6",
+          "#4292C6",
+          "#4292C6",
+          "#2171B5",
+          "#08519C",
+          "#08306B",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          "#F7FBFF",
+          "#DEEBF7",
+          "#C6DBEF",
+          "#9ECAE1",
+          "#6BAED6",
+          "#4292C6",
+          "#2171B5",
+          "#08519C",
+          "#08306B",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            1.1764705882352942,
+            2.3529411764705883,
+            3.5294117647058822,
+            4.7058823529411766,
+            5.882352941176471,
+            7.0588235294117645,
+            8.2352941176470598,
+            9.4117647058823533,
+            10.588235294117647,
+            11.764705882352942,
+            12.941176470588236,
+            14.117647058823529,
+            15.294117647058824,
+            16.47058823529412,
+            17.647058823529413,
+            18.823529411764707
+          ],
+          "labels": [
+            "1.176471",
+            "2.352941",
+            "3.529412",
+            "4.705882",
+            "5.882353",
+            "7.058824",
+            "8.235294",
+            "9.411765",
+            "10.588235",
+            "11.764706",
+            "12.941176",
+            "14.117647",
+            "15.294118",
+            "16.470588",
+            "17.647059",
+            "18.823529"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "many",
+      "control": "left",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "#EFF3FF",
+          "#EFF3FF",
+          "#EFF3FF",
+          "#EFF3FF",
+          "#EFF3FF",
+          "#BDD7E7",
+          "#BDD7E7",
+          "#BDD7E7",
+          "#BDD7E7",
+          "#BDD7E7",
+          "#6BAED6",
+          "#6BAED6",
+          "#6BAED6",
+          "#6BAED6",
+          "#6BAED6",
+          "#2171B5",
+          "#2171B5",
+          "#2171B5",
+          "#2171B5",
+          "#2171B5",
+          "#2171B5"
+        ],
+        "limits": [
+          0,
+          20
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#BDD7E7",
+          "#6BAED6",
+          "#2171B5"
+        ],
+        "guide": {
+          "breaks": [
+            5,
+            10,
+            15
+          ],
+          "labels": [
+            "5",
+            "10",
+            "15"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "many",
+      "control": "limits",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "#EFF3FF",
+          "#C6DBEF",
+          "#9ECAE1",
+          "#6BAED6",
+          "#3182BD",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C"
+        ],
+        "limits": [
+          -1,
+          5
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#C6DBEF",
+          "#9ECAE1",
+          "#6BAED6",
+          "#3182BD",
+          "#08519C"
+        ],
+        "guide": {
+          "breaks": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    },
+    {
+      "palette": "brewer",
+      "population": "many",
+      "control": "partial_limits",
+      "inputs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": {
+        "values": [
+          "#EFF3FF",
+          "#EFF3FF",
+          "#BDD7E7",
+          "#6BAED6",
+          "#3182BD",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C",
+          "#08519C"
+        ],
+        "limits": [
+          0,
+          5
+        ],
+        "palette": [
+          "#EFF3FF",
+          "#BDD7E7",
+          "#6BAED6",
+          "#3182BD",
+          "#08519C"
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "draw_error": null
+      }
+    }
+  ]
+}

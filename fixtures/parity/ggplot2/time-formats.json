@@ -1,0 +1,1105 @@
+{
+  "reference": "R 4.6.1 / ggplot2 4.0.3; LC_TIME=C; digits.secs=0; TZ=UTC",
+  "cases": [
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%Y-%m-%d %H:%M:%S",
+      "label": "2024-01-02 03:04:05"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%a|%A|%b|%B|%h|%p|%P",
+      "label": "Tue|Tuesday|Jan|January|Jan|AM|am"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%c|%x|%X",
+      "label": "Tue Jan  2 03:04:05 2024|01/02/24|03:04:05"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%C|%F|%D|%r|%R|%T|%k|%l|%v|%+",
+      "label": "20|2024-01-02|01/02/24|03:04:05 AM|03:04|03:04:05| 3| 3| 2-Jan-2024|Tue Jan  2 03:04:05 UTC 2024"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%j|%u|%w|%U|%W|%V|%g|%G|%y|%Y",
+      "label": "002|2|2|00|01|01|24|2024|24|2024"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%z|%Z",
+      "label": "+0000|UTC"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%OS",
+      "label": "05"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%OS0",
+      "label": "05"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%OS1",
+      "label": "05.1"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%OS3",
+      "label": "05.123"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%OS6",
+      "label": "05.123456"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%OS9",
+      "label": "05.123456"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%OS3|%OS6",
+      "label": "05.123|056"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%OS10|%OS12|%OS00",
+      "label": "05.10|0512|0500"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%%OS3",
+      "label": "05.123"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%%%OS3",
+      "label": "%05.123"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%%%%OS3",
+      "label": "%05.123"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "a%%OS3b",
+      "label": "a05.123b"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%_d|%-d|%0d|%q|%Q|%f|%L",
+      "label": "_d|-d|0d|q|Q|f|L"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%Ea|%EC|%Ey|%EY|%Ez|%Oa|%Od|%Om|%OI|%OH|%OM|%Ou|%OU|%OV|%Ow|%OW|%Oy|%OY",
+      "label": "Tue|20|24|2024|+0000|Tue|02|01|03|03|04|2|00|01|2|01|24|2024"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%n%t%%|abc%|%E|%O",
+      "label": "\n\t%|abc||O"
+    },
+    {
+      "microseconds": "1704164645123456",
+      "pattern": "%Y\n%b %d",
+      "label": "2024\nJan 02"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%Y-%m-%d %H:%M:%S",
+      "label": "2024-01-02 03:04:05"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%a|%A|%b|%B|%h|%p|%P",
+      "label": "Tue|Tuesday|Jan|January|Jan|AM|am"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%c|%x|%X",
+      "label": "Tue Jan  2 03:04:05 2024|01/02/24|03:04:05"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%C|%F|%D|%r|%R|%T|%k|%l|%v|%+",
+      "label": "20|2024-01-02|01/02/24|03:04:05 AM|03:04|03:04:05| 3| 3| 2-Jan-2024|Tue Jan  2 03:04:05 UTC 2024"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%j|%u|%w|%U|%W|%V|%g|%G|%y|%Y",
+      "label": "002|2|2|00|01|01|24|2024|24|2024"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%z|%Z",
+      "label": "+0000|UTC"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%OS",
+      "label": "05"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%OS0",
+      "label": "05"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%OS1",
+      "label": "05.0"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%OS3",
+      "label": "05.099"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%OS6",
+      "label": "05.099999"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%OS9",
+      "label": "05.099999"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%OS3|%OS6",
+      "label": "05.099|056"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%OS10|%OS12|%OS00",
+      "label": "05.00|0512|0500"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%%OS3",
+      "label": "05.099"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%%%OS3",
+      "label": "%05.099"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%%%%OS3",
+      "label": "%05.099"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "a%%OS3b",
+      "label": "a05.099b"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%_d|%-d|%0d|%q|%Q|%f|%L",
+      "label": "_d|-d|0d|q|Q|f|L"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%Ea|%EC|%Ey|%EY|%Ez|%Oa|%Od|%Om|%OI|%OH|%OM|%Ou|%OU|%OV|%Ow|%OW|%Oy|%OY",
+      "label": "Tue|20|24|2024|+0000|Tue|02|01|03|03|04|2|00|01|2|01|24|2024"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%n%t%%|abc%|%E|%O",
+      "label": "\n\t%|abc||O"
+    },
+    {
+      "microseconds": "1704164645100000",
+      "pattern": "%Y\n%b %d",
+      "label": "2024\nJan 02"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%Y-%m-%d %H:%M:%S",
+      "label": "2024-01-02 03:04:05"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%a|%A|%b|%B|%h|%p|%P",
+      "label": "Tue|Tuesday|Jan|January|Jan|AM|am"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%c|%x|%X",
+      "label": "Tue Jan  2 03:04:05 2024|01/02/24|03:04:05"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%C|%F|%D|%r|%R|%T|%k|%l|%v|%+",
+      "label": "20|2024-01-02|01/02/24|03:04:05 AM|03:04|03:04:05| 3| 3| 2-Jan-2024|Tue Jan  2 03:04:05 UTC 2024"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%j|%u|%w|%U|%W|%V|%g|%G|%y|%Y",
+      "label": "002|2|2|00|01|01|24|2024|24|2024"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%z|%Z",
+      "label": "+0000|UTC"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%OS",
+      "label": "05"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%OS0",
+      "label": "05"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%OS1",
+      "label": "05.1"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%OS3",
+      "label": "05.122"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%OS6",
+      "label": "05.122999"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%OS9",
+      "label": "05.122999"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%OS3|%OS6",
+      "label": "05.122|056"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%OS10|%OS12|%OS00",
+      "label": "05.10|0512|0500"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%%OS3",
+      "label": "05.122"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%%%OS3",
+      "label": "%05.122"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%%%%OS3",
+      "label": "%05.122"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "a%%OS3b",
+      "label": "a05.122b"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%_d|%-d|%0d|%q|%Q|%f|%L",
+      "label": "_d|-d|0d|q|Q|f|L"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%Ea|%EC|%Ey|%EY|%Ez|%Oa|%Od|%Om|%OI|%OH|%OM|%Ou|%OU|%OV|%Ow|%OW|%Oy|%OY",
+      "label": "Tue|20|24|2024|+0000|Tue|02|01|03|03|04|2|00|01|2|01|24|2024"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%n%t%%|abc%|%E|%O",
+      "label": "\n\t%|abc||O"
+    },
+    {
+      "microseconds": "1704164645123000",
+      "pattern": "%Y\n%b %d",
+      "label": "2024\nJan 02"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%Y-%m-%d %H:%M:%S",
+      "label": "1969-12-31 23:59:59"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%a|%A|%b|%B|%h|%p|%P",
+      "label": "Wed|Wednesday|Dec|December|Dec|PM|pm"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%c|%x|%X",
+      "label": "Wed Dec 31 23:59:59 1969|12/31/69|23:59:59"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%C|%F|%D|%r|%R|%T|%k|%l|%v|%+",
+      "label": "19|1969-12-31|12/31/69|11:59:59 PM|23:59|23:59:59|23|11|31-Dec-1969|Wed Dec 31 23:59:59 UTC 1969"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%j|%u|%w|%U|%W|%V|%g|%G|%y|%Y",
+      "label": "365|3|3|52|52|01|70|1970|69|1969"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%z|%Z",
+      "label": "+0000|UTC"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%OS",
+      "label": "59"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%OS0",
+      "label": "59"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%OS1",
+      "label": "59.9"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%OS3",
+      "label": "59.999"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%OS6",
+      "label": "59.999600"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%OS9",
+      "label": "59.999600"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%OS3|%OS6",
+      "label": "59.999|596"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%OS10|%OS12|%OS00",
+      "label": "59.90|5912|5900"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%%OS3",
+      "label": "59.999"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%%%OS3",
+      "label": "%59.999"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%%%%OS3",
+      "label": "%59.999"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "a%%OS3b",
+      "label": "a59.999b"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%_d|%-d|%0d|%q|%Q|%f|%L",
+      "label": "_d|-d|0d|q|Q|f|L"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%Ea|%EC|%Ey|%EY|%Ez|%Oa|%Od|%Om|%OI|%OH|%OM|%Ou|%OU|%OV|%Ow|%OW|%Oy|%OY",
+      "label": "Wed|19|69|1969|+0000|Wed|31|12|11|23|59|3|52|01|3|52|69|1969"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%n%t%%|abc%|%E|%O",
+      "label": "\n\t%|abc||O"
+    },
+    {
+      "microseconds": "-400",
+      "pattern": "%Y\n%b %d",
+      "label": "1969\nDec 31"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%Y-%m-%d %H:%M:%S",
+      "label": "1970-01-01 00:00:00"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%a|%A|%b|%B|%h|%p|%P",
+      "label": "Thu|Thursday|Jan|January|Jan|AM|am"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%c|%x|%X",
+      "label": "Thu Jan  1 00:00:00 1970|01/01/70|00:00:00"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%C|%F|%D|%r|%R|%T|%k|%l|%v|%+",
+      "label": "19|1970-01-01|01/01/70|12:00:00 AM|00:00|00:00:00| 0|12| 1-Jan-1970|Thu Jan  1 00:00:00 UTC 1970"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%j|%u|%w|%U|%W|%V|%g|%G|%y|%Y",
+      "label": "001|4|4|00|00|01|70|1970|70|1970"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%z|%Z",
+      "label": "+0000|UTC"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%OS",
+      "label": "00"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%OS0",
+      "label": "00"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%OS1",
+      "label": "00.1"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%OS3",
+      "label": "00.100"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%OS6",
+      "label": "00.100000"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%OS9",
+      "label": "00.100000"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%OS3|%OS6",
+      "label": "00.100|006"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%OS10|%OS12|%OS00",
+      "label": "00.10|0012|0000"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%%OS3",
+      "label": "00.100"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%%%OS3",
+      "label": "%00.100"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%%%%OS3",
+      "label": "%00.100"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "a%%OS3b",
+      "label": "a00.100b"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%_d|%-d|%0d|%q|%Q|%f|%L",
+      "label": "_d|-d|0d|q|Q|f|L"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%Ea|%EC|%Ey|%EY|%Ez|%Oa|%Od|%Om|%OI|%OH|%OM|%Ou|%OU|%OV|%Ow|%OW|%Oy|%OY",
+      "label": "Thu|19|70|1970|+0000|Thu|01|01|12|00|00|4|00|01|4|00|70|1970"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%n%t%%|abc%|%E|%O",
+      "label": "\n\t%|abc||O"
+    },
+    {
+      "microseconds": "100000",
+      "pattern": "%Y\n%b %d",
+      "label": "1970\nJan 01"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%Y-%m-%d %H:%M:%S",
+      "label": "1970-01-01 00:00:00"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%a|%A|%b|%B|%h|%p|%P",
+      "label": "Thu|Thursday|Jan|January|Jan|AM|am"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%c|%x|%X",
+      "label": "Thu Jan  1 00:00:00 1970|01/01/70|00:00:00"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%C|%F|%D|%r|%R|%T|%k|%l|%v|%+",
+      "label": "19|1970-01-01|01/01/70|12:00:00 AM|00:00|00:00:00| 0|12| 1-Jan-1970|Thu Jan  1 00:00:00 UTC 1970"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%j|%u|%w|%U|%W|%V|%g|%G|%y|%Y",
+      "label": "001|4|4|00|00|01|70|1970|70|1970"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%z|%Z",
+      "label": "+0000|UTC"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%OS",
+      "label": "00"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%OS0",
+      "label": "00"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%OS1",
+      "label": "00.0"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%OS3",
+      "label": "00.000"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%OS6",
+      "label": "00.000000"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%OS9",
+      "label": "00.000000"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%OS3|%OS6",
+      "label": "00.000|006"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%OS10|%OS12|%OS00",
+      "label": "00.00|0012|0000"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%%OS3",
+      "label": "00.000"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%%%OS3",
+      "label": "%00.000"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%%%%OS3",
+      "label": "%00.000"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "a%%OS3b",
+      "label": "a00.000b"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%_d|%-d|%0d|%q|%Q|%f|%L",
+      "label": "_d|-d|0d|q|Q|f|L"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%Ea|%EC|%Ey|%EY|%Ez|%Oa|%Od|%Om|%OI|%OH|%OM|%Ou|%OU|%OV|%Ow|%OW|%Oy|%OY",
+      "label": "Thu|19|70|1970|+0000|Thu|01|01|12|00|00|4|00|01|4|00|70|1970"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%n%t%%|abc%|%E|%O",
+      "label": "\n\t%|abc||O"
+    },
+    {
+      "microseconds": "0",
+      "pattern": "%Y\n%b %d",
+      "label": "1970\nJan 01"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%Y-%m-%d %H:%M:%S",
+      "label": "2021-01-01 00:00:00"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%a|%A|%b|%B|%h|%p|%P",
+      "label": "Fri|Friday|Jan|January|Jan|AM|am"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%c|%x|%X",
+      "label": "Fri Jan  1 00:00:00 2021|01/01/21|00:00:00"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%C|%F|%D|%r|%R|%T|%k|%l|%v|%+",
+      "label": "20|2021-01-01|01/01/21|12:00:00 AM|00:00|00:00:00| 0|12| 1-Jan-2021|Fri Jan  1 00:00:00 UTC 2021"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%j|%u|%w|%U|%W|%V|%g|%G|%y|%Y",
+      "label": "001|5|5|00|00|53|20|2020|21|2021"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%z|%Z",
+      "label": "+0000|UTC"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%OS",
+      "label": "00"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%OS0",
+      "label": "00"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%OS1",
+      "label": "00.0"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%OS3",
+      "label": "00.000"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%OS6",
+      "label": "00.000000"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%OS9",
+      "label": "00.000000"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%OS3|%OS6",
+      "label": "00.000|006"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%OS10|%OS12|%OS00",
+      "label": "00.00|0012|0000"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%%OS3",
+      "label": "00.000"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%%%OS3",
+      "label": "%00.000"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%%%%OS3",
+      "label": "%00.000"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "a%%OS3b",
+      "label": "a00.000b"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%_d|%-d|%0d|%q|%Q|%f|%L",
+      "label": "_d|-d|0d|q|Q|f|L"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%Ea|%EC|%Ey|%EY|%Ez|%Oa|%Od|%Om|%OI|%OH|%OM|%Ou|%OU|%OV|%Ow|%OW|%Oy|%OY",
+      "label": "Fri|20|21|2021|+0000|Fri|01|01|12|00|00|5|00|53|5|00|21|2021"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%n%t%%|abc%|%E|%O",
+      "label": "\n\t%|abc||O"
+    },
+    {
+      "microseconds": "1609459200000000",
+      "pattern": "%Y\n%b %d",
+      "label": "2021\nJan 01"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%Y-%m-%d %H:%M:%S",
+      "label": "2016-01-01 00:00:00"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%a|%A|%b|%B|%h|%p|%P",
+      "label": "Fri|Friday|Jan|January|Jan|AM|am"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%c|%x|%X",
+      "label": "Fri Jan  1 00:00:00 2016|01/01/16|00:00:00"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%C|%F|%D|%r|%R|%T|%k|%l|%v|%+",
+      "label": "20|2016-01-01|01/01/16|12:00:00 AM|00:00|00:00:00| 0|12| 1-Jan-2016|Fri Jan  1 00:00:00 UTC 2016"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%j|%u|%w|%U|%W|%V|%g|%G|%y|%Y",
+      "label": "001|5|5|00|00|53|15|2015|16|2016"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%z|%Z",
+      "label": "+0000|UTC"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%OS",
+      "label": "00"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%OS0",
+      "label": "00"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%OS1",
+      "label": "00.0"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%OS3",
+      "label": "00.000"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%OS6",
+      "label": "00.000000"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%OS9",
+      "label": "00.000000"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%OS3|%OS6",
+      "label": "00.000|006"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%OS10|%OS12|%OS00",
+      "label": "00.00|0012|0000"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%%OS3",
+      "label": "00.000"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%%%OS3",
+      "label": "%00.000"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%%%%OS3",
+      "label": "%00.000"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "a%%OS3b",
+      "label": "a00.000b"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%_d|%-d|%0d|%q|%Q|%f|%L",
+      "label": "_d|-d|0d|q|Q|f|L"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%Ea|%EC|%Ey|%EY|%Ez|%Oa|%Od|%Om|%OI|%OH|%OM|%Ou|%OU|%OV|%Ow|%OW|%Oy|%OY",
+      "label": "Fri|20|16|2016|+0000|Fri|01|01|12|00|00|5|00|53|5|00|16|2016"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%n%t%%|abc%|%E|%O",
+      "label": "\n\t%|abc||O"
+    },
+    {
+      "microseconds": "1451606400000000",
+      "pattern": "%Y\n%b %d",
+      "label": "2016\nJan 01"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%Y-%m-%d %H:%M:%S",
+      "label": "2017-01-01 00:00:00"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%a|%A|%b|%B|%h|%p|%P",
+      "label": "Sun|Sunday|Jan|January|Jan|AM|am"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%c|%x|%X",
+      "label": "Sun Jan  1 00:00:00 2017|01/01/17|00:00:00"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%C|%F|%D|%r|%R|%T|%k|%l|%v|%+",
+      "label": "20|2017-01-01|01/01/17|12:00:00 AM|00:00|00:00:00| 0|12| 1-Jan-2017|Sun Jan  1 00:00:00 UTC 2017"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%j|%u|%w|%U|%W|%V|%g|%G|%y|%Y",
+      "label": "001|7|0|01|00|52|16|2016|17|2017"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%z|%Z",
+      "label": "+0000|UTC"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%OS",
+      "label": "00"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%OS0",
+      "label": "00"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%OS1",
+      "label": "00.0"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%OS3",
+      "label": "00.000"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%OS6",
+      "label": "00.000000"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%OS9",
+      "label": "00.000000"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%OS3|%OS6",
+      "label": "00.000|006"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%OS10|%OS12|%OS00",
+      "label": "00.00|0012|0000"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%%OS3",
+      "label": "00.000"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%%%OS3",
+      "label": "%00.000"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%%%%OS3",
+      "label": "%00.000"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "a%%OS3b",
+      "label": "a00.000b"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%_d|%-d|%0d|%q|%Q|%f|%L",
+      "label": "_d|-d|0d|q|Q|f|L"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%Ea|%EC|%Ey|%EY|%Ez|%Oa|%Od|%Om|%OI|%OH|%OM|%Ou|%OU|%OV|%Ow|%OW|%Oy|%OY",
+      "label": "Sun|20|17|2017|+0000|Sun|01|01|12|00|00|7|01|52|0|00|17|2017"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%n%t%%|abc%|%E|%O",
+      "label": "\n\t%|abc||O"
+    },
+    {
+      "microseconds": "1483228800000000",
+      "pattern": "%Y\n%b %d",
+      "label": "2017\nJan 01"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%Y-%m-%d %H:%M:%S",
+      "label": "2000-02-29 12:34:56"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%a|%A|%b|%B|%h|%p|%P",
+      "label": "Tue|Tuesday|Feb|February|Feb|PM|pm"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%c|%x|%X",
+      "label": "Tue Feb 29 12:34:56 2000|02/29/00|12:34:56"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%C|%F|%D|%r|%R|%T|%k|%l|%v|%+",
+      "label": "20|2000-02-29|02/29/00|12:34:56 PM|12:34|12:34:56|12|12|29-Feb-2000|Tue Feb 29 12:34:56 UTC 2000"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%j|%u|%w|%U|%W|%V|%g|%G|%y|%Y",
+      "label": "060|2|2|09|09|09|00|2000|00|2000"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%z|%Z",
+      "label": "+0000|UTC"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%OS",
+      "label": "56"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%OS0",
+      "label": "56"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%OS1",
+      "label": "56.0"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%OS3",
+      "label": "56.000"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%OS6",
+      "label": "56.000000"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%OS9",
+      "label": "56.000000"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%OS3|%OS6",
+      "label": "56.000|566"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%OS10|%OS12|%OS00",
+      "label": "56.00|5612|5600"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%%OS3",
+      "label": "56.000"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%%%OS3",
+      "label": "%56.000"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%%%%OS3",
+      "label": "%56.000"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "a%%OS3b",
+      "label": "a56.000b"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%_d|%-d|%0d|%q|%Q|%f|%L",
+      "label": "_d|-d|0d|q|Q|f|L"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%Ea|%EC|%Ey|%EY|%Ez|%Oa|%Od|%Om|%OI|%OH|%OM|%Ou|%OU|%OV|%Ow|%OW|%Oy|%OY",
+      "label": "Tue|20|00|2000|+0000|Tue|29|02|12|12|34|2|09|09|2|09|00|2000"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%n%t%%|abc%|%E|%O",
+      "label": "\n\t%|abc||O"
+    },
+    {
+      "microseconds": "951827696000000",
+      "pattern": "%Y\n%b %d",
+      "label": "2000\nFeb 29"
+    }
+  ]
+}

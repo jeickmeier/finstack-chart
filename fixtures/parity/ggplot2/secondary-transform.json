@@ -1,0 +1,347 @@
+{
+  "reference": "ggplot2 4.0.3",
+  "cases": [
+    {
+      "family": "linear",
+      "kind": "cube",
+      "limits": [-2, 3],
+      "range": [-8, 27],
+      "values": [
+        0,
+        10,
+        20
+      ],
+      "labels": [
+        "0",
+        "10",
+        "20"
+      ],
+      "positions": [
+        0.4,
+        0.831,
+        0.943
+      ]
+    },
+    {
+      "family": "linear",
+      "kind": "square",
+      "limits": [2, 17],
+      "range": [4, 289],
+      "values": [
+        100,
+        200
+      ],
+      "labels": [
+        "100",
+        "200"
+      ],
+      "positions": [
+        0.533,
+        0.809
+      ]
+    },
+    {
+      "family": "linear",
+      "kind": "piecewise",
+      "limits": [2, 17],
+      "range": [0.8, 8.4],
+      "values": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "labels": [
+        "2",
+        "4",
+        "6",
+        "8"
+      ],
+      "positions": [
+        0.2,
+        0.45,
+        0.7,
+        0.95
+      ]
+    },
+    {
+      "family": "linear",
+      "kind": "decreasing",
+      "limits": [2, 17],
+      "range": [0.4, 6.8],
+      "values": [
+        6,
+        4,
+        2
+      ],
+      "labels": [
+        "6",
+        "4",
+        "2"
+      ],
+      "positions": [
+        0.033,
+        0.117,
+        0.2
+      ]
+    },
+    {
+      "family": "log",
+      "kind": "cube",
+      "limits": [2, 17],
+      "range": [8, 4913],
+      "values": [
+        10,
+        100,
+        1000
+      ],
+      "labels": [
+        "10",
+        "100",
+        "1000"
+      ],
+      "positions": [
+        0.035,
+        0.393,
+        0.752
+      ]
+    },
+    {
+      "family": "log",
+      "kind": "square",
+      "limits": [2, 17],
+      "range": [4, 289],
+      "values": [
+        10,
+        30,
+        100
+      ],
+      "labels": [
+        "10",
+        "30",
+        "100"
+      ],
+      "positions": [
+        0.214,
+        0.471,
+        0.752
+      ]
+    },
+    {
+      "family": "log",
+      "kind": "piecewise",
+      "limits": [2, 17],
+      "range": [0.8, 8.4],
+      "values": [
+        1,
+        3,
+        5
+      ],
+      "labels": [
+        "1.0",
+        "3.0",
+        "5.0"
+      ],
+      "positions": [
+        0.104,
+        0.577,
+        0.78
+      ]
+    },
+    {
+      "family": "log",
+      "kind": "decreasing",
+      "limits": [2, 17],
+      "range": [0.4, 6.8],
+      "values": [
+        5,
+        3,
+        1,
+        0.5
+      ],
+      "labels": [
+        "5.0",
+        "3.0",
+        "1.0",
+        "0.5"
+      ],
+      "positions": [
+        0.209,
+        0.366,
+        0.856,
+        0.979
+      ]
+    },
+    {
+      "family": "reverse",
+      "kind": "cube",
+      "limits": [-2, 3],
+      "range": [-8, 27],
+      "values": [
+        20,
+        10,
+        0
+      ],
+      "labels": [
+        "20",
+        "10",
+        "0"
+      ],
+      "positions": [
+        0.057,
+        0.169,
+        0.6
+      ]
+    },
+    {
+      "family": "reverse",
+      "kind": "square",
+      "limits": [2, 17],
+      "range": [4, 289],
+      "values": [
+        200,
+        100
+      ],
+      "labels": [
+        "200",
+        "100"
+      ],
+      "positions": [
+        0.191,
+        0.467
+      ]
+    },
+    {
+      "family": "reverse",
+      "kind": "piecewise",
+      "limits": [2, 17],
+      "range": [0.8, 8.4],
+      "values": [
+        8,
+        6,
+        4,
+        2
+      ],
+      "labels": [
+        "8",
+        "6",
+        "4",
+        "2"
+      ],
+      "positions": [
+        0.05,
+        0.3,
+        0.55,
+        0.8
+      ]
+    },
+    {
+      "family": "reverse",
+      "kind": "decreasing",
+      "limits": [2, 17],
+      "range": [0.4, 6.8],
+      "values": [
+        2,
+        4,
+        6
+      ],
+      "labels": [
+        "2",
+        "4",
+        "6"
+      ],
+      "positions": [
+        0.8,
+        0.883,
+        0.967
+      ]
+    },
+    {
+      "family": "sqrt",
+      "kind": "cube",
+      "limits": [2, 17],
+      "range": [8.00000000000001, 4913],
+      "values": [
+        1000,
+        2000,
+        3000,
+        4000
+      ],
+      "labels": [
+        "1000",
+        "2000",
+        "3000",
+        "4000"
+      ],
+      "positions": [
+        0.645,
+        0.788,
+        0.88,
+        0.949
+      ]
+    },
+    {
+      "family": "sqrt",
+      "kind": "square",
+      "limits": [2, 17],
+      "range": [4, 289],
+      "values": [
+        100,
+        200
+      ],
+      "labels": [
+        "100",
+        "200"
+      ],
+      "positions": [
+        0.645,
+        0.866
+      ]
+    },
+    {
+      "family": "sqrt",
+      "kind": "piecewise",
+      "limits": [2, 17],
+      "range": [0.8, 8.4],
+      "values": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "labels": [
+        "2",
+        "4",
+        "6",
+        "8"
+      ],
+      "positions": [
+        0.303,
+        0.57,
+        0.783,
+        0.966
+      ]
+    },
+    {
+      "family": "sqrt",
+      "kind": "decreasing",
+      "limits": [2, 17],
+      "range": [0.4, 6.8],
+      "values": [
+        6,
+        4,
+        2
+      ],
+      "labels": [
+        "6",
+        "4",
+        "2"
+      ],
+      "positions": [
+        0.062,
+        0.193,
+        0.304
+      ]
+    }
+  ]
+}

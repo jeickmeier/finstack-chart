@@ -1,6 +1,7 @@
 //! Thin owned primary handles; all grammar and runtime behavior remains in shared Rust.
 mod color;
 mod data;
+mod hierarchy;
 mod interpolate;
 mod output;
 mod path;
@@ -82,6 +83,16 @@ impl ComponentHandle {
             .map(Self::wrap)
             .map_err(failure)
     }
+    fn value_scale_field(&self, target: &str, field: &FieldHandle, scale: &str) -> PyResult<Self> {
+        self.get()?
+            .value_scale_field(
+                portable::decode(target).map_err(failure)?,
+                *field.get()?,
+                portable::decode(scale).map_err(failure)?,
+            )
+            .map(Self::wrap)
+            .map_err(failure)
+    }
     fn numeric_scale_field(
         &self,
         target: &str,
@@ -92,6 +103,21 @@ impl ComponentHandle {
             .numeric_scale_field(
                 portable::decode(target).map_err(failure)?,
                 *field.get()?,
+                portable::decode(scale).map_err(failure)?,
+            )
+            .map(Self::wrap)
+            .map_err(failure)
+    }
+    fn value_scale_expression(
+        &self,
+        target: &str,
+        input: &ComponentHandle,
+        scale: &str,
+    ) -> PyResult<Self> {
+        self.get()?
+            .value_scale_expression(
+                portable::decode(target).map_err(failure)?,
+                input.get()?,
                 portable::decode(scale).map_err(failure)?,
             )
             .map(Self::wrap)
@@ -301,6 +327,7 @@ pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_class::<shape_stack::ShapeStackHandle>()?;
     module.add_class::<color::ColorHandle>()?;
     module.add_class::<interpolate::InterpolatorHandle>()?;
+    module.add_class::<hierarchy::HierarchyHandle>()?;
     module.add_class::<time::TimeScaleHandle>()?;
     module.add_class::<scale::ScaleHandle>()?;
     module.add_class::<runtime::EditorHandle>()?;
@@ -311,6 +338,7 @@ pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_class::<output::OutputHandle>()?;
     module.add_class::<output::RequestHandle>()?;
     module.add_class::<output::FrameHandle>()?;
+    module.add_class::<output::TransitionHandle>()?;
     module.add_class::<output::QueueHandle>()?;
     module.add_class::<output::JobHandle>()
 }

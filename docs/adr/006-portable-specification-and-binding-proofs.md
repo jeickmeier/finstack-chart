@@ -109,3 +109,15 @@ The [proof matrix](../portable-contract.md#proof-support-matrix) distinguishes e
 exposed and future behavior. Full themes/facets/statistics, rich typography, sustained load,
 Linux execution, browser interaction, wheels/notebooks, free-threaded Python, public package
 publication and complete G4 parity remain later work.
+
+## Hierarchy integration (10 September 2026)
+
+Standalone hierarchy requests/snapshots use their own version 1, exact decimal-string
+hierarchy/node identities and the existing bounded decoder/diagnostic boundary. Primary
+chart envelopes containing hierarchy recipes use version 15; scene envelopes containing
+hierarchy targets also use version 15 and include a version-1 shared membership/metadata
+table. Existing non-hierarchy envelope versions remain unchanged. Prepared semantic
+queries add that same shared membership once per hierarchy layer. See [ADR-022](022-hierarchy-topology-and-layout-history.md)
+for topology/history ownership and the distinction between native registrations and
+portable/session/export boundaries. Python and WASM contain syntax and owned handles;
+all layouts and structural operations execute in core.

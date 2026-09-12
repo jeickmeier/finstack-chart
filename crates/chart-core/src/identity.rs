@@ -36,6 +36,11 @@ identity!(
     GuideId,
     "Identity of a positional guide, independent of its shared scale."
 );
+identity!(HierarchyId, "Identity of an immutable hierarchy owner.");
+identity!(
+    HierarchyNodeId,
+    "Stable hierarchy occurrence identity, independent of source payload and lookup labels."
+);
 identity!(FieldId, "Identity of a field within its dataset schema.");
 identity!(
     ResourceId,

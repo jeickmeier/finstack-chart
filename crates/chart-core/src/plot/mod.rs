@@ -503,6 +503,15 @@ impl PlotBuilder {
         }
         definition.theme = self.theme.map(|t| t.spec);
         let mut axis_builders = self.axes;
+        if axis_builders.is_empty()
+            && !self.layers.is_empty()
+            && self
+                .layers
+                .iter()
+                .all(|l| l.geom == crate::grammar::Geom::Hierarchy)
+        {
+            axis_builders = vec![x_axis().visible(false), y_axis().visible(false)];
+        }
         if !axis_builders.is_empty() {
             if !axis_builders.iter().any(|a| a.name == "x") {
                 axis_builders.push(x_axis());
@@ -626,6 +635,8 @@ impl PlotBuilder {
         }
         let mut names = BTreeMap::new();
         let mut color_ids = BTreeMap::<String, ScaleId>::new();
+        let mut ggplot_numeric_ids = BTreeMap::new();
+        let mut ggplot_style_ids = BTreeMap::new();
         let mut color_scales = BTreeMap::new();
         for color in self.colors {
             validate_name(&color.name)?;
@@ -694,6 +705,8 @@ impl PlotBuilder {
                 axes: &axes,
                 color_ids: &mut color_ids,
                 color_scales: &color_scales,
+                ggplot_numeric_ids: &mut ggplot_numeric_ids,
+                ggplot_style_ids: &mut ggplot_style_ids,
             }
             .apply(&mut definition, &mut layer, builder, &mapping, data)?;
             definition.layers.push(layer);
@@ -711,11 +724,12 @@ impl PlotBuilder {
                     format!("Legend names absent scale '{name}'."),
                 )
             })?;
-            if !definition
-                .layers
-                .iter()
-                .any(|l| l.color.as_ref().is_some_and(|c| &c.id == id))
-            {
+            if !definition.layers.iter().any(|l| {
+                l.color
+                    .iter()
+                    .chain(l.paint_scales.values())
+                    .any(|c| &c.id == id)
+            }) {
                 return Err(error(
                     DiagnosticCode::MissingResource,
                     format!("Legend scale '{name}' has no mapped layer."),
@@ -724,7 +738,7 @@ impl PlotBuilder {
             for color in definition
                 .layers
                 .iter_mut()
-                .filter_map(|l| l.color.as_mut())
+                .flat_map(|l| l.color.iter_mut().chain(l.paint_scales.values_mut()))
                 .filter(|c| &c.id == id)
             {
                 if legend.generic {
@@ -736,11 +750,12 @@ impl PlotBuilder {
             }
         }
         for name in color_scales.keys() {
-            if !definition
-                .layers
-                .iter()
-                .any(|l| l.color.as_ref().is_some_and(|c| c.id == color_ids[name]))
-            {
+            if !definition.layers.iter().any(|l| {
+                l.color
+                    .iter()
+                    .chain(l.paint_scales.values())
+                    .any(|c| c.id == color_ids[name])
+            }) {
                 return Err(error(
                     DiagnosticCode::MissingResource,
                     format!("Declared color scale '{name}' has no mapped layer."),
@@ -806,10 +821,12 @@ impl PlotEditBuilder {
             return Err(error);
         }
         self.original.colors.retain(|_, id| {
-            self.definition
-                .layers
-                .iter()
-                .any(|l| l.color.as_ref().is_some_and(|c| c.id == *id))
+            self.definition.layers.iter().any(|l| {
+                l.color
+                    .iter()
+                    .chain(l.paint_scales.values())
+                    .any(|c| c.id == *id)
+            })
         });
         if self.definition == self.original.definition {
             return Ok(self.original);

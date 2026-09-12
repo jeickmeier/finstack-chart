@@ -1,33 +1,34 @@
 use super::*;
 use crate::grammar::{DataRef, Layer, Numeric, SourceAes};
 
-fn source_mappings(aes: &SourceAes, data: &Data) -> AesBuilder {
-    fn convert(value: &Numeric, data: &Data) -> Mapping {
-        match value {
-            Numeric::Expression(expr) => Mapping::Expression(
-                expr.try_map_reads(|read| Ok(convert(&read.numeric(), data)))
-                    .expect("infallible source read conversion"),
-            ),
-            Numeric::Scaled { input, scale } => Mapping::Scaled {
-                input: Box::new(convert(input, data)),
-                scale: scale.as_ref().clone(),
-            },
-            Numeric::Field(id) | Numeric::Category(id) => Mapping::Handle(FieldHandle {
-                dataset: data.id,
-                field: *id,
-            }),
-            Numeric::Timestamp { field, origin } => Mapping::Timestamp {
-                field: data
-                    .batch
-                    .schema()
-                    .field(*field)
-                    .map_or(String::new(), |(_, f)| f.name.clone()),
-                origin: *origin,
-            },
-            Numeric::Literal(value) => Mapping::Literal(*value),
-        }
+fn source_mapping(value: &Numeric, data: &Data) -> Mapping {
+    match value {
+        Numeric::Expression(expr) => Mapping::Expression(
+            expr.try_map_reads(|read| Ok(source_mapping(&read.numeric(), data)))
+                .expect("infallible source read conversion"),
+        ),
+        Numeric::Scaled { input, scale } => Mapping::Scaled {
+            input: Box::new(source_mapping(input, data)),
+            scale: scale.as_ref().clone(),
+        },
+        Numeric::Field(id) | Numeric::Category(id) => Mapping::Handle(FieldHandle {
+            dataset: data.id,
+            field: *id,
+        }),
+        Numeric::Timestamp { field, origin } => Mapping::Timestamp {
+            field: data
+                .batch
+                .schema()
+                .field(*field)
+                .map_or(String::new(), |(_, f)| f.name.clone()),
+            origin: *origin,
+        },
+        Numeric::Literal(value) => Mapping::Literal(*value),
     }
-    let mapping = |value: &Numeric| convert(value, data);
+}
+
+fn source_mappings(aes: &SourceAes, data: &Data) -> AesBuilder {
+    let mapping = |value: &Numeric| source_mapping(value, data);
     AesBuilder {
         grouping: aes.grouping.clone(),
         x: aes.x.as_ref().map(mapping),
@@ -100,7 +101,7 @@ impl PlotEditBuilder {
                 self.definition
                     .layers
                     .iter()
-                    .filter_map(|l| l.color.as_ref())
+                    .flat_map(|l| l.color.iter().chain(l.paint_scales.values()))
                     .find(|c| c.id == *id)
                     .map(|c| (name.clone(), c.scale.clone()))
             })
@@ -163,6 +164,91 @@ impl PlotEditBuilder {
                     .find(|(_, id)| **id == color.id)
                     .map(|(name, _)| name.clone());
             }
+            if let Some(existing) = &existing {
+                for (channel, color) in &existing.paint_scales {
+                    let input = match &color.input {
+                        ColorInput::Category(field) | ColorInput::GroupField(field) => {
+                            Some(Mapping::Handle(FieldHandle {
+                                dataset: data.id,
+                                field: *field,
+                            }))
+                        }
+                        ColorInput::Numeric(value) => {
+                            source_mappings(&SourceAes::new().x(value.clone()), &data).x
+                        }
+                        _ => None,
+                    };
+                    let scale = this
+                        .original
+                        .colors
+                        .iter()
+                        .find(|(_, id)| **id == color.id)
+                        .map(|(name, _)| name.clone());
+                    match channel {
+                        crate::grammar::PaintAesthetic::Fill => {
+                            inherited.fill = input;
+                            inherited.fill_scale = scale;
+                        }
+                        crate::grammar::PaintAesthetic::Stroke => {
+                            inherited.stroke = input;
+                            inherited.stroke_scale = scale;
+                        }
+                    }
+                }
+            }
+            if let Some(existing) = &existing {
+                for target in [
+                    crate::grammar::ValueAesthetic::Shape,
+                    crate::grammar::ValueAesthetic::LineType,
+                ] {
+                    if let Some(encoding) = existing.value_scales.get(&target)
+                        && encoding.scale == resolve::default_value_scale(target)?
+                        && let ColorInput::Category(field) = encoding.input
+                    {
+                        let input = Some(Mapping::Handle(FieldHandle {
+                            dataset: data.id,
+                            field,
+                        }));
+                        match target {
+                            crate::grammar::ValueAesthetic::Shape => inherited.shape = input,
+                            _ => inherited.linetype = input,
+                        }
+                    }
+                }
+            }
+            if let Some(existing) = &existing {
+                for (target, kind) in [
+                    (
+                        crate::grammar::NumericAesthetic::Alpha,
+                        crate::scales::GgplotNumericPalette::Alpha,
+                    ),
+                    (
+                        crate::grammar::NumericAesthetic::StrokeWidth,
+                        crate::scales::GgplotNumericPalette::Linewidth,
+                    ),
+                ] {
+                    if let Some(encoding) = existing.numeric_scales.get(&target)
+                        && (encoding.scale
+                            == resolve::default_numeric_scale(kind, &encoding.input, &data)?
+                            || encoding.scale == crate::scales::ggplot_numeric_ordinal(kind)?)
+                        && let ColorInput::Category(field)
+                        | ColorInput::Numeric(Numeric::Field(field))
+                        | ColorInput::Numeric(Numeric::Timestamp { field, .. }) = encoding.input
+                    {
+                        let input = Some(match &encoding.input {
+                            ColorInput::Numeric(value) => source_mapping(value, &data),
+                            _ => Mapping::Handle(FieldHandle {
+                                dataset: data.id,
+                                field,
+                            }),
+                        });
+                        match target {
+                            crate::grammar::NumericAesthetic::Alpha => inherited.alpha = input,
+                            _ => inherited.linewidth = input,
+                        }
+                    }
+                }
+            }
             let (mut layer, mapping) =
                 builder.lower(&data, &inherited, this.definition.profile())?;
             layer.data = input;
@@ -179,6 +265,69 @@ impl PlotEditBuilder {
                 layer.scales = old.scales;
             }
             let color_scales = this.color_scales();
+            let ordinal_size =
+                crate::scales::ggplot_numeric_ordinal(crate::scales::GgplotNumericPalette::Size)?;
+            let mut ggplot_numeric_ids = BTreeMap::new();
+            for existing in &this.definition.layers {
+                if let Some(encoding) = existing
+                    .numeric_scales
+                    .get(&crate::grammar::NumericAesthetic::Size)
+                    && (encoding.scale
+                        == resolve::default_numeric_scale(
+                            crate::scales::GgplotNumericPalette::Size,
+                            &encoding.input,
+                            this.root_data(existing.data)?,
+                        )?
+                        || encoding.scale == ordinal_size)
+                    && let ColorInput::Numeric(Numeric::Field(field))
+                    | ColorInput::Numeric(Numeric::Timestamp { field, .. })
+                    | ColorInput::Category(field) = encoding.input
+                {
+                    ggplot_numeric_ids
+                        .insert((crate::grammar::NumericAesthetic::Size, field), encoding.id);
+                }
+            }
+            for existing in &this.definition.layers {
+                for (target, kind) in [
+                    (
+                        crate::grammar::NumericAesthetic::Alpha,
+                        crate::scales::GgplotNumericPalette::Alpha,
+                    ),
+                    (
+                        crate::grammar::NumericAesthetic::StrokeWidth,
+                        crate::scales::GgplotNumericPalette::Linewidth,
+                    ),
+                ] {
+                    if let Some(encoding) = existing.numeric_scales.get(&target)
+                        && (encoding.scale
+                            == resolve::default_numeric_scale(
+                                kind,
+                                &encoding.input,
+                                this.root_data(existing.data)?,
+                            )?
+                            || encoding.scale == crate::scales::ggplot_numeric_ordinal(kind)?)
+                        && let ColorInput::Category(field)
+                        | ColorInput::Numeric(Numeric::Field(field))
+                        | ColorInput::Numeric(Numeric::Timestamp { field, .. }) = encoding.input
+                    {
+                        ggplot_numeric_ids.insert((target, field), encoding.id);
+                    }
+                }
+            }
+            let mut ggplot_style_ids = BTreeMap::new();
+            for existing in &this.definition.layers {
+                for target in [
+                    crate::grammar::ValueAesthetic::Shape,
+                    crate::grammar::ValueAesthetic::LineType,
+                ] {
+                    if let Some(encoding) = existing.value_scales.get(&target)
+                        && encoding.scale == resolve::default_value_scale(target)?
+                        && let ColorInput::Category(field) = encoding.input
+                    {
+                        ggplot_style_ids.insert((target, field), encoding.id);
+                    }
+                }
+            }
             if let Some(theme) = &mut this.definition.theme {
                 theme.layers.remove(&layer.id);
             }
@@ -186,6 +335,8 @@ impl PlotEditBuilder {
                 axes: &this.original.axes,
                 color_ids: &mut this.original.colors,
                 color_scales: &color_scales,
+                ggplot_numeric_ids: &mut ggplot_numeric_ids,
+                ggplot_style_ids: &mut ggplot_style_ids,
             }
             .apply(&mut this.definition, &mut layer, &builder, &mapping, &data)?;
             this.original.layers.insert(name, layer.id);
@@ -301,7 +452,7 @@ impl PlotEditBuilder {
                 .definition
                 .layers
                 .iter_mut()
-                .filter_map(|l| l.color.as_mut())
+                .flat_map(|l| l.color.iter_mut().chain(l.paint_scales.values_mut()))
                 .filter(|c| c.id == id)
             {
                 color.scale = value.clone();
@@ -328,7 +479,7 @@ impl PlotEditBuilder {
                 .definition
                 .layers
                 .iter_mut()
-                .filter_map(|l| l.color.as_mut())
+                .flat_map(|l| l.color.iter_mut().chain(l.paint_scales.values_mut()))
                 .filter(|c| c.id == id)
             {
                 if legend.generic {

@@ -1,6 +1,6 @@
 use super::*;
 use chart_export::{
-    ExportJob, ExportLimits, ExportQueue, FigureRequest, FigureSnapshot, Output,
+    ExportJob, ExportLimits, ExportQueue, FigureRequest, FigureSnapshot, FigureTransition, Output,
     host::{self, Options},
 };
 handle!(OptionsHandle, "_ExportOptions", Options);
@@ -64,6 +64,14 @@ impl OutputHandle {
 handle!(RequestHandle, "_FigureRequest", FigureRequest);
 #[pymethods]
 impl RequestHandle {
+    fn with_hierarchy_history(&self, previous: &FrameHandle) -> PyResult<Self> {
+        Ok(Self::wrap(
+            self.get()?
+                .clone()
+                .with_hierarchy_history(previous.get()?.layout()),
+        ))
+    }
+
     fn prepare(&self, py: Python<'_>) -> PyResult<FrameHandle> {
         let r = self.get()?;
         py.detach(|| r.prepare())
@@ -82,6 +90,21 @@ impl RequestHandle {
 handle!(FrameHandle, "_FigureSnapshot", FigureSnapshot);
 #[pymethods]
 impl FrameHandle {
+    fn guide_transition(
+        &self,
+        py: Python<'_>,
+        previous: &FrameHandle,
+    ) -> PyResult<TransitionHandle> {
+        let f = self.get()?;
+        let previous = previous.get()?;
+        py.detach(|| f.guide_transition(previous))
+            .map(TransitionHandle::wrap)
+            .map_err(failure)
+    }
+    fn presentation(&self, py: Python<'_>) -> PyResult<String> {
+        let f = self.get()?;
+        py.detach(|| f.presentation_json()).map_err(failure)
+    }
     fn guides(&self, py: Python<'_>) -> PyResult<String> {
         let f = self.get()?;
         py.detach(|| f.guides_json()).map_err(failure)
@@ -143,6 +166,20 @@ impl JobHandle {
     fn run(&mut self, py: Python<'_>) -> PyResult<Vec<u8>> {
         let job = self.inner.take().ok_or_else(disposed)?;
         Ok(py.detach(|| job.run()).map_err(failure)?.bytes)
+    }
+    fn dispose(&mut self) {
+        self.inner.take();
+    }
+}
+
+handle!(TransitionHandle, "_FigureTransition", FigureTransition);
+#[pymethods]
+impl TransitionHandle {
+    fn sample(&self, py: Python<'_>, fraction: f64) -> PyResult<FrameHandle> {
+        let t = self.get()?;
+        py.detach(|| t.sample(fraction))
+            .map(FrameHandle::wrap)
+            .map_err(failure)
     }
     fn dispose(&mut self) {
         self.inner.take();

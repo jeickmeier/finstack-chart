@@ -69,6 +69,22 @@ impl Component {
         Self(Kind::VectorPath(super::vector_path(id, path.geometry())))
     }
     /// Attach a numeric aesthetic while preserving an owner-scoped field identity.
+    /// Attach a typed text or line-type scale through the same owner-checked core path.
+    pub fn value_scale_field(
+        &self,
+        target: crate::grammar::ValueAesthetic,
+        field: FieldHandle,
+        scale: crate::scales::MappedScaleSpec,
+    ) -> ChartResult<Self> {
+        let Kind::Layer(layer) = &self.0 else {
+            return Err(unsupported("value_scale"));
+        };
+        Ok(Self(Kind::Layer(layer.clone().value_scale(
+            target,
+            Mapping::Handle(field),
+            scale,
+        ))))
+    }
     pub fn numeric_scale_field(
         &self,
         target: crate::grammar::NumericAesthetic,
@@ -130,6 +146,23 @@ impl Component {
         )))
     }
     /// Attach a numeric aesthetic through a source expression without host evaluation.
+    /// Attach a typed text or line-type scale through the same owner-checked core path.
+    pub fn value_scale_expression(
+        &self,
+        target: crate::grammar::ValueAesthetic,
+        expression: &Self,
+        scale: crate::scales::MappedScaleSpec,
+    ) -> ChartResult<Self> {
+        let (Kind::Layer(layer), Kind::Expression(Expr::Source(expr))) = (&self.0, &expression.0)
+        else {
+            return Err(unsupported("value_scale source expression"));
+        };
+        Ok(Self(Kind::Layer(layer.clone().value_scale(
+            target,
+            Mapping::Expression(expr.clone()),
+            scale,
+        ))))
+    }
     pub fn numeric_scale_expression(
         &self,
         target: crate::grammar::NumericAesthetic,
@@ -376,6 +409,35 @@ impl Component {
             "aes" => empty!(Aes, aes),
             "points" => empty!(Layer, points),
             "line" => empty!(Layer, line),
+            "hierarchy" => Kind::Layer(hierarchy(
+                a.one::<crate::grammar::HierarchyRecipe<String>>()?
+                    .try_map_fields(|name| Ok(Mapping::from(name)))?,
+            )),
+            "hierarchy_tree" => {
+                let (id, parent) = a.pair::<String, String>()?;
+                Kind::Layer(hierarchy_tree(id, parent))
+            }
+            "hierarchy_cluster" => {
+                let (id, parent) = a.pair::<String, String>()?;
+                Kind::Layer(hierarchy_cluster(id, parent))
+            }
+            "hierarchy_icicle" => {
+                let (id, parent) = a.pair::<String, String>()?;
+                Kind::Layer(hierarchy_icicle(id, parent))
+            }
+            "hierarchy_sunburst" => {
+                let (id, parent) = a.pair::<String, String>()?;
+                Kind::Layer(hierarchy_sunburst(id, parent))
+            }
+            "hierarchy_treemap" => {
+                let (id, parent) = a.pair::<String, String>()?;
+                Kind::Layer(hierarchy_treemap(id, parent))
+            }
+            "hierarchy_pack" => {
+                let (id, parent) = a.pair::<String, String>()?;
+                Kind::Layer(hierarchy_pack(id, parent))
+            }
+
             "shape_line" => empty!(Layer, shape_line),
             "shape_line_radial" => empty!(Layer, shape_line_radial),
             "shape_area_radial" => empty!(Layer, shape_area_radial),
@@ -420,11 +482,16 @@ impl Component {
             }
             "filter" => Kind::Filter(filter(a.mapping()?)),
             "scale_linear" => empty!(Scale, scale_linear),
+            "scale_reverse" => empty!(Scale, scale_reverse),
+            "scale_sqrt" => empty!(Scale, scale_sqrt),
             "scale_log" => Kind::Scale(scale_log(a.one()?)),
             "scale_symlog" => Kind::Scale(scale_symlog(a.one()?)),
             "scale_band" => empty!(Scale, scale_band),
             "scale_point" => empty!(Scale, scale_point),
             "scale_utc" => empty!(Scale, scale_utc),
+            "scale_date" => empty!(Scale, scale_date),
+            "scale_duration" => empty!(Scale, scale_duration),
+            "scale_binned" => Kind::Scale(scale_binned(a.one()?)),
             "scale_session" => Kind::Scale(scale_session(a.one()?)),
             "scale_numeric" => Kind::Scale(scale_numeric(a.one()?)),
             "scale_registered" => {
@@ -493,6 +560,11 @@ impl Component {
     pub fn field(&self, method: &str, field: FieldHandle) -> ChartResult<Self> {
         let mapping = Mapping::Handle(field);
         Ok(Self(match &self.0 {
+            Kind::Layer(b) => Kind::Layer(match method {
+                "hierarchy_value" => b.clone().hierarchy_value(mapping),
+                "hierarchy_label" => b.clone().hierarchy_label(mapping),
+                _ => return Err(unsupported(method)),
+            }),
             Kind::Aes(b) => Kind::Aes(match method {
                 "x" => b.clone().x(mapping),
                 "y" => b.clone().y(mapping),
@@ -503,6 +575,12 @@ impl Component {
                 "size" => b.clone().size(mapping),
                 "group" => b.clone().group(mapping),
                 "color" => b.clone().color(mapping),
+                "fill" => b.clone().fill(mapping),
+                "stroke" => b.clone().stroke(mapping),
+                "shape" => b.clone().shape(mapping),
+                "linetype" => b.clone().linetype(mapping),
+                "alpha" => b.clone().alpha(mapping),
+                "linewidth" => b.clone().linewidth(mapping),
                 _ => return Err(unsupported(method)),
             }),
             Kind::Stat(b) => Kind::Stat(match method {

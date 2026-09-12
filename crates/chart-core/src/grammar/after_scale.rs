@@ -10,6 +10,14 @@ pub enum AfterScaleAesthetic {
     Size,
     /// Exact mapped or constant sRGB color.
     Color,
+    /// Independent interior paint.
+    Fill,
+    /// Independent outline paint.
+    Stroke,
+    /// Replacement paint alpha.
+    Alpha,
+    /// Stroke width independent of point size.
+    LineWidth,
 }
 /// Theme-derived input available without a data-column dependency.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -36,7 +44,9 @@ pub enum AfterScaleRead {
 }
 fn kind(read: &AfterScaleRead) -> ChartResult<ExpressionType> {
     Ok(match read {
-        AfterScaleRead::Aesthetic(AfterScaleAesthetic::Size)
+        AfterScaleRead::Aesthetic(
+            AfterScaleAesthetic::Size | AfterScaleAesthetic::Alpha | AfterScaleAesthetic::LineWidth,
+        )
         | AfterScaleRead::Theme(ThemeRead::PointSize | ThemeRead::LineWidth) => {
             ExpressionType::Number
         }
@@ -68,6 +78,7 @@ pub(super) fn apply(
     theme: Option<&GeometryTheme<crate::color::Paint>>,
     mapped_size: bool,
     rows: &mut [super::compiler::EncodedRow],
+    profile: Profile,
 ) -> ChartResult<()> {
     if layer.after_scale.is_empty() {
         return Ok(());
@@ -80,9 +91,34 @@ pub(super) fn apply(
     let input = |read: &AfterScaleRead, i: usize| {
         use AfterScaleRead as R;
         use ExpressionValue as V;
+        if let R::Aesthetic(a) = read
+            && rows[i].is_missing(*a)
+        {
+            return V::Missing(kind(read).expect("validated aesthetic kind"));
+        }
         match read {
             R::Aesthetic(AfterScaleAesthetic::Color) => {
                 V::Color(rows[i].color.unwrap_or(constant_color))
+            }
+            R::Aesthetic(AfterScaleAesthetic::Fill) => V::Color(
+                layer
+                    .style
+                    .fill
+                    .or(rows[i].fill)
+                    .unwrap_or(rows[i].color.unwrap_or(constant_color)),
+            ),
+            R::Aesthetic(AfterScaleAesthetic::Stroke) => V::Color(
+                layer
+                    .style
+                    .stroke
+                    .or(rows[i].stroke)
+                    .unwrap_or(rows[i].color.unwrap_or(constant_color)),
+            ),
+            R::Aesthetic(AfterScaleAesthetic::Alpha) => {
+                V::Number(layer.style.alpha.or(rows[i].alpha).unwrap_or(1.))
+            }
+            R::Aesthetic(AfterScaleAesthetic::LineWidth) => {
+                V::Number(rows[i].stroke_width.unwrap_or(layer.style.stroke_width))
             }
             R::Aesthetic(AfterScaleAesthetic::Size) => {
                 if mapped_size {
@@ -109,16 +145,53 @@ pub(super) fn apply(
         .after_scale
         .iter()
         .map(|(a, e)| {
-            e.evaluate(rows.len(), ExpressionLimits::default(), kind, input)
-                .map(|v| (*a, v))
+            let result = if profile == Profile::Ggplot2_4_0_3 {
+                e.evaluate_reference(rows.len(), ExpressionLimits::default(), kind, input)
+            } else {
+                e.evaluate(rows.len(), ExpressionLimits::default(), kind, input)
+            };
+            result.map(|v| (*a, v))
         })
         .collect::<ChartResult<Vec<_>>>()?;
     for (aesthetic, values) in values {
         for (row, value) in rows.iter_mut().zip(values) {
+            if profile == Profile::Ggplot2_4_0_3 {
+                row.set_missing(aesthetic, matches!(value, ExpressionValue::Missing(_)));
+            }
             match aesthetic {
-                AfterScaleAesthetic::Size => row.size = value.number(),
-                AfterScaleAesthetic::Color => {
-                    row.color = Some(match value {
+                AfterScaleAesthetic::Size => {
+                    row.size = value.number();
+                    if profile == Profile::Ggplot2_4_0_3 {
+                        row.set_missing(aesthetic, row.size.is_none());
+                    }
+                }
+                AfterScaleAesthetic::Alpha => {
+                    let alpha = value.number_with_infinite(profile == Profile::Ggplot2_4_0_3);
+                    if profile != Profile::Ggplot2_4_0_3
+                        && alpha.is_some_and(|v| !v.is_finite() || !(0. ..=1.).contains(&v))
+                    {
+                        return Err(error(
+                            DiagnosticCode::NumericalDomain,
+                            "Post-scale alpha must lie in the closed unit interval.",
+                        ));
+                    }
+                    row.alpha = alpha;
+                }
+                AfterScaleAesthetic::LineWidth => {
+                    row.stroke_width = value.number();
+                    if profile == Profile::Ggplot2_4_0_3 {
+                        row.set_missing(aesthetic, row.stroke_width.is_none());
+                    }
+                    if profile != Profile::Ggplot2_4_0_3 && row.stroke_width.is_none_or(|w| w <= 0.)
+                    {
+                        row.x = None;
+                        row.y = None;
+                    }
+                }
+                AfterScaleAesthetic::Color
+                | AfterScaleAesthetic::Fill
+                | AfterScaleAesthetic::Stroke => {
+                    let paint = Some(match value {
                         ExpressionValue::Color(c) => c,
                         _ => crate::scene::Color {
                             red: 0,
@@ -127,7 +200,12 @@ pub(super) fn apply(
                             alpha: 0,
                         }
                         .into(),
-                    })
+                    });
+                    match aesthetic {
+                        AfterScaleAesthetic::Fill => row.fill = paint,
+                        AfterScaleAesthetic::Stroke => row.stroke = paint,
+                        _ => row.color = paint,
+                    }
                 }
             }
         }

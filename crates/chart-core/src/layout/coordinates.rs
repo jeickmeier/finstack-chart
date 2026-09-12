@@ -23,8 +23,18 @@ impl<'a> Cartesian<'a> {
     pub fn new(x: &'a ResolvedAxis, y: &'a ResolvedAxis, clip: Rect) -> ChartResult<Self> {
         if !x.spec.side.horizontal()
             || y.spec.side.horizontal()
-            || matches!(x.scale, ResolvedScale::Secondary { .. })
-            || matches!(y.scale, ResolvedScale::Secondary { .. })
+            || matches!(
+                x.scale,
+                ResolvedScale::Secondary { .. }
+                    | ResolvedScale::SecondaryTime { .. }
+                    | ResolvedScale::SecondaryDiscrete { .. }
+            )
+            || matches!(
+                y.scale,
+                ResolvedScale::Secondary { .. }
+                    | ResolvedScale::SecondaryTime { .. }
+                    | ResolvedScale::SecondaryDiscrete { .. }
+            )
         {
             return Err(unsupported(
                 "Cartesian projection requires horizontal/vertical primary coordinate axes.",
@@ -61,6 +71,10 @@ impl ResolvedAxis {
     pub fn capabilities(&self) -> crate::scales::ScaleCapabilities {
         use crate::scales::ScaleCapabilities;
         match &self.scale {
+            ResolvedScale::Unbounded(_) => ScaleCapabilities {
+                numeric_inverse: false,
+                category_lookup: false,
+            },
             ResolvedScale::Provider(s) => s.capabilities(),
             ResolvedScale::Linear(_)
             | ResolvedScale::Numeric(_)
@@ -75,7 +89,9 @@ impl ResolvedAxis {
                 numeric_inverse: false,
                 category_lookup: true,
             },
-            ResolvedScale::Secondary { .. } => ScaleCapabilities {
+            ResolvedScale::Secondary { .. }
+            | ResolvedScale::SecondaryTime { .. }
+            | ResolvedScale::SecondaryDiscrete { .. } => ScaleCapabilities {
                 numeric_inverse: false,
                 category_lookup: false,
             },
@@ -84,6 +100,9 @@ impl ResolvedAxis {
     /// Invert a destination position with the resolved numeric/time policy.
     pub fn invert_value(&self, p: f64) -> ChartResult<ScaleValue> {
         match &self.scale {
+            ResolvedScale::Unbounded(_) => Err(unsupported(
+                "An unbounded reference range has no finite numeric inverse.",
+            )),
             ResolvedScale::Provider(s) => s.invert(p),
             ResolvedScale::Linear(s) => s.invert(p).map(ScaleValue::Number),
             ResolvedScale::Numeric(s) => s.invert(p).map(ScaleValue::Number),
@@ -103,7 +122,9 @@ impl ResolvedAxis {
             ResolvedScale::Band(_) | ResolvedScale::Point(_) => Err(unsupported(
                 "Category scales provide category lookup, not a numeric inverse.",
             )),
-            ResolvedScale::Secondary { .. } => Err(unsupported(
+            ResolvedScale::Secondary { .. }
+            | ResolvedScale::SecondaryTime { .. }
+            | ResolvedScale::SecondaryDiscrete { .. } => Err(unsupported(
                 "A secondary guide cannot be used as an independent coordinate inverse.",
             )),
         }

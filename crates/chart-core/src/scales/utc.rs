@@ -88,6 +88,13 @@ impl UtcScale {
             outside,
         })
     }
+    pub(crate) fn shifted(&self, offset: i64) -> ChartResult<Self> {
+        let mut shifted = self.clone();
+        shifted.domain = shift_bounds(self.domain, offset)?;
+        shifted.view = shift_bounds(self.view, offset)?;
+        shifted.origin = shift_timestamp(self.origin, offset)?;
+        Ok(shifted)
+    }
     /// Exact trained source endpoints; zoom does not change them.
     pub fn domain(&self) -> TimeBounds {
         self.domain
@@ -167,17 +174,27 @@ impl UtcScale {
     }
     /// Generate bounded calendar ticks within the viewport (years 0001–9999).
     pub fn ticks(&self, interval: UtcInterval, max_ticks: usize) -> ChartResult<Vec<UtcTick>> {
+        Self::ticks_in(self.view, self.unit, interval, max_ticks)
+    }
+    /// Generate the legacy UTC interval policy over exact bounds, including a constant
+    /// interval, without expanding it or constructing a second positional mapping.
+    pub fn ticks_in(
+        bounds: TimeBounds,
+        unit: TimeUnit,
+        interval: UtcInterval,
+        max_ticks: usize,
+    ) -> ChartResult<Vec<UtcTick>> {
         if max_ticks == 0 || max_ticks > 4096 {
             return Err(error(
                 DiagnosticCode::ResourceLimit,
                 "UTC tick budget must be 1–4096.",
             ));
         }
-        let low = self.view.start.min(self.view.end);
-        let high = self.view.start.max(self.view.end);
-        civil_at(low, self.unit)?;
-        civil_at(high, self.unit)?;
-        let per_second = ticks_per_second(self.unit);
+        let low = bounds.start.min(bounds.end);
+        let high = bounds.start.max(bounds.end);
+        civil_at(low, unit)?;
+        civil_at(high, unit)?;
+        let per_second = ticks_per_second(unit);
         let fixed = match interval {
             UtcInterval::Ticks(n) => Some((i128::from(n), 0)),
             UtcInterval::Seconds(n) => Some((i128::from(n) * per_second, 0)),
@@ -209,11 +226,11 @@ impl UtcScale {
                 value += step;
             }
             while value <= high {
-                push_tick(&mut ticks, value, self.unit, interval, max_ticks)?;
+                push_tick(&mut ticks, value, unit, interval, max_ticks)?;
                 value += step;
             }
         } else {
-            let civil = civil_at(low, self.unit)?;
+            let civil = civil_at(low, unit)?;
             let period = match interval {
                 UtcInterval::Months(n) => i64::from(n),
                 UtcInterval::Years(n) => i64::from(n) * 12,
@@ -234,7 +251,7 @@ impl UtcScale {
                         break;
                     }
                     if value >= i128::from(low) {
-                        push_tick(&mut ticks, value, self.unit, interval, max_ticks)?;
+                        push_tick(&mut ticks, value, unit, interval, max_ticks)?;
                     }
                 }
                 next = next.checked_add(period).ok_or_else(|| {
@@ -242,7 +259,7 @@ impl UtcScale {
                 })?;
             }
         }
-        if self.view.start > self.view.end {
+        if bounds.start > bounds.end {
             ticks.reverse();
         }
         Ok(ticks)
@@ -421,5 +438,20 @@ pub fn format_utc(value: i64, unit: TimeUnit, interval: UtcInterval) -> ChartRes
                 )
             }
         }
+    })
+}
+
+pub(crate) fn shift_timestamp(value: i64, offset: i64) -> ChartResult<i64> {
+    value.checked_add(offset).ok_or_else(|| {
+        error(
+            DiagnosticCode::PrecisionLoss,
+            "Secondary time offset exceeds the timestamp range.",
+        )
+    })
+}
+pub(crate) fn shift_bounds(value: TimeBounds, offset: i64) -> ChartResult<TimeBounds> {
+    Ok(TimeBounds {
+        start: shift_timestamp(value.start, offset)?,
+        end: shift_timestamp(value.end, offset)?,
     })
 }

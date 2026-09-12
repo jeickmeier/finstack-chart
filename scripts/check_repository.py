@@ -14,10 +14,9 @@ ALLOWED = {
     "chart-text": {"chart-core"},
     "chart-extension-example": {"chart-core"},
     "gpui-charts": {"chart-core", "chart-text"},
-    "gpui-charts-kit": {"chart-core", "gpui-charts"},
     "chart-python": {"chart-core", "chart-export"},
     "chart-wasm": {"chart-core", "chart-export"},
-    "chart-gallery": {"chart-core", "chart-export", "gpui-charts", "gpui-charts-kit", "chart-extension-example"},
+    "chart-gallery": {"chart-core", "chart-export", "gpui-charts", "chart-extension-example"},
 }
 PORTABLE_TARGETS = ("aarch64-apple-darwin", "x86_64-unknown-linux-gnu", "wasm32-unknown-unknown")
 

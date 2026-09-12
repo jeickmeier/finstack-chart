@@ -1,0 +1,1875 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "kind": "date",
+      "population": "spaced",
+      "channel": "size",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "scale_installed": true,
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "point_count": 4
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "channel": "alpha",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "values": [
+          0.10000000000000001,
+          0.20000000000000001,
+          0.5,
+          1
+        ],
+        "scale_installed": true,
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "point_count": 4
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "channel": "linewidth",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "values": [
+          1,
+          1.5555555555555556,
+          3.2222222222222223,
+          6
+        ],
+        "scale_installed": true,
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "point_count": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "channel": "colour",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "values": [
+          "#132B43",
+          "#1A3855",
+          "#2F638E",
+          "#56B1F7"
+        ],
+        "scale_installed": true,
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "point_count": 4
+      }
+    },
+    {
+      "kind": "date",
+      "population": "spaced",
+      "channel": "fill",
+      "inputs": [
+        19723,
+        19724,
+        19727,
+        19732
+      ],
+      "result": {
+        "values": [
+          "#132B43",
+          "#1A3855",
+          "#2F638E",
+          "#56B1F7"
+        ],
+        "scale_installed": true,
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "point_count": 4
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "channel": "size",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "scale_installed": true,
+        "limits": [
+          19727,
+          19727
+        ],
+        "guide": {
+          "breaks": [
+            19727
+          ],
+          "labels": [
+            "2024-01-05"
+          ]
+        },
+        "point_count": 3
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "channel": "alpha",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "values": [
+          0.55000000000000004,
+          0.55000000000000004,
+          0.55000000000000004
+        ],
+        "scale_installed": true,
+        "limits": [
+          19727,
+          19727
+        ],
+        "guide": {
+          "breaks": [
+            19727
+          ],
+          "labels": [
+            "2024-01-05"
+          ]
+        },
+        "point_count": 3
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "channel": "linewidth",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "values": [
+          3.5,
+          3.5,
+          3.5
+        ],
+        "scale_installed": true,
+        "limits": [
+          19727,
+          19727
+        ],
+        "guide": {
+          "breaks": [
+            19727
+          ],
+          "labels": [
+            "2024-01-05"
+          ]
+        },
+        "point_count": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "channel": "colour",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "values": [
+          "#336A98",
+          "#336A98",
+          "#336A98"
+        ],
+        "scale_installed": true,
+        "limits": [
+          19727,
+          19727
+        ],
+        "guide": {
+          "breaks": [
+            19727
+          ],
+          "labels": [
+            "2024-01-05"
+          ]
+        },
+        "point_count": 3
+      }
+    },
+    {
+      "kind": "date",
+      "population": "constant",
+      "channel": "fill",
+      "inputs": [
+        19727,
+        19727,
+        19727
+      ],
+      "result": {
+        "values": [
+          "#336A98",
+          "#336A98",
+          "#336A98"
+        ],
+        "scale_installed": true,
+        "limits": [
+          19727,
+          19727
+        ],
+        "guide": {
+          "breaks": [
+            19727
+          ],
+          "labels": [
+            "2024-01-05"
+          ]
+        },
+        "point_count": 3
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "channel": "size",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "scale_installed": true,
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "point_count": 3
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "channel": "alpha",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "values": [
+          null,
+          0.10000000000000001,
+          0.5,
+          null,
+          1
+        ],
+        "scale_installed": true,
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "point_count": 5
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "channel": "linewidth",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          3.2222222222222223,
+          null,
+          6
+        ],
+        "scale_installed": true,
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "point_count": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "channel": "colour",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "values": [
+          "grey50",
+          "#132B43",
+          "#2F638E",
+          "grey50",
+          "#56B1F7"
+        ],
+        "scale_installed": true,
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "point_count": 5
+      }
+    },
+    {
+      "kind": "date",
+      "population": "missing",
+      "channel": "fill",
+      "inputs": [
+        null,
+        19723,
+        19727,
+        null,
+        19732
+      ],
+      "result": {
+        "values": [
+          "grey50",
+          "#132B43",
+          "#2F638E",
+          "grey50",
+          "#56B1F7"
+        ],
+        "scale_installed": true,
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "point_count": 5
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "channel": "size",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "channel": "alpha",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "channel": "linewidth",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "channel": "colour",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "all_missing",
+      "channel": "fill",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "channel": "size",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "scale_installed": false,
+        "limits": null,
+        "guide": null,
+        "point_count": 0
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "channel": "alpha",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "scale_installed": false,
+        "limits": null,
+        "guide": null,
+        "point_count": 0
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "channel": "linewidth",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "scale_installed": false,
+        "limits": null,
+        "guide": null,
+        "point_count": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "channel": "colour",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "scale_installed": false,
+        "limits": null,
+        "guide": null,
+        "point_count": 0
+      }
+    },
+    {
+      "kind": "date",
+      "population": "empty",
+      "channel": "fill",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "scale_installed": false,
+        "limits": null,
+        "guide": null,
+        "point_count": 0
+      }
+    },
+    {
+      "kind": "date",
+      "population": "unsorted",
+      "channel": "size",
+      "inputs": [
+        19732,
+        19723,
+        19727,
+        19724
+      ],
+      "result": {
+        "values": [
+          6,
+          1,
+          4.333333333333333,
+          2.6666666666666665
+        ],
+        "scale_installed": true,
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "point_count": 4
+      }
+    },
+    {
+      "kind": "date",
+      "population": "unsorted",
+      "channel": "alpha",
+      "inputs": [
+        19732,
+        19723,
+        19727,
+        19724
+      ],
+      "result": {
+        "values": [
+          1,
+          0.10000000000000001,
+          0.5,
+          0.20000000000000001
+        ],
+        "scale_installed": true,
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "point_count": 4
+      }
+    },
+    {
+      "kind": "date",
+      "population": "unsorted",
+      "channel": "linewidth",
+      "inputs": [
+        19732,
+        19723,
+        19727,
+        19724
+      ],
+      "result": {
+        "values": [
+          6,
+          1,
+          3.2222222222222223,
+          1.5555555555555556
+        ],
+        "scale_installed": true,
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "point_count": null
+      }
+    },
+    {
+      "kind": "date",
+      "population": "unsorted",
+      "channel": "colour",
+      "inputs": [
+        19732,
+        19723,
+        19727,
+        19724
+      ],
+      "result": {
+        "values": [
+          "#56B1F7",
+          "#132B43",
+          "#2F638E",
+          "#1A3855"
+        ],
+        "scale_installed": true,
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "point_count": 4
+      }
+    },
+    {
+      "kind": "date",
+      "population": "unsorted",
+      "channel": "fill",
+      "inputs": [
+        19732,
+        19723,
+        19727,
+        19724
+      ],
+      "result": {
+        "values": [
+          "#56B1F7",
+          "#132B43",
+          "#2F638E",
+          "#1A3855"
+        ],
+        "scale_installed": true,
+        "limits": [
+          19723,
+          19732
+        ],
+        "guide": {
+          "breaks": [
+            19723,
+            19725,
+            19727,
+            19729,
+            19731,
+            19733
+          ],
+          "labels": [
+            "Jan 01",
+            "Jan 03",
+            "Jan 05",
+            "Jan 07",
+            "Jan 09",
+            "Jan 11"
+          ]
+        },
+        "point_count": 4
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "channel": "size",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          1,
+          2.6666666666666665,
+          4.333333333333333,
+          6
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "point_count": 4
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "channel": "alpha",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          0.10000000000000001,
+          0.20000000000000001,
+          0.5,
+          1
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "point_count": 4
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "channel": "linewidth",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          1,
+          1.5555555555555556,
+          3.2222222222222223,
+          6
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "point_count": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "channel": "colour",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          "#132B43",
+          "#1A3855",
+          "#2F638E",
+          "#56B1F7"
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "point_count": 4
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "spaced",
+      "channel": "fill",
+      "inputs": [
+        1704067200,
+        1704067201,
+        1704067204,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          "#132B43",
+          "#1A3855",
+          "#2F638E",
+          "#56B1F7"
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "point_count": 4
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "channel": "size",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "values": [
+          4.5355339059327378,
+          4.5355339059327378,
+          4.5355339059327378
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067204,
+          1704067204
+        ],
+        "guide": {
+          "breaks": [
+            1704067204
+          ],
+          "labels": [
+            "2024-01-01 00:00:04"
+          ]
+        },
+        "point_count": 3
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "channel": "alpha",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "values": [
+          0.55000000000000004,
+          0.55000000000000004,
+          0.55000000000000004
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067204,
+          1704067204
+        ],
+        "guide": {
+          "breaks": [
+            1704067204
+          ],
+          "labels": [
+            "2024-01-01 00:00:04"
+          ]
+        },
+        "point_count": 3
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "channel": "linewidth",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "values": [
+          3.5,
+          3.5,
+          3.5
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067204,
+          1704067204
+        ],
+        "guide": {
+          "breaks": [
+            1704067204
+          ],
+          "labels": [
+            "2024-01-01 00:00:04"
+          ]
+        },
+        "point_count": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "channel": "colour",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "values": [
+          "#336A98",
+          "#336A98",
+          "#336A98"
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067204,
+          1704067204
+        ],
+        "guide": {
+          "breaks": [
+            1704067204
+          ],
+          "labels": [
+            "2024-01-01 00:00:04"
+          ]
+        },
+        "point_count": 3
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "constant",
+      "channel": "fill",
+      "inputs": [
+        1704067204,
+        1704067204,
+        1704067204
+      ],
+      "result": {
+        "values": [
+          "#336A98",
+          "#336A98",
+          "#336A98"
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067204,
+          1704067204
+        ],
+        "guide": {
+          "breaks": [
+            1704067204
+          ],
+          "labels": [
+            "2024-01-01 00:00:04"
+          ]
+        },
+        "point_count": 3
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "channel": "size",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          4.333333333333333,
+          null,
+          6
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "point_count": 3
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "channel": "alpha",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          null,
+          0.10000000000000001,
+          0.5,
+          null,
+          1
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "point_count": 5
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "channel": "linewidth",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          null,
+          1,
+          3.2222222222222223,
+          null,
+          6
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "point_count": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "channel": "colour",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          "grey50",
+          "#132B43",
+          "#2F638E",
+          "grey50",
+          "#56B1F7"
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "point_count": 5
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "missing",
+      "channel": "fill",
+      "inputs": [
+        null,
+        1704067200,
+        1704067204,
+        null,
+        1704067209
+      ],
+      "result": {
+        "values": [
+          "grey50",
+          "#132B43",
+          "#2F638E",
+          "grey50",
+          "#56B1F7"
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "point_count": 5
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "channel": "size",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "channel": "alpha",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "channel": "linewidth",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "channel": "colour",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "all_missing",
+      "channel": "fill",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "channel": "size",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "scale_installed": false,
+        "limits": null,
+        "guide": null,
+        "point_count": 0
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "channel": "alpha",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "scale_installed": false,
+        "limits": null,
+        "guide": null,
+        "point_count": 0
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "channel": "linewidth",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "scale_installed": false,
+        "limits": null,
+        "guide": null,
+        "point_count": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "channel": "colour",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "scale_installed": false,
+        "limits": null,
+        "guide": null,
+        "point_count": 0
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "empty",
+      "channel": "fill",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "scale_installed": false,
+        "limits": null,
+        "guide": null,
+        "point_count": 0
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "unsorted",
+      "channel": "size",
+      "inputs": [
+        1704067209,
+        1704067200,
+        1704067204,
+        1704067201
+      ],
+      "result": {
+        "values": [
+          6,
+          1,
+          4.333333333333333,
+          2.6666666666666665
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "point_count": 4
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "unsorted",
+      "channel": "alpha",
+      "inputs": [
+        1704067209,
+        1704067200,
+        1704067204,
+        1704067201
+      ],
+      "result": {
+        "values": [
+          1,
+          0.10000000000000001,
+          0.5,
+          0.20000000000000001
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "point_count": 4
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "unsorted",
+      "channel": "linewidth",
+      "inputs": [
+        1704067209,
+        1704067200,
+        1704067204,
+        1704067201
+      ],
+      "result": {
+        "values": [
+          6,
+          1,
+          3.2222222222222223,
+          1.5555555555555556
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "point_count": null
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "unsorted",
+      "channel": "colour",
+      "inputs": [
+        1704067209,
+        1704067200,
+        1704067204,
+        1704067201
+      ],
+      "result": {
+        "values": [
+          "#56B1F7",
+          "#132B43",
+          "#2F638E",
+          "#1A3855"
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "point_count": 4
+      }
+    },
+    {
+      "kind": "datetime",
+      "population": "unsorted",
+      "channel": "fill",
+      "inputs": [
+        1704067209,
+        1704067200,
+        1704067204,
+        1704067201
+      ],
+      "result": {
+        "values": [
+          "#56B1F7",
+          "#132B43",
+          "#2F638E",
+          "#1A3855"
+        ],
+        "scale_installed": true,
+        "limits": [
+          1704067200,
+          1704067209
+        ],
+        "guide": {
+          "breaks": [
+            1704067200,
+            1704067202,
+            1704067204,
+            1704067206,
+            1704067208,
+            1704067210
+          ],
+          "labels": [
+            "00",
+            "02",
+            "04",
+            "06",
+            "08",
+            "10"
+          ]
+        },
+        "point_count": 4
+      }
+    }
+  ]
+}

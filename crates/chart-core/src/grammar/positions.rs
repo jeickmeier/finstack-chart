@@ -72,7 +72,10 @@ pub(super) fn validate(
             if !s.width.is_finite()
                 || s.width <= 0.
                 || s.width > 1.
-                || !matches!(domains.x_space, Some(ValueSpace::Categorical { .. }))
+                || !matches!(
+                    domains.x_space,
+                    Some(ValueSpace::Categorical { .. } | ValueSpace::NullableCategorical { .. })
+                )
             {
                 return Err(error(
                     DiagnosticCode::Validation,
@@ -288,6 +291,9 @@ pub(super) fn apply(
 fn stable_key(target: &Target, group: &Option<GroupValue>) -> String {
     // Deliberate stable encoding excludes changing membership and input revisions.
     let target = match target {
+        Target::HierarchyNode {
+            hierarchy, node, ..
+        } => format!("hierarchy:{}/{node:?}", hierarchy.get()),
         Target::Source(s) => format!("source:{}/{}", s.dataset.get(), s.key.get()),
         Target::Aggregate { id, group, .. } => format!("aggregate:{}/{group}", id.get()),
         Target::Derived {

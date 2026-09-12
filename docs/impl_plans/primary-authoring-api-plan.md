@@ -348,7 +348,7 @@ delivered option/default/extension boundary needs a route and executable example
 | Atomic append/upsert/remove/replace, retention, backpressure, correction, follow/freeze, incremental/batch execution; DAT, STM | Chart data handles, transactions, retention and typed outcomes | AP-05 |
 | Scheduling, cache invalidation, dense representation, resource/quality limits; STM, SCN, PERF | Existing runtime policies exposed through typed Chart options | AP-01/05/09 |
 | Static and live coherent SVG/PDF/PNG and additional supported devices, preview, text/font/DPI/physical size; EXP, GG2-11 | Destination context; Presented/Current basis independently of visible/full-domain and interaction policy; FigureRequest/ExportQueue | AP-06 |
-| Native GPUI and optional Kit hooks, tooltips/controls and platform capability reporting; GPU, SCP-03 | Thin retained native view over Chart; Kit theme/context adapter | AP-06 |
+| Native GPUI and optional Kit hooks, tooltips/controls and platform capability reporting; GPU, SCP-03 | Thin retained native view over Chart; Kit theme mapping is a gallery recipe | AP-06 |
 | Native and registered stat/geom/scale/coord/facet/guide/labeller/model/key-glyph extensions; ARC-03, GRA-08, GG2-10 | Public extension traits/registry and ordinary component builders | AP-03/04 |
 | Standalone colors, interpolation, scales, paths/shapes and hierarchy helpers; COL, ITP, SCL, PTH, SHP, HIR | Public family modules and common typed values, no dummy plot | AP-04 |
 | Python/WASM data, authoring, actions, snapshots, results, disposal and interchange; BND-01–04 | Thin host-native adapters to the same core builders/runtime | AP-07 |
@@ -513,7 +513,7 @@ data-replacement conflicts with unchanged prior state on failure.
 
 ### AP-06 — Complete native, Kit and export integration
 
-Prerequisite: AP-05. Owns `gpui-charts`, optional Kit, `chart-export` and explicit
+Prerequisite: AP-05. Owns `gpui-charts`, optional gallery Kit recipes, `chart-export` and explicit
 resource contexts; AUT-06. Complete adapters to section 2.1's typed runtime without
 collapsing intentional source/view/worker/export lifetimes. Provide retained native
 mounting, replaceable tooltip/menu/toolbar and

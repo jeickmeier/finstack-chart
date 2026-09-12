@@ -31,6 +31,17 @@ pub enum Target {
         /// Distinct source members; an empty aggregate is allowed.
         members: Arc<[RowKey]>,
     },
+    /// A hierarchy subtree with compact exact membership and stable occurrence identity.
+    HierarchyNode {
+        /// Owning hierarchy.
+        hierarchy: crate::HierarchyId,
+        /// Stable source or imputed-path identity.
+        node: crate::hierarchy::HierarchyTargetKey,
+        /// Exact source revision used to construct the hierarchy.
+        input: DatasetVersion,
+        /// Shared preorder source membership range.
+        membership: crate::hierarchy::HierarchyMembership,
+    },
     /// Derived/model output that must never masquerade as a source row.
     Derived {
         /// Derived identity.
@@ -58,6 +69,15 @@ pub enum ResolvedTarget<'a> {
         /// Group/bin identity.
         group: &'a str,
         /// Exact source membership, not one representative source key.
+        members: Vec<RowView<'a>>,
+    },
+    /// Exact source rows for a hierarchy subtree, including internal own rows.
+    HierarchyNode {
+        /// Owning hierarchy.
+        hierarchy: crate::HierarchyId,
+        /// Stable source or imputed-path identity.
+        node: &'a crate::hierarchy::HierarchyTargetKey,
+        /// Actual subtree source rows at the captured input revision.
         members: Vec<RowView<'a>>,
     },
     /// Derived output's declared model/input scopes.
@@ -108,6 +128,28 @@ impl Target {
                     id: *id,
                     group,
                     members: rows,
+                })
+            }
+            Self::HierarchyNode {
+                hierarchy,
+                node,
+                input,
+                membership,
+            } => {
+                let data = resolve_version(snapshot, *input)?;
+                let members = membership
+                    .members()
+                    .iter()
+                    .map(|key| {
+                        data.row(*key).ok_or_else(|| {
+                            invalid("Hierarchy member is absent at its declared input revision.")
+                        })
+                    })
+                    .collect::<ChartResult<Vec<_>>>()?;
+                Ok(ResolvedTarget::HierarchyNode {
+                    hierarchy: *hierarchy,
+                    node,
+                    members,
                 })
             }
             Self::Derived {

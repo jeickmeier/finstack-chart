@@ -15,6 +15,7 @@ macro_rules! option_fields {
     };
 }
 option_fields!(LayoutOptions {
+    device_scale: Option<f64> => "Set explicit device scale for automatic guide offsets; None selects headless policy.",
     font_size: f64 => "Set plain-label size in destination units.",
     padding: f64 => "Set the nonnegative inset in destination units.",
     minimum_plot: (f64, f64) => "Set minimum useful plot width and height.",

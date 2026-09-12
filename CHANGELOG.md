@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Withdraw the optional `gpui-charts-kit` crate. Kit theme mapping is a gallery recipe
+  over `ThemePatch` and `ChartInput::from_plot`; standalone GPUI stays Kit-free.
+
 - Add shared UTC and explicitly supplied local calendars, filtered intervals, automatic
   ticks/nice and full locale time formatting. Exact time scales retain integer origins,
   piecewise ranges and finer timestamp units. Calendar axes and time formatting use

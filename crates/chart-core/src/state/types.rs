@@ -50,6 +50,15 @@ pub enum TargetIdentity {
         /// Group/bin scope.
         group: String,
     },
+    /// Stable hierarchy node identity, independent of membership or parent changes.
+    HierarchyNode {
+        /// Source dataset.
+        dataset: DatasetId,
+        /// Owning hierarchy.
+        hierarchy: HierarchyId,
+        /// Caller occurrence or imputed path identity.
+        node: crate::hierarchy::HierarchyTargetKey,
+    },
     /// Computed model identity and input dataset scope.
     Derived {
         /// Derived identity.
@@ -75,6 +84,16 @@ impl From<&Target> for TargetIdentity {
                 dataset: input.dataset,
                 id: *id,
                 group: group.clone(),
+            },
+            Target::HierarchyNode {
+                hierarchy,
+                node,
+                input,
+                ..
+            } => Self::HierarchyNode {
+                dataset: input.dataset,
+                hierarchy: *hierarchy,
+                node: node.clone(),
             },
             Target::Derived {
                 id,

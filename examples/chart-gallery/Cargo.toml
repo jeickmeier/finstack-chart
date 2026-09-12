@@ -18,12 +18,10 @@ gpui.workspace = true
 gpui_platform.workspace = true
 gpui-kit = { workspace = true, optional = true }
 
-gpui-charts-kit = { workspace = true, optional = true }
-
 [features]
 default = []
 performance = ["gpui/profiler"]
-kit = ["dep:gpui-charts-kit", "dep:gpui-kit"]
+kit = ["dep:gpui-kit"]
 
 [dev-dependencies]
 chart-extension-example.workspace = true

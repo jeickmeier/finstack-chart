@@ -7,6 +7,8 @@ mod authoring;
 mod color;
 mod descriptor;
 mod scalar;
+mod spline;
+pub use spline::CubicSpline;
 mod structured;
 mod text;
 mod transform;

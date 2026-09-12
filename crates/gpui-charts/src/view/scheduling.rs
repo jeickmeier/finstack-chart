@@ -84,6 +84,7 @@ impl ChartView {
     /// Permanently close background preparation and release pending/cache ownership.
     /// An already running synchronous core calculation releases its snapshot on completion.
     pub fn dispose_preparation(&mut self, cx: &mut Context<Self>) {
+        self.guide_animation.running = None;
         self.scheduling.queue.dispose();
         self.scheduling.latest = None;
         self.scheduling.compiler = None;

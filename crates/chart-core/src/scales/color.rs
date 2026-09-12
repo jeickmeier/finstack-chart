@@ -5,6 +5,10 @@ use std::collections::BTreeSet;
 /// Portable palette and domain policy; changing color never contributes positional domains.
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
+#[expect(
+    clippy::large_enum_variant,
+    reason = "Per-scale authoring descriptor; optional guide adds one pointer, not per-mark storage. Keep the existing by-value mapped API."
+)]
 pub enum ColorScale<P = Color> {
     /// Typed D3-compatible mapping with independent population and output configuration.
     Mapped {
@@ -43,6 +47,9 @@ pub struct ColorLegend {
     pub id: crate::ScaleId,
     /// Exact category or numeric labels paired with colors.
     pub entries: Vec<(String, Color)>,
+    /// Reference numeric break candidates and labels before guide composition.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub numeric_breaks: Vec<super::GgplotContinuousGuideEntry>,
     /// Whether colors interpolate between stops.
     pub continuous: bool,
     /// Missing-value swatch.
@@ -72,7 +79,7 @@ impl<P> ColorScale<P> {
         registry: &crate::grammar::ExtensionRegistry,
     ) -> ChartResult<()> {
         if let Self::Mapped { scale, .. } = self {
-            MappedScale::new_with_registry(scale.clone(), registry).map(|_| ())
+            scale.validate_definition_with_registry(registry)
         } else {
             self.validate()
         }
@@ -81,7 +88,8 @@ impl<P> ColorScale<P> {
     pub fn validate(&self) -> ChartResult<()> {
         match self {
             Self::Mapped { scale, .. } => {
-                MappedScale::new(scale.clone())?;
+                scale
+                    .validate_definition_with_registry(&crate::grammar::ExtensionRegistry::new())?;
             }
             Self::Discrete {
                 domain, palette, ..
@@ -229,6 +237,7 @@ impl ColorScale {
             continuous,
             missing,
             entries,
+            numeric_breaks: vec![],
             intervals: vec![],
             midpoint: None,
             mapping: None,
@@ -333,6 +342,30 @@ impl PointScale {
             labels,
         })
     }
+    /// Project a numeric minor candidate in the reference category-index space.
+    pub(crate) fn reference_viewport(&self) -> Option<[crate::interpolate::Number; 2]> {
+        self.spacing.reference_viewport()
+    }
+    pub(crate) fn reference_minor(&self, value: f64) -> ChartResult<Option<f64>> {
+        self.spacing.reference_minor(value)
+    }
+    pub(crate) fn with_reference_expansion(
+        mut self,
+        expansion: super::GgplotExpansion,
+        limits: Option<&[crate::interpolate::Number]>,
+        observed: &[String],
+    ) -> ChartResult<Self> {
+        let continuous = super::spacing::observed_extent(
+            observed
+                .iter()
+                .filter_map(|label| self.index.get(label).copied()),
+            !observed.is_empty(),
+        );
+        self.spacing = self
+            .spacing
+            .with_reference_expansion(expansion, limits, continuous)?;
+        Ok(self)
+    }
     /// Nonnegative interval between neighboring points.
     pub fn step(&self) -> f64 {
         self.spacing.step()
@@ -367,7 +400,7 @@ impl PointScale {
         if !self.window.contains(&i) {
             return Ok(None);
         }
-        self.spacing.center(i - self.window.start).map(Some)
+        self.spacing.center(i - self.window.start)
     }
     /// Nearest category within the destination range, with stable earlier-category ties.
     pub fn category_at(&self, p: f64) -> ChartResult<Option<&str>> {
@@ -380,7 +413,7 @@ impl PointScale {
     pub fn capabilities(&self) -> ScaleCapabilities {
         ScaleCapabilities {
             numeric_inverse: false,
-            category_lookup: true,
+            category_lookup: self.spacing.supports_lookup(),
         }
     }
 }
@@ -489,6 +522,11 @@ impl ColorScale<crate::color::Paint> {
     }
 }
 impl PreparedColorScale {
+    pub(crate) fn missing_paint(&self, input: Option<f64>, key: Option<&ScaleKey>) -> bool {
+        self.mapped
+            .as_ref()
+            .is_some_and(|m| m.missing_paint(input, key))
+    }
     /// Map a typed category, retaining floating color channels until final paint lowering.
     pub fn category_paint(&self, key: Option<&ScaleKey>) -> ChartResult<crate::color::Paint> {
         if let Some(scale) = &self.mapped {

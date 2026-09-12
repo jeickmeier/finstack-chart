@@ -21,7 +21,9 @@ pub use profile::{
     ViewMode,
 };
 pub use request::FigureRequest;
-pub use snapshot::{ExportArtifact, FigureSnapshot, FontManifest, Reproducibility};
+pub use snapshot::{
+    ExportArtifact, FigureSnapshot, FigureTransition, FontManifest, Reproducibility,
+};
 fn error(code: DiagnosticCode, message: impl Into<String>) -> Diagnostic {
     Diagnostic::error(
         code,

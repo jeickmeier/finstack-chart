@@ -1,4 +1,7 @@
 //! Explicit d3-time-format 4.1.0 calendar labels; ISC notice in `LICENSE-d3-time-format`.
+mod ggplot;
+pub use ggplot::GgplotTimeFormat;
+
 use super::{
     Calendar, CalendarDateTime, CalendarInterval, CalendarUnit, CalendarZone, WeekStart, calendar,
     civil, error,
@@ -112,6 +115,7 @@ impl TimeFormat {
 enum Token {
     Text(String),
     Field(char, Option<char>),
+    Fraction(u32),
 }
 /// Immutable prepared labels sharing the calendar's exact timezone revision.
 #[derive(Clone, Debug)]
@@ -120,6 +124,7 @@ pub struct TimeFormatter {
     spec: Arc<TimeFormat>,
     pattern: Option<Vec<Token>>,
     defaults: [Vec<Token>; 8],
+    reference: Option<Arc<GgplotTimeFormat>>,
 }
 impl TimeFormatter {
     /// Compile patterns and validate explicit locale resources once.
@@ -141,11 +146,16 @@ impl TimeFormatter {
             spec: Arc::new(spec),
             pattern,
             defaults,
+            reference: None,
         })
     }
-    /// Original owned formatting policy.
+    /// D3-shaped pattern and locale descriptor; see `ggplot_spec` for the R policy.
     pub fn spec(&self) -> &TimeFormat {
         &self.spec
+    }
+    /// Original R policy when this formatter was prepared from `GgplotTimeFormat`.
+    pub fn ggplot_spec(&self) -> Option<&GgplotTimeFormat> {
+        self.reference.as_deref()
     }
     /// Calendar identity shared with floor, ticks and nice.
     pub fn calendar(&self) -> &Calendar {
@@ -153,7 +163,14 @@ impl TimeFormatter {
     }
     /// Format an exact source timestamp; submillisecond defaults retain native precision.
     pub fn format(&self, value: i64, unit: TimeUnit) -> ChartResult<String> {
-        let c = self.calendar.components(value, unit)?;
+        let (c, fraction) = if self.reference.is_some() {
+            let ns = calendar::source_ns(value, unit);
+            let seconds = ns.div_euclid(calendar::SECOND) as f64
+                + ns.rem_euclid(calendar::SECOND) as f64 / 1e9;
+            self.reference_components(seconds)?
+        } else {
+            (self.calendar.components(value, unit)?, 0.)
+        };
         let tokens = if let Some(pattern) = &self.pattern {
             pattern
         } else {
@@ -199,10 +216,60 @@ impl TimeFormatter {
             };
             &self.defaults[index]
         };
+        self.render(tokens, c, fraction, value, unit)
+    }
+    /// R duration labels use the original binary64 seconds, without integer resampling.
+    pub(crate) fn reference_seconds(&self, seconds: f64) -> ChartResult<String> {
+        if self.reference.is_none()
+            || !seconds.is_finite()
+            || seconds.abs() > 9_007_199_254_740_991.
+        {
+            return Err(error(
+                DiagnosticCode::PrecisionLoss,
+                "R duration labels require finite supported seconds.",
+            ));
+        }
+        let (c, fraction) = self.reference_components(seconds)?;
+        self.render(
+            self.pattern.as_ref().expect("R patterns are explicit"),
+            c,
+            fraction,
+            0,
+            TimeUnit::Seconds,
+        )
+    }
+    fn reference_components(&self, seconds: f64) -> ChartResult<(CalendarDateTime, f64)> {
+        let whole = seconds.floor();
+        let fraction = seconds - whole;
+        // Keep fractional position for timezone coverage/transition lookup. Flooring
+        // to seconds first can move a valid label outside a supplied millisecond window.
+        let ns = whole as i128 * calendar::SECOND + (fraction * 1e9).floor() as i128;
+        Ok((self.calendar.components_ns(ns)?, fraction))
+    }
+    fn render(
+        &self,
+        tokens: &[Token],
+        c: CalendarDateTime,
+        fraction: f64,
+        value: i64,
+        unit: TimeUnit,
+    ) -> ChartResult<String> {
         let mut result = String::new();
         for token in tokens {
             match token {
                 Token::Text(s) => result.push_str(s),
+                Token::Fraction(precision) => {
+                    let power = 10_u64.pow(*precision);
+                    let scaled = ((f64::from(c.second) + fraction) * power as f64).floor() as u64;
+                    result.push_str(&format!("{:02}", scaled / power));
+                    if *precision > 0 {
+                        result.push_str(&format!(
+                            ".{:0width$}",
+                            scaled % power,
+                            width = *precision as usize
+                        ));
+                    }
+                }
                 Token::Field(field, padding) => {
                     result.push_str(&self.field(*field, *padding, c, value, unit)?)
                 }
@@ -238,7 +305,7 @@ impl TimeFormatter {
             ))
         };
         let pad = |n: i64, width| padded(n, padding, width);
-        if matches!(self.calendar.zone(), CalendarZone::Utc) {
+        if self.reference.is_none() && matches!(self.calendar.zone(), CalendarZone::Utc) {
             // Reference formatters use Date-valued year/week intermediates. Preserve
             // their invalid-Date text, including padding, when an intermediate overflows.
             let min = -100_000_000;
@@ -315,9 +382,27 @@ impl TimeFormatter {
             ),
             'V' => pad(iso()?.1, 2),
             'g' => pad(i64::from(iso()?.0 % 100), 2),
-            'G' => pad(i64::from(iso()?.0 % 10000), 4),
+            'G' => pad(
+                i64::from(if self.reference.is_some() {
+                    iso()?.0
+                } else {
+                    iso()?.0 % 10000
+                }),
+                4,
+            ),
             'y' => pad(i64::from(c.year % 100), 2),
-            'Y' => pad(i64::from(c.year % 10000), 4),
+            'Y' => pad(
+                i64::from(if self.reference.is_some() {
+                    c.year
+                } else {
+                    c.year % 10000
+                }),
+                4,
+            ),
+            'C' if self.reference.is_some() => pad(i64::from(c.year.div_euclid(100)), 2),
+            'P' if self.reference.is_some() => {
+                locale.periods[(c.hour >= 12) as usize].to_lowercase()
+            }
             'Z' => {
                 let minutes = c.offset_seconds / 60;
                 format!(

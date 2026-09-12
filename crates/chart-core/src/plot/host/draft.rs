@@ -1,9 +1,5 @@
 use super::*;
 #[derive(Clone)]
-#[expect(
-    clippy::large_enum_variant,
-    reason = "One authoring draft owns a concrete builder; it never appears in a frame or per-row loop."
-)]
 enum Target {
     New(PlotBuilder),
     Edit(PlotEditBuilder),
@@ -72,9 +68,12 @@ impl Draft {
     }
     /// Build structurally through Rust, preserving component handles and no-op edit revisions.
     pub fn build(&self) -> ChartResult<Plot> {
-        match &self.0 {
+        let plot = match &self.0 {
             Target::New(b) => b.clone().build(),
             Target::Edit(b) => b.clone().build(),
-        }
+        }?;
+        plot.extensions()
+            .validate_portable_hierarchies(plot.definition())?;
+        Ok(plot)
     }
 }

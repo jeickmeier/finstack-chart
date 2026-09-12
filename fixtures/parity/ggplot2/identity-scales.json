@@ -1,0 +1,1140 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "kind": "colour",
+      "guide": "none",
+      "train": [
+        "red4",
+        "gray",
+        "green",
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        "red4",
+        "blue",
+        "transparent",
+        "#ABC0",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "mapped": [
+          "red4",
+          "blue",
+          "transparent",
+          "#ABC0",
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": []
+      }
+    },
+    {
+      "kind": "colour",
+      "guide": "legend",
+      "train": [
+        "red4",
+        "gray",
+        "green",
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        "red4",
+        "blue",
+        "transparent",
+        "#ABC0",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "gray",
+          "green",
+          "red4",
+          {
+            "number": "NA"
+          }
+        ],
+        "mapped": [
+          "red4",
+          "blue",
+          "transparent",
+          "#ABC0",
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          "gray",
+          "green",
+          "red4",
+          {
+            "number": "NA"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "fill",
+      "guide": "none",
+      "train": [
+        "red4",
+        "gray",
+        "green",
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        "red4",
+        "blue",
+        "transparent",
+        "#ABC0",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "mapped": [
+          "red4",
+          "blue",
+          "transparent",
+          "#ABC0",
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": []
+      }
+    },
+    {
+      "kind": "fill",
+      "guide": "legend",
+      "train": [
+        "red4",
+        "gray",
+        "green",
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        "red4",
+        "blue",
+        "transparent",
+        "#ABC0",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "gray",
+          "green",
+          "red4",
+          {
+            "number": "NA"
+          }
+        ],
+        "mapped": [
+          "red4",
+          "blue",
+          "transparent",
+          "#ABC0",
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          "gray",
+          "green",
+          "red4",
+          {
+            "number": "NA"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "size",
+      "guide": "none",
+      "train": [
+        0.5,
+        1,
+        3,
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        -1,
+        0,
+        0.5,
+        1,
+        3,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "mapped": [
+          -1,
+          0,
+          0.5,
+          1,
+          3,
+          10,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "breaks": []
+      }
+    },
+    {
+      "kind": "size",
+      "guide": "legend",
+      "train": [
+        0.5,
+        1,
+        3,
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        -1,
+        0,
+        0.5,
+        1,
+        3,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "result": {
+        "domain": [
+          0.5,
+          3
+        ],
+        "mapped": [
+          -1,
+          0,
+          0.5,
+          1,
+          3,
+          10,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "breaks": [
+          0.5,
+          1,
+          1.5,
+          2,
+          2.5,
+          3
+        ]
+      }
+    },
+    {
+      "kind": "alpha",
+      "guide": "none",
+      "train": [
+        0.5,
+        1,
+        3,
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        -1,
+        0,
+        0.5,
+        1,
+        3,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "mapped": [
+          -1,
+          0,
+          0.5,
+          1,
+          3,
+          10,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "breaks": []
+      }
+    },
+    {
+      "kind": "alpha",
+      "guide": "legend",
+      "train": [
+        0.5,
+        1,
+        3,
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        -1,
+        0,
+        0.5,
+        1,
+        3,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "result": {
+        "domain": [
+          0.5,
+          3
+        ],
+        "mapped": [
+          -1,
+          0,
+          0.5,
+          1,
+          3,
+          10,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "breaks": [
+          0.5,
+          1,
+          1.5,
+          2,
+          2.5,
+          3
+        ]
+      }
+    },
+    {
+      "kind": "linewidth",
+      "guide": "none",
+      "train": [
+        0.5,
+        1,
+        3,
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        -1,
+        0,
+        0.5,
+        1,
+        3,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "mapped": [
+          -1,
+          0,
+          0.5,
+          1,
+          3,
+          10,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "breaks": []
+      }
+    },
+    {
+      "kind": "linewidth",
+      "guide": "legend",
+      "train": [
+        0.5,
+        1,
+        3,
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        -1,
+        0,
+        0.5,
+        1,
+        3,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "result": {
+        "domain": [
+          0.5,
+          3
+        ],
+        "mapped": [
+          -1,
+          0,
+          0.5,
+          1,
+          3,
+          10,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "breaks": [
+          0.5,
+          1,
+          1.5,
+          2,
+          2.5,
+          3
+        ]
+      }
+    },
+    {
+      "kind": "shape",
+      "guide": "none",
+      "train": [
+        0.5,
+        1,
+        3,
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        -1,
+        0,
+        0.5,
+        1,
+        3,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "mapped": [
+          -1,
+          0,
+          0.5,
+          1,
+          3,
+          10,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "breaks": []
+      }
+    },
+    {
+      "kind": "shape",
+      "guide": "legend",
+      "train": [
+        0.5,
+        1,
+        3,
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        -1,
+        0,
+        0.5,
+        1,
+        3,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "result": {
+        "domain": [
+          0.5,
+          3
+        ],
+        "mapped": [
+          -1,
+          0,
+          0.5,
+          1,
+          3,
+          10,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "breaks": [
+          0.5,
+          1,
+          1.5,
+          2,
+          2.5,
+          3
+        ]
+      }
+    },
+    {
+      "kind": "linetype",
+      "guide": "none",
+      "train": [
+        "solid",
+        "dashed",
+        "dotted",
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        "solid",
+        "dotted",
+        "dotdash",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          0,
+          1
+        ],
+        "mapped": [
+          "solid",
+          "dotted",
+          "dotdash",
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": []
+      }
+    },
+    {
+      "kind": "linetype",
+      "guide": "legend",
+      "train": [
+        "solid",
+        "dashed",
+        "dotted",
+        {
+          "number": "NA"
+        }
+      ],
+      "input": [
+        "solid",
+        "dotted",
+        "dotdash",
+        {
+          "number": "NA"
+        }
+      ],
+      "result": {
+        "domain": [
+          "dashed",
+          "dotted",
+          "solid",
+          {
+            "number": "NA"
+          }
+        ],
+        "mapped": [
+          "solid",
+          "dotted",
+          "dotdash",
+          {
+            "number": "NA"
+          }
+        ],
+        "breaks": [
+          "dashed",
+          "dotted",
+          "solid",
+          {
+            "number": "NA"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "size",
+      "guide": "none",
+      "transform": "identity",
+      "limits": [
+        1,
+        3
+      ],
+      "train": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "input": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "result": {
+        "domain": [
+          1,
+          3
+        ],
+        "mapped": [
+          0.1,
+          1,
+          2,
+          4,
+          10
+        ]
+      }
+    },
+    {
+      "kind": "size",
+      "guide": "none",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        3
+      ],
+      "train": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "input": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "result": {
+        "domain": [
+          1,
+          1.73205080756888
+        ],
+        "mapped": [
+          0.316227766016838,
+          1,
+          1.4142135623731,
+          2,
+          3.16227766016838
+        ]
+      }
+    },
+    {
+      "kind": "size",
+      "guide": "none",
+      "transform": "log10",
+      "limits": [
+        1,
+        3
+      ],
+      "train": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "input": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "result": {
+        "domain": [
+          0,
+          0.477121254719662
+        ],
+        "mapped": [
+          -1,
+          0,
+          0.301029995663981,
+          0.602059991327962,
+          1
+        ]
+      }
+    },
+    {
+      "kind": "size",
+      "guide": "none",
+      "transform": "reverse",
+      "limits": [
+        1,
+        3
+      ],
+      "train": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "input": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "result": {
+        "domain": [
+          -3,
+          -1
+        ],
+        "mapped": [
+          -0.1,
+          -1,
+          -2,
+          -4,
+          -10
+        ]
+      }
+    },
+    {
+      "kind": "alpha",
+      "guide": "none",
+      "transform": "identity",
+      "limits": [
+        1,
+        3
+      ],
+      "train": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "input": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "result": {
+        "domain": [
+          1,
+          3
+        ],
+        "mapped": [
+          0.1,
+          1,
+          2,
+          4,
+          10
+        ]
+      }
+    },
+    {
+      "kind": "alpha",
+      "guide": "none",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        3
+      ],
+      "train": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "input": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "result": {
+        "domain": [
+          1,
+          1.73205080756888
+        ],
+        "mapped": [
+          0.316227766016838,
+          1,
+          1.4142135623731,
+          2,
+          3.16227766016838
+        ]
+      }
+    },
+    {
+      "kind": "alpha",
+      "guide": "none",
+      "transform": "log10",
+      "limits": [
+        1,
+        3
+      ],
+      "train": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "input": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "result": {
+        "domain": [
+          0,
+          0.477121254719662
+        ],
+        "mapped": [
+          -1,
+          0,
+          0.301029995663981,
+          0.602059991327962,
+          1
+        ]
+      }
+    },
+    {
+      "kind": "alpha",
+      "guide": "none",
+      "transform": "reverse",
+      "limits": [
+        1,
+        3
+      ],
+      "train": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "input": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "result": {
+        "domain": [
+          -3,
+          -1
+        ],
+        "mapped": [
+          -0.1,
+          -1,
+          -2,
+          -4,
+          -10
+        ]
+      }
+    },
+    {
+      "kind": "linewidth",
+      "guide": "none",
+      "transform": "identity",
+      "limits": [
+        1,
+        3
+      ],
+      "train": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "input": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "result": {
+        "domain": [
+          1,
+          3
+        ],
+        "mapped": [
+          0.1,
+          1,
+          2,
+          4,
+          10
+        ]
+      }
+    },
+    {
+      "kind": "linewidth",
+      "guide": "none",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        3
+      ],
+      "train": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "input": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "result": {
+        "domain": [
+          1,
+          1.73205080756888
+        ],
+        "mapped": [
+          0.316227766016838,
+          1,
+          1.4142135623731,
+          2,
+          3.16227766016838
+        ]
+      }
+    },
+    {
+      "kind": "linewidth",
+      "guide": "none",
+      "transform": "log10",
+      "limits": [
+        1,
+        3
+      ],
+      "train": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "input": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "result": {
+        "domain": [
+          0,
+          0.477121254719662
+        ],
+        "mapped": [
+          -1,
+          0,
+          0.301029995663981,
+          0.602059991327962,
+          1
+        ]
+      }
+    },
+    {
+      "kind": "linewidth",
+      "guide": "none",
+      "transform": "reverse",
+      "limits": [
+        1,
+        3
+      ],
+      "train": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "input": [
+        0.1,
+        1,
+        2,
+        4,
+        10
+      ],
+      "result": {
+        "domain": [
+          -3,
+          -1
+        ],
+        "mapped": [
+          -0.1,
+          -1,
+          -2,
+          -4,
+          -10
+        ]
+      }
+    }
+  ]
+}

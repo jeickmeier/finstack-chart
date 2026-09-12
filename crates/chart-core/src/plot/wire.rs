@@ -87,7 +87,7 @@ impl Plot {
         extensions: Arc<ExtensionRegistry>,
     ) -> ChartResult<Self> {
         let value: Envelope = crate::portable::decode(input)?;
-        if !matches!(value.version, 1..=12) || value.version != value.definition.wire_version() {
+        if !matches!(value.version, 1..=28) || value.version != value.definition.wire_version() {
             return Err(error(
                 DiagnosticCode::UnsupportedCapability,
                 "Unsupported primary authoring envelope version.",
@@ -155,7 +155,7 @@ impl Plot {
                 .definition
                 .layers
                 .iter()
-                .filter_map(|l| l.color.as_ref().map(|c| c.id)),
+                .flat_map(|l| l.color.iter().chain(l.paint_scales.values()).map(|c| c.id)),
         )?;
         let store = DataStore::new(
             value.epoch,

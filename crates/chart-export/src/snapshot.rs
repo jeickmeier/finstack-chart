@@ -23,6 +23,8 @@ pub struct FontManifest {
 /// Reproduction inputs, returned with bytes. This is not the WP-09 portable wire envelope.
 #[derive(Clone, Debug)]
 pub struct Reproducibility {
+    /// Exact immutable displayed input when publication explicitly bypassed relayout.
+    pub displayed_layout: Option<Arc<LaidOutChart>>,
     /// Complete authored definition captured before any later edits.
     pub definition: ChartDefinition,
     /// Captured numeric preparation budgets.
@@ -69,6 +71,7 @@ pub struct ExportArtifact {
 #[derive(Clone)]
 pub struct FigureSnapshot(Arc<Figure>);
 struct Figure {
+    extensions: Arc<chart_core::grammar::ExtensionRegistry>,
     layout: Arc<LaidOutChart>,
     scene: Scene,
     fonts: FontResources,
@@ -123,6 +126,7 @@ impl FigureSnapshot {
         let extensions = request.extensions.clone();
         let state = &request.state;
         extensions.validate_portable_interpolations(definition)?;
+        extensions.validate_portable_hierarchies(definition)?;
         profile.validate()?;
         profile.layout.bounds = Rect::new(0., 0., profile.page.width(), profile.page.height())?;
         let captured_profile = profile.clone();
@@ -139,13 +143,17 @@ impl FigureSnapshot {
             }
         }
         fonts.get(&profile.layout.font)?;
-        let prepared = Arc::new(Compiler::with_extensions(extensions).prepare(
-            &effective_definition,
-            &source,
-            &effective_state,
-            request.compile_limits,
-        )?);
-        let laid_out = Arc::new(layout(prepared, &profile.layout, &fonts)?);
+        let laid_out = if let Some(displayed) = &request.displayed_layout {
+            displayed.clone()
+        } else {
+            let prepared = Arc::new(Compiler::with_extensions(extensions).prepare(
+                &effective_definition,
+                &source,
+                &effective_state,
+                request.compile_limits,
+            )?);
+            Arc::new(layout(prepared, &profile.layout, &fonts)?)
+        };
         let result = (|| {
             let mut resources: Vec<_> = fonts.iter().map(|f| f.descriptor).collect();
             resources.sort_by_key(|f| f.id);
@@ -163,6 +171,7 @@ impl FigureSnapshot {
             }
             let mut items = Vec::with_capacity(count.unwrap_or(0));
             items.push(SceneItem {
+                guide: None,
                 layer: None,
                 clip: None,
                 primitive: Primitive::Rectangle {
@@ -229,6 +238,7 @@ impl FigureSnapshot {
             }
             let data = source.get()?;
             let metadata = Reproducibility {
+                displayed_layout: request.displayed_layout.clone(),
                 definition: definition.clone(),
                 compile_limits: request.compile_limits,
                 interaction: request.interaction,
@@ -257,6 +267,7 @@ impl FigureSnapshot {
                 profile: captured_profile,
             };
             Ok(Self(Arc::new(Figure {
+                extensions: request.extensions.clone(),
                 layout: laid_out.clone(),
                 scene,
                 fonts,
@@ -292,7 +303,9 @@ impl FigureSnapshot {
                 Format::Svg if profile.text == TextMode::Preserve => {
                     crate::svg::build(&self.0.scene, &self.0.fonts, profile, true)?.into_bytes()
                 }
-                Format::Svg => crate::svg::outline(&self.0.tree, profile)?,
+                Format::Svg => {
+                    crate::svg::outline(&self.0.tree, &self.0.scene, &self.0.fonts, profile)?
+                }
                 Format::Pdf => {
                     crate::encode::pdf(&self.0.scene, &self.0.tree, &self.0.fonts, profile)?
                 }
@@ -328,7 +341,12 @@ impl FigureSnapshot {
     /// Vector preview of this same publication tree. Glyphs are already positioned/outlined;
     /// a host scales the point viewBox uniformly without native font remeasurement.
     pub fn preview_svg(&self) -> ChartResult<Vec<u8>> {
-        crate::svg::outline(&self.0.tree, &self.0.metadata.profile)
+        crate::svg::outline(
+            &self.0.tree,
+            &self.0.scene,
+            &self.0.fonts,
+            &self.0.metadata.profile,
+        )
     }
 }
 fn preflight(
@@ -470,4 +488,45 @@ fn preflight(
         })?;
     }
     Ok(())
+}
+
+/// One compiled guide plan with retained target publication resources. Hosts own clocks;
+/// sampling performs no source compilation or layout and can outlive an output handle.
+#[derive(Clone)]
+pub struct FigureTransition {
+    target: FigureSnapshot,
+    plan: chart_core::layout::LayoutGuideTransition,
+}
+impl FigureSnapshot {
+    /// Compile a transition from an immutable prior (possibly interrupted) figure.
+    pub fn guide_transition(&self, previous: &FigureSnapshot) -> ChartResult<FigureTransition> {
+        Ok(FigureTransition {
+            target: self.clone(),
+            plan: chart_core::layout::LayoutGuideTransition::new(
+                previous.layout().clone(),
+                self.layout().clone(),
+                self.metadata().profile.layout.limits,
+            )?,
+        })
+    }
+}
+impl FigureTransition {
+    /// Sample an explicit fraction in `[0, 1]`. Passing 1 implements reduced motion;
+    /// dropping this owner cancels future samples without affecting already captured figures.
+    pub fn sample(&self, fraction: f64) -> ChartResult<FigureSnapshot> {
+        let layout = self.plan.sample(fraction)?;
+        let p = layout.prepared();
+        crate::FigureRequest::new(
+            p.definition().clone(),
+            p.source().clone(),
+            self.target.metadata().effective_state.clone(),
+            self.target.0.fonts.clone(),
+            self.target.metadata().profile.clone(),
+            chart_core::state::InteractionCapture::ALL,
+        )?
+        .with_extensions(self.target.0.extensions.clone())
+        .with_compile_limits(self.target.metadata().compile_limits)
+        .with_displayed_layout(layout)?
+        .prepare()
+    }
 }

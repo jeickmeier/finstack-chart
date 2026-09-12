@@ -1,11 +1,220 @@
 # Implementation status
 
-Updated: 9 September 2026. Specification version: 0.5.0.
+Updated: 11 September 2026. Specification version: 0.5.0.
 Bootstrap committed at `fbc9782` (starting commit: `19f4a27`); WP-01 committed at `dfe38e8`.
 WP-02 committed at `435e127`; WP-03 at `3a86189`; WP-04 at `d0a6c48`.
 WP-05 is committed at `3cf1b33`; WP-06 at `f8657fb`; WP-07/08 at `fac148a`.
 WP-09/10 are committed at `c5ec829`; WP-11 at `a6fb2ea`; WP-12 at `63dbcc2`.
 Original reports retain the revision context from their evidence runs.
+
+## Optional Kit crate withdrawal — 11 September 2026
+
+Infrastructure slice: delete `gpui-charts-kit` and keep Kit as an optional gallery
+recipe. [ADR-023](adr/023-withdraw-optional-kit-crate.md) records the boundary.
+A-KIT is WITHDRAWN. Native/export AP-06 evidence is unchanged; hosts map Kit tokens
+into `ThemePatch` and `ChartInput::from_plot`. The composition gallery inlines the
+former adapter. Historical evidence snapshots and prior clippy `-p gpui-charts-kit`
+logs remain dated records.
+
+Executed in `/Users/jeickmeier/Projects/finstack-chart`, Darwin arm64, Rust 1.97.1:
+
+- `python3 scripts/check_repository.py`: PASS workspace edges, host isolation, single
+  GPUI identity and local Markdown links. Members are eight packages; Kit is absent.
+- `cargo fmt --all -- --check`: PASS.
+- `cargo clippy -p chart-gallery --example family_gallery --example host_bootstrap --features kit --locked -- -D warnings`: PASS.
+- `cargo check -p gpui-charts --locked` and `cargo check -p chart-gallery --example family_gallery --locked`: PASS.
+- `cargo check -p gpui-charts-kit --locked`: fails with no matching package, as intended.
+- `mise run check`: repository/deny/fmt/workspace check and Clippy passed; rustdoc
+  then failed on pre-existing `[0,1]` intra-doc links in `interpolate/spline.rs` and
+  `scales/ggplot_identity.rs` from the open ggplot2 assignment. Not part of this slice.
+
+No Python/WASM, native window, or publication artifacts were re-run. GG-04 and G-AUTH
+stay open. Next action: continue the authorized ggplot2 scale work; no Kit library
+crate remains to maintain.
+
+## Remaining-work reconciliation — 11 September 2026
+
+Status-only review at `a6caa39` plus current working-tree changes: P2-00 and GG-00–03
+are complete; GG-04 is in progress; GG-05–19 are not started as acceptance packages.
+Existing baseline implementations within those packages remain reusable. All eight
+D3 prerequisite gates have accepted scoped evidence; they are not a new implementation
+backlog. G-GGPLOT/G-PARITY and the expanded production gates remain open.
+
+The full package backlog is owned by [GG-04 through GG-19 in the Phase 2 plan](impl_plans/phase-2-parity-implementation-plan.md#gg-04--ggplot2-scale-and-palette-policies).
+Current confirmed scale gaps and qualification limits are in the
+[scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md).
+The pinned inventory still has 643 `OPEN` rows, including delivered capabilities;
+it is an inventory baseline, not a current missing-feature count. Completing the
+export/argument-to-evidence reconciliation remains required before claiming an
+exhaustive API-level residual or closing GG-04/GG-19. This review read the live plan,
+ledger, inventory and selected scale/guide source; it ran no feature/runtime tests.
+Next: positional pre/post-statistic limit integration and remaining argument audit,
+then the package-specific work and acceptance in the existing plan.
+
+## Active ggplot2 assignment — 10 September 2026
+
+Active follow-on: binned count/numeric palettes and reference physical linewidths
+now pass 860 states per rebuilt Python/WASM host and 36 byte-identical, inspected
+publication files. Wire 27 retains count palettes; linewidth uses the profile's
+physical conversion and zero hairline at shared scene projection. The final Linux core suite
+passes 547 tests, with Clippy and repository checks also passing. R guide-build
+failures are distinguished from successful scale mapping. Details and limits:
+[scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md). Next: remaining
+GG-04 arguments/registered callbacks. GG-04, GG-05
+presentation and cumulative gates remain open; no fresh macOS/native pass is claimed.
+
+Registered discrete limit functions now pass all 90 pinned R cases, four external
+contract tests and 198 matching states per rebuilt Python/WASM host. Wire 28 retains
+the installed operation selection. Twelve publication files match byte for byte;
+PNG and independently rasterized SVG/PDF inspection is complete. Core/external
+Clippy passes. The full core/external suite passed 569 tests before the final
+hidden-identity callback correction; focused tests and rebuilt hosts pass afterward.
+Numeric limit callbacks now also pass all 378 pinned R cases and 677 exactly matching
+states per rebuilt host, with eighteen identical, inspected publications. The shared
+API is `CustomScaleLimits` / `with_limits_function`; wire 28 uses `limits_function`.
+The full Linux core/external suite passes 571 tests/doctests; all-target Clippy passes.
+The prior positional proof scripts are restored under `ggplot_positional_limits` after
+a filename collision: both rebuilt hosts pass 3,582 matching states and twelve
+unchanged publications. Discrete callbacks retain 198 matching host states and twelve
+unchanged publications. Other rescalers, temporal/positional callbacks and remaining
+registered arguments are next. The 547-test/860-state results above predate callback changes. Details and artifact
+paths are in the scale evidence. GG-04 and cumulative gates remain open.
+
+Follow-on rescaler work: 126 additional pinned R cases now pass focused external
+checks (504 numeric cases total). Maximum rescaling preserves valid maps with
+missing/empty limit vectors; binned single-boundary selection precedes rescaling.
+The primary grammar now treats ggplot2 numeric NaN output as missing; a focused
+test preserves legacy rejection. Both rebuilt hosts pass 892 exactly matching states
+and eighteen publications identical to the inspected files. Final Clippy/rustdoc
+pass; the stable-source full-suite passes 573 tests/doctests with no failures or
+ignored tests. This qualification precedes the next temporal callback changes. Temporal callbacks now pass the 84-case Date/datetime oracle over 336 Rust
+configurations and 1,408 WASM states including the existing numeric lane. The shared
+callback context retains exact origin/unit and Date semantics; empty domains reject
+before invocation. Both actual hosts match all 1,408 states and 36 inspected publication files. The
+full Linux core/external suite passes 574 tests/doctests without failures or ignores;
+Clippy, rustdoc, formatting and repository checks pass. Positional callbacks are next.
+Their 252-panel oracle now verifies 238 first callback inputs and fourteen errors
+before invocation through the shared evaluator. Internal callback evaluation and
+filtered positional collection were extracted for reuse; seven positional-bin and
+nine external callback tests pass, with five numeric tests rerun after the input
+comparison was added. Core/external Clippy and formatting pass. The 574-test/full-host
+qualification predates this internal extraction. Post-statistic callback retraining,
+primary positional output and other registered arguments remain open; GG-05–19
+remain outstanding. See the scale evidence for commands and the next integration step.
+
+Latest extension: materialized positional palettes pass 144 primary R panels plus
+116 nested secondary outcomes, 520 configurations per actual host, twelve identical
+inspected publication files and four Rust replacement states. Full core passes 537
+tests/doctests; all-target Clippy and strict Python/TypeScript consumers pass. Wire 23
+retains authored numeric palettes. Remaining argument/callback reconciliation and
+cumulative destination/platform acceptance keep GG-04 open.
+
+Latest GG-04 slice (11 September): discrete secondary axes pass 176 pinned R panels
+through 352 band/point JSON configurations in Rust and each actual Python/WASM host.
+Both hosts produce identical records and nine identical inspected SVG/PDF/PNG exports.
+Full core passes 533 tests/doctests; two focused tests additionally cover reversed ranges
+and both orientations. Clippy passes. Starting revision remains `a6caa39` plus retained
+working-tree changes. GG-04 is IN PROGRESS; GG-05–19 and cumulative gates remain open.
+Next: reconcile custom positional palettes and remaining GG-04 arguments with the
+pinned inventory. Details: [scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md).
+
+The owner authorized continuing through GG-03–19. GG-03 completed on
+accepted GG-02, SP-04 and WP-S05 prerequisites, starting at `a6caa39` with the
+previously qualified axis/interpolation/hierarchy changes retained in the working tree.
+GG-03 is COMPLETE: [acceptance evidence](evidence/phase-2-aesthetics-2026-09-10.md)
+records twelve focused regressions, 104 reference glyphs, actual Python/WASM ownership
+and eight update states per host, matching Rust/Python/WASM publication, inspected
+PDF/native output, 487 macOS and 468 Linux tests/doctests, and a passing repository
+check. The resolved style grows from 24 to 56 bytes for independent channels; this
+explicit cost is recorded in ADR 014. G-GGPLOT and G-PARITY remain open. The latest guide slices pass 60
+discrete selection/label records, 30 manual break-to-palette records and 160 continuous
+guide cases, plus eighteen zero-row continuous/identity cases including JSON and
+retraining, and 192 all-nonfinite candidate/label/censor cases. Primary guide edits
+preserve marks. Binned candidates and labels pass 288 R records, primary metadata
+and independent boundary-color checks, plus 192 binned population cases and 135 primary time-width string panels. Explicit R date/time formatting additionally passes 220 reference labels and primary
+axis/JSON/resource checks, plus 40 primary duration-format panels. Fresh Python/WASM
+proofs each pass 246 publication cases and 14 explicit tab-glyph rejections, with
+identical records/PNGs and inspected SVG/PDF/PNG samples. Multiline labels pass all
+four axis sides and supplied subsecond timezone-resource checks. All 487 core
+tests/doctests and all-target core Clippy pass on the final code. Full guide presentation,
+remaining scale arguments and actual host/destination acceptance remain open. The latest authored-limit extension passes 2,688 focused R cases, 120 related tests, all 495 core tests/doctests and all-target core Clippy; the hidden-guide/fractional extension passes all 499 core tests/doctests. Fresh Python/WASM each pass 2,304 matching records with three identical PNGs and inspected SVG/PDF/PNG samples. The final structural-validation fix passes 16 focused tests, all 500 core tests/doctests and all-target Clippy. Degenerate-domain handling additionally passes 256 R guide/mapping records and 192 primary chart cases, including constant-zero logarithmic bins, collapsed-cut rejection and correct reference missing-color defaults; all 494 core tests/doctests and Clippy pass. Transformed missing-limit population handling additionally passes 320 scale records and 24 actual R chart cases, including mapping rejections and fully specified-limit controls; all 491 core tests/doctests and Clippy pass. Binned count and transformed missing-limit boundaries additionally pass 228 R records and eight focused tests, including primary JSON/retraining checks; all 489 core tests/doctests and Clippy pass. Positional bins now pass 2,400 direct R records, all 960 primary panels (including infinite limits), 96 statistic/filter cases and live replacement versus fresh batches. Fresh Python/WASM each pass 960 matching records with four identical PNGs and inspected SVG/PDF renders; version 18 retains the shared positional state. Full core validation passes 507 tests/doctests without exclusions, final focused tests pass, and all-target Clippy passes. R's infinite-limit cases produce undefined coordinates and omitted points; an unbounded range adapter preserves that behavior with finite destinations and explicitly unavailable inversion. Free-facet populations, finite viewports over unbounded bin geometry and remaining scale arguments stay open. Minor selection now covers numeric, temporal and discrete policies, with 761 matching fresh Python/WASM records within the reference tolerance, 514 passing core tests/doctests, all-target Clippy and strict host declarations. Four precision cases preserve exact timestamp origins and promote fractional units; Date major flooring is isolated to the ggplot2 profile. Version 19 retains nullable raw minor values and finite positions. Repository, formatting and diff checks pass. Discrete continuous-limit control now passes 756 direct R records, 3,528 primary configurations and 24 replacement states. Fresh Python/WASM each pass 3,552 exactly matching records and four byte-identical PNGs, with SVG/PDF/PNG inspection completed. Version 20 retains the authored vector and distinguishes all-excluded observations from zero rows. All 518 core tests/doctests, all-target Clippy, strict host declarations and repository/format/diff checks pass. Automatic character-order training now follows pinned C collation only in the ggplot2 profile, preserving explicit domains. Six new R records pass 30 actual panels, bringing both host proofs to 3,582 exactly matching records. All four focused Rust tests and all-target Clippy pass; twelve publication files match each other and the previously inspected artifacts byte-for-byte. The latest change uses focused tests; the full 518-test run above predates this ordering correction. Nullable authored/factor domains preserve missing-level order and distinguish zero rows from a trained empty palette. The new 512-record direct oracle and 256 primary hue cases pass; 72 R position panels verify that missing paint preserves numeric/category training. Both hosts pass 346 exactly matching records and fifteen byte-identical publication files, all SVG/PDF/PNG samples inspected. All 523 core tests/doctests, all-target Clippy and repository/format/diff checks pass. Explicit retained empty-population state uses version 21; ordinary policies remain version 17. Identity primary missing colours now pass 512 actual R point-count configurations and twelve focused Rust tests. Both hosts pass 874 matching records, including 32 replacement states, with eighteen identical inspected publication files. The full 523-test run above predates this identity correction; all-target Clippy passes from a fresh target directory. Untrained fallback colour lookups now pass 64 direct R cases and 32 empty primary charts, preserving lazy short-manual-palette errors and empty guides. All 525 core tests/doctests and all-target Clippy pass from the fresh qualification target. Rebuilt hosts retain 874 identical records and eighteen unchanged inspected publications. Positional null identity now retains typed catalogs through domain union, projection, guides and inspection. The 576-case R matrix passes direct policy checks and 1,152 primary band/point configurations. Wire 22 retains factor/drop/translation/nullable-limit policies. Both actual hosts pass 1,152 exactly matching records and six identical inspected SVG/PDF/PNG files. Six focused Rust tests additionally cover 16 replacement states, immutable captures, reversed axes and explicit D3 null-omission controls. All 531 core tests/doctests, all-target Clippy, strict host declarations and repository/format/diff checks pass. Nullable navigation/continuous-limit combinations, broader geometry/facet and host replacement acceptance remain open. Coincident labels and empty-panel presentation remain GG-05 gaps; minor painting/animation, arbitrary callbacks and remaining scale arguments stay open. GG-04 is IN PROGRESS: [the current scale slice](evidence/phase-2-ggplot-scales-2026-09-10.md) passes 766 palette, Nullable continuous-limit/expansion combinations now add 1,152 pinned R panels, bringing direct coverage to 1,728 records and primary coverage to 3,456 configurations. Fresh Python/WASM each pass 3,456 exact-matching records and nine identical publication files, including inspected expanded-axis SVG/PDF/PNG. Full core remains 531 passing tests/doctests; all-target Clippy and repository checks pass. Evidence and next open minor/navigation work are recorded in the linked GG-04 scale ledger. Nullable numeric minor selection adds 192 reference panels: 1,920 direct records, 3,840 matching primary Python/WASM configurations, nine unchanged inspected publication files and 532 passing core tests/doctests. Clippy and repository checks pass. Next: reconcile the remaining GG-04 arguments, including discrete secondary axes, against the pinned inventory.
+93 scale and 284 break records, plus focused point/after-scale and trained-bin budget regressions.
+Automatic and authored linear/logarithmic axes now use reference expansion and
+default breaks/labels: 120 expansion records, 499 label vectors and 32 complete panel
+records pass, including collapsed linear/log viewports with midpoint projection.
+Discrete range policies pass 36 R cases and 54 axis configurations against nine R
+panels. Fixed elapsed-second time breaks and supplied-zone DST labels pass 30 R
+panel cases; structured calendar widths pass 16 additional R panels with exact
+timestamps/labels, bounded generation and v17 serialization. Datetime expansion passes
+16 R cases through three primary forms, three fine-resolution cases and 16 paired
+numeric contraction cases; fractional views retain exact source timestamps. Automatic
+datetime selection and labels pass 534 primary R panels, including default restoration,
+format overrides and supplied DST resources. Date axes pass 81 R records in two
+source units plus 12 width panels through the shared timestamp engine. Timestamp
+population limits pass eight R summary cases and focused exact-integer/stage regressions,
+448 full core tests/doctests and all-target core Clippy. Numeric secondary guides pass 36 affine and 16 custom-transform R
+cases, with independent breaks/labels and reference sampled/rounded placement.
+Secondary Date/datetime guides pass 54 further R panels, including supplied DST
+resources, plus edit, exact-unit and v17 rejection checks. Full core validation passes
+450 tests/doctests before the final fixture expansion; the expanded focused run passes.
+Reference point size units, zero/negative observation retention and outline conversion
+pass nine R configurations / 63 glyph inputs, 452 core tests/doctests and all-target
+core Clippy. Explicit `.radius()` retains its literal-radius contract. Portable point hairlines use the reference
+PDF device's physical minimum; other R device hairline equivalence remains open.
+Elapsed duration scales pass 45 break configurations, 66 primary and nine secondary
+panels plus seven additional label vectors, reusing linear mapping and the extended
+break kernel. The isolated oracle now pins hms 1.1.4. Named duration widths, four UTC
+label patterns, inherited secondary labels, zero-range selection and v17 round-trips
+pass. Full core validation passes 455 tests/doctests before the final duration extensions;
+31 related tests and final all-target Clippy pass after them. Actual host acceptance
+and complete format/argument compatibility remain open.
+R color parsing now covers 657 named colors and 42 parsing records, with an explicit
+portable rejection for overflowing palette indexes. Reference manual text colors pass
+eight ggplot2 selections, 24 related tests and all-target Clippy. Numeric/discrete
+identity mappings now pass 122 R records and primary colour/linewidth integration,
+with raw output independent of guide limits and hidden default colour guides.
+Reference alpha lowering and after-scale arithmetic pass 192 additional point-grob
+paint comparisons, including infinite values and missing-value power identities.
+All-target core Clippy and 464 full core tests/doctests pass. Numeric colour
+indexes, complete identity guide presentation and actual host/destination acceptance
+remain open.
+Geometry-extent training, remaining time policies and ggplot guide-presentation defaults
+remain open (zero-expansion projection tests explicitly preserve endpoint labels).
+Remaining policies and full package acceptance stay open; the other authorized
+packages follow in prerequisite order.
+
+## Completed axis, interpolation and hierarchy assignment — 10 September 2026
+
+The owner authorized final interpolation certification followed by axis and hierarchy.
+WP-AX03–06 are COMPLETE and G-AXIS passes for the declared D3 typed/profile and supported
+platform boundary. [Integrated axis certification](evidence/phase-2-axis-certification-2026-09-09.md)
+records all FIX-19 verdicts, 372 static cases / 376 states, 125 timed samples,
+actual Rust/Python/WASM and inspected native/SVG/PDF/PNG, exact retained capture,
+449 macOS/448 Linux tests and a full repository-check pass.
+
+WP-IP07 and G-INTERPOLATE now pass: the existing 27-export/reference/configuration
+catalog and measured integration evidence are joined by the qualified axis consumer and
+fresh 18-artifact host replay. [Final interpolation certification](evidence/phase-2-interpolation-integration-2026-09-09.md)
+records that closure. H01–08 are COMPLETE and G-HIERARCHY now passes for the declared
+finite typed surface. [Hierarchy final acceptance](evidence/phase-2-hierarchy-integration-2026-09-10.md)
+records 898 independent oracle cases plus 27 control sequences per Rust/Python/WASM
+surface, all 65 method/control/FIX verdicts, nine inspected native projections, 81 matching
+three-host artifacts, update/replay/ownership proofs and measured resource handoff.
+Final qualification passes 474 macOS and 455 Linux tests/doctests, strict host typing and
+full repository checks. Starting revision `a6caa39`; changes remain in the working tree.
+Earlier stop boundaries and remaining-work counts below are historical.
+
+| Active remaining lane | Packages | Count |
+| --- | --- | ---: |
+| Axis, interpolation, hierarchy | None — assigned work complete | 0 |
+| ggplot2 (outside this assignment) | GG-03–19 | 17 |
+| Phase 2 total | 17 remaining of 71; 54 accepted | 17 |
+
+All eight D3 lane gates pass. The hierarchy high-fanout hit query measured 18.49 ms p95
+at 1,000 nodes; WP-22 retains optimization and interactive-latency/allocation/presentation
+qualification. This component parity acceptance does not pass PERF-01–05.
+
+Global WP-21/22/23, G-PARITY/G4 and other release gates remain open.
 
 ## Interpolation handoff — 9 September 2026
 
@@ -854,8 +1063,8 @@ work and FIX-GG cases are defined once in the plan.
 | GG-00 — Reference inventory and executable oracle | COMPLETE | GG2-01/12 | Pinned 643-export inventory, 57 R sources, 32 reproducible seed records/96 artifacts; [entry evidence](evidence/phase-2-oracles-2026-09-08.md). Semantic argument matrices remain with delivering packages. |
 | GG-01 — Reconcile shared legend acceptance | COMPLETE | GG2-04, GRA-07, SCL-05, LAY-03, THM-03 | FIX-GG01: 24 cases, exact actual Python/WASM scenes, 216 exports and inspected PNG/PDF sheets; empty-guide and untitled defects repaired. Evidence: phase-2-entry-and-legends-2026-09-08.md. Full guides remain GG-05. |
 | GG-02 — Compatibility profile, stages and inferred grouping | COMPLETE | GG2-01/02 | [Stage acceptance](evidence/phase-2-stages-2026-09-08.md); primary/binding proofs pass. Later ggplot2 families remain separate. |
-| GG-03 — Independent aesthetic encodings | NOT STARTED | GG2-03 | Requires GG-02, SP-04, WP-S05. |
-| GG-04 — ggplot2 scale and palette policies | NOT STARTED | GG2-03 | Requires GG-03, SP-06, CP-04, CLR-04. |
+| GG-03 — Independent aesthetic encodings | COMPLETE | GG2-03 | [Accepted](evidence/phase-2-aesthetics-2026-09-10.md): 104 R glyph records, 12 core regressions, actual hosts/update/publication/native, 487 macOS / 468 Linux tests and full check. |
+| GG-04 — ggplot2 scale and palette policies | IN PROGRESS | GG2-03 | [In progress](evidence/phase-2-ggplot-scales-2026-09-10.md): 766 palette / 93 scale / 284 break / 120 expansion / 499 label / 32 numeric panel / 36 discrete range records and 54 categorical configurations pass; 18 style palette cases plus primary point/rule integration pass; 16 reverse-axis and 20 square-root panels, inverse-domain boundaries and left-closed histogram edge ordering pass; 30 fixed-time/DST-label and 16 calendar-width panels plus source-precision/budget/edit regressions pass; 36 affine and 16 custom secondary-axis cases pass, including reference guide rounding; 19 datetime-expansion and 16 paired numeric cases pass; 534 automatic datetime panels pass; 81 Date records in two source units and 12 Date-width panels pass; 445 full core tests/doctests and core Clippy pass. Duration selection/labels pass 45 break configurations and 75 primary/secondary panels. Identity mappings pass 122 R records, primary colour/linewidth charts and 192 alpha/after-scale grob paints; 464 full core tests/doctests and Clippy pass. Guide arguments pass 60 R discrete selection/label cases, 30 manual break/palette cases and 160 continuous candidate/label cases. Primary guide colors, labels, hidden guides and unchanged marks pass; all 471 core tests/doctests, Clippy and repository checks pass. Zero-row continuous and identity guide training additionally pass eighteen R records, JSON/retraining and primary empty-color checks; all 473 core tests/doctests and Clippy pass. All-nonfinite guide training additionally passes 192 reference cases, primary missing-color mark preservation, budgets and JSON/retraining checks; all 475 core tests/doctests, Clippy and repository checks pass. Binned candidates/labels additionally pass 288 R records and primary metadata/JSON/color checks; full core validation passes 477 tests/doctests, plus a subsequently added independent boundary-color test. Final Clippy and export-test compilation pass. Binned empty/nonfinite populations additionally pass 192 R records, JSON/retraining, budgets and primary empty/partial-limit checks; all 480 core tests/doctests, Clippy and repository checks pass. Time-width strings additionally pass 135 actual R Date/datetime/duration panels, wire round-trips, exact nanosecond and budget/override checks; all 482 core tests/doctests, Clippy, repository checks and export-test compilation pass. Explicit R date/time patterns additionally pass 220 reference labels, primary timestamp/label/JSON checks, supplied locale/offsets and retained D3 behavior; 40 primary R duration-format panels also pass, preserving original binary64 seconds; all 487 core tests/doctests, Clippy and repository checks pass, and export tests compile. Fresh Python/WASM formatter proofs each pass 246 publication cases and 14 explicit tab-glyph rejections; records and three PNGs match, and SVG/PDF/PNG samples are inspected. Multiline labels pass four axis sides; subsecond timezone windows retain resource coverage. Final full-core qualification passes all 487 tests/doctests and all-target core Clippy. Binned integer-count and finite-population transformed missing-limit boundaries additionally pass 228 R records and eight focused tests, including primary JSON/retraining checks. Final full-core qualification passes all 489 tests/doctests and all-target core Clippy. Transformed missing-limit population handling additionally passes 320 scale records and 24 actual R chart cases; 23 related tests, all 491 core tests/doctests and all-target core Clippy pass. Degenerate-domain handling additionally passes 256 R guide/mapping records and 192 primary chart cases, including zero logarithmic endpoints and reference missing-color defaults; 13 related tests, all 494 core tests/doctests and all-target core Clippy pass. The newer authored-limit extension passes 2,688 focused R cases, 120 related tests, all 495 core tests/doctests and all-target core Clippy; the hidden-guide/fractional extension passes all 499 core tests/doctests. Fresh Python/WASM each pass 2,304 matching records with three identical PNGs and inspected SVG/PDF/PNG samples. The final structural-validation fix passes 16 focused tests, all 500 core tests/doctests and all-target Clippy. Remaining arguments, other host paths and full acceptance are open. |
 | GG-05 — Complete guides and legend composition | NOT STARTED | GG2-04 | Requires GG-01, GG-04, WP-AX04. |
 | GG-06 — Bin/count/summary and position semantics | NOT STARTED | GG2-02/05 | Requires GG-02, SP-03, WP-S06. |
 | GG-07 — Primitive and interval recipe completion | NOT STARTED | GG2-06 | Requires GG-03, GG-06, WP-S02/03/05. |
@@ -957,7 +1166,7 @@ by this assignment. Next interpolation package: **WP-IP01** after the accepted W
 | WP-IP04 — Color interpolation | COMPLETE | Core/hosts | 106 reference cases, exact CSS, independent anchors and actual hosts pass | ITP-04 | Requires WP-IP02 and CLR-03; consumes the shared color engine. |
 | WP-IP05 — Transform and zoom interpolation | COMPLETE | Core/hosts | 17 zoom and 36 pinned browser cases plus actual hosts pass | ITP-05/06 | Requires WP-IP02. |
 | WP-IP06 — Portable and chart integration | COMPLETE | Core/hosts/publication | [Integration proof](evidence/phase-2-interpolation-integration-2026-09-09.md): registered factories, shared scale/mark/guide consumers, actual Rust/Python/WASM, three inspected native/publication states and retained updates | ITP-07 | Version 2 standalone / version 12 registered charts; native-only export rejection and registry snapshot lifetime qualified. |
-| WP-IP07 — Parity certification | PARTIAL | Cross-lane acceptance | [27-export verdicts](evidence/phase-2-interpolation-integration/verdict-catalog.md), fresh reference/host replay and [finite benchmark](evidence/phase-2-interpolation-integration/benchmark.md) | ITP-01–08 | WP-AX06 remains unmet; axis transition/interruption/reduced-motion/capture qualification blocks final certification and G-INTERPOLATE. |
+| WP-IP07 — Parity certification | COMPLETE | Cross-lane acceptance | [27-export verdicts](evidence/phase-2-interpolation-integration/verdict-catalog.md), [axis consumer](evidence/phase-2-axis-certification-2026-09-09.md), fresh host replay and finite benchmark | ITP-01–08 | G-INTERPOLATE passes for the declared typed profile; release gates remain separate. |
 
 ## D3 path parity planning handoff
 
@@ -1124,14 +1333,14 @@ Planning validation passed:
 
 | Hierarchy package | State | Owner | Revision/evidence | Requirements | Next action |
 | --- | --- | --- | --- | --- | --- |
-| WP-H01 — Contract and reference harness | READY | Unassigned | Planning only; no oracle run | HIR-01–08, ARC-04, BND-01, QLT-02 | WP-14 prerequisite passed for its scope; pin method/default fixtures and record the hierarchy ADR. |
-| WP-H02 — Topology, stratification and operations | NOT STARTED | Unassigned | None | HIR-01/02/07 | Requires WP-H01. |
-| WP-H03 — Tidy tree and cluster | NOT STARTED | Unassigned | None | HIR-03 | Requires WP-H02. |
-| WP-H04 — Partition | NOT STARTED | Unassigned | None | HIR-04 | Requires WP-H02. |
-| WP-H05 — Treemap and tilers | NOT STARTED | Unassigned | None | HIR-06 | Requires WP-H02; include explicit resquarify history/reset. |
-| WP-H06 — Packing and helpers | NOT STARTED | Unassigned | None | HIR-05 | Requires WP-H02. |
-| WP-H07 — Grammar, portable API and presentation | NOT STARTED | Unassigned | None | HIR-07, BND-01/03/04, SCN-04 | Requires WP-H03/04/05/06, WP-S03/04, WP-16/18. |
-| WP-H08 — Integrated parity acceptance | NOT STARTED | Unassigned | None | HIR-01–08, QLT-02/03/04 | Requires WP-H07, WP-19/20; full FIX-H01-A–H evidence precedes WP-21/22. |
+| WP-H01 — Contract and reference harness | COMPLETE | Core contract/reference | [Entry evidence](evidence/phase-2-hierarchy-entry-2026-09-09.md): 16 exports, all methods/defaults, 441 reproducible cases, ADR-022 | HIR-01–08, ARC-04, BND-01, QLT-02 | Seed harness only; production/runtime certification remains H02–08. |
+| WP-H02 — Topology, stratification and operations | COMPLETE | Core hierarchy | [Topology evidence](evidence/phase-2-hierarchy-topology-2026-09-10.md): 31 pinned cases, deep/bounded native inputs and 3 passing contracts | HIR-01/02/07 | Standalone core scope; registered/host/chart acceptance remains H07/H08. |
+| WP-H03 — Tidy tree and cluster | COMPLETE | Core hierarchy | [Layout evidence](evidence/phase-2-hierarchy-layouts-2026-09-10.md): 340 reference layouts and mode/callback invariants | HIR-03 | H07/H08 retain radial/presentation/host obligations. |
+| WP-H04 — Partition | COMPLETE | Core hierarchy | [Layout evidence](evidence/phase-2-hierarchy-layouts-2026-09-10.md): 42 reference partitions and own-value slack | HIR-04 | H07/H08 retain icicle/sunburst/host obligations. |
+| WP-H05 — Treemap and tilers | COMPLETE | Core hierarchy | [Kernel evidence](evidence/phase-2-hierarchy-kernels-2026-09-10.md): 217 cases, retained histories and six topology reset states | HIR-06 | Standalone/native callback scope; registered/host/chart acceptance remains H07/H08. |
+| WP-H06 — Packing and helpers | COMPLETE | Core hierarchy | [Kernel evidence](evidence/phase-2-hierarchy-kernels-2026-09-10.md): 191 cases plus containment/non-overlap/budget checks | HIR-05 | Standalone/native callback scope; integration and measured release evidence remain. |
+| WP-H07 — Grammar, portable API and presentation | COMPLETE | Core/hosts/native/export | [Final integration evidence](evidence/phase-2-hierarchy-integration-2026-09-10.md): nine chart contracts, external registered operations, typed actual hosts, native and SVG/PDF/PNG inspection | HIR-07, BND-01/03/04, SCN-04 | Complete within assignment; preserve source-qualified evidence for release rechecks. |
+| WP-H08 — Integrated parity acceptance | COMPLETE | Shared parity acceptance | [65-row catalog](evidence/phase-2-hierarchy-integration/verdict-catalog.md), 898 oracle cases plus 27 controls per host, replay/disposal/resources, 474 macOS/455 Linux tests and repository checks | HIR-01–08, QLT-02/03/04 | G-HIERARCHY passes; benchmark workloads and high-fanout query follow-up handed to WP-22. |
 
 ## D3 scale parity planning handoff
 
@@ -1284,10 +1493,10 @@ WP-21 additionally requires WP-AX06, and WP-22/23 include axis performance/relea
 | --- | --- | --- | --- | --- | --- |
 | WP-AX01 — Guide contract and reference harness | COMPLETE | Core/hosts | WP-14 accepted; reference entry | AXIS-01, AXIS-07 | [372 actual-browser reference cases and complete 4-factory/10-method inventory repeat exactly](evidence/phase-2-axis-entry-2026-09-09.md). Identity, shared-scale guide resolution, primary builders/edits/name maps and version-8 migration implemented; five guide tests plus 39 existing core tests pass on Linux; actual Linux Python/WASM prove shared placement, named navigation, stable scale replacement and retained outputs. Strict positive types and macOS repository/workspace checks pass. Dedicated macOS Python and inspected native guide identity checks pass. [Registered provider acceptance](evidence/phase-2-axis-provider-2026-09-09.md) passes 21 focused macOS/Linux tests, actual macOS/Linux Python and WASM, strict declarations and byte-identical publication output plus inspected native output. [Integrated acceptance](evidence/phase-2-axis-ticks-2026-09-09.md) completes the explicit profile entry and retains final regression/validation limits. Complete geometry remains AX03. |
 | WP-AX02 — Tick selection and formatting | COMPLETE | Core/hosts | Working tree over `51f2eda`; retained source hashes | AXIS-02, AXIS-03 | [Integrated acceptance](evidence/phase-2-axis-ticks-2026-09-09.md): 372 reference cases / 376 states per actual Rust/Python/WASM host, independent reset/selection/formatting, exact timestamps, registered callbacks, strict types, byte-identical publication and inspected native/SVG/PDF/PNG. 430 macOS and 430 Linux tests/doctests; final focused tests pass. Stop before AX03 as requested; aggregate-check limits remain explicit. |
-| WP-AX03 — Axis geometry and bounded layout | NOT STARTED | Unassigned | — | AXIS-04 | Requires WP-AX02. |
-| WP-AX04 — Styling and publication components | NOT STARTED | Unassigned | — | AXIS-05 | Requires WP-AX03. |
-| WP-AX05 — Axis updates and transitions | NOT STARTED | Unassigned | — | AXIS-06 | Requires WP-AX04, WP-15, WP-19, WP-IP02 and WP-IP05. |
-| WP-AX06 — Parity certification and documentation | NOT STARTED | Unassigned | — | AXIS-01–07 | Requires WP-AX05, WP-20 and SP-07; must pass before WP-21. |
+| WP-AX03 — Axis geometry and bounded layout | COMPLETE | Core/hosts/native/export | WP-AX02 accepted | AXIS-04 | [Geometry acceptance](evidence/phase-2-axis-geometry-2026-09-09.md): 437 macOS tests, 372 pinned cases/376 states in Rust/Python/WASM; signed geometry, policies, facets and native/publication inspection. |
+| WP-AX04 — Styling and publication components | COMPLETE | Core/hosts/native/export | WP-AX03 accepted | AXIS-05 | [Component acceptance](evidence/phase-2-axis-components-2026-09-09.md): v14 styles/roles, per-tick typography, 443 macOS tests, 26 matching three-host artifacts and inspected native/text-outline/high-DPI publication. |
+| WP-AX05 — Axis updates and transitions | COMPLETE | Core/native/hosts/export | [Timed/native/capture proof](evidence/phase-2-axis-transitions-2026-09-09.md): 125 reference samples, 75 host artifacts, 449 macOS/448 Linux tests | AXIS-06 | Native clock/interruption/reduced motion/disposal and exact displayed capture pass. |
+| WP-AX06 — Parity certification and documentation | COMPLETE | Integrated acceptance | [Capability matrix](evidence/phase-2-axis-certification-2026-09-09.md), 449 macOS/448 Linux tests, full repository check | AXIS-01–07 | G-AXIS passes for declared supported surface; no global release/FPS claim. |
 
 ### Gate results
 
@@ -1298,13 +1507,13 @@ WP-21 additionally requires WP-AX06, and WP-22/23 include axis performance/relea
 | G2 | PASSED — Cartesian/publication alpha | [Alpha matrix](alpha-api.md) maps complete grammar/facets/themes/publication/extensions and actual portable evidence. G3/G4 retain their remaining scope. |
 | G3 | PASSED (original interactive streaming scope) | WP-15–20 interaction/streaming/export plus WP-21 frozen-resize and native redraw regression fixes; actual native and Rust/Python/WASM evidence. Sustained PERF and expanded parity remain separate. |
 | G-PATH | PASSED | PTH-01–06/FIX-P01–06; [WP-P04 source snapshot and evidence](evidence/phase-2-paths-2026-09-08.md). Shape and performance qualification remain separate. |
-| G-AXIS | NOT PASSED | AXIS-01–07/FIX-19; pinned reference matrix, actual bindings, native/publication inspection and transition evidence. Required before WP-21 and G4. |
+| G-AXIS | PASSED | AXIS-01–07/FIX-19; pinned reference matrix, actual bindings, native/publication inspection and transition evidence. Required before WP-21 and G4. |
 | G-SHAPE | PASSED for finite typed snapshot | SHP-01–10/FIX-S01–09 through WP-S08; [integrated evidence](evidence/phase-2-shape-acceptance-2026-09-09.md). Complete per-item verdicts, actual hosts and inspected destinations; WP-21/22/23 remain open. |
 | G-SCALE | PASSED for declared typed snapshot | SCL-01–08/FIX-20 through SP-07; [integrated evidence](evidence/phase-2-scale-integration-2026-09-09.md). WP-21/22 release rechecks remain open. |
 | G-CHROMATIC | PASSED for retained typed snapshot | CHR-01–06/FIX-21 through CP-05; [final evidence](evidence/phase-2-chromatic-integration-2026-09-09.md). Other Phase 2/release gates remain open. |
 | G-COLOR | PASSED for declared typed snapshot | COL-01–06/FIX-C01 through CLR-05; [integrated evidence](evidence/phase-2-color-acceptance-2026-09-09.md). WP-21/22 release rechecks remain open. |
-| G-INTERPOLATE | NOT PASSED | ITP-01–08/FIX-I01; all 27 exports/configuration/result controls, shared consumers, actual Rust/Python/WASM and applicable inspected native/publication evidence. WP-IP07 precedes WP-21/22. |
-| G-HIERARCHY | NOT PASSED | HIR-01–08/FIX-H01-A–H; complete method/layout/history coverage, actual Rust/Python/WASM and inspected native/publication artifacts. WP-H08 precedes WP-21/22. |
+| G-INTERPOLATE | PASSED | ITP-01–08/FIX-I01; all 27 exports/configuration/result controls, shared consumers, actual Rust/Python/WASM and applicable inspected native/publication evidence. WP-IP07 precedes WP-21/22. |
+| G-HIERARCHY | PASSED for declared finite typed surface | HIR-01–08/FIX-H01-A–H through WP-H08; [complete method/history/host/native/publication/resource evidence](evidence/phase-2-hierarchy-integration-2026-09-10.md). Global WP-21/22/23 and PERF gates remain separate. |
 | G-GGPLOT | NOT PASSED | GG2-01–12 / FIX-GG00–19 and GG-19 complete reference/host/destination capability evidence. |
 | G-PARITY | NOT PASSED | G3, all eight D3 gates and G-GGPLOT; Phase 2 integrated capabilities before final WP-21/22 acceptance. |
 | G4 | OPEN — local candidate only | G-PARITY and all required FIX/PERF/platform/accessibility/documentation evidence through WP-21–23, including D3 and ggplot2 supplemental workloads. |

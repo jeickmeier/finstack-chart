@@ -49,8 +49,8 @@ impl ContinuousDomain {
             ..Self::default()
         }
     }
-    /// Resolve empty/constant/descending domains with checked finite arithmetic.
-    pub fn resolve(self, contribution: Option<Extent>) -> ChartResult<Bounds> {
+    /// Validate and train limits before constant-range, padding and nice policies.
+    pub(crate) fn trained_limits(self, contribution: Option<Extent>) -> ChartResult<Bounds> {
         if !self.padding.is_finite() || self.padding < 0. || !(2..=128).contains(&self.nice_ticks) {
             return Err(error(
                 DiagnosticCode::NumericalDomain,
@@ -65,7 +65,7 @@ impl ContinuousDomain {
                 "Baseline must be finite.",
             ));
         }
-        let mut bounds = if let Some(explicit) = self.explicit {
+        let bounds = if let Some(explicit) = self.explicit {
             explicit
         } else {
             let mut b = if let Some(e) = contribution {
@@ -88,6 +88,11 @@ impl ContinuousDomain {
             }
             b
         };
+        Ok(bounds)
+    }
+    /// Resolve empty/constant/descending domains with checked finite arithmetic.
+    pub fn resolve(self, contribution: Option<Extent>) -> ChartResult<Bounds> {
+        let mut bounds = self.trained_limits(contribution)?;
         // Symmetric 5% expansion for nonzero constants; zero expands to [-1,1].
         // At subnormal magnitudes use the smallest positive representable step.
         if bounds.start() == bounds.end() {
@@ -168,6 +173,12 @@ impl LinearScale {
             outside,
         })
     }
+    // Reference expansion may deliberately collapse a viewport. Keep authored viewport
+    // validation in resolve/from_domains while retaining ggplot2 midpoint projection.
+    pub(crate) fn with_reference_viewport(mut self, view: Bounds) -> Self {
+        self.view = view;
+        self
+    }
     /// Trained full domain, independent of viewport/resize.
     pub fn domain(&self) -> Bounds {
         self.domain
@@ -200,6 +211,9 @@ impl LinearScale {
             OutsidePolicy::Clamp => value.clamp(self.view.minimum(), self.view.maximum()),
             _ => value,
         };
+        if self.view.start() == self.view.end() {
+            return interpolate(self.range, 0.5).map(Some);
+        }
         super::numeric::legacy_map(self.view, self.range, value).map(Some)
     }
     /// Invert a finite destination coordinate; extrapolation is explicit and unclamped.
@@ -208,6 +222,18 @@ impl LinearScale {
     }
     /// Bounded 1/2/5 ticks in visible-domain order, with unique round-trip-safe labels.
     pub fn ticks(&self, target: usize, max_ticks: usize) -> ChartResult<Vec<NumericTick>> {
+        if self.view.start() == self.view.end() {
+            if max_ticks == 0 || max_ticks > 4096 {
+                return Err(error(
+                    DiagnosticCode::ResourceLimit,
+                    "Tick output budget must be 1–4096.",
+                ));
+            }
+            return Ok(vec![NumericTick {
+                value: self.view.start(),
+                label: self.view.start().to_string(),
+            }]);
+        }
         numeric_ticks(self.view, target, max_ticks)
     }
 }

@@ -202,6 +202,7 @@ pub(super) fn emit_block(
             Extent::include(&mut prepared.domains.x, center.x());
             Extent::include(&mut prepared.domains.y, center.y());
             Arc::make_mut(&mut prepared.marks).push(PreparedMark {
+                aesthetics: Default::default(),
                 geometry: PreparedGeometry::ShapePathRun {
                     paint: if area {
                         SymbolPaint::Fill

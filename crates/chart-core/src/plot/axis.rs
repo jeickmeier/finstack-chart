@@ -22,6 +22,21 @@ pub fn scale_linear() -> ScaleBuilder {
         value: Ok(AxisScale::Linear(ContinuousDomain::default())),
     }
 }
+/// Elapsed seconds with reference duration breaks and labels; no timezone is inferred.
+pub fn scale_duration() -> ScaleBuilder {
+    ScaleBuilder {
+        value: Ok(AxisScale::Duration(ContinuousDomain::default())),
+    }
+}
+/// Reference positional bins under the ggplot2 profile, before and after statistics.
+pub fn scale_binned(spec: GgplotBinnedPosition) -> ScaleBuilder {
+    ScaleBuilder {
+        value: spec.validate().map(|_| AxisScale::Binned {
+            spec: Box::new(spec),
+            prepared: None,
+        }),
+    }
+}
 /// Authored D3-compatible numerical knots and outputs on a named positional axis.
 pub fn scale_numeric(spec: NumericScaleSpec) -> ScaleBuilder {
     ScaleBuilder {
@@ -38,6 +53,24 @@ pub fn scale_registered(
         value: Ok(AxisScale::Registered {
             operation: crate::grammar::OperationRef::new(id, version),
             parameters,
+        }),
+    }
+}
+/// Nonnegative square-root positional transformation, before statistics under ggplot2.
+pub fn scale_sqrt() -> ScaleBuilder {
+    ScaleBuilder {
+        value: Ok(AxisScale::Nonlinear {
+            transform: ScaleTransform::Sqrt,
+            domain: ContinuousDomain::default(),
+        }),
+    }
+}
+/// Reverse numeric coordinates using a shared pre-stat transform under the ggplot2 profile.
+pub fn scale_reverse() -> ScaleBuilder {
+    ScaleBuilder {
+        value: Ok(AxisScale::Nonlinear {
+            transform: ScaleTransform::Reverse,
+            domain: ContinuousDomain::default(),
         }),
     }
 }
@@ -94,6 +127,13 @@ pub fn scale_utc() -> ScaleBuilder {
         }),
     }
 }
+/// Reference Date axes over UTC timestamps in the source's declared integer unit.
+/// Expansion amounts are days; data and inspection retain exact timestamps.
+pub fn scale_date() -> ScaleBuilder {
+    ScaleBuilder {
+        value: Ok(AxisScale::Date { domain: None }),
+    }
+}
 /// D3-compatible exact timestamp knots with an explicit UTC or local calendar.
 pub fn scale_calendar(spec: TimeScaleSpec) -> ScaleBuilder {
     ScaleBuilder {
@@ -138,7 +178,9 @@ impl ScaleBuilder {
     fn numeric(mut self, change: impl FnOnce(&mut ContinuousDomain) -> ChartResult<()>) -> Self {
         self.value = self.value.and_then(|mut scale| {
             match &mut scale {
-                AxisScale::Linear(domain) | AxisScale::Nonlinear { domain, .. } => change(domain)?,
+                AxisScale::Linear(domain)
+                | AxisScale::Duration(domain)
+                | AxisScale::Nonlinear { domain, .. } => change(domain)?,
                 _ => {
                     return Err(error(
                         DiagnosticCode::UnsupportedCapability,
@@ -168,9 +210,9 @@ impl ScaleBuilder {
     pub fn padding(mut self, padding: f64) -> Self {
         self.value = self.value.and_then(|mut scale| {
             match &mut scale {
-                AxisScale::Linear(d) | AxisScale::Nonlinear { domain: d, .. } => {
-                    d.padding = padding
-                }
+                AxisScale::Linear(d)
+                | AxisScale::Duration(d)
+                | AxisScale::Nonlinear { domain: d, .. } => d.padding = padding,
                 AxisScale::Point(d) => d.padding = padding,
                 AxisScale::D3Point(d) => d.padding = padding,
                 AxisScale::D3Band(d) => {
@@ -265,10 +307,10 @@ impl ScaleBuilder {
     /// Exact UTC endpoints in the mapped field's original integer unit.
     pub fn time_domain(mut self, start: i64, end: i64) -> Self {
         self.value = self.value.and_then(|mut scale| {
-            let AxisScale::Utc { domain, .. } = &mut scale else {
+            let (AxisScale::Utc { domain, .. } | AxisScale::Date { domain }) = &mut scale else {
                 return Err(error(
                     DiagnosticCode::UnsupportedCapability,
-                    "Exact time domains require a UTC scale.",
+                    "Exact time domains require a UTC or Date scale.",
                 ));
             };
             *domain = Some(TimeBounds { start, end });
@@ -307,6 +349,7 @@ pub struct AxisBuilder {
     pub(super) spec: AxisSpec,
     pub(super) failure: Option<crate::Diagnostic>,
     secondary: Option<(String, f64, f64)>,
+    secondary_transform: Option<Box<NumericScaleSpec>>,
 }
 /// Primary bottom x axis.
 pub fn x_axis() -> AxisBuilder {
@@ -315,6 +358,7 @@ pub fn x_axis() -> AxisBuilder {
         spec: AxisSpec::new(ScaleId::new(0), AxisSide::Bottom),
         failure: None,
         secondary: None,
+        secondary_transform: None,
     }
 }
 /// Primary left y axis.
@@ -324,9 +368,31 @@ pub fn y_axis() -> AxisBuilder {
         spec: AxisSpec::new(ScaleId::new(1), AxisSide::Left),
         failure: None,
         secondary: None,
+        secondary_transform: None,
     }
 }
 impl AxisBuilder {
+    /// Set factor levels, nullable category limits and reference guide selection.
+    pub fn discrete_policy(
+        mut self,
+        policy: Option<crate::scales::GgplotDiscretePosition>,
+    ) -> Self {
+        self.spec.discrete = policy.map(Box::new);
+        self
+    }
+    /// Set reference continuous limits independently from category identity.
+    pub fn continuous_limits(mut self, limits: Option<Vec<crate::interpolate::Number>>) -> Self {
+        self.spec.continuous_limits = limits;
+        self
+    }
+    /// Override reference expansion; None restores the selected profile default.
+    /// Numeric amounts use transformed units, categories use index units, and datetime
+    /// amounts use elapsed seconds regardless of the timestamp source unit.
+    pub fn expansion(mut self, expansion: Option<GgplotExpansion>) -> Self {
+        self.spec.expansion = expansion;
+        self
+    }
+
     /// Apply this transform only at coordinate projection, after statistics.
     pub fn coordinate_scale(mut self, scale: ScaleBuilder) -> Self {
         self.spec.scale_stage = Some(crate::grammar::ScaleStage::AfterStatistics);
@@ -419,9 +485,63 @@ impl AxisBuilder {
         self.spec.profile = profile;
         self
     }
+    /// Replace independent component styles; None restores profile/theme inheritance.
+    pub fn guide_components(mut self, components: Option<crate::layout::GuideComponents>) -> Self {
+        self.spec.components = components;
+        self
+    }
+    /// Replace independent geometry; None resets all controls to the guide profile.
+    pub fn guide_geometry(mut self, geometry: Option<crate::layout::GuideGeometry>) -> Self {
+        self.spec.geometry = geometry;
+        self
+    }
+    /// Set inner ticks and domain caps together in destination units.
+    pub fn tick_size(mut self, size: f64) -> Self {
+        let geometry = self.spec.geometry.get_or_insert_with(Default::default);
+        geometry.inner = Some(size);
+        geometry.outer = Some(size);
+        self
+    }
+    /// Set signed inner tick length independently of domain caps.
+    pub fn tick_size_inner(mut self, size: f64) -> Self {
+        self.spec
+            .geometry
+            .get_or_insert_with(Default::default)
+            .inner = Some(size);
+        self
+    }
+    /// Set signed domain cap length independently of inner ticks.
+    pub fn tick_size_outer(mut self, size: f64) -> Self {
+        self.spec
+            .geometry
+            .get_or_insert_with(Default::default)
+            .outer = Some(size);
+        self
+    }
+    /// Set signed padding after max(inner tick length, zero).
+    pub fn tick_padding(mut self, padding: f64) -> Self {
+        self.spec
+            .geometry
+            .get_or_insert_with(Default::default)
+            .padding = Some(padding);
+        self
+    }
+    /// Set an explicit destination-unit offset; None restores the host/profile policy.
+    pub fn tick_offset(mut self, offset: Option<f64>) -> Self {
+        self.spec
+            .geometry
+            .get_or_insert_with(Default::default)
+            .offset = offset;
+        self
+    }
     /// Replace per-guide density/interval/format hints; None restores profile defaults.
     pub fn tick_arguments(mut self, arguments: Option<GuideTickArguments>) -> Self {
         self.spec.tick_arguments = arguments;
+        self
+    }
+    /// Select reference minor candidates independently of major values and labels.
+    pub fn minor_breaks(mut self, policy: Option<crate::layout::MinorBreaks>) -> Self {
+        self.spec.minor_breaks = policy;
         self
     }
     /// Replace typed tick values independently of formatting. None restores automatic values.
@@ -463,9 +583,22 @@ impl AxisBuilder {
         self.spec.numeric_format = Some(format);
         self
     }
-    /// Show an affine alternate-unit guide over a named primary numeric scale.
+    /// Show an alternate-unit guide over a named primary scale. Numeric axes support
+    /// affine conversion; time axes require factor one and an additive offset in
+    /// seconds (datetime) or days (Date), exactly representable in source units.
     pub fn secondary(mut self, source: impl Into<String>, factor: f64, offset: f64) -> Self {
         self.secondary = Some((source.into(), factor, offset));
+        self.secondary_transform = None;
+        self
+    }
+    /// Independent alternate units using a strictly monotone shared numeric mapping.
+    pub fn secondary_transform(
+        mut self,
+        source: impl Into<String>,
+        transform: NumericScaleSpec,
+    ) -> Self {
+        self.secondary = Some((source.into(), 1., 0.));
+        self.secondary_transform = Some(Box::new(transform));
         self
     }
     pub(super) fn lower(mut self, axes: &BTreeMap<String, ScaleId>) -> ChartResult<AxisSpec> {
@@ -482,6 +615,7 @@ impl AxisBuilder {
                 })?,
                 factor,
                 offset,
+                transform: self.secondary_transform,
             };
         }
         Ok(self.spec)
@@ -627,9 +761,63 @@ impl GuideBuilder {
         self.spec.profile = profile;
         self
     }
+    /// Replace independent component styles; None restores profile/theme inheritance.
+    pub fn guide_components(mut self, components: Option<crate::layout::GuideComponents>) -> Self {
+        self.spec.components = components;
+        self
+    }
+    /// Replace independent geometry; None resets all controls to the guide profile.
+    pub fn guide_geometry(mut self, geometry: Option<crate::layout::GuideGeometry>) -> Self {
+        self.spec.geometry = geometry;
+        self
+    }
+    /// Set inner ticks and domain caps together in destination units.
+    pub fn tick_size(mut self, size: f64) -> Self {
+        let geometry = self.spec.geometry.get_or_insert_with(Default::default);
+        geometry.inner = Some(size);
+        geometry.outer = Some(size);
+        self
+    }
+    /// Set signed inner tick length independently of domain caps.
+    pub fn tick_size_inner(mut self, size: f64) -> Self {
+        self.spec
+            .geometry
+            .get_or_insert_with(Default::default)
+            .inner = Some(size);
+        self
+    }
+    /// Set signed domain cap length independently of inner ticks.
+    pub fn tick_size_outer(mut self, size: f64) -> Self {
+        self.spec
+            .geometry
+            .get_or_insert_with(Default::default)
+            .outer = Some(size);
+        self
+    }
+    /// Set signed padding after max(inner tick length, zero).
+    pub fn tick_padding(mut self, padding: f64) -> Self {
+        self.spec
+            .geometry
+            .get_or_insert_with(Default::default)
+            .padding = Some(padding);
+        self
+    }
+    /// Set an explicit destination-unit offset; None restores the host/profile policy.
+    pub fn tick_offset(mut self, offset: Option<f64>) -> Self {
+        self.spec
+            .geometry
+            .get_or_insert_with(Default::default)
+            .offset = offset;
+        self
+    }
     /// Replace per-guide density/interval/format hints; None restores profile defaults.
     pub fn tick_arguments(mut self, arguments: Option<GuideTickArguments>) -> Self {
         self.spec.tick_arguments = arguments;
+        self
+    }
+    /// Select reference minor candidates independently of major values and labels.
+    pub fn minor_breaks(mut self, policy: Option<crate::layout::MinorBreaks>) -> Self {
+        self.spec.minor_breaks = policy;
         self
     }
     /// Replace typed tick values independently of formatting. None restores automatic values.

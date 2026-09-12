@@ -5,7 +5,6 @@ members = [
     "crates/chart-export",
     "crates/chart-text",
     "crates/gpui-charts",
-    "crates/gpui-charts-kit",
     "crates/chart-python",
     "crates/chart-wasm",
     "examples/chart-gallery",
@@ -30,7 +29,6 @@ chart-extension-example = { path = "examples/custom-extension" }
 chart-export = { path = "crates/chart-export" }
 chart-text = { path = "crates/chart-text" }
 gpui-charts = { path = "crates/gpui-charts" }
-gpui-charts-kit = { path = "crates/gpui-charts-kit" }
 gpui = { package = "gpui-pre", version = "=0.3.3", default-features = false }
 gpui_platform = { package = "gpui-pre-platform", version = "=0.3.3", features = ["font-kit", "runtime_shaders"] }
 gpui-kit = { version = "=0.6.0", default-features = false, features = ["component"] }

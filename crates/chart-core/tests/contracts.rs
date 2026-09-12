@@ -45,6 +45,7 @@ fn font() -> ResourceDescriptor {
 }
 fn item(primitive: Primitive) -> SceneItem {
     SceneItem {
+        guide: None,
         layer: Some(LayerId::new(11)),
         clip: None,
         primitive,

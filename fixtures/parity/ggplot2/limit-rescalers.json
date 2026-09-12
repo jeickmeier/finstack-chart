@@ -1,0 +1,3078 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "identity",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          1,
+          9
+        ],
+        "values": [
+          0,
+          0.25,
+          1
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "reverse",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          9,
+          1
+        ],
+        "values": [
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "fixed",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [
+          0.10000000000000001,
+          0.29999999999999999,
+          0.90000000000000002
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "lower_zero",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          0,
+          9
+        ],
+        "values": [
+          0.1111111111111111,
+          0.33333333333333331,
+          1
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "missing_lower",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "empty",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "single",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [
+          null,
+          null,
+          0.5
+        ],
+        "guide": {
+          "breaks": [
+            5
+          ],
+          "labels": [
+            "5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "identity",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          "Infinity",
+          "-Infinity"
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "reverse",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "fixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "lower_zero",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          0,
+          "-Infinity"
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "labels": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "missing_lower",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "empty",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "single",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            5
+          ],
+          "labels": [
+            "5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "identity",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "reverse",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "fixed",
+      "inputs": [],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "lower_zero",
+      "inputs": [],
+      "result": {
+        "limits": [
+          0
+        ],
+        "values": [],
+        "guide": {
+          "breaks": [
+            0
+          ],
+          "labels": [
+            "0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "missing_lower",
+      "inputs": [],
+      "result": {
+        "limits": [
+          null
+        ],
+        "values": [],
+        "guide": {
+          "breaks": [
+            null
+          ],
+          "labels": [
+            null
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "empty",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "single",
+      "inputs": [],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [],
+        "guide": {
+          "breaks": [
+            5
+          ],
+          "labels": [
+            "5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "identity",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          1,
+          9
+        ],
+        "values": [
+          0.1111111111111111,
+          0.33333333333333331,
+          1
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "reverse",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          9,
+          1
+        ],
+        "values": [
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "fixed",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [
+          0.10000000000000001,
+          0.29999999999999999,
+          0.90000000000000002
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "lower_zero",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          0,
+          9
+        ],
+        "values": [
+          0.1111111111111111,
+          0.33333333333333331,
+          1
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "missing_lower",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          null,
+          9
+        ],
+        "values": [
+          0.1111111111111111,
+          0.33333333333333331,
+          1
+        ],
+        "guide": {
+          "error": "missing value where TRUE/FALSE needed"
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "empty",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [],
+        "values": [
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "error": "`x` must be length 1 or 2"
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "single",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            5
+          ],
+          "labels": [
+            "5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "identity",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          "Infinity",
+          "-Infinity"
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "reverse",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "fixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "lower_zero",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          0,
+          "-Infinity"
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "labels": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "missing_lower",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          null,
+          "-Infinity"
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "error": "missing value where TRUE/FALSE needed"
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "empty",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "error": "`x` must be length 1 or 2"
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "single",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            5
+          ],
+          "labels": [
+            "5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "identity",
+      "inputs": [],
+      "result": {
+        "limits": [],
+        "values": [],
+        "guide": {
+          "error": "`x` must be length 1 or 2"
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "reverse",
+      "inputs": [],
+      "result": {
+        "limits": [],
+        "values": [],
+        "guide": {
+          "error": "`x` must be length 1 or 2"
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "fixed",
+      "inputs": [],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "lower_zero",
+      "inputs": [],
+      "result": {
+        "limits": [
+          0
+        ],
+        "values": [],
+        "guide": {
+          "breaks": [
+            0
+          ],
+          "labels": [
+            "0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "missing_lower",
+      "inputs": [],
+      "result": {
+        "limits": [
+          null
+        ],
+        "values": [],
+        "guide": {
+          "breaks": [
+            null
+          ],
+          "labels": [
+            null
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "empty",
+      "inputs": [],
+      "result": {
+        "limits": [],
+        "values": [],
+        "guide": {
+          "error": "`x` must be length 1 or 2"
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "single",
+      "inputs": [],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [],
+        "guide": {
+          "breaks": [
+            5
+          ],
+          "labels": [
+            "5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "identity",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          1,
+          9
+        ],
+        "values": [
+          0.4285714285714286,
+          0.5714285714285714,
+          1
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "reverse",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          9,
+          1
+        ],
+        "values": [
+          null,
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "fixed",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [
+          0.4375,
+          0.5625,
+          0.9375
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "lower_zero",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          0,
+          9
+        ],
+        "values": [
+          0.4285714285714286,
+          0.5714285714285714,
+          1
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "missing_lower",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "empty",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "single",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [
+          null,
+          null,
+          0.5
+        ],
+        "guide": {
+          "breaks": [
+            5
+          ],
+          "labels": [
+            "5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "identity",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          "Infinity",
+          "-Infinity"
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "reverse",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          "-Infinity",
+          "Infinity"
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "fixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "lower_zero",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          0,
+          "-Infinity"
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "labels": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "missing_lower",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "empty",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "single",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            5
+          ],
+          "labels": [
+            "5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "identity",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "reverse",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "fixed",
+      "inputs": [],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "lower_zero",
+      "inputs": [],
+      "result": {
+        "limits": [
+          0
+        ],
+        "values": [],
+        "guide": {
+          "breaks": [
+            0
+          ],
+          "labels": [
+            "0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "missing_lower",
+      "inputs": [],
+      "result": {
+        "limits": [
+          null
+        ],
+        "values": [],
+        "guide": {
+          "breaks": [
+            null
+          ],
+          "labels": [
+            null
+          ]
+        }
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "empty",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "single",
+      "inputs": [],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [],
+        "guide": {
+          "breaks": [
+            5
+          ],
+          "labels": [
+            "5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "identity",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          1,
+          9
+        ],
+        "values": [
+          0.09375,
+          0.34375,
+          0.90625
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "reverse",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          9,
+          1
+        ],
+        "values": [
+          0.09375,
+          0.09375,
+          0.09375
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "fixed",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [
+          0.125,
+          0.375,
+          0.875
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "lower_zero",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          0,
+          9
+        ],
+        "values": [
+          0.1388888888888889,
+          0.41666666666666669,
+          0.91666666666666674
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "missing_lower",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "empty",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "single",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "labels": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "identity",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "reverse",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "fixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "lower_zero",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "missing_lower",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "empty",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "single",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "labels": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "identity",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "reverse",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "fixed",
+      "inputs": [],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "lower_zero",
+      "inputs": [],
+      "result": {
+        "limits": [
+          0
+        ],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "labels": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "missing_lower",
+      "inputs": [],
+      "result": {
+        "limits": [
+          null
+        ],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "empty",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "single",
+      "inputs": [],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "labels": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "identity",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          1,
+          9
+        ],
+        "values": [
+          0.19444444444444445,
+          0.41666666666666669,
+          0.91666666666666674
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "reverse",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          9,
+          1
+        ],
+        "values": [
+          1.75,
+          1.75,
+          1.75
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "fixed",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [
+          0.125,
+          0.375,
+          0.875
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "lower_zero",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          0,
+          9
+        ],
+        "values": [
+          0.1388888888888889,
+          0.41666666666666669,
+          0.91666666666666674
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "missing_lower",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          null,
+          9
+        ],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "labels": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "empty",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "single",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "labels": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "identity",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "reverse",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "fixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "lower_zero",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "missing_lower",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          null,
+          "-Infinity"
+        ],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "empty",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "single",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "labels": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "identity",
+      "inputs": [],
+      "result": {
+        "limits": [],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "reverse",
+      "inputs": [],
+      "result": {
+        "limits": [],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "fixed",
+      "inputs": [],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "lower_zero",
+      "inputs": [],
+      "result": {
+        "limits": [
+          0
+        ],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "labels": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "missing_lower",
+      "inputs": [],
+      "result": {
+        "limits": [
+          null
+        ],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "empty",
+      "inputs": [],
+      "result": {
+        "limits": [],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "single",
+      "inputs": [],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "labels": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "identity",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          1,
+          9
+        ],
+        "values": [
+          0.48214285714285715,
+          0.625,
+          0.9464285714285714
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "reverse",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          9,
+          1
+        ],
+        "values": [
+          0.48214285714285715,
+          0.48214285714285715,
+          0.48214285714285715
+        ],
+        "guide": {
+          "breaks": [
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "fixed",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [
+          0.453125,
+          0.609375,
+          0.921875
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "lower_zero",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          0,
+          9
+        ],
+        "values": [
+          0.4464285714285714,
+          0.625,
+          0.9464285714285714
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "missing_lower",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "empty",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "single",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "labels": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "identity",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "reverse",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "fixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [
+          null,
+          null
+        ],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "lower_zero",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "missing_lower",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "empty",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "single",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "labels": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "identity",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "reverse",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "fixed",
+      "inputs": [],
+      "result": {
+        "limits": [
+          0,
+          10
+        ],
+        "values": [],
+        "guide": {
+          "breaks": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "labels": [
+            "0.0",
+            "2.5",
+            "5.0",
+            "7.5",
+            "10.0"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "lower_zero",
+      "inputs": [],
+      "result": {
+        "limits": [
+          0
+        ],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "labels": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "missing_lower",
+      "inputs": [],
+      "result": {
+        "limits": [
+          null
+        ],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [],
+          "labels": []
+        }
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "empty",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "single",
+      "inputs": [],
+      "result": {
+        "limits": [
+          5
+        ],
+        "values": [
+          0.5
+        ],
+        "guide": {
+          "breaks": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "labels": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      }
+    }
+  ]
+}

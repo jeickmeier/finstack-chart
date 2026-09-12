@@ -13,6 +13,8 @@ pub enum ScaleValue {
     Number(f64),
     /// Category label identity, never a transient ordinal.
     Category(String),
+    /// Missing category identity, distinct from any display label.
+    MissingCategory,
     /// Exact source timestamp and explicit tick unit.
     Timestamp {
         /// Source ticks, preserved as a decimal wire string.

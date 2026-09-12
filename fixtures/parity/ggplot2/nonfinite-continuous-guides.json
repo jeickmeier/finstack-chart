@@ -1,0 +1,3969 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "none",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "none",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          2,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "none",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "lower",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "labels": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "lower",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          2,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "lower",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "upper",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "labels": [
+          "10",
+          "10",
+          "10",
+          "10",
+          "10"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "upper",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          2,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "upper",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "full",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "full",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          2,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "full",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "none",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "none",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1.4142135623731,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "none",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "lower",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "labels": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "lower",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1.4142135623731,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "lower",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "upper",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          3.16227766016838,
+          3.16227766016838,
+          3.16227766016838,
+          3.16227766016838,
+          3.16227766016838
+        ],
+        "labels": [
+          "10",
+          "10",
+          "10",
+          "10",
+          "10"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "upper",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1.4142135623731,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "upper",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "full",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          0,
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "full",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1.4142135623731,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "full",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "none",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "none",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          "-Infinity",
+          0,
+          0.301029995663981,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "none",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "lower",
+      "breaks": "auto",
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "lower",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          "-Infinity",
+          0,
+          0.301029995663981,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "lower",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "upper",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "upper",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          "-Infinity",
+          0,
+          0.301029995663981,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "upper",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "full",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          0,
+          0.477121254719662,
+          1,
+          1.47712125471966
+        ],
+        "labels": [
+          "1",
+          "3",
+          "10",
+          "30"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "full",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          "-Infinity",
+          0,
+          0.301029995663981,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "full",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "none",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "none",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -2,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "none",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "lower",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "labels": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "lower",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -2,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "lower",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "upper",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          -10,
+          -10,
+          -10,
+          -10,
+          -10
+        ],
+        "labels": [
+          "10",
+          "10",
+          "10",
+          "10",
+          "10"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "upper",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -2,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "upper",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "full",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          -0,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "full",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -2,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "full",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "none",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "none",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          2,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "none",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "lower",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "labels": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "lower",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          2,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "lower",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "upper",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "labels": [
+          "10",
+          "10",
+          "10",
+          "10",
+          "10"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "upper",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          2,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "upper",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "full",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "full",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          2,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "full",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "none",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "none",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1.4142135623731,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "none",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "lower",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "labels": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "lower",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1.4142135623731,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "lower",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "upper",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          3.16227766016838,
+          3.16227766016838,
+          3.16227766016838,
+          3.16227766016838,
+          3.16227766016838
+        ],
+        "labels": [
+          "10",
+          "10",
+          "10",
+          "10",
+          "10"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "upper",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1.4142135623731,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "upper",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "full",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          0,
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "full",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1.4142135623731,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "full",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "none",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "none",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          "-Infinity",
+          0,
+          0.301029995663981,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "none",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "lower",
+      "breaks": "auto",
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "lower",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          "-Infinity",
+          0,
+          0.301029995663981,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "lower",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "upper",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "upper",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          "-Infinity",
+          0,
+          0.301029995663981,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "upper",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "full",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          0,
+          0.477121254719662,
+          1,
+          1.47712125471966
+        ],
+        "labels": [
+          "1",
+          "3",
+          "10",
+          "30"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "full",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          "-Infinity",
+          0,
+          0.301029995663981,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "full",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "none",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "none",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -2,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "none",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "lower",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "labels": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "lower",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -2,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "lower",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "upper",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          -10,
+          -10,
+          -10,
+          -10,
+          -10
+        ],
+        "labels": [
+          "10",
+          "10",
+          "10",
+          "10",
+          "10"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "upper",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -2,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "upper",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "full",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          -0,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "full",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -2,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "full",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "none",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "none",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          2,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "none",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "lower",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "labels": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "lower",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          2,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "lower",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "upper",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "labels": [
+          "10",
+          "10",
+          "10",
+          "10",
+          "10"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "upper",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          2,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "upper",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "full",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "full",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          2,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "identity",
+      "limits": "full",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "none",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "none",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1.4142135623731,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "none",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "lower",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "labels": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "lower",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1.4142135623731,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "lower",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "upper",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          3.16227766016838,
+          3.16227766016838,
+          3.16227766016838,
+          3.16227766016838,
+          3.16227766016838
+        ],
+        "labels": [
+          "10",
+          "10",
+          "10",
+          "10",
+          "10"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "upper",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1.4142135623731,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "upper",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "full",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          0,
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "full",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1.4142135623731,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "sqrt",
+      "limits": "full",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "none",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "none",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          "-Infinity",
+          0,
+          0.301029995663981,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "none",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "lower",
+      "breaks": "auto",
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "lower",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          "-Infinity",
+          0,
+          0.301029995663981,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "lower",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "upper",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "upper",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          "-Infinity",
+          0,
+          0.301029995663981,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "upper",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "full",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          0,
+          0.477121254719662,
+          1,
+          1.47712125471966
+        ],
+        "labels": [
+          "1",
+          "3",
+          "10",
+          "30"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "full",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          "-Infinity",
+          0,
+          0.301029995663981,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "log10",
+      "limits": "full",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "none",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "none",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -2,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "none",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "lower",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "labels": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "lower",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -2,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "lower",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "upper",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          -10,
+          -10,
+          -10,
+          -10,
+          -10
+        ],
+        "labels": [
+          "10",
+          "10",
+          "10",
+          "10",
+          "10"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "upper",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -2,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "upper",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "full",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          -0,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "full",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -2,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "transform": "reverse",
+      "limits": "full",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "none",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "none",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          2,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "none",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "lower",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "labels": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "lower",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          2,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "lower",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "upper",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "labels": [
+          "10",
+          "10",
+          "10",
+          "10",
+          "10"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "upper",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          2,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "upper",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "full",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "full",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          2,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "identity",
+      "limits": "full",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "none",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "none",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1.4142135623731,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "none",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "lower",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "labels": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "lower",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1.4142135623731,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "lower",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "upper",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          3.16227766016838,
+          3.16227766016838,
+          3.16227766016838,
+          3.16227766016838,
+          3.16227766016838
+        ],
+        "labels": [
+          "10",
+          "10",
+          "10",
+          "10",
+          "10"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "upper",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1.4142135623731,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "upper",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "full",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          0,
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "full",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1.4142135623731,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "sqrt",
+      "limits": "full",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "none",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "none",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          "-Infinity",
+          0,
+          0.301029995663981,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "none",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "lower",
+      "breaks": "auto",
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "lower",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          "-Infinity",
+          0,
+          0.301029995663981,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "lower",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "upper",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "upper",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          "-Infinity",
+          0,
+          0.301029995663981,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "upper",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "full",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          0,
+          0.477121254719662,
+          1,
+          1.47712125471966
+        ],
+        "labels": [
+          "1",
+          "3",
+          "10",
+          "30"
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "full",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          "-Infinity",
+          0,
+          0.301029995663981,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "log10",
+      "limits": "full",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "none",
+      "breaks": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "none",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -2,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "none",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "lower",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "labels": [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "lower",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -2,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "lower",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "upper",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          -10,
+          -10,
+          -10,
+          -10,
+          -10
+        ],
+        "labels": [
+          "10",
+          "10",
+          "10",
+          "10",
+          "10"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "upper",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -2,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "upper",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "full",
+      "breaks": "auto",
+      "result": {
+        "breaks": [
+          -0,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "full",
+      "breaks": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -2,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "20"
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "family": "identity",
+      "population": "nonfinite",
+      "transform": "reverse",
+      "limits": "full",
+      "breaks": "empty",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "visible": []
+      }
+    }
+  ]
+}

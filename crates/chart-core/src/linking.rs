@@ -35,7 +35,9 @@ impl LinkedTarget {
             identity: target.into(),
             inputs: match target {
                 Target::Source(_) => vec![],
-                Target::Aggregate { input, .. } => vec![*input],
+                Target::Aggregate { input, .. } | Target::HierarchyNode { input, .. } => {
+                    vec![*input]
+                }
                 Target::Derived { inputs, .. } => inputs.clone(),
             },
         }
@@ -53,7 +55,9 @@ pub enum AxisMeaning {
 }
 fn meaning(axis: &ResolvedAxis) -> ChartResult<AxisMeaning> {
     Ok(match &axis.space {
-        ValueSpace::Categorical { .. } => AxisMeaning::Category,
+        ValueSpace::Categorical { .. } | ValueSpace::NullableCategorical { .. } => {
+            AxisMeaning::Category
+        }
         ValueSpace::Timestamp { representation, .. } => {
             AxisMeaning::Timestamp(representation.clone())
         }
@@ -265,6 +269,10 @@ impl LinkMessage {
             for t in targets {
                 let size = match &t.identity {
                     TargetIdentity::Source { .. } => 0,
+                    TargetIdentity::HierarchyNode { node, .. } => match node {
+                        crate::hierarchy::HierarchyTargetKey::Source(_) => 0,
+                        crate::hierarchy::HierarchyTargetKey::Synthetic(path) => path.len(),
+                    },
                     TargetIdentity::Aggregate { group, .. } => group.len(),
                     TargetIdentity::Derived {
                         model, datasets, ..

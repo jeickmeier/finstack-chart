@@ -54,10 +54,11 @@ impl Options {
             "basis" => b.basis(match value::<String>(v)?.as_str() {
                 "presented" | "Presented" => crate::CaptureBasis::Presented,
                 "current" | "Current" => crate::CaptureBasis::Current,
+                "displayed" | "Displayed" => crate::CaptureBasis::Displayed,
                 _ => {
                     return Err(error(
                         DiagnosticCode::Validation,
-                        "Capture basis must be presented or current.",
+                        "Capture basis must be presented, current or displayed.",
                     ));
                 }
             }),

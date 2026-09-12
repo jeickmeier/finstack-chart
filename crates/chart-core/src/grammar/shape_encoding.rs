@@ -11,7 +11,7 @@ use std::collections::BTreeMap;
 #[derive(Clone, Copy)]
 pub(super) struct ShapeRow {
     parameters: Option<ArcParameters>,
-    symbol: Option<(SymbolKind, f64)>,
+    pub(super) symbol: Option<(SymbolKind, f64)>,
     value: Option<f64>,
     radial: Option<RadialParameters>,
 }
@@ -24,7 +24,7 @@ fn defaults(geom: Geom) -> Option<ArcParameters> {
 pub(super) fn validate_channel(geom: Geom, channel: NumericAesthetic) -> ChartResult<()> {
     use NumericAesthetic as A;
     let radial = super::radial_shapes::defaults(geom).is_some();
-    let valid = if radial && !matches!(channel, A::Size | A::Opacity | A::StrokeWidth) {
+    let valid = if radial && !matches!(channel, A::Size | A::Opacity | A::Alpha | A::StrokeWidth) {
         matches!(channel, A::Angle | A::Radius)
             || (!matches!(geom, Geom::ShapeLineRadial { .. })
                 && matches!(
@@ -33,8 +33,8 @@ pub(super) fn validate_channel(geom: Geom, channel: NumericAesthetic) -> ChartRe
                 ))
     } else {
         match channel {
-            A::Size | A::Opacity | A::StrokeWidth => true,
-            A::AreaSize => matches!(geom, Geom::ShapeSymbol { .. }),
+            A::Size | A::Opacity | A::Alpha | A::StrokeWidth => true,
+            A::AreaSize => matches!(geom, Geom::Point | Geom::ShapeSymbol { .. }),
             A::PieValue => matches!(geom, Geom::ShapePie { .. }),
             A::StartAngle | A::EndAngle | A::PadAngle => matches!(geom, Geom::ShapeArc { .. }),
             _ => defaults(geom).is_some() && !matches!(channel, A::Angle | A::Radius),
@@ -120,10 +120,20 @@ pub(super) fn set(
     value: f64,
 ) -> ChartResult<bool> {
     use NumericAesthetic as A;
-    if matches!(channel, A::Size | A::Opacity | A::StrokeWidth) {
+    if matches!(channel, A::Size | A::Opacity | A::Alpha | A::StrokeWidth) {
         return Ok(false);
     }
     validate_channel(geom, channel)?;
+    if channel == A::AreaSize && geom == Geom::Point {
+        if value < 0. || !value.is_finite() {
+            return Err(error(
+                DiagnosticCode::NumericalDomain,
+                "Point area must be finite and nonnegative.",
+            ));
+        }
+        row.size = Some((value / std::f64::consts::PI).sqrt());
+        return Ok(true);
+    }
     let shape = row.shape.get_or_insert_with(|| {
         Box::new(ShapeRow {
             parameters: defaults(geom),

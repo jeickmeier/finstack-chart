@@ -12,6 +12,7 @@ mod pie;
 mod radial;
 mod registered;
 pub(crate) use radial::curve_point_radial;
+mod ggplot_symbol;
 mod stack;
 mod symbol;
 use crate::{Diagnostic, DiagnosticCode};

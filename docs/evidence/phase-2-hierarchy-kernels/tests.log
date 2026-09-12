@@ -1,0 +1,38 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.47s
+     Running tests/hierarchy_layouts.rs (target/hierarchy-proof/debug/deps/hierarchy_layouts-d1475a31f375035f)
+
+running 3 tests
+test tree_modes_native_separation_and_leaf_alignment ... ok
+test pinned_partition_internal_values_padding_and_rounding ... ok
+test pinned_tidy_tree_and_cluster_controls ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests/hierarchy_pack.rs (target/hierarchy-proof/debug/deps/hierarchy_pack-d6a382c5f34bf9b9)
+
+running 2 tests
+test explicit_unscaled_radii_overflow_and_work_budgets ... ok
+test pinned_hierarchical_pack_and_independent_helpers ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/hierarchy_topology.rs (target/hierarchy-proof/debug/deps/hierarchy_topology-07bcee586c299cd5)
+
+running 3 tests
+test custom_children_grouping_keys_atomicity_and_deep_flat_budget ... ok
+test native_deep_input_release_and_accessor_work_are_bounded ... ok
+test pinned_construction_and_all_node_operations ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/hierarchy_treemap.rs (target/hierarchy-proof/debug/deps/hierarchy_treemap-98632e7443a93f6a)
+
+running 4 tests
+test invalid_custom_output_ratio_changes_and_topology_reset_are_atomic ... ok
+test pinned_insert_remove_reparent_and_reorder_reset_history ... ok
+test pinned_resquarify_value_resize_and_explicit_reset_histories ... ok
+test pinned_six_standalone_tilers_and_complete_treemap_controls ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+

@@ -1,0 +1,8381 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          2.5,
+          5,
+          7.5
+        ],
+        "labels": [
+          "2.5",
+          "5.0",
+          "7.5"
+        ],
+        "hidden": false,
+        "limits": [
+          0,
+          10
+        ],
+        "visible": [
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          2.5,
+          5,
+          7.5
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0,
+          10
+        ],
+        "visible": [
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          2.5,
+          4,
+          5.5,
+          7,
+          8.5
+        ],
+        "labels": [
+          "2.5",
+          "4.0",
+          "5.5",
+          "7.0",
+          "8.5"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          2.5,
+          4,
+          5.5,
+          7,
+          8.5
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          2.5,
+          4,
+          5.5,
+          7,
+          8.5
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          2.5,
+          4,
+          5.5,
+          7,
+          8.5
+        ],
+        "labels": [
+          "2.5",
+          "4.0",
+          "5.5",
+          "7.0",
+          "8.5"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          2.5,
+          4,
+          5.5,
+          7,
+          8.5
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          2.5,
+          4,
+          5.5,
+          7,
+          8.5
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          1,
+          10
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          2,
+          4,
+          6,
+          8
+        ],
+        "labels": [
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "hidden": false,
+        "limits": [
+          0,
+          10
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          2,
+          4,
+          6,
+          8
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0,
+          10
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          2.06666666666667,
+          3.33333333333333,
+          4.6,
+          5.86666666666667,
+          7.13333333333333
+        ],
+        "labels": [
+          "2.066667",
+          "3.333333",
+          "4.600000",
+          "5.866667",
+          "7.133333"
+        ],
+        "hidden": false,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          2.06666666666667,
+          3.33333333333333,
+          4.6,
+          5.86666666666667,
+          7.13333333333333
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          2.06666666666667,
+          3.33333333333333,
+          4.6,
+          5.86666666666667,
+          7.13333333333333
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          2,
+          4,
+          6,
+          8
+        ],
+        "labels": [
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "hidden": false,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          2,
+          4,
+          6,
+          8
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          2.06666666666667,
+          3.33333333333333,
+          4.6,
+          5.86666666666667,
+          7.13333333333333
+        ],
+        "labels": [
+          "2.066667",
+          "3.333333",
+          "4.600000",
+          "5.866667",
+          "7.133333"
+        ],
+        "hidden": false,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          2.06666666666667,
+          3.33333333333333,
+          4.6,
+          5.86666666666667,
+          7.13333333333333
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          2.06666666666667,
+          3.33333333333333,
+          4.6,
+          5.86666666666667,
+          7.13333333333333
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          0.8,
+          8.4
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          3.95,
+          4.05
+        ],
+        "labels": [
+          "3.95",
+          "4.05"
+        ],
+        "hidden": false,
+        "limits": [
+          3.95,
+          4.05
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          3.95,
+          4.05
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          3.95,
+          4.05
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          3.95,
+          4.05
+        ],
+        "labels": [
+          "3.95",
+          "4.05"
+        ],
+        "hidden": false,
+        "limits": [
+          3.95,
+          4.05
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          3.95,
+          4.05
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          3.95,
+          4.05
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        "labels": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4"
+        ],
+        "hidden": false,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        "labels": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4"
+        ],
+        "hidden": false,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          3,
+          20
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "identity",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          4,
+          4
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "hidden": false,
+        "limits": [
+          0,
+          3.53553390593274
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0,
+          3.53553390593274
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          1.58113883008419,
+          2,
+          2.34520787991171,
+          2.64575131106459,
+          2.91547594742265
+        ],
+        "labels": [
+          "2.5",
+          "4.0",
+          "5.5",
+          "7.0",
+          "8.5"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          1.58113883008419,
+          2,
+          2.34520787991171,
+          2.64575131106459,
+          2.91547594742265
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          1.58113883008419,
+          2,
+          2.34520787991171,
+          2.64575131106459,
+          2.91547594742265
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          1.58113883008419,
+          2,
+          2.34520787991171,
+          2.64575131106459,
+          2.91547594742265
+        ],
+        "labels": [
+          "2.5",
+          "4.0",
+          "5.5",
+          "7.0",
+          "8.5"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          1.58113883008419,
+          2,
+          2.34520787991171,
+          2.64575131106459,
+          2.91547594742265
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          1.58113883008419,
+          2,
+          2.34520787991171,
+          2.64575131106459,
+          2.91547594742265
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          1,
+          3.16227766016838
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          1.4142135623731,
+          2,
+          2.44948974278318,
+          2.82842712474619
+        ],
+        "labels": [
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "hidden": false,
+        "limits": [
+          0,
+          3.16227766016838
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          1.4142135623731,
+          2,
+          2.44948974278318,
+          2.82842712474619
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0,
+          3.16227766016838
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          1.43759057685652,
+          1.82574185835055,
+          2.14476105895272,
+          2.42212028327799,
+          2.67083008320135
+        ],
+        "labels": [
+          "2.066667",
+          "3.333333",
+          "4.600000",
+          "5.866667",
+          "7.133333"
+        ],
+        "hidden": false,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          1.43759057685652,
+          1.82574185835055,
+          2.14476105895272,
+          2.42212028327799,
+          2.67083008320135
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          1.43759057685652,
+          1.82574185835055,
+          2.14476105895272,
+          2.42212028327799,
+          2.67083008320135
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          1.4142135623731,
+          2,
+          2.44948974278318,
+          2.82842712474619
+        ],
+        "labels": [
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "hidden": false,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          1.4142135623731,
+          2,
+          2.44948974278318,
+          2.82842712474619
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          1.43759057685652,
+          1.82574185835055,
+          2.14476105895272,
+          2.42212028327799,
+          2.67083008320135
+        ],
+        "labels": [
+          "2.066667",
+          "3.333333",
+          "4.600000",
+          "5.866667",
+          "7.133333"
+        ],
+        "hidden": false,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          1.43759057685652,
+          1.82574185835055,
+          2.14476105895272,
+          2.42212028327799,
+          2.67083008320135
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          1.43759057685652,
+          1.82574185835055,
+          2.14476105895272,
+          2.42212028327799,
+          2.67083008320135
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          0.894427190999916,
+          2.89827534923789
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          1.98746069143518,
+          2.01246117974981
+        ],
+        "labels": [
+          "3.95",
+          "4.05"
+        ],
+        "hidden": false,
+        "limits": [
+          1.98746069143518,
+          2.01246117974981
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          1.98746069143518,
+          2.01246117974981
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          1.98746069143518,
+          2.01246117974981
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          1.98746069143518,
+          2.01246117974981
+        ],
+        "labels": [
+          "3.95",
+          "4.05"
+        ],
+        "hidden": false,
+        "limits": [
+          1.98746069143518,
+          2.01246117974981
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          1.98746069143518,
+          2.01246117974981
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          1.98746069143518,
+          2.01246117974981
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "labels": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4"
+        ],
+        "hidden": false,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "labels": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4"
+        ],
+        "hidden": false,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0,
+          1,
+          1,
+          1.73205080756888,
+          4.47213595499958
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "sqrt",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          2,
+          2
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0.477121254719662
+        ],
+        "labels": [
+          "3"
+        ],
+        "hidden": false,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0.477121254719662
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": [
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0.397940008672038,
+          0.602059991327962,
+          0.740362689494244,
+          0.845098040014257,
+          0.929418925714293
+        ],
+        "labels": [
+          "2.5",
+          "4.0",
+          "5.5",
+          "7.0",
+          "8.5"
+        ],
+        "hidden": false,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0.397940008672038,
+          0.602059991327962,
+          0.740362689494244,
+          0.845098040014257,
+          0.929418925714293
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0.397940008672038,
+          0.602059991327962,
+          0.740362689494244,
+          0.845098040014257,
+          0.929418925714293
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0,
+          0.477121254719662,
+          1
+        ],
+        "labels": [
+          "1",
+          "3",
+          "10"
+        ],
+        "hidden": false,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": [
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0,
+          0.477121254719662,
+          1
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": [
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0.397940008672038,
+          0.602059991327962,
+          0.740362689494244,
+          0.845098040014257,
+          0.929418925714293
+        ],
+        "labels": [
+          "2.5",
+          "4.0",
+          "5.5",
+          "7.0",
+          "8.5"
+        ],
+        "hidden": false,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0.397940008672038,
+          0.602059991327962,
+          0.740362689494244,
+          0.845098040014257,
+          0.929418925714293
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0.397940008672038,
+          0.602059991327962,
+          0.740362689494244,
+          0.845098040014257,
+          0.929418925714293
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          0,
+          1
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0,
+          0.477121254719662,
+          0.698970004336019
+        ],
+        "labels": [
+          "1",
+          "3",
+          "5"
+        ],
+        "hidden": false,
+        "limits": [
+          -0.0969100130080564,
+          0.845098040014257
+        ],
+        "visible": [
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0,
+          0.477121254719662,
+          0.698970004336019
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -0.0969100130080564,
+          0.845098040014257
+        ],
+        "visible": [
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0.315270434778591,
+          0.522878745280338,
+          0.662757831681574,
+          0.768391413094487,
+          0.853292518629528
+        ],
+        "labels": [
+          "2.066667",
+          "3.333333",
+          "4.600000",
+          "5.866667",
+          "7.133333"
+        ],
+        "hidden": false,
+        "limits": [
+          -0.0969100130080565,
+          0.924279286061882
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0.315270434778591,
+          0.522878745280338,
+          0.662757831681574,
+          0.768391413094487,
+          0.853292518629528
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -0.0969100130080565,
+          0.924279286061882
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0.315270434778591,
+          0.522878745280338,
+          0.662757831681574,
+          0.768391413094487,
+          0.853292518629528
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          -0.0969100130080565,
+          0.924279286061882
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0,
+          0.477121254719662,
+          0.698970004336019
+        ],
+        "labels": [
+          "1",
+          "3",
+          "5"
+        ],
+        "hidden": false,
+        "limits": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "visible": [
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0,
+          0.477121254719662,
+          0.698970004336019
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "visible": [
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0.315270434778591,
+          0.522878745280338,
+          0.662757831681574,
+          0.768391413094487,
+          0.853292518629528
+        ],
+        "labels": [
+          "2.066667",
+          "3.333333",
+          "4.600000",
+          "5.866667",
+          "7.133333"
+        ],
+        "hidden": false,
+        "limits": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0.315270434778591,
+          0.522878745280338,
+          0.662757831681574,
+          0.768391413094487,
+          0.853292518629528
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0.315270434778591,
+          0.522878745280338,
+          0.662757831681574,
+          0.768391413094487,
+          0.853292518629528
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          -0.0969100130080564,
+          0.924279286061882
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0.59659709562646,
+          0.607455023214668
+        ],
+        "labels": [
+          "3.95",
+          "4.05"
+        ],
+        "hidden": false,
+        "limits": [
+          0.59659709562646,
+          0.607455023214668
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0.59659709562646,
+          0.607455023214668
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.59659709562646,
+          0.607455023214668
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0.59659709562646,
+          0.607455023214668
+        ],
+        "labels": [
+          "3.95",
+          "4.05"
+        ],
+        "hidden": false,
+        "limits": [
+          0.59659709562646,
+          0.607455023214668
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0.59659709562646,
+          0.607455023214668
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.59659709562646,
+          0.607455023214668
+        ],
+        "visible": [
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4"
+        ],
+        "hidden": false,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4"
+        ],
+        "hidden": false,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          "-Inf",
+          0,
+          0,
+          0.477121254719662,
+          1.30102999566398
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "log10",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          0.602059991327962,
+          0.602059991327962
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -2.5,
+          -5,
+          -7.5
+        ],
+        "labels": [
+          "2.5",
+          "5.0",
+          "7.5"
+        ],
+        "hidden": false,
+        "limits": [
+          -10,
+          -0
+        ],
+        "visible": [
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -2.5,
+          -5,
+          -7.5
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -10,
+          -0
+        ],
+        "visible": [
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -2.5,
+          -4,
+          -5.5,
+          -7,
+          -8.5
+        ],
+        "labels": [
+          "2.5",
+          "4.0",
+          "5.5",
+          "7.0",
+          "8.5"
+        ],
+        "hidden": false,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -2.5,
+          -4,
+          -5.5,
+          -7,
+          -8.5
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          -2.5,
+          -4,
+          -5.5,
+          -7,
+          -8.5
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "hidden": false,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -2.5,
+          -4,
+          -5.5,
+          -7,
+          -8.5
+        ],
+        "labels": [
+          "2.5",
+          "4.0",
+          "5.5",
+          "7.0",
+          "8.5"
+        ],
+        "hidden": false,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -2.5,
+          -4,
+          -5.5,
+          -7,
+          -8.5
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          -2.5,
+          -4,
+          -5.5,
+          -7,
+          -8.5
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        1,
+        10
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          -10,
+          -1
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -2,
+          -4,
+          -6,
+          -8
+        ],
+        "labels": [
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "hidden": false,
+        "limits": [
+          -10,
+          -0
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -2,
+          -4,
+          -6,
+          -8
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -10,
+          -0
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -2.06666666666667,
+          -3.33333333333333,
+          -4.6,
+          -5.86666666666667,
+          -7.13333333333333
+        ],
+        "labels": [
+          "2.066667",
+          "3.333333",
+          "4.600000",
+          "5.866667",
+          "7.133333"
+        ],
+        "hidden": false,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -2.06666666666667,
+          -3.33333333333333,
+          -4.6,
+          -5.86666666666667,
+          -7.13333333333333
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          -2.06666666666667,
+          -3.33333333333333,
+          -4.6,
+          -5.86666666666667,
+          -7.13333333333333
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -2,
+          -4,
+          -6,
+          -8
+        ],
+        "labels": [
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "hidden": false,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -2,
+          -4,
+          -6,
+          -8
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -2.06666666666667,
+          -3.33333333333333,
+          -4.6,
+          -5.86666666666667,
+          -7.13333333333333
+        ],
+        "labels": [
+          "2.066667",
+          "3.333333",
+          "4.600000",
+          "5.866667",
+          "7.133333"
+        ],
+        "hidden": false,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -2.06666666666667,
+          -3.33333333333333,
+          -4.6,
+          -5.86666666666667,
+          -7.13333333333333
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          -2.06666666666667,
+          -3.33333333333333,
+          -4.6,
+          -5.86666666666667,
+          -7.13333333333333
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": [
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        0.8,
+        8.4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          -8.4,
+          -0.8
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -3.95,
+          -4.05
+        ],
+        "labels": [
+          "3.95",
+          "4.05"
+        ],
+        "hidden": false,
+        "limits": [
+          -3.95,
+          -4.05
+        ],
+        "visible": [
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -3.95,
+          -4.05
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -3.95,
+          -4.05
+        ],
+        "visible": [
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -3.95,
+          -4.05
+        ],
+        "labels": [
+          "3.95",
+          "4.05"
+        ],
+        "hidden": false,
+        "limits": [
+          -3.95,
+          -4.05
+        ],
+        "visible": [
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -3.95,
+          -4.05
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -3.95,
+          -4.05
+        ],
+        "visible": [
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "none",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -4,
+          -4,
+          -4,
+          -4,
+          -4
+        ],
+        "labels": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4"
+        ],
+        "hidden": false,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -4,
+          -4,
+          -4,
+          -4,
+          -4
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "nice",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          -4,
+          -4,
+          -4,
+          -4,
+          -4
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -4,
+          -4,
+          -4,
+          -4,
+          -4
+        ],
+        "labels": [
+          "4",
+          "4",
+          "4",
+          "4",
+          "4"
+        ],
+        "hidden": false,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -4,
+          -4,
+          -4,
+          -4,
+          -4
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "equal",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          -4,
+          -4,
+          -4,
+          -4,
+          -4
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "auto",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [
+          "0",
+          "1",
+          "1",
+          "3",
+          "20"
+        ],
+        "hidden": false,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "hidden",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "explicit",
+      "labels": "explicit",
+      "result": {
+        "breaks": [
+          -0,
+          -1,
+          -1,
+          -3,
+          -20
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "hidden": false,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "auto",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "hidden",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": true,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": []
+      }
+    },
+    {
+      "transform": "reverse",
+      "domain": [
+        4,
+        4
+      ],
+      "limits": "full",
+      "breaks": "empty",
+      "labels": "explicit",
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "hidden": false,
+        "limits": [
+          -4,
+          -4
+        ],
+        "visible": []
+      }
+    }
+  ]
+}

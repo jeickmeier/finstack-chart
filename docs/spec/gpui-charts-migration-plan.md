@@ -188,8 +188,7 @@ Start with four library crates and one development application. Keep internal mo
 | `chart-core` | Portable spec/data/action types; normalization, stats, positioning, scales, coordinates, facets, geoms, guides, scenes, state, hit testing | No GPUI/Python/JS types; no mandatory OS fonts, file/network I/O or native threading. |
 | `chart-export` | Publication layout support and SVG/PDF/PNG exporters | Depends on portable core and verified Rust export/text dependencies; headless use has no GPUI dependency. |
 | `gpui-charts` | Persistent chart state, native text measurement, GPUI painting, input translation, focus and accessibility integration | Depends on core and one selected GPUI release line. |
-| `gpui-charts-kit` | Theme adapter, chart cards, legends, tooltips, menus, toolbar, table-link examples | Depends on GPUI adapter and compatible GPUI Kit. |
-| `chart-gallery` | Executable examples, fixture comparison, stress workloads, interaction scenarios | Development-only application. |
+| `chart-gallery` | Executable examples, fixture comparison, stress workloads, interaction scenarios; optional Kit host recipes | Development-only application. No first-party Kit library crate; see [ADR-023](../adr/023-withdraw-optional-kit-crate.md). |
 | `chart-python` — future | PyO3 adapter for specs, column batches, actions, scenes and headless export | Depends on core/export; native viewer and interactive notebooks are separate integrations. |
 | `chart-wasm` — future | wasm-bindgen adapter and browser-facing data/action interface | Depends on portable core; browser rendering/events supplied by a separate host. |
 

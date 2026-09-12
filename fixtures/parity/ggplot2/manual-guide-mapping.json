@@ -1,0 +1,668 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "named": false,
+      "breaks": null,
+      "automatic": true,
+      "limits": null,
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "mapped": [
+          "red",
+          "green",
+          "blue",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": false,
+      "breaks": null,
+      "automatic": true,
+      "limits": [
+        "a",
+        "b",
+        "c"
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c"
+        ],
+        "mapped": [
+          "red",
+          "green",
+          "blue",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": false,
+      "breaks": null,
+      "automatic": true,
+      "limits": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "result": {
+        "error": "Insufficient values in manual scale. 4 needed but only 3 provided."
+      }
+    },
+    {
+      "named": false,
+      "breaks": [
+        "c",
+        "a"
+      ],
+      "automatic": false,
+      "limits": null,
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "mapped": [
+          "green",
+          "grey50",
+          "red",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": false,
+      "breaks": [
+        "c",
+        "a"
+      ],
+      "automatic": false,
+      "limits": [
+        "a",
+        "b",
+        "c"
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c"
+        ],
+        "mapped": [
+          "green",
+          "grey50",
+          "red",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": false,
+      "breaks": [
+        "c",
+        "a"
+      ],
+      "automatic": false,
+      "limits": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "result": {
+        "error": "Insufficient values in manual scale. 4 needed but only 3 provided."
+      }
+    },
+    {
+      "named": false,
+      "breaks": [
+        "c",
+        "z",
+        "a",
+        "c",
+        null
+      ],
+      "automatic": false,
+      "limits": null,
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "mapped": [
+          "blue",
+          "grey50",
+          "red",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": false,
+      "breaks": [
+        "c",
+        "z",
+        "a",
+        "c",
+        null
+      ],
+      "automatic": false,
+      "limits": [
+        "a",
+        "b",
+        "c"
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c"
+        ],
+        "mapped": [
+          "blue",
+          "grey50",
+          "red",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": false,
+      "breaks": [
+        "c",
+        "z",
+        "a",
+        "c",
+        null
+      ],
+      "automatic": false,
+      "limits": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "result": {
+        "error": "Insufficient values in manual scale. 4 needed but only 3 provided."
+      }
+    },
+    {
+      "named": false,
+      "breaks": [],
+      "automatic": false,
+      "limits": null,
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": false,
+      "breaks": [],
+      "automatic": false,
+      "limits": [
+        "a",
+        "b",
+        "c"
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c"
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": false,
+      "breaks": [],
+      "automatic": false,
+      "limits": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "result": {
+        "error": "Insufficient values in manual scale. 4 needed but only 3 provided."
+      }
+    },
+    {
+      "named": false,
+      "breaks": [
+        "c",
+        "c",
+        "a"
+      ],
+      "automatic": false,
+      "limits": null,
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c",
+          null
+        ],
+        "mapped": [
+          "blue",
+          "grey50",
+          "red",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": false,
+      "breaks": [
+        "c",
+        "c",
+        "a"
+      ],
+      "automatic": false,
+      "limits": [
+        "a",
+        "b",
+        "c"
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c"
+        ],
+        "mapped": [
+          "blue",
+          "grey50",
+          "red",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": false,
+      "breaks": [
+        "c",
+        "c",
+        "a"
+      ],
+      "automatic": false,
+      "limits": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "result": {
+        "error": "Insufficient values in manual scale. 4 needed but only 3 provided."
+      }
+    },
+    {
+      "named": true,
+      "breaks": null,
+      "automatic": true,
+      "limits": null,
+      "result": {
+        "domain": [
+          "a",
+          "c",
+          null
+        ],
+        "mapped": [
+          "blue",
+          "grey50",
+          "red",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": true,
+      "breaks": null,
+      "automatic": true,
+      "limits": [
+        "a",
+        "b",
+        "c"
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c"
+        ],
+        "mapped": [
+          "blue",
+          "grey50",
+          "red",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": true,
+      "breaks": null,
+      "automatic": true,
+      "limits": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "result": {
+        "error": "Insufficient values in manual scale. 4 needed but only 3 provided."
+      }
+    },
+    {
+      "named": true,
+      "breaks": [
+        "c",
+        "a"
+      ],
+      "automatic": false,
+      "limits": null,
+      "result": {
+        "domain": [
+          "a",
+          "c",
+          null
+        ],
+        "mapped": [
+          "blue",
+          "grey50",
+          "red",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": true,
+      "breaks": [
+        "c",
+        "a"
+      ],
+      "automatic": false,
+      "limits": [
+        "a",
+        "b",
+        "c"
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c"
+        ],
+        "mapped": [
+          "blue",
+          "grey50",
+          "red",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": true,
+      "breaks": [
+        "c",
+        "a"
+      ],
+      "automatic": false,
+      "limits": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "result": {
+        "error": "Insufficient values in manual scale. 4 needed but only 3 provided."
+      }
+    },
+    {
+      "named": true,
+      "breaks": [
+        "c",
+        "z",
+        "a",
+        "c",
+        null
+      ],
+      "automatic": false,
+      "limits": null,
+      "result": {
+        "domain": [
+          "a",
+          "c",
+          null
+        ],
+        "mapped": [
+          "blue",
+          "grey50",
+          "red",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": true,
+      "breaks": [
+        "c",
+        "z",
+        "a",
+        "c",
+        null
+      ],
+      "automatic": false,
+      "limits": [
+        "a",
+        "b",
+        "c"
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c"
+        ],
+        "mapped": [
+          "blue",
+          "grey50",
+          "red",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": true,
+      "breaks": [
+        "c",
+        "z",
+        "a",
+        "c",
+        null
+      ],
+      "automatic": false,
+      "limits": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "result": {
+        "error": "Insufficient values in manual scale. 4 needed but only 3 provided."
+      }
+    },
+    {
+      "named": true,
+      "breaks": [],
+      "automatic": false,
+      "limits": null,
+      "result": {
+        "domain": [
+          "a",
+          "c",
+          null
+        ],
+        "mapped": [
+          "blue",
+          "grey50",
+          "red",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": true,
+      "breaks": [],
+      "automatic": false,
+      "limits": [
+        "a",
+        "b",
+        "c"
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c"
+        ],
+        "mapped": [
+          "blue",
+          "grey50",
+          "red",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": true,
+      "breaks": [],
+      "automatic": false,
+      "limits": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "result": {
+        "error": "Insufficient values in manual scale. 4 needed but only 3 provided."
+      }
+    },
+    {
+      "named": true,
+      "breaks": [
+        "c",
+        "c",
+        "a"
+      ],
+      "automatic": false,
+      "limits": null,
+      "result": {
+        "domain": [
+          "a",
+          "c",
+          null
+        ],
+        "mapped": [
+          "blue",
+          "grey50",
+          "red",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": true,
+      "breaks": [
+        "c",
+        "c",
+        "a"
+      ],
+      "automatic": false,
+      "limits": [
+        "a",
+        "b",
+        "c"
+      ],
+      "result": {
+        "domain": [
+          "a",
+          "b",
+          "c"
+        ],
+        "mapped": [
+          "blue",
+          "grey50",
+          "red",
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "named": true,
+      "breaks": [
+        "c",
+        "c",
+        "a"
+      ],
+      "automatic": false,
+      "limits": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "result": {
+        "error": "Insufficient values in manual scale. 4 needed but only 3 provided."
+      }
+    }
+  ]
+}

@@ -121,7 +121,27 @@ pub(crate) fn pdf(
         })?;
         pdf_fonts.insert(f.descriptor.id, font);
     }
+    let mut active: Option<&chart_core::scene::GuideComponent> = None;
     for (index, item) in scene.items().iter().enumerate() {
+        let next = item.guide.as_ref().filter(|g| g.animation.is_some());
+        let same = active.zip(next).is_some_and(|(a, b)| {
+            a.scope == b.scope
+                && a.guide == b.guide
+                && a.side == b.side
+                && a.animation == b.animation
+        });
+        if !same {
+            if active.is_some() {
+                surface.pop();
+            }
+            if let Some(next) = next {
+                surface.push_opacity(
+                    NormalizedF32::new(next.animation.expect("sampled tick").opacity as f32)
+                        .expect("validated opacity"),
+                );
+            }
+        }
+        active = next;
         let clip = item.clip.unwrap_or(scene.bounds());
         // Empty clips paint nothing, including annotations; do not turn them into unbounded paint.
         if clip.width() == 0. || clip.height() == 0. {
@@ -385,6 +405,9 @@ pub(crate) fn pdf(
             }
             e
         })?;
+    }
+    if active.is_some() {
+        surface.pop();
     }
     surface.finish();
     page.finish();

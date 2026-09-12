@@ -194,11 +194,11 @@ class Component(_Owned):
                 if isinstance(source, Field): inner = self._inner.shape_value_field(_encode(target), source._inner)
                 elif isinstance(source, Component): inner = self._inner.shape_value_expression(_encode(target), source._inner)
                 else: inner = self._inner.set(name, _encode(args))
-            elif name == "numeric_scale" and len(args) == 3:
+            elif name in ("numeric_scale", "value_scale") and len(args) == 3:
                 target, source, scale = args
                 descriptor = scale.mapped() if isinstance(scale, StandaloneScale) else scale
-                if isinstance(source, Field): inner = self._inner.numeric_scale_field(_encode(target), source._inner, _encode(descriptor))
-                elif isinstance(source, Component): inner = self._inner.numeric_scale_expression(_encode(target), source._inner, _encode(descriptor))
+                if isinstance(source, Field): inner = getattr(self._inner, name+"_field")(_encode(target), source._inner, _encode(descriptor))
+                elif isinstance(source, Component): inner = getattr(self._inner, name+"_expression")(_encode(target), source._inner, _encode(descriptor))
                 else: inner = self._inner.set(name, _encode((target, source, descriptor)))
             else:
                 if name in ("geometry", "time_domain"): args = tuple(str(v) if type(v) is int else v for v in args)
@@ -432,10 +432,16 @@ class ExportOptions(_Owned):
 def export_options(width, height, unit="pt"): return ExportOptions(_native._ExportOptions(width,height,unit))
 
 class FigureRequest(_Owned):
+    def with_hierarchy_history(self, previous): return FigureRequest(self._inner.with_hierarchy_history(previous._inner))
     def prepare(self): return FigureSnapshot(self._inner.prepare())
     def manifest(self): return _decode(self._inner.manifest())
 
+class FigureTransition(_Owned):
+    def sample(self, fraction): return FigureSnapshot(self._inner.sample(fraction))
+
 class FigureSnapshot(_Owned):
+    def guide_transition(self, previous): return FigureTransition(self._inner.guide_transition(previous._inner))
+    def presentation(self): return _decode(self._inner.presentation())
     def guides(self): return _decode(self._inner.guides())
     def scene(self): return _decode(self._inner.scene())
     def manifest(self): return _decode(self._inner.manifest())
@@ -527,6 +533,7 @@ class Chart(_Owned):
     def act(self, action, *, origin="Programmatic", expected=None): return _decode(self._inner.act(_encode(action),_encode(origin),expected))
     def query(self, operation, *, gesture=False, stamp=None): return _decode(self._inner.query(_encode(operation),gesture,None if stamp is None else _encode(stamp)))
     def request(self, output, options): return FigureRequest(self._inner.request(output._inner,options._inner))
+    def acknowledge_frame(self, frame): self._inner.acknowledge_frame(frame._inner)
     def present(self, output, options): return FigureSnapshot(self._inner.present(output._inner,options._inner))
     def stream(self, options): self._inner.stream(options._inner); return self
     def stream_status(self): return _decode(self._inner.stream_status())
@@ -550,7 +557,7 @@ class _Expression(Component):
     def __neg__(self): return self.negate()
 
 # Each family has its own public type; implementation and validation remain in Rust.
-_FAMILIES = {'SourceExpression': 'source_expr', 'StatExpression': 'stat_expr', 'BinExpression': 'bin_expr', 'ScaleExpression': 'after_scale_expr from_theme', 'ScaleAes': 'scale_aes', 'Aes': 'aes', 'Layer': 'points line area ribbon shape_line shape_area shape_line_radial shape_area_radial shape_link shape_link_horizontal shape_link_vertical shape_link_radial shape_arc shape_pie shape_symbol bars volume ohlc rule rectangle cells histogram', 'Stat': 'identity_stat bin count summary fit custom_stat', 'StatAes': 'stat_aes', 'BinAes': 'bin_aes', 'Position': 'stack shape_stack dodge jitter', 'Filter': 'filter', 'Transform': 'transform', 'Scale': 'scale_linear scale_log scale_symlog scale_band scale_point scale_utc scale_session', 'Axis': 'x_axis y_axis', 'Guide': 'axis_guide', 'ColorScale': 'color_discrete color_continuous', 'Legend': 'legend', 'Facet': 'facet_wrap facet_grid', 'Style': 'style', 'Theme': 'theme', 'TextStyle': 'text_style', 'TextRun': 'text_run', 'RichText': 'rich_text', 'Title': 'title', 'Subtitle': 'subtitle', 'Caption': 'caption', 'SourceNote': 'source_note', 'Footnote': 'footnote', 'Labels': 'labels', 'Callout': 'callout', 'PanelLetter': 'panel_letter', 'Inset': 'inset', 'NumberFormat': 'number_format', 'LayoutOptions': 'layout_options', 'RenderOptions': 'render_options', 'StreamOptions': 'stream_options', 'AnnotationEdit': 'annotation_edit', 'Link': 'link'}
+_FAMILIES = {'SourceExpression': 'source_expr', 'StatExpression': 'stat_expr', 'BinExpression': 'bin_expr', 'ScaleExpression': 'after_scale_expr from_theme', 'ScaleAes': 'scale_aes', 'Aes': 'aes', 'Layer': 'points line area ribbon hierarchy hierarchy_tree hierarchy_cluster hierarchy_icicle hierarchy_sunburst hierarchy_treemap hierarchy_pack shape_line shape_area shape_line_radial shape_area_radial shape_link shape_link_horizontal shape_link_vertical shape_link_radial shape_arc shape_pie shape_symbol bars volume ohlc rule rectangle cells histogram', 'Stat': 'identity_stat bin count summary fit custom_stat', 'StatAes': 'stat_aes', 'BinAes': 'bin_aes', 'Position': 'stack shape_stack dodge jitter', 'Filter': 'filter', 'Transform': 'transform', 'Scale': 'scale_linear scale_binned scale_reverse scale_sqrt scale_log scale_symlog scale_band scale_point scale_utc scale_date scale_duration scale_session', 'Axis': 'x_axis y_axis', 'Guide': 'axis_guide', 'ColorScale': 'color_discrete color_continuous', 'Legend': 'legend', 'Facet': 'facet_wrap facet_grid', 'Style': 'style', 'Theme': 'theme', 'TextStyle': 'text_style', 'TextRun': 'text_run', 'RichText': 'rich_text', 'Title': 'title', 'Subtitle': 'subtitle', 'Caption': 'caption', 'SourceNote': 'source_note', 'Footnote': 'footnote', 'Labels': 'labels', 'Callout': 'callout', 'PanelLetter': 'panel_letter', 'Inset': 'inset', 'NumberFormat': 'number_format', 'LayoutOptions': 'layout_options', 'RenderOptions': 'render_options', 'StreamOptions': 'stream_options', 'AnnotationEdit': 'annotation_edit', 'Link': 'link'}
 _FACTORY_TYPES = {}
 for _family, _factories in _FAMILIES.items():
     _class = type(_family, (_Expression if _family.endswith("Expression") else Component,), {"__module__": __name__})
@@ -610,3 +617,5 @@ from ._shape import ShapeLineRadialConfig, ShapeAreaRadialConfig, ShapeLinkConfi
 from ._shape import RadialParameters
 
 from ._shape import ShapeOperationId, ShapeOperation, ShapeFamily
+
+from ._hierarchy import Hierarchy as Hierarchy, pack_siblings as pack_siblings, pack_enclose as pack_enclose

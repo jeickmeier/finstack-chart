@@ -8,6 +8,45 @@ pub mod chromatic;
 mod civil;
 mod classifier;
 mod color;
+mod extended;
+mod log_breaks;
+pub use log_breaks::ggplot_breaks_log;
+mod ggplot;
+mod ggplot_bins;
+mod ggplot_continuous_guide;
+mod ggplot_discrete_guide;
+mod ggplot_discrete_position;
+pub use ggplot_discrete_position::{GgplotDiscretePosition, PreparedGgplotDiscretePosition};
+mod ggplot_position_bins;
+pub use ggplot_continuous_guide::{
+    GgplotContinuousGuide, GgplotContinuousGuideEntry, GgplotScaleGuide,
+};
+mod ggplot_identity;
+pub use ggplot_discrete_guide::{GgplotDiscreteGuide, GgplotDiscreteGuideEntry, GgplotGuideLabels};
+pub use ggplot_identity::{GgplotDiscreteIdentity, GgplotNumericIdentity};
+mod ggplot_expansion;
+mod ggplot_time;
+pub(crate) use ggplot_time::{aligned_dates, aligned_seconds, parse_width, width_seconds};
+mod ggplot_temporal_guide;
+mod ggplot_time_pretty;
+pub use ggplot_temporal_guide::{
+    GgplotTemporalBreaks, GgplotTemporalGuide, GgplotTemporalGuideArguments,
+};
+mod secondary;
+pub use extended::{ggplot_breaks_duration, ggplot_breaks_extended};
+pub(crate) use ggplot::zero_range as ggplot_zero_range;
+pub use ggplot::{
+    GgplotDiscretePalette, GgplotNumericPalette, GgplotOob, GgplotScalePolicy,
+    ggplot_color_default, ggplot_numeric_default, ggplot_numeric_ordinal,
+};
+pub use ggplot_bins::{GgplotBinnedPalette, GgplotBinnedPolicy, GgplotBreaks};
+pub use ggplot_expansion::GgplotExpansion;
+pub use ggplot_position_bins::{GgplotBinnedPosition, PreparedGgplotBinnedPosition};
+pub use ggplot_time::{ggplot_breaks_duration_width, ggplot_breaks_seconds, ggplot_breaks_width};
+pub use ggplot_time_pretty::{
+    GgplotTimeBreaks, ggplot_breaks_pretty_date, ggplot_breaks_pretty_time,
+};
+pub(crate) use secondary::secondary_mapping;
 mod interpolated;
 mod linear;
 mod mapped;
@@ -178,3 +217,10 @@ pub(crate) fn category_window(
         )),
     }
 }
+
+mod ggplot_unbounded;
+pub use ggplot_unbounded::GgplotUnboundedScale;
+mod ggplot_minor_breaks;
+pub use ggplot_minor_breaks::ggplot_minor_breaks;
+
+mod ggplot_numeric_limits;

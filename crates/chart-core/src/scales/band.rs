@@ -112,6 +112,30 @@ impl BandScale {
             labels,
         })
     }
+    /// Project a numeric minor candidate in the reference category-index space.
+    pub(crate) fn reference_viewport(&self) -> Option<[crate::interpolate::Number; 2]> {
+        self.spacing.reference_viewport()
+    }
+    pub(crate) fn reference_minor(&self, value: f64) -> ChartResult<Option<f64>> {
+        self.spacing.reference_minor(value)
+    }
+    pub(crate) fn with_reference_expansion(
+        mut self,
+        expansion: super::GgplotExpansion,
+        limits: Option<&[crate::interpolate::Number]>,
+        observed: &[String],
+    ) -> ChartResult<Self> {
+        let continuous = super::spacing::observed_extent(
+            observed
+                .iter()
+                .filter_map(|label| self.index.get(label).copied()),
+            !observed.is_empty(),
+        );
+        self.spacing = self
+            .spacing
+            .with_reference_expansion(expansion, limits, continuous)?;
+        Ok(self)
+    }
     /// Nonnegative interval between neighboring band starts.
     pub fn step(&self) -> f64 {
         self.spacing.step()
@@ -146,7 +170,7 @@ impl BandScale {
     pub fn capabilities(&self) -> ScaleCapabilities {
         ScaleCapabilities {
             numeric_inverse: false,
-            category_lookup: true,
+            category_lookup: self.spacing.supports_lookup(),
         }
     }
     /// Map a known label to its center; absent labels are explicitly missing.
@@ -158,7 +182,35 @@ impl BandScale {
             return Ok(None);
         }
         let i = i - self.window.start;
-        self.spacing.center(i).map(Some)
+        self.spacing.center(i)
+    }
+    /// Guide-only D3 centering; data marks retain the band's full center.
+    pub fn guide_position(&self, label: &str, offset: f64) -> ChartResult<Option<f64>> {
+        if !offset.is_finite() {
+            return Err(error(
+                DiagnosticCode::Validation,
+                "Guide offset must be finite.",
+            ));
+        }
+        self.extent(label)?
+            .map(|bounds| {
+                let center = (self.bandwidth() - 2. * offset).max(0.) / 2.;
+                let center = if self.spacing.round {
+                    center.round()
+                } else {
+                    center
+                };
+                let start = bounds.start().min(bounds.end());
+                let value = start + center;
+                if !value.is_finite() {
+                    return Err(error(
+                        DiagnosticCode::PrecisionLoss,
+                        "Guide center exceeds finite positions.",
+                    ));
+                }
+                Ok(value)
+            })
+            .transpose()
     }
     /// Oriented destination edges of a band; widths are not fabricated for absent labels.
     pub fn extent(&self, label: &str) -> ChartResult<Option<Bounds>> {
@@ -169,7 +221,7 @@ impl BandScale {
             return Ok(None);
         }
         let i = i - self.window.start;
-        self.spacing.extent(i).map(Some)
+        self.spacing.extent(i)
     }
     /// Locate a band containing a destination position; gaps/outside positions yield `None`.
     pub fn category_at(&self, position: f64) -> ChartResult<Option<&str>> {

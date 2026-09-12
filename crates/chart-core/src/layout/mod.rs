@@ -9,10 +9,23 @@ mod composition;
 mod coordinates;
 mod engine;
 mod facets;
+mod hierarchy;
+pub use hierarchy::{HierarchyHistoryEntry, HierarchySnapshot, ResolvedHierarchy};
+mod guide_components;
 mod guide_config;
+pub use guide_components::{GuideComponents, GuideLineStyle, GuideTextStyle, GuideTickStyle};
+mod guide_geometry;
+pub use guide_geometry::{GuideGeometry, GuideLabelPolicy, GuideOverflow};
+mod guide_animation;
 mod guide_selection;
 mod guide_ticks;
+mod guide_transition;
+mod minor_breaks;
+pub use guide_animation::{GuidePresentationSnapshot, LayoutGuideTransition};
 pub use guide_config::*;
+pub use guide_transition::{
+    GuideDomain, GuideTransitionFrame, GuideTransitionPlan, GuideTransitionTick,
+};
 mod project;
 mod text;
 mod theme;
@@ -23,3 +36,5 @@ pub use engine::layout;
 pub use types::*;
 
 pub(crate) use axes::validate_definition_axes;
+
+mod secondary_discrete;

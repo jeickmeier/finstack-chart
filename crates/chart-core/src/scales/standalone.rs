@@ -489,6 +489,10 @@ impl StandaloneScale {
             _ => return Err(capability("a mapped aesthetic descriptor")),
         };
         let spec = MappedScaleSpec {
+            resolved_numeric_limits: None,
+            limits_function: None,
+            guide: None,
+            ggplot: None,
             catalog: None,
             function,
             training,
@@ -501,6 +505,19 @@ impl StandaloneScale {
 impl StandaloneScaleSpec {
     /// Minimum standalone scale envelope version, preserving builtin version one.
     pub fn wire_version(&self) -> u32 {
+        if matches!(self, Self::Interpolated(s) if matches!(s.normalization, NormalizationSpec::Ggplot { timestamp: Some(GgplotTimestampNormalization { date: true, .. }), .. }))
+        {
+            return 5;
+        }
+        if matches!(self, Self::Interpolated(s) if matches!(s.normalization, NormalizationSpec::Ggplot { timestamp: Some(_), .. }))
+        {
+            return 4;
+        }
+        if matches!(self,Self::Interpolated(s) if matches!(&s.output,ScaleRangeFunction::Interpolate(i) if i.wire_version()==3) || matches!(s.normalization,NormalizationSpec::Ggplot {..}))
+        {
+            return 3;
+        }
+
         let registered = match self {
             Self::Continuous(s) => s.factory.has_registration(),
             Self::Time(s) => s.factory.has_registration(),

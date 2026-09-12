@@ -411,6 +411,7 @@ impl Compiler {
         let mut colors = BTreeMap::new();
         let mut scale_domains = BTreeMap::new();
         let mut budget = GeometryBudget {
+            profile: definition.profile(),
             geometry_theme: definition.theme.as_ref().and_then(|t| t.geometry.as_ref()),
             population_axes: population_axes(definition),
             extensions: &self.extensions,
@@ -450,12 +451,14 @@ impl Compiler {
             for e in &mut diagnostics[start..] {
                 *e = context(e.clone(), data, Some(layer.id));
             }
-            merge_named(
-                &mut scale_domains,
-                layer.scales,
-                &eligible_domains(&prepared),
-            )
-            .map_err(|e| context(e, data, Some(layer.id)))?;
+            if layer.geom != Geom::Hierarchy {
+                merge_named(
+                    &mut scale_domains,
+                    layer.scales,
+                    &eligible_domains(&prepared),
+                )
+                .map_err(|e| context(e, data, Some(layer.id)))?;
+            }
             if let Some(legend) = &prepared.color_legend {
                 if colors.get(&legend.id).is_some_and(|old| old != legend) {
                     return Err(error(
@@ -552,6 +555,7 @@ pub(super) fn validate_definition(
     limits: CompileLimits,
     extensions: &ExtensionRegistry,
 ) -> ChartResult<Vec<usize>> {
+    extensions.validate_hierarchy_selections(definition, false)?;
     extensions.validate_scale_selections(definition, false)?;
     extensions.validate_guide_selections(definition, false)?;
     extensions.validate_interpolation_selections(definition, false)?;
@@ -637,14 +641,44 @@ pub(super) fn validate_definition(
             extensions.stat_descriptor(&layer.statistic.operation)?;
         }
         stats::validate_filters(&layer.filters, limits)?;
-        if !layer.style.radius.is_finite()
-            || layer.style.radius <= 0.
-            || !layer.style.stroke_width.is_finite()
-            || layer.style.stroke_width <= 0.
+        if layer
+            .style
+            .alpha
+            .is_some_and(|v| !v.is_finite() || !(0. ..=1.).contains(&v))
         {
             return Err(error(
                 DiagnosticCode::NumericalDomain,
-                "Constant radii and stroke widths must be finite and positive.",
+                "Alpha must lie in the closed unit interval.",
+            ));
+        }
+        let reference_line =
+            definition.profile() == Profile::Ggplot2_4_0_3 && layer.geom.reference_linewidth();
+        if let Some(line_type) = layer.style.line_type {
+            line_type.pattern(if reference_line && layer.style.stroke_width == 0. {
+                1.
+            } else {
+                layer.style.stroke_width
+            })?;
+        }
+        for (channel, value) in &layer.aesthetic_values {
+            channel.validate(value)?;
+        }
+        let reference_point = definition.profile() == Profile::Ggplot2_4_0_3
+            && layer.geom == Geom::Point
+            && !layer
+                .grammar
+                .as_ref()
+                .is_some_and(|g| g.default_radius == Some(false));
+        if !layer.style.radius.is_finite()
+            || (!reference_point && layer.style.radius < 0.)
+            || (!reference_point && layer.style.radius == 0.)
+            || !layer.style.stroke_width.is_finite()
+            || layer.style.stroke_width < 0.
+            || (!reference_point && !reference_line && layer.style.stroke_width == 0.)
+        {
+            return Err(error(
+                DiagnosticCode::NumericalDomain,
+                "Constant radii and stroke widths must be finite and positive; reference point sizes may be nonpositive and reference stroke widths may be zero.",
             ));
         }
     }
@@ -695,13 +729,18 @@ pub(super) fn validate_definition(
 }
 
 pub(super) struct EncodedRow {
+    pub(super) missing_aesthetics: u8,
+    pub(super) values: BTreeMap<ValueAesthetic, crate::interpolate::Value>,
     pub(super) shape: Option<Box<super::shape_encoding::ShapeRow>>,
     pub(super) x: Option<f64>,
     pub(super) y: Option<f64>,
     pub(super) x2: Option<f64>,
     pub(super) y2: Option<f64>,
     pub(super) color: Option<crate::color::Paint>,
+    pub(super) fill: Option<crate::color::Paint>,
+    pub(super) stroke: Option<crate::color::Paint>,
     pub(super) opacity: Option<f64>,
+    pub(super) alpha: Option<f64>,
     pub(super) stroke_width: Option<f64>,
     pub(super) low: Option<f64>,
     pub(super) high: Option<f64>,
@@ -711,12 +750,44 @@ pub(super) struct EncodedRow {
     pub(super) target: Target,
     pub(super) key: Option<RowKey>,
 }
-fn coordinate_space(data: &DatasetSnapshot, value: &Numeric) -> ChartResult<ValueSpace> {
+impl EncodedRow {
+    pub(super) fn is_missing(&self, aesthetic: AfterScaleAesthetic) -> bool {
+        self.missing_aesthetics & (1 << aesthetic as u8) != 0
+    }
+    pub(super) fn set_missing(&mut self, aesthetic: AfterScaleAesthetic, missing: bool) {
+        let mask = 1 << aesthetic as u8;
+        if missing {
+            self.missing_aesthetics |= mask;
+        } else {
+            self.missing_aesthetics &= !mask;
+        }
+    }
+}
+fn coordinate_space(
+    data: &DatasetSnapshot,
+    value: &Numeric,
+    profile: Profile,
+) -> ChartResult<ValueSpace> {
     if let Numeric::Category(id) = value {
         return data
             .categories(*id)
-            .map(|v| ValueSpace::Categorical {
-                categories: v.to_vec(),
+            .map(|v| {
+                if profile == Profile::Ggplot2_4_0_3
+                    && data.rows().any(|row| row.value(*id).is_none())
+                {
+                    ValueSpace::NullableCategorical {
+                        categories: v
+                            .iter()
+                            .cloned()
+                            .map(Some)
+                            .chain(std::iter::once(None))
+                            .collect(),
+                    }
+                } else {
+                    ValueSpace::Categorical {
+                        categories: v.to_vec(),
+                    }
+                }
             })
             .ok_or_else(|| {
                 error(
@@ -727,8 +798,12 @@ fn coordinate_space(data: &DatasetSnapshot, value: &Numeric) -> ChartResult<Valu
     }
     numeric_space(data, value)
 }
-fn source_space(data: &DatasetSnapshot, value: &Numeric) -> ChartResult<Option<ValueSpace>> {
-    let space = coordinate_space(data, value)?;
+fn source_space(
+    data: &DatasetSnapshot,
+    value: &Numeric,
+    profile: Profile,
+) -> ChartResult<Option<ValueSpace>> {
+    let space = coordinate_space(data, value, profile)?;
     Ok(if matches!(value, Numeric::Literal(_)) {
         None
     } else {
@@ -783,13 +858,20 @@ pub(super) fn eligible_domains(layer: &PreparedLayer) -> DomainContributions {
         } else {
             &mut d.y_space
         };
-        if let Some(ValueSpace::Categorical { categories }) = space {
-            let mut used = BTreeSet::new();
+        if space.as_ref().is_some_and(ValueSpace::is_categorical) {
+            let mut used = layer
+                .unpainted_categories
+                .as_ref()
+                .map_or_else(BTreeSet::new, |categories| {
+                    categories[usize::from(!horizontal)].clone()
+                });
             let mut include = |p: Point| {
                 used.insert(if horizontal { p.x() } else { p.y() } as usize);
             };
             for mark in layer.marks.iter() {
                 match &mark.geometry {
+                    PreparedGeometry::HierarchyNode(_) | PreparedGeometry::HierarchyLink { .. } => {
+                    }
                     PreparedGeometry::Point(p)
                     | PreparedGeometry::ShapePath { center: p, .. }
                     | PreparedGeometry::ShapePathRun { center: p, .. } => include(*p),
@@ -813,12 +895,25 @@ pub(super) fn eligible_domains(layer: &PreparedLayer) -> DomainContributions {
                     }
                 }
             }
-            *categories = categories
-                .iter()
-                .enumerate()
-                .filter(|(i, _)| used.contains(i))
-                .map(|(_, s)| s.clone())
-                .collect();
+            match space.as_mut().unwrap() {
+                ValueSpace::Categorical { categories } => {
+                    let mut i = 0;
+                    categories.retain(|_| {
+                        let keep = used.contains(&i);
+                        i += 1;
+                        keep
+                    });
+                }
+                ValueSpace::NullableCategorical { categories } => {
+                    let mut i = 0;
+                    categories.retain(|_| {
+                        let keep = used.contains(&i);
+                        i += 1;
+                        keep
+                    });
+                }
+                _ => unreachable!(),
+            }
         }
     }
     d
@@ -865,7 +960,33 @@ pub(super) fn merge_axis(
     } else {
         (&mut a.y_space, &b.y_space)
     };
-    if let (
+    let nullable = matches!(prior, Some(ValueSpace::NullableCategorical { .. }))
+        || matches!(next, Some(ValueSpace::NullableCategorical { .. }));
+    if nullable
+        && prior.as_ref().is_some_and(ValueSpace::is_categorical)
+        && next.as_ref().is_some_and(ValueSpace::is_categorical)
+    {
+        let keys = |space: &ValueSpace| match space {
+            ValueSpace::Categorical { categories } => {
+                categories.iter().cloned().map(Some).collect::<Vec<_>>()
+            }
+            ValueSpace::NullableCategorical { categories } => categories.clone(),
+            _ => unreachable!(),
+        };
+        let mut p = keys(prior.as_ref().unwrap());
+        let mut seen: BTreeSet<_> = p.iter().cloned().collect();
+        p.extend(
+            keys(next.as_ref().unwrap())
+                .into_iter()
+                .filter(|key| seen.insert(key.clone())),
+        );
+        *prior = Some(ValueSpace::NullableCategorical { categories: p });
+        let extent = if horizontal { &mut a.x } else { &mut a.y };
+        if let Some(e) = if horizontal { b.x } else { b.y } {
+            Extent::include(extent, e.minimum);
+            Extent::include(extent, e.maximum);
+        }
+    } else if let (
         Some(ValueSpace::Categorical { categories: p }),
         Some(ValueSpace::Categorical { categories: n }),
     ) = (prior, next)
@@ -880,6 +1001,7 @@ pub(super) fn merge_axis(
     } else {
         merge_domains(a, &b)?;
     }
+
     Ok(())
 }
 
@@ -901,6 +1023,7 @@ fn source_binding(
     authored: &SourceAes,
     inherited: &SourceAes,
     data: &DatasetSnapshot,
+    profile: Profile,
 ) -> ChartResult<(SourceAes, DomainContributions)> {
     let endpoints = matches!(
         layer.geom,
@@ -912,6 +1035,16 @@ fn source_binding(
     } else {
         authored.clone()
     };
+    if layer.geom == Geom::Hierarchy || layer.hierarchy.is_some() {
+        super::hierarchy::validate(layer, data, inherited)?;
+        if let Some(group) = &aes.grouping {
+            validate_group(data, group)?;
+        }
+        if let Some(group) = aes.group {
+            validate_group(data, &Grouping::Field(group))?;
+        }
+        return Ok((aes, DomainContributions::default()));
+    }
     let (Some(x), Some(y)) = (&aes.x, &aes.y) else {
         return Err(error(
             DiagnosticCode::SchemaConflict,
@@ -941,7 +1074,7 @@ fn source_binding(
         .into_iter()
         .flatten()
     {
-        coordinate_space(data, value)?;
+        coordinate_space(data, value, profile)?;
     }
     if let Some(size) = &aes.size {
         numeric_space(data, size)?;
@@ -951,14 +1084,14 @@ fn source_binding(
         .clone()
         .unwrap_or_else(|| aes.group.map_or(Grouping::All, Grouping::Field));
     validate_group(data, &grouping)?;
-    domains.x_space = source_space(data, x)?;
-    domains.y_space = source_space(data, y)?;
+    domains.x_space = source_space(data, x, profile)?;
+    domains.y_space = source_space(data, y, profile)?;
     if endpoints {
         if let Some(value) = &aes.x2 {
-            merge_space(&mut domains.x_space, &source_space(data, value)?)?;
+            merge_space(&mut domains.x_space, &source_space(data, value, profile)?)?;
         }
         if let Some(value) = &aes.y2 {
-            merge_space(&mut domains.y_space, &source_space(data, value)?)?;
+            merge_space(&mut domains.y_space, &source_space(data, value, profile)?)?;
         }
     }
     if matches!(
@@ -971,15 +1104,19 @@ fn source_binding(
                 "Ribbon requires a y2 upper-bound mapping.",
             )
         })?;
-        merge_space(&mut domains.y_space, &source_space(data, y2)?)?;
+        merge_space(&mut domains.y_space, &source_space(data, y2, profile)?)?;
     }
     for bound in [&aes.low, &aes.high].into_iter().flatten() {
-        merge_space(&mut domains.y_space, &source_space(data, bound)?)?;
+        merge_space(&mut domains.y_space, &source_space(data, bound, profile)?)?;
     }
     if matches!(layer.geom, Geom::Ohlc { .. } | Geom::Bar { .. })
         && matches!(
             domains.y_space,
-            Some(ValueSpace::Categorical { .. } | ValueSpace::Timestamp { .. })
+            Some(
+                ValueSpace::Categorical { .. }
+                    | ValueSpace::NullableCategorical { .. }
+                    | ValueSpace::Timestamp { .. }
+            )
         )
     {
         return Err(error(
@@ -1049,9 +1186,10 @@ fn validate_line_size(layer: &Layer, mapped: bool) -> ChartResult<()> {
 }
 
 struct GeometryBudget<'a> {
+    profile: Profile,
     geometry_theme: Option<&'a crate::theme::GeometryTheme<crate::color::Paint>>,
     population_axes: &'a [crate::layout::AxisSpec],
-    extensions: &'a ExtensionRegistry,
+    extensions: &'a Arc<ExtensionRegistry>,
     limits: CompileLimits,
     vertices: usize,
     color_domains: BTreeMap<crate::ScaleId, Vec<String>>,
@@ -1071,9 +1209,18 @@ fn prepare_layer(
     let limits = budget.limits;
     let vertices = &mut budget.vertices;
     let mut domains;
+    let mut hierarchy = None;
     let (mut encoded, mapped_size): (Vec<EncodedRow>, bool) = match (&table.rows, &layer.mappings) {
+        (PreparedRows::Source(_), Mappings::Source(_)) if layer.geom == Geom::Hierarchy => {
+            let (prepared_hierarchy, rows) =
+                super::hierarchy::prepare(layer, &table, data, inherited, extensions, limits)?;
+            hierarchy = prepared_hierarchy;
+            domains = DomainContributions::default();
+            (rows, false)
+        }
         (PreparedRows::Source(rows), Mappings::Source(authored)) => {
-            let (aes, bound_domains) = source_binding(layer, authored, inherited, data)?;
+            let (aes, bound_domains) =
+                source_binding(layer, authored, inherited, data, budget.profile)?;
             domains = bound_domains;
             let (Some(x), Some(y)) = (&aes.x, &aes.y) else {
                 return Err(error(
@@ -1109,6 +1256,8 @@ fn prepare_layer(
                 if let Numeric::Category(id) = value {
                     if let Some(crate::data::ValueRef::Category(label)) = row.value(*id) {
                         catalogs.get(id)?.get(label).copied()
+                    } else if budget.profile == Profile::Ggplot2_4_0_3 && row.value(*id).is_none() {
+                        Some(catalogs.get(id)?.len() as f64)
                     } else {
                         None
                     }
@@ -1121,13 +1270,18 @@ fn prepare_layer(
                 .map(|r| {
                     let row = index[&r.key];
                     EncodedRow {
+                        missing_aesthetics: 0,
+                        values: BTreeMap::new(),
                         x: coordinate(row, x),
                         y: coordinate(row, y),
                         x2: aes.x2.as_ref().and_then(|v| coordinate(row, v)),
                         y2: aes.y2.as_ref().and_then(|v| coordinate(row, v)),
                         color: None,
+                        fill: None,
+                        stroke: None,
                         shape: None,
                         opacity: None,
+                        alpha: None,
                         stroke_width: None,
                         low: aes.low.as_ref().and_then(|v| coordinate(row, v)),
                         high: aes.high.as_ref().and_then(|v| coordinate(row, v)),
@@ -1198,13 +1352,18 @@ fn prepare_layer(
                 rows.iter()
                     .enumerate()
                     .map(|(i, r)| EncodedRow {
+                        missing_aesthetics: 0,
+                        values: BTreeMap::new(),
                         x: value(i, r, &aes.x, 0),
                         y: value(i, r, &aes.y, 1),
                         x2: aes.x2.as_ref().and_then(|v| value(i, r, v, 2)),
                         y2: aes.y2.as_ref().and_then(|v| value(i, r, v, 3)),
                         color: None,
+                        fill: None,
+                        stroke: None,
                         shape: None,
                         opacity: None,
+                        alpha: None,
                         stroke_width: None,
                         low: None,
                         high: None,
@@ -1259,13 +1418,18 @@ fn prepare_layer(
                 .iter()
                 .enumerate()
                 .map(|(i, r)| EncodedRow {
+                    missing_aesthetics: 0,
+                    values: BTreeMap::new(),
                     x: value(i, r, &aes.x, 0),
                     y: value(i, r, &aes.y, 1),
                     x2: aes.x2.as_ref().and_then(|v| value(i, r, v, 2)),
                     y2: aes.y2.as_ref().and_then(|v| value(i, r, v, 3)),
                     color: None,
+                    fill: None,
+                    stroke: None,
                     shape: None,
                     opacity: None,
+                    alpha: None,
                     stroke_width: None,
                     low: None,
                     high: None,
@@ -1295,7 +1459,11 @@ fn prepare_layer(
         if !baseline.is_finite()
             || matches!(
                 domains.y_space,
-                Some(ValueSpace::Categorical { .. } | ValueSpace::Timestamp { .. })
+                Some(
+                    ValueSpace::Categorical { .. }
+                        | ValueSpace::NullableCategorical { .. }
+                        | ValueSpace::Timestamp { .. }
+                )
             )
         {
             return Err(error(
@@ -1323,13 +1491,14 @@ fn prepare_layer(
             }
         }
     }
-    super::scale_stage::generated_rows(layer, budget.population_axes, &mut domains, &mut encoded);
+    super::scale_stage::generated_rows(layer, budget.population_axes, &mut domains, &mut encoded)?;
     let catalog = layer
         .color
         .as_ref()
         .and_then(|c| budget.color_domains.get(&c.id));
     let color_legend = super::colors::apply(
-        layer,
+        layer.color.as_ref(),
+        None,
         data,
         &table,
         &mut encoded,
@@ -1343,7 +1512,43 @@ fn prepare_layer(
                 .and_then(|c| budget.color_samples.get(&c.id)),
         },
     )?;
-    super::numeric_aesthetics::apply(
+    let mut paint_legends = BTreeMap::new();
+    for (channel, encoding) in &layer.paint_scales {
+        if match channel {
+            PaintAesthetic::Fill => layer.style.fill.is_some(),
+            PaintAesthetic::Stroke => layer.style.stroke.is_some(),
+        } {
+            continue;
+        }
+        if let Some(legend) = super::colors::apply(
+            Some(encoding),
+            Some(*channel),
+            data,
+            &table,
+            &mut encoded,
+            super::colors::ColorContext {
+                limits,
+                registry: extensions,
+                shared: budget.color_domains.get(&encoding.id).map(Vec::as_slice),
+                samples: budget.color_samples.get(&encoding.id),
+            },
+        )? {
+            paint_legends.insert(*channel, legend);
+        }
+    }
+    let numeric_scales = super::numeric_aesthetics::apply(
+        layer,
+        data,
+        &table,
+        &mut encoded,
+        super::numeric_aesthetics::NumericContext {
+            limits,
+            samples: budget.color_samples,
+            registry: extensions,
+            profile: budget.profile,
+        },
+    )?;
+    let value_scales = super::style_channels::apply(
         layer,
         data,
         &table,
@@ -1364,10 +1569,83 @@ fn prepare_layer(
     if let Some(symbol) = shape_protocols.symbol() {
         super::symbols::custom_glyphs(&mut symbol_legends, symbol, limits, vertices)?;
     }
-    let mapped_size = mapped_size || layer.numeric_scales.contains_key(&NumericAesthetic::Size);
+    let area_size = layer.geom == Geom::Point
+        && layer
+            .numeric_scales
+            .contains_key(&NumericAesthetic::AreaSize);
+    let mapped_size =
+        mapped_size || area_size || layer.numeric_scales.contains_key(&NumericAesthetic::Size);
     let stack = super::positions::apply(layer, &domains, &mut encoded, limits, &shape_protocols)?;
     super::positions::output_space(layer, &mut domains);
-    super::after_scale::apply(layer, budget.geometry_theme, mapped_size, &mut encoded)?;
+    super::after_scale::apply(
+        layer,
+        budget.geometry_theme,
+        mapped_size,
+        &mut encoded,
+        budget.profile,
+    )?;
+    let mut unpainted_categories: Option<Box<[BTreeSet<usize>; 2]>> = None;
+    if budget.profile == Profile::Ggplot2_4_0_3
+        && matches!(
+            layer.geom,
+            Geom::Point
+                | Geom::ShapeSymbol { .. }
+                | Geom::Line { .. }
+                | Geom::ShapeLine { .. }
+                | Geom::Rule
+        )
+    {
+        for row in &mut encoded {
+            if [
+                AfterScaleAesthetic::Color,
+                AfterScaleAesthetic::Stroke,
+                AfterScaleAesthetic::Size,
+                AfterScaleAesthetic::LineWidth,
+            ]
+            .iter()
+            .any(|a| row.is_missing(*a))
+            {
+                // ggplot2 trains position scales before removing missing paint.
+                // Retain each finite contribution without emitting an invisible
+                // primitive or changing source category ordinals.
+                for (axis, values, extent, space) in [
+                    (
+                        0,
+                        [
+                            row.x,
+                            (layer.geom == Geom::Rule).then_some(row.x2).flatten(),
+                        ],
+                        &mut domains.x,
+                        &domains.x_space,
+                    ),
+                    (
+                        1,
+                        [
+                            row.y,
+                            (layer.geom == Geom::Rule).then_some(row.y2).flatten(),
+                        ],
+                        &mut domains.y,
+                        &domains.y_space,
+                    ),
+                ] {
+                    for value in values.into_iter().flatten().filter(|v| v.is_finite()) {
+                        Extent::include(extent, value);
+                        if let Some(space) = space
+                            && space.is_categorical()
+                            && value >= 0.
+                            && value.fract() == 0.
+                            && value < space.category_count().unwrap() as f64
+                        {
+                            unpainted_categories.get_or_insert_with(Default::default)[axis]
+                                .insert(value as usize);
+                        }
+                    }
+                }
+                row.x = None;
+                row.y = None;
+            }
+        }
+    }
     let mapped_size = mapped_size || layer.after_scale.contains_key(&AfterScaleAesthetic::Size);
     super::shape_encoding::allocate(layer, &mut encoded, limits, &shape_protocols)?;
     if matches!(layer.geom, Geom::ShapeArea { .. }) {
@@ -1379,10 +1657,14 @@ fn prepare_layer(
         }
     }
     let mut prepared = PreparedLayer {
+        hierarchy,
         shape_protocols,
         orientation: layer.orientation,
         interactions: BTreeMap::new(),
         color_legend,
+        paint_legends,
+        numeric_scales,
+        value_scales,
         symbol_legends,
         position: layer.position.clone(),
         id: layer.id,
@@ -1391,11 +1673,14 @@ fn prepare_layer(
         table,
         marks: Arc::new(vec![]),
         domains,
+        unpainted_categories,
         invalid_geometry: 0,
         visible: state.is_visible(layer.id),
     };
     let mut samples = vec![];
-    if let Some(stack) = stack.filter(|_| matches!(layer.geom, Geom::ShapeArea { .. })) {
+    if layer.geom == Geom::Hierarchy {
+        super::hierarchy::emit(&mut prepared, layer, encoded, vertices)?;
+    } else if let Some(stack) = stack.filter(|_| matches!(layer.geom, Geom::ShapeArea { .. })) {
         super::stack_position::emit(&mut prepared, layer, &encoded, stack, vertices)?;
     } else if let Some((_, connect_gaps)) = layer.geom.run() {
         let mut groups: Vec<(GroupValue, Vec<EncodedRow>)> = vec![];
@@ -1434,8 +1719,41 @@ fn prepare_layer(
             };
             groups[i].1.push(row);
         }
+        let segment_styles = budget.profile == Profile::Ggplot2_4_0_3
+            && matches!(
+                layer.geom,
+                Geom::Line { .. }
+                    | Geom::ShapeLine {
+                        curve: crate::shape::CurveSpec::Linear,
+                        ..
+                    }
+            );
+        if segment_styles {
+            let mut varied = false;
+            let mut non_solid = false;
+            for (_, rows) in &groups {
+                varied |= run_style(layer, rows.iter()).is_err();
+                for row in rows.iter().filter(|r| r.x.is_some() && r.y.is_some()) {
+                    non_solid |= row_style(layer, row)?
+                        .line_type
+                        .is_some_and(|t| t != LineType::Solid);
+                }
+            }
+            if varied && non_solid {
+                return Err(error(
+                    DiagnosticCode::UnsupportedCapability,
+                    "Ggplot lines cannot vary color, alpha, linewidth or line type when any line is non-solid.",
+                ));
+            }
+        }
         for (group, rows) in groups {
-            let style = run_style(layer, rows.iter())?;
+            let resolved = run_style(layer, rows.iter());
+            let varying = segment_styles && resolved.is_err();
+            let style = if varying {
+                LineBlockStyle::Varying(layer)
+            } else {
+                LineBlockStyle::Constant(resolved?)
+            };
 
             // Missing x has no sortable position. It separates authored blocks before x ordering.
             let mut block = vec![];
@@ -1467,23 +1785,32 @@ fn prepare_layer(
             )?;
         }
     } else {
-        let resolved_style = layer.style.resolve();
         let candle_colors = layer.candle_colors;
         for row in encoded {
-            let base_style = Style {
-                color: super::numeric_aesthetics::apply_opacity(
-                    row.color.unwrap_or(layer.style.color),
-                    row.opacity,
-                ),
-                stroke_width: row.stroke_width.unwrap_or(resolved_style.stroke_width),
-                ..resolved_style
-            };
+            let base_style = row_style(layer, &row)?;
             let style = if mapped_size {
-                row.size.filter(|v| *v > 0.).map(|size| Style {
-                    radius: size,
-                    stroke_width: row.stroke_width.unwrap_or(size),
-                    ..base_style
-                })
+                row.size
+                    .filter(|v| {
+                        *v > 0.
+                            || (v.is_finite()
+                                && budget.profile == Profile::Ggplot2_4_0_3
+                                && (layer.geom == Geom::Point
+                                    || (layer.geom.reference_linewidth() && *v == 0.)))
+                    })
+                    .map(|size| Style {
+                        radius: size,
+                        stroke_width: row.stroke_width.unwrap_or(
+                            if area_size
+                                || (budget.profile == Profile::Ggplot2_4_0_3
+                                    && matches!(layer.geom, Geom::Point))
+                            {
+                                base_style.stroke_width
+                            } else {
+                                size
+                            },
+                        ),
+                        ..base_style
+                    })
             } else {
                 Some(base_style)
             };
@@ -1535,6 +1862,7 @@ fn prepare_layer(
                 ] {
                     include_geometry(&mut prepared.domains, &geometry);
                     Arc::make_mut(&mut prepared.marks).push(PreparedMark {
+                        aesthetics: row.values.clone(),
                         geometry,
                         targets: vec![row.target.clone()],
                         group: group.clone(),
@@ -1560,7 +1888,45 @@ fn prepare_layer(
                         Point::new(x, y)?,
                         limits,
                     )?),
-                    Geom::Point => Some(PreparedGeometry::Point(Point::new(x, y)?)),
+                    Geom::Point => match row.values.get(&ValueAesthetic::Shape) {
+                        Some(
+                            crate::interpolate::Value::Missing | crate::interpolate::Value::Null,
+                        ) => None,
+                        Some(crate::interpolate::Value::Number(crate::interpolate::Number(
+                            code,
+                        ))) => style
+                            .map(|style| {
+                                super::shape_encoding::geometry(
+                                    Geom::ShapeSymbol {
+                                        kind: crate::shape::SymbolKind::Ggplot(*code as u8),
+                                        size: {
+                                            let radius = if budget.profile == Profile::Ggplot2_4_0_3
+                                                && !area_size
+                                                && !layer.grammar.as_ref().is_some_and(|g| {
+                                                    g.default_radius == Some(false)
+                                                }) {
+                                                // gg_par fontsize = size * .pt + stroke * .stroke / 2;
+                                                // R's circle glyph radius is 3/8 of that device fontsize.
+                                                (style.radius * 0.37640625
+                                                    + style.stroke_width * 0.25)
+                                                    .max(0.)
+                                            } else {
+                                                style.radius
+                                            };
+                                            std::f64::consts::PI * radius * radius
+                                        },
+                                        paint: crate::shape::SymbolPaint::Auto,
+                                    },
+                                    &row,
+                                    Point::new(x, y)?,
+                                    limits,
+                                    None,
+                                )
+                            })
+                            .transpose()?,
+                        None => Some(PreparedGeometry::Point(Point::new(x, y)?)),
+                        _ => unreachable!("validated point shape"),
+                    },
                     Geom::Bar { width, .. } => row
                         .y2
                         .map(|y2| {
@@ -1586,7 +1952,8 @@ fn prepare_layer(
                         }),
                         _ => None,
                     },
-                    Geom::Line { .. }
+                    Geom::Hierarchy
+                    | Geom::Line { .. }
                     | Geom::ShapeLineRadial { .. }
                     | Geom::ShapeAreaRadial { .. }
                     | Geom::ShapeLine { .. }
@@ -1606,6 +1973,9 @@ fn prepare_layer(
                     PreparedGeometry::ShapePath { ref geometry, .. } => {
                         geometry.commands().len() + 1
                     }
+                    PreparedGeometry::HierarchyNode(_) | PreparedGeometry::HierarchyLink { .. } => {
+                        0
+                    }
                     PreparedGeometry::Point(_) => 1,
                     PreparedGeometry::Rule { .. } => 2,
                     PreparedGeometry::Rectangle { .. } | PreparedGeometry::Bar { .. } => 4,
@@ -1618,6 +1988,7 @@ fn prepare_layer(
                 charge(vertices, n, "vertex")?;
                 include_geometry(&mut prepared.domains, &geometry);
                 Arc::make_mut(&mut prepared.marks).push(PreparedMark {
+                    aesthetics: row.values.clone(),
                     geometry,
                     targets: if matches!(layer.geom, Geom::ShapeLinkRadial { .. }) {
                         vec![row.target.clone(), row.target]
@@ -1653,55 +2024,94 @@ fn prepare_layer(
     super::orientation::output(&mut prepared)?;
     Ok(prepared)
 }
+/// Resolve independent paint, alpha and linewidth once for every geometry consumer.
+pub(super) fn row_style(layer: &Layer, row: &EncodedRow) -> ChartResult<Style> {
+    let alpha = layer.style.alpha.or(row.alpha);
+    let resolve = |paint| {
+        super::numeric_aesthetics::apply_alpha(
+            super::numeric_aesthetics::apply_opacity(paint, row.opacity),
+            alpha,
+        )
+    };
+    let default_fill = matches!(row.values.get(&ValueAesthetic::Shape), Some(crate::interpolate::Value::Number(crate::interpolate::Number(code))) if (21. ..=25.).contains(code))
+        || matches!(
+            row.shape.as_deref().and_then(|s| s.symbol).map(|s| s.0),
+            Some(crate::shape::SymbolKind::Ggplot(21..=25))
+        )
+        || matches!(
+            layer.geom,
+            Geom::ShapeSymbol {
+                kind: crate::shape::SymbolKind::Ggplot(21..=25),
+                ..
+            }
+        );
+    Ok(Style {
+        color: resolve(row.color.unwrap_or(layer.style.color)),
+        fill: layer.style.fill.or(row.fill).map(resolve).or_else(|| {
+            default_fill.then_some(crate::scene::Color {
+                red: 0,
+                green: 0,
+                blue: 0,
+                alpha: 0,
+            })
+        }),
+        stroke: layer.style.stroke.or(row.stroke).map(resolve),
+        line_type: layer.style.line_type.or(row
+            .values
+            .get(&ValueAesthetic::LineType)
+            .map(super::style_channels::line_type)
+            .transpose()?),
+        stroke_width: row.stroke_width.unwrap_or(layer.style.stroke_width),
+        ..layer.style.resolve()
+    })
+}
 pub(super) fn run_style<'a>(
     layer: &Layer,
     rows: impl Iterator<Item = &'a EncodedRow>,
 ) -> ChartResult<Style> {
-    let mut style = layer.style.resolve();
-    let mut color = None;
-    let mut width = None;
+    let mut result: Option<Style> = None;
     for row in rows.filter(|r| r.x.is_some() && r.y.is_some()) {
-        if let Some(w) = row.stroke_width {
-            if width.is_some_and(|old| old != w) {
-                return Err(error(
-                    DiagnosticCode::UnsupportedCapability,
-                    "Stroke width must be constant within each line/filled group.",
-                ));
+        let style = row_style(layer, row)?;
+        let same = |old: Style| {
+            if matches!(layer.geom, Geom::Line { .. } | Geom::ShapeLine { .. }) {
+                old.stroke.unwrap_or(old.color) == style.stroke.unwrap_or(style.color)
+                    && old.stroke_width == style.stroke_width
+                    && old.line_type == style.line_type
+                    && old.units == style.units
+            } else {
+                old == style
             }
-            width = Some(w);
+        };
+        if result.is_some_and(|old| !same(old)) {
+            return Err(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Line and filled runs require constant styling within each group.",
+            ));
         }
-        if let Some(c) = row
-            .color
-            .or_else(|| row.opacity.map(|_| layer.style.color))
-            .map(|c| super::numeric_aesthetics::apply_opacity(c, row.opacity))
-        {
-            if color.is_some_and(|old| old != c) {
-                return Err(error(
-                    DiagnosticCode::UnsupportedCapability,
-                    "Filled/line runs require color constant within each group; use a group color mapping.",
-                ));
-            }
-            color = Some(c);
-        }
+        result = Some(style);
     }
-    if let Some(c) = color {
-        style.color = c;
-    }
-    if let Some(w) = width {
-        style.stroke_width = w;
-    }
-
-    Ok(style)
+    Ok(result.unwrap_or_else(|| layer.style.resolve()))
 }
+
+#[derive(Clone, Copy)]
+enum LineBlockStyle<'a> {
+    Constant(Style),
+    Varying(&'a Layer),
+}
+
 fn emit_line_block(
     prepared: &mut PreparedLayer,
     rows: &mut Vec<EncodedRow>,
     group: &GroupValue,
-    style: Style,
+    block_style: LineBlockStyle<'_>,
     geom: Geom,
     vertices: &mut usize,
     limits: CompileLimits,
 ) -> ChartResult<()> {
+    let style = match block_style {
+        LineBlockStyle::Constant(style) => style,
+        LineBlockStyle::Varying(layer) => layer.style.resolve(),
+    };
     if matches!(
         geom,
         Geom::ShapeLineRadial { .. } | Geom::ShapeAreaRadial { .. }
@@ -1718,6 +2128,35 @@ fn emit_line_block(
                 .unwrap_or(std::cmp::Ordering::Equal)
                 .then(a.ordinal.cmp(&b.ordinal))
         });
+    }
+    if let LineBlockStyle::Varying(layer) = block_style {
+        let mut previous: Option<EncodedRow> = None;
+        for row in rows.drain(..) {
+            if row.x.is_none() || row.y.is_none() {
+                if !connect {
+                    previous = None;
+                }
+                continue;
+            }
+            if let Some(before) = previous.take() {
+                let style = row_style(layer, &before)?;
+                charge(vertices, 2, "styled line segment vertex")?;
+                let geometry = PreparedGeometry::LineRun(vec![
+                    Point::new(before.x.expect("valid"), before.y.expect("valid"))?,
+                    Point::new(row.x.expect("valid"), row.y.expect("valid"))?,
+                ]);
+                include_geometry(&mut prepared.domains, &geometry);
+                Arc::make_mut(&mut prepared.marks).push(PreparedMark {
+                    geometry,
+                    style,
+                    group: group.clone(),
+                    targets: vec![before.target, row.target.clone()],
+                    aesthetics: before.values,
+                });
+            }
+            previous = Some(row);
+        }
+        return Ok(());
     }
     let mut points = vec![];
     let mut upper = vec![];
@@ -1785,6 +2224,7 @@ fn push_run(
         };
         include_geometry(&mut prepared.domains, &geometry);
         Arc::make_mut(&mut prepared.marks).push(PreparedMark {
+            aesthetics: BTreeMap::new(),
             geometry,
             targets: std::mem::take(targets),
             group: group.clone(),
@@ -1798,6 +2238,7 @@ pub(super) fn include_geometry(domains: &mut DomainContributions, geometry: &Pre
         Extent::include(&mut domains.y, p.y());
     };
     match geometry {
+        PreparedGeometry::HierarchyNode(_) | PreparedGeometry::HierarchyLink { .. } => {}
         PreparedGeometry::Point(p)
         | PreparedGeometry::ShapePath { center: p, .. }
         | PreparedGeometry::ShapePathRun { center: p, .. } => include(*p),
@@ -1869,7 +2310,8 @@ fn preflight_schemas(
         .map_err(|e| context(e, data, Some(layer.id)))?;
         let mut binding = match (&output.bins, &output.statistical, &layer.mappings) {
             (None, None, Mappings::Source(aes)) => {
-                source_binding(layer, aes, &definition.mappings, data).map(|(_, domain)| domain)
+                source_binding(layer, aes, &definition.mappings, data, definition.profile())
+                    .map(|(_, domain)| domain)
             }
             (Some(space), None, Mappings::Binned(aes)) => bin_binding(layer, aes, space),
             (None, Some(fields), Mappings::Statistical(aes)) => {
@@ -1881,7 +2323,7 @@ fn preflight_schemas(
             )),
         }
         .map_err(|e| context(e, data, Some(layer.id)))?;
-        if let Some(color) = &layer.color {
+        for color in super::colors::encodings(layer) {
             super::colors::preflight(
                 color,
                 data,
@@ -1898,8 +2340,10 @@ fn preflight_schemas(
         if layer.orientation == Orientation::Horizontal {
             super::orientation::domains(&mut binding);
         }
-        merge_named(&mut domains, layer.scales, &binding)
-            .map_err(|e| context(e, data, Some(layer.id)))?;
+        if layer.geom != Geom::Hierarchy {
+            merge_named(&mut domains, layer.scales, &binding)
+                .map_err(|e| context(e, data, Some(layer.id)))?;
+        }
     }
     Ok(())
 }
@@ -2036,7 +2480,10 @@ fn statistical_binding(
         space(v)?;
     }
     if let Some(v) = &aes.size
-        && matches!(space(v)?, Some(ValueSpace::Categorical { .. }))
+        && matches!(
+            space(v)?,
+            Some(ValueSpace::Categorical { .. } | ValueSpace::NullableCategorical { .. })
+        )
     {
         return Err(error(
             DiagnosticCode::SchemaConflict,
@@ -2176,6 +2623,7 @@ fn apply_custom_geometry(
         include_geometry(&mut domains, &output.geometry);
         interactions.insert(marks.len(), output.interaction);
         marks.push(PreparedMark {
+            aesthetics: BTreeMap::new(),
             geometry: output.geometry,
             targets: source.targets.clone(),
             group: source.group.clone(),
@@ -2218,10 +2666,13 @@ fn numeric_expression_type<R>(
     Ok(())
 }
 fn stat_expression_type(fields: &[StatColumn], field: &StatField) -> ChartResult<ExpressionType> {
-    if !fields
-        .iter()
-        .any(|c| &c.field == field && !matches!(c.space, ValueSpace::Categorical { .. }))
-    {
+    if !fields.iter().any(|c| {
+        &c.field == field
+            && !matches!(
+                c.space,
+                ValueSpace::Categorical { .. } | ValueSpace::NullableCategorical { .. }
+            )
+    }) {
         return Err(error(
             DiagnosticCode::SchemaConflict,
             "Expression requires a numeric field in this statistic's generated schema.",

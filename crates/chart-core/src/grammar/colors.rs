@@ -20,6 +20,30 @@ pub enum ColorInput {
     /// Generated numeric statistical field.
     Statistical(StatField),
 }
+/// Independent paint channels; the legacy color channel remains a shared fallback.
+#[derive(
+    Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, serde::Serialize, serde::Deserialize,
+)]
+pub enum PaintAesthetic {
+    /// Interior paint.
+    Fill,
+    /// Outline and line paint.
+    Stroke,
+}
+
+pub(super) fn encodings(layer: &Layer) -> impl Iterator<Item = &ColorEncoding> {
+    layer.color.iter().chain(
+        layer
+            .paint_scales
+            .iter()
+            .filter(|(channel, _)| match channel {
+                PaintAesthetic::Fill => layer.style.fill.is_none(),
+                PaintAesthetic::Stroke => layer.style.stroke.is_none(),
+            })
+            .map(|(_, encoding)| encoding),
+    )
+}
+
 /// Named portable color mapping; it never trains positional domains.
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
@@ -95,7 +119,11 @@ pub(super) fn preflight(
         ColorInput::Statistical(field)
             if fields.is_some_and(|fields| {
                 fields.iter().any(|c| {
-                    &c.field == field && !matches!(c.space, ValueSpace::Categorical { .. })
+                    &c.field == field
+                        && !matches!(
+                            c.space,
+                            ValueSpace::Categorical { .. } | ValueSpace::NullableCategorical { .. }
+                        )
                 })
             }) => {}
         _ => {
@@ -115,7 +143,8 @@ pub(super) struct ColorContext<'a> {
     pub samples: Option<&'a crate::scales::ScalePopulation>,
 }
 pub(super) fn apply(
-    layer: &Layer,
+    encoding: Option<&ColorEncoding>,
+    channel: Option<PaintAesthetic>,
     data: &DatasetSnapshot,
     table: &PreparedTable,
     rows: &mut [EncodedRow],
@@ -127,7 +156,7 @@ pub(super) fn apply(
         shared,
         samples,
     } = context;
-    let Some(encoding) = &layer.color else {
+    let Some(encoding) = encoding else {
         return Ok(None);
     };
     let fields = match &table.schema {
@@ -149,17 +178,33 @@ pub(super) fn apply(
         categories,
         keys,
         values,
-    } = read_inputs(&encoding.input, data, table, rows, limits, shared)?;
+    } = read_inputs(
+        &encoding.input,
+        data,
+        table,
+        rows,
+        limits,
+        shared,
+        matches!(&encoding.scale, ColorScale::Mapped { scale, .. } if scale.has_ggplot()),
+    )?;
     let trained;
     let scale = if let ColorScale::Mapped { scale, missing } = &encoding.scale {
         trained = ColorScale::Mapped {
-            scale: scale.trained_population(samples)?,
+            scale: scale.trained_population(samples, registry)?,
             missing: *missing,
         };
         &trained
     } else {
         &encoding.scale
     };
+    if let ColorScale::Mapped { scale, .. } = scale
+        && scale.guide_entries() > limits.max_groups
+    {
+        return Err(error(
+            DiagnosticCode::ResourceLimit,
+            "Trained color scale exceeds category budget.",
+        ));
+    }
     let prepared_scale = scale.prepare_with_registry(registry)?;
     let categorical_map = if let ColorScale::Discrete {
         domain,
@@ -177,8 +222,9 @@ pub(super) fn apply(
     } else {
         None
     };
+    let suppress_missing = matches!(scale,ColorScale::Mapped{scale,..} if matches!(scale.ggplot.as_deref(),Some(crate::scales::GgplotScalePolicy::Discrete{na_translate:false,..})) || matches!(scale.function, crate::scales::ScaleFunctionSpec::GgplotDiscreteIdentity(_)));
     for (i, row) in rows.iter_mut().enumerate() {
-        row.color = Some(if let Some(catalog) = &categorical_map {
+        let mut paint = Some(if let Some(catalog) = &categorical_map {
             categories[i]
                 .as_ref()
                 .and_then(|label| catalog.map(label))
@@ -200,8 +246,47 @@ pub(super) fn apply(
         } else {
             prepared_scale.numeric_paint(values[i])?
         });
+        if suppress_missing {
+            let key = keys[i].clone().or_else(|| {
+                categories[i]
+                    .as_ref()
+                    .map(|s| crate::scales::ScaleKey::Text(s.clone()))
+            });
+            if prepared_scale.missing_paint(values[i], key.as_ref()) {
+                let aesthetic = match channel {
+                    None => AfterScaleAesthetic::Color,
+                    Some(PaintAesthetic::Fill) => AfterScaleAesthetic::Fill,
+                    Some(PaintAesthetic::Stroke) => AfterScaleAesthetic::Stroke,
+                };
+                row.set_missing(aesthetic, true);
+                paint = Some(
+                    crate::scene::Color {
+                        red: 0,
+                        green: 0,
+                        blue: 0,
+                        alpha: 0,
+                    }
+                    .into(),
+                );
+            }
+        }
+        match channel {
+            None => row.color = paint,
+            Some(PaintAesthetic::Fill) => row.fill = paint,
+            Some(PaintAesthetic::Stroke) => row.stroke = paint,
+        }
+    }
+    if matches!(&encoding.scale, ColorScale::Mapped { scale, .. } if matches!(&scale.function, crate::scales::ScaleFunctionSpec::GgplotDiscreteIdentity(s) if !s.guide) || matches!(scale.guide.as_deref(),Some(crate::scales::GgplotScaleGuide::Hidden)))
+    {
+        return Ok(None);
     }
     let mut legend = prepared_scale.legend(encoding.id, &labels)?;
+    if legend.entries.len() > limits.max_groups {
+        return Err(error(
+            DiagnosticCode::ResourceLimit,
+            "Prepared color guide exceeds the category budget.",
+        ));
+    }
     legend.title.clone_from(&encoding.title);
     Ok(Some(legend))
 }
@@ -219,6 +304,7 @@ pub(super) fn read_inputs(
     rows: &[EncodedRow],
     limits: CompileLimits,
     shared: Option<&[String]>,
+    reference: bool,
 ) -> ChartResult<AestheticInputs> {
     let mut labels = shared.unwrap_or_default().to_vec();
     let mut categories = vec![None; rows.len()];
@@ -260,12 +346,14 @@ pub(super) fn read_inputs(
             }
             let source: BTreeMap<_, _> = data.rows().map(|r| (r.key(), r)).collect();
             for (i, row) in rows.iter().enumerate() {
-                let r = source[&row.key.expect("source row")];
+                let Some(r) = row.key.and_then(|key| source.get(&key)) else {
+                    continue;
+                };
                 keys[i] = r.value(*field).map(scale_key);
                 categories[i] = match r.value(*field) {
                     None => None,
                     Some(ValueRef::Category(s) | ValueRef::Utf8(s)) => Some(s.to_owned()),
-                    _ => super::stats::group_value(r, &Grouping::Field(*field))
+                    _ => super::stats::group_value(*r, &Grouping::Field(*field))
                         .map(|g| super::statistics::group_label(&g)),
                 };
             }
@@ -284,7 +372,13 @@ pub(super) fn read_inputs(
             super::stats::numeric_space(data, value)?;
             let source: BTreeMap<_, _> = data.rows().map(|r| (r.key(), r)).collect();
             for (i, row) in rows.iter().enumerate() {
-                values[i] = super::stats::number(source[&row.key.expect("source row")], value);
+                values[i] = row.key.and_then(|key| source.get(&key)).and_then(|r| {
+                    if reference {
+                        super::stats::raw_number(*r, value)
+                    } else {
+                        super::stats::number(*r, value)
+                    }
+                });
             }
         }
         ColorInput::Statistical(field) => {
@@ -298,10 +392,13 @@ pub(super) fn read_inputs(
                     "Generated color mapping requires statistical rows.",
                 ));
             };
-            if !fields
-                .iter()
-                .any(|c| &c.field == field && !matches!(c.space, ValueSpace::Categorical { .. }))
-            {
+            if !fields.iter().any(|c| {
+                &c.field == field
+                    && !matches!(
+                        c.space,
+                        ValueSpace::Categorical { .. } | ValueSpace::NullableCategorical { .. }
+                    )
+            }) {
                 return Err(error(
                     DiagnosticCode::SchemaConflict,
                     "Generated numeric color field is absent or categorical.",
@@ -341,23 +438,28 @@ pub(super) fn shared_catalogs(
     limits: CompileLimits,
 ) -> ChartResult<BTreeMap<ScaleId, Vec<String>>> {
     let mut counts = BTreeMap::<ScaleId, usize>::new();
-    for layer in &definition.layers {
+    for (layer, encoding) in definition
+        .layers
+        .iter()
+        .flat_map(|l| encodings(l).map(move |e| (l, e)))
+    {
         if tables.contains_key(&layer.id)
-            && let Some(ColorEncoding {
+            && let ColorEncoding {
                 id,
                 scale: ColorScale::Discrete { domain: None, .. },
                 ..
-            }) = &layer.color
+            } = encoding
         {
             *counts.entry(*id).or_default() += 1;
         }
     }
     let mut catalogs = BTreeMap::<ScaleId, Vec<String>>::new();
     let mut seen = BTreeMap::<ScaleId, BTreeSet<String>>::new();
-    for layer in &definition.layers {
-        let Some(encoding) = &layer.color else {
-            continue;
-        };
+    for (layer, encoding) in definition
+        .layers
+        .iter()
+        .flat_map(|l| encodings(l).map(move |e| (l, e)))
+    {
         if counts.get(&encoding.id).copied().unwrap_or_default() < 2 {
             continue;
         }
@@ -495,6 +597,7 @@ fn key_population(
     definition: &ChartDefinition,
     data: &DatasetSnapshot,
     table: &PreparedTable,
+    include_missing: bool,
 ) -> ChartResult<Vec<crate::scales::ScaleKey>> {
     use crate::scales::ScaleKey;
     if let ColorInput::Category(field) = input {
@@ -508,7 +611,12 @@ fn key_population(
         let index: BTreeMap<_, _> = data.rows().map(|r| (r.key(), r)).collect();
         return Ok(rows
             .iter()
-            .filter_map(|r| index[&r.key].value(*field).map(scale_key))
+            .filter_map(|r| {
+                index[&r.key]
+                    .value(*field)
+                    .map(scale_key)
+                    .or_else(|| include_missing.then_some(ScaleKey::Null))
+            })
             .collect());
     }
     if matches!(input, ColorInput::Numeric(_) | ColorInput::Statistical(_)) {
@@ -518,13 +626,16 @@ fn key_population(
             .map(ScaleKey::Number)
             .collect());
     }
-    let key = |group: &GroupValue| match input {
-        ColorInput::Group => Some(ScaleKey::Text(super::statistics::group_label(group))),
-        ColorInput::GroupField(field) => group
-            .component(*field)
-            .filter(|g| **g != GroupValue::Missing)
-            .map(|v| ScaleKey::Text(v.label())),
-        _ => None,
+    let key = |group: &GroupValue| {
+        (match input {
+            ColorInput::Group => Some(ScaleKey::Text(super::statistics::group_label(group))),
+            ColorInput::GroupField(field) => group
+                .component(*field)
+                .filter(|g| **g != GroupValue::Missing)
+                .map(|v| ScaleKey::Text(v.label())),
+            _ => None,
+        })
+        .or_else(|| include_missing.then_some(ScaleKey::Null))
     };
     Ok(match &table.rows {
         PreparedRows::Source(rows) => {
@@ -576,30 +687,42 @@ pub(super) fn shared_samples<'a>(
         }
         let mut mappings: Vec<_> = layer
             .numeric_scales
-            .values()
-            .map(|e| (e.id, &e.input, &e.scale))
+            .iter()
+            .filter(|(a, _)| **a != NumericAesthetic::Alpha || layer.style.alpha.is_none())
+            .map(|(_, e)| (e.id, &e.input, &e.scale))
+            .chain(
+                layer
+                    .value_scales
+                    .iter()
+                    .filter(|(channel, _)| {
+                        !layer.aesthetic_values.contains_key(channel)
+                            && (**channel != ValueAesthetic::LineType
+                                || layer.style.line_type.is_none())
+                    })
+                    .map(|(_, e)| (e.id, &e.input, &e.scale)),
+            )
             .collect();
-        if let Some(ColorEncoding {
-            id,
-            input,
-            scale: ColorScale::Mapped { scale, .. },
-            ..
-        }) = &layer.color
-        {
-            mappings.push((*id, input, scale));
+        for encoding in encodings(layer) {
+            if let ColorScale::Mapped { scale, .. } = &encoding.scale {
+                mappings.push((encoding.id, &encoding.input, scale));
+            }
         }
         for (id, input, scale) in mappings {
             if scale.training != crate::scales::ScaleTraining::Eligible {
                 continue;
             }
             scale.validate_training()?;
-            if matches!(scale.function, ScaleFunctionSpec::Ordinal(_)) {
+            if matches!(
+                scale.function,
+                ScaleFunctionSpec::Ordinal(_) | ScaleFunctionSpec::GgplotDiscreteIdentity(_)
+            ) {
                 let values = key_population(
                     input,
                     layer,
                     definition,
                     source.dataset(table.input.dataset)?,
                     table,
+                    scale.has_ggplot(),
                 )?;
                 let population = samples
                     .entry(id)

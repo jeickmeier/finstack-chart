@@ -6,6 +6,12 @@ use crate::ChartResult;
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct LayerGrammar {
+    /// Independent radius default; absent uses the legacy coupled size flag.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub default_radius: Option<bool>,
+    /// Independent linewidth default; absent uses the legacy coupled size flag.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub default_line_width: Option<bool>,
     /// Apply the profile's geometry size when no constant size was authored.
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub default_size: bool,
@@ -126,6 +132,16 @@ pub(super) fn resolve<'a>(
     limits: CompileLimits,
 ) -> ChartResult<std::borrow::Cow<'a, ChartDefinition>> {
     let Some(policy) = &definition.semantics else {
+        if definition
+            .axes
+            .iter()
+            .any(|a| matches!(a.scale, crate::layout::AxisScale::Binned { .. }))
+        {
+            return Err(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Positional bins require the ggplot2 pre-statistic scale stage.",
+            ));
+        }
         return Ok(std::borrow::Cow::Borrowed(definition));
     };
     policy.validate()?;
@@ -164,6 +180,18 @@ pub(super) fn resolve<'a>(
         };
         let data = source.dataset(id)?;
         if policy.profile == Profile::Ggplot2_4_0_3
+            && layer.geom == Geom::Point
+            && !layer
+                .grammar
+                .as_ref()
+                .is_some_and(|g| g.default_radius == Some(false))
+        {
+            layer
+                .style
+                .units
+                .get_or_insert(super::AestheticUnits::Millimeters);
+        }
+        if policy.profile == Profile::Ggplot2_4_0_3
             && let Some(grammar) = &layer.grammar
         {
             let theme = definition
@@ -172,12 +200,39 @@ pub(super) fn resolve<'a>(
                 .and_then(|t| t.geometry.clone())
                 .unwrap_or_default();
             theme.validate()?;
-            if grammar.default_size {
+            if grammar.default_radius.unwrap_or(grammar.default_size) {
                 layer.style.radius = theme.point_size;
+            }
+            if grammar.default_line_width.unwrap_or(grammar.default_size) {
                 layer.style.stroke_width = theme.line_width;
+            }
+            // Fixed parameters replace mapped aesthetics before scale training and
+            // group inference. Keep the authored mapping in the immutable definition.
+            if grammar.default_line_width == Some(false) {
+                layer.numeric_scales.remove(&NumericAesthetic::StrokeWidth);
             }
             if grammar.default_color {
                 layer.style.color = theme.ink;
+            } else {
+                layer.color = None;
+            }
+            if matches!(layer.geom, Geom::Point) {
+                if grammar.default_radius != Some(false) && grammar.default_line_width.is_none() {
+                    layer.style.stroke_width = theme.line_width;
+                }
+                let constant = !grammar.default_radius.unwrap_or(grammar.default_size);
+                if constant {
+                    layer.numeric_scales.remove(&NumericAesthetic::Size);
+                }
+                if (constant || layer.numeric_scales.contains_key(&NumericAesthetic::Size))
+                    && let Mappings::Source(source) = &mut layer.mappings
+                {
+                    if layer.inherit {
+                        *source = source.inherit(&definition.mappings);
+                        layer.inherit = false;
+                    }
+                    source.size = None;
+                }
             }
         }
         if policy.grouping == GroupPolicy::DiscreteInteraction {
@@ -190,10 +245,34 @@ pub(super) fn resolve<'a>(
                 _ => layer.grammar.as_ref().map(|g| g.source.clone()),
             };
             if let Some(aes) = authored {
-                let color = layer.color.as_ref().and_then(|c| match c.input {
-                    ColorInput::Category(f) | ColorInput::GroupField(f) => Some(f),
-                    _ => None,
-                });
+                let color = super::colors::encodings(layer)
+                    .map(|c| &c.input)
+                    .chain(layer.symbol.iter().map(|c| &c.input))
+                    .chain(
+                        layer
+                            .numeric_scales
+                            .iter()
+                            .filter(|(a, _)| {
+                                **a != NumericAesthetic::Alpha || layer.style.alpha.is_none()
+                            })
+                            .map(|(_, c)| &c.input),
+                    )
+                    .chain(
+                        layer
+                            .value_scales
+                            .iter()
+                            .filter(|(a, _)| {
+                                **a != ValueAesthetic::Label
+                                    && !layer.aesthetic_values.contains_key(a)
+                                    && (**a != ValueAesthetic::LineType
+                                        || layer.style.line_type.is_none())
+                            })
+                            .map(|(_, c)| &c.input),
+                    )
+                    .filter_map(|input| match *input {
+                        ColorInput::Category(f) | ColorInput::GroupField(f) => Some(f),
+                        _ => None,
+                    });
                 let group = resolve_group(&aes, color, data)?;
                 if let Mappings::Source(mapped) = &mut layer.mappings {
                     // Execution-local resolved mappings; the returned snapshot retains authored semantics.
@@ -210,8 +289,11 @@ pub(super) fn resolve<'a>(
                 }
             }
         }
-        if policy.scale_stage == ScaleStage::BeforeStatistics {
-            super::scale_stage::source_layer(layer, &definition.axes)?;
+    }
+    super::scale_stage::train_binned_axes(&mut resolved, source, limits)?;
+    if policy.scale_stage == ScaleStage::BeforeStatistics {
+        for layer in &mut resolved.layers {
+            super::scale_stage::source_layer(layer, &resolved.axes)?;
         }
     }
     resolve_transforms(&mut resolved, definition, source, policy)?;
@@ -225,7 +307,7 @@ fn keep_missing(group: &Grouping) -> Grouping {
 }
 fn resolve_group(
     aes: &SourceAes,
-    color: Option<crate::FieldId>,
+    color: impl IntoIterator<Item = crate::FieldId>,
     data: &crate::data::DatasetSnapshot,
 ) -> ChartResult<Grouping> {
     if let Some(group) = &aes.grouping {
@@ -263,7 +345,7 @@ fn resolve_group(
             add(*field)?;
         }
     }
-    if let Some(field) = color {
+    for field in color {
         add(field)?;
     }
     Ok(if fields.is_empty() {
@@ -317,6 +399,8 @@ fn resolve_transforms(
             layer.grammar = node.grammar.as_ref().map(|g| LayerGrammar {
                 source: g.source.clone(),
                 stat_grouping: g.stat_grouping.clone(),
+                default_radius: None,
+                default_line_width: None,
                 default_size: false,
                 default_color: false,
             });
@@ -362,7 +446,7 @@ fn resolve_transforms(
                 set_group(&mut layer.statistic, group);
             }
             if policy.scale_stage == ScaleStage::BeforeStatistics {
-                super::scale_stage::source_layer(&mut layer, &authored.axes)?;
+                super::scale_stage::source_layer(&mut layer, &resolved.axes)?;
             }
             if let Some(previous) = operations.insert(id, layer.statistic.clone())
                 && previous != layer.statistic

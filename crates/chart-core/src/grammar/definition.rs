@@ -558,6 +558,8 @@ pub enum LineOrder {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub enum Geom {
+    /// Deferred hierarchy nodes/edges calculated after destination panel allocation.
+    Hierarchy,
     /// Radial authored runs around one x/y center per run, with destination-unit radii.
     ShapeLineRadial {
         /// Authored order, or start-angle order for X.
@@ -676,6 +678,17 @@ pub enum Geom {
     Rectangle,
 }
 impl Geom {
+    pub(crate) fn reference_linewidth(self) -> bool {
+        matches!(
+            self,
+            Self::Line { .. }
+                | Self::Area { .. }
+                | Self::Ribbon { .. }
+                | Self::Bar { .. }
+                | Self::Rule
+                | Self::Rectangle
+        )
+    }
     /// Zero-baseline area, ordered by x and split at gaps.
     pub fn area() -> Self {
         Self::Area {
@@ -761,6 +774,21 @@ pub enum Position {
 pub struct Style<P = Color> {
     /// Fill/stroke color, before any future palette scale.
     pub color: P,
+    /// Explicit alpha replaces paint alpha, matching the ggplot2 alpha aesthetic.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub alpha: Option<f64>,
+    /// Independent fill override; absent preserves the established color channel.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub fill: Option<P>,
+    /// Independent outline override; transparent paint suppresses the outline.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub stroke: Option<P>,
+    /// Explicit dimensional units; absent preserves destination units.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub units: Option<super::AestheticUnits>,
+    /// Independent line type, with dash lengths relative to stroke width.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub line_type: Option<super::LineType>,
     /// Positive point radius in eventual destination units.
     pub radius: f64,
     /// Positive stroke width in eventual destination units.
@@ -776,6 +804,11 @@ impl<P: From<Color>> Default for Style<P> {
                 alpha: 255,
             }
             .into(),
+            alpha: None,
+            units: None,
+            line_type: None,
+            fill: None,
+            stroke: None,
             radius: 3.,
             stroke_width: 1.5,
         }
@@ -814,6 +847,19 @@ pub enum ClipPolicy {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Layer {
+    /// Explicit style constants override their corresponding mapped channels.
+    #[serde(default, skip_serializing_if = "std::collections::BTreeMap::is_empty")]
+    pub aesthetic_values:
+        std::collections::BTreeMap<super::ValueAesthetic, crate::interpolate::Value>,
+    /// Text and line-type channels evaluated through the shared typed scale engine.
+    #[serde(default, skip_serializing_if = "std::collections::BTreeMap::is_empty")]
+    pub value_scales: std::collections::BTreeMap<super::ValueAesthetic, super::NumericEncoding>,
+    /// Independently trained fill and outline mappings, evaluated by the common color engine.
+    #[serde(default, skip_serializing_if = "std::collections::BTreeMap::is_empty")]
+    pub paint_scales: std::collections::BTreeMap<super::PaintAesthetic, super::ColorEncoding>,
+    /// Explicit shared hierarchy topology and layout recipe.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub hierarchy: Option<super::HierarchyRecipe>,
     /// Versioned native shape protocols selected in the shared compiler (wire v9).
     #[serde(default, skip_serializing_if = "std::collections::BTreeMap::is_empty")]
     pub shape_protocols: std::collections::BTreeMap<super::ShapeFamily, super::ShapeOperation>,
@@ -882,6 +928,10 @@ impl Layer {
     /// Author a source identity layer; callers can supply independent mappings/schema.
     pub fn new(id: LayerId, data: impl Into<DataRef>, geom: Geom, mappings: SourceAes) -> Self {
         Self {
+            aesthetic_values: Default::default(),
+            value_scales: Default::default(),
+            paint_scales: Default::default(),
+            hierarchy: None,
             id,
             grammar: None,
             orientation: super::Orientation::Vertical,
@@ -1029,6 +1079,241 @@ pub struct ChartDefinition {
 impl ChartDefinition {
     /// Minimum definition-envelope version required by its retained capabilities.
     pub fn wire_version(&self) -> u32 {
+        if super::interpolation_extensions::mapped_scales(self).any(|s| s.limits_function.is_some())
+        {
+            return 28;
+        }
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            matches!(scale.ggplot.as_deref(), Some(crate::scales::GgplotScalePolicy::Binned(p)) if p.palette.is_some())
+        }) { return 27; }
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            matches!(scale.guide.as_deref(), Some(crate::scales::GgplotScaleGuide::Temporal(g)) if g.arguments != crate::scales::GgplotTemporalGuideArguments::default())
+                || matches!(&scale.function, crate::scales::ScaleFunctionSpec::Interpolated(s) if matches!(s.normalization, crate::scales::NormalizationSpec::Ggplot { timestamp: Some(crate::scales::GgplotTimestampNormalization { date: true, .. }), .. }))
+        }) {
+            return 26;
+        }
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            matches!(&scale.function, crate::scales::ScaleFunctionSpec::Interpolated(s)
+                if matches!(s.normalization, crate::scales::NormalizationSpec::Ggplot { timestamp: Some(_), .. }))
+        }) {
+            return 25;
+        }
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            matches!(
+                scale.guide.as_deref(),
+                Some(crate::scales::GgplotScaleGuide::Temporal(_))
+            )
+        }) {
+            return 24;
+        }
+
+        if self
+            .axes
+            .iter()
+            .any(|axis| axis.discrete.as_ref().is_some_and(|p| p.palette.is_some()))
+        {
+            return 23;
+        }
+        if self.axes.iter().any(|axis| axis.discrete.is_some())
+            || self
+                .axes
+                .iter()
+                .map(|axis| &axis.guide)
+                .chain(self.guides.iter().map(|guide| &guide.style))
+                .any(|guide| {
+                    guide
+                        .tick_values
+                        .iter()
+                        .flatten()
+                        .chain(guide.guide_ticks.iter().flatten().map(|tick| &tick.value))
+                        .any(|value| {
+                            matches!(value, crate::composition::ScaleValue::MissingCategory)
+                        })
+                })
+            || self.figure.as_ref().is_some_and(|figure| {
+                figure
+                    .annotations
+                    .iter()
+                    .flat_map(|a| std::iter::once(&a.anchor).chain(a.callout.as_ref()))
+                    .chain(figure.paths.iter().map(|path| &path.anchor))
+                    .any(|anchor| {
+                        matches!(
+                            anchor,
+                            crate::composition::Anchor::Data {
+                                x: crate::composition::ScaleValue::MissingCategory,
+                                ..
+                            } | crate::composition::Anchor::Data {
+                                y: crate::composition::ScaleValue::MissingCategory,
+                                ..
+                            }
+                        )
+                    })
+            })
+        {
+            return 22;
+        }
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            matches!(
+                scale.ggplot.as_deref(),
+                Some(crate::scales::GgplotScalePolicy::Discrete {
+                    empty_population: true,
+                    ..
+                })
+            )
+        }) {
+            return 21;
+        }
+        if self
+            .axes
+            .iter()
+            .any(|axis| axis.continuous_limits.is_some())
+        {
+            return 20;
+        }
+        if self
+            .axes
+            .iter()
+            .map(|a| &a.guide)
+            .chain(self.guides.iter().map(|g| &g.style))
+            .any(|g| g.minor_breaks.is_some())
+        {
+            return 19;
+        }
+        if self
+            .axes
+            .iter()
+            .any(|a| matches!(a.scale, crate::layout::AxisScale::Binned { .. }))
+            || self.has_scale_mapping(|scale| scale.binned.is_some())
+        {
+            return 18;
+        }
+        if self
+            .axes
+            .iter()
+            .map(|axis| &axis.guide)
+            .chain(self.guides.iter().map(|guide| &guide.style))
+            .any(|guide| {
+                matches!(
+                    guide.tick_format,
+                    Some(crate::layout::GuideFormatter::GgplotTime(_))
+                ) || guide
+                    .tick_arguments
+                    .as_ref()
+                    .is_some_and(|args| args.seconds.is_some() || args.time_width.is_some())
+            })
+            || self.axes.iter().any(|axis| {
+                if let crate::layout::AxisScale::Secondary { source, .. } = axis.scale {
+                    self.axes.iter().any(|primary| {
+                        primary.id == source
+                            && matches!(
+                                primary.scale,
+                                crate::layout::AxisScale::Utc { .. }
+                                    | crate::layout::AxisScale::Date { .. }
+                                    | crate::layout::AxisScale::Calendar { .. }
+                                    | crate::layout::AxisScale::Auto
+                            )
+                    })
+                } else {
+                    false
+                }
+            })
+            || self.has_reference_scale_mapping()
+            || self.axes.iter().any(|axis| {
+                axis.expansion.is_some()
+                    || matches!(
+                        axis.scale,
+                        crate::layout::AxisScale::Date { .. }
+                            | crate::layout::AxisScale::Duration(_)
+                    )
+                    || matches!(
+                        axis.scale,
+                        crate::layout::AxisScale::Secondary {
+                            transform: Some(_),
+                            ..
+                        }
+                    )
+                    || matches!(
+                        axis.scale,
+                        crate::layout::AxisScale::Nonlinear {
+                            transform: crate::scales::ScaleTransform::Reverse
+                                | crate::scales::ScaleTransform::Sqrt,
+                            ..
+                        }
+                    )
+            })
+            || self.layers.iter().any(|layer| {
+                layer
+                    .value_scales
+                    .contains_key(&super::ValueAesthetic::Shape)
+                    || layer
+                        .aesthetic_values
+                        .contains_key(&super::ValueAesthetic::Shape)
+            })
+        {
+            return 17;
+        }
+        if self.layers.iter().any(|l| l.numeric_scales.values().chain(l.value_scales.values()).any(|s|s.scale.has_ggplot()) || l.color.iter().chain(l.paint_scales.values()).any(|c|matches!(&c.scale,crate::scales::ColorScale::Mapped {scale,..} if scale.has_ggplot()))) {return 17;}
+
+        if self.layers.iter().any(|l| {
+            matches!(
+                l.geom,
+                Geom::ShapeSymbol {
+                    kind: crate::shape::SymbolKind::Ggplot(_),
+                    ..
+                } | Geom::ShapeSymbol {
+                    paint: crate::shape::SymbolPaint::FillStroke
+                        | crate::shape::SymbolPaint::ColorFill
+                        | crate::shape::SymbolPaint::ColorFillStroke,
+                    ..
+                }
+            ) || l.symbol.as_ref().is_some_and(|s| {
+                s.palette
+                    .iter()
+                    .chain(s.missing.iter())
+                    .any(|k| matches!(k, crate::shape::SymbolKind::Ggplot(_)))
+            }) || l
+                .grammar
+                .as_ref()
+                .is_some_and(|g| g.default_radius.is_some() || g.default_line_width.is_some())
+                || l.after_scale.keys().any(|a| {
+                    !matches!(
+                        a,
+                        super::AfterScaleAesthetic::Size | super::AfterScaleAesthetic::Color
+                    )
+                })
+                || !l.value_scales.is_empty()
+                || !l.aesthetic_values.is_empty()
+                || l.style.alpha.is_some()
+                || l.numeric_scales
+                    .contains_key(&super::NumericAesthetic::Alpha)
+                || l.style.units.is_some()
+                || l.style.line_type.is_some()
+                || !l.paint_scales.is_empty()
+                || l.style.fill.is_some()
+                || l.style.stroke.is_some()
+                || (l.geom == Geom::Point
+                    && l.numeric_scales
+                        .contains_key(&super::NumericAesthetic::AreaSize))
+        }) {
+            return 16;
+        }
+        if self
+            .layers
+            .iter()
+            .any(|l| l.hierarchy.is_some() || l.geom == Geom::Hierarchy)
+        {
+            return 15;
+        }
+        if self.axes.iter().any(|a| a.components.is_some())
+            || self.guides.iter().any(|a| a.components.is_some())
+        {
+            return 14;
+        }
+        if self.axes.iter().any(|axis| axis.geometry.is_some())
+            || self.guides.iter().any(|guide| guide.geometry.is_some())
+        {
+            return 13;
+        }
         if super::interpolation_extensions::mapped_scales(self)
             .any(crate::scales::MappedScaleSpec::has_registered_interpolation)
         {
@@ -1209,9 +1494,14 @@ impl Default for CompileLimits {
 
 impl<P> Style<P> {
     /// Transform the authored color while preserving numeric styling.
-    pub fn map_color<Q>(self, map: impl FnOnce(P) -> Q) -> Style<Q> {
+    pub fn map_color<Q>(self, mut map: impl FnMut(P) -> Q) -> Style<Q> {
         Style {
             color: map(self.color),
+            alpha: self.alpha,
+            units: self.units,
+            line_type: self.line_type,
+            fill: self.fill.map(&mut map),
+            stroke: self.stroke.map(&mut map),
             radius: self.radius,
             stroke_width: self.stroke_width,
         }
@@ -1232,8 +1522,76 @@ impl ChartDefinition {
             || self.axes.iter().any(|a| a.title.as_ref().is_some_and(crate::typography::RichText::has_floating_paint)
                 || a.typography.as_ref().is_some_and(|r| r.color.is_some_and(crate::color::Paint::is_floating)))
             || self.layers.iter().any(|l| l.style.color.is_floating()
+                || l.style.fill.is_some_and(crate::color::Paint::is_floating)
+                || l.style.stroke.is_some_and(crate::color::Paint::is_floating)
+                || l.paint_scales.values().any(|c| c.scale.has_floating())
                 || l.candle_colors.is_some_and(|c| c.up.is_floating() || c.down.is_floating())
                 || l.color.as_ref().is_some_and(|c| c.scale.has_floating())
                 || l.after_scale.values().any(|e| e.nodes.iter().any(|n| matches!(n, super::ExpressionNode::Literal(super::ExpressionValue::Color(p)) if p.is_floating()))))
+    }
+}
+
+impl ChartDefinition {
+    // Authored scale projections can occur without an AxisSpec, including inside a
+    // statistic or a nonpositional mapping. They share the same wire capability.
+    fn has_reference_scale_mapping(&self) -> bool {
+        self.has_scale_mapping(|scale| {
+            scale.timestamp.is_some()
+                || matches!(
+                    scale.transform,
+                    Some(
+                        crate::scales::ScaleTransform::Reverse
+                            | crate::scales::ScaleTransform::Sqrt
+                    )
+                )
+        })
+    }
+    fn has_scale_mapping(&self, predicate: fn(&super::ScaleProjection) -> bool) -> bool {
+        let numeric = |mut value: &Numeric| {
+            while let Numeric::Scaled { input, scale } = value {
+                if predicate(scale) {
+                    return true;
+                }
+                value = input;
+            }
+            false
+        };
+        let source = |a: &SourceAes| {
+            [&a.x, &a.y, &a.x2, &a.y2, &a.low, &a.high, &a.size]
+                .into_iter()
+                .flatten()
+                .any(numeric)
+        };
+        let statistic = |s: &Statistic| match &s.parameters {
+            StatParameters::Bin(s) => numeric(&s.input),
+            StatParameters::AutoBin(s) => numeric(&s.input),
+            StatParameters::Summary(s) => numeric(&s.input),
+            StatParameters::Ols(s) => numeric(&s.x) || numeric(&s.y),
+            StatParameters::Count(s) => s.required.iter().any(numeric),
+            _ => false,
+        };
+        let color =
+            |c: &super::ColorInput| matches!(c, super::ColorInput::Numeric(n) if numeric(n));
+        source(&self.mappings)
+            || self.transforms.iter().any(|t| {
+                statistic(&t.statistic)
+                    || t.grammar.as_ref().is_some_and(|g| source(&g.source))
+                    || t.filters.iter().any(|f| numeric(&f.value))
+            })
+            || self.layers.iter().any(|l| {
+                matches!(&l.mappings, Mappings::Source(a) if source(a))
+                    || l.grammar.as_ref().is_some_and(|g| source(&g.source))
+                    || statistic(&l.statistic)
+                    || l.filters.iter().any(|f| numeric(&f.value))
+                    || l.color
+                        .iter()
+                        .chain(l.paint_scales.values())
+                        .any(|c| color(&c.input))
+                    || l.symbol.as_ref().is_some_and(|s| color(&s.input))
+                    || l.numeric_scales
+                        .values()
+                        .chain(l.value_scales.values())
+                        .any(|s| color(&s.input))
+            })
     }
 }

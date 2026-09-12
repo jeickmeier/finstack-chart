@@ -111,7 +111,6 @@ WP-01 should create a repository layout equivalent to the following table. Keep 
 | `crates/chart-core/src/` | Spec/data/stat/scale/layout/scene/interaction modules with bounded public interfaces. |
 | `crates/chart-export/src/` | Figure snapshot and SVG/PDF/PNG implementation. |
 | `crates/gpui-charts/src/` | GPUI host, painting, resources, input and lifecycle. |
-| `crates/gpui-charts-kit/src/` | Optional Kit integration. |
 | `crates/chart-python/`, `crates/chart-wasm/` | Minimal proofs initially, excluded from default desktop consumers. |
 | `examples/chart-gallery/` | Runnable examples and visual/stress scenarios. |
 | `fixtures/` | Small canonical data, expected semantic results and deterministic resources. |
@@ -347,7 +346,7 @@ WP-21/22/23 acceptance. The status ledger tracks each supplemental package separ
 - Add titles, panel letters, insets, direct labels, annotations, captions/notes and shared/per-panel legend composition.
 - Complete rich/rotated text, explicit resources, font fallback/outline policies and physical output sizing.
 - Produce native publication preview plus SVG/PDF/300 and 600 DPI PNG examples.
-- Add the optional Kit theme/control adapter without leaking its types into core.
+- Optional Kit theme/control recipes stay in the gallery; do not add a Kit library crate or leak Kit types into core. See [ADR-023](../adr/023-withdraw-optional-kit-crate.md).
 
 **Acceptance:** FIX-12/13 pass numerical invariance and actual visual/vector/font inspection. Native and publication measurement differences are reconciled deliberately, not hidden by loose screenshots.
 

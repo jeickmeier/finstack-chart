@@ -327,7 +327,7 @@ fn explicit_symbol_catalogs_validate_and_preserve_unknown_policy() {
         shape_symbol().symbol_types("category", vec!["a".into(), "a".into()], vec![S::Circle]),
         shape_symbol().shape_value(A::Size, 20.),
         shape_symbol().symbol_size_guide("Invalid", vec![2.]),
-        points().shape_value(A::AreaSize, 2.),
+        points().shape_value(A::AreaSize, -2.),
     ] {
         match make(layer) {
             Err(_) => {}

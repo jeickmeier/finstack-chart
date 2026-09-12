@@ -345,7 +345,8 @@ impl ScaleOptions {
                     }
                 }
                 S::Interpolated(s) => match &mut s.normalization {
-                    NormalizationSpec::Sequential { domain: d, .. } => *d = endpoints(domain)?,
+                    NormalizationSpec::Sequential { domain: d, .. }
+                    | NormalizationSpec::Ggplot { domain: d, .. } => *d = endpoints(domain)?,
                     NormalizationSpec::Diverging { domain: d, .. } => *d = endpoints(domain)?,
                     NormalizationSpec::Quantile { samples } => *samples = numbers(domain, true)?,
                 },

@@ -327,6 +327,7 @@ pub struct TimeAxisScale {
     spec: TimeScaleSpec,
     calendar: Calendar,
     origin: i64,
+    view: TimeBounds,
     mapping: super::NumericAxisScale,
     date_inverse: Option<NumericScale>,
     outside: super::OutsidePolicy,
@@ -338,6 +339,29 @@ impl TimeAxisScale {
         range: super::Bounds,
         viewport: Option<TimeBounds>,
         outside: super::OutsidePolicy,
+    ) -> ChartResult<Self> {
+        Self::resolve_reference(spec, range, viewport, outside, None)
+    }
+    /// Resolve optional reference expansion in seconds. Source timestamps remain exact;
+    /// fractional view boundaries are retained relative to the integer origin.
+    pub fn resolve_reference(
+        spec: TimeScaleSpec,
+        range: super::Bounds,
+        viewport: Option<TimeBounds>,
+        outside: super::OutsidePolicy,
+        expansion: Option<super::GgplotExpansion>,
+    ) -> ChartResult<Self> {
+        Self::resolve_reference_unit(spec, range, viewport, outside, expansion, 1.)
+    }
+    /// Shared time projection with reference expansion measured in the supplied
+    /// number of elapsed seconds (one for datetime, 86400 for Date).
+    pub(crate) fn resolve_reference_unit(
+        spec: TimeScaleSpec,
+        range: super::Bounds,
+        viewport: Option<TimeBounds>,
+        outside: super::OutsidePolicy,
+        expansion: Option<super::GgplotExpansion>,
+        reference_seconds: f64,
     ) -> ChartResult<Self> {
         use crate::interpolate::FactoryKind;
         let prepared = TimeScale::new(spec.clone())?;
@@ -371,15 +395,84 @@ impl TimeAxisScale {
                 )
             })
             .transpose()?;
+        let reference = expansion.is_some();
+        let factor = utc::ticks_per_second(spec.unit) as f64 * reference_seconds;
+        let end = utc::relative(*spec.domain.last().expect("prepared domain"), origin)?;
+        // Calibrate a constant domain in reference units, including when an
+        // explicit viewport overrides expansion. Preserve the authored outer range.
+        if reference && end == 0. {
+            numeric.domain = vec![Number(0.), Number(factor)];
+            numeric.range = vec![
+                numeric.range[0],
+                *numeric.range.last().expect("prepared range"),
+            ];
+        }
+        let viewport = match (viewport, expansion) {
+            (None, Some(expansion)) => {
+                // The reference's near-zero decision uses absolute epoch magnitude,
+                // while projection still subtracts the exact integer origin first.
+                let expansion = if super::ggplot::zero_range(
+                    origin as f64,
+                    *spec.domain.last().expect("prepared domain") as f64,
+                ) {
+                    super::GgplotExpansion {
+                        mult: [0.; 2],
+                        add: [
+                            expansion.add[0] + expansion.mult[0],
+                            expansion.add[1] + expansion.mult[1],
+                        ],
+                    }
+                } else {
+                    expansion
+                };
+                let expanded =
+                    expansion.continuous_viewport(super::Bounds::new(0., end / factor)?)?;
+                Some(super::Bounds::new(
+                    expanded.start() * factor,
+                    expanded.end() * factor,
+                )?)
+            }
+            (viewport, _) => viewport,
+        };
         let mapping = super::NumericAxisScale::resolve(numeric, range, viewport, outside)?;
+        let relative = mapping.viewport();
+        let (first, last) = if relative.start() <= relative.end() {
+            (relative.start().floor(), relative.end().ceil())
+        } else {
+            (relative.start().ceil(), relative.end().floor())
+        };
+        let view = TimeBounds {
+            start: utc::absolute(first, origin)?,
+            end: utc::absolute(last, origin)?,
+        };
         Ok(Self {
             spec,
             calendar: prepared.calendar,
             origin,
+            view,
             mapping,
-            date_inverse: prepared.date_inverse,
+            date_inverse: if reference {
+                None
+            } else {
+                prepared.date_inverse
+            },
             outside,
         })
+    }
+    pub(crate) fn shifted(&self, offset: i64) -> ChartResult<Self> {
+        let mut shifted = self.clone();
+        shifted.origin = utc::shift_timestamp(self.origin, offset)?;
+        shifted.view = utc::shift_bounds(self.view, offset)?;
+        shifted.spec.domain = self
+            .spec
+            .domain
+            .iter()
+            .map(|v| utc::shift_timestamp(*v, offset))
+            .collect::<ChartResult<_>>()?;
+        // Secondary guides use exact origin-relative projection, not the legacy
+        // JavaScript-Date inverse rounding used by interactive numeric outputs.
+        shifted.date_inverse = None;
+        Ok(shifted)
     }
     /// Original authored configuration.
     pub fn spec(&self) -> &TimeScaleSpec {
@@ -396,13 +489,28 @@ impl TimeAxisScale {
             end: *self.spec.domain.last().expect("resolved domain"),
         }
     }
-    /// Visible timestamp endpoints.
+    /// Integer enclosure of the visible interval. Reference expansion may place the
+    /// actual boundaries between source quanta; use `relative_viewport` for those.
     pub fn viewport(&self) -> TimeBounds {
-        let v = self.mapping.viewport();
-        TimeBounds {
-            start: utc::absolute(v.start(), self.origin).expect("checked view"),
-            end: utc::absolute(v.end(), self.origin).expect("checked view"),
+        self.view
+    }
+    /// Exact floating view endpoints after subtracting `origin`, in source units.
+    pub fn relative_viewport(&self) -> super::Bounds {
+        self.mapping.viewport()
+    }
+    /// Inclusive integer timestamps inside the visible interval, or none when the
+    /// interval lies wholly between source quanta.
+    pub fn tick_bounds(&self) -> ChartResult<Option<TimeBounds>> {
+        let view = self.mapping.viewport();
+        let low = view.minimum().ceil();
+        let high = view.maximum().floor();
+        if low > high {
+            return Ok(None);
         }
+        Ok(Some(TimeBounds {
+            start: utc::absolute(low, self.origin)?,
+            end: utc::absolute(high, self.origin)?,
+        }))
     }
     /// Exact timestamp origin.
     pub fn origin(&self) -> i64 {
@@ -418,8 +526,8 @@ impl TimeAxisScale {
     }
     /// Project a timestamp using the retained numeric mapping.
     pub fn map(&self, mut value: i64) -> ChartResult<Option<f64>> {
-        let view = self.viewport();
-        let (low, high) = (view.start.min(view.end), view.start.max(view.end));
+        let low = self.view.start.min(self.view.end);
+        let high = self.view.start.max(self.view.end);
         if self.outside == super::OutsidePolicy::Omit && !(low..=high).contains(&value) {
             return Ok(None);
         }
@@ -432,6 +540,52 @@ impl TimeAxisScale {
         }
         self.mapping.map(utc::relative(value, self.origin)?)
     }
+    /// Preserve an exact source timestamp as an origin-relative guide coordinate.
+    pub(crate) fn relative_guide(&self, value: i64) -> ChartResult<f64> {
+        utc::relative(value, self.origin)
+    }
+    /// Date guide candidates use whole UTC days, including before the epoch.
+    pub(crate) fn floor_date_guide(&self, value: i64) -> ChartResult<i64> {
+        let day = utc::ticks_per_second(self.unit()) * 86400;
+        i64::try_from(i128::from(value).div_euclid(day) * day).map_err(|_| {
+            error(
+                DiagnosticCode::PrecisionLoss,
+                "Floored Date guide exceeds timestamp representation.",
+            )
+        })
+    }
+    /// Project an already selected origin-relative guide coordinate, including
+    /// positions between representable source timestamps.
+    pub(crate) fn map_relative_guide(&self, value: f64) -> ChartResult<Option<f64>> {
+        self.mapping.map(value)
+    }
+    /// Preserve a fractional guide timestamp by promoting its source resolution.
+    /// Positions finer than nanoseconds or outside i64 have no raw timestamp.
+    pub(crate) fn guide_timestamp(&self, relative: f64) -> Option<(i64, TimeUnit)> {
+        let units = [
+            TimeUnit::Seconds,
+            TimeUnit::Milliseconds,
+            TimeUnit::Microseconds,
+            TimeUnit::Nanoseconds,
+        ];
+        for unit in units {
+            let numerator = utc::ticks_per_second(unit);
+            let denominator = utc::ticks_per_second(self.unit());
+            if numerator < denominator {
+                continue;
+            }
+            let factor = numerator / denominator;
+            let delta = relative * factor as f64;
+            if !delta.is_finite() || delta.fract() != 0. || delta.abs() > (1_u64 << 53) as f64 {
+                continue;
+            }
+            let absolute = i128::from(self.origin) * factor + delta as i128;
+            if let Ok(value) = i64::try_from(absolute) {
+                return Some((value, unit));
+            }
+        }
+        None
+    }
     /// Invert to an exact timestamp, truncating toward epoch zero.
     pub fn invert(&self, position: f64) -> ChartResult<i64> {
         if let Some(inverse) = &self.date_inverse {
@@ -442,7 +596,13 @@ impl TimeAxisScale {
     }
     /// Full domain in the numeric output coordinate used by navigation.
     pub fn coordinate_domain(&self) -> ChartResult<super::Bounds> {
-        self.mapping.coordinate_domain()
+        let domain = self.domain();
+        super::Bounds::new(
+            self.mapping
+                .coordinate(utc::relative(domain.start, self.origin)?)?,
+            self.mapping
+                .coordinate(utc::relative(domain.end, self.origin)?)?,
+        )
     }
     /// Visible output coordinates used by navigation.
     pub fn coordinate_viewport(&self) -> super::Bounds {
@@ -456,9 +616,32 @@ impl TimeAxisScale {
             truncate_absolute(self.mapping.coordinate_inverse(value)?, self.origin)
         }
     }
+    pub(crate) fn ggplot_width_ticks(
+        &self,
+        width: super::CalendarInterval,
+        budget: usize,
+        date: bool,
+    ) -> ChartResult<Vec<i64>> {
+        match self.tick_bounds()? {
+            Some(bounds) if date && width.unit == super::CalendarUnit::Day => {
+                super::ggplot_time::date_day_width(bounds, self.unit(), width.step, budget)
+            }
+            Some(bounds) => super::ggplot_time::breaks_width_from(
+                bounds,
+                self.view.start.min(self.view.end),
+                self.unit(),
+                &self.calendar,
+                width,
+                budget,
+            ),
+            None => Ok(Vec::new()),
+        }
+    }
     /// Unthinned source-time candidates for the visible domain.
     pub fn ticks(&self, selection: CalendarTicks, budget: usize) -> ChartResult<Vec<i64>> {
-        self.calendar
-            .ticks(self.viewport(), self.unit(), selection, budget)
+        match self.tick_bounds()? {
+            Some(bounds) => self.calendar.ticks(bounds, self.unit(), selection, budget),
+            None => Ok(Vec::new()),
+        }
     }
 }

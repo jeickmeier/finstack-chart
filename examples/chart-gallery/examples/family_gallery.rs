@@ -4,11 +4,19 @@ mod authoring_fixtures;
 use chart_core::prelude::Plot;
 #[cfg(feature = "kit")]
 use chart_core::prelude::theme;
+#[cfg(feature = "kit")]
+use chart_core::scene::Color;
+#[cfg(feature = "kit")]
+use chart_core::theme::ThemePatch;
+#[cfg(feature = "kit")]
+use chart_core::{ChartResult, Diagnostic, DiagnosticCode};
 use gpui::{
     Bounds, Context, Entity, IntoElement, Render, Window, WindowBounds, WindowOptions, div,
     prelude::*, px, rgb, size,
 };
 use gpui_charts::{ChartInput, ChartView, NativeFont};
+#[cfg(feature = "kit")]
+use gpui_kit::component::{Theme, button::Button};
 
 struct Case {
     name: String,
@@ -25,7 +33,7 @@ impl Gallery {
         #[cfg(feature = "kit")]
         let input = if case.name == "composition-kit-host" {
             use gpui_kit::component::ActiveTheme;
-            gpui_charts_kit::chart_input(&case.plot, font.clone(), cx.theme()).expect("Kit input")
+            kit_chart_input(&case.plot, font.clone(), cx.theme()).expect("Kit input")
         } else {
             ChartInput::from_plot(&case.plot, font.clone()).expect("native input")
         };
@@ -97,7 +105,7 @@ impl Render for Gallery {
             .first()
             .is_some_and(|c| c.name.starts_with("composition-"))
         {
-            buttons = buttons.child(gpui_charts_kit::reset_button(self.chart.clone()));
+            buttons = buttons.child(kit_reset_button(self.chart.clone()));
         }
         div()
             .size_full()
@@ -238,4 +246,61 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         cx.activate(true);
     });
     Ok(())
+}
+#[cfg(feature = "kit")]
+fn kit_color(c: gpui_kit::Hsla) -> ChartResult<Color> {
+    let c: gpui_kit::Rgba = c.into();
+    if [c.r, c.g, c.b, c.a]
+        .iter()
+        .any(|v| !v.is_finite() || !(0. ..=1.).contains(v))
+    {
+        return Err(Diagnostic::error(
+            DiagnosticCode::Validation,
+            "Kit color is not a finite normalized sRGB value.",
+            "Provide valid semantic theme colors.",
+        ));
+    }
+    let byte = |v: f32| (v * 255.).round() as u8;
+    Ok(Color {
+        red: byte(c.r),
+        green: byte(c.g),
+        blue: byte(c.b),
+        alpha: byte(c.a),
+    })
+}
+#[cfg(feature = "kit")]
+fn kit_theme_patch(theme: &Theme) -> ChartResult<ThemePatch> {
+    let t = theme.semantic_tokens();
+    let patch = ThemePatch {
+        background: Some(kit_color(t.colors.background)?),
+        panel: Some(kit_color(t.colors.surface)?),
+        foreground: Some(kit_color(t.colors.foreground)?),
+        grid: Some(kit_color(t.colors.border)?),
+        annotation: Some(kit_color(t.colors.muted_foreground)?),
+        focus: Some(kit_color(t.colors.ring)?),
+        selection: Some(kit_color(t.colors.selection)?),
+        font_size: Some(f64::from(f32::from(t.typography.sm.size))),
+        padding: Some(f64::from(f32::from(t.spacing.sm))),
+        gap: Some(f64::from(f32::from(t.spacing.xs))),
+        ..ThemePatch::default()
+    };
+    patch.validate()?;
+    Ok(patch)
+}
+#[cfg(feature = "kit")]
+fn kit_chart_input(plot: &Plot, font: NativeFont, theme: &Theme) -> ChartResult<ChartInput> {
+    Ok(ChartInput::from_plot(plot, font)?.layout(
+        chart_core::plot::layout_options()
+            .host_theme(kit_theme_patch(theme)?.map_colors(Into::into)),
+    ))
+}
+#[cfg(feature = "kit")]
+fn kit_reset_button(chart: Entity<ChartView>) -> Button {
+    Button::new("chart-reset")
+        .label("Reset view")
+        .on_click(move |_, _, cx| {
+            let _ = chart.update(cx, |view, cx| {
+                view.dispatch_chart(chart_core::state::ChartAction::Reset, cx)
+            });
+        })
 }

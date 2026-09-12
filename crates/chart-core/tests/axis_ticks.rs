@@ -50,6 +50,7 @@ impl CustomGuideFormatter for Formatter {
             ScaleValue::Number(n) => n.to_string(),
             ScaleValue::Category(s) => s.clone(),
             ScaleValue::Timestamp { value, .. } => value.to_string(),
+            ScaleValue::MissingCategory => "NA".into(),
         };
         Ok(match input.parameters.as_str().unwrap() {
             "Blank" => String::new(),
@@ -272,6 +273,9 @@ fn primary_controls_are_versioned_independent_resettable_and_portability_checked
                     count: Some(5.),
                     specifier: Some(".1%".into()),
                     interval: None,
+                    seconds: None,
+                    time_width: None,
+                    width: None,
                 }))
                 .tick_values(Some(vec![0.0.into(), 1.0.into()]))
                 .tick_format(Some(registered("Same"))),
@@ -315,12 +319,36 @@ fn primary_controls_are_versioned_independent_resettable_and_portability_checked
 }
 
 fn apply_config(style: &mut GuideStyle, config: &Json) {
+    for (key, field) in [
+        ("tickSizeInner", "inner"),
+        ("tickSizeOuter", "outer"),
+        ("tickPadding", "padding"),
+        ("offset", "offset"),
+        ("tickSize", "both"),
+    ] {
+        if let Some(value) = config[key].as_f64() {
+            let g = style.geometry.get_or_insert_with(Default::default);
+            match field {
+                "inner" => g.inner = Some(value),
+                "outer" => g.outer = Some(value),
+                "padding" => g.padding = Some(value),
+                "offset" => g.offset = Some(value),
+                _ => {
+                    g.inner = Some(value);
+                    g.outer = Some(value);
+                }
+            }
+        }
+    }
     if let Some(arguments) = config.get("arguments") {
         let a = arguments.as_array().unwrap();
         style.tick_arguments = Some(GuideTickArguments {
             count: a.first().and_then(Json::as_f64),
             specifier: a.get(1).and_then(Json::as_str).map(Into::into),
             interval: None,
+            seconds: None,
+            time_width: None,
+            width: None,
         });
     }
     if let Some(interval) = config.get("interval") {
@@ -368,6 +396,8 @@ fn pinned_axis_reference_preserves_all_selected_values_and_labels_in_both_device
             let horizontal = matches!(side, AxisSide::Top | AxisSide::Bottom);
             let axis_index = usize::from(!horizontal);
             let mut r = request();
+            r.device_scale = profile["device_scale"].as_f64();
+            r.axes[1 - axis_index].visible = false;
             let values = match kind {
                 "Band" | "Point" => categorical(domain.iter().map(|s| s.as_str().unwrap())),
                 "Utc" => timestamps(
@@ -403,6 +433,13 @@ fn pinned_axis_reference_preserves_all_selected_values_and_labels_in_both_device
             if let Some(range) = scale.get("range") {
                 a.range = Some(
                     Bounds::new(range[0].as_f64().unwrap(), range[1].as_f64().unwrap()).unwrap(),
+                );
+            }
+            // Standalone D3 identity uses its domain as its range; the chart adapter
+            // explicitly places that coordinate range instead of fitting the plot span.
+            if kind == "Identity" {
+                a.range = Some(
+                    Bounds::new(domain[0].as_f64().unwrap(), domain[1].as_f64().unwrap()).unwrap(),
                 );
             }
             let padding = scale["padding"].as_f64().unwrap_or(0.);
@@ -458,6 +495,7 @@ fn pinned_axis_reference_preserves_all_selected_values_and_labels_in_both_device
                 }
                 let scene = layout(prepared.clone(), &r, &Metrics)
                     .unwrap_or_else(|e| panic!("{id}: {e:?}"));
+                assert_axis_geometry(&scene, axis_index, expected, id);
                 let ticks = &scene.guides()[&GuideId::new(axis_index as u64)].ticks;
                 let expected = expected["ticks"].as_array().unwrap();
                 assert_eq!(ticks.len(), expected.len(), "{id} state {state_index}");
@@ -486,4 +524,345 @@ fn pinned_axis_reference_preserves_all_selected_values_and_labels_in_both_device
     }
     assert_eq!(case_count, 372);
     assert_eq!(state_count, 376);
+}
+
+// FIX-19-F: compare the committed browser's coordinates, not a second copy of core formulas.
+fn assert_axis_geometry(
+    chart: &chart_core::layout::LaidOutChart,
+    axis: usize,
+    expected: &Json,
+    id: &str,
+) {
+    use chart_core::scene::{PathCommand, Primitive};
+    let guide = &chart.guides()[&GuideId::new(axis as u64)];
+    let plot = chart.plot().unwrap();
+    let side = guide.spec.side;
+    let horizontal = side.horizontal();
+    let origin = match side {
+        AxisSide::Bottom => (0., plot.max_y()),
+        AxisSide::Top => (0., plot.origin().y()),
+        AxisSide::Left => (plot.origin().x(), 0.),
+        AxisSide::Right => (plot.max_x(), 0.),
+    };
+    let close = |actual: f64, expected: f64| {
+        assert!(
+            (actual - expected).abs() <= 1e-9,
+            "{id}: {actual} != {expected}"
+        )
+    };
+    let commands = chart
+        .scene()
+        .items()
+        .iter()
+        .find_map(|item| match &item.primitive {
+            Primitive::Path { commands, .. } if item.layer.is_none() => Some(commands),
+            _ => None,
+        })
+        .unwrap();
+    let source = expected["domain"][0]["attributes"]["d"].as_str().unwrap();
+    let mut x = 0.;
+    let mut y = 0.;
+    let mut vertices = vec![];
+    let bytes = source.as_bytes();
+    let mut i = 0;
+    while i < bytes.len() {
+        let op = bytes[i] as char;
+        i += 1;
+        let start = i;
+        while i < bytes.len() && !matches!(bytes[i], b'M' | b'H' | b'V') {
+            i += 1;
+        }
+        let values: Vec<f64> = source[start..i]
+            .split(',')
+            .map(|v| v.parse().unwrap())
+            .collect();
+        match op {
+            'M' => {
+                x = values[0];
+                y = values[1];
+            }
+            'H' => x = values[0],
+            'V' => y = values[0],
+            _ => panic!("{source}"),
+        }
+        vertices.push((x + origin.0, y + origin.1));
+    }
+    assert_eq!(commands.len(), vertices.len(), "{id}");
+    for (command, (x, y)) in commands.iter().zip(vertices) {
+        let point = match command {
+            PathCommand::MoveTo(p) | PathCommand::LineTo(p) => p,
+            _ => panic!("domain curve"),
+        };
+        close(point.x(), x);
+        close(point.y(), y);
+    }
+    let rules: Vec<_> = chart
+        .scene()
+        .items()
+        .iter()
+        .filter_map(|item| match item.primitive {
+            Primitive::Rule { from, to, .. } if item.layer.is_none() => Some((from, to)),
+            _ => None,
+        })
+        .collect();
+    assert_eq!(rules.len(), guide.ticks.len(), "{id}");
+    let mut text = chart
+        .scene()
+        .items()
+        .iter()
+        .filter_map(|item| match &item.primitive {
+            Primitive::Text {
+                origin,
+                text,
+                font_size,
+                ..
+            } if item.layer.is_none() => Some((origin, text, font_size)),
+            _ => None,
+        });
+    for ((tick, expected), (from, to)) in guide
+        .ticks
+        .iter()
+        .zip(expected["ticks"].as_array().unwrap())
+        .zip(rules)
+    {
+        let transform = expected["attributes"]["transform"]
+            .as_str()
+            .unwrap()
+            .trim_start_matches("translate(")
+            .trim_end_matches(')');
+        let xy: Vec<f64> = transform.split(',').map(|v| v.parse().unwrap()).collect();
+        close(tick.position, xy[usize::from(!horizontal)]);
+        close(from.x(), origin.0 + xy[0]);
+        close(from.y(), origin.1 + xy[1]);
+        let line = &expected["line"];
+        close(
+            to.x(),
+            from.x() + line["x2"].as_str().unwrap_or("0").parse::<f64>().unwrap(),
+        );
+        close(
+            to.y(),
+            from.y() + line["y2"].as_str().unwrap_or("0").parse::<f64>().unwrap(),
+        );
+        if !tick.label.is_empty() {
+            let (painted, label, size) = text.next().unwrap();
+            assert_eq!(label, &tick.label);
+            close(*size, 10.);
+            let a = &expected["text"]["attributes"];
+            let anchor_x =
+                origin.0 + xy[0] + a["x"].as_str().unwrap_or("0").parse::<f64>().unwrap();
+            let anchor_y =
+                origin.1 + xy[1] + a["y"].as_str().unwrap_or("0").parse::<f64>().unwrap();
+            let width = label.chars().count() as f64 * 5.;
+            close(
+                painted.x(),
+                anchor_x
+                    - match side {
+                        AxisSide::Bottom | AxisSide::Top => width / 2.,
+                        AxisSide::Left => width,
+                        AxisSide::Right => 0.,
+                    },
+            );
+            close(
+                painted.y(),
+                anchor_y
+                    + a["dy"]
+                        .as_str()
+                        .unwrap()
+                        .trim_end_matches("em")
+                        .parse::<f64>()
+                        .unwrap()
+                        * 10.,
+            );
+        }
+    }
+}
+
+#[test]
+fn geometry_signed_controls_clipping_policy_reset_and_resource_failures_are_independent() {
+    use chart_core::layout::{GuideGeometry, GuideLabelPolicy, GuideOverflow};
+    use chart_core::scene::Primitive;
+    let p = prepare(&numeric_plot(Arc::default()));
+    let mut r = configured_request();
+    r.axes[1].visible = false;
+    r.axes[0].tick_values = Some(vec![0.5.into(), 0.5.into(), 0.5.into()]);
+    r.axes[0].tick_format = Some(GuideFormatter::Labels(vec!["same".into(); 3]));
+    r.axes[0].geometry = Some(GuideGeometry {
+        inner: Some(-40.),
+        outer: Some(-6.),
+        padding: Some(-3.),
+        offset: Some(0.),
+        overflow: GuideOverflow::Clip,
+        clip_ticks: true,
+        ..Default::default()
+    });
+    let full = layout(p.clone(), &r, &Metrics).unwrap();
+    assert_eq!(full.guides()[&GuideId::new(0)].ticks.len(), 3);
+    let rules: Vec<_> = full
+        .scene()
+        .items()
+        .iter()
+        .filter(|i| matches!(i.primitive, Primitive::Rule { .. }))
+        .collect();
+    assert_eq!(rules.len(), 3);
+    assert!(rules.iter().all(|i| i.clip == full.plot()));
+    let text_count = |c: &chart_core::layout::LaidOutChart| {
+        c.scene()
+            .items()
+            .iter()
+            .filter(|i| matches!(i.primitive, Primitive::Text { .. }))
+            .count()
+    };
+    assert_eq!(text_count(&full), 3);
+    r.axes[0].geometry.as_mut().unwrap().labels = Some(GuideLabelPolicy::HideLabels);
+    let hidden = layout(p.clone(), &r, &Metrics).unwrap();
+    assert_eq!(hidden.guides()[&GuideId::new(0)].ticks.len(), 3);
+    assert_eq!(text_count(&hidden), 1);
+    r.axes[0].geometry.as_mut().unwrap().labels = Some(GuideLabelPolicy::ThinTicks);
+    assert_eq!(
+        layout(p.clone(), &r, &Metrics).unwrap().guides()[&GuideId::new(0)]
+            .ticks
+            .len(),
+        1
+    );
+    r.axes[0].geometry.as_mut().unwrap().offset = Some(f64::NAN);
+    assert_eq!(
+        layout(p.clone(), &r, &Metrics).unwrap_err().code,
+        DiagnosticCode::Validation
+    );
+    r.axes[0].geometry = None;
+    r.limits.max_path_commands = 3;
+    assert_eq!(
+        layout(p.clone(), &r, &Metrics).unwrap_err().code,
+        DiagnosticCode::ResourceLimit
+    );
+    assert_eq!(full.guides()[&GuideId::new(0)].ticks.len(), 3);
+    let authored = numeric_plot(Arc::default())
+        .edit()
+        .x_axis(
+            x_axis()
+                .tick_size(-9.)
+                .tick_size_inner(-40.)
+                .tick_padding(-3.)
+                .tick_offset(Some(0.)),
+        )
+        .build()
+        .unwrap();
+    let wire = authored.to_json().unwrap();
+    assert_eq!(serde_json::from_str::<Json>(&wire).unwrap()["version"], 13);
+    assert_eq!(Plot::from_json(&wire).unwrap().to_json().unwrap(), wire);
+    let reset = authored
+        .edit()
+        .x_axis(x_axis().guide_geometry(None))
+        .build()
+        .unwrap();
+    assert!(reset.definition().axes.iter().all(|a| a.geometry.is_none()));
+}
+
+#[test]
+fn signed_geometry_survives_shared_facets_resize_and_translation_without_mark_changes() {
+    use chart_core::{
+        layout::GuideGeometry,
+        scene::{PathCommand, Primitive},
+    };
+    let data = Data::columns()
+        .column("x", [0., 1., 0., 1.])
+        .column("y", [0., 1., 1., 0.])
+        .column("panel", categorical(["A", "A", "B", "B"]))
+        .build()
+        .unwrap();
+    let p = plot(data)
+        .aes(aes().x("x").y("y"))
+        .layer(points())
+        .facet(facet_wrap("panel").columns(2))
+        .x_axis(
+            x_axis()
+                .guide_profile(GuideProfile::D3_3_0_0)
+                .tick_values(Some(vec![0f64.into(), 1f64.into()]))
+                .guide_geometry(Some(GuideGeometry {
+                    inner: Some(-40.),
+                    outer: Some(6.),
+                    offset: Some(0.),
+                    ..Default::default()
+                })),
+        )
+        .guide(
+            axis_guide("top", "x")
+                .side(AxisSide::Top)
+                .translate(7., -11.)
+                .guide_profile(GuideProfile::D3_3_0_0)
+                .tick_offset(Some(0.))
+                .tick_values(Some(vec![0f64.into(), 1f64.into()])),
+        )
+        .build()
+        .unwrap();
+    let prepared = prepare(&p);
+    for width in [600., 900.] {
+        let mut r = request();
+        r.bounds = Rect::new(0., 0., width, 400.).unwrap();
+        let c = layout(prepared.clone(), &r, &Metrics).unwrap();
+        assert_eq!(c.panels().len(), 2);
+        let scopes: std::collections::BTreeSet<_> = c
+            .scene()
+            .items()
+            .iter()
+            .filter_map(|i| i.guide.as_ref())
+            .map(|g| g.scope.clone())
+            .collect();
+        assert_eq!(scopes.len(), 2);
+        assert!(
+            scopes
+                .iter()
+                .all(|scope| scope.len() == 1 && scope[0].starts_with("panel:"))
+        );
+        for panel in c.panels() {
+            let bottom = panel
+                .chart
+                .guides()
+                .values()
+                .find(|g| g.spec.side == AxisSide::Bottom)
+                .unwrap();
+            let top = panel
+                .chart
+                .guides()
+                .values()
+                .find(|g| g.spec.side == AxisSide::Top)
+                .unwrap();
+            for (a, b) in bottom.ticks.iter().zip(&top.ticks) {
+                assert_eq!(a.value, b.value);
+                assert!((b.position - a.position - 7.).abs() < 1e-9);
+            }
+            let bounds = panel.chart.plot().unwrap();
+            let paths: Vec<_> = panel
+                .chart
+                .scene()
+                .items()
+                .iter()
+                .filter_map(|i| {
+                    if let Primitive::Path { commands, .. } = &i.primitive {
+                        Some(commands)
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+            assert_eq!(paths.len(), 2);
+            assert!(paths.iter().any(|commands| matches!(commands[0],PathCommand::MoveTo(p) if (p.x()-bounds.origin().x()).abs()<1e-9 && (p.y()-bounds.max_y()-6.).abs()<1e-9)));
+            let points: Vec<_> = panel
+                .chart
+                .scene()
+                .items()
+                .iter()
+                .filter_map(|i| {
+                    if let Primitive::Point { center, .. } = i.primitive {
+                        Some(center)
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+            assert_eq!(points.len(), 2);
+            assert!((points[0].x() - bottom.ticks[0].position).abs() < 1e-9);
+            assert!((points[1].x() - bottom.ticks[1].position).abs() < 1e-9);
+        }
+    }
 }

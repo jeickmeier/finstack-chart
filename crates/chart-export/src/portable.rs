@@ -347,6 +347,10 @@ pub fn diagnostic_json(diagnostic: &Diagnostic) -> String {
 impl FigureSnapshot {
     /// Coherent guide values, labels and configuration, including exact timestamp strings.
     /// The records use this retained publication layout and never resolve a second state.
+    pub fn presentation_json(&self) -> ChartResult<String> {
+        portable::encode(&self.layout().guide_presentation())
+    }
+    /// Coherent selected semantic guide values and labels.
     pub fn guides_json(&self) -> ChartResult<String> {
         portable::encode(&json!({"version": 1, "guides": self.layout().guide_snapshots()}))
     }
@@ -381,8 +385,12 @@ impl FigureSnapshot {
             .iter()
             .map(|(i, v)| (i + 1, v))
             .collect();
-        portable::encode(
-            &json!({"interactions":interactions,"insets":insets,"version":figure.scene().wire_version(),"stamp":figure.scene().stamp(),"units":figure.scene().units(),"bounds":figure.scene().bounds(),"items":figure.scene().items(),"resources":figure.scene().resources(),"targets":targets,"item_panels":item_panels,"panels":panels,"diagnostics":figure.layout().diagnostics(),"fonts":figure.metadata().fonts.iter().map(|f|json!({"id":f.id,"revision":f.revision,"sha256":f.sha256})).collect::<Vec<_>>() }),
-        )
+        let mut value = json!({"interactions":interactions,"insets":insets,"version":figure.scene().wire_version(),"stamp":figure.scene().stamp(),"units":figure.scene().units(),"bounds":figure.scene().bounds(),"items":figure.scene().items(),"resources":figure.scene().resources(),"targets":targets,"item_panels":item_panels,"panels":panels,"diagnostics":figure.layout().diagnostics(),"fonts":figure.metadata().fonts.iter().map(|f|json!({"id":f.id,"revision":f.revision,"sha256":f.sha256})).collect::<Vec<_>>() });
+        let hierarchies = figure.layout().hierarchy_snapshots()?;
+        if !hierarchies.is_empty() {
+            value["version"] = json!(15);
+            value["hierarchies"] = json!({"version": 1, "snapshots": hierarchies});
+        }
+        portable::encode(&value)
     }
 }

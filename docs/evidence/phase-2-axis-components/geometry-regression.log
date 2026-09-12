@@ -1,0 +1,52 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 20.11s
+     Running tests/axis_guides.rs (target/axis-rust-proof/debug/deps/axis_guides-2ebfa3f9bb64c191)
+
+running 5 tests
+test legacy_axis_wire_fields_round_trip_and_unknown_fields_still_reject ... ok
+test one_scale_drives_top_bottom_and_two_translated_same_side_guides ... ok
+test invalid_guide_identity_orientation_reference_and_work_reject_before_measurement ... ok
+test replacing_one_guide_scale_preserves_its_identity_and_other_guides ... ok
+test primary_builders_names_edits_and_version_eight_round_trips_retain_ownership ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/axis_ticks.rs (target/axis-rust-proof/debug/deps/axis_ticks-2d7f085cc71a275a)
+
+running 7 tests
+test registered_formatter_gets_full_semantic_context_and_failures_precede_callbacks ... ok
+test explicit_time_values_bypass_an_unbounded_automatic_interval_and_keep_exact_source_units ... ok
+test geometry_signed_controls_clipping_policy_reset_and_resource_failures_are_independent ... ok
+test primary_controls_are_versioned_independent_resettable_and_portability_checked ... ok
+test signed_geometry_survives_shared_facets_resize_and_translation_without_mark_changes ... ok
+test count_is_a_hint_and_explicit_values_preserve_order_occurrences_and_empty_labels ... ok
+test pinned_axis_reference_preserves_all_selected_values_and_labels_in_both_device_profiles ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.26s
+
+     Running tests/layout.rs (target/axis-rust-proof/debug/deps/layout-e42cf2f4dc5efebf)
+
+running 20 tests
+test wp11_mapped_color_changes_styles_and_metadata_without_numeric_domain_changes ... ok
+test invalid_scale_options_reject_even_at_tiny_bounds_before_measurement ... ok
+test known_linear_geometry_clips_targets_ranges_and_inverse_share_one_scene ... ok
+test category_catalogs_merge_by_label_across_layers_and_reject_numeric_statistics ... ok
+test representable_narrow_numeric_domains_have_finite_scene_and_distinct_labels ... ok
+test outside_policies_split_lines_and_annotation_overflow_is_explicit ... ok
+test wp11_ohlc_validation_and_volume_invalidity_are_independent ... ok
+test projection_overflow_and_category_or_guide_budgets_fail_without_replacing_a_scene ... ok
+test category_label_projection_survives_codes_reordering_removal_and_explicit_domain ... ok
+test independent_named_axes_accept_distinct_calculation_spaces_and_hidden_layers_train ... ok
+test wp11_area_and_ribbon_split_missing_and_validate_bounds ... ok
+test utc_large_origin_scene_uses_integer_inverse_and_calendar_labels ... ok
+test visibility_has_its_own_scene_stamp_and_does_not_change_trained_domains ... ok
+test resource_and_work_errors_precede_callbacks_and_preserve_previous_scene ... ok
+test zoom_keeps_histogram_edges_counts_membership_domains_and_snapshot ... ok
+test automatic_category_training_is_eligible_and_keeps_retained_relative_order ... ok
+test destination_text_changes_margins_without_recomputing_statistics ... ok
+test tiny_empty_and_empty_histogram_have_controlled_states_and_finite_geometry ... ok
+test crowded_labels_are_thinned_deterministically_with_a_pressure_diagnostic ... ok
+test wp11_portable_log_axis_and_secondary_units_use_shared_projection ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

@@ -44,7 +44,6 @@ name. No root facade is justified yet. Select public names before release prepar
 | `crates/chart-core` | None | Portable synchronous computation; optional serialization evaluated in WP-02/09. |
 | `crates/chart-export` | `chart-core` | Font/SVG/PDF/PNG route selected by WP-03 evidence. |
 | `crates/gpui-charts` | `chart-core` | One exact GPUI package/source compatible with the intended host. |
-| `crates/gpui-charts-kit` | `chart-core`, `gpui-charts` | Matching optional Kit; no second GPUI identity. |
 | `crates/chart-python` | `chart-core`, `chart-export` | PyO3 plus executable WP-09 proof; no wheels/viewer now. |
 | `crates/chart-wasm` | `chart-core` | wasm-bindgen plus executable WP-09 proof; basic SVG route chosen then. |
 | `examples/chart-gallery` | Core/export/GPUI; optional Kit via `kit` | Native proof, visual QA and stress scenarios; never a production dependency. |

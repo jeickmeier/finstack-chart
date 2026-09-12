@@ -1,7 +1,8 @@
 use crate::{FontResources, PublicationProfile, error};
 use base64::Engine;
-use chart_core::scene::{Color, PathCommand, Primitive, Scene};
+use chart_core::scene::{Color, GuideComponent, GuideRole, PathCommand, Primitive, Scene};
 use chart_core::{ChartResult, DiagnosticCode};
+use std::collections::BTreeMap;
 use std::fmt::Write;
 
 pub(crate) fn escape(text: &str) -> String {
@@ -35,11 +36,89 @@ fn color(c: Color) -> String {
 fn alpha(c: Color) -> f64 {
     f64::from(c.alpha) / 255.
 }
+fn component_attributes(component: Option<&GuideComponent>) -> String {
+    match component {
+        Some(c) => {
+            let role = match c.role {
+                GuideRole::Domain => "domain",
+                GuideRole::Line => "tick-line",
+                GuideRole::Label => "label",
+            };
+            let mut attrs = format!(" class=\"{role}\" data-guide-role=\"{role}\"");
+            if let Some(label) = &c.label {
+                write!(attrs, " data-label=\"{}\"", escape(label)).unwrap();
+            }
+            attrs
+        }
+        None => String::new(),
+    }
+}
+fn guide_groups<'a>(
+    out: &mut Writer,
+    active: &mut Option<&'a GuideComponent>,
+    next: Option<&'a GuideComponent>,
+    index: usize,
+) -> Result<(), std::fmt::Error> {
+    let same_axis = active
+        .zip(next)
+        .is_some_and(|(a, b)| a.guide == b.guide && a.scope == b.scope && a.side == b.side);
+    let same_tick = same_axis
+        && active.zip(next).is_some_and(|(a, b)| {
+            a.tick == b.tick && a.animation.map(|v| v.identity) == b.animation.map(|v| v.identity)
+        });
+    if active.is_some_and(|a| a.tick.is_some()) && !same_tick {
+        out.write_str("</g>")?;
+    }
+    if active.is_some() && !same_axis {
+        out.write_str("</g>")?;
+    }
+    if let Some(c) = next {
+        if !same_axis {
+            let scope = chart_core::portable::encode(&c.scope).map_err(|_| std::fmt::Error)?;
+            write!(
+                out,
+                "<g id=\"axis-{index}\" class=\"axis\" data-guide-id=\"{}\" data-guide-scope=\"{}\">",
+                c.guide.get(),
+                escape(&scope)
+            )?;
+        }
+        if let Some(tick) = &c.tick
+            && !same_tick
+        {
+            let value = chart_core::portable::encode(&tick.value).map_err(|_| std::fmt::Error)?;
+            write!(
+                out,
+                "<g id=\"tick-{index}\" class=\"tick\" data-value=\"{}\" data-occurrence=\"{}\" data-index=\"{}\" data-label=\"{}\"{}>",
+                escape(&value),
+                tick.occurrence,
+                c.index.unwrap_or_default(),
+                escape(c.label.as_deref().unwrap_or_default()),
+                c.animation
+                    .map(|a| format!(
+                        " data-animation-id=\"{}\" opacity=\"{}\"",
+                        a.identity, a.opacity
+                    ))
+                    .unwrap_or_default()
+            )?;
+        }
+    }
+    *active = next;
+    Ok(())
+}
 pub(crate) fn build(
     scene: &Scene,
     fonts: &FontResources,
     p: &PublicationProfile,
     embed: bool,
+) -> ChartResult<String> {
+    build_with_outlines(scene, fonts, p, embed, None)
+}
+fn build_with_outlines(
+    scene: &Scene,
+    fonts: &FontResources,
+    p: &PublicationProfile,
+    embed: bool,
+    outlines: Option<&BTreeMap<usize, &str>>,
 ) -> ChartResult<String> {
     scene.require_portable_paint()?;
     let mut remaining_path_bytes = p.max_output_bytes;
@@ -109,7 +188,10 @@ pub(crate) fn build(
             }
             out.write_str("</style></defs>")?;
         }
+        let mut active: Option<&GuideComponent> = None;
         for (index, item) in scene.items().iter().enumerate() {
+            guide_groups(&mut out, &mut active, item.guide.as_ref(), index)?;
+            let attrs = component_attributes(item.guide.as_ref());
             let clip = item.clip.unwrap_or(scene.bounds());
             write!(
                 out,
@@ -134,7 +216,7 @@ pub(crate) fn build(
                 } => {
                     write!(
                         out,
-                        "<path id=\"item-{index}\" d=\"{}\" fill-rule=\"nonzero\"",
+                        "<path id=\"item-{index}\"{attrs} d=\"{}\" fill-rule=\"nonzero\"",
                         vector_paths[index].as_deref().unwrap_or_default()
                     )?;
                     if let Some(c) = fill {
@@ -179,7 +261,7 @@ pub(crate) fn build(
                 } => {
                     write!(
                         out,
-                        "<path id=\"item-{index}\" fill=\"{}\" fill-opacity=\"{}\" d=\"",
+                        "<path id=\"item-{index}\"{attrs} fill=\"{}\" fill-opacity=\"{}\" d=\"",
                         color(*fill),
                         alpha(*fill)
                     )?;
@@ -199,7 +281,7 @@ pub(crate) fn build(
                     // Exact positioned outlines are the display truth; logical content stays explicit.
                     write!(
                         out,
-                        "<g id=\"item-{index}\" role=\"img\" aria-label=\"{}\"><desc>{}</desc><path fill=\"{}\" fill-opacity=\"{}\" fill-rule=\"nonzero\" d=\"",
+                        "<g id=\"item-{index}\"{attrs} role=\"img\" aria-label=\"{}\"><desc>{}</desc><path fill=\"{}\" fill-opacity=\"{}\" fill-rule=\"nonzero\" d=\"",
                         escape(&run.text),
                         escape(&run.text),
                         color(*c),
@@ -219,7 +301,7 @@ pub(crate) fn build(
                     };
                     write!(
                         out,
-                        "<defs><linearGradient id=\"gradient-{index}\" x1=\"0\" y1=\"0\" x2=\"{x2}\" y2=\"{y2}\" color-interpolation=\"sRGB\"><stop offset=\"0\" stop-color=\"{}\" stop-opacity=\"{}\"/><stop offset=\"1\" stop-color=\"{}\" stop-opacity=\"{}\"/></linearGradient></defs><rect id=\"item-{index}\" x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" fill=\"url(#gradient-{index})\"/>",
+                        "<defs><linearGradient id=\"gradient-{index}\" x1=\"0\" y1=\"0\" x2=\"{x2}\" y2=\"{y2}\" color-interpolation=\"sRGB\"><stop offset=\"0\" stop-color=\"{}\" stop-opacity=\"{}\"/><stop offset=\"1\" stop-color=\"{}\" stop-opacity=\"{}\"/></linearGradient></defs><rect id=\"item-{index}\"{attrs} x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" fill=\"url(#gradient-{index})\"/>",
                         color(gradient.start),
                         alpha(gradient.start),
                         color(gradient.end),
@@ -232,7 +314,7 @@ pub(crate) fn build(
                 }
                 Primitive::Rectangle { bounds, fill } => write!(
                     out,
-                    "<rect id=\"item-{index}\" x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" fill=\"{}\" fill-opacity=\"{}\"/>",
+                    "<rect id=\"item-{index}\"{attrs} x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" fill=\"{}\" fill-opacity=\"{}\"/>",
                     bounds.origin().x(),
                     bounds.origin().y(),
                     bounds.width(),
@@ -246,28 +328,80 @@ pub(crate) fn build(
                     fill,
                 } => write!(
                     out,
-                    "<circle id=\"item-{index}\" cx=\"{}\" cy=\"{}\" r=\"{}\" fill=\"{}\" fill-opacity=\"{}\"/>",
+                    "<circle id=\"item-{index}\"{attrs} cx=\"{}\" cy=\"{}\" r=\"{}\" fill=\"{}\" fill-opacity=\"{}\"/>",
                     center.x(),
                     center.y(),
                     radius,
                     color(*fill),
                     alpha(*fill)
                 )?,
-                Primitive::Rule { from, to, stroke } => write!(
-                    out,
-                    "<path id=\"item-{index}\" d=\"M {} {} L {} {}\" fill=\"none\" stroke=\"{}\" stroke-width=\"{}\" stroke-opacity=\"{}\"/>",
-                    from.x(),
-                    from.y(),
-                    to.x(),
-                    to.y(),
-                    color(stroke.color),
-                    stroke.width,
-                    alpha(stroke.color)
-                )?,
+                Primitive::Rule { from, to, stroke } => {
+                    if item
+                        .guide
+                        .as_ref()
+                        .is_some_and(|g| g.role == GuideRole::Line)
+                    {
+                        write!(
+                            out,
+                            "<line id=\"item-{index}\"{attrs} x1=\"{}\" y1=\"{}\" x2=\"{}\" y2=\"{}\" stroke=\"{}\" stroke-width=\"{}\" stroke-opacity=\"{}\"/>",
+                            from.x(),
+                            from.y(),
+                            to.x(),
+                            to.y(),
+                            color(stroke.color),
+                            stroke.width,
+                            alpha(stroke.color)
+                        )?;
+                    } else {
+                        write!(
+                            out,
+                            "<path id=\"item-{index}\"{attrs} d=\"M {} {} L {} {}\" fill=\"none\" stroke=\"{}\" stroke-width=\"{}\" stroke-opacity=\"{}\"/>",
+                            from.x(),
+                            from.y(),
+                            to.x(),
+                            to.y(),
+                            color(stroke.color),
+                            stroke.width,
+                            alpha(stroke.color)
+                        )?;
+                    }
+                }
+                Primitive::DashedPath {
+                    commands,
+                    stroke,
+                    dashes,
+                } if item
+                    .guide
+                    .as_ref()
+                    .is_some_and(|g| g.role == GuideRole::Line) =>
+                {
+                    let [PathCommand::MoveTo(from), PathCommand::LineTo(to)] = commands.as_slice()
+                    else {
+                        return Err(std::fmt::Error);
+                    };
+                    write!(
+                        out,
+                        "<line id=\"item-{index}\"{attrs} x1=\"{}\" y1=\"{}\" x2=\"{}\" y2=\"{}\" stroke=\"{}\" stroke-width=\"{}\" stroke-opacity=\"{}\" stroke-dasharray=\"",
+                        from.x(),
+                        from.y(),
+                        to.x(),
+                        to.y(),
+                        color(stroke.color),
+                        stroke.width,
+                        alpha(stroke.color)
+                    )?;
+                    for (i, dash) in dashes.iter().enumerate() {
+                        if i > 0 {
+                            out.write_str(",")?;
+                        }
+                        write!(out, "{dash}")?;
+                    }
+                    out.write_str("\"/>")?;
+                }
                 Primitive::Path { commands, .. }
                 | Primitive::FilledPath { commands, .. }
                 | Primitive::DashedPath { commands, .. } => {
-                    write!(out, "<path id=\"item-{index}\" d=\"")?;
+                    write!(out, "<path id=\"item-{index}\"{attrs} d=\"")?;
                     for c in commands {
                         write_command(&mut out, c)?;
                     }
@@ -308,6 +442,23 @@ pub(crate) fn build(
                     font_size,
                     color: c,
                 } => {
+                    if let Some(outlines) = outlines {
+                        if let Some(fragment) = outlines.get(&index) {
+                            let end = fragment.find('>').ok_or(std::fmt::Error)?;
+                            out.write_str(&fragment[..end])?;
+                            out.write_str(&attrs)?;
+                            out.write_str(&fragment[end..])?;
+                        } else {
+                            // Empty or fully transparent text may be pruned by the renderer.
+                            write!(
+                                out,
+                                "<g id=\"item-{index}\"{attrs}><desc>{}</desc></g>",
+                                escape(text)
+                            )?;
+                        }
+                        out.write_str("</g>")?;
+                        continue;
+                    }
                     // Resource and glyph preflight already ran, so this lookup is only formatting.
                     let alias = fonts
                         .iter()
@@ -316,7 +467,7 @@ pub(crate) fn build(
                         .ok_or(std::fmt::Error)?;
                     write!(
                         out,
-                        "<text id=\"item-{index}\" x=\"{}\" y=\"{}\" font-family=\"{alias}\" font-size=\"{font_size}\" xml:space=\"preserve\" fill=\"{}\" fill-opacity=\"{}\">{}</text>",
+                        "<text id=\"item-{index}\"{attrs} x=\"{}\" y=\"{}\" font-family=\"{alias}\" font-size=\"{font_size}\" xml:space=\"preserve\" fill=\"{}\" fill-opacity=\"{}\">{}</text>",
                         origin.x(),
                         origin.y(),
                         color(*c),
@@ -327,6 +478,7 @@ pub(crate) fn build(
             }
             out.write_str("</g>")?;
         }
+        guide_groups(&mut out, &mut active, None, scene.items().len())?;
         out.write_str("</svg>")
     })();
     result.map_err(|_| {
@@ -374,8 +526,34 @@ pub(crate) fn lower_path(
     Ok(commands)
 }
 /// Outline serialization keeps the exact point viewBox despite SVG's default CSS DPI.
-pub(crate) fn outline(tree: &usvg::Tree, p: &PublicationProfile) -> ChartResult<Vec<u8>> {
+pub(crate) fn outline(
+    tree: &usvg::Tree,
+    scene: &Scene,
+    fonts: &FontResources,
+    p: &PublicationProfile,
+) -> ChartResult<Vec<u8>> {
     let text = tree.to_string(&usvg::WriteOptions::default());
+    if scene.items().iter().any(|item| item.guide.is_some()) {
+        // Reuse the already positioned glyph outlines, not a second font/layout route.
+        let document = usvg::roxmltree::Document::parse(&text)
+            .map_err(|e| error(DiagnosticCode::ExportFidelity, e.to_string()))?;
+        let by_id: BTreeMap<_, _> = document
+            .descendants()
+            .filter_map(|node| node.attribute("id").map(|id| (id, node.range())))
+            .collect();
+        let mut fragments = BTreeMap::new();
+        for (index, item) in scene.items().iter().enumerate() {
+            if matches!(item.primitive, Primitive::Text { .. })
+                && let Some(range) = by_id.get(format!("item-{index}").as_str())
+            {
+                fragments.insert(index, &text[range.clone()]);
+            }
+        }
+        return super::encode::bounded(
+            build_with_outlines(scene, fonts, p, false, Some(&fragments))?.into_bytes(),
+            p,
+        );
+    }
     let (_, body) = text.split_once('>').ok_or_else(|| {
         error(
             DiagnosticCode::ExportFidelity,

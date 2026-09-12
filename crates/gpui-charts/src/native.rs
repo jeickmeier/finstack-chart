@@ -196,6 +196,7 @@ impl NativeFont {
         text: &str,
         font_size: f64,
         color: Color,
+        opacity: f32,
         system: &WindowTextSystem,
     ) -> ChartResult<ShapedLine> {
         let face = ttf_parser::Face::parse(&self.bytes, 0).map_err(|e| {
@@ -216,7 +217,11 @@ impl NativeFont {
         let run = TextRun {
             len: text.len(),
             font: self.font.clone(),
-            color: native_color(color).into(),
+            color: {
+                let mut c = native_color(color);
+                c.a *= opacity;
+                c.into()
+            },
             ..Default::default()
         };
         let line = system.shape_line(text.to_owned().into(), pixel(font_size)?, &[run], None);
@@ -309,6 +314,7 @@ impl TextMeasurer for Metrics<'_> {
                 blue: 0,
                 alpha: 255,
             },
+            1.,
             self.system,
         )?;
         TextMetrics::new(
@@ -364,6 +370,7 @@ impl NativeFrame {
         bounds: Bounds<Pixels>,
         window: &Window,
     ) -> ChartResult<Self> {
+        request.device_scale = Some(f64::from(window.scale_factor()));
         request.bounds = Rect::new(
             0.,
             0.,
@@ -378,10 +385,31 @@ impl NativeFrame {
                 system: window.text_system(),
             },
         )?);
+        Self::from_layout(chart, request, font, painters, density, bounds, window)
+    }
+    pub fn from_layout(
+        chart: Arc<chart_core::layout::LaidOutChart>,
+        request: LayoutRequest,
+        font: &NativeFont,
+        painters: &crate::NativePainterRegistry,
+        density: &chart_core::dense::DensityOptions,
+        bounds: Bounds<Pixels>,
+        window: &Window,
+    ) -> ChartResult<Self> {
         let reduced =
             chart_core::dense::DenseChart::prepare(chart.clone(), density, request.limits)?;
         let mut items = vec![];
         for item in reduced.scene().items() {
+            let opacity = item
+                .guide
+                .as_ref()
+                .and_then(|g| g.animation)
+                .map_or(1., |a| a.opacity as f32);
+            let native_color = |c: Color| {
+                let mut rgba = native_color(c);
+                rgba.a *= opacity;
+                rgba
+            };
             let result = (|| {
                 let clip = rect_at(item.clip.unwrap_or(chart.scene().bounds()), bounds.origin)?;
                 let outlined = if let Primitive::GlyphRun {
@@ -573,7 +601,8 @@ impl NativeFrame {
                                 "Scene text references another font.",
                             ));
                         }
-                        let line = font.shape(text, *font_size, *color, window.text_system())?;
+                        let line =
+                            font.shape(text, *font_size, *color, opacity, window.text_system())?;
                         let mut origin = point_at(*origin, bounds.origin)?;
                         origin.y -= line.ascent;
                         Paint::Text(Box::new(line), origin)

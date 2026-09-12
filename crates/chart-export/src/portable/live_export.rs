@@ -69,7 +69,7 @@ impl PortableChart {
                         None,
                         i.profile.clone(),
                     ),
-                    CaptureBasis::Presented => {
+                    CaptureBasis::Presented | CaptureBasis::Displayed => {
                         let figure = i.presented.as_ref().ok_or_else(|| {
                             error(
                                 DiagnosticCode::Validation,
@@ -86,6 +86,9 @@ impl PortableChart {
                         )
                     }
                 };
+                if let Some(previous) = i.presented.as_ref() {
+                    profile.layout = profile.layout.with_hierarchy_history(previous.layout());
+                }
                 if let Some(full) = full_domain {
                     profile.view = if full {
                         ViewMode::FullDomain
@@ -121,6 +124,15 @@ impl PortableChart {
                 .with_extensions(i.core.extensions().clone());
                 if let Some(origin) = origin {
                     request = request.with_origin_scene(origin)?;
+                }
+                if basis == CaptureBasis::Displayed {
+                    request = request.with_displayed_layout(
+                        i.presented
+                            .as_ref()
+                            .expect("checked presented figure")
+                            .layout()
+                            .clone(),
+                    )?;
                 }
                 let manifest = request.manifest()?;
                 let job = i.exports.submit(request, format)?;

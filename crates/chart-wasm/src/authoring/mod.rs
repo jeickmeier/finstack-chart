@@ -1,6 +1,7 @@
 //! Owned primary authoring handles; source columns cross typed WASM vectors.
 mod color;
 mod data;
+mod hierarchy;
 mod interpolate;
 mod output;
 mod path;
@@ -76,6 +77,21 @@ impl _Component {
             .map(Self::wrap)
             .map_err(failure)
     }
+    pub fn value_scale_field(
+        &self,
+        target: &str,
+        field: &_Field,
+        scale: &str,
+    ) -> Result<Self, JsError> {
+        self.get()?
+            .value_scale_field(
+                portable::decode(target).map_err(failure)?,
+                *field.get()?,
+                portable::decode(scale).map_err(failure)?,
+            )
+            .map(Self::wrap)
+            .map_err(failure)
+    }
     pub fn numeric_scale_field(
         &self,
         target: &str,
@@ -86,6 +102,21 @@ impl _Component {
             .numeric_scale_field(
                 portable::decode(target).map_err(failure)?,
                 *field.get()?,
+                portable::decode(scale).map_err(failure)?,
+            )
+            .map(Self::wrap)
+            .map_err(failure)
+    }
+    pub fn value_scale_expression(
+        &self,
+        target: &str,
+        input: &_Component,
+        scale: &str,
+    ) -> Result<Self, JsError> {
+        self.get()?
+            .value_scale_expression(
+                portable::decode(target).map_err(failure)?,
+                input.get()?,
                 portable::decode(scale).map_err(failure)?,
             )
             .map(Self::wrap)

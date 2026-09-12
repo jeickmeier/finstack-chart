@@ -1,0 +1,4841 @@
+{
+  "schema_version": 1,
+  "reference": "ggplot2 4.0.3",
+  "r_version": "4.6.1",
+  "r_revision": "90187",
+  "cases": [
+    {
+      "id": "independent_paints",
+      "owner": "GG-03",
+      "layers": [
+        {
+          "row_count": 4,
+          "columns": {
+            "x": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "y": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "fill": [
+              "#ff0000",
+              "#0000ff",
+              "#ff0000",
+              "#0000ff"
+            ],
+            "colour": [
+              "#008000",
+              "#000000",
+              "#000000",
+              "#008000"
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              2,
+              3,
+              1,
+              4
+            ],
+            "shape": [
+              21,
+              21,
+              21,
+              21
+            ],
+            "size": [
+              1.5,
+              1.5,
+              1.5,
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "scales": [
+        {
+          "aesthetics": [
+            "fill"
+          ],
+          "domain": [
+            "A",
+            "B"
+          ]
+        },
+        {
+          "aesthetics": [
+            "colour"
+          ],
+          "domain": [
+            "A",
+            "B"
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "constant_fill",
+      "owner": "GG-03",
+      "layers": [
+        {
+          "row_count": 4,
+          "columns": {
+            "x": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "y": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "colour": [
+              "#00BFC4",
+              "#F8766D",
+              "#F8766D",
+              "#00BFC4"
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              2,
+              1,
+              1,
+              2
+            ],
+            "shape": [
+              21,
+              21,
+              21,
+              21
+            ],
+            "fill": [
+              "#123456",
+              "#123456",
+              "#123456",
+              "#123456"
+            ],
+            "size": [
+              1.5,
+              1.5,
+              1.5,
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "scales": [
+        {
+          "aesthetics": [
+            "colour"
+          ],
+          "domain": [
+            "A",
+            "B"
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "constant_stroke",
+      "owner": "GG-03",
+      "layers": [
+        {
+          "row_count": 4,
+          "columns": {
+            "x": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "y": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "fill": [
+              "#F8766D",
+              "#00BFC4",
+              "#F8766D",
+              "#00BFC4"
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "shape": [
+              21,
+              21,
+              21,
+              21
+            ],
+            "colour": [
+              "#123456",
+              "#123456",
+              "#123456",
+              "#123456"
+            ],
+            "size": [
+              1.5,
+              1.5,
+              1.5,
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "scales": [
+        {
+          "aesthetics": [
+            "fill"
+          ],
+          "domain": [
+            "A",
+            "B"
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "mapped_alpha",
+      "owner": "GG-03",
+      "layers": [
+        {
+          "row_count": 4,
+          "columns": {
+            "alpha": [
+              0.2,
+              0.4,
+              0.6,
+              0.8
+            ],
+            "x": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "y": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "fill": [
+              "#F8766D",
+              "#00BFC4",
+              "#F8766D",
+              "#00BFC4"
+            ],
+            "colour": [
+              "#00BFC4",
+              "#F8766D",
+              "#F8766D",
+              "#00BFC4"
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              2,
+              3,
+              1,
+              4
+            ],
+            "shape": [
+              21,
+              21,
+              21,
+              21
+            ],
+            "size": [
+              1.5,
+              1.5,
+              1.5,
+              1.5
+            ],
+            "stroke": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "scales": [
+        {
+          "aesthetics": [
+            "alpha"
+          ],
+          "domain": [
+            0,
+            1
+          ]
+        },
+        {
+          "aesthetics": [
+            "fill"
+          ],
+          "domain": [
+            "A",
+            "B"
+          ]
+        },
+        {
+          "aesthetics": [
+            "colour"
+          ],
+          "domain": [
+            "A",
+            "B"
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "embedded_alpha",
+      "owner": "GG-03",
+      "layers": [
+        {
+          "row_count": 4,
+          "columns": {
+            "x": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "y": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "alpha": [
+              0.2,
+              0.4,
+              0.6,
+              0.8
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "shape": [
+              21,
+              21,
+              21,
+              21
+            ],
+            "colour": [
+              "#00000080",
+              "#00000080",
+              "#00000080",
+              "#00000080"
+            ],
+            "fill": [
+              "#ff000080",
+              "#ff000080",
+              "#ff000080",
+              "#ff000080"
+            ],
+            "size": [
+              1.5,
+              1.5,
+              1.5,
+              1.5
+            ],
+            "stroke": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "scales": [
+        {
+          "aesthetics": [
+            "alpha"
+          ],
+          "domain": [
+            0,
+            1
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "area_size",
+      "owner": "GG-03",
+      "layers": [
+        {
+          "row_count": 4,
+          "columns": {
+            "x": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "y": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "size": [
+              2,
+              4,
+              6,
+              8
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "shape": [
+              19,
+              19,
+              19,
+              19
+            ],
+            "colour": [
+              "black",
+              "black",
+              "black",
+              "black"
+            ],
+            "fill": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "scales": [
+        {
+          "aesthetics": [
+            "size"
+          ],
+          "domain": [
+            1,
+            16
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "radius_size",
+      "owner": "GG-03",
+      "layers": [
+        {
+          "row_count": 4,
+          "columns": {
+            "x": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "y": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "size": [
+              1,
+              4,
+              9,
+              16
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "shape": [
+              19,
+              19,
+              19,
+              19
+            ],
+            "colour": [
+              "black",
+              "black",
+              "black",
+              "black"
+            ],
+            "fill": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "scales": [
+        {
+          "aesthetics": [
+            "size"
+          ],
+          "domain": [
+            1,
+            16
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "linewidth",
+      "owner": "GG-03",
+      "layers": [
+        {
+          "row_count": 4,
+          "columns": {
+            "x": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "y": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "linewidth": [
+              0.5,
+              1,
+              1.5,
+              2
+            ],
+            "group": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "flipped_aes": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "colour": [
+              "black",
+              "black",
+              "black",
+              "black"
+            ],
+            "linetype": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ]
+          }
+        }
+      ],
+      "scales": [
+        {
+          "aesthetics": [
+            "linewidth"
+          ],
+          "domain": [
+            0,
+            1
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "constant_linewidth",
+      "owner": "GG-03",
+      "layers": [
+        {
+          "row_count": 4,
+          "columns": {
+            "x": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "y": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "group": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "flipped_aes": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "colour": [
+              "black",
+              "black",
+              "black",
+              "black"
+            ],
+            "linewidth": [
+              2,
+              2,
+              2,
+              2
+            ],
+            "linetype": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ]
+          }
+        }
+      ],
+      "scales": [],
+      "warnings": []
+    },
+    {
+      "id": "independent_shapes",
+      "owner": "GG-03",
+      "layers": [
+        {
+          "row_count": 4,
+          "columns": {
+            "shape": [
+              21,
+              24,
+              21,
+              24
+            ],
+            "x": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "y": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "fill": [
+              "#F8766D",
+              "#00BFC4",
+              "#F8766D",
+              "#00BFC4"
+            ],
+            "colour": [
+              "#00BFC4",
+              "#F8766D",
+              "#F8766D",
+              "#00BFC4"
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              2,
+              3,
+              1,
+              4
+            ],
+            "size": [
+              1.5,
+              1.5,
+              1.5,
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "scales": [
+        {
+          "aesthetics": [
+            "shape"
+          ],
+          "domain": [
+            "A",
+            "B"
+          ]
+        },
+        {
+          "aesthetics": [
+            "fill"
+          ],
+          "domain": [
+            "A",
+            "B"
+          ]
+        },
+        {
+          "aesthetics": [
+            "colour"
+          ],
+          "domain": [
+            "A",
+            "B"
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "line_types",
+      "owner": "GG-03",
+      "layers": [
+        {
+          "row_count": 4,
+          "columns": {
+            "x": [
+              1,
+              3,
+              2,
+              4
+            ],
+            "y": [
+              1,
+              1,
+              2,
+              2
+            ],
+            "linetype": [
+              "dotted",
+              "dotted",
+              "longdash",
+              "longdash"
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              1,
+              1,
+              2,
+              2
+            ],
+            "flipped_aes": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "colour": [
+              "black",
+              "black",
+              "black",
+              "black"
+            ],
+            "linewidth": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ]
+          }
+        }
+      ],
+      "scales": [
+        {
+          "aesthetics": [
+            "linetype"
+          ],
+          "domain": [
+            "A",
+            "B"
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "text_channels",
+      "owner": "GG-03",
+      "layers": [
+        {
+          "row_count": 4,
+          "columns": {
+            "x": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "y": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "label": [
+              "A",
+              "B",
+              "A",
+              "B"
+            ],
+            "angle": [
+              1,
+              4,
+              9,
+              16
+            ],
+            "hjust": [
+              0.2,
+              0.4,
+              0.6,
+              0.8
+            ],
+            "vjust": [
+              0.5,
+              1,
+              1.5,
+              2
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "nudge_x": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "nudge_y": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "colour": [
+              "black",
+              "black",
+              "black",
+              "black"
+            ],
+            "family": [
+              "sans",
+              "sans",
+              "sans",
+              "sans"
+            ],
+            "size": [
+              3.86605783866058,
+              3.86605783866058,
+              3.86605783866058,
+              3.86605783866058
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "fontface": [
+              "bold",
+              "bold",
+              "bold",
+              "bold"
+            ],
+            "lineheight": [
+              1.2,
+              1.2,
+              1.2,
+              1.2
+            ]
+          }
+        }
+      ],
+      "scales": [],
+      "warnings": []
+    },
+    {
+      "id": "after_scale_paints",
+      "owner": "GG-03",
+      "layers": [
+        {
+          "row_count": 4,
+          "columns": {
+            "x": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "y": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "colour": [
+              "#00BFC4",
+              "#F8766D",
+              "#F8766D",
+              "#00BFC4"
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              2,
+              1,
+              1,
+              2
+            ],
+            "shape": [
+              21,
+              21,
+              21,
+              21
+            ],
+            "fill": [
+              "#00BFC4",
+              "#F8766D",
+              "#F8766D",
+              "#00BFC4"
+            ],
+            "size": [
+              1.5,
+              1.5,
+              1.5,
+              1.5
+            ],
+            "alpha": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "stroke": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "scales": [
+        {
+          "aesthetics": [
+            "colour"
+          ],
+          "domain": [
+            "A",
+            "B"
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "after_scale_alpha",
+      "owner": "GG-03",
+      "layers": [
+        {
+          "row_count": 4,
+          "columns": {
+            "x": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "y": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "fill": [
+              "#F8766D",
+              "#00BFC4",
+              "#F8766D",
+              "#00BFC4"
+            ],
+            "colour": [
+              "#00BFC4",
+              "#F8766D",
+              "#F8766D",
+              "#00BFC4"
+            ],
+            "PANEL": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ],
+            "group": [
+              2,
+              3,
+              1,
+              4
+            ],
+            "shape": [
+              21,
+              21,
+              21,
+              21
+            ],
+            "size": [
+              1.5,
+              1.5,
+              1.5,
+              1.5
+            ],
+            "alpha": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ],
+            "stroke": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "scales": [
+        {
+          "aesthetics": [
+            "fill"
+          ],
+          "domain": [
+            "A",
+            "B"
+          ]
+        },
+        {
+          "aesthetics": [
+            "colour"
+          ],
+          "domain": [
+            "A",
+            "B"
+          ]
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "symbols": [
+    {
+      "pch": 0,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -0.75,
+              0.75
+            ],
+            [
+              0.75,
+              0.75
+            ],
+            [
+              0.75,
+              -0.75
+            ],
+            [
+              -0.75,
+              -0.75
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 1,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 0.75
+        }
+      ]
+    },
+    {
+      "pch": 2,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -1.1700000000000017
+            ],
+            [
+              1.0100000000000051,
+              0.5799999999999983
+            ],
+            [
+              -1.0100000000000051,
+              0.5799999999999983
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 3,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -1.0600000000000023,
+              0.0
+            ],
+            [
+              1.0600000000000023,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              1.0600000000000023
+            ],
+            [
+              0.0,
+              -1.0600000000000023
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 4,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -0.75,
+              0.75
+            ],
+            [
+              0.75,
+              -0.75
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -0.75,
+              -0.75
+            ],
+            [
+              0.75,
+              0.75
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 5,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -1.0600000000000023,
+              0.0
+            ],
+            [
+              0.0,
+              -1.0600000000000023
+            ],
+            [
+              1.0600000000000023,
+              0.0
+            ],
+            [
+              0.0,
+              1.0600000000000023
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 6,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              1.1700000000000017
+            ],
+            [
+              1.0100000000000051,
+              -0.5799999999999983
+            ],
+            [
+              -1.0100000000000051,
+              -0.5799999999999983
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 7,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -0.75,
+              0.75
+            ],
+            [
+              0.75,
+              0.75
+            ],
+            [
+              0.75,
+              -0.75
+            ],
+            [
+              -0.75,
+              -0.75
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -0.75,
+              0.75
+            ],
+            [
+              0.75,
+              -0.75
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -0.75,
+              -0.75
+            ],
+            [
+              0.75,
+              0.75
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 8,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -0.75,
+              0.75
+            ],
+            [
+              0.75,
+              -0.75
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -0.75,
+              -0.75
+            ],
+            [
+              0.75,
+              0.75
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -1.0600000000000023,
+              0.0
+            ],
+            [
+              1.0600000000000023,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              1.0600000000000023
+            ],
+            [
+              0.0,
+              -1.0600000000000023
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 9,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -1.0600000000000023,
+              0.0
+            ],
+            [
+              1.0600000000000023,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              1.0600000000000023
+            ],
+            [
+              0.0,
+              -1.0600000000000023
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -1.0600000000000023,
+              0.0
+            ],
+            [
+              0.0,
+              -1.0600000000000023
+            ],
+            [
+              1.0600000000000023,
+              0.0
+            ],
+            [
+              0.0,
+              1.0600000000000023
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 10,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 0.75
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -0.75,
+              0.0
+            ],
+            [
+              0.75,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              0.75
+            ],
+            [
+              0.0,
+              -0.75
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 11,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              1.1700000000000017
+            ],
+            [
+              1.0100000000000051,
+              -0.8700000000000045
+            ],
+            [
+              -1.0100000000000051,
+              -0.8700000000000045
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -1.1700000000000017
+            ],
+            [
+              1.0100000000000051,
+              0.8700000000000045
+            ],
+            [
+              -1.0100000000000051,
+              0.8700000000000045
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 12,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -0.75,
+              0.0
+            ],
+            [
+              0.75,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              0.75
+            ],
+            [
+              0.0,
+              -0.75
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -0.75,
+              0.75
+            ],
+            [
+              0.75,
+              0.75
+            ],
+            [
+              0.75,
+              -0.75
+            ],
+            [
+              -0.75,
+              -0.75
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 13,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 0.75
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -0.75,
+              0.75
+            ],
+            [
+              0.75,
+              -0.75
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -0.75,
+              -0.75
+            ],
+            [
+              0.75,
+              0.75
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 14,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -0.75
+            ],
+            [
+              0.75,
+              0.75
+            ],
+            [
+              -0.75,
+              0.75
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -0.75,
+              0.75
+            ],
+            [
+              0.75,
+              0.75
+            ],
+            [
+              0.75,
+              -0.75
+            ],
+            [
+              -0.75,
+              -0.75
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 15,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": false,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              -0.75,
+              0.75
+            ],
+            [
+              0.75,
+              0.75
+            ],
+            [
+              0.75,
+              -0.75
+            ],
+            [
+              -0.75,
+              -0.75
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 16,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": false,
+          "fill": true,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 0.75
+        }
+      ]
+    },
+    {
+      "pch": 17,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": false,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -1.1700000000000017
+            ],
+            [
+              1.0100000000000051,
+              0.5799999999999983
+            ],
+            [
+              -1.0100000000000051,
+              0.5799999999999983
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 18,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": false,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              -0.75,
+              0.0
+            ],
+            [
+              0.0,
+              -0.75
+            ],
+            [
+              0.75,
+              0.0
+            ],
+            [
+              0.0,
+              0.75
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 19,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 0.75
+        }
+      ]
+    },
+    {
+      "pch": 20,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 0.5
+        }
+      ]
+    },
+    {
+      "pch": 21,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 0.75
+        }
+      ]
+    },
+    {
+      "pch": 22,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              -0.6599999999999966,
+              0.6599999999999966
+            ],
+            [
+              0.6700000000000017,
+              0.6599999999999966
+            ],
+            [
+              0.6700000000000017,
+              -0.6700000000000017
+            ],
+            [
+              -0.6599999999999966,
+              -0.6700000000000017
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 23,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              0.9399999999999977
+            ],
+            [
+              0.9399999999999977,
+              0.0
+            ],
+            [
+              0.0,
+              -0.9399999999999977
+            ],
+            [
+              -0.9399999999999977,
+              0.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 24,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -1.1700000000000017
+            ],
+            [
+              1.0100000000000051,
+              0.5799999999999983
+            ],
+            [
+              -1.0100000000000051,
+              0.5799999999999983
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 25,
+      "device_size": 2,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              1.1700000000000017
+            ],
+            [
+              1.0100000000000051,
+              -0.5799999999999983
+            ],
+            [
+              -1.0100000000000051,
+              -0.5799999999999983
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 0,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -3.0,
+              3.0
+            ],
+            [
+              3.0,
+              3.0
+            ],
+            [
+              3.0,
+              -3.0
+            ],
+            [
+              -3.0,
+              -3.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 1,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 3.0
+        }
+      ]
+    },
+    {
+      "pch": 2,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -4.670000000000002
+            ],
+            [
+              4.040000000000006,
+              2.3299999999999983
+            ],
+            [
+              -4.040000000000006,
+              2.3299999999999983
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 3,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -4.239999999999995,
+              0.0
+            ],
+            [
+              4.239999999999995,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              4.239999999999995
+            ],
+            [
+              0.0,
+              -4.239999999999995
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 4,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -3.0,
+              3.0
+            ],
+            [
+              3.0,
+              -3.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -3.0,
+              -3.0
+            ],
+            [
+              3.0,
+              3.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 5,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -4.239999999999995,
+              0.0
+            ],
+            [
+              0.0,
+              -4.239999999999995
+            ],
+            [
+              4.239999999999995,
+              0.0
+            ],
+            [
+              0.0,
+              4.239999999999995
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 6,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              4.670000000000002
+            ],
+            [
+              4.040000000000006,
+              -2.3299999999999983
+            ],
+            [
+              -4.040000000000006,
+              -2.3299999999999983
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 7,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -3.0,
+              3.0
+            ],
+            [
+              3.0,
+              3.0
+            ],
+            [
+              3.0,
+              -3.0
+            ],
+            [
+              -3.0,
+              -3.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -3.0,
+              3.0
+            ],
+            [
+              3.0,
+              -3.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -3.0,
+              -3.0
+            ],
+            [
+              3.0,
+              3.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 8,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -3.0,
+              3.0
+            ],
+            [
+              3.0,
+              -3.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -3.0,
+              -3.0
+            ],
+            [
+              3.0,
+              3.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -4.239999999999995,
+              0.0
+            ],
+            [
+              4.239999999999995,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              4.239999999999995
+            ],
+            [
+              0.0,
+              -4.239999999999995
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 9,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -4.239999999999995,
+              0.0
+            ],
+            [
+              4.239999999999995,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              4.239999999999995
+            ],
+            [
+              0.0,
+              -4.239999999999995
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -4.239999999999995,
+              0.0
+            ],
+            [
+              0.0,
+              -4.239999999999995
+            ],
+            [
+              4.239999999999995,
+              0.0
+            ],
+            [
+              0.0,
+              4.239999999999995
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 10,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 3.0
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -3.0,
+              0.0
+            ],
+            [
+              3.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              3.0
+            ],
+            [
+              0.0,
+              -3.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 11,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              4.670000000000002
+            ],
+            [
+              4.040000000000006,
+              -3.5
+            ],
+            [
+              -4.040000000000006,
+              -3.5
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -4.670000000000002
+            ],
+            [
+              4.040000000000006,
+              3.5
+            ],
+            [
+              -4.040000000000006,
+              3.5
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 12,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -3.0,
+              0.0
+            ],
+            [
+              3.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              3.0
+            ],
+            [
+              0.0,
+              -3.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -3.0,
+              3.0
+            ],
+            [
+              3.0,
+              3.0
+            ],
+            [
+              3.0,
+              -3.0
+            ],
+            [
+              -3.0,
+              -3.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 13,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 3.0
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -3.0,
+              3.0
+            ],
+            [
+              3.0,
+              -3.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -3.0,
+              -3.0
+            ],
+            [
+              3.0,
+              3.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 14,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -3.0
+            ],
+            [
+              3.0,
+              3.0
+            ],
+            [
+              -3.0,
+              3.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -3.0,
+              3.0
+            ],
+            [
+              3.0,
+              3.0
+            ],
+            [
+              3.0,
+              -3.0
+            ],
+            [
+              -3.0,
+              -3.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 15,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": false,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              -3.0,
+              3.0
+            ],
+            [
+              3.0,
+              3.0
+            ],
+            [
+              3.0,
+              -3.0
+            ],
+            [
+              -3.0,
+              -3.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 16,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": false,
+          "fill": true,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 3.0
+        }
+      ]
+    },
+    {
+      "pch": 17,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": false,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -4.670000000000002
+            ],
+            [
+              4.040000000000006,
+              2.3299999999999983
+            ],
+            [
+              -4.040000000000006,
+              2.3299999999999983
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 18,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": false,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              -3.0,
+              0.0
+            ],
+            [
+              0.0,
+              -3.0
+            ],
+            [
+              3.0,
+              0.0
+            ],
+            [
+              0.0,
+              3.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 19,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 3.0
+        }
+      ]
+    },
+    {
+      "pch": 20,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 2.0
+        }
+      ]
+    },
+    {
+      "pch": 21,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 3.0
+        }
+      ]
+    },
+    {
+      "pch": 22,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              -2.6599999999999966,
+              2.6599999999999966
+            ],
+            [
+              2.6599999999999966,
+              2.6599999999999966
+            ],
+            [
+              2.6599999999999966,
+              -2.6599999999999966
+            ],
+            [
+              -2.6599999999999966,
+              -2.6599999999999966
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 23,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              3.760000000000005
+            ],
+            [
+              3.760000000000005,
+              0.0
+            ],
+            [
+              0.0,
+              -3.760000000000005
+            ],
+            [
+              -3.760000000000005,
+              0.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 24,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -4.670000000000002
+            ],
+            [
+              4.040000000000006,
+              2.3299999999999983
+            ],
+            [
+              -4.040000000000006,
+              2.3299999999999983
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 25,
+      "device_size": 8,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              4.670000000000002
+            ],
+            [
+              4.040000000000006,
+              -2.3299999999999983
+            ],
+            [
+              -4.040000000000006,
+              -2.3299999999999983
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 0,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -6.0,
+              6.0
+            ],
+            [
+              6.0,
+              6.0
+            ],
+            [
+              6.0,
+              -6.0
+            ],
+            [
+              -6.0,
+              -6.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 1,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 6.0
+        }
+      ]
+    },
+    {
+      "pch": 2,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -9.329999999999998
+            ],
+            [
+              8.079999999999998,
+              4.670000000000002
+            ],
+            [
+              -8.079999999999998,
+              4.670000000000002
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 3,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -8.490000000000002,
+              0.0
+            ],
+            [
+              8.489999999999995,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              8.490000000000002
+            ],
+            [
+              0.0,
+              -8.489999999999995
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 4,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -6.0,
+              6.0
+            ],
+            [
+              6.0,
+              -6.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -6.0,
+              -6.0
+            ],
+            [
+              6.0,
+              6.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 5,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -8.490000000000002,
+              0.0
+            ],
+            [
+              0.0,
+              -8.489999999999995
+            ],
+            [
+              8.489999999999995,
+              0.0
+            ],
+            [
+              0.0,
+              8.490000000000002
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 6,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              9.329999999999998
+            ],
+            [
+              8.079999999999998,
+              -4.670000000000002
+            ],
+            [
+              -8.079999999999998,
+              -4.670000000000002
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 7,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -6.0,
+              6.0
+            ],
+            [
+              6.0,
+              6.0
+            ],
+            [
+              6.0,
+              -6.0
+            ],
+            [
+              -6.0,
+              -6.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -6.0,
+              6.0
+            ],
+            [
+              6.0,
+              -6.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -6.0,
+              -6.0
+            ],
+            [
+              6.0,
+              6.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 8,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -6.0,
+              6.0
+            ],
+            [
+              6.0,
+              -6.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -6.0,
+              -6.0
+            ],
+            [
+              6.0,
+              6.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -8.490000000000002,
+              0.0
+            ],
+            [
+              8.489999999999995,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              8.490000000000002
+            ],
+            [
+              0.0,
+              -8.489999999999995
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 9,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -8.490000000000002,
+              0.0
+            ],
+            [
+              8.489999999999995,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              8.490000000000002
+            ],
+            [
+              0.0,
+              -8.489999999999995
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -8.490000000000002,
+              0.0
+            ],
+            [
+              0.0,
+              -8.489999999999995
+            ],
+            [
+              8.489999999999995,
+              0.0
+            ],
+            [
+              0.0,
+              8.490000000000002
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 10,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 6.0
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -6.0,
+              0.0
+            ],
+            [
+              6.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              6.0
+            ],
+            [
+              0.0,
+              -6.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 11,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              9.329999999999998
+            ],
+            [
+              8.079999999999998,
+              -7.0
+            ],
+            [
+              -8.079999999999998,
+              -7.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -9.329999999999998
+            ],
+            [
+              8.079999999999998,
+              7.0
+            ],
+            [
+              -8.079999999999998,
+              7.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 12,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -6.0,
+              0.0
+            ],
+            [
+              6.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              6.0
+            ],
+            [
+              0.0,
+              -6.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -6.0,
+              6.0
+            ],
+            [
+              6.0,
+              6.0
+            ],
+            [
+              6.0,
+              -6.0
+            ],
+            [
+              -6.0,
+              -6.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 13,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 6.0
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -6.0,
+              6.0
+            ],
+            [
+              6.0,
+              -6.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -6.0,
+              -6.0
+            ],
+            [
+              6.0,
+              6.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 14,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -6.0
+            ],
+            [
+              6.0,
+              6.0
+            ],
+            [
+              -6.0,
+              6.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -6.0,
+              6.0
+            ],
+            [
+              6.0,
+              6.0
+            ],
+            [
+              6.0,
+              -6.0
+            ],
+            [
+              -6.0,
+              -6.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 15,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": false,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              -6.0,
+              6.0
+            ],
+            [
+              6.0,
+              6.0
+            ],
+            [
+              6.0,
+              -6.0
+            ],
+            [
+              -6.0,
+              -6.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 16,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": false,
+          "fill": true,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 6.0
+        }
+      ]
+    },
+    {
+      "pch": 17,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": false,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -9.329999999999998
+            ],
+            [
+              8.079999999999998,
+              4.670000000000002
+            ],
+            [
+              -8.079999999999998,
+              4.670000000000002
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 18,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": false,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              -6.0,
+              0.0
+            ],
+            [
+              0.0,
+              -6.0
+            ],
+            [
+              6.0,
+              0.0
+            ],
+            [
+              0.0,
+              6.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 19,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 6.0
+        }
+      ]
+    },
+    {
+      "pch": 20,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 4.0
+        }
+      ]
+    },
+    {
+      "pch": 21,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 6.0
+        }
+      ]
+    },
+    {
+      "pch": 22,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              -5.319999999999993,
+              5.319999999999993
+            ],
+            [
+              5.310000000000002,
+              5.319999999999993
+            ],
+            [
+              5.310000000000002,
+              -5.310000000000002
+            ],
+            [
+              -5.319999999999993,
+              -5.310000000000002
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 23,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              7.519999999999996
+            ],
+            [
+              7.519999999999996,
+              0.0
+            ],
+            [
+              0.0,
+              -7.519999999999996
+            ],
+            [
+              -7.519999999999996,
+              0.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 24,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -9.329999999999998
+            ],
+            [
+              8.079999999999998,
+              4.670000000000002
+            ],
+            [
+              -8.079999999999998,
+              4.670000000000002
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 25,
+      "device_size": 16,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              9.329999999999998
+            ],
+            [
+              8.079999999999998,
+              -4.670000000000002
+            ],
+            [
+              -8.079999999999998,
+              -4.670000000000002
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 0,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -12.0,
+              12.0
+            ],
+            [
+              12.0,
+              12.0
+            ],
+            [
+              12.0,
+              -12.0
+            ],
+            [
+              -12.0,
+              -12.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 1,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 12.0
+        }
+      ]
+    },
+    {
+      "pch": 2,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -18.659999999999997
+            ],
+            [
+              16.159999999999997,
+              9.329999999999998
+            ],
+            [
+              -16.159999999999997,
+              9.329999999999998
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 3,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -16.97,
+              0.0
+            ],
+            [
+              16.97,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              16.97
+            ],
+            [
+              0.0,
+              -16.97
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 4,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -12.0,
+              12.0
+            ],
+            [
+              12.0,
+              -12.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -12.0,
+              -12.0
+            ],
+            [
+              12.0,
+              12.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 5,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -16.97,
+              0.0
+            ],
+            [
+              0.0,
+              -16.97
+            ],
+            [
+              16.97,
+              0.0
+            ],
+            [
+              0.0,
+              16.97
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 6,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              18.659999999999997
+            ],
+            [
+              16.159999999999997,
+              -9.329999999999998
+            ],
+            [
+              -16.159999999999997,
+              -9.329999999999998
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 7,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -12.0,
+              12.0
+            ],
+            [
+              12.0,
+              12.0
+            ],
+            [
+              12.0,
+              -12.0
+            ],
+            [
+              -12.0,
+              -12.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -12.0,
+              12.0
+            ],
+            [
+              12.0,
+              -12.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -12.0,
+              -12.0
+            ],
+            [
+              12.0,
+              12.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 8,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -12.0,
+              12.0
+            ],
+            [
+              12.0,
+              -12.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -12.0,
+              -12.0
+            ],
+            [
+              12.0,
+              12.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -16.97,
+              0.0
+            ],
+            [
+              16.97,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              16.97
+            ],
+            [
+              0.0,
+              -16.97
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 9,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -16.97,
+              0.0
+            ],
+            [
+              16.97,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              16.97
+            ],
+            [
+              0.0,
+              -16.97
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -16.97,
+              0.0
+            ],
+            [
+              0.0,
+              -16.97
+            ],
+            [
+              16.97,
+              0.0
+            ],
+            [
+              0.0,
+              16.97
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 10,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 12.0
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -12.0,
+              0.0
+            ],
+            [
+              12.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              12.0
+            ],
+            [
+              0.0,
+              -12.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 11,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              18.659999999999997
+            ],
+            [
+              16.159999999999997,
+              -14.0
+            ],
+            [
+              -16.159999999999997,
+              -14.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -18.659999999999997
+            ],
+            [
+              16.159999999999997,
+              14.0
+            ],
+            [
+              -16.159999999999997,
+              14.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 12,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -12.0,
+              0.0
+            ],
+            [
+              12.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              0.0,
+              12.0
+            ],
+            [
+              0.0,
+              -12.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -12.0,
+              12.0
+            ],
+            [
+              12.0,
+              12.0
+            ],
+            [
+              12.0,
+              -12.0
+            ],
+            [
+              -12.0,
+              -12.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 13,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 12.0
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -12.0,
+              12.0
+            ],
+            [
+              12.0,
+              -12.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "line",
+          "points": [
+            [
+              -12.0,
+              -12.0
+            ],
+            [
+              12.0,
+              12.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 14,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -12.0
+            ],
+            [
+              12.0,
+              12.0
+            ],
+            [
+              -12.0,
+              12.0
+            ]
+          ]
+        },
+        {
+          "stroke": true,
+          "fill": false,
+          "kind": "polygon",
+          "points": [
+            [
+              -12.0,
+              12.0
+            ],
+            [
+              12.0,
+              12.0
+            ],
+            [
+              12.0,
+              -12.0
+            ],
+            [
+              -12.0,
+              -12.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 15,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": false,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              -12.0,
+              12.0
+            ],
+            [
+              12.0,
+              12.0
+            ],
+            [
+              12.0,
+              -12.0
+            ],
+            [
+              -12.0,
+              -12.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 16,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": false,
+          "fill": true,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 12.0
+        }
+      ]
+    },
+    {
+      "pch": 17,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": false,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -18.659999999999997
+            ],
+            [
+              16.159999999999997,
+              9.329999999999998
+            ],
+            [
+              -16.159999999999997,
+              9.329999999999998
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 18,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": false,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              -12.0,
+              0.0
+            ],
+            [
+              0.0,
+              -12.0
+            ],
+            [
+              12.0,
+              0.0
+            ],
+            [
+              0.0,
+              12.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 19,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 12.0
+        }
+      ]
+    },
+    {
+      "pch": 20,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 8.0
+        }
+      ]
+    },
+    {
+      "pch": 21,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "circle",
+          "center": [
+            0.0,
+            0.0
+          ],
+          "radius": 12.0
+        }
+      ]
+    },
+    {
+      "pch": 22,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              -10.630000000000003,
+              10.630000000000003
+            ],
+            [
+              10.64,
+              10.630000000000003
+            ],
+            [
+              10.64,
+              -10.64
+            ],
+            [
+              -10.630000000000003,
+              -10.64
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 23,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              15.04
+            ],
+            [
+              15.040000000000006,
+              0.0
+            ],
+            [
+              0.0,
+              -15.040000000000006
+            ],
+            [
+              -15.04,
+              0.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 24,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              -18.659999999999997
+            ],
+            [
+              16.159999999999997,
+              9.329999999999998
+            ],
+            [
+              -16.159999999999997,
+              9.329999999999998
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pch": 25,
+      "device_size": 32,
+      "primitives": [
+        {
+          "stroke": true,
+          "fill": true,
+          "kind": "polygon",
+          "points": [
+            [
+              0.0,
+              18.659999999999997
+            ],
+            [
+              16.159999999999997,
+              -9.329999999999998
+            ],
+            [
+              -16.159999999999997,
+              -9.329999999999998
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "symbol_coordinate_tolerance_points": 0.011
+}

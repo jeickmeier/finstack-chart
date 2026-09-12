@@ -400,6 +400,7 @@ fn plain_text_xml_escaping_curves_and_empty_clips_are_supported() {
         *text = "A < B & C > D".into();
     }
     p.annotations.push(SceneItem {
+        guide: None,
         layer: Some(LayerId::new(99)),
         clip: Some(Rect::new(0., 0., 0., 0.).unwrap()),
         primitive: Primitive::Path {

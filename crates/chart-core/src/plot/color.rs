@@ -153,12 +153,13 @@ pub fn color_mapped(
     name: impl Into<String>,
     scale: crate::scales::MappedScaleSpec,
 ) -> ColorScaleBuilder {
+    let missing = if scale.reference_guides() { 127 } else { 128 };
     ColorScaleBuilder {
         name: name.into(),
         id: fresh_id().map(ScaleId::new),
         scale: Ok(ColorScale::Mapped {
             scale,
-            missing: crate::theme::rgb(128, 128, 128).into(),
+            missing: crate::theme::rgb(missing, missing, missing).into(),
         }),
     }
 }

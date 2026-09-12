@@ -1,0 +1,20 @@
+   Compiling chart-core v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-core)
+   Compiling chart-text v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-text)
+   Compiling chart-extension-example v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/examples/custom-extension)
+   Compiling chart-export v0.1.0 (/Users/jeickmeier/Projects/finstack-chart/crates/chart-export)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.86s
+     Running tests/hierarchy.rs (target/axis-rust-proof/debug/deps/hierarchy-4d865bdaa851d0fc)
+
+running 9 tests
+test sunburst_seam_sides_and_zero_area_nodes_keep_structural_metadata ... ok
+test sunburst_hole_is_not_a_pointer_target ... ok
+test nested_circles_use_frontmost_leaf_and_clip_outside_the_panel ... ok
+test registered_chart_accessors_and_tiler_are_captured_and_native_only_rejects ... ok
+test live_resize_uses_acknowledged_rows_and_keeps_prior_export_immutable ... ok
+test reparenting_keeps_node_identity_changes_link_and_failed_layout_keeps_prior_frame ... ok
+test facets_isolate_topology_membership_history_and_inspection_values ... ok
+test deep_membership_is_shared_bounded_and_released_and_filters_do_not_repair_orphans ... ok
+test every_recipe_exports_and_retains_exact_structural_membership ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.60s
+

@@ -271,6 +271,7 @@ fn replay_and_scene_snapshots_preserve_supplied_metadata_without_vertex_targets(
     assert_eq!(consumer.commands.len(), 3); // One model target, not three source rows.
     let clip = Rect::new(0., 0., 12., 20.).unwrap();
     let mut items = vec![SceneItem {
+        guide: None,
         layer: Some(LayerId::new(17)),
         clip: Some(clip),
         primitive: Primitive::VectorPath {

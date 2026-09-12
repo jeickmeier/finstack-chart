@@ -78,6 +78,7 @@ pub fn profile() -> PublicationProfile {
     p.layout.font_size = 10.;
     p.annotation_revision = Revision::new(4);
     p.annotations.push(SceneItem {
+        guide: None,
         layer: None,
         clip: None,
         primitive: Primitive::Text {

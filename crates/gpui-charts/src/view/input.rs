@@ -84,7 +84,13 @@ fn panel_axes(
     let ids = chart
         .axes()
         .iter()
-        .filter(|(_, a)| !matches!(a.scale, chart_core::layout::ResolvedScale::Secondary { .. }))
+        .filter(|(_, a)| {
+            !matches!(
+                a.scale,
+                chart_core::layout::ResolvedScale::Secondary { .. }
+                    | chart_core::layout::ResolvedScale::SecondaryTime { .. }
+            )
+        })
         .map(|(id, _)| *id)
         .collect();
     Some((panel, ids))

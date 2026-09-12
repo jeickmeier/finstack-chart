@@ -18,7 +18,9 @@ impl Block {
             .map(|item| {
                 let mut item = item.clone();
                 item.clip = Some(clip);
-                if let Primitive::GlyphRun { origin, .. } = &mut item.primitive {
+                if let Primitive::GlyphRun { origin, .. } | Primitive::Text { origin, .. } =
+                    &mut item.primitive
+                {
                     *origin = Point::new(
                         origin.x() + x - self.bounds.origin().x(),
                         origin.y() + y - self.bounds.origin().y(),
@@ -28,6 +30,59 @@ impl Block {
             })
             .collect()
     }
+}
+/// Plain multiline guide labels retain logical text while painting separate lines.
+/// Each destination measures ordinary runs; no shaping capability is required.
+pub(super) fn plain_lines(
+    text: &str,
+    r: &LayoutRequest,
+    measurer: &dyn TextMeasurer,
+    color: Color,
+) -> ChartResult<Block> {
+    let mut lines = Vec::new();
+    let mut width = 0_f64;
+    let mut ascent = 0_f64;
+    let mut descent = 0_f64;
+    for line in text.split('\n') {
+        let metrics = crate::services::measure_text(
+            measurer,
+            super::engine::text_request(r, if line.is_empty() { "M" } else { line }),
+            r.limits,
+        )?;
+        if !line.is_empty() {
+            width = width.max(metrics.width());
+        }
+        ascent = ascent.max(metrics.ascent());
+        descent = descent.max(metrics.descent());
+        lines.push((line, metrics));
+    }
+    let step = (ascent + descent) * 1.2;
+    let height = ascent + descent + step * lines.len().saturating_sub(1) as f64;
+    let bounds = Rect::new(0., -ascent, width, height)?;
+    let items = lines
+        .into_iter()
+        .enumerate()
+        .filter(|(_, (line, _))| !line.is_empty())
+        .map(|(index, (line, metrics))| {
+            Ok(SceneItem {
+                guide: None,
+                layer: None,
+                clip: None,
+                primitive: Primitive::Text {
+                    origin: Point::new((width - metrics.width()) / 2., index as f64 * step)?,
+                    text: line.into(),
+                    font: r.font.id,
+                    font_size: r.font_size,
+                    color,
+                },
+            })
+        })
+        .collect::<ChartResult<Vec<_>>>()?;
+    Ok(Block {
+        bounds,
+        items,
+        diagnostics: Vec::new(),
+    })
 }
 pub(super) fn measure(
     text: &RichText,
@@ -129,6 +184,7 @@ pub(super) fn measure(
             }
             x += run.metrics.width();
             items.push(SceneItem {
+                guide: None,
                 layer: None,
                 clip: None,
                 primitive: Primitive::GlyphRun {

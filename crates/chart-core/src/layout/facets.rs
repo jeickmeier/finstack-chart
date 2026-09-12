@@ -152,13 +152,11 @@ fn legend_values(
                         .mark
                         .map(crate::color::Paint::resolve)
                         .unwrap_or(l.color);
-                    let fill = (entry.paint == crate::shape::SymbolPaint::Fill).then_some(color);
-                    let stroke = (entry.paint == crate::shape::SymbolPaint::Stroke).then_some(
-                        crate::scene::Stroke {
-                            color,
-                            width: l.stroke_width,
-                        },
-                    );
+                    let fill = entry.paint.fills().then_some(color);
+                    let stroke = entry.paint.strokes().then_some(crate::scene::Stroke {
+                        color,
+                        width: l.stroke_width,
+                    });
                     let base = geometry
                         .bounds(0.01, r.limits.max_path_commands)?
                         .unwrap_or(Rect::new(0., 0., 0., 0.)?);
@@ -195,6 +193,7 @@ fn push_text(
 ) -> ChartResult<()> {
     require_within(items.len() < r.limits.max_items, "figure scene item")?;
     items.push(SceneItem {
+        guide: None,
         layer: None,
         clip: Some(clip),
         primitive: Primitive::Text {
@@ -239,6 +238,7 @@ fn paint_legend(
                     let size = r.font_size.min(bounds.width() / 3.);
                     if size > 0. {
                         items.push(SceneItem {
+                            guide: None,
                             layer: None,
                             clip: Some(bounds),
                             primitive: Primitive::Rectangle {
@@ -264,6 +264,7 @@ fn paint_legend(
                     ])?;
                     if geometry.has_segments() {
                         items.push(SceneItem {
+                            guide: None,
                             layer: None,
                             clip: Some(bounds),
                             primitive: Primitive::VectorPath {
@@ -487,6 +488,8 @@ pub(super) fn layout_facets(
             cell_height,
         )?;
         let mut r = request.clone();
+        r.hierarchy_scope
+            .push(super::GuideScope::Panel(panel.key.clone()));
         r.figure_bounds = Some(request.figure_bounds.unwrap_or(request.bounds));
         r.bounds = Rect::new(
             cell.origin().x(),
@@ -530,7 +533,19 @@ pub(super) fn layout_facets(
                 .iter()
                 .map(|(i, v)| (i + items.len(), v.clone())),
         );
-        items.extend_from_slice(chart.scene().items());
+        let scope = format!(
+            "panel:{}",
+            serde_json::to_string(&panel.key).map_err(|_| crate::scales::error(
+                crate::DiagnosticCode::Validation,
+                "Panel scope cannot be encoded."
+            ))?
+        );
+        items.extend(chart.scene().items().iter().cloned().map(|mut item| {
+            if let Some(guide) = &mut item.guide {
+                guide.scope.insert(0, scope.clone());
+            }
+            item
+        }));
         targets.extend_from_slice(chart.targets());
         item_panels.extend(std::iter::repeat_n(
             Some(panel.key.clone()),
@@ -603,6 +618,9 @@ pub(super) fn layout_facets(
         request.limits,
     )?;
     Ok(LaidOutChart {
+        hierarchies: Default::default(),
+        guide_frames: Default::default(),
+        guide_presentation: None,
         guides: Default::default(),
         paint_themes: std::collections::BTreeMap::new(),
         interactions,
